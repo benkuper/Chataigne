@@ -1304,11 +1304,62 @@
     <Filter Include="JUCE Modules\juce_simpleweb\asio\asio">
       <UniqueIdentifier>{8A31E23A-0D4D-A36C-1F67-5E04480FEF11}</UniqueIdentifier>
     </Filter>
+    <Filter Include="JUCE Modules\juce_simpleweb\asio\detail\impl">
+      <UniqueIdentifier>{5A8499C2-BAD9-DB14-E54E-6E2B7369B660}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_simpleweb\asio\detail">
+      <UniqueIdentifier>{19D240E5-61FC-6FC4-5E21-DB927DCC5DEC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_simpleweb\asio\generic\detail">
+      <UniqueIdentifier>{C643E19E-CA54-83B4-5DE7-DAFE613C37BD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_simpleweb\asio\generic">
+      <UniqueIdentifier>{54911988-B33B-DB28-83EF-C2AA1D59FAF7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_simpleweb\asio\impl">
+      <UniqueIdentifier>{AB73AC6D-D3C3-6A5F-AAAA-9C160EAAB8D0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_simpleweb\asio\ip\detail">
+      <UniqueIdentifier>{C982787C-225F-AB57-02AA-5571AFCBC8F8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_simpleweb\asio\ip\impl">
+      <UniqueIdentifier>{E1691F7A-14D3-3409-5A4A-B1CB3EE18B6C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_simpleweb\asio\ip">
+      <UniqueIdentifier>{75B5FA31-47D9-058C-A9AF-0D0E6F1C3F62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_simpleweb\asio\local\detail">
+      <UniqueIdentifier>{86C6C273-28E1-BD33-D09D-F675B09B8476}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_simpleweb\asio\local">
+      <UniqueIdentifier>{2B72F40F-72FA-15D6-E2AD-B2A51B4E573C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_simpleweb\asio\posix">
+      <UniqueIdentifier>{C0A2EE99-AAF8-5882-8991-C499311DEF3D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_simpleweb\asio\ssl\detail">
+      <UniqueIdentifier>{36F87D6D-13CE-9C49-E6B9-60C58AD710EF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_simpleweb\asio\ssl\impl">
+      <UniqueIdentifier>{4BE584DB-DCC0-009E-D1CA-3C4D69EC56F3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_simpleweb\asio\ssl">
+      <UniqueIdentifier>{2C0C2B19-CFE3-09BC-E63E-D9C5E2AD227B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_simpleweb\asio\ts">
+      <UniqueIdentifier>{7A3ECA86-87E1-0E08-7951-E4CC761B68A7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_simpleweb\asio\windows">
+      <UniqueIdentifier>{F83CFE3F-E398-42D5-A112-D2127BB8A06B}</UniqueIdentifier>
+    </Filter>
     <Filter Include="JUCE Modules\juce_simpleweb\asio">
       <UniqueIdentifier>{0F38CADC-6AB0-B98A-F3DA-893C4B37B1B9}</UniqueIdentifier>
     </Filter>
     <Filter Include="JUCE Modules\juce_simpleweb\common">
       <UniqueIdentifier>{D25362D0-3C0A-688F-F7E6-C8873E07CBA6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_simpleweb\openssl">
+      <UniqueIdentifier>{9684BA1D-7154-C152-738D-C2B17D1BDCE3}</UniqueIdentifier>
     </Filter>
     <Filter Include="JUCE Modules\juce_simpleweb\webserver">
       <UniqueIdentifier>{27A7C349-E808-FB6E-970C-05068A50479E}</UniqueIdentifier>
@@ -5128,7 +5179,16 @@
     <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\impl\src.cpp">
       <Filter>JUCE Modules\juce_simpleweb\asio\asio\include\asio\impl</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\asio\impl\src.cpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\openssl\applink.c">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_simpleweb\juce_simpleweb.cpp">
+      <Filter>JUCE Modules\juce_simpleweb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\juce_simpleweb2.cpp">
       <Filter>JUCE Modules\juce_simpleweb</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_simpleweb\SimpleWebSocketClient.cpp">
@@ -5348,6 +5408,9 @@
       <Filter>JUCE Library Code</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_simpleweb.cpp">
+      <Filter>JUCE Library Code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\include_juce_simpleweb2.cpp">
       <Filter>JUCE Library Code</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_timeline.cpp">
@@ -10554,6 +10617,1245 @@
     <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio.hpp">
       <Filter>JUCE Modules\juce_simpleweb\asio\asio\include</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\impl\dev_poll_reactor.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\impl\epoll_reactor.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\impl\kqueue_reactor.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\impl\select_reactor.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\impl\service_registry.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\impl\strand_executor_service.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\impl\strand_service.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\impl\win_iocp_io_context.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\impl\winrt_timer_scheduler.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\array.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\array_fwd.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\assert.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\atomic_count.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\base_from_completion_cond.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\bind_handler.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\buffer_resize_guard.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\buffer_sequence_adapter.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\buffered_stream_storage.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\call_stack.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\chrono.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\chrono_time_traits.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\completion_handler.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\concurrency_hint.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\conditionally_enabled_event.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\conditionally_enabled_mutex.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\config.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\consuming_buffers.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\cstddef.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\cstdint.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\date_time_fwd.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\deadline_timer_service.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\dependent_type.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\descriptor_ops.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\descriptor_read_op.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\descriptor_write_op.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\dev_poll_reactor.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\epoll_reactor.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\event.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\eventfd_select_interrupter.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\executor_function.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\executor_op.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\fd_set_adapter.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\fenced_block.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\functional.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\future.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\gcc_arm_fenced_block.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\gcc_hppa_fenced_block.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\gcc_sync_fenced_block.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\gcc_x86_fenced_block.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\global.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\handler_alloc_helpers.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\handler_cont_helpers.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\handler_invoke_helpers.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\handler_tracking.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\handler_type_requirements.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\handler_work.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\hash_map.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\io_control.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\io_object_executor.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\io_object_impl.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\is_buffer_sequence.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\is_executor.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\keyword_tss_ptr.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\kqueue_reactor.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\limits.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\local_free_on_block_exit.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\macos_fenced_block.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\memory.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\mutex.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\non_const_lvalue.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\noncopyable.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\null_event.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\null_fenced_block.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\null_global.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\null_mutex.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\null_reactor.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\null_signal_blocker.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\null_socket_service.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\null_static_mutex.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\null_thread.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\null_tss_ptr.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\object_pool.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\old_win_sdk_compat.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\op_queue.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\operation.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\pipe_select_interrupter.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\pop_options.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\posix_event.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\posix_fd_set_adapter.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\posix_global.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\posix_mutex.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\posix_signal_blocker.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\posix_static_mutex.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\posix_thread.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\posix_tss_ptr.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\push_options.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\reactive_descriptor_service.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\reactive_null_buffers_op.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\reactive_serial_port_service.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\reactive_socket_accept_op.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\reactive_socket_connect_op.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\reactive_socket_recv_op.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\reactive_socket_recvfrom_op.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\reactive_socket_recvmsg_op.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\reactive_socket_send_op.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\reactive_socket_sendto_op.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\reactive_socket_service.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\reactive_socket_service_base.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\reactive_wait_op.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\reactor.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\reactor_fwd.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\reactor_op.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\reactor_op_queue.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\recycling_allocator.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\regex_fwd.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\resolve_endpoint_op.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\resolve_op.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\resolve_query_op.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\resolver_service.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\resolver_service_base.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\scheduler.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\scheduler_operation.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\scheduler_thread_info.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\scoped_lock.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\scoped_ptr.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\select_interrupter.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\select_reactor.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\service_registry.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\signal_blocker.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\signal_handler.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\signal_init.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\signal_op.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\signal_set_service.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\socket_holder.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\socket_ops.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\socket_option.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\socket_select_interrupter.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\socket_types.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\solaris_fenced_block.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\source_location.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\static_mutex.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\std_event.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\std_fenced_block.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\std_global.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\std_mutex.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\std_static_mutex.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\std_thread.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\strand_executor_service.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\strand_service.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\string_view.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\thread.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\thread_context.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\thread_group.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\thread_info_base.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\throw_error.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\throw_exception.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\timer_queue.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\timer_queue_base.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\timer_queue_ptime.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\timer_queue_set.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\timer_scheduler.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\timer_scheduler_fwd.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\tss_ptr.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\type_traits.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\variadic_templates.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\wait_handler.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\wait_op.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\win_event.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\win_fd_set_adapter.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\win_fenced_block.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\win_global.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\win_iocp_handle_read_op.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\win_iocp_handle_service.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\win_iocp_handle_write_op.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\win_iocp_io_context.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\win_iocp_null_buffers_op.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\win_iocp_operation.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\win_iocp_overlapped_op.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\win_iocp_overlapped_ptr.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\win_iocp_serial_port_service.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\win_iocp_socket_accept_op.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\win_iocp_socket_connect_op.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\win_iocp_socket_recv_op.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\win_iocp_socket_recvfrom_op.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\win_iocp_socket_recvmsg_op.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\win_iocp_socket_send_op.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\win_iocp_socket_service.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\win_iocp_socket_service_base.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\win_iocp_thread_info.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\win_iocp_wait_op.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\win_mutex.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\win_object_handle_service.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\win_static_mutex.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\win_thread.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\win_tss_ptr.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\winapp_thread.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\wince_thread.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\winrt_async_manager.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\winrt_async_op.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\winrt_resolve_op.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\winrt_resolver_service.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\winrt_socket_connect_op.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\winrt_socket_recv_op.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\winrt_socket_send_op.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\winrt_ssocket_service.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\winrt_ssocket_service_base.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\winrt_timer_scheduler.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\winrt_utils.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\winsock_init.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\work_dispatcher.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detail\wrapped_handler.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\generic\detail\endpoint.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\generic\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\generic\basic_endpoint.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\generic\datagram_protocol.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\generic\raw_protocol.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\generic\seq_packet_protocol.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\generic\stream_protocol.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\impl\awaitable.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\impl\buffered_read_stream.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\impl\buffered_write_stream.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\impl\co_spawn.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\impl\compose.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\impl\connect.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\impl\defer.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\impl\detached.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\impl\dispatch.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\impl\execution_context.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\impl\executor.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\impl\io_context.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\impl\post.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\impl\read.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\impl\read_at.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\impl\read_until.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\impl\redirect_error.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\impl\serial_port_base.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\impl\spawn.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\impl\src.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\impl\system_context.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\impl\system_executor.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\impl\thread_pool.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\impl\use_awaitable.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\impl\use_future.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\impl\write.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\impl\write_at.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ip\detail\endpoint.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ip\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ip\detail\socket_option.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ip\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ip\impl\address.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ip\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ip\impl\address_v4.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ip\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ip\impl\address_v6.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ip\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ip\impl\basic_endpoint.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ip\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ip\impl\network_v4.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ip\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ip\impl\network_v6.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ip\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ip\address.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ip\address_v4.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ip\address_v4_iterator.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ip\address_v4_range.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ip\address_v6.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ip\address_v6_iterator.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ip\address_v6_range.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ip\bad_address_cast.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ip\basic_endpoint.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ip\basic_resolver.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ip\basic_resolver_entry.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ip\basic_resolver_iterator.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ip\basic_resolver_query.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ip\basic_resolver_results.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ip\host_name.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ip\icmp.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ip\multicast.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ip\network_v4.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ip\network_v6.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ip\resolver_base.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ip\resolver_query_base.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ip\tcp.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ip\udp.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ip\unicast.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ip\v6_only.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\local\detail\endpoint.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\local\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\local\basic_endpoint.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\local</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\local\connect_pair.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\local</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\local\datagram_protocol.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\local</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\local\stream_protocol.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\local</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\posix\basic_descriptor.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\posix</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\posix\basic_stream_descriptor.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\posix</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\posix\descriptor.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\posix</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\posix\descriptor_base.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\posix</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\posix\stream_descriptor.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\posix</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ssl\detail\buffered_handshake_op.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ssl\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ssl\detail\engine.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ssl\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ssl\detail\handshake_op.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ssl\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ssl\detail\io.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ssl\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ssl\detail\openssl_init.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ssl\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ssl\detail\openssl_types.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ssl\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ssl\detail\password_callback.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ssl\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ssl\detail\read_op.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ssl\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ssl\detail\shutdown_op.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ssl\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ssl\detail\stream_core.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ssl\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ssl\detail\verify_callback.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ssl\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ssl\detail\write_op.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ssl\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ssl\impl\context.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ssl\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ssl\impl\src.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ssl\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ssl\context.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ssl\context_base.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ssl\error.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ssl\host_name_verification.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ssl\rfc2818_verification.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ssl\stream.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ssl\stream_base.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ssl\verify_context.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ssl\verify_mode.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ts\buffer.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ts\executor.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ts\internet.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ts\io_context.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ts\net.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ts\netfwd.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ts\socket.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ts\timer.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\ts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\windows\basic_object_handle.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\windows\basic_overlapped_handle.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\windows\basic_random_access_handle.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\windows\basic_stream_handle.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\windows\object_handle.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\windows\overlapped_handle.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\windows\overlapped_ptr.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\windows\random_access_handle.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\windows\stream_handle.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\associated_allocator.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\associated_executor.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\async_result.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\awaitable.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\basic_datagram_socket.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\basic_deadline_timer.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\basic_io_object.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\basic_raw_socket.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\basic_seq_packet_socket.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\basic_serial_port.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\basic_signal_set.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\basic_socket.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\basic_socket_acceptor.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\basic_socket_iostream.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\basic_socket_streambuf.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\basic_stream_socket.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\basic_streambuf.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\basic_streambuf_fwd.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\basic_waitable_timer.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\bind_executor.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\buffer.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\buffered_read_stream.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\buffered_read_stream_fwd.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\buffered_stream.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\buffered_stream_fwd.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\buffered_write_stream.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\buffered_write_stream_fwd.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\buffers_iterator.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\co_spawn.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\completion_condition.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\compose.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\connect.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\coroutine.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\deadline_timer.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\defer.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\detached.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\dispatch.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\error.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\error_code.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\execution_context.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\executor.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\executor_work_guard.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\handler_alloc_hook.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\handler_continuation_hook.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\handler_invoke_hook.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\high_resolution_timer.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\io_context.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\io_context_strand.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\io_service.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\io_service_strand.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\is_executor.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\is_read_buffered.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\is_write_buffered.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\packaged_task.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\placeholders.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\post.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\read.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\read_at.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\read_until.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\redirect_error.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\serial_port.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\serial_port_base.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\signal_set.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\socket_base.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\spawn.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\ssl.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\steady_timer.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\strand.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\streambuf.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\system_context.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\system_error.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\system_executor.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\system_timer.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\this_coro.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\thread.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\thread_pool.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\time_traits.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\unyield.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\use_awaitable.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\use_future.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\uses_executor.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\version.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\wait_traits.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\write.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\write_at.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio\yield.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Modules\juce_simpleweb\common\asio_compatibility.hpp">
       <Filter>JUCE Modules\juce_simpleweb\common</Filter>
     </ClInclude>
@@ -10569,10 +11871,328 @@
     <ClInclude Include="..\..\Modules\juce_simpleweb\common\utility.hpp">
       <Filter>JUCE Modules\juce_simpleweb\common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Modules\juce_simpleweb\webserver\client_http.hpp">
-      <Filter>JUCE Modules\juce_simpleweb\webserver</Filter>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\__DECC_INCLUDE_EPILOGUE.H">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\__DECC_INCLUDE_PROLOGUE.H">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\aes.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\asn1.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\asn1_mac.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\asn1err.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\asn1t.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\async.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\asyncerr.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\bio.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\bioerr.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\blowfish.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\bn.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\bnerr.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\buffer.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\buffererr.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\camellia.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\cast.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\cmac.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\cms.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\cmserr.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\comp.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\comperr.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\conf.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\conf_api.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\conferr.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\crypto.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\cryptoerr.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\ct.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\cterr.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\des.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\dh.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\dherr.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\dsa.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\dsaerr.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\dtls1.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\e_os2.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\ebcdic.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\ec.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\ecdh.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\ecdsa.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\ecerr.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\engine.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\engineerr.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\err.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\evp.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\evperr.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\hmac.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\idea.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\kdf.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\kdferr.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\lhash.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\md2.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\md4.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\md5.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\mdc2.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\modes.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\obj_mac.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\objects.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\objectserr.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\ocsp.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\ocsperr.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\opensslconf.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\opensslv.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\ossl_typ.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\pem.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\pem2.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\pemerr.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\pkcs7.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\pkcs7err.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\pkcs12.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\pkcs12err.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\rand.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\rand_drbg.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\randerr.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\rc2.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\rc4.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\rc5.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\ripemd.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\rsa.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\rsaerr.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\safestack.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\seed.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\sha.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\srp.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\srtp.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\ssl.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\ssl2.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\ssl3.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\sslerr.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\stack.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\store.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\storeerr.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\symhacks.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\tls1.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\ts.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\tserr.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\txt_db.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\ui.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\uierr.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\whrlpool.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\x509.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\x509_vfy.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\x509err.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\x509v3.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\x509v3err.h">
+      <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_simpleweb\webserver\server_http.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\webserver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\webserver\server_https.hpp">
       <Filter>JUCE Modules\juce_simpleweb\webserver</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_simpleweb\webserver\status_code.hpp">
@@ -10581,8 +12201,17 @@
     <ClInclude Include="..\..\Modules\juce_simpleweb\websocket\client_ws.hpp">
       <Filter>JUCE Modules\juce_simpleweb\websocket</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\websocket\client_wss.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\websocket</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Modules\juce_simpleweb\websocket\server_ws.hpp">
       <Filter>JUCE Modules\juce_simpleweb\websocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\websocket\server_wss.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\websocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\asio.hpp">
+      <Filter>JUCE Modules\juce_simpleweb</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_simpleweb\MIMETypes.h">
       <Filter>JUCE Modules\juce_simpleweb</Filter>

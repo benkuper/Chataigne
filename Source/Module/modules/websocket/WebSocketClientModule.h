@@ -15,19 +15,20 @@
 
 class WebSocketClientModule :
 	public StreamingModule,
-	public SimpleWebSocketClient::Listener,
+	public SimpleWebSocketClientBase::Listener,
 	public Timer
 
 {
 public:
-	WebSocketClientModule(const String& name = "WebSocket Client", const String &defaultServerPath = "127.0.0.1:8080/ws");
+	WebSocketClientModule(const String& name = "WebSocket Client", const String &defaultServerPath = "127.0.0.1:8080");
 	virtual ~WebSocketClientModule();
 
+	BoolParameter* useSecureConnection;
 	StringParameter* serverPath;
 	BoolParameter* isConnected;
 	bool connectFirstTry;
 
-	std::unique_ptr<SimpleWebSocketClient> client;
+	std::unique_ptr<SimpleWebSocketClientBase> client;
 
 	const Identifier wsMessageReceivedId = "wsMessageReceived";
 	const Identifier wsDataReceivedId = "wsDataReceived";

@@ -12,7 +12,8 @@ WebSocketClientModule::WebSocketClientModule(const String& name, const String& d
 	StreamingModule(name),
 	connectFirstTry(true)
 {
-	serverPath = moduleParams.addStringParameter("Server Path", "Path to the server, meaning ip:port/path", defaultServerPath);
+	useSecureConnection = moduleParams.addBoolParameter("Use Secure Connection", "If checked, this will use a secure connection. Use this if the server you're connecting to is using wss://", false);
+	serverPath = moduleParams.addStringParameter("Server Path", "Path to the server, meaning ip:port/path WITHOUT ws:// or wss://", defaultServerPath);
 	isConnected = moduleParams.addBoolParameter("Connected", "Is the socket sucessfully bound and listening", false);
 	isConnected->setControllableFeedbackOnly(true);
 	connectionFeedbackRef = isConnected;
@@ -20,7 +21,7 @@ WebSocketClientModule::WebSocketClientModule(const String& name, const String& d
 	scriptManager->scriptTemplate += ChataigneAssetManager::getInstance()->getScriptTemplate("wsClient");
 
 	setupClient();
-	startTimer(1000);
+	startTimer(5000);
 }
 
 WebSocketClientModule::~WebSocketClientModule()
@@ -37,7 +38,9 @@ void WebSocketClientModule::setupClient()
 
 	if (!enabled->intValue()) return;
 
-	client.reset(new SimpleWebSocketClient());
+	if (useSecureConnection->boolValue()) client.reset(new SecureWebSocketClient());
+	else client.reset(new SimpleWebSocketClient());
+
 	client->addWebSocketListener(this);
 	client->start(serverPath->stringValue());
 }
@@ -108,7 +111,7 @@ void WebSocketClientModule::dataReceived(const MemoryBlock& data)
 {
 	inActivityTrigger->trigger();
 
-	Array<uint8_t> bytes((const uint8_t *)data.getData(), data.getSize());
+	Array<uint8_t> bytes((const uint8_t*)data.getData(), data.getSize());
 
 	if (logIncomingData->boolValue())
 	{
@@ -144,7 +147,25 @@ void WebSocketClientModule::onControllableFeedbackUpdateInternal(ControllableCon
 {
 	StreamingModule::onControllableFeedbackUpdateInternal(cc, c);
 
-	if (c == serverPath) setupClient();
+	if (c == serverPath)
+	{
+		connectFirstTry = true;
+		
+		String s = serverPath->stringValue();
+		if (s.startsWith("ws://"))
+		{
+			serverPath->setValue(s.substring(5));
+			return;
+		}
+		else if (s.startsWith("wss://"))
+		{
+			serverPath->setValue(s.substring(6));
+			useSecureConnection->setValue(true);
+			return;
+		}
+
+		setupClient();
+	}
 	else if (c == isConnected)
 	{
 
@@ -155,8 +176,13 @@ void WebSocketClientModule::onControllableFeedbackUpdateInternal(ControllableCon
 		else
 		{
 			connectFirstTry = true;
-			startTimer(1000);
+			startTimer(5000);
 		}
+	}
+	else if (c == useSecureConnection)
+	{
+		connectFirstTry = true; 
+		setupClient();
 	}
 }
 

@@ -12,7 +12,7 @@
 
 class WebSocketServerModule :
 	public StreamingModule,
-	public SimpleWebSocketServer::Listener
+	public SimpleWebSocketServerBase::Listener
 
 {
 public:
@@ -20,10 +20,12 @@ public:
 	virtual ~WebSocketServerModule();
 
 	IntParameter* localPort;
+	BoolParameter* useSecureConnection;
+
 	IntParameter* numClients;
 	BoolParameter* isConnected;
 
-	std::unique_ptr<SimpleWebSocketServer> server;
+	std::unique_ptr<SimpleWebSocketServerBase> server;
 
 	const Identifier wsMessageReceivedId = "wsMessageReceived";
 	const Identifier wsDataReceivedId = "wsDataReceived";

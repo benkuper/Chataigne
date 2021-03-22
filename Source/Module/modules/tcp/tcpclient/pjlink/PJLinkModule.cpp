@@ -43,7 +43,7 @@ PJLinkModule::PJLinkModule() :
 
 void PJLinkModule::sendMessageInternal(const String& message, var params)
 {
-	String encodedPass = MD5((passBytes + password->stringValue()).toUTF8()).toHexString();
+	String encodedPass = juce::MD5((passBytes + password->stringValue()).toUTF8()).toHexString();
 	String encodedMessage = password->stringValue().isEmpty() ? message : (encodedPass + message);
 	
 	TCPClientModule::sendMessageInternal(encodedMessage, params);

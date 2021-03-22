@@ -36,7 +36,7 @@ public:
 
 class GenericOSCQueryModule :
 	public Module,
-	public SimpleWebSocketClient::Listener,
+	public SimpleWebSocketClientBase::Listener,
 	public Thread
 {
 public:
@@ -57,7 +57,7 @@ public:
 	IntParameter* remoteOSCPort;
 
 	OSCSender sender;
-	std::unique_ptr<SimpleWebSocketClient> wsClient;
+	std::unique_ptr<SimpleWebSocketClientBase> wsClient;
 	bool hasListenExtension;
 	var treeData; //to keep on save
 

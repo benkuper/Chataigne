@@ -12,6 +12,7 @@ WebSocketServerModule::WebSocketServerModule(const String& name, int defaultRemo
 	StreamingModule(name)
 {
 	localPort = moduleParams.addIntParameter("Local Port", "Port to bind to listen to incoming data", defaultRemotePort, 1, 65535);
+	useSecureConnection = moduleParams.addBoolParameter("Use Secure Connection", "If checked, you will be able to access this webserver through secure, wss:// connection.", false);
 	isConnected = moduleParams.addBoolParameter("Connected", "Is the socket sucessfully bound and listening", false);
 	isConnected->setControllableFeedbackOnly(true);
 
@@ -21,7 +22,6 @@ WebSocketServerModule::WebSocketServerModule(const String& name, int defaultRemo
 	connectionFeedbackRef = isConnected;
 
 	scriptManager->scriptTemplate += ChataigneAssetManager::getInstance()->getScriptTemplate("wsServer");
-
 
 	setupServer();
 }
@@ -45,7 +45,22 @@ void WebSocketServerModule::setupServer()
 
 	if (!enabled->intValue()) return;
 
-	server.reset(new SimpleWebSocketServer());
+	if (useSecureConnection->boolValue())
+	{
+		File k = File::getSpecialLocation(File::currentApplicationFile).getParentDirectory().getChildFile("server.key");
+		File c = File::getSpecialLocation(File::currentApplicationFile).getParentDirectory().getChildFile("server.crt");
+		try
+		{
+			server.reset(new SecureWebSocketServer(c.getFullPathName(), k.getFullPathName()));
+		}
+		catch (std::exception e)
+		{
+			NLOGERROR(niceName, "Error creating secure server : " << e.what());
+			return;
+		}
+	}
+	else server.reset(new SimpleWebSocketServer());
+
 	server->addWebSocketListener(this);
 	server->start(localPort->intValue());
 
@@ -130,14 +145,14 @@ void WebSocketServerModule::dataReceived(const String& connectionId, const Memor
 	if (logIncomingData->boolValue())
 	{
 		String s = "";
-		for (auto & b : bytes) s += String(b) + "\n";
+		for (auto& b : bytes) s += String(b) + "\n";
 		NLOG(niceName, "Received " << bytes.size() << " bytes :\n" << s);
 	}
 
 	Array<var> args;
 	args.add(connectionId);
 	var bytesData;
-	for(auto & b : bytes) bytesData.append(b);
+	for (auto& b : bytes) bytesData.append(b);
 	args.add(bytesData);
 	scriptManager->callFunctionOnAllItems(wsDataReceivedId, args);
 }
@@ -150,7 +165,7 @@ void WebSocketServerModule::onContainerParameterChangedInternal(Parameter* p)
 	{
 		if (!enabled->boolValue() && isConnected->boolValue())
 		{
-			NLOG(niceName, "Disabling module, closign server.");
+			NLOG(niceName, "Disabling module, closing server.");
 		}
 		setupServer();
 	}
@@ -159,6 +174,11 @@ void WebSocketServerModule::onContainerParameterChangedInternal(Parameter* p)
 void WebSocketServerModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
 {
 	StreamingModule::onControllableFeedbackUpdateInternal(cc, c);
+
+	if (c == useSecureConnection)
+	{
+		setupServer();
+	}
 }
 
 

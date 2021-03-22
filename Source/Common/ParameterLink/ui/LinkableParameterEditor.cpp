@@ -146,9 +146,8 @@ void LinkableParameterEditor::buttonClicked(Button* b)
                 }
                 else
                 {
-                    bool t = link->linkType == link->MULTIPLEX_LIST && link->list == bli;
-
-                    itMenu.addItem(1000 + i, "List : " + bli->niceName, true, t);
+                    bool ti = link->linkType == link->MULTIPLEX_LIST && link->list == bli;
+                    itMenu.addItem(1000 + i, "List : " + bli->niceName, true, ti);
                 }
             }
 

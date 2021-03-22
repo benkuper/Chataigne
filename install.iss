@@ -30,7 +30,8 @@ SetupWindowTitle={#ApplicationName} {#ApplicationVersion} Setup
 [Files]
 Source: "Binaries/CI/App/{#ApplicationName}.exe"; DestDir: "{app}" ; Flags: ignoreversion
 Source: "Binaries/CI/App/*.dll"; DestDir: "{app}"; Flags: ignoreversion
-
+Source: "Binaries/CI/App/webserver.cert"; DestDir: "{app}"; Flags: ignoreversion
+Source: "Binaries/CI/App/webserver.key"; DestDir: "{app}"; Flags: ignoreversion
 [Icons]
 Name: "{group}\{#ApplicationName}"; Filename: "{app}\{#ApplicationName}.exe"
 

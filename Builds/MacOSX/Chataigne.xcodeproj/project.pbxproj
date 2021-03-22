@@ -91,6 +91,7 @@
 		CEF52996937104AFE201FA08 /* ../../JuceLibraryCode/include_juce_audio_processors.mm */ = {isa = PBXBuildFile; fileRef = 14E5D0E29E9A6BEAD9C32A03; };
 		D553CB88C72C0B51E97A4676 /* System/Library/Frameworks/IOKit.framework */ = {isa = PBXBuildFile; fileRef = 7335A92ACDE20B14F02ADA97; };
 		D5BA72E6B1F43C42CFDDCE35 /* ../../Source/Common/InputSystem/InputSystemManager.cpp */ = {isa = PBXBuildFile; fileRef = B68AA40E425DF28AFA78226B; };
+		D9D175B4BD9D9E379D7B0842 /* ../../JuceLibraryCode/include_juce_simpleweb2.cpp */ = {isa = PBXBuildFile; fileRef = BF6D9D661141F04A04FFE925; };
 		DA910C499A52C803D9A9158E /* ../../JuceLibraryCode/include_juce_cryptography.mm */ = {isa = PBXBuildFile; fileRef = C6D2FE7E6817726C8813E755; };
 		DAFC4F097C396F425F32EE4F /* ../../Source/Common/Serial/lib/serial/serial.cc */ = {isa = PBXBuildFile; fileRef = 4F4804536C25AE1613284CDE; };
 		DD2464F57B8E65E34C00CDE7 /* ../../Source/StateMachine/StateMachineIncludes.cpp */ = {isa = PBXBuildFile; fileRef = F697A6937365CFBE8B6E51B6; };
@@ -667,6 +668,7 @@
 		BEB5FC676103F81A003208E8 /* ../../Source/Module/modules/system/os/commands/WakeOnLanCommand.cpp */ /* WakeOnLanCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = WakeOnLanCommand.cpp; path = ../../Source/Module/modules/system/os/commands/WakeOnLanCommand.cpp; sourceTree = SOURCE_ROOT; };
 		BEDFBEFAB93D6A8F37A47919 /* ../../Source/Common/DMX/device/DMXOpenUSBDevice.cpp */ /* DMXOpenUSBDevice.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DMXOpenUSBDevice.cpp; path = ../../Source/Common/DMX/device/DMXOpenUSBDevice.cpp; sourceTree = SOURCE_ROOT; };
 		BF56666BCED854C39FE8D1C1 /* ../../Source/Module/modules/generators/signal/SignalModule.cpp */ /* SignalModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SignalModule.cpp; path = ../../Source/Module/modules/generators/signal/SignalModule.cpp; sourceTree = SOURCE_ROOT; };
+		BF6D9D661141F04A04FFE925 /* ../../JuceLibraryCode/include_juce_simpleweb2.cpp */ /* include_juce_simpleweb2.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_juce_simpleweb2.cpp; path = ../../JuceLibraryCode/include_juce_simpleweb2.cpp; sourceTree = SOURCE_ROOT; };
 		BF9BE431A99A71683F148A0C /* ../../Source/Common/Processor/Mapping/Filter/MappingFilterManager.cpp */ /* MappingFilterManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MappingFilterManager.cpp; path = ../../Source/Common/Processor/Mapping/Filter/MappingFilterManager.cpp; sourceTree = SOURCE_ROOT; };
 		C011CD17DA02C50BA1542AD8 /* ../../Source/Module/ModuleFactory.cpp */ /* ModuleFactory.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ModuleFactory.cpp; path = ../../Source/Module/ModuleFactory.cpp; sourceTree = SOURCE_ROOT; };
 		C03652534579A2AA472C2268 /* ../../Source/Module/modules/osc/reaper/commands/ReaperTimeCommand.h */ /* ReaperTimeCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ReaperTimeCommand.h; path = ../../Source/Module/modules/osc/reaper/commands/ReaperTimeCommand.h; sourceTree = SOURCE_ROOT; };
@@ -1287,6 +1289,7 @@
 				23DDF3B6DEC463FC8B8F1644,
 				8AB58B2FA156DD075B892850,
 				A344ECDA05A5372A32341886,
+				BF6D9D661141F04A04FFE925,
 				4D147E8D071C0C93CB433813,
 				0DD04E60A5E6174F61924D04,
 			);
@@ -3430,6 +3433,7 @@
 				B6614E8CDCC9AE8C59BF4C65,
 				A2C0DA5E1710F15AA0E3F840,
 				14B03BE884B82BE8EC264AE9,
+				D9D175B4BD9D9E379D7B0842,
 				6FB44A657258A9A5ACB8BE85,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
