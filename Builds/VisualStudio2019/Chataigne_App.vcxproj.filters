@@ -5185,6 +5185,9 @@
     <ClCompile Include="..\..\Modules\juce_simpleweb\asio\impl\src.cpp">
       <Filter>JUCE Modules\juce_simpleweb\asio\impl</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\common\SHA1.cpp">
+      <Filter>JUCE Modules\juce_simpleweb\common</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_simpleweb\openssl\applink.c">
       <Filter>JUCE Modules\juce_simpleweb\openssl</Filter>
     </ClCompile>
@@ -11872,6 +11875,9 @@
       <Filter>JUCE Modules\juce_simpleweb\common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_simpleweb\common\mutex.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\common\SHA1.h">
       <Filter>JUCE Modules\juce_simpleweb\common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_simpleweb\common\status_code.hpp">

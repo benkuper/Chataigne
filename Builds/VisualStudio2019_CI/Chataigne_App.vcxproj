@@ -3616,6 +3616,9 @@
     <ClCompile Include="..\..\Modules\juce_simpleweb\asio\impl\src.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\common\SHA1.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_simpleweb\openssl\applink.c">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -5955,6 +5958,7 @@
     <ClInclude Include="..\..\Modules\juce_simpleweb\common\asio_compatibility.hpp"/>
     <ClInclude Include="..\..\Modules\juce_simpleweb\common\crypto.hpp"/>
     <ClInclude Include="..\..\Modules\juce_simpleweb\common\mutex.hpp"/>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\common\SHA1.h"/>
     <ClInclude Include="..\..\Modules\juce_simpleweb\common\status_code.hpp"/>
     <ClInclude Include="..\..\Modules\juce_simpleweb\common\utility.hpp"/>
     <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\__DECC_INCLUDE_EPILOGUE.H"/>
