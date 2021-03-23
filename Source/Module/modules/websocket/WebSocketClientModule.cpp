@@ -20,8 +20,7 @@ WebSocketClientModule::WebSocketClientModule(const String& name, const String& d
 
 	scriptManager->scriptTemplate += ChataigneAssetManager::getInstance()->getScriptTemplate("wsClient");
 
-	setupClient();
-	startTimer(5000);
+	startTimer(1000);
 }
 
 WebSocketClientModule::~WebSocketClientModule()
@@ -176,7 +175,6 @@ void WebSocketClientModule::setupClient()
 		}
 		else if (c == isConnected)
 		{
-
 			if (isConnected->boolValue())
 			{
 				stopTimer();
@@ -184,13 +182,16 @@ void WebSocketClientModule::setupClient()
 			else
 			{
 				connectFirstTry = true;
-				startTimer(5000);
+				startTimer(1000);
 			}
 		}
 		else if (c == useSecureConnection)
 		{
-			connectFirstTry = true;
-			setupClient();
+			if (!isCurrentlyLoadingData)
+			{
+				connectFirstTry = true;
+				setupClient();
+			}
 		}
 	}
 
@@ -199,6 +200,8 @@ void WebSocketClientModule::setupClient()
 		if (!isConnected->boolValue())
 		{
 			setupClient();
+
+			if (connectFirstTry) startTimer(5000);
 			connectFirstTry = false;
 		}
 	}

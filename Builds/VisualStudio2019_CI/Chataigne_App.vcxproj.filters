@@ -5185,7 +5185,7 @@
     <ClCompile Include="..\..\Modules\juce_simpleweb\asio\impl\src.cpp">
       <Filter>JUCE Modules\juce_simpleweb\asio\impl</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_simpleweb\common\SHA1.cpp">
+    <ClCompile Include="..\..\Modules\juce_simpleweb\common\WSCrypto.cpp">
       <Filter>JUCE Modules\juce_simpleweb\common</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_simpleweb\openssl\applink.c">
@@ -11877,13 +11877,13 @@
     <ClInclude Include="..\..\Modules\juce_simpleweb\common\mutex.hpp">
       <Filter>JUCE Modules\juce_simpleweb\common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Modules\juce_simpleweb\common\SHA1.h">
-      <Filter>JUCE Modules\juce_simpleweb\common</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Modules\juce_simpleweb\common\status_code.hpp">
       <Filter>JUCE Modules\juce_simpleweb\common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_simpleweb\common\utility.hpp">
+      <Filter>JUCE Modules\juce_simpleweb\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_simpleweb\common\WSCrypto.h">
       <Filter>JUCE Modules\juce_simpleweb\common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_simpleweb\openssl\__DECC_INCLUDE_EPILOGUE.H">
