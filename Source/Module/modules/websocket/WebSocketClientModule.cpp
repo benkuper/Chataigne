@@ -58,12 +58,13 @@ void WebSocketClientModule::setupClient()
 		return client != nullptr && isConnected->boolValue();
 	}
 
-	void WebSocketClientModule::sendMessageInternal(const String & message, var)
+	void WebSocketClientModule::sendMessageInternal(const String & message, var params)
 	{
+		if(var)
 		client->send(message);
 	}
 
-	void WebSocketClientModule::sendBytesInternal(Array<uint8> data, var)
+	void WebSocketClientModule::sendBytesInternal(Array<uint8> data, var params)
 	{
 		client->send((const char*)data.getRawDataPointer(), data.size());
 	}

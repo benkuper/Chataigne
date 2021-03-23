@@ -28,8 +28,15 @@ public:
 	std::unique_ptr<ControllableContainer> thruManager;
 
 	const Identifier dataEventId = "dataReceived";
+	
 	const Identifier sendId = "send";
+	const Identifier sendToId = "sendTo";
+	const Identifier sendExcludeId = "sendExclude"; 
+
 	const Identifier sendBytesId = "sendBytes";
+	const Identifier sendBytesToId = "sendBytesTo";
+	const Identifier sendBytesExcludeId = "sendBytesExclude";
+
 
 	virtual void setAutoAddAvailable(bool value);
 
@@ -76,6 +83,16 @@ public:
 
 	static var sendStringFromScript(const var::NativeFunctionArgs &a);
 	static var sendBytesFromScript(const var::NativeFunctionArgs &a);
+
+	static var sendStringToFromScript(const var::NativeFunctionArgs& a);
+	static var sendStringExcludeFromScript(const var::NativeFunctionArgs& a);
+
+	static var sendBytesToFromScript(const var::NativeFunctionArgs& a);
+	static var sendBytesExcludeFromScript(const var::NativeFunctionArgs& a);
+
+	static var getToExcludeParamObject(const var::NativeFunctionArgs& a, const String& propName);
+	static String getStringFromArgs(const var::NativeFunctionArgs& a, int offset = 0);
+	static Array<uint8> getByteFromArgs(const var::NativeFunctionArgs& a, int offset = 0);
 
 	virtual String getDefaultTypeString() const override { return "Streaming"; }
 };

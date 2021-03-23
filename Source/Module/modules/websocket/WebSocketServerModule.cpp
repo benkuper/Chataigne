@@ -79,14 +79,52 @@ bool WebSocketServerModule::isReadyToSend()
 	return server != nullptr && isConnected->boolValue();
 }
 
-void WebSocketServerModule::sendMessageInternal(const String& message, var)
+void WebSocketServerModule::sendMessageInternal(const String& message, var params)
 {
-	server->send(message);
+	if (params.isObject())
+	{
+		if (params.hasProperty("include"))
+		{
+			var list = params.getProperty("include", var());
+			for (int i = 0; i < list.size(); i++) server->sendTo(message, list[i].toString());
+		}
+		else if (params.hasProperty("exclude"))
+		{
+			var list = params.getProperty("exclude", var());
+			StringArray excludes;
+			for (int i = 0; i < list.size(); i++) excludes.add(list[i].toString());
+			server->sendExclude(message, excludes);
+		}
+	}
+	else
+	{
+		server->send(message);
+	}
 }
 
-void WebSocketServerModule::sendBytesInternal(Array<uint8> data, var)
+void WebSocketServerModule::sendBytesInternal(Array<uint8> data, var params)
 {
-	server->send((const char*)data.getRawDataPointer(), data.size());
+	if (params.isObject())
+	{
+		MemoryBlock b(data.getRawDataPointer(), data.size());
+		if (params.hasProperty("include"))
+		{
+			var list = params.getProperty("include", var());
+			for (int i = 0; i < list.size(); i++) server->sendTo(b, list[i].toString());
+		}
+		else if (params.hasProperty("exclude"))
+		{
+			var list = params.getProperty("exclude", var());
+			StringArray excludes;
+			for (int i = 0; i < list.size(); i++) excludes.add(list[i].toString());
+			server->sendExclude(b, excludes);
+		}
+	}
+	else
+	{
+		server->send((const char*)data.getRawDataPointer(), data.size());
+	}
+	
 }
 
 void WebSocketServerModule::connectionOpened(const String& connectionId)

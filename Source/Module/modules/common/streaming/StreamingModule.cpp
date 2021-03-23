@@ -30,8 +30,12 @@ StreamingModule::StreamingModule(const String & name) :
 	defManager->add(CommandDefinition::createDef(this, "", "Send hex data", &SendStreamStringCommand::create, CommandContext::BOTH)->addParam("mode", SendStreamStringCommand::DataMode::HEX));
 	
 	scriptObject.setMethod(sendId, StreamingModule::sendStringFromScript);
+	scriptObject.setMethod(sendToId, StreamingModule::sendStringToFromScript);
+	scriptObject.setMethod(sendExcludeId, StreamingModule::sendStringExcludeFromScript);
 	scriptObject.setMethod(sendBytesId, StreamingModule::sendBytesFromScript);
-	
+	scriptObject.setMethod(sendBytesToId, StreamingModule::sendBytesToFromScript);
+	scriptObject.setMethod(sendBytesExcludeId, StreamingModule::sendBytesExcludeFromScript);
+
 	scriptManager->scriptTemplate += ChataigneAssetManager::getInstance()->getScriptTemplate("streaming");
 
 
@@ -652,51 +656,112 @@ var StreamingModule::sendStringFromScript(const var::NativeFunctionArgs & a)
 {
 	StreamingModule * m = getObjectFromJS<StreamingModule>(a);
 	if (!checkNumArgs(m->niceName, a, 1)) return false;
-
-	if (a.arguments[0].isObject()) m->sendMessage(JSON::toString(a.arguments[0]));
-	else
-	{
-		String s = "";
-		for (int i = 0; i < a.numArguments; ++i)
-		{
-			if (a.arguments[i].isArray() && a.arguments[i].size() > 0)
-			{
-				for (int j = 0; j < a.arguments[i].size(); j++)
-				{
-					s += (s.isNotEmpty() ? " " : "") + a.arguments[i][j].toString();
-				}
-			}
-			else
-			{
-				s += (s.isNotEmpty() ? " " : "") + a.arguments[i].toString();
-			}
-		}
-
-		m->sendMessage(s);
-	}
+	String s = getStringFromArgs(a, 0);
+	m->sendMessage(s);
 	return var();
 }
 
 var StreamingModule::sendBytesFromScript(const var::NativeFunctionArgs & a)
 {
 	StreamingModule * m = getObjectFromJS<StreamingModule>(a);
-	DBG(a.numArguments);
 	if (!checkNumArgs(m->niceName, a, 1)) return false;
+	Array<uint8> data = getByteFromArgs(a, 0);
+	m->sendBytes(data);
+	return var();
+}
+
+
+var StreamingModule::sendStringToFromScript(const var::NativeFunctionArgs& a)
+{
+	StreamingModule* m = getObjectFromJS<StreamingModule>(a);
+	if (!checkNumArgs(m->niceName, a, 2)) return false;
+	String s = getStringFromArgs(a, 1);
+	m->sendMessage(s, getToExcludeParamObject(a, "include"));
+	return var();
+}
+
+var StreamingModule::sendStringExcludeFromScript(const var::NativeFunctionArgs& a)
+{
+	StreamingModule* m = getObjectFromJS<StreamingModule>(a);
+	if (!checkNumArgs(m->niceName, a, 2)) return false;
+	String s = getStringFromArgs(a, 1);
+	m->sendMessage(s, getToExcludeParamObject(a, "exclude"));
+	return var();
+}
+
+var StreamingModule::sendBytesToFromScript(const var::NativeFunctionArgs& a)
+{
+	StreamingModule* m = getObjectFromJS<StreamingModule>(a);
+	if (!checkNumArgs(m->niceName, a, 2)) return false;
+	Array<uint8> data = getByteFromArgs(a, 1);
+	m->sendBytes(data, getToExcludeParamObject(a, "include"));
+	return var();
+}
+
+var StreamingModule::sendBytesExcludeFromScript(const var::NativeFunctionArgs& a)
+{
+	StreamingModule* m = getObjectFromJS<StreamingModule>(a);
+	if (!checkNumArgs(m->niceName, a, 2)) return false;
+	Array<uint8> data = getByteFromArgs(a, 1);
+	m->sendBytes(data, getToExcludeParamObject(a, "exclude"));
+	return var();
+}
+
+var StreamingModule::getToExcludeParamObject(const var::NativeFunctionArgs& a, const String& propName)
+{
+	var result(new DynamicObject());
+	var list;
+	
+	if (a.arguments[0].isString()) list.append(a.arguments[0].toString());
+	else if (a.arguments[0].isArray()) list = a.arguments[0];
+	
+	result.getDynamicObject()->setProperty(propName, list);
+
+	return result;
+}
+
+String StreamingModule::getStringFromArgs(const var::NativeFunctionArgs& a, int offset)
+{
+	String result = "";
+	if (a.arguments[offset].isObject()) result = JSON::toString(a.arguments[offset]);
+	else
+	{
+		for (int i = offset; i < a.numArguments; ++i)
+		{
+			if (a.arguments[i].isArray() && a.arguments[i].size() > 0)
+			{
+				for (int j = 0; j < a.arguments[i].size(); j++)
+				{
+					result += (result.isNotEmpty() ? " " : "") + a.arguments[i][j].toString();
+				}
+			}
+			else
+			{
+				result += (result.isNotEmpty() ? " " : "") + a.arguments[i].toString();
+			}
+		}
+	}
+
+	return result;
+}
+
+Array<uint8> StreamingModule::getByteFromArgs(const var::NativeFunctionArgs& a, int offset)
+{
 	Array<uint8> data;
-	for (int i = 0; i < a.numArguments; ++i)
+	for (int i = offset; i < a.numArguments; ++i)
 	{
 		if (a.arguments[i].isArray())
 		{
-			Array<var> * aa = a.arguments[i].getArray();
-			for (auto &vaa : *aa) data.add((uint8)(int)vaa);
-		} else if (a.arguments[i].isInt() || a.arguments[i].isDouble() || a.arguments[i].isInt64() || a.arguments[i].isBool())
+			Array<var>* aa = a.arguments[i].getArray();
+			for (auto& vaa : *aa) data.add((uint8)(int)vaa);
+		}
+		else if (a.arguments[i].isInt() || a.arguments[i].isDouble() || a.arguments[i].isInt64() || a.arguments[i].isBool())
 		{
 			data.add((uint8)(int)a.arguments[i]);
 		}
 	}
 
-	m->sendBytes(data);
-	return var();
+	return data;
 }
 
 StreamingModule::StreamingRouteParams::StreamingRouteParams(Module* sourceModule, Controllable* c)
