@@ -38,165 +38,173 @@ void WebSocketClientModule::setupClient()
 
 	if (!enabled->intValue()) return;
 
-	if (useSecureConnection->boolValue()) client.reset(new SecureWebSocketClient());
+	if (useSecureConnection->boolValue())
+	{
+#if JUCE_WINDOWS
+		client.reset(new SecureWebSocketClient());
+#else
+		NLOGWARNING("Secure connection is only supported on Windows right now.");
+		server.reset(new SimpleWebSocketClient());
+#endif
+	}
 	else client.reset(new SimpleWebSocketClient());
 
 	client->addWebSocketListener(this);
 	client->start(serverPath->stringValue());
-}
-
-bool WebSocketClientModule::isReadyToSend()
-{
-	return client != nullptr && isConnected->boolValue();
-}
-
-void WebSocketClientModule::sendMessageInternal(const String& message, var)
-{
-	client->send(message);
-}
-
-void WebSocketClientModule::sendBytesInternal(Array<uint8> data, var)
-{
-	client->send((const char*)data.getRawDataPointer(), data.size());
-}
-
-void WebSocketClientModule::connectionOpened()
-{
-	NLOG(niceName, "Connection opened");
-	isConnected->setValue(true);
-}
-
-void WebSocketClientModule::connectionClosed(int status, const String& reason)
-{
-	NLOG(niceName, "Connection closed");
-	isConnected->setValue(false);
-}
-
-void WebSocketClientModule::connectionError(const String& errorMessage)
-{
-	if (enabled->boolValue() && connectFirstTry) NLOGERROR(niceName, "Connection error " << errorMessage);
-	isConnected->setValue(false);
-
-}
-
-void WebSocketClientModule::messageReceived(const String& message)
-{
-	StreamingType t = streamingType->getValueDataAsEnum<StreamingType>();
-	switch (t)
-	{
-	case LINES:
-	{
-		StringArray sa;
-		sa.addTokens(message, "\n", "\"");
-		for (auto& s : sa) processDataLine(s);
 	}
-	break;
 
-	case TYPE_JSON:
+	bool WebSocketClientModule::isReadyToSend()
 	{
-		var result;
-		juce::Result r = JSON::parse(message, result);
-		if (r.failed()) NLOGWARNING(niceName, "Error parsing message :\n" << r.getErrorMessage());
-		processDataJSON(result);
+		return client != nullptr && isConnected->boolValue();
 	}
-	break;
 
-	default:
-		DBG("Not handled");
+	void WebSocketClientModule::sendMessageInternal(const String & message, var)
+	{
+		client->send(message);
+	}
+
+	void WebSocketClientModule::sendBytesInternal(Array<uint8> data, var)
+	{
+		client->send((const char*)data.getRawDataPointer(), data.size());
+	}
+
+	void WebSocketClientModule::connectionOpened()
+	{
+		NLOG(niceName, "Connection opened");
+		isConnected->setValue(true);
+	}
+
+	void WebSocketClientModule::connectionClosed(int status, const String & reason)
+	{
+		NLOG(niceName, "Connection closed");
+		isConnected->setValue(false);
+	}
+
+	void WebSocketClientModule::connectionError(const String & errorMessage)
+	{
+		if (enabled->boolValue() && connectFirstTry) NLOGERROR(niceName, "Connection error " << errorMessage);
+		isConnected->setValue(false);
+
+	}
+
+	void WebSocketClientModule::messageReceived(const String & message)
+	{
+		StreamingType t = streamingType->getValueDataAsEnum<StreamingType>();
+		switch (t)
+		{
+		case LINES:
+		{
+			StringArray sa;
+			sa.addTokens(message, "\n", "\"");
+			for (auto& s : sa) processDataLine(s);
+		}
 		break;
-	}
-}
 
-void WebSocketClientModule::dataReceived(const MemoryBlock& data)
-{
-	inActivityTrigger->trigger();
-
-	Array<uint8_t> bytes((const uint8_t*)data.getData(), data.getSize());
-
-	if (logIncomingData->boolValue())
-	{
-		String s = "";
-		for (auto& b : bytes) s += String(b) + "\n";
-		NLOG(niceName, "Received " << bytes.size() << " bytes :\n" << s);
-	}
-
-	Array<var> args;
-	var bytesData;
-	for (auto& b : bytes) bytesData.append(b);
-	args.add(bytesData);
-	scriptManager->callFunctionOnAllItems(wsDataReceivedId, args);
-}
-
-void WebSocketClientModule::onContainerParameterChangedInternal(Parameter* p)
-{
-	StreamingModule::onContainerParameterChangedInternal(p);
-
-	if (p == enabled)
-	{
-		if (!enabled->boolValue() && isConnected->boolValue())
+		case TYPE_JSON:
 		{
-			NLOG(niceName, "Disabling module, closing server.");
+			var result;
+			juce::Result r = JSON::parse(message, result);
+			if (r.failed()) NLOGWARNING(niceName, "Error parsing message :\n" << r.getErrorMessage());
+			processDataJSON(result);
+		}
+		break;
+
+		default:
+			DBG("Not handled");
+			break;
+		}
+	}
+
+	void WebSocketClientModule::dataReceived(const MemoryBlock & data)
+	{
+		inActivityTrigger->trigger();
+
+		Array<uint8_t> bytes((const uint8_t*)data.getData(), data.getSize());
+
+		if (logIncomingData->boolValue())
+		{
+			String s = "";
+			for (auto& b : bytes) s += String(b) + "\n";
+			NLOG(niceName, "Received " << bytes.size() << " bytes :\n" << s);
 		}
 
-		connectFirstTry = true;
-		setupClient();
+		Array<var> args;
+		var bytesData;
+		for (auto& b : bytes) bytesData.append(b);
+		args.add(bytesData);
+		scriptManager->callFunctionOnAllItems(wsDataReceivedId, args);
 	}
-}
 
-void WebSocketClientModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
-{
-	StreamingModule::onControllableFeedbackUpdateInternal(cc, c);
-
-	if (c == serverPath)
+	void WebSocketClientModule::onContainerParameterChangedInternal(Parameter * p)
 	{
-		connectFirstTry = true;
-		
-		String s = serverPath->stringValue();
-		if (s.startsWith("ws://"))
-		{
-			serverPath->setValue(s.substring(5));
-			return;
-		}
-		else if (s.startsWith("wss://"))
-		{
-			serverPath->setValue(s.substring(6));
-			useSecureConnection->setValue(true);
-			return;
-		}
+		StreamingModule::onContainerParameterChangedInternal(p);
 
-		setupClient();
+		if (p == enabled)
+		{
+			if (!enabled->boolValue() && isConnected->boolValue())
+			{
+				NLOG(niceName, "Disabling module, closing server.");
+			}
+
+			connectFirstTry = true;
+			setupClient();
+		}
 	}
-	else if (c == isConnected)
-	{
 
-		if (isConnected->boolValue())
-		{
-			stopTimer();
-		}
-		else
+	void WebSocketClientModule::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
+	{
+		StreamingModule::onControllableFeedbackUpdateInternal(cc, c);
+
+		if (c == serverPath)
 		{
 			connectFirstTry = true;
-			startTimer(5000);
+
+			String s = serverPath->stringValue();
+			if (s.startsWith("ws://"))
+			{
+				serverPath->setValue(s.substring(5));
+				return;
+			}
+			else if (s.startsWith("wss://"))
+			{
+				serverPath->setValue(s.substring(6));
+				useSecureConnection->setValue(true);
+				return;
+			}
+
+			setupClient();
+		}
+		else if (c == isConnected)
+		{
+
+			if (isConnected->boolValue())
+			{
+				stopTimer();
+			}
+			else
+			{
+				connectFirstTry = true;
+				startTimer(5000);
+			}
+		}
+		else if (c == useSecureConnection)
+		{
+			connectFirstTry = true;
+			setupClient();
 		}
 	}
-	else if (c == useSecureConnection)
+
+	void WebSocketClientModule::timerCallback()
 	{
-		connectFirstTry = true; 
-		setupClient();
+		if (!isConnected->boolValue())
+		{
+			setupClient();
+			connectFirstTry = false;
+		}
 	}
-}
 
-void WebSocketClientModule::timerCallback()
-{
-	if (!isConnected->boolValue())
+
+	ModuleUI* WebSocketClientModule::getModuleUI()
 	{
-		setupClient();
-		connectFirstTry = false;
+		return StreamingModule::getModuleUI();
 	}
-}
-
-
-ModuleUI* WebSocketClientModule::getModuleUI()
-{
-	return StreamingModule::getModuleUI();
-}

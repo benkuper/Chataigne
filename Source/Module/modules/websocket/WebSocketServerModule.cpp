@@ -47,6 +47,7 @@ void WebSocketServerModule::setupServer()
 
 	if (useSecureConnection->boolValue())
 	{
+#if JUCE_WINDOWS
 		File k = File::getSpecialLocation(File::currentApplicationFile).getParentDirectory().getChildFile("server.key");
 		File c = File::getSpecialLocation(File::currentApplicationFile).getParentDirectory().getChildFile("server.crt");
 		try
@@ -58,6 +59,10 @@ void WebSocketServerModule::setupServer()
 			NLOGERROR(niceName, "Error creating secure server : " << e.what());
 			return;
 		}
+#else
+		NLOGWARNING("Secure connection is only supported on Windows right now.");
+		server.reset(new SimpleWebSocketServer());
+#endif
 	}
 	else server.reset(new SimpleWebSocketServer());
 
