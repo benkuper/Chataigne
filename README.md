@@ -126,14 +126,9 @@ Chataigne is now on Discord, join and meet the community !
 [![Chataigne on discord](https://discordapp.com/api/guilds/697400442027769998/widget.png?style=banner2)](https://discord.gg/wYNB3rK)
 
 ## The Badge Zone
-Linux (x64):  [![Build Status](https://travis-matrix-badges.herokuapp.com/repos/benkuper/Chataigne/branches/master/2)](https://travis-ci.org/benkuper/Chataigne)
 
-MacOS : [![Build Status](https://travis-matrix-badges.herokuapp.com/repos/benkuper/Chataigne/branches/master/1)](https://travis-ci.org/benkuper/Chataigne)
-
-Windows (x64) : [![Build status](https://ci.appveyor.com/api/projects/status/7lskg35ttnsv99cq?svg=true)](https://ci.appveyor.com/project/benkuper/chataigne)
-
-Raspberry Pi (3B):  [![Build Status](https://travis-matrix-badges.herokuapp.com/repos/benkuper/Chataigne/branches/master/3)](https://travis-ci.org/benkuper/Chataigne)
-
+Windows 7 x64 / Windows 10 x64 / MacOS / Linux x64 / Raspberry Pi :
+[![Build Status](https://github.com/benkuper/Chataigne/actions/workflows/build.yml/badge.svg)](https://github.com/benkuper/Chataigne/actions/workflows/build.yml)
 
 [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
 [![forthebadge](https://forthebadge.com/images/badges/makes-people-smile.svg)](https://forthebadge.com)
