@@ -60,7 +60,7 @@ void WebSocketServerModule::setupServer()
 			return;
 		}
 #else
-		NLOGWARNING("Secure connection is only supported on Windows right now.");
+		NLOGWARNING(niceName, "Secure connection is only supported on Windows right now.");
 		server.reset(new SimpleWebSocketServer());
 #endif
 	}

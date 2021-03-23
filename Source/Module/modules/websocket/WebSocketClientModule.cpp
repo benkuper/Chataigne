@@ -43,8 +43,8 @@ void WebSocketClientModule::setupClient()
 #if JUCE_WINDOWS
 		client.reset(new SecureWebSocketClient());
 #else
-		NLOGWARNING("Secure connection is only supported on Windows right now.");
-		server.reset(new SimpleWebSocketClient());
+		NLOGWARNING(niceName, "Secure connection is only supported on Windows right now.");
+		client.reset(new SimpleWebSocketClient());
 #endif
 	}
 	else client.reset(new SimpleWebSocketClient());
