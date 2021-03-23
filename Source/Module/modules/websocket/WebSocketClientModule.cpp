@@ -60,7 +60,6 @@ void WebSocketClientModule::setupClient()
 
 	void WebSocketClientModule::sendMessageInternal(const String & message, var params)
 	{
-		if(var)
 		client->send(message);
 	}
 
