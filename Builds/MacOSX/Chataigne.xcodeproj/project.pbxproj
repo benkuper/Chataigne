@@ -3592,6 +3592,7 @@
 					"\"../../External/libartnet/lib/osx\"",
 					"\"../../External/joycon/lib/osx\"",
 					"\"../../External/sdl/lib/osx\"",
+					"\"../../Modules/juce_simpleweb/libs/VisualStudio2019/${CURRENT_ARCH}\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/~/JUCE/modules $(SRCROOT)/../../Modules $(SRCROOT)/../../External/wiiuse $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../External/dnssd/include $(SRCROOT)/../../External/libartnet/include $(SRCROOT)/../../External/joycon/include $(SRCROOT)/../../External/sdl/include $(SRCROOT)/../../External/hidapi/include $(SRCROOT)/../../Source";
@@ -3658,6 +3659,7 @@
 					"\"../../External/libartnet/lib/osx\"",
 					"\"../../External/joycon/lib/osx\"",
 					"\"../../External/sdl/lib/osx\"",
+					"\"../../Modules/juce_simpleweb/libs/VisualStudio2019/${CURRENT_ARCH}\"",
 				);
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;

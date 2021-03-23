@@ -93,7 +93,7 @@
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>../../External/kinect/lib;../../External/joycon/lib/win;../../External/servus/lib/win/x64/debug;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/hidapi/lib/win/x64;..\..\Modules\juce_simpleweb\libs\VisualStudio2019\$(Platform)\MDd;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <LargeAddressAware>true</LargeAddressAware>
-      <AdditionalDependencies>Setupapi.lib;hid.lib;Kinect20.lib;JoyShockLibrary.lib;Servus.lib;dnssd.lib;SDL2.lib;iphlpapi.lib;hid.lib;hidapi_static.lib;openssl.lib;libcrypto.lib;libssl.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Setupapi.lib;hid.lib;Kinect20.lib;JoyShockLibrary.lib;Servus.lib;dnssd.lib;SDL2.lib;iphlpapi.lib;hid.lib;hidapi_static.lib;openssl.lib;libssl.lib;libcrypto.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/HEAP:0x200000,0x10000 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <Bscmake>
@@ -101,7 +101,7 @@
       <OutputFile>$(IntDir)\Chataigne.bsc</OutputFile>
     </Bscmake>
     <Lib>
-      <AdditionalDependencies>Setupapi.lib;hid.lib;Kinect20.lib;JoyShockLibrary.lib;Servus.lib;dnssd.lib;SDL2.lib;iphlpapi.lib;hid.lib;hidapi_static.lib;openssl.lib;libcrypto.lib;libssl.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Setupapi.lib;hid.lib;Kinect20.lib;JoyShockLibrary.lib;Servus.lib;dnssd.lib;SDL2.lib;iphlpapi.lib;hid.lib;hidapi_static.lib;openssl.lib;libssl.lib;libcrypto.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>../../External/kinect/lib;../../External/joycon/lib/win;../../External/servus/lib/win/x64/debug;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/hidapi/lib/win/x64;..\..\Modules\juce_simpleweb\libs\VisualStudio2019\$(Platform)\MDd;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
@@ -144,7 +144,7 @@
       <AdditionalLibraryDirectories>../../External/kinect/lib;../../External/joycon/lib/win;../../External/servus/lib/win/x64/release;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/hidapi/lib/win/x64;..\..\Modules\juce_simpleweb\libs\VisualStudio2019\$(Platform)\MD;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <LargeAddressAware>true</LargeAddressAware>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
-      <AdditionalDependencies>Setupapi.lib;hid.lib;Kinect20.lib;JoyShockLibrary.lib;Servus.lib;dnssd.lib;SDL2.lib;iphlpapi.lib;hid.lib;hidapi_static.lib;openssl.lib;libcrypto.lib;libssl.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Setupapi.lib;hid.lib;Kinect20.lib;JoyShockLibrary.lib;Servus.lib;dnssd.lib;SDL2.lib;iphlpapi.lib;hid.lib;hidapi_static.lib;openssl.lib;libssl.lib;libcrypto.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/HEAP:0x200000,0x10000 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <Bscmake>
@@ -152,7 +152,7 @@
       <OutputFile>$(IntDir)\Chataigne.bsc</OutputFile>
     </Bscmake>
     <Lib>
-      <AdditionalDependencies>Setupapi.lib;hid.lib;Kinect20.lib;JoyShockLibrary.lib;Servus.lib;dnssd.lib;SDL2.lib;iphlpapi.lib;hid.lib;hidapi_static.lib;openssl.lib;libcrypto.lib;libssl.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Setupapi.lib;hid.lib;Kinect20.lib;JoyShockLibrary.lib;Servus.lib;dnssd.lib;SDL2.lib;iphlpapi.lib;hid.lib;hidapi_static.lib;openssl.lib;libssl.lib;libcrypto.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>../../External/kinect/lib;../../External/joycon/lib/win;../../External/servus/lib/win/x64/release;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/hidapi/lib/win/x64;..\..\Modules\juce_simpleweb\libs\VisualStudio2019\$(Platform)\MD;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
@@ -1623,6 +1623,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\utilities\juce_ParameterAttachments.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\utilities\juce_PluginHostType.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\utilities\juce_RangedAudioParameter.cpp">
@@ -4426,6 +4429,7 @@
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\utilities\juce_AudioProcessorParameterWithID.h"/>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\utilities\juce_AudioProcessorValueTreeState.h"/>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\utilities\juce_ParameterAttachments.h"/>
+    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\utilities\juce_PluginHostType.h"/>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\utilities\juce_RangedAudioParameter.h"/>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\juce_audio_processors.h"/>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_utils\audio_cd\juce_AudioCDBurner.h"/>
@@ -4829,6 +4833,7 @@
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\native\x11\juce_linux_X11_Symbols.h"/>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\native\x11\juce_linux_XWindowSystem.h"/>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\native\juce_MultiTouchMapper.h"/>
+    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\native\juce_win32_ScopedThreadDPIAwarenessSetter.h"/>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\positioning\juce_MarkerList.h"/>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\positioning\juce_RelativeCoordinate.h"/>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\positioning\juce_RelativeCoordinatePositioner.h"/>
