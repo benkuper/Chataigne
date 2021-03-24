@@ -47,9 +47,16 @@ void WebSocketServerModule::setupServer()
 
 	if (useSecureConnection->boolValue())
 	{
+#if JUCE_WINDOWS || JUCE_MAC
+    
 #if JUCE_WINDOWS
-		File k = File::getSpecialLocation(File::currentApplicationFile).getParentDirectory().getChildFile("server.key");
-		File c = File::getSpecialLocation(File::currentApplicationFile).getParentDirectory().getChildFile("server.crt");
+        File k = File::getSpecialLocation(File::currentApplicationFile).getParentDirectory().getChildFile("server.key");
+        File c = File::getSpecialLocation(File::currentApplicationFile).getParentDirectory().getChildFile("server.crt");
+#else
+        File k = File::getSpecialLocation(File::currentApplicationFile).getChildFile("Contents/Resources/server.key");
+        File c = File::getSpecialLocation(File::currentApplicationFile).getChildFile("Contents/Resources/server.crt");
+#endif
+        		
 		try
 		{
 			server.reset(new SecureWebSocketServer(c.getFullPathName(), k.getFullPathName()));
@@ -184,7 +191,7 @@ void WebSocketServerModule::dataReceived(const String& connectionId, const Memor
 {
 	inActivityTrigger->trigger();
 
-	Array<uint8_t> bytes((const uint8_t*)data.getData(), data.getSize());
+	Array<uint8_t> bytes((const uint8_t*)data.getData(), (int)data.getSize());
 	if (logIncomingData->boolValue())
 	{
 		String s = "";

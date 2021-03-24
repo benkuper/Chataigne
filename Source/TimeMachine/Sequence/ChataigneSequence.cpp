@@ -220,6 +220,6 @@ void ChataigneSequence::mtcTimeUpdated(bool isFullFrame)
 	if (mtcReceiver == nullptr) return;
 
 	double time = jlimit<float>(0, totalTime->floatValue(), mtcReceiver->getTime() + (mtcSyncOffset->floatValue() * (reverseOffset->boolValue() ? -1 : 1)));
-	double diff = fabsf(currentTime->floatValue() - time);
+	double diff = fabs(currentTime->floatValue() - time);
 	setCurrentTime(time, diff > 0.1, isFullFrame && !mtcReceiver->isPlaying);
 }

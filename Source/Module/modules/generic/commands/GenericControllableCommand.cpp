@@ -10,8 +10,8 @@
 
 GenericControllableCommand::GenericControllableCommand(ChataigneGenericModule* _module, CommandContext context, var params, Multiplex* multiplex) :
 	BaseCommand(_module, context, params, multiplex),
-	value(nullptr),
-	valueOperator(nullptr)
+    valueOperator(nullptr),
+    value(nullptr)
 {
 	target = addTargetParameter("Target", "Target to set the value");
 

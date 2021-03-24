@@ -11,8 +11,8 @@
 GenericOSCQueryCommand::GenericOSCQueryCommand(GenericOSCQueryModule * _oscQuerymodule, CommandContext context, var params, Multiplex * multiplex) :
 	BaseCommand(_oscQuerymodule, context, params, multiplex),
 	oscQueryModule(_oscQuerymodule),
-	value(nullptr),
-	valueOperator(nullptr)
+    valueOperator(nullptr),
+    value(nullptr)
 {
 	target = addTargetParameter("Target", "Target to set the value", &oscQueryModule->valuesCC);
 
