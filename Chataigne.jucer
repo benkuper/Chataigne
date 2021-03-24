@@ -1614,23 +1614,23 @@
                        enablePluginBinaryCopyStep="1" libraryPath="../../External/servus/lib/osx/release&#10;../../External/libartnet/lib/osx&#10;../../External/joycon/lib/osx&#10;../../External/sdl/lib/osx"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_osc" path="/Users/benkuper/Documents/Dev/JUCE/modules"/>
-        <MODULEPATH id="juce_opengl" path="/Users/benkuper/Documents/Dev/JUCE/modules"/>
-        <MODULEPATH id="juce_gui_basics" path="/Users/benkuper/Documents/Dev/JUCE/modules"/>
-        <MODULEPATH id="juce_graphics" path="/Users/benkuper/Documents/Dev/JUCE/modules"/>
-        <MODULEPATH id="juce_events" path="/Users/benkuper/Documents/Dev/JUCE/modules"/>
-        <MODULEPATH id="juce_data_structures" path="/Users/benkuper/Documents/Dev/JUCE/modules"/>
-        <MODULEPATH id="juce_cryptography" path="/Users/benkuper/Documents/Dev/JUCE/modules"/>
-        <MODULEPATH id="juce_core" path="/Users/benkuper/Documents/Dev/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_processors" path="/Users/benkuper/Documents/Dev/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_devices" path="/Users/benkuper/Documents/Dev/JUCE/modules"/>
+        <MODULEPATH id="juce_osc" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_opengl" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_cryptography" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics"/>
-        <MODULEPATH id="juce_audio_utils" path="/Users/benkuper/Documents/Dev/JUCE/modules"/>
-        <MODULEPATH id="juce_gui_extra" path="/Users/benkuper/Documents/Dev/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_organicui" path="Modules"/>
-        <MODULEPATH id="juce_dsp" path="/Users/benkuper/Documents/Dev/JUCE/modules"/>
+        <MODULEPATH id="juce_dsp" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_timeline" path="Modules"/>
-        <MODULEPATH id="juce_audio_formats" path="/Users/benkuper/Documents/Dev/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_simpleweb" path="Modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
@@ -1645,23 +1645,23 @@
                        linuxArchitecture="-m64" libraryPath="../../External/servus/lib/linux&#10;../../External/sdl/lib/linux&#10;/usr/lib/x86_64-linux-gnu/&#10;../../External/joycon/lib/linux"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_osc" path="JUCE/modules"/>
+        <MODULEPATH id="juce_osc" path="/home/osboxes/Documents/Dev/JUCE/modules"/>
         <MODULEPATH id="juce_organicui" path="Modules"/>
-        <MODULEPATH id="juce_opengl" path="JUCE/modules"/>
-        <MODULEPATH id="juce_gui_extra" path="JUCE/modules"/>
-        <MODULEPATH id="juce_gui_basics" path="JUCE/modules"/>
-        <MODULEPATH id="juce_graphics" path="JUCE/modules"/>
-        <MODULEPATH id="juce_events" path="JUCE/modules"/>
-        <MODULEPATH id="juce_data_structures" path="JUCE/modules"/>
-        <MODULEPATH id="juce_cryptography" path="JUCE/modules"/>
-        <MODULEPATH id="juce_core" path="JUCE/modules"/>
-        <MODULEPATH id="juce_audio_utils" path="JUCE/modules"/>
-        <MODULEPATH id="juce_audio_processors" path="JUCE/modules"/>
-        <MODULEPATH id="juce_audio_devices" path="JUCE/modules"/>
-        <MODULEPATH id="juce_audio_basics" path="JUCE/modules"/>
-        <MODULEPATH id="juce_dsp" path="JUCE/modules"/>
+        <MODULEPATH id="juce_opengl" path="/home/osboxes/Documents/Dev/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="/home/osboxes/Documents/Dev/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="/home/osboxes/Documents/Dev/JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="/home/osboxes/Documents/Dev/JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="/home/osboxes/Documents/Dev/JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="/home/osboxes/Documents/Dev/JUCE/modules"/>
+        <MODULEPATH id="juce_cryptography" path="/home/osboxes/Documents/Dev/JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="/home/osboxes/Documents/Dev/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="/home/osboxes/Documents/Dev/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="/home/osboxes/Documents/Dev/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="/home/osboxes/Documents/Dev/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_basics"/>
+        <MODULEPATH id="juce_dsp" path="/home/osboxes/Documents/Dev/JUCE/modules"/>
         <MODULEPATH id="juce_timeline" path="Modules"/>
-        <MODULEPATH id="juce_audio_formats" path="JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="/home/osboxes/Documents/Dev/JUCE/modules"/>
         <MODULEPATH id="juce_simpleweb" path="Modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
