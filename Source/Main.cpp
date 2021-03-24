@@ -52,6 +52,11 @@ void ChataigneApplication::afterInit()
 
 void ChataigneApplication::shutdown()
 {   
+	for (auto& m : ModuleManager::getInstance()->getItemsWithType<OSModule>())
+	{
+		m->terminateTrigger->trigger();
+	}
+
 	OrganicApplication::shutdown();
 
 	if (enableSendAnalytics->boolValue())

@@ -24,6 +24,7 @@ public:
 	EnumParameter * osType;
 	StringParameter * osName;
 	StringParameter* ips;
+	Trigger* terminateTrigger;
 
 	//Script
 	const Identifier launchAppId = "launchApp";
@@ -51,6 +52,4 @@ public:
 
 	virtual String getDefaultTypeString() const override { return "OS"; }
 	static OSModule * create() { return new OSModule(); }
-
-
 };

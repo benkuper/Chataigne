@@ -1,3 +1,4 @@
+#include "OSModule.h"
 /*
   ==============================================================================
 
@@ -12,7 +13,6 @@ OSModule::OSModule() :
 	Module(getDefaultTypeString()),
 	Thread("OS-ChildProcess")
 {
-
 	osType = valuesCC.addEnumParameter("OS Type", "Type of OS");
 	osType->addOption("Windows", OS_WIN)->addOption("MacOS", OS_MAC)->addOption("Linux", OS_LINUX);
 #if JUCE_WINDOWS
@@ -27,6 +27,7 @@ OSModule::OSModule() :
 	moduleParams.hideInEditor = true;
 
 	ips = valuesCC.addStringParameter("IP", "IP that has been detected than most probable to be a LAN IP", NetworkHelpers::getLocalIP());
+	terminateTrigger = valuesCC.addTrigger("Terminate", "This will be triggered when the program is about to terminate.");
 
 	for (auto &c : valuesCC.controllables) c->isControllableFeedbackOnly = true;
 
