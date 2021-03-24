@@ -68,3 +68,13 @@ void ChataigneApplication::shutdown()
 	if(MatomoAnalytics::getInstanceWithoutCreating() != nullptr) MatomoAnalytics::deleteInstance();
 	AppUpdater::deleteInstance();
 }
+
+void ChataigneApplication::handleCrashed(bool autoReopen)
+{
+	for (auto& m : ModuleManager::getInstance()->getItemsWithType<OSModule>())
+	{
+		m->crashedTrigger->trigger();
+	}
+
+	OrganicApplication::handleCrashed(autoReopen);
+}

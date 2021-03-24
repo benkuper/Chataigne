@@ -25,6 +25,7 @@ public:
 	StringParameter * osName;
 	StringParameter* ips;
 	Trigger* terminateTrigger;
+	Trigger* crashedTrigger;
 
 	//Script
 	const Identifier launchAppId = "launchApp";

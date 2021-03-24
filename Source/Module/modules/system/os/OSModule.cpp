@@ -28,6 +28,7 @@ OSModule::OSModule() :
 
 	ips = valuesCC.addStringParameter("IP", "IP that has been detected than most probable to be a LAN IP", NetworkHelpers::getLocalIP());
 	terminateTrigger = valuesCC.addTrigger("Terminate", "This will be triggered when the program is about to terminate.");
+	crashedTrigger = valuesCC.addTrigger("Crashed", "This will be triggered when the program has crashed, just before killing itself like a sad puppy.");
 
 	for (auto &c : valuesCC.controllables) c->isControllableFeedbackOnly = true;
 

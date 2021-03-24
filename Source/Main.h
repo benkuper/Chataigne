@@ -30,6 +30,8 @@ public:
 	void afterInit() override;
 
 	void shutdown() override;
+
+	void handleCrashed(bool autoReopen) override;
 };
 
 START_JUCE_APPLICATION(ChataigneApplication)
