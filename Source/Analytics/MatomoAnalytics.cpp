@@ -50,7 +50,8 @@ MatomoAnalytics::MatomoAnalytics() :
 	baseURL = URL("http://benjamin.kuperberg.fr/chataigne/matomo/matomo.php")
 		.withParameter("rec", "1").withParameter("idsite", "1").withParameter("apiv", "1").withParameter("ua", ua)
 		.withParameter("res", res).withParameter("rand", String(rand.nextInt())).withParameter("_id", id).withParameter("uid", name)
-		.withParameter("_cvar", "{\"1\":[\"User name\",\"" + name + "\"], \"2\":[\"App Version\",\"" + getAppVersion() + "\"]}");
+		.withParameter("_cvar", "{\"1\":[\"User name\",\"" + name + "\"], \"2\":[\"App Version\",\"" + getAppVersion() + "\"]}")
+		.withParameter("dimension1", getAppVersion());
 
 	startTimer(5 * 60 * 1000); //every 5 minutes
 }
