@@ -39,7 +39,7 @@ void WebSocketClientModule::setupClient()
 
 	if (useSecureConnection->boolValue())
 	{
-#if JUCE_WINDOWS || JUCE_MAC
+#if SIMPLEWEB_SECURE_SUPPORTED
 		client.reset(new SecureWebSocketClient());
 #else
 		NLOGWARNING(niceName, "Secure connection is only supported on Windows right now.");

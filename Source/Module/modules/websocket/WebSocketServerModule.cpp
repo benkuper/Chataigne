@@ -47,8 +47,8 @@ void WebSocketServerModule::setupServer()
 
 	if (useSecureConnection->boolValue())
 	{
-#if WEBSOCKET_SECURE_SUPPORTED
-    
+
+#if SIMPLEWEB_SECURE_SUPPORTED
 #if JUCE_MAC
         File k = File::getSpecialLocation(File::currentApplicationFile).getChildFile("Contents/Resources/server.key");
         File c = File::getSpecialLocation(File::currentApplicationFile).getChildFile("Contents/Resources/server.crt");
@@ -70,7 +70,7 @@ void WebSocketServerModule::setupServer()
 #else
 		NLOGWARNING(niceName, "Secure connection is only supported on Windows right now.");
 		server.reset(new SimpleWebSocketServer());
-#endif
+#endif //  end SECURE
 	}
 	else server.reset(new SimpleWebSocketServer());
 
