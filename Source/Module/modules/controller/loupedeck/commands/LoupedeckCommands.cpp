@@ -127,6 +127,8 @@ LoupedeckCommand::LoupedeckCommand(LoupedeckModule* _module, CommandContext cont
 	case SET_AUTO_REFRESH:
 		valueParam = addBoolParameter("Value", "If checked, this will force refreshing on every change. Otherwise this will not...", false);
 		break;
+        default:
+            break;
 
 	}
 

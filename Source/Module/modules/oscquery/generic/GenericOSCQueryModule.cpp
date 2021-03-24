@@ -424,6 +424,8 @@ void GenericOSCQueryModule::createOrUpdateControllableFromData(ControllableConta
 		else ((BoolParameter*)c)->setValue(value[0]);
 	}
 	break;
+        default:
+            break;
 	}
 
 	if (c != nullptr)
