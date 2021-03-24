@@ -47,14 +47,15 @@ void WebSocketServerModule::setupServer()
 
 	if (useSecureConnection->boolValue())
 	{
-#if JUCE_WINDOWS || JUCE_MAC
+#if WEBSOCKET_SECURE_SUPPORTED
     
-#if JUCE_WINDOWS
-        File k = File::getSpecialLocation(File::currentApplicationFile).getParentDirectory().getChildFile("server.key");
-        File c = File::getSpecialLocation(File::currentApplicationFile).getParentDirectory().getChildFile("server.crt");
-#else
+#if JUCE_MAC
         File k = File::getSpecialLocation(File::currentApplicationFile).getChildFile("Contents/Resources/server.key");
         File c = File::getSpecialLocation(File::currentApplicationFile).getChildFile("Contents/Resources/server.crt");
+#else
+		
+        File k = File::getSpecialLocation(File::currentApplicationFile).getParentDirectory().getChildFile("server.key");
+        File c = File::getSpecialLocation(File::currentApplicationFile).getParentDirectory().getChildFile("server.crt");
 #endif
         		
 		try
