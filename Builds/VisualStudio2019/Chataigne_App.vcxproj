@@ -50,12 +50,12 @@
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\App\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Chataigne</TargetName>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(LibraryPath);../../External/kinect/lib;../../External/joycon/lib/win;../../External/servus/lib/win/x64/debug;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/hidapi/lib/win/x64;..\..\Modules\juce_simpleweb\libs\MacOSX\$(Platform)\MDd</LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(LibraryPath);../../External/kinect/lib;../../External/joycon/lib/win;../../External/servus/lib/win/x64/debug;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/hidapi/lib/win/x64;..\..\Modules\juce_simpleweb\libs\VisualStudio2019\$(Platform)\MDd</LibraryPath>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\..\..\Binaries\App\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\App\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Chataigne</TargetName>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(LibraryPath);../../External/kinect/lib;../../External/joycon/lib/win;../../External/servus/lib/win/x64/release;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/hidapi/lib/win/x64;..\..\Modules\juce_simpleweb\libs\MacOSX\$(Platform)\MD</LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(LibraryPath);../../External/kinect/lib;../../External/joycon/lib/win;../../External/servus/lib/win/x64/release;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/hidapi/lib/win/x64;..\..\Modules\juce_simpleweb\libs\VisualStudio2019\$(Platform)\MD</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Midl>
@@ -91,7 +91,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(IntDir)\Chataigne.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>../../External/kinect/lib;../../External/joycon/lib/win;../../External/servus/lib/win/x64/debug;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/hidapi/lib/win/x64;..\..\Modules\juce_simpleweb\libs\MacOSX\$(Platform)\MDd;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../External/kinect/lib;../../External/joycon/lib/win;../../External/servus/lib/win/x64/debug;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/hidapi/lib/win/x64;..\..\Modules\juce_simpleweb\libs\VisualStudio2019\$(Platform)\MDd;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <LargeAddressAware>true</LargeAddressAware>
       <AdditionalDependencies>Setupapi.lib;hid.lib;Kinect20.lib;JoyShockLibrary.lib;Servus.lib;dnssd.lib;SDL2.lib;iphlpapi.lib;hid.lib;hidapi_static.lib;openssl.lib;libssl.lib;libcrypto.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/HEAP:0x200000,0x10000 %(AdditionalOptions)</AdditionalOptions>
@@ -102,7 +102,7 @@
     </Bscmake>
     <Lib>
       <AdditionalDependencies>Setupapi.lib;hid.lib;Kinect20.lib;JoyShockLibrary.lib;Servus.lib;dnssd.lib;SDL2.lib;iphlpapi.lib;hid.lib;hidapi_static.lib;openssl.lib;libssl.lib;libcrypto.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../../External/kinect/lib;../../External/joycon/lib/win;../../External/servus/lib/win/x64/debug;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/hidapi/lib/win/x64;..\..\Modules\juce_simpleweb\libs\MacOSX\$(Platform)\MDd;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../External/kinect/lib;../../External/joycon/lib/win;../../External/servus/lib/win/x64/debug;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/hidapi/lib/win/x64;..\..\Modules\juce_simpleweb\libs\VisualStudio2019\$(Platform)\MDd;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -141,7 +141,7 @@
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <AdditionalLibraryDirectories>../../External/kinect/lib;../../External/joycon/lib/win;../../External/servus/lib/win/x64/release;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/hidapi/lib/win/x64;..\..\Modules\juce_simpleweb\libs\MacOSX\$(Platform)\MD;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../External/kinect/lib;../../External/joycon/lib/win;../../External/servus/lib/win/x64/release;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/hidapi/lib/win/x64;..\..\Modules\juce_simpleweb\libs\VisualStudio2019\$(Platform)\MD;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <LargeAddressAware>true</LargeAddressAware>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
       <AdditionalDependencies>Setupapi.lib;hid.lib;Kinect20.lib;JoyShockLibrary.lib;Servus.lib;dnssd.lib;SDL2.lib;iphlpapi.lib;hid.lib;hidapi_static.lib;openssl.lib;libssl.lib;libcrypto.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -153,7 +153,7 @@
     </Bscmake>
     <Lib>
       <AdditionalDependencies>Setupapi.lib;hid.lib;Kinect20.lib;JoyShockLibrary.lib;Servus.lib;dnssd.lib;SDL2.lib;iphlpapi.lib;hid.lib;hidapi_static.lib;openssl.lib;libssl.lib;libcrypto.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../../External/kinect/lib;../../External/joycon/lib/win;../../External/servus/lib/win/x64/release;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/hidapi/lib/win/x64;..\..\Modules\juce_simpleweb\libs\MacOSX\$(Platform)\MD;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../External/kinect/lib;../../External/joycon/lib/win;../../External/servus/lib/win/x64/release;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/hidapi/lib/win/x64;..\..\Modules\juce_simpleweb\libs\VisualStudio2019\$(Platform)\MD;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
