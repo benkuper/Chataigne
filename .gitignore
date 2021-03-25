@@ -56,7 +56,6 @@ doxygen/doc
 extras/Projucer/JUCECompileEngine.dylib
 Binaries/
 Builds/LinuxMakeFile/build
-Builds/LinuxMakefile/*\.AppDir/usr/bin/
 
 travis_enc.txt
 site/
