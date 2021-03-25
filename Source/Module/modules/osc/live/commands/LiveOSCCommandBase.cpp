@@ -37,7 +37,7 @@ LiveOSCCommandBase::LiveOSCCommandBase(LiveOSCModule* _module, CommandContext co
 
 		argumentsContainer.addControllable(value);
 
-		linkParamToMappingIndex(value, 0);
+		argumentsContainer.linkParamToMappingIndex(value, 0);
 	}
 	
 	if (addressModel.contains("[scene]")) paramID = addIntParameter("Scene", "Index of the scene, 0 is first scene", 0, 0);

@@ -61,6 +61,8 @@ public:
 	virtual void setValue(var value, int multiplexIndex); //for mapping context
 	virtual void setValueInternal(var value, int multiplexIndex) {}
 
+	virtual void updateMappingInputValue(var value, int multiplexIndex);
+
 	virtual void setInputNamesFromParams(Array<WeakReference<Parameter>> outParams) override;
 
 	virtual var getLinkedCustomArgumentValueAt(int argIndex, int multiplexIndex);

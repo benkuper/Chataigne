@@ -205,6 +205,14 @@ void BaseCommand::trigger(int multiplexIndex)
 
 void BaseCommand::setValue(var value, int multiplexIndex)
 {
+	updateMappingInputValue(value, multiplexIndex);
+	setValueInternal(value, multiplexIndex);
+	trigger(multiplexIndex);
+}
+
+
+void BaseCommand::updateMappingInputValue(var value, int multiplexIndex)
+{
 	for (auto& pLink : paramLinks) pLink->updateMappingInputValue(value, multiplexIndex);
 	if (customValuesManager != nullptr)
 	{
@@ -213,10 +221,7 @@ void BaseCommand::setValue(var value, int multiplexIndex)
 			if (cv->paramLink != nullptr) cv->paramLink->updateMappingInputValue(value, multiplexIndex);
 		}
 	}
-	setValueInternal(value, multiplexIndex);
-	trigger(multiplexIndex);
 }
-
 
 void BaseCommand::setInputNamesFromParams(Array<WeakReference<Parameter>> outParams)
 {

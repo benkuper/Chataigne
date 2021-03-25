@@ -209,13 +209,16 @@ void AudioModule::audioDeviceIOCallback(const float ** inputChannelData, int num
 				{
 					if ((int)pitchDetector->getBufferSize() != numSamples) pitchDetector->setBufferSize(numSamples);
 
-					float freq = pitchDetector->getPitch(inputChannelData[0]);
-					frequency->setValue(freq);
-					int pitchNote = getNoteForFrequency(freq);
-					pitch->setValue(pitchNote);
+					if (inputChannelData[0][0] >= 0)
+					{
+						float freq = pitchDetector->getPitch(inputChannelData[0]);
+						frequency->setValue(freq);
+						int pitchNote = getNoteForFrequency(freq);
+						pitch->setValue(pitchNote);
 
-					note->setValueWithKey(MIDIManager::getNoteName(pitchNote, false));
-					octave->setValue(floor(pitchNote / 12.0));
+						note->setValueWithKey(MIDIManager::getNoteName(pitchNote, false));
+						octave->setValue(floor(pitchNote / 12.0));
+					}
 				}
 			} else
 			{

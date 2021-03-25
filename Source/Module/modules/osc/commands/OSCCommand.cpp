@@ -1,3 +1,4 @@
+#include "OSCCommand.h"
 /*
   ==============================================================================
 
@@ -11,7 +12,7 @@
 OSCCommand::OSCCommand(OSCModule * _module, CommandContext context, var params, Multiplex * multiplex) :
 	BaseCommand(_module, context, params, multiplex),
 	oscModule(_module),
-	argumentsContainer("Arguments")
+	argumentsContainer("Arguments", multiplex)
 {
 	address = addStringParameter("Address", "Adress of the OSC Message (e.g. /example)", params.getProperty("address", "/example"));
 	address->setControllableFeedbackOnly(true);
@@ -74,7 +75,7 @@ void OSCCommand::buildArgsAndParamsFromData(var data)
 				p->saveValueOnly = false;
 				p->loadJSONData(a);
 				argumentsContainer.addParameter(p);
-				if (a.hasProperty("mappingIndex")) linkParamToMappingIndex(p, a.getProperty("mappingIndex", 0));
+				if (a.hasProperty("mappingIndex")) argumentsContainer.linkParamToMappingIndex(p, a.getProperty("mappingIndex", 0));
 
 				if (p->type == Controllable::ENUM && a.hasProperty("options"))
 				{
@@ -133,6 +134,18 @@ void OSCCommand::onContainerParameterChanged(Parameter * p)
 	}
 }
 
+void OSCCommand::updateMappingInputValue(var value, int multiplexIndex)
+{
+	BaseCommand::updateMappingInputValue(value, multiplexIndex);
+	for (auto& a : argumentsContainer.paramLinks) a->updateMappingInputValue(value, multiplexIndex);
+}
+
+void OSCCommand::setInputNamesFromParams(Array<WeakReference<Parameter>> outParams)
+{
+	BaseCommand::setInputNamesFromParams(outParams);
+	argumentsContainer.setInputNamesFromParams(outParams);
+}
+
 void OSCCommand::triggerInternal(int multiplexIndex)
 {
 	if (oscModule == nullptr) return;
@@ -151,7 +164,7 @@ void OSCCommand::triggerInternal(int multiplexIndex)
 			Parameter* p = static_cast<Parameter*>(a);
 			if (p == nullptr) continue;
 
-			var val = getLinkedValue(p, multiplexIndex);
+			var val = argumentsContainer.getLinkedValue(p, multiplexIndex);
 
 			switch (p->type)
 			{

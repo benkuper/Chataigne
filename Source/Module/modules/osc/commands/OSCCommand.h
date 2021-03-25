@@ -21,7 +21,7 @@ public:
 
 	OSCModule * oscModule;
 	StringParameter * address;
-	ControllableContainer argumentsContainer;
+	ParamLinkContainer argumentsContainer;
 
 	String addressModel;
 	bool rebuildAddressOnParamChanged;
@@ -38,6 +38,9 @@ public:
 	void controllableAdded(Controllable* c) override;
 
 	void onContainerParameterChanged(Parameter * p) override;
+
+	virtual void updateMappingInputValue(var value, int multiplexIndex) override;
+	virtual void setInputNamesFromParams(Array<WeakReference<Parameter>> outParams) override;
 
 	void triggerInternal(int multiplexIndex) override;
 
