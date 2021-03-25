@@ -1767,13 +1767,13 @@
     </XCODE_MAC>
     <LINUX_MAKE targetFolder="Builds/Raspberry" smallIcon="nVz6Li" bigIcon="nVz6Li"
                 extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;&#10;-Wl,--as-needed"
-                externalLibraries="bluetooth&#10;Servus&#10;curl&#10;SDL2&#10;usb-1.0&#10;hidapi-hidraw&#10;pthread">
+                externalLibraries="bluetooth&#10;Servus&#10;curl&#10;SDL2&#10;usb-1.0&#10;hidapi-hidraw&#10;pthread&#10;JoyShockLibrary">
       <CONFIGURATIONS>
-        <CONFIGURATION name="Debug" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/sdl/include&#10;/usr/include/freetype2&#10;../../External/hidapi/include&#10;../../External/libusb/include/libusb-1.0"
-                       libraryPath="../../External/servus/lib/raspberry&#10;../../External/sdl/lib/raspberry&#10;/usr/lib/arm-linux-gnueabihf"
+        <CONFIGURATION name="Debug" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/sdl/include&#10;/usr/include/freetype2&#10;../../External/hidapi/include&#10;../../External/libusb/include/libusb-1.0&#10;../../External/joycon/include"
+                       libraryPath="../../External/servus/lib/raspberry&#10;../../External/sdl/lib/raspberry&#10;../../External/joycon/lib/raspberry&#10;/usr/lib/arm-linux-gnueabihf"
                        linuxArchitecture="-march=armv7" optimisation="3" isDebug="1"/>
-        <CONFIGURATION name="Release" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/sdl/include&#10;/usr/include/freetype2&#10;../../External/hidapi/include&#10;../../External/libusb/include/libusb-1.0"
-                       libraryPath="../../External/servus/lib/raspberry&#10;../../External/sdl/lib/raspberry&#10;/usr/lib/arm-linux-gnueabihf&#10;"
+        <CONFIGURATION name="Release" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/sdl/include&#10;/usr/include/freetype2&#10;../../External/hidapi/include&#10;../../External/libusb/include/libusb-1.0&#10;../../External/joycon/include"
+                       libraryPath="../../External/servus/lib/raspberry&#10;../../External/sdl/lib/raspberry&#10;../../External/joycon/lib/raspberry&#10;/usr/lib/arm-linux-gnueabihf&#10;"
                        linuxArchitecture="-march=armv7"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
