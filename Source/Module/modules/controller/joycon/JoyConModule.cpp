@@ -70,8 +70,6 @@ JoyConModule::~JoyConModule()
 	stopThread(1000);
 }
 
-#ifndef __arm__
-
 void JoyConModule::updateController(int controller)
 {
 
@@ -141,12 +139,9 @@ void JoyConModule::onControllableFeedbackUpdateInternal(ControllableContainer * 
 		inActivityTrigger->trigger();
 	}
 }
-#endif
 
 void JoyConModule::run()
 {
-#ifndef __arm__
-
 	int numConnected = JslConnectDevices();
 	int connectedDevices[32];
 	int deviceHandles = JslGetConnectedDeviceHandles(connectedDevices, numConnected);
@@ -182,6 +177,4 @@ void JoyConModule::run()
 	
 	controllers.clear();
 	JslDisconnectAndDisposeAll();
-#endif
-
 }

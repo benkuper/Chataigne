@@ -222,7 +222,7 @@ jobs:
       - name: Create AppImage
         id: create_package
         run: |
-          mkdir ${{ env.ProjectName }}.AppDir/usr/bin/
+          mkdir -p ${{ env.ProjectName }}.AppDir/usr/bin/
           cp build/${{ env.ProjectName }} ${{ env.ProjectName }}.AppDir/usr/bin/
 
           PKGNAME=${{ env.ProjectName }}-${{ steps.set_variables.outputs.suffix }}.AppImage

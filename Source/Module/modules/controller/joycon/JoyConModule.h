@@ -10,17 +10,7 @@
 
 #pragma once
 
-#ifndef __arm__
 #include "JoyShockLibrary.h"
-
-/*
-#elif JUCE_MAC
-#define JOYTIME_CORE_BUILT_AS_STATIC
-#define JOYTIME_INPUT_HIDAPI_BUILT_AS_STATIC
-#include "joytime-input-hidapi.hpp"
-*/
-
-#endif
 
 class JoyConModule :
 	public Module,
@@ -88,12 +78,8 @@ public:
 	Vector3D<float> i_b_;
 	Vector3D<float> w_a, w_g;
 
-#ifndef __arm__
 	void updateController(int id);
     void onControllableFeedbackUpdateInternal(ControllableContainer *, Controllable *c) override;
-#endif
-    
-
 
 	static JoyConModule * create() { return new JoyConModule(); }
 	virtual String getDefaultTypeString() const override { return "JoyCon"; }
