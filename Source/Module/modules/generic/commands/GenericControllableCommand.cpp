@@ -60,7 +60,7 @@ void GenericControllableCommand::setValueParameter(Parameter* p)
 {
 	if (!value.wasObjectDeleted() && value != nullptr)
 	{
-		ghostValueData = value->getJSONData();
+		if(ghostValueData.isVoid()) ghostValueData = value->getJSONData();
 		Parameter* tmpVal = value.get();
 		value = nullptr; //force to be null here so when removeControllable triggers contentChanged, the triggerInternal will not use it
 
@@ -78,6 +78,7 @@ void GenericControllableCommand::setValueParameter(Parameter* p)
 
 		addParameter(value);
 		if (!ghostValueData.isVoid()) value->loadJSONData(ghostValueData);
+		ghostValueData = var();
 		if(!isCurrentlyLoadingData) linkParamToMappingIndex(value, 0);
 	}
 }
@@ -120,8 +121,8 @@ void GenericControllableCommand::updateOperatorOptions()
 
 void GenericControllableCommand::triggerInternal(int multiplexIndex)
 {
-	BaseCommand::triggerInternal(multiplexIndex);
-
+	if (isCurrentlyLoadingData) return; //should it be better than  that ?
+	
 	Controllable* c = getLinkedTargetAs<Controllable>(target, multiplexIndex);
 	if (c == nullptr) return;
 
@@ -238,16 +239,16 @@ void GenericControllableCommand::loadJSONDataInternal(var data)
 	}
 	else
 	{
-		BaseCommand::loadJSONDataInternal(data);
 		loadGhostData(data);
+		BaseCommand::loadJSONDataInternal(data);
 	}
 }
 
 void GenericControllableCommand::endLoadFile()
 {
-	target->resetValue();
-	loadJSONData(dataToLoad);
+	//target->resetValue();
 	loadGhostData(dataToLoad);
+	loadJSONData(dataToLoad);
 	dataToLoad = var();
 
 	Engine::mainEngine->removeEngineListener(this);
@@ -270,7 +271,7 @@ void GenericControllableCommand::loadGhostData(var data)
 			}
 		}
 
-		updateValueFromTarget(); //force generate if not yet
+		//updateValueFromTarget(); //force generate if not yet
 	}
 }
 

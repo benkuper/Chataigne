@@ -212,6 +212,8 @@ void CVCommand::onContainerParameterChanged(Parameter* p)
 
 void CVCommand::triggerInternal(int multiplexIndex)
 {
+	if (isCurrentlyLoadingData) return;
+
 	switch (type)
 	{
 	case SET_VALUE:

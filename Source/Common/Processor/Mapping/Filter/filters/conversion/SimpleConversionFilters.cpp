@@ -267,7 +267,7 @@ ToColorFilter::~ToColorFilter()
 var ToColorFilter::getJSONData()
 {
 	var data = SimpleConversionFilter::getJSONData();
-	data.getProperty("ghostOptions",var()).getDynamicObject()->setProperty("color", baseColor->getValue());
+	if(baseColor != nullptr) data.getProperty("ghostOptions",var()).getDynamicObject()->setProperty("color", baseColor->getValue());
 	return data;
 }
 

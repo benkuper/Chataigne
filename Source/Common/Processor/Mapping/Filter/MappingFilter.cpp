@@ -24,6 +24,8 @@ MappingFilter::MappingFilter(const String& name, var params, Multiplex* multiple
 	filterParams.hideEditorHeader = true;
 	addChildControllableContainer(&filterParams);
 	filterParams.addControllableContainerListener(this);
+
+	filterParams.addParamLinkContainerListener(this);
 }
 
 MappingFilter::~MappingFilter()
@@ -201,6 +203,11 @@ MappingFilter::ProcessResult  MappingFilter::processInternal(Array<Parameter*> i
 	return result;
 }
 
+
+void MappingFilter::linkUpdated(ParamLinkContainer* c, ParameterLink* pLink)
+{
+	filterParamChanged(pLink->parameter);
+}
 
 void MappingFilter::multiplexPreviewIndexChanged()
 {

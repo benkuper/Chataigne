@@ -1,3 +1,4 @@
+#include "SimpleRemapFilter.h"
 /*
   ==============================================================================
 
@@ -36,6 +37,13 @@ SimpleRemapFilter::SimpleRemapFilter(var params, Multiplex* multiplex) :
 
 SimpleRemapFilter::~SimpleRemapFilter()
 {
+}
+
+bool SimpleRemapFilter::setupSources(Array<Parameter*> sources, int multiplexIndex)
+{
+	bool result = MappingFilter::setupSources(sources, multiplexIndex);
+	computeOutRanges();
+	return result;
 }
 
 Parameter* SimpleRemapFilter::setupSingleParameterInternal(Parameter* source, int multiplexIndex)
@@ -179,46 +187,53 @@ var SimpleRemapFilter::getRemappedValueFor(Parameter* source, int multiplexIndex
 	return source->getValue();
 }
 
+void SimpleRemapFilter::computeOutRanges()
+{
+	bool hasChanged = false;
+	for (int i = 0; i < filteredParameters.size(); i++)
+	{
+		auto mFilteredParams = filteredParameters[i];
 
+		for (auto& f : *mFilteredParams)
+		{
+			var mRange = filterParams.getLinkedValue(targetOut, i);
+
+			if (f->type == Controllable::FLOAT || f->type == Controllable::INT)
+			{
+				var newMin = jmin<float>(mRange[0], mRange[1]);
+				var newMax = jmax<float>(mRange[0], mRange[1]);
+				if (newMin != f->minimumValue || newMax != f->maximumValue) hasChanged = true;
+				f->setRange(newMin, newMax);
+			}
+			else if (f->type == Controllable::POINT2D || f->type == Controllable::POINT3D)
+			{
+				var minVal;
+				var maxVal;
+				for (int i = 0; i < f->value.size(); i++)
+				{
+					minVal.append(jmin<float>(mRange[0], mRange[1]));
+					maxVal.append(jmax<float>(mRange[0], mRange[1]));
+				}
+
+				if (f->checkValueIsTheSame(minVal, f->minimumValue) || f->checkValueIsTheSame(maxVal, f->maximumValue)) hasChanged = true;
+				f->setRange(minVal, maxVal);
+
+			}
+		}
+	}
+
+	if(hasChanged) mappingFilterListeners.call(&FilterListener::filteredParamRangeChanged, this);
+}
 
 void SimpleRemapFilter::filterParamChanged(Parameter* p)
 {
 	if (p == useCustomInputRange)
 	{
 		targetIn->setEnabled(useCustomInputRange->boolValue());
-
 	}
 	else if (p == targetOut)
 	{
-		for (int i = 0; i < filteredParameters.size(); i++)
-		{
-			auto mFilteredParams = filteredParameters[i];
-
-			for (auto& f : *mFilteredParams)
-			{
-				var mRange = filterParams.getLinkedValue(targetOut, i);
-
-				if (f->type == Controllable::FLOAT || f->type == Controllable::INT)
-				{
-					f->setRange(jmin<float>(mRange[0], mRange[1]), jmax<float>(mRange[0], mRange[1]));
-				}
-				else if(f->type == Controllable::POINT2D || f->type == Controllable::POINT3D)
-				{
-					var minVal;
-					var maxVal;
-					for (int i = 0; i < f->value.size(); i++)
-					{
-						minVal.append(jmin<float>(mRange[0], mRange[1]));
-						maxVal.append(jmax<float>(mRange[0], mRange[1]));
-					}
-
-					f->setRange(minVal, maxVal);
-
-				}
-			}
-		}
-
-		mappingFilterListeners.call(&FilterListener::filteredParamRangeChanged, this);
+		computeOutRanges();
 	}
 	else if (p == forceFloatOutput)
 	{

@@ -61,7 +61,7 @@ void GenericOSCQueryCommand::setValueParameter(Parameter* p)
 {
 	if (!value.wasObjectDeleted() && value != nullptr)
 	{
-		ghostValueData = value->getJSONData();
+		if(ghostValueData.isVoid()) ghostValueData = value->getJSONData();
 		Parameter* tmpVal = value.get();
 		value = nullptr; //force to be null here so when removeControllable triggers contentChanged, the triggerInternal will not use it
 
@@ -79,7 +79,7 @@ void GenericOSCQueryCommand::setValueParameter(Parameter* p)
 
 		addParameter(value);
 		if (!ghostValueData.isVoid()) value->loadJSONData(ghostValueData);
-
+		ghostValueData = var();
 		if(!isCurrentlyLoadingData) linkParamToMappingIndex(value, 0);
 	}
 }
@@ -122,8 +122,8 @@ void GenericOSCQueryCommand::updateOperatorOptions()
 
 void GenericOSCQueryCommand::triggerInternal(int multiplexIndex)
 {
-	BaseCommand::triggerInternal(multiplexIndex);
-
+	if (isCurrentlyLoadingData) return; //should it be better than  that ?
+	
 	Controllable* c = getLinkedTargetAs<Controllable>(target, multiplexIndex);
 	if (c == nullptr) return;
 
@@ -241,8 +241,8 @@ void GenericOSCQueryCommand::loadJSONDataInternal(var data)
 	}
 	else
 	{
-		BaseCommand::loadJSONDataInternal(data);
 		loadGhostData(data);
+		BaseCommand::loadJSONDataInternal(data);
 	}
 }
 
@@ -250,28 +250,25 @@ void GenericOSCQueryCommand::endLoadFile()
 {
 	target->resetValue();
 
-	loadJSONData(dataToLoad);
 	loadGhostData(dataToLoad);
+	loadJSONData(dataToLoad);
 
 	Engine::mainEngine->removeEngineListener(this);
 }
 
 void GenericOSCQueryCommand::loadGhostData(var data)
 {
-	if (value == nullptr)
+	var paramsData = data.getProperty("parameters", var());
+	for (int i = 0; i < paramsData.size(); i++)
 	{
-		var paramsData = data.getProperty("parameters", var());
-		for (int i = 0; i < paramsData.size(); i++)
+		if (paramsData[i].getProperty("controlAddress", "") == "/value")
 		{
-			if (paramsData[i].getProperty("controlAddress", "") == "/value")
-			{
-				ghostValueData = paramsData[i];
-			}else if (paramsData[i].getProperty("controlAddress", "") == "/operator")
-			{
-				ghostOperator = paramsData[i].getProperty("value", var());
-			}
+			ghostValueData = paramsData[i];
+		}else if (paramsData[i].getProperty("controlAddress", "") == "/operator")
+		{
+			ghostOperator = paramsData[i].getProperty("value", var());
 		}
-
-		updateValueFromTarget(); //force generate if not yet
 	}
+
+	//updateValueFromTarget(); //force generate if not yet
 }

@@ -84,7 +84,7 @@ public:
     void addParameterLinkListener(ParameterLinkListener* newListener) { parameterLinkListeners.add(newListener); }
     void removeParameterLinkListener(ParameterLinkListener* listener) { parameterLinkListeners.remove(listener); }
 
-    DECLARE_ASYNC_EVENT(ParameterLink, ParameterLink, paramLink, ENUM_LIST(LINK_UPDATED, PREVIEW_UPDATED, LIST_ITEM_UPDATED))
+    DECLARE_ASYNC_EVENT(ParameterLink, ParameterLink, paramLink, ENUM_LIST(LINK_UPDATED, PREVIEW_UPDATED, INPUT_VALUE_UPDATED, LIST_ITEM_UPDATED))
 };
 
 
@@ -113,6 +113,8 @@ public:
     virtual ParameterLink* getLinkedParam(Parameter* p);
     virtual var getLinkedValue(Parameter* p, int multiplexIndex);
 
+    virtual void linkUpdated(ParameterLink* p) override;
+
 
     template<class T>
     T* getLinkedTargetAs(TargetParameter* target, int multiplexIndex)
@@ -139,6 +141,18 @@ public:
     virtual void linkParamToMappingIndex(Parameter* p, int mappingIndex);
 
     virtual void setInputNamesFromParams(Array<WeakReference<Parameter>> outParams);
+
+    class ParamLinkContainerListener
+    {
+    public:
+        virtual ~ParamLinkContainerListener() {}
+        virtual void linkUpdated(ParamLinkContainer * container, ParameterLink* pLink) {}
+    };
+
+
+    ListenerList<ParamLinkContainerListener> paramLinkContainerListeners;
+    void addParamLinkContainerListener(ParamLinkContainerListener* newListener) { paramLinkContainerListeners.add(newListener); }
+    void removeParamLinkContainerListener(ParamLinkContainerListener* listener) { paramLinkContainerListeners.remove(listener); }
 
     virtual var getJSONData() override;
     virtual void loadJSONDataInternal(var data) override;

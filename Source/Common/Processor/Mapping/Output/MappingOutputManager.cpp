@@ -104,7 +104,7 @@ void MappingOutputManager::addItemInternal(MappingOutput * o, var)
 		for (int i = 0; i < outParams.size(); i++) o->setOutParams(outParams[i], i);
 	}
 
-	for (int i = 0; i < getMultiplexCount(); i++) updateOutputValue(o, i);
+	//for (int i = 0; i < getMultiplexCount(); i++) updateOutputValue(o, i);
 }
 
 void MappingOutputManager::removeItemInternal(MappingOutput * o)

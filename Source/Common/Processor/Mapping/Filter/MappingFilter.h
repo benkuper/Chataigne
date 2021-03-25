@@ -15,12 +15,12 @@
 
 class MappingFilter :
 	public BaseItem,
-	public MultiplexTarget
+	public MultiplexTarget,
+	public ParamLinkContainer::ParamLinkContainerListener
 {
 public:
 	MappingFilter(const String &name = "MappingFilter", var params = var(), Multiplex* multiplex = nullptr);
 	virtual ~MappingFilter();
-
 
 	enum ProcessResult { CHANGED, UNCHANGED, STOP_HERE };
 	ParamLinkContainer filterParams;
@@ -37,7 +37,7 @@ public:
 
 	bool filterParamsAreDirty; //This is use to force processing even if input has not changed when a filterParam has been changed
 
-	bool setupSources(Array<Parameter *> sources, int multiplexIndex);
+	virtual bool setupSources(Array<Parameter *> sources, int multiplexIndex);
 	virtual void setupParametersInternal(int mutiplexIndex);
 	virtual Parameter * setupSingleParameterInternal(Parameter * source, int multiplexIndex);
 
@@ -48,6 +48,8 @@ public:
 	virtual void onContainerParameterChangedInternal(Parameter* p) override;
 	virtual void onControllableFeedbackUpdateInternal(ControllableContainer *, Controllable * p) override;
 	virtual void filterParamChanged(Parameter * ) {};
+
+	void linkUpdated(ParamLinkContainer* c, ParameterLink* pLink) override;
 
 	void multiplexPreviewIndexChanged() override;
 

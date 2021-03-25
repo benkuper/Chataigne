@@ -39,7 +39,6 @@ void OSCCommand::rebuildAddress()
 String OSCCommand::getTargetAddress(int multiplexIndex)
 {
 	String targetAddress(addressModel);
-
 	if (targetAddress.containsChar('['))
 	{
 		//rebuild by replacing [..] with parameters
@@ -50,13 +49,15 @@ String OSCCommand::getTargetAddress(int multiplexIndex)
 				Parameter * p = static_cast<Parameter *>(c);
 				if (p == nullptr) continue;
 
-
-				targetAddress = targetAddress.replace("[" + p->shortName + "]", p->stringValue());
+				targetAddress = targetAddress.replace("[" + p->shortName + "]", getLinkedValue(p, multiplexIndex).toString());
 			}
 		}
 	}
 
-	return getTargetAddressInternal(targetAddress, multiplexIndex);
+	String result = getTargetAddressInternal(targetAddress, multiplexIndex);
+	if (result.isEmpty()) return getLinkedValue(address, multiplexIndex).toString();
+	
+	return result;
 }
 
 void OSCCommand::buildArgsAndParamsFromData(var data)
@@ -137,7 +138,7 @@ void OSCCommand::triggerInternal(int multiplexIndex)
 	if (oscModule == nullptr) return;
 
 	BaseCommand::triggerInternal(multiplexIndex);
-	String addrString = isMultiplexed() ? getTargetAddress() : getLinkedValue(address, multiplexIndex).toString(); //forces iteratives to reevalute the address
+	String addrString = getTargetAddress(multiplexIndex) ; //forces iteratives to reevalute the address
 	
 	try
 	{

@@ -42,7 +42,8 @@ void ParameterLink::multiplexCountChanged()
 
 void ParameterLink::multiplexPreviewIndexChanged()
 {
-	notifyLinkUpdated();
+	paramLinkNotifier.addMessage(new ParameterLinkEvent(ParameterLinkEvent::PREVIEW_UPDATED, this)); //only UI
+
 }
 
 void ParameterLink::setLinkType(LinkType type)
@@ -178,10 +179,13 @@ void ParameterLink::setLinkedList(BaseMultiplexList* _list)
 
 	if (list != nullptr)
 	{
+		bool shouldNotify = linkType == MULTIPLEX_LIST; //if already, notify will not be trigger by setLinkType()
 		setLinkType(MULTIPLEX_LIST);
 		list = _list;
 		listRef = _list;;
 		list->addListListener(this);
+
+		if(shouldNotify) notifyLinkUpdated();
 	}
 	else
 	{
@@ -225,11 +229,13 @@ void ParameterLink::updateMappingInputValue(var value, int multiplexIndex)
 	if (parameter == nullptr || parameter.wasObjectDeleted()) return;
 
 	if (linkType == MAPPING_INPUT && !isMultiplexed()) parameter->setValue(linkedInputValue);
+
+	paramLinkNotifier.addMessage(new ParameterLinkEvent(ParameterLinkEvent::INPUT_VALUE_UPDATED, this)); //only for preview
 }
 
 void ParameterLink::listItemUpdated(int multiplexIndex)
 {
-	paramLinkNotifier.addMessage(new ParameterLinkEvent(ParameterLinkEvent::LINK_UPDATED, this)); //only for preview
+	paramLinkNotifier.addMessage(new ParameterLinkEvent(ParameterLinkEvent::LIST_ITEM_UPDATED, this)); //only for preview
 }
 
 String ParameterLink::getReplacementString(int multiplexIndex)
@@ -335,7 +341,7 @@ var ParameterLink::getInputMappingValue(var value)
 
 void ParameterLink::notifyLinkUpdated()
 {
-	//parameterLinkListeners.call(&ParameterLinkListener::linkUpdated, this);
+	parameterLinkListeners.call(&ParameterLinkListener::linkUpdated, this);
 	paramLinkNotifier.addMessage(new ParameterLinkEvent(ParameterLinkEvent::PREVIEW_UPDATED, this));
 }
 
@@ -471,6 +477,12 @@ var ParamLinkContainer::getLinkedValue(Parameter* p, int multiplexIndex)
 	if (!paramsCanBeLinked) return p->getValue();
 	if (ParameterLink* pLink = getLinkedParam(p)) return pLink->getLinkedValue(multiplexIndex);
 	return p->getValue();
+}
+
+
+void ParamLinkContainer::linkUpdated(ParameterLink* p)
+{
+	paramLinkContainerListeners.call(&ParamLinkContainerListener::linkUpdated, this, p);
 }
 
 

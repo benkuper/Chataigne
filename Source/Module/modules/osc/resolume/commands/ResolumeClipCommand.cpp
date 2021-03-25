@@ -42,7 +42,6 @@ void ResolumeClipCommand::rebuildParametersInternal()
 }
 
 
-
 void ResolumeClipCommand::onContainerParameterChanged(Parameter * p)
 {
 	ResolumeBaseCommand::onContainerParameterChanged(p);
@@ -77,13 +76,15 @@ void ResolumeClipCommand::triggerInternal(int multiplexIndex)
 
 	if (firstClip != nullptr)
 	{
-		int targetClip = randomClips->boolValue() ? clipRand.nextInt(Range<int>(firstClip->intValue(),lastClip->intValue()+1)) : clipParam->intValue() + 1;
-		if (targetClip > lastClip->intValue())
+		int firstClipVal = getLinkedValue(firstClip, multiplexIndex);
+		int lastClipVal = getLinkedValue(lastClip, multiplexIndex);
+		int loopClipsVal = getLinkedValue(loopClips, multiplexIndex);
+
+		int targetClip = randomClips->boolValue() ? clipRand.nextInt(Range<int>(firstClipVal,lastClipVal+1)) : clipParam->intValue() + 1; //to change clipParam needs to be multiplexed
+		if (targetClip > lastClipVal)
 		{
-			targetClip = loopClips->boolValue() ? firstClip->intValue() : lastClip->intValue();
+			targetClip = loopClipsVal ? firstClipVal: lastClipVal;
 		}
 		clipParam->setValue(targetClip);
 	}
-
-
 }

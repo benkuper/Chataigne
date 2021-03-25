@@ -265,7 +265,11 @@ void LinkableParameterEditor::newMessage(const ParameterLink::ParameterLinkEvent
         if (visible) addAndMakeVisible(paramEditor.get());
         else removeChildComponent(paramEditor.get());
     }
-  
+    else if (e.type == ParameterLink::ParameterLinkEvent::LIST_ITEM_UPDATED || e.type == ParameterLink::ParameterLinkEvent::INPUT_VALUE_UPDATED)
+    {
+       
+    }
+
     repaint();
 }
  
