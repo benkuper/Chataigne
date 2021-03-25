@@ -8,8 +8,9 @@
   ==============================================================================
 */
 
-CustomOSCCommand::CustomOSCCommand(OSCModule * module, CommandContext context, var params, Multiplex * multiplex) :
+CustomOSCCommand::CustomOSCCommand(CustomOSCModule * module, CommandContext context, var params, Multiplex * multiplex) :
 	OSCCommand(module, context, params, multiplex),
+	customOSCModule(module),
 	wildcardsContainer("Address Parameters")
 {
 	address->setControllableFeedbackOnly(false);
@@ -50,15 +51,7 @@ void CustomOSCCommand::triggerInternal(int multiplexIndex)
 			case Controllable::INT: m.addInt32((int)pVal); break;
 			case Controllable::FLOAT: m.addFloat32((float)pVal); break;
 			case Controllable::STRING: m.addString(pVal.toString()); break;
-			case Controllable::COLOR:
-			{
-				Colour c = Colour::fromFloatRGBA(pVal[0], pVal[1], pVal[2], pVal[3]);
-				m.addFloat32(c.getFloatRed());
-				m.addFloat32(c.getFloatGreen());
-				m.addFloat32(c.getFloatBlue());
-				m.addFloat32(c.getFloatAlpha());
-			}
-			break;
+			case Controllable::COLOR: customOSCModule->addColorArgumentToMessage(m, Colour::fromFloatRGBA(pVal[0], pVal[1], pVal[2], pVal[3])); break;
 
 			case Controllable::POINT2D:
 				m.addFloat32(pVal[0]);

@@ -22,11 +22,17 @@ public:
 	BoolParameter * useHierarchy;
 	BoolParameter * autoFeedback;
 
+	enum ColorMode { ColorRGBA, Float3, Float4 };
+	EnumParameter* colorMode;
+
+
 	void processMessageInternal(const OSCMessage &msg) override;
 
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 
 	static void showMenuAndCreateValue(ControllableContainer * container);
+
+	void addColorArgumentToMessage(OSCMessage& m, const Colour& c);
 
 	static CustomOSCModule * create() { return new CustomOSCModule(); }
 	virtual String getDefaultTypeString() const override { return "OSC"; }

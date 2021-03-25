@@ -14,10 +14,12 @@ class CustomOSCCommand :
 	public OSCCommand
 {
 public:
-	CustomOSCCommand(OSCModule * module, CommandContext context, var params, Multiplex * multiplex = nullptr);
+	CustomOSCCommand(CustomOSCModule * module, CommandContext context, var params, Multiplex * multiplex = nullptr);
 	~CustomOSCCommand();
 	
 	var lastValue;
+
+	CustomOSCModule* customOSCModule;
 
 	CustomValuesCommandArgumentManager wildcardsContainer;
 	Array<Parameter *> wildCardParams;
