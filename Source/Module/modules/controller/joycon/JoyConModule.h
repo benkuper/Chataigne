@@ -20,9 +20,7 @@ public:
 	JoyConModule();
 	~JoyConModule();
 
-#ifndef __arm__
 	Array<int> controllers;
-#endif
 
 	ControllableContainer leftValues;
 	ControllableContainer rightValues;

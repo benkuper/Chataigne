@@ -174,10 +174,18 @@ LoupedeckModule::~LoupedeckModule()
 
 void LoupedeckModule::dataReceived(const MemoryBlock& data)
 {
-
 	Array<uint8> bytes((const uint8*)data.getData(), data.getSize());
 	uint8 id = bytes[0];
 
+	if (id != 4)
+	{
+		DBG("Bytes : ");
+		for (auto& b : data)
+		{
+			DBG(" > " << b);
+		}
+	}
+	
 	switch (id)
 	{
 	case 4:
@@ -192,7 +200,7 @@ void LoupedeckModule::dataReceived(const MemoryBlock& data)
 		{
 			buttons[pot - 6]->setValue(bytes[4] == 0);
 		}
-		else
+		else if(pot >= 0)
 		{
 			if (bytes[1])
 			{
@@ -204,6 +212,10 @@ void LoupedeckModule::dataReceived(const MemoryBlock& data)
 			{
 				knobButtons[pot]->setValue(bytes[4] == 0);
 			}
+		}
+		else
+		{
+			DBG("Pot : " << pot << " unknown");
 		}
 	}
 	break;
