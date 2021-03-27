@@ -9,21 +9,21 @@
   ==============================================================================
 */
 
-Mapping::Mapping(var params, Multiplex * multiplex, bool canBeDisabled) :
+Mapping::Mapping(var params, Multiplex* multiplex, bool canBeDisabled) :
 	Processor("Mapping", canBeDisabled),
 	MultiplexTarget(multiplex),
 	Thread("Mapping"),
 	im(multiplex),
-    mappingParams("Parameters"),
-    fm(multiplex),
+	mappingParams("Parameters"),
+	fm(multiplex),
 	om(multiplex),
 	outValuesCC("Out Values"),
-    processMode(VALUE_CHANGE),
-    isRebuilding(false),
+	processMode(VALUE_CHANGE),
+	isRebuilding(false),
 	isProcessing(false),
 	shouldRebuildAfterProcess(false),
-    inputIsLocked(false),
-    mappingNotifier(10)
+	inputIsLocked(false),
+	mappingNotifier(10)
 {
 	itemDataType = "Mapping";
 	type = MAPPING;
@@ -40,7 +40,7 @@ Mapping::Mapping(var params, Multiplex * multiplex, bool canBeDisabled) :
 
 	addChildControllableContainer(&fm);
 	addChildControllableContainer(&om);
-	
+
 	outValuesCC.hideInEditor = true;
 	addChildControllableContainer(&outValuesCC);
 
@@ -76,7 +76,7 @@ void Mapping::setProcessMode(ProcessMode mode)
 	}
 }
 
-void Mapping::lockInputTo(Array<Parameter *> lockParams)
+void Mapping::lockInputTo(Array<Parameter*> lockParams)
 {
 	inputIsLocked = lockParams.size() > 0;
 	im.lockInput(lockParams);
@@ -87,10 +87,10 @@ void Mapping::checkFiltersNeedContinuousProcess()
 {
 	bool need = false;
 	if (processMode == TIMER) need = true;
-	
+
 	if (!need)
 	{
-		for (auto &f : fm.items)
+		for (auto& f : fm.items)
 		{
 			if (f->processOnSameValue)
 			{
@@ -103,12 +103,12 @@ void Mapping::checkFiltersNeedContinuousProcess()
 	updateRate->setEnabled(need);
 }
 
-void Mapping::updateMappingChain(MappingFilter* afterThisFilter, bool processAfter)
+void Mapping::updateMappingChain(MappingFilter* afterThisFilter, bool processAfter, bool rangeOnly)
 {
 	if (isCurrentlyLoadingData || isClearing) return;
 	if (isRebuilding) return;
 
-	if (isProcessing)
+	if (isProcessing && !rangeOnly)
 	{
 		shouldRebuildAfterProcess = true;
 		return;
@@ -119,48 +119,64 @@ void Mapping::updateMappingChain(MappingFilter* afterThisFilter, bool processAft
 		GenericScopedLock lock(mappingLock);
 		isRebuilding = true;
 
-		outValuesCC.clear();
+		if (!rangeOnly) outValuesCC.clear();
 
 		for (int i = 0; i < getMultiplexCount(); i++)
 		{
 			if (afterThisFilter == nullptr) fm.setupSources(im.getInputReferences(i), i); //do the whole rebuild
-			else fm.rebuildFilterChain(afterThisFilter, i); //only ask to rebuild after the changed filter
+			else fm.rebuildFilterChain(afterThisFilter, i, rangeOnly); //only ask to rebuild after the changed filter
 
 			Array<Parameter*> processedParams = fm.getLastFilteredParameters(i);
 
 			ControllableContainer* outCC = &outValuesCC;
 
-			if (isMultiplexed())
+			if (!rangeOnly)
 			{
-				ControllableContainer* multiplexOutCC = new ControllableContainer("Index "+String(i + 1));
-				outValuesCC.addChildControllableContainer(multiplexOutCC, true);
-				outCC = multiplexOutCC;
-			}
+				if (isMultiplexed())
+				{
+					ControllableContainer* multiplexOutCC = new ControllableContainer("Index " + String(i + 1));
+					outValuesCC.addChildControllableContainer(multiplexOutCC, true);
+					outCC = multiplexOutCC;
+				}
 
-			Array<Parameter*> mOutParams;
-			for (auto& sp : processedParams)
+				Array<Parameter*> mOutParams;
+				for (auto& sp : processedParams)
+				{
+
+					Parameter* p = ControllableFactory::createParameterFrom(sp, false, false);
+					mOutParams.add(p);
+					outCC->addParameter(p);
+					p->setControllableFeedbackOnly(true);
+					p->setNiceName("Out " + String(mOutParams.size()));
+					p->setValue(sp->value);
+				}
+				om.setOutParams(mOutParams, i);
+
+			}
+			else
 			{
-				Parameter* p = ControllableFactory::createParameterFrom(sp, false, false);
-				mOutParams.add(p);
-				outCC->addParameter(p);
-				p->setControllableFeedbackOnly(true);
-				p->setNiceName("Out " + String(mOutParams.size()));
-				p->setValue(sp->value);
-			}
+				if (isMultiplexed()) outCC = outValuesCC.controllableContainers[i];
 
-			om.setOutParams(mOutParams, i);
+				for (int j = 0; i < processedParams.size(); i++)
+				{
+					Parameter* p = (Parameter*)outCC->controllables[j];
+					if (p->hasRange()) p->setRange(processedParams[j]->minimumValue, processedParams[j]->maximumValue);
+				}
+
+			}
 		}
 
-
-		mappingNotifier.addMessage(new MappingEvent(MappingEvent::OUTPUT_TYPE_CHANGED, this));
-
-		checkFiltersNeedContinuousProcess();
+		if (!rangeOnly)
+		{
+			mappingNotifier.addMessage(new MappingEvent(MappingEvent::OUTPUT_TYPE_CHANGED, this));
+			checkFiltersNeedContinuousProcess();
+		}
 
 		isRebuilding = false;
 	}
 
 
-	if(processAfter) process();
+	if (processAfter) process();
 }
 
 
@@ -185,7 +201,7 @@ void Mapping::process(bool forceOutput, int multiplexIndex)
 	{
 		GenericScopedLock lock(mappingLock);
 		ScopedLock filterLock(fm.filterLock);
-		
+
 		isProcessing = true;
 
 		Array<Parameter*> inputs = im.getInputReferences(multiplexIndex);
@@ -210,7 +226,7 @@ void Mapping::process(bool forceOutput, int multiplexIndex)
 
 			om.updateOutputValues(multiplexIndex, sendOnOutputChangeOnly->boolValue());
 		}
-		
+
 		isProcessing = false;
 	}
 
@@ -256,7 +272,7 @@ var Mapping::getJSONData()
 void Mapping::loadJSONDataInternal(var data)
 {
 	Processor::loadJSONDataInternal(data);
-	if(!inputIsLocked) im.loadJSONData(data.getProperty("im", var()));
+	if (!inputIsLocked) im.loadJSONData(data.getProperty("im", var()));
 	mappingParams.loadJSONData(data.getProperty("params", var()));
 	fm.loadJSONData(data.getProperty("filters", var()));
 	om.loadJSONData(data.getProperty("outputs", var()));
@@ -273,7 +289,7 @@ void Mapping::afterLoadJSONDataInternal()
 void Mapping::itemAdded(MappingInput* item)
 {
 	item->addMappingInputListener(this);
-	if(item->inputReference != nullptr) updateMappingChain();
+	if (item->inputReference != nullptr) updateMappingChain();
 }
 
 void Mapping::itemRemoved(MappingInput* item)
@@ -287,14 +303,14 @@ void Mapping::itemsReordered()
 	updateMappingChain();
 }
 
-void Mapping::inputReferenceChanged(MappingInput *)
+void Mapping::inputReferenceChanged(MappingInput*)
 {
 	if (Engine::mainEngine->isClearing) return;
 
 	updateMappingChain();
 }
 
-void Mapping::inputParameterValueChanged(MappingInput *, int multiplexIndex)
+void Mapping::inputParameterValueChanged(MappingInput*, int multiplexIndex)
 {
 	if (processMode == VALUE_CHANGE)
 	{
@@ -309,12 +325,12 @@ void Mapping::inputParameterValueChanged(MappingInput *, int multiplexIndex)
 	}
 }
 
-void Mapping::inputParameterRangeChanged(MappingInput *)
+void Mapping::inputParameterRangeChanged(MappingInput*)
 {
 	updateMappingChain();
 }
 
-void Mapping::onContainerParameterChangedInternal(Parameter * p)
+void Mapping::onContainerParameterChangedInternal(Parameter* p)
 {
 	Processor::onContainerParameterChangedInternal(p);
 
@@ -334,10 +350,10 @@ void Mapping::onControllableStateChanged(Controllable* c)
 	}
 }
 
-void Mapping::filterManagerNeedsRebuild(MappingFilter* afterThisFilter)
+void Mapping::filterManagerNeedsRebuild(MappingFilter* afterThisFilter, bool rangeOnly)
 {
 	if (isClearing) return;
-	updateMappingChain(afterThisFilter);
+	updateMappingChain(afterThisFilter, true, rangeOnly);
 }
 
 void Mapping::filterManagerNeedsProcess()
@@ -352,7 +368,7 @@ void Mapping::clearItem()
 	Processor::clearItem();
 
 	fm.removeFilterManagerListener(this);
-	im.removeBaseManagerListener(this); 
+	im.removeBaseManagerListener(this);
 	im.clear();
 }
 
@@ -365,7 +381,7 @@ void Mapping::run()
 	while (!threadShouldExit())
 	{
 		uint32 rateMillis = 1000 / updateRate->intValue();
-		
+
 		if ((canBeDisabled && !enabled->boolValue()) || forceDisabled)
 		{
 			wait(rateMillis);
@@ -373,7 +389,7 @@ void Mapping::run()
 		}
 
 		millis = Time::getMillisecondCounter();
-		
+
 		for (int i = 0; i < getMultiplexCount(); i++) process(false, i);
 
 		uint32 newMillis = Time::getMillisecondCounter();
@@ -381,12 +397,12 @@ void Mapping::run()
 
 		uint32 millisToWait = rateMillis - jmax<uint32>(newMillis - millis, 0);
 		millis = newMillis;
-		
-		if(millisToWait > 0) wait(millisToWait);
+
+		if (millisToWait > 0) wait(millisToWait);
 	}
 }
 
-ProcessorUI * Mapping::getUI()
+ProcessorUI* Mapping::getUI()
 {
 	return new MappingUI(this);
 }
@@ -400,7 +416,7 @@ void Mapping::highlightLinkedInspectables(bool value)
 		i->highlightLinkedInspectables(value);
 	}
 
-	for (auto & o : om.items)
+	for (auto& o : om.items)
 	{
 		o->highlightLinkedInspectables(value);
 	}

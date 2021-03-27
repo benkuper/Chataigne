@@ -1,4 +1,3 @@
-#include "SimpleRemapFilter.h"
 /*
   ==============================================================================
 
@@ -39,16 +38,19 @@ SimpleRemapFilter::~SimpleRemapFilter()
 {
 }
 
-bool SimpleRemapFilter::setupSources(Array<Parameter*> sources, int multiplexIndex)
+bool SimpleRemapFilter::setupSources(Array<Parameter*> sources, int multiplexIndex, bool rangeOnly)
 {
-	bool result = MappingFilter::setupSources(sources, multiplexIndex);
+	bool result = MappingFilter::setupSources(sources, multiplexIndex, rangeOnly);
 	computeOutRanges();
 	return result;
 }
 
-Parameter* SimpleRemapFilter::setupSingleParameterInternal(Parameter* source, int multiplexIndex)
+Parameter* SimpleRemapFilter::setupSingleParameterInternal(Parameter* source, int multiplexIndex, bool rangeOnly)
 {
 	Parameter* p = nullptr;
+
+	if(rangeOnly) return nullptr; //nothing to do, range is forced from remap
+	
 	if (!source->isComplex() && forceFloatOutput->boolValue())
 	{
 		p = new FloatParameter(source->niceName, source->description, source->value, source->minimumValue, source->maximumValue);
@@ -57,7 +59,7 @@ Parameter* SimpleRemapFilter::setupSingleParameterInternal(Parameter* source, in
 	}
 	else
 	{
-		p = MappingFilter::setupSingleParameterInternal(source, multiplexIndex);
+		p = MappingFilter::setupSingleParameterInternal(source, multiplexIndex, rangeOnly);
 	}
 
 	if (!useCustomInputRange->isOverriden || !useCustomInputRange->boolValue()) useCustomInputRange->setValue(!source->hasRange());

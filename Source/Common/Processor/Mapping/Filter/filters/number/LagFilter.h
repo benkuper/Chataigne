@@ -21,8 +21,8 @@ public:
 	HashMap<Parameter*, var> paramTempValueMap;
 	FloatParameter * frequency;
 
-	void setupParametersInternal(int multiplexIndex) override;
-	Parameter * setupSingleParameterInternal(Parameter * source, int multiplexIndex) override;
+	void setupParametersInternal(int multiplexIndex, bool rangeOnly) override;
+	Parameter* setupSingleParameterInternal(Parameter* source, int multiplexIndex, bool rangeOnly) override;
 	ProcessResult processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;
 
 	void filterParamChanged(Parameter * p) override;

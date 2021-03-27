@@ -19,7 +19,7 @@ ConditionFilter::~ConditionFilter()
 {
 }
 
-void ConditionFilter::setupParametersInternal(int multiplexIndex)
+void ConditionFilter::setupParametersInternal(int multiplexIndex, bool rangeOnly)
 {
     MappingFilter::setupParametersInternal(multiplexIndex);
     updateConditionsLinks(Array<Parameter *>(sourceParams[multiplexIndex].getRawDataPointer(), sourceParams[multiplexIndex].size()), multiplexIndex, true);

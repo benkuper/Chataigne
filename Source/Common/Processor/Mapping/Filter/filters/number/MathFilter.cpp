@@ -1,3 +1,4 @@
+#include "MathFilter.h"
 /*
   ==============================================================================
 
@@ -15,7 +16,8 @@ MathFilter::MathFilter(var params, Multiplex* multiplex) :
 	operation = filterParams.addEnumParameter("Operation", "The operation to use for this filter");
 	operation->addOption("Offset", OFFSET)
 		->addOption("Multiply", MULTIPLY)->addOption("Divide", DIVIDE)->addOption("Modulo", MODULO)
-		->addOption("Floor", FLOOR)->addOption("Ceil", CEIL)->addOption("Round", ROUND)->addOption("Max",MAX)->addOption("Min",MIN);
+		->addOption("Floor", FLOOR)->addOption("Ceil", CEIL)->addOption("Round", ROUND)->addOption("Max",MAX)->addOption("Min",MIN)
+		->addOption("Absolute", ABSOLUTE);
 
 	autoSetRange = false;
 	rangeRemapMode = filterParams.addEnumParameter("Range Remap Mode", "How to setup the output range.\nKeep will keep the input's range, adjust will ajdust automatically depending on the operator. \
@@ -29,34 +31,36 @@ MathFilter::~MathFilter()
 {
 }
 
-void MathFilter::setupParametersInternal(int multiplexIndex)
+void MathFilter::setupParametersInternal(int multiplexIndex, bool rangeOnly)
 {
-	MappingFilter::setupParametersInternal(multiplexIndex);
+	MappingFilter::setupParametersInternal(multiplexIndex, rangeOnly);
 
 	if (multiplexIndex != 0) return; //only setup depending on first value
 
-	Array<WeakReference<Parameter>> mSourceParams = sourceParams[multiplexIndex];
-	if (mSourceParams.size() == 0 || mSourceParams[0] == nullptr) return;
-
-	if (operationValue == nullptr || operationValue->type != mSourceParams[0]->type)
+	if (!rangeOnly)
 	{
-		if (operationValue != nullptr)
+		Array<WeakReference<Parameter>> mSourceParams = sourceParams[multiplexIndex];
+		if (mSourceParams.size() == 0 || mSourceParams[0] == nullptr) return;
+
+		if (operationValue == nullptr || operationValue->type != mSourceParams[0]->type)
 		{
-			opValueData = operationValue->getJSONData();
-			filterParams.removeControllable(operationValue);
+			if (operationValue != nullptr)
+			{
+				opValueData = operationValue->getJSONData();
+				filterParams.removeControllable(operationValue);
+			}
+			bool loadLastData = (operationValue == nullptr && opValueData.isObject()) || (operationValue != nullptr && mSourceParams[0]->type == operationValue->type);
+			operationValue = (Parameter*)ControllableFactory::createControllable(mSourceParams[0]->getTypeString());
+			operationValue->setNiceName("Value");
+			if (loadLastData) operationValue->loadJSONData(opValueData);
+			operationValue->isSavable = false;
+			filterParams.addParameter(operationValue);
 		}
-		bool loadLastData = (operationValue == nullptr && opValueData.isObject()) || (operationValue != nullptr && mSourceParams[0]->type == operationValue->type);
-		operationValue = (Parameter*)ControllableFactory::createControllable(mSourceParams[0]->getTypeString());
-		operationValue->setNiceName("Value");
-		if(loadLastData) operationValue->loadJSONData(opValueData);
-		operationValue->isSavable = false;
-		filterParams.addParameter(operationValue);
+
+		Operation o = operation->getValueDataAsEnum<Operation>();
+		operationValue->setEnabled(o != FLOOR && o != CEIL && o != ROUND && o != ABSOLUTE);
 	}
-
-	Operation o = operation->getValueDataAsEnum<Operation>();
-	operationValue->setEnabled(o != FLOOR && o != CEIL && o != ROUND);
-
-
+	
 	updateFilteredParamsRange();
 }
 
@@ -121,6 +125,11 @@ void MathFilter::updateFilteredParamsRange()
 			newMax = jmax(0.f, operationValue->floatValue());
 			break;
 
+		case ABSOLUTE:
+			newMin = 0;
+			newMax = jmax(0.f, (float)sourceParam->maximumValue);
+			break;
+
 		default:
 		{
 			if (!sourceParam->isComplex())
@@ -169,6 +178,18 @@ void MathFilter::filterParamChanged(Parameter * p)
 	}
 }
 
+void MathFilter::parameterControlModeChanged(Parameter* p)
+{
+	if (p == operationValue)
+	{
+		if (operationValue->controlMode != Parameter::MANUAL) rangeRemapMode->setValue(FREE); //force free to avoid constant out recreation. Better way would be to have rangeUpdate accross filter and output to avoid recreating the whole parameters
+		return;
+	}
+
+	MappingFilter::parameterControlModeChanged(p);
+
+}
+
 float MathFilter::getProcessedValue(float val, int index, int multiplexIndex)
 {
 	Operation o = operation->getValueDataAsEnum<Operation>();
@@ -200,6 +221,7 @@ float MathFilter::getProcessedValue(float val, int index, int multiplexIndex)
 		case ROUND: return roundToInt(val);
 		case MAX: return std::max(oVal, val);
 		case MIN: return std::min(oVal, val);
+		case ABSOLUTE: return std::fabsf(val);
 	}
 
 	return val;

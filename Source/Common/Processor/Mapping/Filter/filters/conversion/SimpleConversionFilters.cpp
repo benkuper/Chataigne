@@ -23,8 +23,21 @@ SimpleConversionFilter::~SimpleConversionFilter()
 {
 }
 
-Parameter* SimpleConversionFilter::setupSingleParameterInternal(Parameter* source, int multiplexIndex)
+Parameter* SimpleConversionFilter::setupSingleParameterInternal(Parameter* source, int multiplexIndex, bool rangeOnly)
 {
+	if (rangeOnly)
+	{
+		int index = sourceParams[multiplexIndex].indexOf(source);
+		if (index >= 0)
+		{
+			Parameter* fp = (*filteredParameters[multiplexIndex])[index];
+			if (fp->isComplex() == source->isComplex())
+			{
+				if (source->hasRange() && fp->canHaveRange) fp->setRange(source->minimumValue, source->maximumValue);
+			}
+		}
+	}
+
 	Parameter* p = (Parameter *)ControllableFactory::getInstance()->createControllable(outTypeString);
 	p->setNiceName(source->niceName);
 
@@ -122,9 +135,9 @@ ToFloatFilter::ToFloatFilter(var params, Multiplex* multiplex) :
 {
 }
 
-Parameter * ToFloatFilter::setupSingleParameterInternal(Parameter* source, int multiplexIndex)
+Parameter * ToFloatFilter::setupSingleParameterInternal(Parameter* source, int multiplexIndex, bool rangeOnly)
 {
-	Parameter* p = SimpleConversionFilter::setupSingleParameterInternal(source, multiplexIndex);
+	Parameter* p = SimpleConversionFilter::setupSingleParameterInternal(source, multiplexIndex, rangeOnly);
 
 	if (source->hasRange())
 	{
@@ -271,14 +284,16 @@ var ToColorFilter::getJSONData()
 	return data;
 }
 
-Parameter* ToColorFilter::setupSingleParameterInternal(Parameter* sourceParam, int multiplexIndex)
+Parameter* ToColorFilter::setupSingleParameterInternal(Parameter* sourceParam, int multiplexIndex, bool rangeOnly)
 {
 	String oldKey = "";
 	if (retargetComponent != nullptr) oldKey = retargetComponent->getValueKey();
 
-	Parameter* p = SimpleConversionFilter::setupSingleParameterInternal(sourceParam, multiplexIndex);
+	Parameter* p = SimpleConversionFilter::setupSingleParameterInternal(sourceParam, multiplexIndex, rangeOnly);
 
 	if (multiplexIndex != 0) return p; //only setup for 1st if multiplex
+
+	if (rangeOnly) return p;
 
 	if (transferType != TARGET)
 	{

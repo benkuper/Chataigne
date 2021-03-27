@@ -22,17 +22,20 @@ LagFilter::~LagFilter()
 
 }
 
-void LagFilter::setupParametersInternal(int multiplexIndex)
+void LagFilter::setupParametersInternal(int multiplexIndex, bool rangeOnly)
 {
-	paramTempValueMap.clear();
-	MappingFilter::setupParametersInternal(multiplexIndex);
+	if(!rangeOnly) paramTempValueMap.clear();
+	MappingFilter::setupParametersInternal(multiplexIndex, rangeOnly);
 }
 
-Parameter* LagFilter::setupSingleParameterInternal(Parameter* source, int multiplexIndex)
+Parameter* LagFilter::setupSingleParameterInternal(Parameter* source, int multiplexIndex, bool rangeOnly)
 {
-	var tmpVal = var(source->getValue()); //shoud maybe copy the values or is it enough ?
-	paramTempValueMap.set(source, tmpVal);
-	return MappingFilter::setupSingleParameterInternal(source, multiplexIndex);
+	if (!rangeOnly)
+	{
+		var tmpVal = var(source->getValue()); //shoud maybe copy the values or is it enough ?
+		paramTempValueMap.set(source, tmpVal);
+	}
+	return MappingFilter::setupSingleParameterInternal(source, multiplexIndex, rangeOnly);
 }
 
 MappingFilter::ProcessResult  LagFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)

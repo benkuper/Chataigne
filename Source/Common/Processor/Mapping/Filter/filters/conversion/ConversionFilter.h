@@ -39,7 +39,7 @@ public:
 
 	ConversionParamValueLink* getLinkForOut(ConvertedParameter* out, int outValueIndex);
 
-	void setupParametersInternal(int multiplexIndex) override;
+	void setupParametersInternal(int multiplexIndex, bool rangeOnly) override;
 	ProcessResult processInternal(Array<Parameter *> inputs, int multiplexIndex) override;
 
 	void askForRemove(ConversionParamValueLink* link) override;

@@ -20,7 +20,7 @@ public:
 	FloatParameter * targetMin;
 	FloatParameter * targetMax;
 
-	Parameter* setupSingleParameterInternal(Parameter* source, int multiplexIndex) override;
+	Parameter* setupSingleParameterInternal(Parameter* source, int multiplexIndex, bool rangeOnly) override;
 	ProcessResult processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;
 
 	void filterParamChanged(Parameter *) override;

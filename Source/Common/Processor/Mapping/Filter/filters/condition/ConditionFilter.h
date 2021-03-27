@@ -19,7 +19,7 @@ public:
 
 	ConditionManager cdm;
 
-	void setupParametersInternal(int multiplexIndex) override;
+	void setupParametersInternal(int multiplexIndex, bool rangeOnly = false) override;
 	ProcessResult processInternal(Array<Parameter *> inputs, int multiplexIndex) override;
 	ProcessResult processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;
 

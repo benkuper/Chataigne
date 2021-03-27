@@ -75,6 +75,7 @@ MappingFilter::ProcessResult MappingFilterManager::processFilters(Array<Paramete
 
 	for (auto &f : items)
 	{
+		if (!f->enabled->boolValue()) continue; //f
 		MappingFilter::ProcessResult r = f->process(fp, multiplexIndex);
 		if (r == MappingFilter::STOP_HERE) return MappingFilter::STOP_HERE;
 		else if (r == MappingFilter::CHANGED) result = MappingFilter::CHANGED;
@@ -88,11 +89,14 @@ MappingFilter::ProcessResult MappingFilterManager::processFilters(Array<Paramete
 	return result;
 }
 
-bool MappingFilterManager::rebuildFilterChain(MappingFilter * afterThisFilter, int multiplexIndex)
+bool MappingFilterManager::rebuildFilterChain(MappingFilter * afterThisFilter, int multiplexIndex, bool rangeOnly)
 {
 	Array<Parameter *> fp = inputSources[multiplexIndex];
-	lastEnabledFilter = nullptr;
+
+	if (!rangeOnly) lastEnabledFilter = nullptr;
+	
 	bool foundFilter = afterThisFilter == nullptr?true:false;
+	
 	for (auto& f : items)
 	{
 		if (f == afterThisFilter)
@@ -106,24 +110,27 @@ bool MappingFilterManager::rebuildFilterChain(MappingFilter * afterThisFilter, i
 			if (!foundFilter) continue;
 			if (!f->enabled->boolValue()) continue;
 
-			bool setupResult = f->setupSources(fp, multiplexIndex);
+			bool setupResult = f->setupSources(fp, multiplexIndex, rangeOnly);
 			if (!setupResult) continue;
 		}
 		
-		OwnedArray<Parameter>* fParams = f->filteredParameters[multiplexIndex];
-		fp = Array<Parameter*>(fParams->getRawDataPointer(), fParams->size());
-		lastEnabledFilter = f;
+		if (!rangeOnly)
+		{
+			OwnedArray<Parameter>* fParams = f->filteredParameters[multiplexIndex];
+			fp = Array<Parameter*>(fParams->getRawDataPointer(), fParams->size());
+			lastEnabledFilter = f;
+		}
 	}
 
-	filteredParameters.set(multiplexIndex, fp);
+	if(!rangeOnly) filteredParameters.set(multiplexIndex, fp);
 
 	return true;
 }
 
-void MappingFilterManager::notifyNeedsRebuild(MappingFilter* afterThisFilter)
+void MappingFilterManager::notifyNeedsRebuild(MappingFilter* afterThisFilter, bool rangeOnly)
 {
 	if (isCurrentlyLoadingData) return;
-	filterManagerListeners.call(&FilterManagerListener::filterManagerNeedsRebuild, afterThisFilter);
+	filterManagerListeners.call(&FilterManagerListener::filterManagerNeedsRebuild, afterThisFilter, rangeOnly);
 }
 
 Array<Parameter *> MappingFilterManager::getLastFilteredParameters(int multiplexIndex)
@@ -177,7 +184,7 @@ void MappingFilterManager::filteredParamsChanged(MappingFilter* mf)
 
 void MappingFilterManager::filteredParamRangeChanged(MappingFilter* mf)
 {
-	notifyNeedsRebuild(mf);
+	notifyNeedsRebuild(mf, true);
 }
 
 void MappingFilterManager::loadJSONDataManagerInternal(var data)

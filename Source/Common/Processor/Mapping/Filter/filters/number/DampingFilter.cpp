@@ -27,16 +27,17 @@ DampingFilter::~DampingFilter()
 }
 
 
-void DampingFilter::setupParametersInternal(int multiplexIndex)
+void DampingFilter::setupParametersInternal(int multiplexIndex, bool rangeOnly)
 {
-	previousSpeedsMap.clear();
-	MappingFilter::setupParametersInternal(multiplexIndex);
+	if(!rangeOnly) previousSpeedsMap.clear();
+	MappingFilter::setupParametersInternal(multiplexIndex, rangeOnly);
 }
 
-Parameter* DampingFilter::setupSingleParameterInternal(Parameter* source, int multiplexIndex)
+Parameter* DampingFilter::setupSingleParameterInternal(Parameter* source, int multiplexIndex, bool rangeOnly)
 {
 	Parameter* p = nullptr;
-	if (source->type == Controllable::BOOL)
+
+	if (!rangeOnly && source->type == Controllable::BOOL)
 	{
 		p = new FloatParameter(source->niceName, source->description, source->value, 0, 1);
 		p->isSavable = false;
@@ -44,18 +45,21 @@ Parameter* DampingFilter::setupSingleParameterInternal(Parameter* source, int mu
 	}
 	else
 	{
-		p = MappingFilter::setupSingleParameterInternal(source, multiplexIndex);
+		p = MappingFilter::setupSingleParameterInternal(source, multiplexIndex, rangeOnly);
 	}
 
-	if (!source->isComplex())
+	if (!rangeOnly)
 	{
-		previousSpeedsMap.set(source, 0);
-	}
-	else
-	{
-		var s;
-		for (int i = 0; i < source->value.size(); i++) s.append(0);
-		previousSpeedsMap.set(source, s);
+		if (!source->isComplex())
+		{
+			previousSpeedsMap.set(source, 0);
+		}
+		else
+		{
+			var s;
+			for (int i = 0; i < source->value.size(); i++) s.append(0);
+			previousSpeedsMap.set(source, s);
+		}
 	}
 
 	return p;

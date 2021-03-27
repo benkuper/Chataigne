@@ -25,10 +25,10 @@ SimpleSmoothFilter::~SimpleSmoothFilter()
 }
 
 
-Parameter* SimpleSmoothFilter::setupSingleParameterInternal(Parameter* source, int multiplexIndex)
+Parameter* SimpleSmoothFilter::setupSingleParameterInternal(Parameter* source, int multiplexIndex, bool rangeOnly)
 {
 	Parameter* p = nullptr;
-	if (source->type == Controllable::BOOL)
+	if (!rangeOnly && source->type == Controllable::BOOL)
 	{
 		p = new FloatParameter(source->niceName, source->description, source->value, 0, 1);
 		p->isSavable = false;
@@ -36,7 +36,7 @@ Parameter* SimpleSmoothFilter::setupSingleParameterInternal(Parameter* source, i
 	}
 	else
 	{
-		p = MappingFilter::setupSingleParameterInternal(source, multiplexIndex);
+		p = MappingFilter::setupSingleParameterInternal(source, multiplexIndex, rangeOnly);
 	}
 
 	return p;

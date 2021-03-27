@@ -33,85 +33,102 @@ MappingFilter::~MappingFilter()
 	clearItem();
 }
 
-bool MappingFilter::setupSources(Array<Parameter*> sources, int multiplexIndex)
+bool MappingFilter::setupSources(Array<Parameter*> sources, int multiplexIndex, bool rangeOnly)
 {
 	if (isClearing) return false;
 
-
-	for (auto& source : sources) if (source == nullptr) return false; //check that all sources are valid
-
-	sourceParams.ensureStorageAllocated(multiplexIndex+1);
-
-	Array<WeakReference<Parameter>> mSourceParams = sourceParams[multiplexIndex];
-	for (auto& sourceParam : mSourceParams)
+	if (!rangeOnly)
 	{
-		if (sourceParam != nullptr) sourceParam->removeParameterListener(this);
-	}
 
-	filteredParameters.ensureStorageAllocated(multiplexIndex+1);
+		for (auto& source : sources) if (source == nullptr) return false; //check that all sources are valid
 
-	if (filteredParameters[multiplexIndex] == nullptr) filteredParameters.set(multiplexIndex, new OwnedArray<Parameter>());
+		sourceParams.ensureStorageAllocated(multiplexIndex + 1);
 
-	for (auto& filteredParameter : *filteredParameters[multiplexIndex])
-	{
-		if (filteredParameter != nullptr)
+		Array<WeakReference<Parameter>> mSourceParams = sourceParams[multiplexIndex];
+		for (auto& sourceParam : mSourceParams)
 		{
-			filteredParameter->removeParameterListener(this);
-			removeControllable(filteredParameter);
+			if (sourceParam != nullptr) sourceParam->removeParameterListener(this);
+		}
+
+		filteredParameters.ensureStorageAllocated(multiplexIndex + 1);
+
+		if (filteredParameters[multiplexIndex] == nullptr) filteredParameters.set(multiplexIndex, new OwnedArray<Parameter>());
+
+		for (auto& filteredParameter : *filteredParameters[multiplexIndex])
+		{
+			if (filteredParameter != nullptr)
+			{
+				filteredParameter->removeParameterListener(this);
+				removeControllable(filteredParameter);
+			}
+		}
+
+		sourceParams[multiplexIndex].clear();
+
+		previousValues.clear();
+		for (int i = 0; i < getMultiplexCount(); i++) previousValues.add(var());
+
+		sourceParams.set(multiplexIndex, Array<WeakReference<Parameter>>(sources.getRawDataPointer(), sources.size()));
+		mSourceParams = sourceParams[multiplexIndex];
+
+		for (auto& source : mSourceParams)
+		{
+			source->addParameterListener(this);
 		}
 	}
 
-	sourceParams[multiplexIndex].clear();
+	setupParametersInternal(multiplexIndex, rangeOnly);
 
-	previousValues.clear();
-	for (int i = 0; i < getMultiplexCount();i++) previousValues.add(var());
-
-	sourceParams.set(multiplexIndex, Array<WeakReference<Parameter>>(sources.getRawDataPointer(), sources.size()));
-	mSourceParams = sourceParams[multiplexIndex];
-
-	for (auto& source : mSourceParams)
+	if (!rangeOnly)
 	{
-		source->addParameterListener(this);
+		for (auto& filteredParameter : *filteredParameters[multiplexIndex])
+		{
+			filteredParameter->isControllableFeedbackOnly = true;
+			filteredParameter->addParameterListener(this);
+		}
+
+		filterAsyncNotifier.addMessage(new FilterEvent(FilterEvent::FILTER_REBUILT, this));
 	}
-
-
-	setupParametersInternal(multiplexIndex);
-
-	for (auto& filteredParameter : *filteredParameters[multiplexIndex])
-	{
-		filteredParameter->isControllableFeedbackOnly = true;
-		filteredParameter->addParameterListener(this);
-	}
-
-	filterAsyncNotifier.addMessage(new FilterEvent(FilterEvent::FILTER_REBUILT, this));
 
 	return true;
 }
 
-void MappingFilter::setupParametersInternal(int multiplexIndex)
+void MappingFilter::setupParametersInternal(int multiplexIndex, bool rangeOnly)
 {
-	if (filteredParameters.size() == 0) return;
 
+	if (filteredParameters.size() == 0) return;
+	
 	if (multiplexIndex == -1)
 	{
 		for (int i = 0; i < getMultiplexCount(); i++) setupParametersInternal(i);
 		return;
 	}
 
-	filteredParameters[multiplexIndex]->clear();
+	if (!rangeOnly) filteredParameters[multiplexIndex]->clear();
 
 	for (auto& source : sourceParams[multiplexIndex])
 	{
-		Parameter* p = setupSingleParameterInternal(source, multiplexIndex);
-		filteredParameters[multiplexIndex]->add(p);
+		Parameter* p = setupSingleParameterInternal(source, multiplexIndex, rangeOnly);
+		if (!rangeOnly) filteredParameters[multiplexIndex]->add(p);
 	}
 }
 
-Parameter* MappingFilter::setupSingleParameterInternal(Parameter* source, int multiplexIndex)
+Parameter* MappingFilter::setupSingleParameterInternal(Parameter* source, int multiplexIndex, bool rangeOnly)
 {
-	Parameter* p = ControllableFactory::createParameterFrom(source, true, true);
-	p->isSavable = false;
-	p->setControllableFeedbackOnly(true);
+	Parameter* p = nullptr;
+	if (!rangeOnly)
+	{
+		p = ControllableFactory::createParameterFrom(source, true, true);
+		p->isSavable = false;
+		p->setControllableFeedbackOnly(true);
+	}
+	else
+	{
+		int index = sourceParams[multiplexIndex].indexOf(source);
+		if (index >= 0) p = (*filteredParameters[multiplexIndex])[index];
+		if (p != nullptr && p->hasRange()) p->setRange(source->minimumValue, source->maximumValue);
+	}
+	
 	return p;
 }
 

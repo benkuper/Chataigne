@@ -45,7 +45,7 @@ public:
 	void lockInputTo(Array<Parameter*> lockParam);
 	void checkFiltersNeedContinuousProcess();
 
-	void updateMappingChain(MappingFilter * afterThisFilter = nullptr, bool processAfter = true); //will host warnings and type change checks
+	void updateMappingChain(MappingFilter * afterThisFilter = nullptr, bool processAfter = true, bool rangeOnly = false); //will host warnings and type change checks
 	virtual void multiplexCountChanged() override;
 	virtual void multiplexPreviewIndexChanged() override;
 
@@ -70,7 +70,7 @@ public:
 	void onContainerParameterChangedInternal(Parameter* p) override;
 	void onControllableStateChanged(Controllable* c) override;
 
-	void filterManagerNeedsRebuild(MappingFilter* afterThisFilter) override;
+	void filterManagerNeedsRebuild(MappingFilter* afterThisFilter, bool rangeOnly) override;
 	void filterManagerNeedsProcess() override;
 
 	virtual void clearItem() override;

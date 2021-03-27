@@ -153,17 +153,17 @@ ConversionParamValueLink* ConversionFilter::getLinkForOut(ConvertedParameter* ou
 	return nullptr;
 }
 
-void ConversionFilter::setupParametersInternal(int multiplexIndex)
+void ConversionFilter::setupParametersInternal(int multiplexIndex, bool rangeOnly)
 {
 	//do not call parent, we have our own filteredParameterCreation implementation
 
-	while (filteredParameters.size() < getMultiplexCount()) filteredParameters.add(new OwnedArray<Parameter>());
-
-	//need here to reconnect links to new source parameters
-
-	relinkGhostData();
-
-	conversionFilterAsyncNotifier.addMessage(new ConversionFilterEvent(ConversionFilterEvent::SOURCES_UPDATED));
+	if (!rangeOnly)
+	{
+		while (filteredParameters.size() < getMultiplexCount()) filteredParameters.add(new OwnedArray<Parameter>());
+		//need here to reconnect links to new source parameters
+		relinkGhostData();
+		conversionFilterAsyncNotifier.addMessage(new ConversionFilterEvent(ConversionFilterEvent::SOURCES_UPDATED));
+	}
 }
 
 MappingFilter::ProcessResult ConversionFilter::processInternal(Array<Parameter *> inputs, int multiplexIndex)

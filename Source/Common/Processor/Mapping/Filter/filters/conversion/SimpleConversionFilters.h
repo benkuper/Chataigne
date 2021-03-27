@@ -30,7 +30,7 @@ public:
 	enum TransferType { DIRECT, EXTRACT, TARGET};
 	TransferType transferType;
 
-	virtual Parameter* setupSingleParameterInternal(Parameter* source, int multiplexIndex) override;
+	virtual Parameter* setupSingleParameterInternal(Parameter* source, int multiplexIndex, bool rangeOnly) override;
 	virtual ProcessResult processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;
 	virtual var convertValue(Parameter * source, var sourceValue) { return var(sourceValue) ; }
 };
@@ -56,7 +56,7 @@ public:
 	ToFloatFilter(var params, Multiplex* multiplex);
 	~ToFloatFilter() {}
 
-	virtual Parameter * setupSingleParameterInternal(Parameter* source, int multiplexIndex) override;
+	virtual Parameter * setupSingleParameterInternal(Parameter* source, int multiplexIndex, bool rangeOnly) override;
 	var convertValue(Parameter * source, var sourceValue) override;
 
 	String getTypeString() const override { return "Convert To Float"; }
@@ -142,7 +142,7 @@ public:
 
 	var getJSONData() override;
 
-	Parameter* setupSingleParameterInternal(Parameter* sourceParam, int multiplexIndex) override;
+	Parameter* setupSingleParameterInternal(Parameter* sourceParam, int multiplexIndex, bool rangeOnly) override;
 	ProcessResult processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;
 
 

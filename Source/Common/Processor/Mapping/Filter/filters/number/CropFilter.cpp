@@ -29,12 +29,12 @@ CropFilter::~CropFilter()
 {
 }
 
-Parameter * CropFilter::setupSingleParameterInternal(Parameter * source, int multiplexIndex)
+Parameter * CropFilter::setupSingleParameterInternal(Parameter * source, int multiplexIndex, bool rangeOnly)
 {
 	float tMin = filterParams.getLinkedValue(targetMin, multiplexIndex);
 	float tMax = filterParams.getLinkedValue(targetMax, multiplexIndex);
 
-	Parameter * p = MappingFilter::setupSingleParameterInternal(source, multiplexIndex);
+	Parameter * p = MappingFilter::setupSingleParameterInternal(source, multiplexIndex, rangeOnly);
 	if (p->isComplex())
 	{
 		var minVal;

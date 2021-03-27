@@ -23,8 +23,8 @@ public:
 	Point2DParameter * targetOut;
 	BoolParameter* forceFloatOutput;
 
-	virtual bool setupSources(Array<Parameter*> sources, int multiplexIndex) override;
-	Parameter * setupSingleParameterInternal(Parameter * source, int multiplexIndex) override;
+	virtual bool setupSources(Array<Parameter*> sources, int multiplexIndex, bool rangeOnly) override;
+	Parameter * setupSingleParameterInternal(Parameter * source, int multiplexIndex, bool rangeOnly) override;
 	ProcessResult processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;
 
 	var getRemappedValueFor(Parameter* source, int multiplexIndex); //allow for child classes to invoke this 

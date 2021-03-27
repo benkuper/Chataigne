@@ -27,8 +27,8 @@ public:
 	Factory<MappingFilter> factory;
 
 	bool setupSources(Array<Parameter *> sources, int multiplexIndex);
-	bool rebuildFilterChain(MappingFilter * afterThisFilter = nullptr, int multiplexIndex = -1);
-	void notifyNeedsRebuild(MappingFilter * afterThisFilter = nullptr);
+	bool rebuildFilterChain(MappingFilter * afterThisFilter = nullptr, int multiplexIndex = -1, bool rangeOnly = false);
+	void notifyNeedsRebuild(MappingFilter* afterThisFilter = nullptr, bool rangeOnly = false);
 
 	WeakReference<MappingFilter> getLastEnabledFilter() { return lastEnabledFilter; }
 	Array<Parameter *> getLastFilteredParameters(int multiplexIndex);
@@ -53,7 +53,7 @@ public:
 	public:
 		/** Destructor. */
 		virtual ~FilterManagerListener() {}
-		virtual void filterManagerNeedsRebuild(MappingFilter* afterThisFilter) {}
+		virtual void filterManagerNeedsRebuild(MappingFilter* afterThisFilter, bool rangeOnly) {}
 		virtual void filterManagerNeedsProcess() {}
 	};
 

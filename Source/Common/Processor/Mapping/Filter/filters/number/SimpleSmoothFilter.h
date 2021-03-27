@@ -23,7 +23,7 @@ public:
 
 	const float precision = .00001f;
 
-	Parameter* setupSingleParameterInternal(Parameter* source, int multiplexIndex) override;
+	Parameter* setupSingleParameterInternal(Parameter* source, int multiplexIndex, bool rangeOnly) override;
 	ProcessResult processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;
 
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;

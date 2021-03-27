@@ -25,8 +25,8 @@ public:
 	double timeAtLastUpdate;
 	const float precision = .00001f;
 
-	void setupParametersInternal(int multiplexIndex) override;
-	Parameter* setupSingleParameterInternal(Parameter* source, int multiplexIndex) override;
+	void setupParametersInternal(int multiplexIndex, bool rangeOnly) override;
+	Parameter* setupSingleParameterInternal(Parameter* source, int multiplexIndex, bool rangeOnly) override;
 	ProcessResult processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;
 
 	String getTypeString() const override { return "Damping"; }
