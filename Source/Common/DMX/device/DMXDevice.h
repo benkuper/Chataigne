@@ -24,6 +24,8 @@ public:
 	bool enabled;
 	bool isConnected;
 	
+	CriticalSection dmxLock;
+
 	uint8 dmxDataOut[512];
 	uint8 dmxDataIn[512];
 	bool canReceive;

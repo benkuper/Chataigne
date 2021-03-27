@@ -60,23 +60,30 @@ void DMXDevice::setConnected(bool value)
 
 void DMXDevice::sendDMXValue(int channel, int value) //channel 1-512
 {
-	if (channel < 0 || channel > 512) return;
-	dmxDataOut[channel-1] = (uint8)value;
+	{
+		ScopedLock lock(dmxLock);
+		if (channel < 0 || channel > 512) return;
+		dmxDataOut[channel - 1] = (uint8)value;
+	}
+	
 	if (!alwaysSend->boolValue()) sendDMXValues();
 }
 
 void DMXDevice::sendDMXRange(int startChannel, Array<int> values)
 {
-	int numValues = values.size();
-	for (int i = 0; i < numValues; ++i)
 	{
-		int channel = startChannel + i;
-		if (channel < 0) continue;
-		if (channel > 512) break;
+		ScopedLock lock(dmxLock);
+		int numValues = values.size();
+		for (int i = 0; i < numValues; ++i)
+		{
+			int channel = startChannel + i;
+			if (channel < 0) continue;
+			if (channel > 512) break;
 
-		dmxDataOut[channel - 1] = (uint8)(values[i]);
+			dmxDataOut[channel - 1] = (uint8)(values[i]);
+		}
 	}
-
+	
 	if (!alwaysSend->boolValue()) sendDMXValues();
 	
 }
@@ -90,6 +97,8 @@ void DMXDevice::setDMXValuesIn(int numChannels, uint8* values)
 void DMXDevice::sendDMXValues()
 {
 	if (!outputCC->enabled->boolValue()) return;
+
+	ScopedLock lock(dmxLock);
 	sendDMXValuesInternal();
 }
 
