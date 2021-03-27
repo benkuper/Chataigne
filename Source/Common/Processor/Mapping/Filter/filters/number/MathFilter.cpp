@@ -221,7 +221,7 @@ float MathFilter::getProcessedValue(float val, int index, int multiplexIndex)
 		case ROUND: return roundToInt(val);
 		case MAX: return std::max(oVal, val);
 		case MIN: return std::min(oVal, val);
-		case ABSOLUTE: return std::fabsf(val);
+		case ABSOLUTE: return std::fabs(val);
 	}
 
 	return val;
