@@ -1,14 +1,15 @@
+#include "SimpleConversionFilters.h"
 /*
   ==============================================================================
 
-    SimpleConversionFilters.cpp
-    Created: 17 Apr 2018 10:25:04am
-    Author:  Ben
+	SimpleConversionFilters.cpp
+	Created: 17 Apr 2018 10:25:04am
+	Author:  Ben
 
   ==============================================================================
 */
 
-SimpleConversionFilter::SimpleConversionFilter(const String &name, var params, StringRef outTypeString, Multiplex* multiplex) :
+SimpleConversionFilter::SimpleConversionFilter(const String& name, var params, StringRef outTypeString, Multiplex* multiplex) :
 	MappingFilter(name, params, multiplex),
 	retargetComponent(nullptr),
 	outTypeString(outTypeString)
@@ -38,7 +39,7 @@ Parameter* SimpleConversionFilter::setupSingleParameterInternal(Parameter* sourc
 		}
 	}
 
-	Parameter* p = (Parameter *)ControllableFactory::getInstance()->createControllable(outTypeString);
+	Parameter* p = (Parameter*)ControllableFactory::getInstance()->createControllable(outTypeString);
 	p->setNiceName(source->niceName);
 
 	if (multiplexIndex != 0) return p; //only setup for 1st if multiplex multiplex
@@ -58,7 +59,7 @@ Parameter* SimpleConversionFilter::setupSingleParameterInternal(Parameter* sourc
 		retargetComponent->hideInEditor = false;
 		transferType = p->isComplex() ? TARGET : EXTRACT;
 		retargetComponent->setNiceName(transferType == TARGET ? "Target Component" : "Extract Component");
-		Parameter * retargetP = transferType == TARGET ? p : source;
+		Parameter* retargetP = transferType == TARGET ? p : source;
 		StringArray valueNames = retargetP->getValuesNames();
 		for (int i = 0; i < valueNames.size(); ++i)
 		{
@@ -78,21 +79,21 @@ MappingFilter::ProcessResult SimpleConversionFilter::processSingleParameterInter
 	{
 	case DIRECT:
 	{
-		if (!source->isComplex()) out->setValue(convertValue(source, source->getValue()));
+		if (!source->isComplex()) out->setValue(convertValue(source, source->getValue(), multiplexIndex));
 		else
 		{
 			var val = var();
 			var sourceVal = source->getValue();
-			for (int i = 0; i < source->value.size() && i < out->value.size(); ++i) val.append(convertValue(source, sourceVal[i]));
+			for (int i = 0; i < source->value.size() && i < out->value.size(); ++i) val.append(convertValue(source, sourceVal[i], multiplexIndex));
 			while (val.size() < out->value.size()) val.append(0);
 			out->setValue(val);
 		}
 	}
 	break;
 
-	case EXTRACT: 
+	case EXTRACT:
 	{
-		out->setValue(convertValue(source, source->value[(int)retargetComponent->getValueData()]));
+		out->setValue(convertValue(source, source->value[(int)retargetComponent->getValueData()], multiplexIndex));
 		DBG("Extracted out value : " << out->floatValue());
 	}
 	break;
@@ -101,7 +102,7 @@ MappingFilter::ProcessResult SimpleConversionFilter::processSingleParameterInter
 	{
 		var val = var();
 		for (int i = 0; i < out->value.size(); ++i) val.append(0);
-		val[(int)retargetComponent->getValueData()] = convertValue(source, source->getValue());
+		val[(int)retargetComponent->getValueData()] = convertValue(source, source->getValue(), multiplexIndex);
 		out->setValue(val);
 	}
 	break;
@@ -135,7 +136,7 @@ ToFloatFilter::ToFloatFilter(var params, Multiplex* multiplex) :
 {
 }
 
-Parameter * ToFloatFilter::setupSingleParameterInternal(Parameter* source, int multiplexIndex, bool rangeOnly)
+Parameter* ToFloatFilter::setupSingleParameterInternal(Parameter* source, int multiplexIndex, bool rangeOnly)
 {
 	Parameter* p = SimpleConversionFilter::setupSingleParameterInternal(source, multiplexIndex, rangeOnly);
 
@@ -155,7 +156,7 @@ Parameter * ToFloatFilter::setupSingleParameterInternal(Parameter* source, int m
 	return p;
 }
 
-var ToFloatFilter::convertValue(Parameter * source, var sourceValue)
+var ToFloatFilter::convertValue(Parameter* source, var sourceValue, int multiplexIndex)
 {
 	if (sourceValue.isString()) return sourceValue.toString().getFloatValue();
 	return (float)sourceValue;
@@ -165,25 +166,42 @@ var ToFloatFilter::convertValue(Parameter * source, var sourceValue)
 ToIntFilter::ToIntFilter(var params, Multiplex* multiplex) :
 	SimpleConversionFilter(getTypeString(), params, IntParameter::getTypeStringStatic(), multiplex)
 {
-	modeParam = addEnumParameter("Mode", "Conversion mode");
+	modeParam = filterParams.addEnumParameter("Mode", "Conversion mode");
 	modeParam->addOption("Round", ROUND)->addOption("Floor", FLOOR)->addOption("Ceil", CEIL);
 }
 
-var ToIntFilter::convertValue(Parameter * source, var sourceValue)
+var ToIntFilter::convertValue(Parameter* source, var sourceValue, int multiplexIndex)
 {
 	Mode m = modeParam->getValueDataAsEnum<Mode>();
-	switch(m)
+
+	if (source->type == Parameter::ENUM)
 	{
-	case ROUND: return roundf(source->floatValue());
-	case FLOOR: return floorf(source->floatValue()); 
-	case CEIL:  return ceilf(source->floatValue());
+		EnumParameter* ep = (EnumParameter*)source;
+		if (ep->getValueData().isInt() || ep->getValueData().isDouble()) return (int)ep->getValueData();
+		else return ep->getIndexForKey(ep->getValueKey());
+	}
+	else
+	{
+		switch (m)
+		{
+		case ROUND: return roundf(source->floatValue());
+		case FLOOR: return floorf(source->floatValue());
+		case CEIL:  return ceilf(source->floatValue());
+		}
+
 	}
 
 	return 0;
 }
 
 ToStringFilter::ToStringFilter(var params, Multiplex* multiplex) :
-	SimpleConversionFilter(getTypeString(), params, StringParameter::getTypeStringStatic(), multiplex)
+	SimpleConversionFilter(getTypeString(), params, StringParameter::getTypeStringStatic(), multiplex),
+	format(nullptr),
+	numDecimals(nullptr),
+	fixedLeading(nullptr),
+	prefix(nullptr),
+	suffix(nullptr),
+	enumConvertMode(nullptr)
 {
 	format = filterParams.addEnumParameter("Format", "The format of the string");
 	format->addOption("Number", NUMBER)->addOption("Time", TIME);
@@ -195,51 +213,88 @@ ToStringFilter::ToStringFilter(var params, Multiplex* multiplex) :
 	suffix = filterParams.addStringParameter("Suffix", "Something appended  to the result", "");
 }
 
-var ToStringFilter::convertValue(Parameter * source, var sourceValue)
-{
-	String result = prefix->stringValue();
 
-	if (!sourceValue.isArray())
+void ToStringFilter::setupParametersInternal(int multiplexIndex, bool rangeOnly)
+{
+	SimpleConversionFilter::setupParametersInternal(multiplexIndex, rangeOnly);
+	if (multiplexIndex != 0 || rangeOnly) return;
+
+	Parameter* p = sourceParams[multiplexIndex].size() > 0 ? sourceParams[multiplexIndex][0] : nullptr;
+	if (p == nullptr) return;
+	
+	if (p->type == Parameter::FLOAT || p->type == Parameter::INT)
 	{
-		if (sourceValue.isString()) result += sourceValue.toString();
+		if (enumConvertMode != nullptr)
+		{
+			filterParams.removeControllable(enumConvertMode);
+			enumConvertMode = nullptr;
+		}
+	}
+	else
+	{
+		if (enumConvertMode == nullptr)
+		{
+			enumConvertMode = filterParams.addEnumParameter("Convert Mode", "What to convert in the enum");
+			enumConvertMode->addOption("Key", KEY)->addOption("Value", VALUE);
+		}
+	}
+}
+
+
+var ToStringFilter::convertValue(Parameter* source, var sourceValue, int multiplexIndex)
+{
+	String result = filterParams.getLinkedValue(prefix, multiplexIndex).toString();
+
+	var sv = sourceValue;
+
+	if (source->type == Parameter::ENUM)
+	{
+		EnumParameter* ep = (EnumParameter*)source;
+		ConvertMode m = enumConvertMode != nullptr ? enumConvertMode->getValueDataAsEnum<ConvertMode>() : KEY;
+		if (m == KEY) sv = ep->getValueKey();
+		else sv = ep->getValueData();
+	}
+
+	if (!sv.isArray())
+	{
+		if (sv.isString()) result += sv.toString();
 		else
 		{
-			if (sourceValue.isArray())
+			if (sv.isArray())
 			{
 				result = "[";
-				for (int i = 0; i < sourceValue.size(); i++) result += String(i >= 0 ? "," : "") + sourceValue[i].toString();
+				for (int i = 0; i < sv.size(); i++) result += String(i >= 0 ? "," : "") + sv[i].toString();
 				result += "]";
 			}
-			else if(sourceValue.isDouble() || sourceValue.isInt() || sourceValue.isInt64())
+			else if (sv.isDouble() || sv.isInt() || sv.isInt64())
 			{
 				Format f = format->getValueDataAsEnum<Format>();
 				switch (f)
 				{
 				case NUMBER:
-					result += String((float)sourceValue, numDecimals->intValue());
+					result += String((float)sv, (int)filterParams.getLinkedValue(numDecimals, multiplexIndex));
 					if (fixedLeading->enabled)
 					{
 						StringArray s;
 						s.addTokens(result, ".", "");
-						String first = String::repeatedString("0", fixedLeading->intValue() - s[0].length()) + s[0];
+						String first = String::repeatedString("0", (int)filterParams.getLinkedValue(fixedLeading, multiplexIndex) - s[0].length()) + s[0];
 						result = first + (s.size() > 1 ? "." + s[1] : "");
 					}
 					break;
 
 				case TIME:
-					result += StringUtil::valueToTimeString((float)sourceValue);
+					result += StringUtil::valueToTimeString((float)sv);
 					break;
 				}
 			}
-			
 		}
 	}
-	
-	result += suffix->stringValue();
+
+	result += filterParams.getLinkedValue(suffix, multiplexIndex).toString();
 	return result;
 }
 
-void ToStringFilter::filterParamChanged(Parameter * p)
+void ToStringFilter::filterParamChanged(Parameter* p)
 {
 	numDecimals->hideInEditor = format->getValueDataAsEnum<Format>() != NUMBER;
 	SimpleConversionFilter::filterParamChanged(p);
@@ -250,7 +305,7 @@ ToPoint2DFilter::ToPoint2DFilter(var params, Multiplex* multiplex) :
 {
 }
 
-var ToPoint2DFilter::convertValue(Parameter * source, var sourceValue)
+var ToPoint2DFilter::convertValue(Parameter* source, var sourceValue, int multiplexIndex)
 {
 	if (sourceValue.isString()) return sourceValue.toString().getFloatValue();
 	return (float)sourceValue;
@@ -261,7 +316,7 @@ ToPoint3DFilter::ToPoint3DFilter(var params, Multiplex* multiplex) :
 {
 }
 
-var ToPoint3DFilter::convertValue(Parameter * source, var sourceValue)
+var ToPoint3DFilter::convertValue(Parameter* source, var sourceValue, int multiplexIndex)
 {
 	if (sourceValue.isString()) return sourceValue.toString().getFloatValue();
 	return (float)sourceValue;
@@ -280,20 +335,20 @@ ToColorFilter::~ToColorFilter()
 var ToColorFilter::getJSONData()
 {
 	var data = SimpleConversionFilter::getJSONData();
-	if(baseColor != nullptr) data.getProperty("ghostOptions",var()).getDynamicObject()->setProperty("color", baseColor->getValue());
+	if (baseColor != nullptr) data.getProperty("ghostOptions", var()).getDynamicObject()->setProperty("color", baseColor->getValue());
 	return data;
 }
 
-Parameter* ToColorFilter::setupSingleParameterInternal(Parameter* sourceParam, int multiplexIndex, bool rangeOnly)
+void ToColorFilter::setupParametersInternal(int multiplexIndex, bool rangeOnly)
 {
+	SimpleConversionFilter::setupParametersInternal(multiplexIndex, rangeOnly);
+	if (multiplexIndex != 0 || rangeOnly) return;
+
+	Parameter* p = sourceParams[multiplexIndex].size() > 0 ? sourceParams[multiplexIndex][0] : nullptr;
+	if (p == nullptr) return;
+
 	String oldKey = "";
 	if (retargetComponent != nullptr) oldKey = retargetComponent->getValueKey();
-
-	Parameter* p = SimpleConversionFilter::setupSingleParameterInternal(sourceParam, multiplexIndex, rangeOnly);
-
-	if (multiplexIndex != 0) return p; //only setup for 1st if multiplex
-
-	if (rangeOnly) return p;
 
 	if (transferType != TARGET)
 	{
@@ -302,14 +357,14 @@ Parameter* ToColorFilter::setupSingleParameterInternal(Parameter* sourceParam, i
 			filterParams.removeControllable(baseColor);
 			baseColor = nullptr;
 		}
-		
+
 	}
 	else if (baseColor == nullptr)
 	{
 		baseColor = filterParams.addColorParameter("Base Color", "Color to use to convert", Colours::red);
 	}
 
-	switch(transferType)
+	switch (transferType)
 	{
 
 	case TARGET:
@@ -317,28 +372,26 @@ Parameter* ToColorFilter::setupSingleParameterInternal(Parameter* sourceParam, i
 		if (oldKey.isNotEmpty()) retargetComponent->setValueWithKey(oldKey);
 		else retargetComponent->setValueWithData(ghostOptions.getProperty("retarget", HUE));
 
-		if(baseColor != nullptr) baseColor->hideInEditor = false;
+		if (baseColor != nullptr) baseColor->hideInEditor = false;
 		break;
-            
-    default:
-		if(baseColor != nullptr) baseColor->hideInEditor = true;
-        break;
+
+	default:
+		if (baseColor != nullptr) baseColor->hideInEditor = true;
+		break;
 
 	}
 
 	if (ghostOptions.isObject())
 	{
-		if(ghostOptions.hasProperty("color")) baseColor->setValue(ghostOptions.getDynamicObject()->getProperty("color"));
+		if (ghostOptions.hasProperty("color")) baseColor->setValue(ghostOptions.getDynamicObject()->getProperty("color"));
 		ghostOptions = var();
 	}
-
-	return p;
 }
+
+
 
 MappingFilter::ProcessResult ToColorFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
 {
-	
-
 	if (source->value.isArray())
 	{
 		if (source->value.size() >= 3)
@@ -389,12 +442,12 @@ MappingFilter::ProcessResult ToColorFilter::processSingleParameterInternal(Param
 		{
 			var val = var();
 			for (int i = 0; i < out->value.size() && i < baseColorVal.size(); ++i) val.append(baseColorVal[i]); //force alpha to 1
-			val[(int)retargetComponent->getValueData()] = convertValue(source, source->getValue());
+			val[(int)retargetComponent->getValueData()] = convertValue(source, source->getValue(), multiplexIndex);
 			out->setValue(val);
 		}
 		break;
 		}
-		
+
 	}
 	break;
 
@@ -410,13 +463,15 @@ MappingFilter::ProcessResult ToColorFilter::processSingleParameterInternal(Param
 ToBooleanFilter::ToBooleanFilter(var params, Multiplex* multiplex) :
 	SimpleConversionFilter(getTypeString(), params, BoolParameter::getTypeStringStatic(), multiplex)
 {
-	toggleMode = addBoolParameter("Toggle Mode", "If checked, this will act as a toggle, and its value will be inverted when input value is 1", false);
+	toggleMode = filterParams.addBoolParameter("Toggle Mode", "If checked, this will act as a toggle, and its value will be inverted when input value is 1", false);
 }
 
 MappingFilter::ProcessResult ToBooleanFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
 {
-	bool val = (source->value.isString() ?source->value.toString().getFloatValue():source->floatValue()) >= 1;
-	if (toggleMode->boolValue())
+	bool val = (source->value.isString() ? source->value.toString().getFloatValue() : source->floatValue()) >= 1;
+
+	bool tMode = (bool)(int)filterParams.getLinkedValue(toggleMode, multiplexIndex);
+	if (tMode)
 	{
 		if (val) out->setValue(!out->boolValue());
 	}

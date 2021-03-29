@@ -21,7 +21,6 @@ public:
 	var retargetValues; //ghosting
 	String outTypeString;
 
-
 	var ghostOptions;
 
 	var getJSONData() override;
@@ -32,7 +31,7 @@ public:
 
 	virtual Parameter* setupSingleParameterInternal(Parameter* source, int multiplexIndex, bool rangeOnly) override;
 	virtual ProcessResult processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;
-	virtual var convertValue(Parameter * source, var sourceValue) { return var(sourceValue) ; }
+	virtual var convertValue(Parameter * source, var sourceValue, int multiplexIndex) { return var(sourceValue) ; }
 };
 
 class ToBooleanFilter :
@@ -57,7 +56,7 @@ public:
 	~ToFloatFilter() {}
 
 	virtual Parameter * setupSingleParameterInternal(Parameter* source, int multiplexIndex, bool rangeOnly) override;
-	var convertValue(Parameter * source, var sourceValue) override;
+	var convertValue(Parameter * source, var sourceValue, int multiplexIndex) override;
 
 	String getTypeString() const override { return "Convert To Float"; }
 };
@@ -72,7 +71,7 @@ public:
 	enum Mode { FLOOR, ROUND, CEIL };
 	EnumParameter * modeParam;
 
-	var convertValue(Parameter * source, var sourceValue) override;
+	var convertValue(Parameter * source, var sourceValue, int multiplexIndex) override;
 
 	String getTypeString() const override { return "Convert To Integer"; }
 
@@ -91,9 +90,12 @@ public:
 	IntParameter * fixedLeading;
 	StringParameter* prefix;
 	StringParameter* suffix;
-	//IntParameter * numLeadingZeros;
+	enum ConvertMode { KEY, VALUE };
+	EnumParameter * enumConvertMode;
 
-	var convertValue(Parameter * source, var sourceValue) override;
+	void setupParametersInternal(int multiplexIndex, bool rangeOnly) override;
+	var convertValue(Parameter * source, var sourceValue, int multiplexIndex) override;
+
 
 	void filterParamChanged(Parameter*) override;
 
@@ -109,7 +111,7 @@ public:
 	ToPoint2DFilter(var params, Multiplex* multiplex);
 	~ToPoint2DFilter() {}
 
-	var convertValue(Parameter * source, var sourceValue) override;
+	var convertValue(Parameter * source, var sourceValue, int multiplexIndex) override;
 
 	String getTypeString() const override { return "Convert To Point2D"; }
 
@@ -123,7 +125,7 @@ public:
 	ToPoint3DFilter(var params, Multiplex* multiplex);
 	~ToPoint3DFilter() {}
 
-	var convertValue(Parameter * source, var sourceValue) override;
+	var convertValue(Parameter * source, var sourceValue, int multiplexIndex) override;
 
 	String getTypeString() const override { return "Convert To Point3D"; }
 
@@ -142,7 +144,7 @@ public:
 
 	var getJSONData() override;
 
-	Parameter* setupSingleParameterInternal(Parameter* sourceParam, int multiplexIndex, bool rangeOnly) override;
+	void setupParametersInternal(int multiplexIndex, bool rangeOnly) override;
 	ProcessResult processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;
 
 
