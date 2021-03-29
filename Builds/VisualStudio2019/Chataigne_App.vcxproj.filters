@@ -1693,6 +1693,9 @@
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ConvertedParameterManager.cpp">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\conversion</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\color\ColorRemapFilter.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\color</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\color\ColorShiftFilter.cpp">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\color</Filter>
     </ClCompile>
@@ -5693,6 +5696,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ConvertedParameterManager.h">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\conversion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\color\ColorRemapFilter.h">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\color</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\color\ColorShiftFilter.h">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\color</Filter>

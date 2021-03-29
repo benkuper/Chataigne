@@ -381,6 +381,7 @@
 		55E5E4547FF6CFC7E6F7C586 /* ../../Source/TimeMachine/Sequence/ChataigneSequence.cpp */ /* ChataigneSequence.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ChataigneSequence.cpp; path = ../../Source/TimeMachine/Sequence/ChataigneSequence.cpp; sourceTree = SOURCE_ROOT; };
 		565E20FE17BBEB8D15B5519E /* ../../Source/Common/Processor/Mapping/Filter/filters/condition/ConditionFilter.cpp */ /* ConditionFilter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ConditionFilter.cpp; path = ../../Source/Common/Processor/Mapping/Filter/filters/condition/ConditionFilter.cpp; sourceTree = SOURCE_ROOT; };
 		5781A95A86CBB04AF916EC28 /* ../../Source/Common/Processor/Mapping/Filter/MappingFilter.h */ /* MappingFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MappingFilter.h; path = ../../Source/Common/Processor/Mapping/Filter/MappingFilter.h; sourceTree = SOURCE_ROOT; };
+		579D8252F12FE4BBB337B155 /* ../../Source/Common/Processor/Mapping/Filter/filters/color/ColorRemapFilter.cpp */ /* ColorRemapFilter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ColorRemapFilter.cpp; path = ../../Source/Common/Processor/Mapping/Filter/filters/color/ColorRemapFilter.cpp; sourceTree = SOURCE_ROOT; };
 		5835F7B7E9A758B2CB9F0DA4 /* ../../Source/CustomVariables/Preset/Morpher/ui/CVPresetMorphUI.h */ /* CVPresetMorphUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CVPresetMorphUI.h; path = ../../Source/CustomVariables/Preset/Morpher/ui/CVPresetMorphUI.h; sourceTree = SOURCE_ROOT; };
 		589D06AF4BF9A0E8EC90AE00 /* ../../Source/Common/Serial/SerialDevice.h */ /* SerialDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SerialDevice.h; path = ../../Source/Common/Serial/SerialDevice.h; sourceTree = SOURCE_ROOT; };
 		5A09E732212BD7F0F838B951 /* ../../Resources/Modules/OSC.png */ /* OSC.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = OSC.png; path = ../../Resources/Modules/OSC.png; sourceTree = SOURCE_ROOT; };
@@ -390,6 +391,7 @@
 		5C12A4316D9EC6B2970870E9 /* ../../Source/Common/MIDI/MIDIDeviceParameter.h */ /* MIDIDeviceParameter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MIDIDeviceParameter.h; path = ../../Source/Common/MIDI/MIDIDeviceParameter.h; sourceTree = SOURCE_ROOT; };
 		5C13AE7A8B665A7EA4229092 /* ../../Resources/Modules/TCP Client.png */ /* TCP Client.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TCP Client.png"; path = "../../Resources/Modules/TCP Client.png"; sourceTree = SOURCE_ROOT; };
 		5C7B7096B6336C01EC92FB5D /* ../../Source/Common/Serial/lib/serial/impl/unix.cc */ /* unix.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = unix.cc; path = ../../Source/Common/Serial/lib/serial/impl/unix.cc; sourceTree = SOURCE_ROOT; };
+		5CA4E31D942A42B08872F39B /* ../../Source/Common/Processor/Mapping/Filter/filters/color/ColorRemapFilter.h */ /* ColorRemapFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ColorRemapFilter.h; path = ../../Source/Common/Processor/Mapping/Filter/filters/color/ColorRemapFilter.h; sourceTree = SOURCE_ROOT; };
 		5D89B92BBA87AFC030B5C515 /* ../../Source/Module/modules/audio/analysis/ui/FFTAnalyzerManagerEditor.h */ /* FFTAnalyzerManagerEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FFTAnalyzerManagerEditor.h; path = ../../Source/Module/modules/audio/analysis/ui/FFTAnalyzerManagerEditor.h; sourceTree = SOURCE_ROOT; };
 		5DA0E15C8037F3E9BD9F306C /* ../../Source/Module/modules/gpio/pigpio/command.h */ /* command.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = command.h; path = ../../Source/Module/modules/gpio/pigpio/command.h; sourceTree = SOURCE_ROOT; };
 		5DACFADA47B796E8671A31A1 /* ../../Source/Module/modules/audio/analysis/FFTAnalyzer.cpp */ /* FFTAnalyzer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FFTAnalyzer.cpp; path = ../../Source/Module/modules/audio/analysis/FFTAnalyzer.cpp; sourceTree = SOURCE_ROOT; };
@@ -1345,6 +1347,8 @@
 		2DB4B1A155C988F31985EF37 /* color */ = {
 			isa = PBXGroup;
 			children = (
+				579D8252F12FE4BBB337B155,
+				5CA4E31D942A42B08872F39B,
 				6313EC26291DA0D987B28559,
 				E9DC14E295FEC8CF62406CB1,
 			);
@@ -3564,7 +3568,7 @@
 					"VST_LOGGING=0",
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.8.0b21",
+					"JUCE_APP_VERSION=1.8.0b22",
 					"JUCE_APP_VERSION_HEX=0x10800",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -3629,7 +3633,7 @@
 					"VST_LOGGING=0",
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.8.0b21",
+					"JUCE_APP_VERSION=1.8.0b22",
 					"JUCE_APP_VERSION_HEX=0x10800",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
