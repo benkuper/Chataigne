@@ -38,7 +38,12 @@ void DMXEnttecProDevice::setPortConfig()
 
 void DMXEnttecProDevice::sendDMXValuesSerialInternal()
 {
-
+    if(dmxPort == nullptr || dmxPort->port == nullptr)
+    {
+        LOGWARNING("Error with DMX Pro, please disconnect and reconnect");
+        return;
+    }
+    
 	dmxPort->port->write(sendHeaderData, 5);
 	dmxPort->port->write(dmxDataOut, 512);
 	dmxPort->port->write(sendFooterData, 1);
