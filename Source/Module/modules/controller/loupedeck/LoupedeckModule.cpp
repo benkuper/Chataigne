@@ -165,7 +165,6 @@ LoupedeckModule::LoupedeckModule() :
 	valuesCC.addChildControllableContainer(&padsCC);
 
 
-	timerCallback(); //force setting server path
 }
 
 LoupedeckModule::~LoupedeckModule()
@@ -383,7 +382,7 @@ void LoupedeckModule::updatePadContent(int padID, bool refresh)
 	Rectangle<int> r = getPadCoords(padID).translated(-60, 0);
 
 	Colour c = padColors[padID]->getColor();
-	if (pads[padID]->boolValue() && highlightOnTouch->boolValue()) c = c.brighter(.1f);
+	if (pads[padID]->boolValue() && highlightOnTouch->boolValue()) c = c.brighter(.2f);
 	setScreenContent(2, r, ImageCache::getFromFile(padImages[padID]->getFile()), c, padTexts[padID]->stringValue(), refresh);
 }
 
