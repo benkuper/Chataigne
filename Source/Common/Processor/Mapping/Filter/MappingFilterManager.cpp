@@ -37,6 +37,7 @@ MappingFilterManager::MappingFilterManager(Multiplex * multiplex) :
 	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<LagFilter>("Time", "FPS", multiplex));
 
 	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<ColorShiftFilter>("Color", ColorShiftFilter::getTypeStringStatic(), multiplex));
+	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<ColorRemapFilter>("Color", ColorRemapFilter::getTypeStringStatic(), multiplex));
 
 	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<ConditionFilter>("", "Condition", multiplex));
 	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<ScriptFilter>("", "Script", multiplex));

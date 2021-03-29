@@ -14,7 +14,10 @@
 #include "Mapping/Filter/MappingFilter.cpp"
 #include "Mapping/Filter/MappingFilterManager.cpp"
 #include "Mapping/Filter/filters/ScriptFilter.cpp"
+
 #include "Mapping/Filter/filters/color/ColorShiftFilter.cpp"
+#include "Mapping/Filter/filters/color/ColorRemapFilter.cpp"
+
 #include "Mapping/Filter/filters/condition/ConditionFilter.cpp"
 #include "Mapping/Filter/filters/conversion/ConversionFilter.cpp"
 #include "Mapping/Filter/filters/conversion/ConversionParamValueLink.cpp"

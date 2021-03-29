@@ -60,6 +60,7 @@
 
 #include "Mapping/Filter/filters/ScriptFilter.h"
 #include "Mapping/Filter/filters/color/ColorShiftFilter.h"
+#include "Mapping/Filter/filters/color/ColorRemapFilter.h"
 #include "Mapping/Filter/filters/condition/ConditionFilter.h"
 #include "Mapping/Filter/filters/conversion/SimpleConversionFilters.h"
 
