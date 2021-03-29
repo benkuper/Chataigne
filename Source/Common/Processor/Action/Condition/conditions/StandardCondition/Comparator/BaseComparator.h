@@ -39,6 +39,8 @@ public:
 
 	void onContainerParameterChanged(Parameter*) override;
 	virtual BaseComparatorUI * createUI();
+
+	DECLARE_ASYNC_EVENT(BaseComparator, Comparator, comparator, { REFERENCE_CHANGED })
 };
 
 /*

@@ -13,7 +13,8 @@
 BaseComparator::BaseComparator(Multiplex * multiplex) :
 	ControllableContainer("Comparator"),
 	MultiplexTarget(multiplex),
-	reference(nullptr)
+	reference(nullptr),
+	comparatorNotifier(5)
 {
 	compareFunction = addEnumParameter("Comparison Function", "Decides what function checks the activeness of the condition");
 	compareFunction->hideInEditor = true;
@@ -39,6 +40,8 @@ void BaseComparator::setReferenceParam(Parameter* p)
 		addParameter(reference);
 		if (isMultiplexed()) refLink.reset(new ParameterLink(reference, multiplex));
 	}
+
+	comparatorNotifier.addMessage(new ComparatorEvent(ComparatorEvent::REFERENCE_CHANGED, this));
 }
 
 void BaseComparator::addCompareOption(const String & name, const Identifier & func)

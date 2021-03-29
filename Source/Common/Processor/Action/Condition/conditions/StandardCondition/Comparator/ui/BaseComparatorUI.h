@@ -14,7 +14,8 @@
 
 class BaseComparatorUI :
 	public Component,
-	public Parameter::AsyncListener
+	public Parameter::AsyncListener,
+	public BaseComparator::AsyncListener
 {
 public:
 	BaseComparatorUI(BaseComparator * comparator);
@@ -24,10 +25,12 @@ public:
 	WeakReference<Inspectable> comparatorRef;
 
 	std::unique_ptr<EnumParameterUI> compareFuncUI;
-
 	std::unique_ptr<InspectableEditor> refEditor;
 
 	void resized() override;
 
+	void updateReferenceUI();
+
 	void newMessage(const Parameter::ParameterEvent &e) override;
+	void newMessage(const BaseComparator::ComparatorEvent& e) override;
 };

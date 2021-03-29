@@ -17,7 +17,12 @@ Point3DComparator::Point3DComparator(Parameter* sourceParam, Multiplex* multiple
 	addCompareOption("=", equalsId);
 	addCompareOption("Magnitude >", magnGreaterId);
 	addCompareOption("Magnitude <", magnLessId);
-
+	addCompareOption("X >", xGreaterId);
+	addCompareOption("X <", xGreaterId);
+	addCompareOption("Y >", yGreaterId);
+	addCompareOption("Y <", yLessId);
+	addCompareOption("Z >", zGreaterId);
+	addCompareOption("Z <", zLessId);
 	updateReferenceParam();
 }
 
@@ -71,6 +76,12 @@ bool Point3DComparator::compare(Parameter* sourceParam, int multiplexIndex)
 	if (currentFunctionId == equalsId)				return p.x == (float)value[0] && p.y == (float)value[1] && p.z == (float)value[2];
 	else if (currentFunctionId == magnGreaterId)	return p.length() > (float)value;
 	else if (currentFunctionId == magnLessId)		return p.length() < (float)value;
+	else if (currentFunctionId == xGreaterId)	return p.x > (float)value;
+	else if (currentFunctionId == xLessId)		return p.x < (float)value;
+	else if (currentFunctionId == yGreaterId)	return p.y > (float)value;
+	else if (currentFunctionId == yLessId)		return p.y < (float)value;
+	else if (currentFunctionId == zGreaterId)	return p.z > (float)value;
+	else if (currentFunctionId == zLessId)		return p.z < (float)value; 
 	
 	return false;
 }

@@ -20,7 +20,12 @@ public:
 	const Identifier equalsId = "=";
 	const Identifier magnGreaterId = "m>";
 	const Identifier magnLessId = "m<";
-
+	const Identifier xGreaterId = "x>";
+	const Identifier xLessId = "x<";
+	const Identifier yGreaterId = "y>";
+	const Identifier yLessId = "y<";
+	const Identifier zGreaterId = "z>";
+	const Identifier zLessId = "z<";
 	Parameter* sourceParam;
 
 	void onContainerParameterChanged(Parameter* p) override;

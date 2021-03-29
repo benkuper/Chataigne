@@ -15,6 +15,10 @@ Point2DComparator::Point2DComparator(Parameter* sourceParam, Multiplex* multiple
 	addCompareOption("=", equalsId);
 	addCompareOption("Magnitude >", magnGreaterId);
 	addCompareOption("Magnitude <", magnLessId);
+	addCompareOption("X >", xGreaterId);
+	addCompareOption("X <", xGreaterId);
+	addCompareOption("Y >", yGreaterId);
+	addCompareOption("Y <", yLessId);;
 
 	updateReferenceParam();
 }
@@ -25,12 +29,12 @@ Point2DComparator::~Point2DComparator()
 
 void Point2DComparator::onContainerParameterChanged(Parameter* p)
 {
+	BaseComparator::onContainerParameterChanged(p);
+	
 	if (p == compareFunction)
 	{
 		updateReferenceParam();
 	}
-
-	BaseComparator::onContainerParameterChanged(p);
 }
 
 void Point2DComparator::updateReferenceParam()
@@ -69,5 +73,9 @@ bool Point2DComparator::compare(Parameter* sourceParam, int multiplexIndex)
 	if (currentFunctionId == equalsId)				return p == Point<float>(value[0], value[1]);
 	else if (currentFunctionId == magnGreaterId)	return p.getDistanceFromOrigin() > (float)value;
 	else if (currentFunctionId == magnLessId)		return p.getDistanceFromOrigin() < (float)value;
+	else if (currentFunctionId == xGreaterId)	return p.x > (float)value;
+	else if (currentFunctionId == xLessId)		return p.x < (float)value; 
+	else if (currentFunctionId == yGreaterId)	return p.y > (float)value;
+	else if (currentFunctionId == yLessId)		return p.y < (float)value; 
 	return false;
 }
