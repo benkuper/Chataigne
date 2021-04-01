@@ -472,7 +472,12 @@ var OSCModule::argumentToVar(const OSCArgument & a)
 		OSCColour c = a.getColour();
 		return var((int)c.toInt32());
 	}
-	
+	else if (a.isBlob())
+	{
+		MemoryBlock blob = a.getBlob();
+		return var(blob);
+	}
+
 	return var("error");
 }
 
