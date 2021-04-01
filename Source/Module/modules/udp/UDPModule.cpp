@@ -39,11 +39,13 @@ void UDPModule::setupReceiver()
 	receiverIsBound->setValue(receiver->getBoundPort() != -1);
 	if (receiverIsBound->boolValue())
 	{
-		receiver->setEnablePortReuse(false);
-		proxySender = receiver.get();
+		receiver->setEnablePortReuse(true);
 
 		NLOG(niceName, "UDP Receiver bound to port " << localPort->intValue());
 		localPort->clearWarning();
+
+		setupSender(); //force using same port
+
 		startThread();
 	}
 	else
@@ -70,13 +72,11 @@ void UDPModule::setupSender()
 	if (sendCC == nullptr) return;
 	if (!sendCC->enabled->boolValue()) return;
 	
-	if (receiver != nullptr) proxySender = receiver.get();
-	else
-	{
-		sender.reset(new DatagramSocket(true));
-		senderIsConnected->setValue(true);
-		proxySender = sender.get();
-	}
+	sender.reset(new DatagramSocket(true));
+	if(receiver != nullptr) sender->bindToPort(receiver->getBoundPort());
+	sender->setEnablePortReuse(true);
+
+	senderIsConnected->setValue(true);
 }
 
 bool UDPModule::checkReceiverIsReady()
@@ -88,22 +88,22 @@ bool UDPModule::checkReceiverIsReady()
 
 bool UDPModule::isReadyToSend()
 {
-	if (proxySender == nullptr) return false;
-	return proxySender->waitUntilReady(false, 300) == 1;
+	if (sender == nullptr) return false;
+	return sender->waitUntilReady(false, 300) == 1;
 }
 
 void UDPModule::sendMessageInternal(const String & message, var params)
 {
 	String targetHost = params.getProperty("ip", useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue());
 	int port = params.getProperty("port", remotePort->intValue());
-	if(proxySender != nullptr) proxySender->write(targetHost, port, message.getCharPointer(), message.length());
+	if(sender != nullptr) sender->write(targetHost, port, message.getCharPointer(), message.length());
 }
 
 void UDPModule::sendBytesInternal(Array<uint8> data, var params)
 {
 	String targetHost = params.getProperty("ip", useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue());
 	int port = params.getProperty("port", remotePort->intValue());
-	if(proxySender != nullptr) proxySender->write(targetHost, port, data.getRawDataPointer(), data.size());
+	if(sender != nullptr) sender->write(targetHost, port, data.getRawDataPointer(), data.size());
 }
 
 Array<uint8> UDPModule::readBytes()
@@ -112,7 +112,9 @@ Array<uint8> UDPModule::readBytes()
 	uint8 data[255];
 	while (true)
 	{
-		int numBytes = receiver->read(data, 255, false);
+		String senderAddress = "";
+		int senderPort = 0;
+		int numBytes = receiver->read(data, 255, false, senderAddress, senderPort);
 
 		if (numBytes == -1)
 		{
