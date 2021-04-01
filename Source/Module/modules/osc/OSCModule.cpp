@@ -611,6 +611,20 @@ void OSCModule::onControllableFeedbackUpdateInternal(ControllableContainer * cc,
 	{
 		if (!isCurrentlyLoadingData) setupReceiver();
 	}
+	else if (OSCOutput* o = c->getParentAs<OSCOutput>())
+	{
+		if (c == o->listenToOutputFeedback)
+		{
+			if (o->listenToOutputFeedback->boolValue())
+			{
+				if (o->receiver != nullptr)
+				{
+					NLOG(niceName, "Feedback enabled, listening also on port " << o->socket->getBoundPort());
+					o->receiver->addListener(this);
+				}
+			}
+		}
+	}
 }
 
 void OSCModule::oscMessageReceived(const OSCMessage & message)
@@ -682,6 +696,7 @@ OSCOutput::OSCOutput() :
 	remoteHost->autoTrim = true;
 	remoteHost->setEnabled(!useLocal->boolValue());
 	remotePort = addIntParameter("Remote port", "Port on which the remote host is listening to", 9000, 1024, 65535);
+	listenToOutputFeedback = addBoolParameter("Listen to Feedback", "If checked, this will listen to the (randomly set) bound port of this sender. This is useful when some softwares automatically detect incoming host and port to send back messages.", false);
 
 	if (!Engine::mainEngine->isLoadingFile) setupSender();
 }
@@ -710,6 +725,10 @@ void OSCOutput::onContainerParameterChangedInternal(Parameter * p)
 	{
 		if(!Engine::mainEngine->isLoadingFile) setupSender();
 	}
+	else if (p == listenToOutputFeedback)
+	{
+		setupSender();
+	}
 }
 
 InspectableEditor * OSCOutput::getEditor(bool isRoot)
@@ -730,13 +749,26 @@ void OSCOutput::setupSender()
 
 	senderIsConnected = false;
 	sender.disconnect();
+	socket.reset();
+	
+	if(receiver != nullptr) receiver->disconnect();
+	receiver.reset();
 
 	if (!enabled->boolValue() || forceDisabled || Engine::mainEngine->isClearing) return;
 
 	String targetHost = useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue();
-	senderIsConnected = sender.connect(targetHost, remotePort->intValue());
+	socket.reset(new DatagramSocket(true));
+	socket->setEnablePortReuse(true);
+	socket->bindToPort(0);
+	senderIsConnected = sender.connectToSocket(*socket, targetHost, remotePort->intValue());
+
 	if (senderIsConnected)
 	{ 
+		if (listenToOutputFeedback->boolValue())
+		{
+			receiver.reset(new OSCReceiver());
+			receiver->connectToSocket(*socket);
+		}
 		startThread();
 
 		NLOG(niceName, "Now sending to " + remoteHost->stringValue() + ":" + remotePort->stringValue());

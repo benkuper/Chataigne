@@ -123,6 +123,8 @@ void CVCommand::updateValueFromTarget()
 		removeControllable(value);
 	}
 
+	if (target == nullptr) return;
+
 	Controllable* cvTarget = getLinkedTargetAs<Controllable>(target, 0); //use multiplex 0 to create param, should be better
 
 	if (cvTarget != nullptr) value = ControllableFactory::createParameterFrom(cvTarget);

@@ -123,6 +123,8 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 {
 	if (isCurrentlyLoadingData) return; //should it be better than  that ?
 	
+	if (target == nullptr) return;
+
 	Controllable* c = getLinkedTargetAs<Controllable>(target, multiplexIndex);
 	if (c == nullptr) return;
 

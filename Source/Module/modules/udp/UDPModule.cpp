@@ -13,7 +13,7 @@ UDPModule::UDPModule(const String & name, bool canHaveInput, bool canHaveOutput,
 {
 	scriptObject.setMethod("sendTo", &UDPModule::sendBytesToFromScript);
 	scriptObject.setMethod("sendMessageTo", &UDPModule::sendMessageToFromScript);
-
+	
 	if(!Engine::mainEngine->isLoadingFile) setupReceiver();
 	setupSender();
 }
@@ -40,6 +40,7 @@ void UDPModule::setupReceiver()
 	if (receiverIsBound->boolValue())
 	{
 		receiver->setEnablePortReuse(false);
+		proxySender = receiver.get();
 
 		NLOG(niceName, "UDP Receiver bound to port " << localPort->intValue());
 		localPort->clearWarning();
@@ -50,6 +51,8 @@ void UDPModule::setupReceiver()
 		NLOGERROR(niceName, "UDP Receiver bound to port " << localPort->intValue());
 		localPort->setWarningMessage("Could not bind to port " + String(localPort->intValue()));
 	}
+
+
 
 	Array<IPAddress> ad;
 	IPAddress::findAllAddresses(ad);
@@ -62,11 +65,18 @@ void UDPModule::setupReceiver()
 
 void UDPModule::setupSender()
 {
-	sender = nullptr;
+	sender.reset();
+	proxySender = nullptr;
 	if (sendCC == nullptr) return;
 	if (!sendCC->enabled->boolValue()) return;
-	sender.reset(new DatagramSocket(true));
-	senderIsConnected->setValue(true);
+	
+	if (receiver != nullptr) proxySender = receiver.get();
+	else
+	{
+		sender.reset(new DatagramSocket(true));
+		senderIsConnected->setValue(true);
+		proxySender = sender.get();
+	}
 }
 
 bool UDPModule::checkReceiverIsReady()
@@ -78,22 +88,22 @@ bool UDPModule::checkReceiverIsReady()
 
 bool UDPModule::isReadyToSend()
 {
-	if (sender == nullptr) return false;
-	return sender->waitUntilReady(false, 300) == 1;
+	if (proxySender == nullptr) return false;
+	return proxySender->waitUntilReady(false, 300) == 1;
 }
 
 void UDPModule::sendMessageInternal(const String & message, var params)
 {
 	String targetHost = params.getProperty("ip", useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue());
 	int port = params.getProperty("port", remotePort->intValue());
-	sender->write(targetHost, port, message.getCharPointer(), message.length());
+	if(proxySender != nullptr) proxySender->write(targetHost, port, message.getCharPointer(), message.length());
 }
 
 void UDPModule::sendBytesInternal(Array<uint8> data, var params)
 {
 	String targetHost = params.getProperty("ip", useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue());
 	int port = params.getProperty("port", remotePort->intValue());
-	sender->write(targetHost, port, data.getRawDataPointer(), data.size());
+	if(proxySender != nullptr) proxySender->write(targetHost, port, data.getRawDataPointer(), data.size());
 }
 
 Array<uint8> UDPModule::readBytes()
@@ -122,7 +132,8 @@ Array<uint8> UDPModule::readBytes()
 void UDPModule::clearInternal()
 {
 	if (receiver != nullptr) receiver->shutdown();
-	receiver = nullptr;
+	if (proxySender == receiver.get()) proxySender = nullptr;
+	receiver.reset();
 }
 
 var UDPModule::sendMessageToFromScript(const var::NativeFunctionArgs& a)

@@ -28,6 +28,10 @@ public:
 	BoolParameter * useLocal;
 	StringParameter * remoteHost;
 	IntParameter * remotePort;
+	BoolParameter* listenToOutputFeedback;
+	std::unique_ptr<OSCReceiver> receiver;
+	std::unique_ptr<DatagramSocket> socket;
+
 
 	void setForceDisabled(bool value);
 

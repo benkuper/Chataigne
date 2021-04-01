@@ -21,7 +21,7 @@ public:
 	BoolParameter * splitArgs;
 	BoolParameter * useHierarchy;
 	BoolParameter * autoFeedback;
-
+	
 	enum ColorMode { ColorRGBA, Float3, Float4 };
 	EnumParameter* colorMode;
 

@@ -119,6 +119,8 @@ public:
     template<class T>
     T* getLinkedTargetAs(TargetParameter* target, int multiplexIndex)
     {
+        if (target == nullptr) return nullptr;
+
         if (paramsCanBeLinked)
         {
             if (ParameterLink* pl = getLinkedParam(target)) return dynamic_cast<T*>(pl->getLinkedTarget(multiplexIndex).get());

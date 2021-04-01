@@ -33,6 +33,8 @@ GenericOSCQueryCommand::~GenericOSCQueryCommand()
 
 void GenericOSCQueryCommand::updateValueFromTarget()
 {
+	if (target == nullptr) return;
+
 	Controllable* c = getLinkedTargetAs<Controllable>(target, 0); //check first item if multiplex and linked to a list
 
 	if (c == nullptr) setValueParameter(nullptr);
