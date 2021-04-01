@@ -475,7 +475,13 @@ var OSCModule::argumentToVar(const OSCArgument & a)
 	else if (a.isBlob())
 	{
 		MemoryBlock blob = a.getBlob();
-		return var(blob);
+		var result;
+		for (int i = 0; i < blob.getSize(); i++)
+		{
+			result.append((uint8)blob[i]);
+		}
+
+		return result;
 	}
 
 	return var("error");
