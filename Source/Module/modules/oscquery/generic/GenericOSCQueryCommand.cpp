@@ -138,6 +138,8 @@ void GenericOSCQueryCommand::triggerInternal(int multiplexIndex)
 		{
 			var val = getLinkedValue(value, multiplexIndex);
 
+			DBG("Val : " << val.toString());
+
 			Operator o = valueOperator->getValueDataAsEnum<Operator>();
 
 			switch (o)

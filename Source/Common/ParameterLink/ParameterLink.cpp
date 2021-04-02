@@ -107,7 +107,7 @@ var ParameterLink::getLinkedValue(int multiplexIndex)
 	case MULTIPLEX_LIST:
 		if (!listRef.wasObjectDeleted() && list != nullptr)
 		{
-			if (Parameter* p = dynamic_cast<Parameter*>(list->list[multiplexIndex]))
+			if (Parameter* p = dynamic_cast<Parameter*>(list->getTargetControllableAt(multiplexIndex)))
 			{
 				return parameter->getCroppedValue(p->getValue());
 			}
