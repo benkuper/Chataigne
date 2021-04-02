@@ -32,8 +32,12 @@ MatomoAnalytics::MatomoAnalytics() :
 	}
 	
 	Random rand(Time::currentTimeMillis());
-	String id = String::toHexString(name.getCharPointer(),name.length()).replace(" ","").substring(0, 16);
+	Array<MACAddress> addresses = MACAddress::getAllAddresses();
+	String id = "";
+	if (addresses.size() > 0) id = addresses[0].toString().replace("-", "");
+	id += String::toHexString(name.getCharPointer(),name.length()).replace(" ","").substring(0, 16-id.length());
 	while (id.length() < 16) id = "0" + id;
+
 	String lang = SystemStats::getUserLanguage() +"-"+ SystemStats::getUserRegion();
 
 #if JUCE_WINDOWS
