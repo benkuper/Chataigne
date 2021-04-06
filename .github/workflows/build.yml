@@ -75,12 +75,12 @@ jobs:
         shell: powershell
         run: |
           Rename-Item -Path "./Chataigne.pdb" -NewName "${{ steps.create_package.outputs.pdb-name }}"
-        working-directory: ./Builds/VisualStudio2019_CI/x64/${{ steps.set_variables.outputs.config }}/App
+        working-directory: ./Builds/${{ matrix.buildFolder }}/x64/${{ steps.set_variables.outputs.config }}/App
 
       - name: Upload PDB
         uses: ./.github/actions/upload
         with:
-          pkg-name: ./Builds/VisualStudio2019_CI/x64/${{ steps.set_variables.outputs.config }}/App/${{ steps.create_package.outputs.pdb-name }}
+          pkg-name: ./Builds/${{ matrix.buildFolder }}/x64/${{ steps.set_variables.outputs.config }}/App/${{ steps.create_package.outputs.pdb-name }}
           url: ${{ secrets.PDBUPLOADURL }}
           pass: ${{ secrets.UPLOADPASS }}
 
@@ -231,7 +231,7 @@ jobs:
             export TARGET_ARCH="-march=armv8-a" # TARGET_ARCH is used in the Makefile
           fi
 
-          cd ${{ github.workspace }}/Builds/${{ matrix.BuildFolder }}
+          cd ${{ github.workspace }}/Builds/${{ matrix.buildFolder }}
           make -j2 CONFIG=Release
 
       - name: Create AppImage
