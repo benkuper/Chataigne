@@ -60,6 +60,7 @@ jobs:
           7z e deps.zip -aoa
           &"C:/Program Files (x86)/Inno Setup 6/ISCC.exe" "${{ github.workspace }}/install.iss" /O. /F$PKGNAME
           echo "::set-output name=pkg-name::$PKGNAME.exe"
+          echo "::set-output name=pdb-name::$PKGNAME.pdb"
         working-directory: ./Binaries/CI/App
 
       - name: Upload
@@ -67,6 +68,13 @@ jobs:
         with:
           pkg-name: ./Binaries/CI/App/${{ steps.create_package.outputs.pkg-name }}
           url: ${{ secrets.UPLOADURL }}
+          pass: ${{ secrets.UPLOADPASS }}
+
+      - name: Upload PDB
+        uses: ./.github/actions/upload
+        with:
+          pkg-name: ./Builds/VisualStudio2019_CI/x64/${{ steps.set_variables.outputs.config }}/App/${{ steps.create_package.outputs.pdb-name }}
+          url: ${{ secrets.PDBUPLOADURL }}
           pass: ${{ secrets.UPLOADPASS }}
 
   osx:
