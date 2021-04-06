@@ -14,9 +14,11 @@ jobs:
         include:
         - arch: win-x64
           buildFolder: "VisualStudio2019_CI"
+          installerName: install
 
         - arch: win7-x64
           buildFolder: "VisualStudio2019_Win7CI"
+          installerName: installWin7
 
       fail-fast: false
 
@@ -58,7 +60,7 @@ jobs:
           Set-Variable -Name "PKGNAME" -Value "${{ env.ProjectName }}-${{ steps.set_variables.outputs.suffix }}"
           Invoke-WebRequest "${{ secrets.DEPDIRURL }}${{ env.ProjectName }}-win-x64-${{ steps.set_variables.outputs.dep }}-dependencies.zip" -OutFile ./deps.zip
           7z e deps.zip -aoa
-          &"C:/Program Files (x86)/Inno Setup 6/ISCC.exe" "${{ github.workspace }}/install.iss" /O. /F$PKGNAME
+          &"C:/Program Files (x86)/Inno Setup 6/ISCC.exe" "${{ github.workspace }}/${{ matrix.installerName }}.iss" /O. /F$PKGNAME
           echo "::set-output name=pkg-name::$PKGNAME.exe"
           echo "::set-output name=pdb-name::$PKGNAME.pdb"
         working-directory: ./Binaries/CI/App
