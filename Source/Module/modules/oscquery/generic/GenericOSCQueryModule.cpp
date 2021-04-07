@@ -523,6 +523,8 @@ void GenericOSCQueryModule::connectionError(const String& errorMessage)
 
 void GenericOSCQueryModule::dataReceived(const MemoryBlock& data)
 {
+	if (!enabled->boolValue()) return;
+
 	if (logIncomingData->boolValue())
 	{
 		NLOG(niceName, "Websocket data received : " << (int)data.getSize() << " bytes");
@@ -544,18 +546,18 @@ void GenericOSCQueryModule::dataReceived(const MemoryBlock& data)
 		OSCHelpers::handleControllableForOSCMessage(c, m);
 		noFeedbackList.removeAllInstancesOf(c);
 	}
-
 }
 
 void GenericOSCQueryModule::messageReceived(const String& message)
 {
+	if (!enabled->boolValue()) return;
+	
 	if (logIncomingData->boolValue())
 	{
 		NLOG(niceName, "Websocket message received : " << message);
 	}
 
 	inActivityTrigger->trigger();
-
 }
 
 var GenericOSCQueryModule::getJSONData()
@@ -680,6 +682,7 @@ void GenericOSCQueryModule::requestStructure()
 
 void GenericOSCQueryModule::handleRoutedModuleValue(Controllable* c, RouteParams* p)
 {
+	if (!enabled->boolValue()) return;
 
 	if (Parameter* sourceP = dynamic_cast<Parameter*>(c))
 	{
