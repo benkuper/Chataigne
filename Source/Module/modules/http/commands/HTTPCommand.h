@@ -17,14 +17,18 @@ public:
 	HTTPCommand(HTTPModule * _module, CommandContext context, var params, Multiplex* multiplex = nullptr);
 	~HTTPCommand();
 
+	enum ContentType { URLENCODED, PLAIN };
+
+	ContentType contentType;
+
 	HTTPModule * httpModule;
-	
 
 	StringParameter * address;
 	EnumParameter * method;
 	EnumParameter * resultDataType;
 
 	StringParameter* extraHeaders;
+	StringParameter* payload;
 
 	void triggerInternal(int multiplexIndex) override;
 

@@ -10,7 +10,9 @@
 
 HTTPCommand::HTTPCommand(HTTPModule * _module, CommandContext context, var params, Multiplex* multiplex) :
 	BaseCommand(_module, context, params, multiplex),
-	httpModule(_module)
+	httpModule(_module),
+	contentType((ContentType)(int)params.getProperty("contentType", URLENCODED)),
+	payload(nullptr)
 {
 	method = addEnumParameter("Method", "Request Method");
 	for (int i = 0; i < HTTPModule::TYPE_MAX; ++i) method->addOption(HTTPModule::requestMethodNames[i], (HTTPModule::RequestMethod)i);
@@ -24,6 +26,13 @@ HTTPCommand::HTTPCommand(HTTPModule * _module, CommandContext context, var param
 
 	extraHeaders = addStringParameter("Extra Headers", "HTTP headers to add to the request", "");
 	extraHeaders->multiline = true;
+
+	if (contentType == PLAIN)
+	{
+		extraHeaders->setValue("Content-Type: text/plain");
+		payload = addStringParameter("Payload", "This is content that you can put in the request body.", "");
+		payload->multiline = true;
+	}
 }
 
 HTTPCommand::~HTTPCommand()
@@ -38,7 +47,14 @@ void HTTPCommand::triggerInternal(int multiplexIndex)
 	
 	StringPairArray headers;
 	
-	httpModule->sendRequest(getLinkedValue(address, multiplexIndex).toString(), method->getValueDataAsEnum<HTTPModule::RequestMethod>(), resultDataType->getValueDataAsEnum<HTTPModule::ResultDataType>(), requestParams, getLinkedValue(extraHeaders, multiplexIndex).toString());
+	httpModule->sendRequest(
+		getLinkedValue(address, multiplexIndex).toString(),
+		method->getValueDataAsEnum<HTTPModule::RequestMethod>(),
+		resultDataType->getValueDataAsEnum<HTTPModule::ResultDataType>(),
+		requestParams,
+		getLinkedValue(extraHeaders, multiplexIndex).toString(),
+		contentType == PLAIN ? getLinkedValue(payload, multiplexIndex).toString():""
+		);
 }
 
 var HTTPCommand::getJSONData()

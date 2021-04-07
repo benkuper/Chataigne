@@ -46,11 +46,14 @@ public:
 	static const String requestMethodNames[TYPE_MAX];
 
 
-	void sendRequest(StringRef address, RequestMethod method, ResultDataType dataType = ResultDataType::RAW, StringPairArray params = StringPairArray(), String extraHeaders = String());
+	void sendRequest(StringRef address, RequestMethod method, ResultDataType dataType = ResultDataType::RAW, StringPairArray params = StringPairArray(), String extraHeaders = String(), String payload = String());
 
 	struct Request
 	{
-		Request(URL u, RequestMethod m, ResultDataType dataType = ResultDataType::DEFAULT, String extraHeaders = String()) : url(u), method(m), resultDataType(dataType), extraHeaders(extraHeaders){}
+		Request(URL u, RequestMethod m, ResultDataType dataType = ResultDataType::DEFAULT, String extraHeaders = String()) : 
+			url(u), method(m), resultDataType(dataType), extraHeaders(extraHeaders)
+		{
+		}
 
 		URL url;
 		RequestMethod method;

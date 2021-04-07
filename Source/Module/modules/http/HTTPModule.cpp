@@ -33,6 +33,7 @@ HTTPModule::HTTPModule(const String& name) :
 	valuesCC.saveAndLoadRecursiveData = true;
 
 	defManager->add(CommandDefinition::createDef(this, "", "Request", &HTTPCommand::create, CommandContext::BOTH));
+	defManager->add(CommandDefinition::createDef(this, "", "Request with payload", &HTTPCommand::create, CommandContext::BOTH)->addParam("contentType",HTTPCommand::PLAIN));
 
 	scriptObject.setMethod(sendGETId, HTTPModule::sendGETFromScript);
 	scriptObject.setMethod(sendPOSTId, HTTPModule::sendPOSTFromScript);
@@ -49,11 +50,11 @@ HTTPModule::~HTTPModule()
 	stopThread(3000);
 }
 
-void HTTPModule::sendRequest(StringRef address, RequestMethod method, ResultDataType dataType, StringPairArray params, String extraHeaders)
+void HTTPModule::sendRequest(StringRef address, RequestMethod method, ResultDataType dataType, StringPairArray params, String extraHeaders, String payload)
 {
 
 	String urlString = baseAddress->stringValue() + address;
-	URL url = URL(urlString).withParameters(params);
+	URL url = URL(urlString).withPOSTData(payload).withParameters(params);
 
 	if (authHeader.isNotEmpty()) extraHeaders += "\r\n" + authHeader;
 
@@ -71,7 +72,6 @@ void HTTPModule::processRequest(Request* request)
 	
 	StringPairArray responseHeaders;
 	int statusCode = 0;
-
 	std::unique_ptr<InputStream> stream(request->url.createInputStream(request->method == METHOD_POST, nullptr, nullptr, request->extraHeaders,
 		2000, // timeout in millisecs
 		&responseHeaders, &statusCode, 5, requestMethodNames[(int)request->method]));
