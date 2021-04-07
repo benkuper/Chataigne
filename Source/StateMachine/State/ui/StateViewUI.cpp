@@ -56,7 +56,15 @@ void StateViewUI::mouseDown(const MouseEvent & e)
 	{
 		if (e.mods.isLeftButtonDown())
 		{
-			if (e.originalComponent == pmui.get()) item->selectThis();
+			if (e.mods.isAltDown())
+			{
+				if (e.originalComponent == this || e.originalComponent == pmui.get())
+				{
+					stateEditorListeners.call(&StateViewUI::Listener::askCreateTransitionFromUI, this);
+				}
+			}
+			else if (e.originalComponent == pmui.get()) item->selectThis();
+			
 		}else if (e.mods.isRightButtonDown())
 		{
 			if (e.originalComponent != pmui.get() 
