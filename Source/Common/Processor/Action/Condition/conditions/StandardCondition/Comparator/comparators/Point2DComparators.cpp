@@ -59,7 +59,7 @@ void Point2DComparator::updateReferenceParam()
 	{
 		if (reference == nullptr || reference->type != Parameter::FLOAT)
 		{
-			setReferenceParam(new FloatParameter("Reference", "Comparison Reference to check against source value", 0, 0));
+			setReferenceParam(new FloatParameter("Reference", "Comparison Reference to check against source value", 0));
 		}
 	}
 
