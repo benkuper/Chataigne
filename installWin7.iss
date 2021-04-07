@@ -4,7 +4,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING .ISS SCRIPT FILES!
 
 #define ApplicationName 'Chataigne'
-#define ApplicationVersion GetStringFileInfo('Binaries/Win7CI/App/Chataigne.exe',"ProductVersion")
+#define ApplicationVersion GetStringFileInfo('Binaries/CI/App/Chataigne.exe',"ProductVersion")
 
 [Setup]
 AppName={#ApplicationName}
@@ -21,15 +21,15 @@ SolidCompression=yes
 ArchitecturesAllowed=x64
 ArchitecturesInstallIn64BitMode=x64
 OutputDir=/
-OutputBaseFilename={#ApplicationName}-win-x64-bleedingedge
+OutputBaseFilename={#ApplicationName}-win7-x64-bleedingedge
 SetupIconFile=setup.ico
 
 [Messages]
 SetupWindowTitle={#ApplicationName} {#ApplicationVersion} Setup
 
 [Files]
-Source: "Binaries/Win7CI/App/{#ApplicationName}.exe"; DestDir: "{app}" ; Flags: ignoreversion
-Source: "Binaries/Win7CI/App/*.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "Binaries/CI/App/{#ApplicationName}.exe"; DestDir: "{app}" ; Flags: ignoreversion
+Source: "Binaries/CI/App/*.dll"; DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]
 Name: "{group}\{#ApplicationName}"; Filename: "{app}\{#ApplicationName}.exe"
