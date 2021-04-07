@@ -136,7 +136,7 @@ void InputValueMultiplexList::onContainerParameterChangedInternal(Parameter* p)
             else((Parameter*)c)->addParameterListener(this);
             inputControllables.set(index, c);
 
-            if (index == 0) listListeners.call(&MultiplexListListener::listReferenceUpdated);
+            listListeners.call(&MultiplexListListener::listReferenceUpdated);
             notifyItemUpdated(index);
         }
     }
@@ -144,7 +144,7 @@ void InputValueMultiplexList::onContainerParameterChangedInternal(Parameter* p)
 
 void InputValueMultiplexList::onExternalParameterRangeChanged(Parameter* p)
 {
-    if (inputControllables.indexOf(p) == 0) listListeners.call(&MultiplexListListener::listReferenceUpdated);
+    if (inputControllables.indexOf(p) != -1) listListeners.call(&MultiplexListListener::listReferenceUpdated);
 }
 
 void InputValueMultiplexList::onExternalParameterValueChanged(Parameter* p)
