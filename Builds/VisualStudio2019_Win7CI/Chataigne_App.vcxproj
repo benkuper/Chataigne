@@ -1068,6 +1068,9 @@
     <ClCompile Include="..\..\JUCE\Modules\juce_audio_basics\synthesisers\juce_Synthesiser.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\JUCE\Modules\juce_audio_basics\utilities\juce_ADSR_test.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\JUCE\Modules\juce_audio_basics\utilities\juce_IIRFilter.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -4513,8 +4516,10 @@
     <ClInclude Include="..\..\JUCE\Modules\juce_core\misc\juce_WindowsRegistry.h"/>
     <ClInclude Include="..\..\JUCE\Modules\juce_core\native\juce_android_JNIHelpers.h"/>
     <ClInclude Include="..\..\JUCE\Modules\juce_core\native\juce_BasicNativeHeaders.h"/>
+    <ClInclude Include="..\..\JUCE\Modules\juce_core\native\juce_intel_SharedCode.h"/>
+    <ClInclude Include="..\..\JUCE\Modules\juce_core\native\juce_mac_CFHelpers.h"/>
     <ClInclude Include="..\..\JUCE\Modules\juce_core\native\juce_mac_ClangBugWorkaround.h"/>
-    <ClInclude Include="..\..\JUCE\Modules\juce_core\native\juce_osx_ObjCHelpers.h"/>
+    <ClInclude Include="..\..\JUCE\Modules\juce_core\native\juce_mac_ObjCHelpers.h"/>
     <ClInclude Include="..\..\JUCE\Modules\juce_core\native\juce_posix_IPAddress.h"/>
     <ClInclude Include="..\..\JUCE\Modules\juce_core\native\juce_posix_SharedCode.h"/>
     <ClInclude Include="..\..\JUCE\Modules\juce_core\native\juce_win32_ComSmartPtr.h"/>
@@ -6214,6 +6219,7 @@
     <None Include="..\..\JUCE\Modules\juce_audio_processors\format_types\VST3_SDK\pluginterfaces\README.md"/>
     <None Include="..\..\JUCE\Modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\LICENSE.txt"/>
     <None Include="..\..\JUCE\Modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\README.md"/>
+    <None Include="..\..\JUCE\Modules\juce_audio_processors\format_types\VST3_SDK\JUCE_README.txt"/>
     <None Include="..\..\JUCE\Modules\juce_audio_processors\format_types\VST3_SDK\LICENSE.txt"/>
     <None Include="..\..\JUCE\Modules\juce_audio_processors\format_types\VST3_SDK\README.md"/>
     <None Include="..\..\JUCE\Modules\juce_core\native\java\README.txt"/>
