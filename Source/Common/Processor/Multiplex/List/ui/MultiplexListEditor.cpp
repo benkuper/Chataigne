@@ -1,3 +1,4 @@
+#include "MultiplexListEditor.h"
 /*
   ==============================================================================
 
@@ -136,4 +137,79 @@ CVPresetMultiplexListEditor::~CVPresetMultiplexListEditor()
 void CVPresetMultiplexListEditor::resizedInternalHeaderItemInternal(Rectangle<int>& r)
 {
 	cvTargetUI->setBounds(r.removeFromRight(120));
+}
+
+
+//Input values list
+
+InputValueListEditor::InputValueListEditor(InputValueMultiplexList* eList, bool isRoot) :
+	BaseItemEditor(eList, isRoot),
+	list(eList),
+	fillFromExpBT("Fill...")
+{
+	fillFromExpBT.addListener(this);
+	addAndMakeVisible(&fillFromExpBT);
+
+}
+
+InputValueListEditor::~InputValueListEditor()
+{
+
+}
+
+void InputValueListEditor::resizedInternalHeaderItemInternal(Rectangle<int>& r)
+{
+	fillFromExpBT.setBounds(r.removeFromRight(100).reduced(1));
+}
+
+void InputValueListEditor::buttonClicked(Button* b)
+{
+	if (b == &fillFromExpBT)
+	{
+		expressionWindow.reset(new ExpressionComponentWindow(list));
+		DialogWindow::LaunchOptions dw;
+		dw.content.set(expressionWindow.get(), false);
+		dw.dialogTitle = "Fill from expression";
+		dw.escapeKeyTriggersCloseButton = true;
+		dw.dialogBackgroundColour = BG_COLOR;
+		dw.launchAsync();
+	}
+
+	BaseItemEditor::buttonClicked(b);
+}
+
+InputValueListEditor::ExpressionComponentWindow::ExpressionComponentWindow(InputValueMultiplexList* list) :
+	assignBT("Assign"),
+	list(list)
+{
+	instructions.setText("This expression will be used to fill each item in this list. You can use wildcards {index} and {index0} to replace with index of the item that is processed.", dontSendNotification);
+
+	addAndMakeVisible(&instructions);
+	addAndMakeVisible(&editor);
+	addAndMakeVisible(&assignBT);
+	assignBT.addListener(this);
+	//addAndMakeVisible(&closeBT);
+
+	editor.setColour(editor.backgroundColourId, Colours::black);
+	editor.setColour(CaretComponent::caretColourId, Colours::orange);
+	editor.setColour(editor.textColourId, TEXT_COLOR);
+	editor.setMultiLine(true);
+
+	setSize(600, 300);
+}
+
+void InputValueListEditor::ExpressionComponentWindow::resized()
+{
+	Rectangle<int> r = getLocalBounds().reduced(2);
+	instructions.setBounds(r.removeFromTop(60).reduced(8));
+	editor.setBounds(r.removeFromTop(100));
+	assignBT.setBounds(r.removeFromTop(40).reduced(2));
+}
+
+void InputValueListEditor::ExpressionComponentWindow::buttonClicked(Button* b)
+{
+	if (b == &assignBT)
+	{
+		list->fillFromExpression(editor.getText());
+	}
 }

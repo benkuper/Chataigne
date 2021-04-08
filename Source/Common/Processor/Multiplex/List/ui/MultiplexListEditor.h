@@ -71,3 +71,41 @@ public:
 
 	void resizedInternalHeaderItemInternal(Rectangle<int>& r) override;
 };
+
+class InputValueListEditor :
+	public BaseItemEditor
+{
+public:
+	InputValueListEditor(InputValueMultiplexList* eList, bool isRoot);
+	~InputValueListEditor();
+
+	TextButton fillFromExpBT;
+	InputValueMultiplexList* list;
+
+	void resizedInternalHeaderItemInternal(Rectangle<int>& r) override;
+
+	void buttonClicked(Button* b) override;
+
+	class ExpressionComponentWindow :
+		public Component,
+		public Button::Listener
+	{
+	public:
+		ExpressionComponentWindow(InputValueMultiplexList * list);
+		~ExpressionComponentWindow() {}
+
+		InputValueMultiplexList* list;
+
+		Label instructions;
+		TextEditor editor;
+		TextButton assignBT;
+		TextButton closeBT;
+
+		void resized() override;
+
+		void buttonClicked(Button * b) override;
+	};
+
+	std::unique_ptr<ExpressionComponentWindow> expressionWindow;
+};
+

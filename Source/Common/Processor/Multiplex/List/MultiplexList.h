@@ -110,7 +110,11 @@ public:
     void onExternalParameterValueChanged(Parameter* p) override;
     void onExternalTriggerTriggered(Trigger * t) override;
 
+    void fillFromExpression(const String &s);
+
     virtual Controllable* getTargetControllableAt(int multiplexIndex) override { return inputControllables[multiplexIndex]; }
+
+    InspectableEditor* getEditor(bool isRoot) override;
 
     String getTypeString() const override { return getTypeStringStatic(); }
     static String getTypeStringStatic() { return "Input Values"; }

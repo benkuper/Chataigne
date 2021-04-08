@@ -10,6 +10,7 @@
 
 #include "Module/ModuleIncludes.h"
 #include "CustomVariables/CustomVariablesIncludes.h"
+#include "MultiplexList.h"
 
 BaseMultiplexList::BaseMultiplexList(const String& name, var params) :
     BaseItem(name, false),
@@ -155,6 +156,30 @@ void InputValueMultiplexList::onExternalParameterValueChanged(Parameter* p)
 void InputValueMultiplexList::onExternalTriggerTriggered(Trigger* t)
 {
     notifyItemUpdated(inputControllables.indexOf(t));
+}
+
+void InputValueMultiplexList::fillFromExpression(const String& s)
+{
+    for (int i = 0; i < listSize; i++)
+    {
+        String exp = s.replace("{index}", String(i + 1)).replace("{index0}", String(i));
+
+        LOG("Exp(#" << (i + 1) << ") : " << exp);
+
+        ScriptExpression e;
+        e.setExpression(exp);
+        if (e.state == ScriptExpression::EXPRESSION_LOADED)
+        {
+            e.evaluate();
+            LOG(" > " << e.currentValue.toString());
+            ((TargetParameter*)list[i])->setValue(e.currentValue.toString());
+        }
+    }
+}
+
+InspectableEditor* InputValueMultiplexList::getEditor(bool isRoot)
+{
+    return new InputValueListEditor(this, isRoot);
 }
 
 EnumMultiplexList::EnumMultiplexList(var params) :
