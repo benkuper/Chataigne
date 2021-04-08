@@ -29,6 +29,7 @@
 		4218F765091045FC822AA302 /* ../../Source/TimeMachine/TimeMachineIncludes.cpp */ = {isa = PBXBuildFile; fileRef = 693EFA1B8916691D7568591A; };
 		43E1EC2D9919CC1742754AA5 /* ../../Source/Common/InputSystem/InputDeviceHelpers.cpp */ = {isa = PBXBuildFile; fileRef = 6EAF69491475B1BC390D110E; };
 		4482F1AEF42497B7CD326C97 /* ../../JuceLibraryCode/include_juce_audio_basics.mm */ = {isa = PBXBuildFile; fileRef = 8883C7CD4CC4127DC5FA03FE; };
+		448F27CC60AD16885E035946 /* ../../Source/Common/DMX/device/sacn/e131.c */ = {isa = PBXBuildFile; fileRef = A815B250CA77F84CD93A9F3B; };
 		463FCA5E4AC4131ABB088D01 /* ../../Source/Common/Serial/lib/serial/impl/list_ports/list_ports_win.cc */ = {isa = PBXBuildFile; fileRef = E1DC8CBAF35FAAB742559C6B; };
 		46C66B985D744A5FB6A3D13A /* ../../Source/Common/Command/Template/CommandTemplateParameter.cpp */ = {isa = PBXBuildFile; fileRef = B63560F060FE73D4403EF4A9; };
 		4901731157879611D8BF22A8 /* ../../Source/UI/AboutWindow.cpp */ = {isa = PBXBuildFile; fileRef = 9DD64A74FA3FA91032907BDD; };
@@ -249,6 +250,7 @@
 		2ECFA22C565DB276D2C327CE /* ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ConvertedParameterManager.cpp */ /* ConvertedParameterManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ConvertedParameterManager.cpp; path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ConvertedParameterManager.cpp; sourceTree = SOURCE_ROOT; };
 		2EF4541423C08B373926C946 /* System/Library/Frameworks/DiscRecording.framework */ /* DiscRecording.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DiscRecording.framework; path = System/Library/Frameworks/DiscRecording.framework; sourceTree = SDKROOT; };
 		2F4F15F3B838C8ED91761D44 /* ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ConvertedParameter.h */ /* ConvertedParameter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ConvertedParameter.h; path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ConvertedParameter.h; sourceTree = SOURCE_ROOT; };
+		2F6A8DB66048BB90BBA7B248 /* ../../Source/Common/DMX/device/DMXSACNDevice.cpp */ /* DMXSACNDevice.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DMXSACNDevice.cpp; path = ../../Source/Common/DMX/device/DMXSACNDevice.cpp; sourceTree = SOURCE_ROOT; };
 		2FAC44CBAAC99F2D1B182674 /* ../../Source/Common/Processor/Mapping/Output/MappingOutputManager.cpp */ /* MappingOutputManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MappingOutputManager.cpp; path = ../../Source/Common/Processor/Mapping/Output/MappingOutputManager.cpp; sourceTree = SOURCE_ROOT; };
 		3003594D522C89372E5FEB57 /* ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConversionConnector.h */ /* ConversionConnector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ConversionConnector.h; path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConversionConnector.h; sourceTree = SOURCE_ROOT; };
 		306C379FA8EDF09052FE046B /* ../../Source/Common/MIDI/ui/MIDIDeviceParameterUI.h */ /* MIDIDeviceParameterUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MIDIDeviceParameterUI.h; path = ../../Source/Common/MIDI/ui/MIDIDeviceParameterUI.h; sourceTree = SOURCE_ROOT; };
@@ -528,6 +530,7 @@
 		8E161399DEC1EED4622B6EE6 /* ../../JuceLibraryCode/BinaryData.cpp */ /* BinaryData.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BinaryData.cpp; path = ../../JuceLibraryCode/BinaryData.cpp; sourceTree = SOURCE_ROOT; };
 		8E3E93C35A0A71C64796898E /* ../../Modules/juce_organicui */ /* juce_organicui */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_organicui; path = ../../Modules/juce_organicui; sourceTree = SOURCE_ROOT; };
 		8E93C7D90650CE468073A0C1 /* ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ConversionFilter.cpp */ /* ConversionFilter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ConversionFilter.cpp; path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ConversionFilter.cpp; sourceTree = SOURCE_ROOT; };
+		8EA7B502B21B808319BF9498 /* ../../Source/Common/DMX/device/sacn/e131.h */ /* e131.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = e131.h; path = ../../Source/Common/DMX/device/sacn/e131.h; sourceTree = SOURCE_ROOT; };
 		8EB292748351756688228DCB /* ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/comparators/Point2DComparators.h */ /* Point2DComparators.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Point2DComparators.h; path = ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/comparators/Point2DComparators.h; sourceTree = SOURCE_ROOT; };
 		8EFE304B0BBA3DFA624E0D0F /* ../../Source/Common/DMX/device/DMXOpenUSBDevice.h */ /* DMXOpenUSBDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DMXOpenUSBDevice.h; path = ../../Source/Common/DMX/device/DMXOpenUSBDevice.h; sourceTree = SOURCE_ROOT; };
 		8F138647B18B05C8E209974A /* ../../Source/Module/modules/tcp/tcpclient/watchout/commands/WatchoutCommand.h */ /* WatchoutCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WatchoutCommand.h; path = ../../Source/Module/modules/tcp/tcpclient/watchout/commands/WatchoutCommand.h; sourceTree = SOURCE_ROOT; };
@@ -597,6 +600,7 @@
 		A62E1C36DBE67FDD245C95E8 /* ../../Source/Module/modules/controller/loupedeck/LoupedeckShapeManager.h */ /* LoupedeckShapeManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LoupedeckShapeManager.h; path = ../../Source/Module/modules/controller/loupedeck/LoupedeckShapeManager.h; sourceTree = SOURCE_ROOT; };
 		A73E903AE8660391CF8BAD95 /* ../../Source/Module/Routing/ui/ModuleRouterPanelView.h */ /* ModuleRouterPanelView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ModuleRouterPanelView.h; path = ../../Source/Module/Routing/ui/ModuleRouterPanelView.h; sourceTree = SOURCE_ROOT; };
 		A744DB2EF1F3D5C1A1E99373 /* ../../Source/Module/modules/osc/resolume/commands/ResolumeFXCommand.cpp */ /* ResolumeFXCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ResolumeFXCommand.cpp; path = ../../Source/Module/modules/osc/resolume/commands/ResolumeFXCommand.cpp; sourceTree = SOURCE_ROOT; };
+		A815B250CA77F84CD93A9F3B /* ../../Source/Common/DMX/device/sacn/e131.c */ /* e131.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = e131.c; path = ../../Source/Common/DMX/device/sacn/e131.c; sourceTree = SOURCE_ROOT; };
 		A827068B7EA45A80070F2DFD /* ../../Source/Module/modules/system/os/commands/OSPowerCommand.h */ /* OSPowerCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OSPowerCommand.h; path = ../../Source/Module/modules/system/os/commands/OSPowerCommand.h; sourceTree = SOURCE_ROOT; };
 		A87E90F4FDB303B941D32E3D /* ../../Source/Common/MIDI/MIDIDevice.h */ /* MIDIDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MIDIDevice.h; path = ../../Source/Common/MIDI/MIDIDevice.h; sourceTree = SOURCE_ROOT; };
 		A89E9815C9ABE0721FF8CB75 /* ../../Source/MainComponentCommands.cpp */ /* MainComponentCommands.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MainComponentCommands.cpp; path = ../../Source/MainComponentCommands.cpp; sourceTree = SOURCE_ROOT; };
@@ -640,6 +644,7 @@
 		B1FD26BF556916851197C97B /* ../../Resources/Modules/PJLink.png */ /* PJLink.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PJLink.png; path = ../../Resources/Modules/PJLink.png; sourceTree = SOURCE_ROOT; };
 		B253B745FAA7F0D0265B51AA /* ../../Source/Common/Processor/Mapping/Filter/filters/conversion/SimpleConversionFilters.cpp */ /* SimpleConversionFilters.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SimpleConversionFilters.cpp; path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/SimpleConversionFilters.cpp; sourceTree = SOURCE_ROOT; };
 		B2AE5AB8212F91ACEEB0E80E /* System/Library/Frameworks/ForceFeedback.framework */ /* ForceFeedback.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ForceFeedback.framework; path = System/Library/Frameworks/ForceFeedback.framework; sourceTree = SDKROOT; };
+		B35A56BDE9676886EBB52791 /* ../../Source/Common/DMX/device/DMXSACNDevice.h */ /* DMXSACNDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DMXSACNDevice.h; path = ../../Source/Common/DMX/device/DMXSACNDevice.h; sourceTree = SOURCE_ROOT; };
 		B3C3ED01C6D0D020BC0E895C /* ../../Resources/server/server.crt */ /* server.crt */ = {isa = PBXFileReference; lastKnownFileType = file.crt; name = server.crt; path = ../../Resources/server/server.crt; sourceTree = SOURCE_ROOT; };
 		B3F9109E23EBCBBC1AD7FD5F /* ../../Source/Common/Processor/Mapping/Filter/filters/number/CropFilter.h */ /* CropFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CropFilter.h; path = ../../Source/Common/Processor/Mapping/Filter/filters/number/CropFilter.h; sourceTree = SOURCE_ROOT; };
 		B52752D23217AA7EC926EAF6 /* ../../Source/Module/modules/controller/wiimote/WiimotePairUtil.cpp */ /* WiimotePairUtil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = WiimotePairUtil.cpp; path = ../../Source/Module/modules/controller/wiimote/WiimotePairUtil.cpp; sourceTree = SOURCE_ROOT; };
@@ -1896,6 +1901,7 @@
 		672611DCE9EFBBA901CED0BB /* device */ = {
 			isa = PBXGroup;
 			children = (
+				D6A35E88682C164004E2E35C,
 				F58BA7324F5F5A4FAC7BB4A4,
 				126E6696F8B855707269C2AF,
 				25F87024F7686AF5C7769784,
@@ -1904,6 +1910,8 @@
 				04C4B1D0745E80C293C0ED83,
 				BEDFBEFAB93D6A8F37A47919,
 				8EFE304B0BBA3DFA624E0D0F,
+				2F6A8DB66048BB90BBA7B248,
+				B35A56BDE9676886EBB52791,
 				31DF86E3221ACBF249C401A8,
 				3E3642D43B646B4695474647,
 			);
@@ -2892,6 +2900,15 @@
 			name = ConditionGroup;
 			sourceTree = "<group>";
 		};
+		D6A35E88682C164004E2E35C /* sacn */ = {
+			isa = PBXGroup;
+			children = (
+				A815B250CA77F84CD93A9F3B,
+				8EA7B502B21B808319BF9498,
+			);
+			name = sacn;
+			sourceTree = "<group>";
+		};
 		D6DCC5B7D4DECDD47BFBDFEF /* ui */ = {
 			isa = PBXGroup;
 			children = (
@@ -3384,6 +3401,7 @@
 				F4C9EDCD0ABB0CE562499E78,
 				8231BCBE66CA875D6775BD47,
 				63A1E335EDCF9ECBCA9D56C3,
+				448F27CC60AD16885E035946,
 				61E67DC16A98E630727391F8,
 				A01121FD77059F1E4D8C2F72,
 				DAFC4F097C396F425F32EE4F,
@@ -3568,7 +3586,7 @@
 					"VST_LOGGING=0",
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.8.0b25",
+					"JUCE_APP_VERSION=1.8.0b26",
 					"JUCE_APP_VERSION_HEX=0x10800",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -3635,7 +3653,7 @@
 					"VST_LOGGING=0",
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.8.0b25",
+					"JUCE_APP_VERSION=1.8.0b26",
 					"JUCE_APP_VERSION_HEX=0x10800",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",

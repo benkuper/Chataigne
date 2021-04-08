@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.8.0b25"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.8.0b26"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="VST_LOGGING=0&#10;"
@@ -253,6 +253,10 @@
         </GROUP>
         <GROUP id="{672CD9A6-0B3A-28B4-B3F7-2C0B1183CBBB}" name="DMX">
           <GROUP id="{E9C61B40-A648-980E-2FF5-28709FE98F53}" name="device">
+            <GROUP id="{D158B5FE-0978-B76E-1F03-ED629A4BC7B3}" name="sacn">
+              <FILE id="nFIgYu" name="e131.c" compile="1" resource="0" file="Source/Common/DMX/device/sacn/e131.c"/>
+              <FILE id="pNgh55" name="e131.h" compile="0" resource="0" file="Source/Common/DMX/device/sacn/e131.h"/>
+            </GROUP>
             <FILE id="gf0iKS" name="DMXArtNetDevice.cpp" compile="0" resource="0"
                   file="Source/Common/DMX/device/DMXArtNetDevice.cpp"/>
             <FILE id="U4PYuN" name="DMXArtNetDevice.h" compile="0" resource="0"
@@ -267,6 +271,9 @@
                   file="Source/Common/DMX/device/DMXOpenUSBDevice.cpp"/>
             <FILE id="JsesTI" name="DMXOpenUSBDevice.h" compile="0" resource="0"
                   file="Source/Common/DMX/device/DMXOpenUSBDevice.h"/>
+            <FILE id="ZFiwGB" name="DMXSACNDevice.cpp" compile="0" resource="0"
+                  file="Source/Common/DMX/device/DMXSACNDevice.cpp"/>
+            <FILE id="QRqI1O" name="DMXSACNDevice.h" compile="0" resource="0" file="Source/Common/DMX/device/DMXSACNDevice.h"/>
             <FILE id="j3znjL" name="DMXSerialDevice.cpp" compile="0" resource="0"
                   file="Source/Common/DMX/device/DMXSerialDevice.cpp"/>
             <FILE id="BQnYUa" name="DMXSerialDevice.h" compile="0" resource="0"

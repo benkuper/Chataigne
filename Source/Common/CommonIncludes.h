@@ -23,6 +23,7 @@
 #include "DMX/device/DMXArtNetDevice.h"
 #include "DMX/device/DMXEnttecProDevice.h"
 #include "DMX/device/DMXOpenUSBDevice.h"
+#include "DMX/device/DMXSACNDevice.h"
 
 #include "MIDI/MIDIDevice.h"
 #include "MIDI/MIDIManager.h"

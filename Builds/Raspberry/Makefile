@@ -35,7 +35,7 @@ ifeq ($(CONFIG),Debug)
     TARGET_ARCH := -march=armv7
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DDEBUG=1" "-D_DEBUG=1" "-DVST_LOGGING=0" "-DJUCER_LINUX_MAKE_9C1B7400=1" "-DJUCE_APP_VERSION=1.8.0b25" "-DJUCE_APP_VERSION_HEX=0x10800" $(shell pkg-config --cflags alsa freetype2 libcurl webkit2gtk-4.0 gtk+-x11-3.0) -pthread -I../../JuceLibraryCode -I../../JUCE/modules -I../../Modules -I../../External/wiiuse -I../../External/serial/include -I../../External/servus/include -I../../External/dnssd/include -I../../External/sdl/include -I/usr/include/freetype2 -I../../External/hidapi/include -I../../External/libusb/include/libusb-1.0 -I../../External/joycon/include -I../../Source $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DDEBUG=1" "-D_DEBUG=1" "-DVST_LOGGING=0" "-DJUCER_LINUX_MAKE_9C1B7400=1" "-DJUCE_APP_VERSION=1.8.0b26" "-DJUCE_APP_VERSION_HEX=0x10800" $(shell pkg-config --cflags alsa freetype2 libcurl webkit2gtk-4.0 gtk+-x11-3.0) -pthread -I../../JuceLibraryCode -I../../JUCE/modules -I../../Modules -I../../External/wiiuse -I../../External/serial/include -I../../External/servus/include -I../../External/dnssd/include -I../../External/sdl/include -I/usr/include/freetype2 -I../../External/hidapi/include -I../../External/libusb/include/libusb-1.0 -I../../External/joycon/include -I../../Source $(CPPFLAGS)
   JUCE_CPPFLAGS_APP :=  "-DJucePlugin_Build_VST=0" "-DJucePlugin_Build_VST3=0" "-DJucePlugin_Build_AU=0" "-DJucePlugin_Build_AUv3=0" "-DJucePlugin_Build_RTAS=0" "-DJucePlugin_Build_AAX=0" "-DJucePlugin_Build_Standalone=0" "-DJucePlugin_Build_Unity=0"
   JUCE_TARGET_APP := Chataigne
 
@@ -56,7 +56,7 @@ ifeq ($(CONFIG),Release)
     TARGET_ARCH := -march=armv7
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DNDEBUG=1" "-DVST_LOGGING=0" "-DJUCER_LINUX_MAKE_9C1B7400=1" "-DJUCE_APP_VERSION=1.8.0b25" "-DJUCE_APP_VERSION_HEX=0x10800" $(shell pkg-config --cflags alsa freetype2 libcurl webkit2gtk-4.0 gtk+-x11-3.0) -pthread -I../../JuceLibraryCode -I../../JUCE/modules -I../../Modules -I../../External/wiiuse -I../../External/serial/include -I../../External/servus/include -I../../External/dnssd/include -I../../External/sdl/include -I/usr/include/freetype2 -I../../External/hidapi/include -I../../External/libusb/include/libusb-1.0 -I../../External/joycon/include -I../../Source $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DNDEBUG=1" "-DVST_LOGGING=0" "-DJUCER_LINUX_MAKE_9C1B7400=1" "-DJUCE_APP_VERSION=1.8.0b26" "-DJUCE_APP_VERSION_HEX=0x10800" $(shell pkg-config --cflags alsa freetype2 libcurl webkit2gtk-4.0 gtk+-x11-3.0) -pthread -I../../JuceLibraryCode -I../../JUCE/modules -I../../Modules -I../../External/wiiuse -I../../External/serial/include -I../../External/servus/include -I../../External/dnssd/include -I../../External/sdl/include -I/usr/include/freetype2 -I../../External/hidapi/include -I../../External/libusb/include/libusb-1.0 -I../../External/joycon/include -I../../Source $(CPPFLAGS)
   JUCE_CPPFLAGS_APP :=  "-DJucePlugin_Build_VST=0" "-DJucePlugin_Build_VST3=0" "-DJucePlugin_Build_AU=0" "-DJucePlugin_Build_AUv3=0" "-DJucePlugin_Build_RTAS=0" "-DJucePlugin_Build_AAX=0" "-DJucePlugin_Build_Standalone=0" "-DJucePlugin_Build_Unity=0"
   JUCE_TARGET_APP := Chataigne
 
@@ -93,6 +93,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/CommandDefinition_7c3c255f.o \
   $(JUCE_OBJDIR)/CommandDefinitionManager_7c0c55d8.o \
   $(JUCE_OBJDIR)/CommandFactory_3a72e748.o \
+  $(JUCE_OBJDIR)/e131_c3d02d0c.o \
   $(JUCE_OBJDIR)/ProcessorIncludes_efd64865.o \
   $(JUCE_OBJDIR)/ProcessorIncludes2_b12da37.o \
   $(JUCE_OBJDIR)/serial_82f97e54.o \
@@ -291,6 +292,11 @@ $(JUCE_OBJDIR)/CommandFactory_3a72e748.o: ../../Source/Common/Command/CommandFac
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling CommandFactory.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/e131_c3d02d0c.o: ../../Source/Common/DMX/device/sacn/e131.c
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling e131.c"
+	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/ProcessorIncludes_efd64865.o: ../../Source/Common/Processor/ProcessorIncludes.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)

@@ -15,7 +15,7 @@ class DMXDevice :
 	public HighResolutionTimer
 {
 public:
-	enum Type { OPENDMX, ENTTEC_DMXPRO, ENTTEC_MK2, ARTNET};
+	enum Type { OPENDMX, ENTTEC_DMXPRO, ENTTEC_MK2, ARTNET, SACN};
 	DMXDevice(const String &name, Type type, bool canReceive);
 	virtual ~DMXDevice();
 

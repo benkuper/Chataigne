@@ -56,6 +56,9 @@
     <Filter Include="Chataigne\Source\Common\Command">
       <UniqueIdentifier>{BE242EEE-600F-3A0A-D733-68EE1CD456DD}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Common\DMX\device\sacn">
+      <UniqueIdentifier>{50D6BDEE-B73D-9F82-4BF7-31E45BEDE70E}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Common\DMX\device">
       <UniqueIdentifier>{685DA80D-0562-85D5-6788-5A1BCC716520}</UniqueIdentifier>
     </Filter>
@@ -1525,6 +1528,9 @@
     <ClCompile Include="..\..\Source\Common\Command\CommandFactory.cpp">
       <Filter>Chataigne\Source\Common\Command</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Common\DMX\device\sacn\e131.c">
+      <Filter>Chataigne\Source\Common\DMX\device\sacn</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\DMX\device\DMXArtNetDevice.cpp">
       <Filter>Chataigne\Source\Common\DMX\device</Filter>
     </ClCompile>
@@ -1535,6 +1541,9 @@
       <Filter>Chataigne\Source\Common\DMX\device</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\DMX\device\DMXOpenUSBDevice.cpp">
+      <Filter>Chataigne\Source\Common\DMX\device</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\DMX\device\DMXSACNDevice.cpp">
       <Filter>Chataigne\Source\Common\DMX\device</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\DMX\device\DMXSerialDevice.cpp">
@@ -5526,6 +5535,9 @@
     <ClInclude Include="..\..\Source\Common\Command\CommandFactory.h">
       <Filter>Chataigne\Source\Common\Command</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Common\DMX\device\sacn\e131.h">
+      <Filter>Chataigne\Source\Common\DMX\device\sacn</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Common\DMX\device\DMXArtNetDevice.h">
       <Filter>Chataigne\Source\Common\DMX\device</Filter>
     </ClInclude>
@@ -5536,6 +5548,9 @@
       <Filter>Chataigne\Source\Common\DMX\device</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\DMX\device\DMXOpenUSBDevice.h">
+      <Filter>Chataigne\Source\Common\DMX\device</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\DMX\device\DMXSACNDevice.h">
       <Filter>Chataigne\Source\Common\DMX\device</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\DMX\device\DMXSerialDevice.h">

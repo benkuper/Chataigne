@@ -16,6 +16,7 @@
 #include "DMX/device/DMXArtNetDevice.cpp"
 #include "DMX/device/DMXEnttecProDevice.cpp"
 #include "DMX/device/DMXOpenUSBDevice.cpp"
+#include "DMX/device/DMXSACNDevice.cpp"
 
 #include "MIDI/MIDIDevice.cpp"
 #include "MIDI/MIDIDeviceParameter.cpp"
