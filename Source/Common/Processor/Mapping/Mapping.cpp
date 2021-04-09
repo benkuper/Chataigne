@@ -156,12 +156,13 @@ void Mapping::updateMappingChain(MappingFilter* afterThisFilter, bool processAft
 			{
 				if (isMultiplexed()) outCC = outValuesCC.controllableContainers[i];
 
-				for (int j = 0; i < processedParams.size(); i++)
+				for (int j = 0; j < processedParams.size(); j++)
 				{
-					Parameter* p = (Parameter*)outCC->controllables[j];
-					if (p->hasRange()) p->setRange(processedParams[j]->minimumValue, processedParams[j]->maximumValue);
+					if (Parameter* p = (Parameter*)outCC->controllables[j])
+					{
+						if (p->hasRange()) p->setRange(processedParams[j]->minimumValue, processedParams[j]->maximumValue);
+					}
 				}
-
 			}
 		}
 
