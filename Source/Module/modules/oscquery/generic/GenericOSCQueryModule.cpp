@@ -525,20 +525,24 @@ void GenericOSCQueryModule::dataReceived(const MemoryBlock& data)
 {
 	if (!enabled->boolValue()) return;
 
-	if (logIncomingData->boolValue())
-	{
-		NLOG(niceName, "Websocket data received : " << (int)data.getSize() << " bytes");
-	}
-
-	inActivityTrigger->trigger();
+	
 
 	OSCPacketParser parser(data.getData(), (int)data.getSize());
 	OSCMessage m = parser.readMessage();
 	if (m.isEmpty())
 	{
-		LOGERROR("Empty message");
+		NLOGERROR(niceName, "Received empty message from feedback");
 		return;
 	}
+
+	if (logIncomingData->boolValue())
+	{
+		String s = m.getAddressPattern().toString();
+		for (auto& a : m) s += "\n" + OSCHelpers::getStringArg(a);
+		NLOG(niceName, "Feedback received : " << s);
+	}
+
+	inActivityTrigger->trigger();
 
 	if (Controllable* c = OSCHelpers::findControllable(&valuesCC, m))
 	{
