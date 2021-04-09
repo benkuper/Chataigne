@@ -25,7 +25,7 @@ You can check the tutorials to better understand what and how you can use Chatai
     - OSC
     - OSCQuery
     - MIDI
-    - DMX
+    - DMX (Enttec OpenDMX, Enttec DMXPro, Enttec DMX-MkII, Art-Net, sACN/E1.31)
     - Serial
     - UDP
     - TCP
