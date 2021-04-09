@@ -19,7 +19,7 @@
 
 class DMXSACNDevice :
 	public DMXDevice,
-	public EngineListener,
+//	public EngineListener,
 	public Thread //receiving
 {
 public:
@@ -28,26 +28,25 @@ public:
 
 	//EnumParameter * networkInterface;
 	IntParameter* localPort;
-	//IntParameter* inputNet;
-	//IntParameter* inputSubnet;
+	BoolParameter* receiveMulticast;
 	IntParameter* inputUniverse;
 
 
 	StringParameter* remoteHost;
 	IntParameter* remotePort;
-	//IntParameter* outputNet;
-	//IntParameter* outputSubnet;
-	IntParameter* outputUniverse;
 	StringParameter* nodeName;
+	BoolParameter* sendMulticast;
+	IntParameter* outputUniverse;
+	IntParameter* priority;
 
 	//Receiver
-	int receiverSocket;
+	std::unique_ptr<DatagramSocket> receiver;
 	e131_packet_t receivedPacket;
 	e131_error_t receivedError;
 	uint8_t receivedSeq = 0x00;
 
 	//Sender
-	int senderSocket;
+	DatagramSocket sender;
 	e131_packet_t senderPacket;
 	e131_addr_t senderDest;
 
@@ -59,7 +58,9 @@ public:
 
 	void sendDMXValuesInternal() override;
 
-	void endLoadFile() override;
+//	void endLoadFile() override;
+
+	String getMulticastIPForUniverse(int universe) const;
 
 	void onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* c) override;
 

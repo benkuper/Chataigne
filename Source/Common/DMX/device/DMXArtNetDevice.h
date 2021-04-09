@@ -18,7 +18,7 @@
 
 class DMXArtNetDevice :
 	public DMXDevice,
-	public EngineListener,
+	//public EngineListener,
 	public Thread //receiving
 {
 public:
@@ -53,7 +53,7 @@ public:
 
 	void sendDMXValuesInternal() override;
 
-	void endLoadFile() override;
+//	void endLoadFile() override;
 
 	void onControllableFeedbackUpdate(ControllableContainer * cc, Controllable * c) override;
 	

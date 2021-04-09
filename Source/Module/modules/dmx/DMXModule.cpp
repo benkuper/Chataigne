@@ -240,25 +240,34 @@ void DMXModule::dmxDeviceDisconnected()
 	dmxConnected->setValue(false);
 }
 
-void DMXModule::dmxDataInChanged(int numChannels, uint8* values)
+void DMXModule::dmxDataInChanged(int numChannels, uint8* values, const String& sourceName)
 {
 	if (isClearing || !enabled->boolValue()) return;
-	if (logIncomingData->boolValue()) NLOG(niceName, "DMX In : " + String(numChannels) + " channels received.");
+	if (logIncomingData->boolValue())
+	{
+		String s = "DMX In : " + String(numChannels) + " channels received";
+		if (sourceName.isNotEmpty()) s += " from " + sourceName;
+		NLOG(niceName, s);
+	}
+
 	inActivityTrigger->trigger();
 
 	var data;
 
 	for (int i = 0; i < numChannels; ++i)
 	{
-		DMXValueParameter* vp = channelValues[i];
-		if(vp->type == DMXByteOrder::BIT8) vp->setValue(values[i]);
-		else if (i < numChannels - 1)
+		if (DMXValueParameter* vp = channelValues[i])
 		{
-			vp->setValueFrom2Channels(values[i], values[i+1]);
-			i++;
-		}
+			if (vp->type == DMXByteOrder::BIT8) vp->setValue(values[i]);
+			else if (i < numChannels - 1)
+			{
+				vp->setValueFrom2Channels(values[i], values[i + 1]);
+				i++;
+			}
 
-		data.append(vp->getValue());
+			data.append(vp->getValue());
+		}
+		
 	}
 
 	scriptManager->callFunctionOnAllItems(dmxEventId, Array<var>{data});

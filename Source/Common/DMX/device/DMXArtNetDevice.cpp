@@ -36,7 +36,7 @@ DMXArtNetDevice::DMXArtNetDevice() :
 
 DMXArtNetDevice::~DMXArtNetDevice()
 {
-	if (Engine::mainEngine != nullptr) Engine::mainEngine->removeEngineListener(this);
+	//if (Engine::mainEngine != nullptr) Engine::mainEngine->removeEngineListener(this);
 	stopThread(200);
 }
 
@@ -106,11 +106,11 @@ void DMXArtNetDevice::sendDMXValuesInternal()
 
 	sender.write(remoteHost->stringValue(), remotePort->intValue(), artnetPacket, 530);
 }
-void DMXArtNetDevice::endLoadFile()
-{
-	Engine::mainEngine->removeEngineListener(this);
-	setupReceiver();
-}
+//void DMXArtNetDevice::endLoadFile()
+//{
+//	Engine::mainEngine->removeEngineListener(this);
+//	setupReceiver();
+//}
 
 void DMXArtNetDevice::onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* c)
 {
@@ -124,7 +124,10 @@ void DMXArtNetDevice::run()
 
 	while (!threadShouldExit())
 	{
-		int bytesRead = receiver->read(receiveBuffer, MAX_PACKET_LENGTH, false);
+		String rAddress = "";
+		int rPort = 0;
+
+		int bytesRead = receiver->read(receiveBuffer, MAX_PACKET_LENGTH, false, rAddress, rPort);
 		
 		if (bytesRead > 0)
 		{
@@ -150,7 +153,8 @@ void DMXArtNetDevice::run()
 				if (net == inputNet->intValue() && subnet == inputSubnet->intValue() && universe == inputUniverse->intValue())
 				{
 					int dmxDataLength = jmin(receiveBuffer[17] | receiveBuffer[16] << 8, NUM_CHANNELS);
-					setDMXValuesIn(dmxDataLength, receiveBuffer + DMX_HEADER_LENGTH);
+					String sName = rAddress + ":" + String(rPort);
+					setDMXValuesIn(dmxDataLength, receiveBuffer + DMX_HEADER_LENGTH, 0, sName);
 				}
 			}
 			else

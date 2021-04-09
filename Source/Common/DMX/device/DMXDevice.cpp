@@ -88,10 +88,10 @@ void DMXDevice::sendDMXRange(int startChannel, Array<int> values)
 	
 }
 
-void DMXDevice::setDMXValuesIn(int numChannels, uint8* values)
+void DMXDevice::setDMXValuesIn(int numChannels, uint8* values, int startChannel, const String& sourceName)
 {
-	for (int i = 0; i < numChannels && i < 512; ++i) dmxDataIn[i] = values[i];
-	dmxDeviceListeners.call(&DMXDeviceListener::dmxDataInChanged, numChannels, values);
+	for (int i = startChannel; i < numChannels && i < 512; ++i) dmxDataIn[i] = values[i];
+	dmxDeviceListeners.call(&DMXDeviceListener::dmxDataInChanged, numChannels, values, sourceName);
 }
 
 void DMXDevice::sendDMXValues()
@@ -101,6 +101,7 @@ void DMXDevice::sendDMXValues()
 	ScopedLock lock(dmxLock);
 	sendDMXValuesInternal();
 }
+
 
 
 void DMXDevice::clearDevice()

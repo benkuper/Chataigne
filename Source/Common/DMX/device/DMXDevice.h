@@ -43,7 +43,7 @@ public:
 	virtual void sendDMXValues();
 	virtual void sendDMXValuesInternal() = 0;
 
-	void setDMXValuesIn(int numChannels, uint8* values);
+	void setDMXValuesIn(int numChannels, uint8* values, int startChannel = 0, const String & sourceName = "");
 
 	virtual void clearDevice();
 	
@@ -60,7 +60,7 @@ public:
 
 		virtual void dmxDeviceConnected() {}
 		virtual void dmxDeviceDisconnected() {}
-		virtual void dmxDataInChanged(int /*numChannels*/, uint8* /*values*/) {}
+		virtual void dmxDataInChanged(int /*numChannels*/, uint8* /*values*/, const String &sourceName = "") {}
 	};
 
 	ListenerList<DMXDeviceListener> dmxDeviceListeners;
