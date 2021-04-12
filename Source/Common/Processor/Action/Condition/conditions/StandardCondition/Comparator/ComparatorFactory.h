@@ -15,6 +15,7 @@ class ComparatorFactory
 public:
 	static BaseComparator * createComparatorForControllable(Parameter * sourceParam, Multiplex * multiplex)
 	{
+		if (sourceParam == nullptr) return nullptr;
 		BaseComparator* result = nullptr;
 		switch (sourceParam->type)
 		{
