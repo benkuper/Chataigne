@@ -530,12 +530,7 @@ void GenericOSCQueryModule::dataReceived(const MemoryBlock& data)
 
 	OSCPacketParser parser(data.getData(), (int)data.getSize());
 	OSCMessage m = parser.readMessage();
-	if (m.isEmpty())
-	{
-		NLOGERROR(niceName, "Received empty message from feedback");
-		return;
-	}
-
+	
 	if (logIncomingData->boolValue())
 	{
 		String s = m.getAddressPattern().toString();
