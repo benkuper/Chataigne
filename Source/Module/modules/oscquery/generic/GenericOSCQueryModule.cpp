@@ -27,6 +27,7 @@ GenericOSCQueryModule::GenericOSCQueryModule(const String& name, int defaultRemo
 	syncTrigger = moduleParams.addTrigger("Sync Data", "Sync the data");
 	serverName = moduleParams.addStringParameter("Server Name", "The name of the OSCQuery server, if provided", "");
 	serverName->setControllableFeedbackOnly(true);
+	onlySyncSameName = moduleParams.addBoolParameter("Only sync from same name", "If checked, this will not sync if the server name is different", true);
 	listenAllTrigger = moduleParams.addTrigger("Listen to all", "This will automatically enable listen to all containers");
 
 	sendCC.reset(new OSCQueryOutput(this));
@@ -590,7 +591,6 @@ void GenericOSCQueryModule::run()
 	wait(100); //safety
 
 	requestHostInfo();
-	requestStructure();
 
 }
 
@@ -622,7 +622,26 @@ void GenericOSCQueryModule::requestHostInfo()
 		{
 			if (logIncomingData->boolValue()) NLOG(niceName, "Received HOST_INFO :\n" << JSON::toString(data));
 
-			serverName->setValue(data.getProperty("NAME", ""));
+			String curServerName = serverName->stringValue();
+			String newServerName = data.getProperty("NAME", "");
+			if (curServerName.isNotEmpty() && newServerName != curServerName)
+			{
+				if (onlySyncSameName->boolValue())
+				{
+					NLOGWARNING(niceName, "Server name is not the same (" << curServerName << " <> " << newServerName << "), not syncing");
+					return;
+				}
+				else
+				{
+					NLOG(niceName, "Server name has changed, if you wish to not sync, please enable \"Only sync from same name\"");
+					serverName->setValue(newServerName);
+				}
+			}
+			else
+			{
+				serverName->setValue(newServerName);
+			}
+
 
 			int oscPort = data.getProperty("OSC_PORT", remotePort->intValue());
 			if (oscPort != remotePort->intValue())
@@ -634,6 +653,10 @@ void GenericOSCQueryModule::requestHostInfo()
 
 			hasListenExtension = data.getProperty("EXTENSIONS", var()).getProperty("LISTEN", false);
 			setupWSClient();
+			
+			
+			
+			requestStructure();
 		}
 	}
 	else

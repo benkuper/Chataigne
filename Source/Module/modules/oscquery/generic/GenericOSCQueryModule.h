@@ -48,6 +48,7 @@ public:
 	Trigger* syncTrigger;
 	BoolParameter* keepValuesOnSync;
 	StringParameter* serverName;
+	BoolParameter* onlySyncSameName;
 	Trigger* listenAllTrigger;
 
 	std::unique_ptr<OSCQueryOutput> sendCC;
