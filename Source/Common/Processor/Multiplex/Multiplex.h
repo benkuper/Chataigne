@@ -20,6 +20,8 @@ public:
     IntParameter* count;
     IntParameter* previewIndex;
 
+    bool isChangingCount; //keep track to avoid rebuilding many times on one change (mutliple listeners)
+
     MultiplexListManager listManager;
     ProcessorManager processorManager;
 

@@ -29,7 +29,7 @@ public:
 	void setupParametersInternal(int multiplexIndex, bool rangeOnly) override;
 	ProcessResult processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;
 
-	void updateFilteredParamsRange();
+	bool updateFilteredParamsRange();
 	void filterParamChanged(Parameter * p) override;
 	void parameterControlModeChanged(Parameter* p) override;
 

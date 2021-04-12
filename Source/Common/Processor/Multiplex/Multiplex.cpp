@@ -35,9 +35,11 @@ void Multiplex::onContainerParameterChangedInternal(Parameter* p)
     Processor::onContainerParameterChangedInternal(p);
     if (p == count)
     {
+        isChangingCount = true;
         for (auto& l : listManager.items) l->setSize(count->intValue());
         previewIndex->setRange(1, count->intValue());
         multiplexListeners.call(&MultiplexListener::multiplexCountChanged);
+        isChangingCount = false;
     }
     else if (p == previewIndex)
     {

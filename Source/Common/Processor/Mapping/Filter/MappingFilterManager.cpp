@@ -104,6 +104,7 @@ bool MappingFilterManager::rebuildFilterChain(MappingFilter * afterThisFilter, i
 		{
 			foundFilter = true;
 			OwnedArray<Parameter>* fParams = f->filteredParameters[multiplexIndex];
+			if (fParams == nullptr) return false;
 			fp = Array<Parameter*>(fParams->getRawDataPointer(), fParams->size());
 		}
 		else

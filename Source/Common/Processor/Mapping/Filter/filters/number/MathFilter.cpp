@@ -84,8 +84,10 @@ MappingFilter::ProcessResult  MathFilter::processSingleParameterInternal(Paramet
 	return CHANGED;
 }
 
-void MathFilter::updateFilteredParamsRange()
+bool MathFilter::updateFilteredParamsRange()
 {
+	bool hasChanged = false;
+
 	for (int i = 0; i < filteredParameters[0]->size(); ++i)
 	{
 		Parameter* sourceParam = sourceParams[0][i];
@@ -101,13 +103,15 @@ void MathFilter::updateFilteredParamsRange()
 		if (rm == FREE || !sourceParam->hasRange() || !filteredParamShouldHaveRange())
 		{
 			p->clearRange();
+			hasChanged = true; 
 			continue;
 		}
 
 		if (rm == KEEP)
 		{
 			p->setRange(sourceParam->minimumValue, sourceParam->maximumValue);
-			return;
+			hasChanged = true;
+			continue;
 		}
 
 
@@ -156,7 +160,10 @@ void MathFilter::updateFilteredParamsRange()
 		}
 
 		p->setRange(newMin, newMax);
+		hasChanged = true;
 	}
+
+	return hasChanged;
 }
 
 void MathFilter::filterParamChanged(Parameter * p)
@@ -172,9 +179,12 @@ void MathFilter::filterParamChanged(Parameter * p)
 	RangeRemapMode rm = rangeRemapMode->getValueDataAsEnum<RangeRemapMode>();
 	if (p == operation || (p == operationValue && rm == RangeRemapMode::AJDUST)|| p == rangeRemapMode)
 	{
-		updateFilteredParamsRange();
-		mappingFilterListeners.call(&FilterListener::filteredParamRangeChanged, this);
-		if(p == rangeRemapMode) filterAsyncNotifier.addMessage(new FilterEvent(FilterEvent::FILTER_REBUILT, this));
+		bool hasChanged = updateFilteredParamsRange();
+		if (hasChanged)
+		{
+			mappingFilterListeners.call(&FilterListener::filteredParamRangeChanged, this);
+			if (p == rangeRemapMode) filterAsyncNotifier.addMessage(new FilterEvent(FilterEvent::FILTER_REBUILT, this));
+		}
 	}
 }
 

@@ -96,7 +96,7 @@ bool MappingFilter::setupSources(Array<Parameter*> sources, int multiplexIndex, 
 void MappingFilter::setupParametersInternal(int multiplexIndex, bool rangeOnly)
 {
 
-	if (filteredParameters.size() == 0) return;
+	if (multiplexIndex >= 0 && filteredParameters.size() <= multiplexIndex || sourceParams.size() <= multiplexIndex) return;
 	
 	if (multiplexIndex == -1)
 	{
@@ -111,6 +111,7 @@ void MappingFilter::setupParametersInternal(int multiplexIndex, bool rangeOnly)
 		Parameter* p = setupSingleParameterInternal(source, multiplexIndex, rangeOnly);
 		if (!rangeOnly) filteredParameters[multiplexIndex]->add(p);
 	}
+
 }
 
 Parameter* MappingFilter::setupSingleParameterInternal(Parameter* source, int multiplexIndex, bool rangeOnly)

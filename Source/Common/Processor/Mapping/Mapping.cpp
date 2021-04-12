@@ -141,6 +141,7 @@ void Mapping::updateMappingChain(MappingFilter* afterThisFilter, bool processAft
 				Array<Parameter*> mOutParams;
 				for (auto& sp : processedParams)
 				{
+					if (sp == nullptr) continue;
 
 					Parameter* p = ControllableFactory::createParameterFrom(sp, false, false);
 					mOutParams.add(p);
@@ -149,8 +150,8 @@ void Mapping::updateMappingChain(MappingFilter* afterThisFilter, bool processAft
 					p->setNiceName("Out " + String(mOutParams.size()));
 					p->setValue(sp->value);
 				}
-				om.setOutParams(mOutParams, i);
 
+				om.setOutParams(mOutParams, i);
 			}
 			else
 			{
@@ -353,6 +354,7 @@ void Mapping::onControllableStateChanged(Controllable* c)
 void Mapping::filterManagerNeedsRebuild(MappingFilter* afterThisFilter, bool rangeOnly)
 {
 	if (isClearing) return;
+	if (isMultiplexed() && multiplex->isChangingCount) return; //this is to avoid rebuilding for all filters that trigger a rebuild on multiplex count change
 	updateMappingChain(afterThisFilter, true, rangeOnly);
 }
 
