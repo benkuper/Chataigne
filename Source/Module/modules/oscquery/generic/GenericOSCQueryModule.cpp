@@ -449,7 +449,7 @@ void GenericOSCQueryModule::updateListenToContainer(GenericOSCQueryValueContaine
 	}
 
 	String command = gcc->enableListen->boolValue() ? "LISTEN" : "IGNORE";
-	Array<WeakReference<Parameter>> params = gcc->getAllParameters();
+	Array<WeakReference<Controllable>> params = gcc->getAllControllables();
 
 	var o(new DynamicObject());
 	o.getDynamicObject()->setProperty("COMMAND", command);
