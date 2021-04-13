@@ -24,6 +24,7 @@ public:
 
 	//---- GLOBAL SETTINGS CHATAIGNE SPECIFIC
 	BoolParameter * enableSendAnalytics;
+	bool relaunchFromCrash;
 	//
 
 	void initialiseInternal(const String& /*commandLine*/) override;
@@ -31,7 +32,7 @@ public:
 
 	void shutdown() override;
 
-	void handleCrashed(bool autoReopen) override;
+	void handleCrashed() override;
 };
 
 START_JUCE_APPLICATION(ChataigneApplication)

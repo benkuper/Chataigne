@@ -22,8 +22,8 @@ void ChataigneApplication::initialiseInternal(const String &)
 	//Call after engine init
 	AppUpdater::getInstance()->setURLs("http://benjamin.kuperberg.fr/chataigne/releases/update.json", "http://benjamin.kuperberg.fr/chataigne/user/data/", "Chataigne");
 	HelpBox::getInstance()->helpURL = URL("http://benjamin.kuperberg.fr/chataigne/help/");
-	CrashDumpUploader::getInstance()->remoteURL = URL("http://benjamin.kuperberg.fr/chataigne/support/crash_report.php");
-	CrashDumpUploader::getInstance()->crashImage = ImageCache::getFromMemory(BinaryData::crash_png, BinaryData::crash_pngSize);
+
+	CrashDumpUploader::getInstance()->init("http://benjamin.kuperberg.fr/chataigne/support/crash_report.php",ImageCache::getFromMemory(BinaryData::crash_png, BinaryData::crash_pngSize));
 
 	//DashboardManager::getInstance()->setupDownloadURL("http://benjamin.kuperberg.fr/download/dashboard/dashboard.php?folder=dashboard");
 
@@ -35,15 +35,10 @@ void ChataigneApplication::initialiseInternal(const String &)
 void ChataigneApplication::afterInit()
 {
 	//ANALYTICS
-	if (enableSendAnalytics->boolValue())
+	if (!launchedFromCrash && enableSendAnalytics->boolValue())
 	{
-		bool crashFound = CrashDumpUploader::getInstance()->crashFound;
-		
 		StringPairArray options;
-		
-		if (crashFound) MatomoAnalytics::getInstance()->log(MatomoAnalytics::CRASH); 
-		else options.set("new_visit", "1");
-
+		options.set("new_visit", "1");
 		MatomoAnalytics::getInstance()->log(MatomoAnalytics::START, options);
 	}
 
@@ -69,12 +64,17 @@ void ChataigneApplication::shutdown()
 	AppUpdater::deleteInstance();
 }
 
-void ChataigneApplication::handleCrashed(bool autoReopen)
+void ChataigneApplication::handleCrashed()
 {
 	for (auto& m : ModuleManager::getInstance()->getItemsWithType<OSModule>())
 	{
 		m->crashedTrigger->trigger();
 	}
 
-	OrganicApplication::handleCrashed(autoReopen);
+	if (enableSendAnalytics->boolValue())
+	{
+		MatomoAnalytics::getInstance()->log(MatomoAnalytics::CRASH);
+	}
+
+	OrganicApplication::handleCrashed();
 }
