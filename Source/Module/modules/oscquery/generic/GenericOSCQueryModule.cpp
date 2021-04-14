@@ -26,7 +26,6 @@ GenericOSCQueryModule::GenericOSCQueryModule(const String& name, int defaultRemo
 	keepValuesOnSync = moduleParams.addBoolParameter("Keep Values On Sync", "If checked, this will force keeping the current values when syncing the OSCQuery remote data structure.", false);
 	syncTrigger = moduleParams.addTrigger("Sync Data", "Sync the data");
 	serverName = moduleParams.addStringParameter("Server Name", "The name of the OSCQuery server, if provided", "");
-	serverName->setControllableFeedbackOnly(true);
 	onlySyncSameName = moduleParams.addBoolParameter("Only sync from same name", "If checked, this will not sync if the server name is different", true);
 	listenAllTrigger = moduleParams.addTrigger("Listen to all", "This will automatically enable listen to all containers");
 
