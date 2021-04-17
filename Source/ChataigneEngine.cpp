@@ -173,7 +173,7 @@ void ChataigneEngine::importSelection(File f)
 {
 	if (!f.existsAsFile())
 	{
-		FileChooser fc("Load a LilNut", File::getSpecialLocation(File::userDocumentsDirectory).getChildFile(ProjectInfo::projectName), "*.lilnut");
+		FileChooser fc("Load a LilNut", File::getCurrentWorkingDirectory(), "*.lilnut");
 		if (!fc.browseForFileToOpen()) return;
 		f = fc.getResult();
 	}
@@ -201,7 +201,7 @@ void ChataigneEngine::exportSelection()
 
 	String s = JSON::toString(data);
 
-	FileChooser fc("Save a LilNut", File::getSpecialLocation(File::userDocumentsDirectory).getChildFile(ProjectInfo::projectName), "*.lilnut");
+	FileChooser fc("Save a LilNut", File::getCurrentWorkingDirectory(), "*.lilnut");
 	if (fc.browseForFileToSave(true))
 	{
 		File f=  fc.getResult();
