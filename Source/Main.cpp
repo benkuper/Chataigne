@@ -74,6 +74,10 @@ void ChataigneApplication::handleCrashed()
 	if (enableSendAnalytics->boolValue())
 	{
 		MatomoAnalytics::getInstance()->log(MatomoAnalytics::CRASH);
+		while (MatomoAnalytics::getInstance()->isThreadRunning())
+		{
+			//wait until thread is done
+		}
 	}
 
 	OrganicApplication::handleCrashed();
