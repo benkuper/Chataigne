@@ -22,11 +22,14 @@ public:
 
 	TopLevelWindow * window;
 
-	StringParameter * lastKey;
+	StringParameter* lastKey;
+	StringParameter * combination;
 	BoolParameter * ctrl;
 	BoolParameter * shift;
 	BoolParameter * command;
 	BoolParameter * alt;
+
+	ControllableContainer keysCC;
 
 	void sendKeyDown(int keyID);
 	void sendKeyUp(int keyID);

@@ -28,7 +28,8 @@ OrganicApplication::MainWindow* getMainWindow();
 
 KeyboardModule::KeyboardModule() :
 	Module(getDefaultTypeString()),
-	window(nullptr)
+	window(nullptr),
+	keysCC("Keys")
 {
 	setupIOConfiguration(true, true);
 
@@ -36,10 +37,23 @@ KeyboardModule::KeyboardModule() :
 	if(window != nullptr) window->addKeyListener(this);
 
 	lastKey = valuesCC.addStringParameter("Last Key", "Last Key pressed", "");
+	combination = valuesCC.addStringParameter("Current Combination", "The current combination in a string representation", "");
 	ctrl = valuesCC.addBoolParameter("Ctrl", "Is Control down ?", false);
 	shift = valuesCC.addBoolParameter("Shift", "Is shift down ?", false);
 	command = valuesCC.addBoolParameter("Command", "Is command down ?", false);
 	alt = valuesCC.addBoolParameter("Alt", "Is alt down ?", false);
+
+	for (int i = 33; i < 127; i++)
+	{
+		String s = KeyPress(i).getTextDescription();
+		if (i >= 97 && i <= 122) continue;
+		String sn = "key" + String(i - 33);
+		BoolParameter * p = new BoolParameter(s, "Is this key pressed ?", false);
+		p->setCustomShortName(sn);
+		keysCC.addParameter(p);
+	}
+
+	addChildControllableContainer(&keysCC);
 
 	defManager->add(CommandDefinition::createDef(this, "", "Key Down", &KeyboardModuleCommands::create)->addParam("type", KeyboardModuleCommands::KEY_DOWN));
 	defManager->add(CommandDefinition::createDef(this, "", "Key Up", &KeyboardModuleCommands::create)->addParam("type", KeyboardModuleCommands::KEY_UP));
@@ -121,7 +135,7 @@ bool KeyboardModule::keyPressed(const KeyPress & key, juce::Component * originat
 {
 	if (!enabled->boolValue()) return false;
 	
-	char k = (char)key.getKeyCode();
+	char k = (char)key.getTextCharacter();
 	String ks = String::fromUTF8(&k, 1);
 	lastKey->setValue(ks.toLowerCase());
 
@@ -129,6 +143,8 @@ bool KeyboardModule::keyPressed(const KeyPress & key, juce::Component * originat
 	ctrl->setValue(key.getModifiers().isCtrlDown());
 	command->setValue(key.getModifiers().isCommandDown());
 	alt->setValue(key.getModifiers().isAltDown());
+
+	combination->setValue(key.getTextDescription());
 
 	inActivityTrigger->trigger();
 
@@ -139,9 +155,19 @@ bool KeyboardModule::keyStateChanged(bool isKeyDown, juce::Component * originati
 {
 	if (!enabled->boolValue()) return false;
 
+	for (int i = 33; i < 127; i++)
+	{
+		int index = i - 33;
+		if (i >= 97 && i <= 122) continue;
+		if (i > 122) index -= 26;
+		BoolParameter* bp = (BoolParameter*)keysCC.controllables[index];
+		bp->setValue(KeyPress::createFromDescription(bp->niceName).isCurrentlyDown());
+	}
+
 	if (!isKeyDown)
 	{
 		lastKey->setValue("");
+		combination->setValue("");
 		ctrl->setValue(false);
 		shift->setValue(false);
 		command->setValue(false);
