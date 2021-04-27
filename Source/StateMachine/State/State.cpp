@@ -1,3 +1,4 @@
+#include "State.h"
 /*
   ==============================================================================
 
@@ -112,9 +113,14 @@ void State::loadJSONDataInternal(var data)
 {
 	BaseItem::loadJSONDataInternal(data);
 	pm->loadJSONData(data.getProperty(pm->shortName, var()));
+}
 
+void State::afterLoadJSONDataInternal()
+{
+	BaseItem::afterLoadJSONDataInternal();
 	LoadBehavior b = loadActivationBehavior->getValueDataAsEnum<LoadBehavior>();
 	if (b != KEEP) active->setValue(b == ACTIVE);
+	else if(!Engine::mainEngine->isLoadingFile) active->setValue(active->boolValue(), false, true); //force reactivate if not already
 }
 
 bool State::paste()

@@ -37,6 +37,7 @@ public:
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
+	void afterLoadJSONDataInternal() override;
 
 	virtual bool paste() override;
 	virtual void selectAll(bool addToSelection = false) override;
