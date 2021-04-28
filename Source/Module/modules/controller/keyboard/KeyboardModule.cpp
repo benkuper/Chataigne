@@ -53,7 +53,7 @@ KeyboardModule::KeyboardModule() :
 		keysCC.addParameter(p);
 	}
 
-	addChildControllableContainer(&keysCC);
+	valuesCC.addChildControllableContainer(&keysCC);
 
 	defManager->add(CommandDefinition::createDef(this, "", "Key Down", &KeyboardModuleCommands::create)->addParam("type", KeyboardModuleCommands::KEY_DOWN));
 	defManager->add(CommandDefinition::createDef(this, "", "Key Up", &KeyboardModuleCommands::create)->addParam("type", KeyboardModuleCommands::KEY_UP));
