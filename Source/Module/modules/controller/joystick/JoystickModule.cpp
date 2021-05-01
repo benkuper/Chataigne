@@ -13,6 +13,9 @@ JoystickModule::JoystickModule(const String & name) :
 	calibCC("Calibration")
 {
 	setupIOConfiguration(true, false);
+
+	includeValuesInSave = true;
+
 	joystickParam = new JoystickParameter("Device", "The Joystick to connect to");
 	moduleParams.addParameter(joystickParam);
 	for (int i = 0; i < 4; ++i)

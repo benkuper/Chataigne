@@ -13,6 +13,8 @@ GamepadModule::GamepadModule(const String & name) :
 	calibCC("Calibration")
 {
 	setupIOConfiguration(true, false);
+	includeValuesInSave = true;
+	
 	gamepadParam = new GamepadParameter("Device", "The Gamepad to connect to");
 	moduleParams.addParameter(gamepadParam);
 
