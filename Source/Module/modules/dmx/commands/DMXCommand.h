@@ -29,6 +29,7 @@ public:
 	IntParameter * value;
 	ColorParameter * colorParam;
 
+	int remapTarget;
 	BoolParameter * remap01To255;
 
 	void setValue(var value, int multiplexIndex) override;

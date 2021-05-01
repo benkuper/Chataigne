@@ -16,7 +16,8 @@ DMXCommand::DMXCommand(DMXModule* _module, CommandContext context, var params, M
 	channel2(nullptr),
 	value(nullptr),
 	colorParam(nullptr),
-	remap01To255(nullptr)
+	remap01To255(nullptr),
+	remapTarget(0)
 {
 
 	dmxAction = (DMXAction)(int)params.getProperty("action", 0);
@@ -73,7 +74,8 @@ DMXCommand::DMXCommand(DMXModule* _module, CommandContext context, var params, M
 
 	if (context == MAPPING && (dmxAction == SET_VALUE || dmxAction == SET_VALUE_16BIT || dmxAction == SET_RANGE || dmxAction == SET_CUSTOM))
 	{
-		remap01To255 = addBoolParameter("Remap to 0-255", "If checked, this will automatically remap values from 0-1 to 0-255", false);
+		remapTarget = dmxAction == SET_VALUE_16BIT ? 65535 : 255;
+		remap01To255 = addBoolParameter("Remap to 0-" + String(remapTarget), "If checked, this will automatically remap values from 0-1 to 0-" + String(remapTarget), false);
 	}
 }
 
@@ -86,7 +88,7 @@ void DMXCommand::setValue(var val, int multiplexIndex)
 {
 	//DBG("Value val " << (int)val.isArray() << " / " << val.size()) ;
 
-	float mapFactor = (remap01To255 != nullptr && remap01To255->boolValue()) ? 255 : 1;
+	float mapFactor = (remap01To255 != nullptr && (int)getLinkedValue(remap01To255, multiplexIndex) == 1) ? remapTarget : 1;
 	var newVal;
 
 	if (val.isArray())
