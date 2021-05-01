@@ -27,7 +27,10 @@ public:
 
 	std::unique_ptr<BoolToggleUI> connectionFeedbackUI;
 
+	void mouseDown(const MouseEvent &e) override;
+	void paintOverChildren(Graphics& g) override;
 	void moduleIOConfigurationChanged() override;
+	void controllableFeedbackUpdateInternal(Controllable* c) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ModuleUI)
 };

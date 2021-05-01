@@ -1,3 +1,4 @@
+#include "ModuleUI.h"
 /*
   ==============================================================================
 
@@ -73,8 +74,39 @@ void ModuleUI::resizedHeader(Rectangle<int>& r)
 	resizedInternalHeaderModule(r);
 }
 
+void ModuleUI::mouseDown(const MouseEvent& e)
+{
+	BaseItemUI::mouseDown(e);
+	if (e.eventComponent == inActivityUI.get()) item->logIncomingData->setValue(!item->logIncomingData->boolValue());
+	else if (e.eventComponent == outActivityUI.get()) item->logOutgoingData->setValue(!item->logOutgoingData->boolValue());
+}
+
+void ModuleUI::paintOverChildren(Graphics& g)
+{
+	BaseItemUI::paintOverChildren(g);
+
+	if (item->logIncomingData != nullptr && item->logIncomingData->boolValue())
+	{
+		g.setColour(BLUE_COLOR.brighter(.3f));
+		g.drawEllipse(inActivityUI->getBounds().toFloat().reduced(1), 1.5f);
+	}
+
+	if (item->logOutgoingData != nullptr && item->logOutgoingData->boolValue())
+	{
+		g.setColour(GREEN_COLOR);
+		g.drawEllipse(outActivityUI->getBounds().toFloat().reduced(1), 1);
+	}
+}
+
 void ModuleUI::moduleIOConfigurationChanged()
 {
 	inActivityUI->setVisible(item->hasInput);
 	outActivityUI->setVisible(item->hasOutput);
+	repaint();
+}
+
+void ModuleUI::controllableFeedbackUpdateInternal(Controllable* c)
+{
+	BaseItemUI::controllableFeedbackUpdateInternal(c);
+	if (c == item->logIncomingData || c == item->logOutgoingData) repaint();
 }
