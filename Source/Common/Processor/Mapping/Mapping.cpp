@@ -27,8 +27,10 @@ Mapping::Mapping(var params, Multiplex* multiplex, bool canBeDisabled) :
 	itemDataType = "Mapping";
 	type = MAPPING;
 
-	sendOnOutputChangeOnly = mappingParams.addBoolParameter("Send On Output Change Only", "This decides whether the Mapping Outputs are always triggered on source change, or only when a value's filtered output has changed.", false);
 	updateRate = mappingParams.addIntParameter("Update rate", "This is the update rate at which the mapping is processing. This is used only when continuous filters like Smooth and Damping are presents", 50, 1, 500, false);
+	sendOnOutputChangeOnly = mappingParams.addBoolParameter("Send On Output Change Only", "This decides whether the Mapping Outputs are always triggered on source change, or only when a value's filtered output has changed.", false);
+	processAfterLoad = mappingParams.addBoolParameter("Process After Load", "This will force processing this mapping once after loading", false);
+
 	//updateRate->canBeDisabledByUser = true;
 
 
@@ -283,7 +285,7 @@ void Mapping::loadJSONDataInternal(var data)
 
 void Mapping::afterLoadJSONDataInternal()
 {
-	updateMappingChain(nullptr, false);
+	updateMappingChain(nullptr, processAfterLoad->boolValue());
 	updateContinuousProcess();
 }
 
