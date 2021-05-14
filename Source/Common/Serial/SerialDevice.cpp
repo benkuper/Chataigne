@@ -180,7 +180,10 @@ void SerialDevice::addSerialDeviceListener(SerialDeviceListener * newListener) {
 
 void SerialDevice::removeSerialDeviceListener(SerialDeviceListener * listener) {
 	listeners.remove(listener);
-	if (listeners.size() == 0) SerialManager::getInstance()->removePort(this);
+	if (listeners.size() == 0) {
+		SerialManager* manager = SerialManager::getInstance();
+		manager->removePort(this);
+	}
 }
 
 SerialReadThread::SerialReadThread(String name, SerialDevice * _port) :
