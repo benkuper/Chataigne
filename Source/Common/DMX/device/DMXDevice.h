@@ -37,6 +37,7 @@ public:
 	IntParameter * targetRate;
 
 	void setConnected(bool value);
+	virtual void refreshEnabled() {};
 
 	virtual void sendDMXValue(int channel, int value);
 	virtual void sendDMXRange(int startChannel, Array<int> values);

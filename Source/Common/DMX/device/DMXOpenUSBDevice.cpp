@@ -75,7 +75,7 @@ void DMXOpenUSBDevice::sendDMXValuesSerialInternal()
 		dmxPort->port->setBreak(true);
 	    dmxPort->port->setBreak(false);
 	    dmxPort->port->write(startCode, 1); //start code
-		dmxPort->port->write(dmxDataOut, 512);
+		dmxPort->port->write(dmxDataOut, dmxChannels);
 	}
 	catch (serial::IOException e)
 	{

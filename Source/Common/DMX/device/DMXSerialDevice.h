@@ -20,8 +20,12 @@ public:
 	DMXSerialDevice(const String &name, Type type, bool canReceive);
 	virtual ~DMXSerialDevice();
 
+	bool setPortStatus(bool status);
+
 	SerialDeviceParameter * portParam;
 	SerialDevice * dmxPort;
+	IntParameter * channelsParam;
+	int dmxChannels = 512;
 
 	//Device info
 	String deviceID;
@@ -29,6 +33,10 @@ public:
 
 	void setCurrentPort(SerialDevice * port);
 	virtual void setPortConfig() {}
+
+	void refreshEnabled() override;
+
+	virtual void changeDMXChannels() {};
 
 	virtual void processIncomingData();
 

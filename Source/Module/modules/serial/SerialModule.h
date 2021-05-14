@@ -19,6 +19,8 @@ public:
 	SerialModule(const String &name = "Serial");
 	virtual ~SerialModule();
 
+	bool setPortStatus(bool status);
+
 	//Device info
 	String deviceID;
 	String lastOpenedPortID; //for ghosting

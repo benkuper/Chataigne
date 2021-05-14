@@ -1,3 +1,4 @@
+#include "DMXSerialDevice.h"
 /*
   ==============================================================================
 
@@ -15,6 +16,8 @@ DMXSerialDevice::DMXSerialDevice(const String &name, Type type, bool canReceive)
 	portParam = new SerialDeviceParameter("Port", "USB Port for the DMX device", true);
 	addParameter(portParam);
 	SerialManager::getInstance()->addSerialManagerListener(this);
+	channelsParam = outputCC->addIntParameter("Channel count", "Maximum DMX channel sent", 512, 1, 512);
+	changeDMXChannels();
 }
 
 DMXSerialDevice::~DMXSerialDevice()
@@ -27,9 +30,43 @@ DMXSerialDevice::~DMXSerialDevice()
 	setCurrentPort(nullptr);
 }
 
-void DMXSerialDevice::setCurrentPort(SerialDevice * port)
+bool DMXSerialDevice::setPortStatus(bool status) {
+	bool connected = false;
+	if (dmxPort != nullptr) {
+		connected = dmxPort->isOpen();
+		bool moduleEnabled = enabled;
+		if (status && !connected && moduleEnabled) { //We want to open the port, it's not already opened and the module is enabled
+			dmxPort->setMode(SerialDevice::PortMode::RAW);
+			dmxPort->open();
+
+			connected = dmxPort->isOpen();
+			if (!connected) {
+				NLOG(niceName, "Could not open port : " << dmxPort->info->port);
+				dmxDeviceListeners.call(&DMXDeviceListener::dmxDeviceDisconnected);
+				dmxPort = nullptr; //Avoid crash if SerialPort is busy
+			}
+			else {
+				NLOG(niceName, "Port connected : " << dmxPort->info->port);
+				setPortConfig();
+			}
+		}
+		else if ((!moduleEnabled || !status) && connected) { //We want to close the port or the module is disabled, and it's actually opened
+			NLOG(niceName, "Port disconnected : " << dmxPort->info->port);
+			dmxPort->close();
+			connected = dmxPort->isOpen();
+		}
+	}
+	setConnected(connected);
+	return connected;
+}
+
+void DMXSerialDevice::refreshEnabled() {
+	setPortStatus(enabled);
+}
+
+void DMXSerialDevice::setCurrentPort(SerialDevice* port)
 {
-	if (port == dmxPort) return;
+	if (dmxPort == port) return;
 
 	if (dmxPort != nullptr)
 	{
@@ -37,28 +74,13 @@ void DMXSerialDevice::setCurrentPort(SerialDevice * port)
 	}
 
 	dmxPort = port;
+	setPortStatus(true);
 
 	if (dmxPort != nullptr)
 	{
+		DBG(" > " << dmxPort->info->port);
 		dmxPort->addSerialDeviceListener(this);
-		dmxPort->setMode(SerialDevice::PortMode::RAW);
-		dmxPort->open();
-		if (!port->isOpen())
-		{
-			NLOG(niceName, "Could not open port : " << port->info->port);
-			dmxDeviceListeners.call(&DMXDeviceListener::dmxDeviceDisconnected);
-		}
-		else
-		{
-			NLOG(niceName, "Port connected : " << port->info->port);
-			lastOpenedPortID = port->info->port;
-			setPortConfig();
-			setConnected(true);
-		}
-	}
-	else
-	{
-		setConnected(false);
+		lastOpenedPortID = dmxPort->info->deviceID;
 	}
 }
 
@@ -87,21 +109,34 @@ void DMXSerialDevice::onContainerParameterChanged(Parameter * p)
 
 	if (p == portParam)
 	{
-		setCurrentPort(portParam->getDevice());
+		setPortStatus(false);
+		SerialDevice* newDevice = portParam->getDevice();
+		SerialDevice* prevPort = dmxPort;
+		setCurrentPort(newDevice);
+
+		if (dmxPort == nullptr && prevPort != nullptr)
+		{
+			DBG("Manually set no ghost port");
+			lastOpenedPortID = ""; //forces no ghosting when user chose to manually disable port
+		}
+	}
+	else if (p == channelsParam) {
+		dmxChannels = channelsParam->getValue();
+		changeDMXChannels();
 	}
 }
 
 void DMXSerialDevice::portAdded(SerialDeviceInfo * info)
 {
-	if (dmxPort == nullptr && lastOpenedPortID == info->port)
+	if (dmxPort == nullptr && lastOpenedPortID == info->deviceID)
 	{
 		setCurrentPort(SerialManager::getInstance()->getPort(info));
 	}
 }
 
-void DMXSerialDevice::portRemoved(SerialDeviceInfo * /*info*/)
+void DMXSerialDevice::portRemoved(SerialDeviceInfo * p)
 {
-	setCurrentPort(nullptr);
+	if (dmxPort != nullptr && dmxPort->info == p) setCurrentPort(nullptr);
 }
 
 void DMXSerialDevice::portOpened(SerialDevice *)

@@ -213,7 +213,10 @@ void DMXModule::onContainerParameterChanged(Parameter* p)
 	Module::onContainerParameterChanged(p);
 	if (p == enabled)
 	{
-		if (dmxDevice != nullptr) dmxDevice->enabled = enabled->boolValue();
+		if (dmxDevice != nullptr) {
+			dmxDevice->enabled = enabled->boolValue();
+			dmxDevice->refreshEnabled();
+		}
 	}
 }
 

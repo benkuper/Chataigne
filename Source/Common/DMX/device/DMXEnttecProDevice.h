@@ -42,6 +42,8 @@ public:
 	void setPortConfig() override;
 	void sendDMXValuesSerialInternal() override;
 
+	void changeDMXChannels() override;
+
 	void serialDataReceived(const var &data) override;
 	Array<uint8> getDMXPacket(Array<uint8> bytes, int &endIndex);
 	void processDMXPacket(Array<uint8> bytes);

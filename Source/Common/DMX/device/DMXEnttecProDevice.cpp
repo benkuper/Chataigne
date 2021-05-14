@@ -33,7 +33,6 @@ void DMXEnttecProDevice::setPortConfig()
 	dmxPort->writeBytes(getSerialNumberBytes);
 
 	dmxPort->port->write(changeAlwaysData, 6); //to avoid blocking the dmxPro on send
-
 }
 
 void DMXEnttecProDevice::sendDMXValuesSerialInternal()
@@ -45,7 +44,7 @@ void DMXEnttecProDevice::sendDMXValuesSerialInternal()
     }
     
 	dmxPort->port->write(sendHeaderData, 5);
-	dmxPort->port->write(dmxDataOut, 512);
+	dmxPort->port->write(dmxDataOut, dmxChannels);
 	dmxPort->port->write(sendFooterData, 1);
 	dmxPort->port->flush();
 
@@ -58,6 +57,11 @@ void DMXEnttecProDevice::sendDMXValuesSerialInternal()
 	if(inputCC->enabled->boolValue()) dmxPort->port->write(changeAlwaysData, 6); //to avoid blocking the dmxPro on send
 }
 
+void DMXEnttecProDevice::changeDMXChannels()
+{
+	sendHeaderData[2] = (dmxChannels + 1) & 255;
+	sendHeaderData[3] = ((dmxChannels + 1) >> 8) & 255;
+}
 
 
 void DMXEnttecProDevice::serialDataReceived(const var& data)

@@ -36,6 +36,33 @@ SerialModule::~SerialModule()
 	setCurrentPort(nullptr);
 }
 
+bool SerialModule::setPortStatus(bool status) {
+	bool connected = false;
+	if (port != nullptr) {
+		connected = port->isOpen();
+		bool moduleEnabled = enabled->boolValue();
+		if (status && !connected && moduleEnabled) { //We want to open the port, it's not already opened and the module is enabled
+			port->open(baudRate->intValue());
+
+			connected = port->isOpen();
+			if (!connected) {
+				NLOG(niceName, "Could not open port : " << port->info->port);
+				port = nullptr; //Avoid crash if SerialPort is busy
+			}
+			else {
+				port->setMode(streamingType->getValueDataAsEnum<SerialDevice::PortMode>());
+			}
+		}
+		else if((!moduleEnabled || !status) && connected) { //We want to close the port or the module is disabled, and it's actually opened
+			NLOG(niceName, "Port disconnected : " << port->info->port);
+			port->close();
+			connected = port->isOpen();
+		}
+	}
+	isConnected->setValue(connected);
+	return connected;
+}
+
 void SerialModule::setCurrentPort(SerialDevice * _port)
 {
 	if (port == _port) return;
@@ -46,27 +73,16 @@ void SerialModule::setCurrentPort(SerialDevice * _port)
 	}
 
 	port = _port;
+	setPortStatus(true);
 
 	if (port != nullptr)
 	{
 		DBG(" > " << port->info->port);
 
 		port->addSerialDeviceListener(this);
-		if(enabled->boolValue()) port->open(baudRate->intValue());
-		if (!port->isOpen())
-		{
-			NLOG(niceName, "Could not open port : " << port->info->port);
-		}
-		else
-		{
-			port->setMode(streamingType->getValueDataAsEnum<SerialDevice::PortMode>());
-		}
 
 		lastOpenedPortID = port->info->deviceID;
 	}
-
-	isConnected->setValue(port != nullptr);
-
 	serialModuleListeners.call(&SerialModuleListener::currentPortChanged);
 }
 
@@ -77,8 +93,7 @@ void SerialModule::onContainerParameterChangedInternal(Parameter* p)
 	{
 		if (port != nullptr)
 		{
-			if (enabled->boolValue()) port->open(baudRate->intValue());
-			else port->close();
+			setPortStatus(true);
 
 			NLOG(niceName, "Module is " << (enabled->boolValue() ? "enabled" : "disabled") << ", " << (enabled->boolValue() ? "opening" : "closing serial port"));
 		}
@@ -101,17 +116,15 @@ void SerialModule::onControllableFeedbackUpdateInternal(ControllableContainer * 
 	}
 	if (c == portParam)
 	{
+		setPortStatus(false);
 		SerialDevice* newDevice = portParam->getDevice();
-		if (enabled->boolValue() || newDevice == nullptr)
-		{
-			SerialDevice* prevPort = port;
-			setCurrentPort(newDevice);
+		SerialDevice* prevPort = port;
+		setCurrentPort(newDevice);
 
-			if (port == nullptr && prevPort != nullptr)
-			{
-				DBG("Manually set no ghost port");
-				lastOpenedPortID = ""; //forces no ghosting when user chose to manually disable port
-			}
+		if (port == nullptr && prevPort != nullptr)
+		{
+			DBG("Manually set no ghost port");
+			lastOpenedPortID = ""; //forces no ghosting when user chose to manually disable port
 		}
 	}if (c == streamingType)
 	{
