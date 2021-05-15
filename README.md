@@ -150,9 +150,7 @@ This list contains all the references to projects and libraries that Chataigne u
 - HIDAPI : https://github.com/signal11/hidapi
 - Microsoft Kinect SDK 2.0 : https://developer.microsoft.com/en-us/windows/kinect
 
-Thanks to Chris Hocking (https://github.com/latenitefilms) for his help and work on reverse engineering the Loupedeck
-
-Thanks to Stephan Brunner for his contribution on the Arch Linux AUR deployment
+Thanks to Manuel Mitasch, Norbert Rostaing, David Chanel, Tom Magnier, Chris Hocking, Stephan Brunner and many more for their contributions and very helpful presence in the community
 
 ## Perhaps the most important
 
