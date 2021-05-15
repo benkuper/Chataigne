@@ -78,7 +78,7 @@ If you wish to test the latest features and commits, the bleeding-edge section i
 
 ## Getting Started
 
-You can start by checking the Amazing Chataigne Documentation, made with love ! https://chataigne-goldengeek.gitbook.io/chataigne/
+You can start by checking the Amazing Chataigne Documentation, made with love ! https://benjamin.kuperberg.fr/chataigne/docs
 
 Also you can watch tutorials from the website and follow the interactive guide from withing the application.
 
