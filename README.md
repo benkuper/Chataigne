@@ -151,6 +151,7 @@ This list contains all the references to projects and libraries that Chataigne u
 - Microsoft Kinect SDK 2.0 : https://developer.microsoft.com/en-us/windows/kinect
 
 Thanks to Chris Hocking (https://github.com/latenitefilms) for his help and work on reverse engineering the Loupedeck
+
 Thanks to Stephan Brunner for his contribution on the Arch Linux AUR deployment
 
 ## Perhaps the most important
