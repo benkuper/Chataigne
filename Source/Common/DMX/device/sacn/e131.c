@@ -36,6 +36,8 @@
 
 #include "e131.h"
 
+#pragma warning(disable: 4996 4244 4133 4804 4057 4267)
+
 /* E1.31 Public Constants */
 const uint16_t E131_DEFAULT_PORT = 5568;
 const uint8_t E131_DEFAULT_PRIORITY = 0x64;

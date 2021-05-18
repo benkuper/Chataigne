@@ -58,6 +58,8 @@ extern const uint8_t E131_DEFAULT_PRIORITY;
 /* E1.31 Socket Address Type */
 typedef struct sockaddr_in e131_addr_t;
 
+#pragma warning(disable:4201)
+
 /* E1.31 Packet Type */
 /* All packet contents shall be transmitted in network byte order (big endian) */
 typedef union {
