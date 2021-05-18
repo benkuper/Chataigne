@@ -433,7 +433,11 @@ void StreamingModule::processDataBytes(Array<uint8_t> data)
 void StreamingModule::processDataJSON(const var& data)
 {
 	if (!enabled->boolValue()) return;
-	if (logIncomingData->boolValue()) NLOG(niceName, "JSON received : " << (data.isVoid() ? JSON::toString(data) : "(Invalid JSON)"));
+	if (logIncomingData->boolValue())
+	{
+		NLOG(niceName, "JSON received : " << (!data.isVoid() ? JSON::toString(data) : "(Invalid JSON)"));
+	}
+
 	inActivityTrigger->trigger();
 
 	createControllablesFromJSONResult(data, &valuesCC);

@@ -1,3 +1,4 @@
+#include "NetworkStreamingModule.h"
 /*
   ==============================================================================
 
@@ -110,6 +111,11 @@ void NetworkStreamingModule::controllableFeedbackUpdate(ControllableContainer* c
 void NetworkStreamingModule::loadJSONDataInternal(var data)
 {
 	StreamingModule::loadJSONDataInternal(data);
+
+}
+
+void NetworkStreamingModule::afterLoadJSONDataInternal()
+{
 	setupSender();
 	setupReceiver();
 }
@@ -148,7 +154,7 @@ void NetworkStreamingModule::run()
 					var data = JSON::parse(stringBuffer);
 					if (!data.isVoid())
 					{
-						processDataJSON(stringBuffer);
+						processDataJSON(data);
 						stringBuffer = "";
 					}
 				}
