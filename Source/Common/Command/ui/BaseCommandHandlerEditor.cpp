@@ -45,7 +45,7 @@ BaseCommandHandlerEditor::~BaseCommandHandlerEditor()
 void BaseCommandHandlerEditor::resizedInternalHeaderItemInternal(Rectangle<int>& r)
 {
 	if(triggerBT != nullptr) triggerBT->setBounds(r.removeFromRight(50).reduced(2));
-	chooser.setBounds(r.removeFromRight(150));
+	chooser.setBounds(r);
 }
 
 void BaseCommandHandlerEditor::updateChooserLabel()
