@@ -6582,6 +6582,9 @@
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_devices\native\oboe\include\oboe\Version.h">
       <Filter>JUCE Modules\juce_audio_devices\native\oboe\include\oboe</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_devices\native\oboe\src\aaudio\AAudioExtensions.h">
+      <Filter>JUCE Modules\juce_audio_devices\native\oboe\src\aaudio</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_devices\native\oboe\src\aaudio\AAudioLoader.h">
       <Filter>JUCE Modules\juce_audio_devices\native\oboe\src\aaudio</Filter>
     </ClInclude>
