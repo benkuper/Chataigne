@@ -20,6 +20,12 @@ CustomValuesCommandArgumentEditor::CustomValuesCommandArgumentEditor(CustomValue
 		addAndMakeVisible(editableUI.get());
 	}
 
+	if (arg->sendPrecision != nullptr)
+	{
+		sendPrecisionUI.reset(arg->sendPrecision->createUI());
+		addAndMakeVisible(sendPrecisionUI.get());
+	}
+
 	if (arg->paramLink != nullptr)
 	{
 		paramUI.reset(new LinkableParameterEditor(arg->paramLink.get(), arg->mappingEnabled));

@@ -11,14 +11,15 @@
 #include "CustomValuesCommandArgumentManager.h"
 #include "ui/CustomValuesCommandArgumentManagerEditor.h"
 
-CustomValuesCommandArgumentManager::CustomValuesCommandArgumentManager(bool _mappingEnabled, bool templateMode, Multiplex * multiplex) :
+CustomValuesCommandArgumentManager::CustomValuesCommandArgumentManager(bool _mappingEnabled, bool templateMode, Multiplex* multiplex) :
 	BaseManager("arguments"),
 	MultiplexTarget(multiplex),
 	isBeingDestroyed(false),
-    mappingEnabled(_mappingEnabled),
-    templateMode(templateMode),
-    linkedTemplateManager(nullptr),
-	createParamCallbackFunc(nullptr)
+	mappingEnabled(_mappingEnabled),
+	templateMode(templateMode),
+	linkedTemplateManager(nullptr),
+	createParamCallbackFunc(nullptr),
+	enablePrecison(true)
 {
 	selectItemWhenCreated = false;
 	editorCanBeCollapsed = false;
@@ -109,7 +110,7 @@ void CustomValuesCommandArgumentManager::removeItemInternal(CustomValuesCommandA
 
 CustomValuesCommandArgument * CustomValuesCommandArgumentManager::addItemWithParam(Parameter * p, var data, bool fromUndoableAction)
 {
-	CustomValuesCommandArgument* a = new CustomValuesCommandArgument("#" + String(items.size() + 1), p, mappingEnabled, templateMode, multiplex);
+	CustomValuesCommandArgument* a = new CustomValuesCommandArgument("#" + String(items.size() + 1), p, mappingEnabled, templateMode, multiplex, enablePrecison);
 	//a->addArgumentListener(this);
 	addItem(a, data, fromUndoableAction);
 

@@ -19,14 +19,18 @@ class CustomValuesCommandArgument :
 	public MultiplexTarget
 {
 public:
-	CustomValuesCommandArgument(const String& name = "arg", Parameter* p = nullptr, bool mappingEnabled = false, bool templateMode = false, Multiplex * multiplex = nullptr);
+	CustomValuesCommandArgument(const String& name = "arg", Parameter* p = nullptr, bool mappingEnabled = false, bool templateMode = false, Multiplex * multiplex = nullptr, bool enablePrecison = true);
 	virtual ~CustomValuesCommandArgument();
 
 	Parameter * param;
 	BoolParameter * editable;
+	EnumParameter * sendPrecision;
+
+	enum IntType {INT32, INT16, BYTE};
 
 	bool mappingEnabled;
 	bool templateMode;
+	bool enablePrecison;
 
 	std::unique_ptr<ParameterLink> paramLink;
 

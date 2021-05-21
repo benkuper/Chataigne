@@ -153,6 +153,8 @@ void BaseCommand::setupTemplateParameters(CommandTemplate* ct)
 		//create customValuesTemplateManager
 		ct->customValuesManager.reset(new CustomValuesCommandArgumentManager(context == MAPPING, true, multiplex));
 		ct->customValuesManager->allowedTypes.addArray(customValuesManager->allowedTypes);
+		ct->customValuesManager->enablePrecison = customValuesManager->enablePrecison;
+		ct->customValuesManager->createParamCallbackFunc = customValuesManager->createParamCallbackFunc;
 		ct->addChildControllableContainer(ct->customValuesManager.get());
 	}
 }

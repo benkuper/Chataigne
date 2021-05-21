@@ -13,6 +13,7 @@ SendStreamRawDataCommand::SendStreamRawDataCommand(StreamingModule* _module, Com
 {
 	customValuesManager->allowedTypes.add(Controllable::INT);
 	customValuesManager->createParamCallbackFunc = std::bind(&SendStreamRawDataCommand::customValueCreated, this, std::placeholders::_1, std::placeholders::_2);
+	customValuesManager->enablePrecison = false;
 }
 
 SendStreamRawDataCommand::~SendStreamRawDataCommand()
