@@ -65,6 +65,8 @@ public:
 	void deviceAdded(StreamDeck* d) override;
 	void deviceRemoved(StreamDeck * d) override;
 
+	void afterLoadJSONDataInternal() override;
+
 	static StreamDeckModule * create() { return new StreamDeckModule(); }
 	virtual String getDefaultTypeString() const override { return "Stream Deck"; }
 };

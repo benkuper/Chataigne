@@ -1,3 +1,4 @@
+#include "StreamDeckModule.h"
 /*
   ==============================================================================
 
@@ -70,6 +71,8 @@ StreamDeckModule::~StreamDeckModule()
 
 void StreamDeckModule::rebuildValues()
 { 
+	if (isCurrentlyLoadingData) return;
+
 	DeviceType t = deviceType->getValueDataAsEnum<DeviceType>();
 
 	switch (t)
@@ -183,14 +186,16 @@ void StreamDeckModule::setDevice(StreamDeck* newDevice)
 			break;
 		}
 
-		for (int i = 0; i < numRows; ++i)
-		{
-			for (int j = 0; j < numColumns; j++)
-			{
-				updateButton(i, j);
-			}
-		}
+		//for (int i = 0; i < numRows; ++i)
+		//{
+		//	for (int j = 0; j < numColumns; j++)
+		//	{
+		//		updateButton(i, j);
+		//	}
+		//}
 	}
+
+	rebuildValues();
 
 	isConnected->setValue(device != nullptr);
 
@@ -331,4 +336,10 @@ void StreamDeckModule::deviceRemoved(StreamDeck* d)
 	{
 		setDevice(nullptr);
 	}
+}
+
+void StreamDeckModule::afterLoadJSONDataInternal()
+{
+	Module::afterLoadJSONDataInternal();
+	rebuildValues();
 }
