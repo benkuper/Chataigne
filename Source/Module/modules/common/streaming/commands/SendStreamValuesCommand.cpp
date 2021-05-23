@@ -49,7 +49,20 @@ void SendStreamValuesCommand::triggerInternal(int multiplexIndex)
 		switch (p->type)
 		{
 		case Controllable::BOOL: data.writeBool(val);
-		case Controllable::INT: data.writeInt(val); break;
+		case Controllable::INT:
+			switch (a->sendPrecision->getValueDataAsEnum<CustomValuesCommandArgument::IntType>())
+			{
+				case CustomValuesCommandArgument::INT16:
+					data.writeShort((int)val);
+					break;
+				case CustomValuesCommandArgument::BYTE:
+					data.writeByte((int)val);
+					break;
+				default:
+					data.writeInt(val);
+					break;
+			}
+			break;
 		case Controllable::FLOAT: data.writeFloat(val); break;
 		case Controllable::STRING: data.writeString(val); break;
 

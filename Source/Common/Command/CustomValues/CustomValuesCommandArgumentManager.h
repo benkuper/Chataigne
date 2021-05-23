@@ -24,6 +24,7 @@ public:
 	bool isBeingDestroyed; //to keep track for templates, do not sync on destroy, so we can keep a ghost
 	bool mappingEnabled;
 	bool templateMode;
+	bool enablePrecison;
 
 	Array<Controllable::Type> allowedTypes;
 
