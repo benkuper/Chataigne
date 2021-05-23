@@ -30,6 +30,8 @@ public:
 	TransferType transferType;
 
 	virtual Parameter* setupSingleParameterInternal(Parameter* source, int multiplexIndex, bool rangeOnly) override;
+	virtual void addExtraRetargetOptions() {}
+
 	virtual ProcessResult processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;
 	virtual var convertValue(Parameter * source, var sourceValue, int multiplexIndex) { return var(sourceValue) ; }
 };
@@ -145,6 +147,7 @@ public:
 	var getJSONData() override;
 
 	void setupParametersInternal(int multiplexIndex, bool rangeOnly) override;
+	virtual void addExtraRetargetOptions() override;
 	ProcessResult processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;
 
 

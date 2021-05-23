@@ -53,7 +53,7 @@ void MathFilter::setupParametersInternal(int multiplexIndex, bool rangeOnly)
 			operationValue = (Parameter*)ControllableFactory::createControllable(mSourceParams[0]->getTypeString());
 			operationValue->setNiceName("Value");
 			if (loadLastData) operationValue->loadJSONData(opValueData);
-			operationValue->isSavable = false;
+			//operationValue->isSavable = false;
 			filterParams.addParameter(operationValue);
 		}
 

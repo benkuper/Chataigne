@@ -66,6 +66,9 @@ Parameter* SimpleConversionFilter::setupSingleParameterInternal(Parameter* sourc
 			retargetComponent->addOption(valueNames[i], i, true);
 		}
 
+		addExtraRetargetOptions();
+
+
 		retargetComponent->setValueWithData(ghostOptions.getProperty("retarget", valueNames[0]));
 	}
 
@@ -347,8 +350,8 @@ void ToColorFilter::setupParametersInternal(int multiplexIndex, bool rangeOnly)
 	Parameter* p = sourceParams[multiplexIndex].size() > 0 ? sourceParams[multiplexIndex][0] : nullptr;
 	if (p == nullptr) return;
 
-	String oldKey = "";
-	if (retargetComponent != nullptr) oldKey = retargetComponent->getValueKey();
+	//String oldKey = "";
+	//if (retargetComponent != nullptr) oldKey = retargetComponent->getValueKey();
 
 	if (transferType != TARGET)
 	{
@@ -364,13 +367,24 @@ void ToColorFilter::setupParametersInternal(int multiplexIndex, bool rangeOnly)
 		baseColor = filterParams.addColorParameter("Base Color", "Color to use to convert", Colours::red);
 	}
 
+	
+
+	if (ghostOptions.isObject())
+	{
+		if (ghostOptions.hasProperty("color")) baseColor->setValue(ghostOptions.getDynamicObject()->getProperty("color"));
+		ghostOptions = var();
+	}
+}
+
+void ToColorFilter::addExtraRetargetOptions()
+{
 	switch (transferType)
 	{
 
 	case TARGET:
 		retargetComponent->addOption("Hue", HUE)->addOption("Saturation", SAT)->addOption("Brightness", VAL);
-		if (oldKey.isNotEmpty()) retargetComponent->setValueWithKey(oldKey);
-		else retargetComponent->setValueWithData(ghostOptions.getProperty("retarget", HUE));
+		//if (oldKey.isNotEmpty()) retargetComponent->setValueWithKey(oldKey);
+	//	else retargetComponent->setValueWithData(ghostOptions.getProperty("retarget", HUE));
 
 		if (baseColor != nullptr) baseColor->hideInEditor = false;
 		break;
@@ -380,15 +394,7 @@ void ToColorFilter::setupParametersInternal(int multiplexIndex, bool rangeOnly)
 		break;
 
 	}
-
-	if (ghostOptions.isObject())
-	{
-		if (ghostOptions.hasProperty("color")) baseColor->setValue(ghostOptions.getDynamicObject()->getProperty("color"));
-		ghostOptions = var();
-	}
 }
-
-
 
 MappingFilter::ProcessResult ToColorFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
 {
