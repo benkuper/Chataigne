@@ -26,7 +26,7 @@ public:
 	std::unique_ptr<BoolToggleUI> editableUI;
 	std::unique_ptr<EnumParameterUI> sendPrecisionUI;
 
-	void resizedInternalHeader(Rectangle<int> &r) override;
+	void resizedInternalHeaderItemInternal(Rectangle<int> &r) override;
 	void resizedInternalContent(Rectangle<int> &r) override;
 	void childBoundsChanged(Component *) override;
 };

@@ -46,8 +46,8 @@ CustomValuesCommandArgument::CustomValuesCommandArgument(const String& name, Par
 	{
 		sendPrecision = addEnumParameter("Precision", "Type of int sent to the device, determine the number of bytes sent for this variable", true);
 		sendPrecision->addOption("4 bytes (Int32)", IntType:: INT32)->addOption("2 bytes (Int16)", IntType::INT16)->addOption("1 byte", IntType::BYTE);
-		//sendType->addOption("uInt32", IntType::UINT32)->addOption("uInt16", IntType::UINT16)->addOption("Char (signed Byte)", IntType::CHAR);
-		//sendType->hideInEditor = true;
+		//sendPrecision->addOption("uInt32", IntType::UINT32)->addOption("uInt16", IntType::UINT16)->addOption("Char (signed Byte)", IntType::CHAR);
+		sendPrecision->hideInEditor = true;
 	}
 
 	//argumentName = addStringParameter("Argument name", "Name for the argument", "Arg");

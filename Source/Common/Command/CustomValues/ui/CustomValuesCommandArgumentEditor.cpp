@@ -47,23 +47,25 @@ CustomValuesCommandArgumentEditor::~CustomValuesCommandArgumentEditor()
 }
 
 
-void CustomValuesCommandArgumentEditor::resizedInternalHeader(Rectangle<int>& r)
+void CustomValuesCommandArgumentEditor::resizedInternalHeaderItemInternal(Rectangle<int>& r)
 {
-	BaseItemEditor::resizedInternalHeader(r);
-
+	
 	if (editableUI != nullptr)
 	{
-		editableUI->setBounds(r.removeFromRight(80).reduced(2));
+		editableUI->setBounds(r.removeFromRight(70).reduced(2));
 		r.removeFromRight(2);
 	}
-	else
+
+	if (sendPrecisionUI != nullptr)
 	{
-		if (paramUI != nullptr)
-		{
-			r.translate(0, 3);
-			paramUI->setBounds(r.withHeight(paramUI->getHeight()));
-		}
+		sendPrecisionUI->setBounds(r.removeFromRight(95).reduced(3));
 	}
+
+	if (paramUI != nullptr)
+	{
+		paramUI->setBounds(r.reduced(2));
+	}
+
 }
 
 void CustomValuesCommandArgumentEditor::resizedInternalContent(Rectangle<int>& r)
