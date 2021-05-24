@@ -86,7 +86,7 @@ ZeroconfManager::ServiceInfo* ZeroconfManager::showMenuAndGetService(StringRef s
 		for (int i = 0; i < s->services.size(); i++)
 		{
 			ServiceInfo* info = s->services[i];
-			p.addItem(1 + i, info->name + " on " + info->host + " (" + info->ip + ":" + String(info->port) + ")");
+			p.addItem(1 + i, info->name + " on " + info->host + " (" + info->getIP() + ":" + String(info->port) + ")");
 		}
 	}
 
@@ -233,7 +233,7 @@ void ZeroconfManager::ZeroconfSearcher::addService(StringRef sName, StringRef ho
 	ServiceInfo* s = new ServiceInfo(sName, host, ip, port, keys);
 
 	services.add(s);
-	NLOG("Zeroconf", "New " << name << " service discovered : " << s->name << " on " << s->host << ", " << s->ip << ":" << s->port);// << service->keys);
+	NLOG("Zeroconf", "New " << name << " service discovered : " << s->name << " on " << s->host << ", " << s->ip << ":" << s->port << (s->isLocal?" (local)":""));// << service->keys);
 	listeners.call(&SearcherListener::serviceAdded, s);
 }
 
@@ -253,7 +253,7 @@ void ZeroconfManager::ZeroconfSearcher::updateService(ServiceInfo* service, Stri
 	service->port = port;
 	service->setKeys(keys);
 
-	NLOG("Zeroconf", "New " << name << " service updated : " << service->name << " on " << service->host << ", " << service->ip << ":" << service->port);
+	NLOG("Zeroconf", "New " << name << " service updated : " << service->name << " on " << service->host << ", " << service->ip << ":" << service->port << (service->isLocal ? " (local)" : ""));
 	listeners.call(&SearcherListener::serviceUpdated, service);
 }
 
@@ -262,5 +262,6 @@ ZeroconfManager::ServiceInfo::ServiceInfo(StringRef name, StringRef host, String
 	name(name), host(host), ip(ip), port(port)
 {
 	setKeys(_keys);
+	isLocal = NetworkHelpers::isIPLocal(ip);
 	//DBG("New service info, keys : " << keys.size() << ", items");
 }

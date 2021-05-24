@@ -32,8 +32,8 @@ void OSCQueryModuleOutputEditor::showMenuAndSetupOutput()
 	if (service != nullptr)
 	{
 		GenericOSCQueryModule  * o = ((OSCQueryOutput *)container.get())->module;
-		o->useLocal->setValue(service->ip == IPAddress::local().toString());
-		o->remoteHost->setValue(service->ip);
+		o->useLocal->setValue(service->isLocal);
+		o->remoteHost->setValue(service->getIP());
 		o->remotePort->setValue(service->port);
 	}
 }

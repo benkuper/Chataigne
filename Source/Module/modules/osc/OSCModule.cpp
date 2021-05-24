@@ -782,13 +782,13 @@ void OSCOutput::setupSender()
 		}
 		startThread();
 
-		NLOG(niceName, "Now sending to " + remoteHost->stringValue() + ":" + remotePort->stringValue());
+		NLOG(niceName, "Now sending to " + targetHost + ":" + remotePort->stringValue());
 		clearWarning();
 	}
 	else
 	{
-		NLOGWARNING(niceName, "Could not connect to " << remoteHost->stringValue() << ":" + remotePort->stringValue());
-		setWarningMessage("Could not connect to " + remoteHost->stringValue() + ":" + remotePort->stringValue());
+		NLOGWARNING(niceName, "Could not connect to " << targetHost << ":" + remotePort->stringValue());
+		setWarningMessage("Could not connect to " + targetHost + ":" + remotePort->stringValue());
 	}
 }
 

@@ -33,6 +33,7 @@ public:
 		String ip;
 		int port;
 		HashMap<String, String> keys;
+		bool isLocal;
 
 		void setKeys(const HashMap<String, String>& _keys)
 		{
@@ -44,6 +45,7 @@ public:
 		void addKey(String key, String value) { keys.set(key, value); }
 		String getKey(String key) { return keys.contains(key) ? keys[key] : ""; }
 
+		String getIP() const { return isLocal ? "127.0.0.1" : ip; }
 
 		JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ServiceInfo)
 

@@ -31,8 +31,8 @@ void OSCOutputEditor::showMenuAndSetupOutput()
 	if (service != nullptr)
 	{
 		OSCOutput * o = (OSCOutput *)item;
-		o->useLocal->setValue(service->ip == IPAddress::local().toString());
-		o->remoteHost->setValue(service->ip);
+		o->useLocal->setValue(service->isLocal);
+		o->remoteHost->setValue(service->getIP());
 		o->remotePort->setValue(service->port);
 	}
 }
