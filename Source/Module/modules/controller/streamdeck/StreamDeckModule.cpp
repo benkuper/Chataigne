@@ -1,27 +1,27 @@
 /*
   ==============================================================================
 
-    StreamDeckModule.cpp
-    Created: 22 Nov 2019 4:37:02pm
-    Author:  bkupe
+	StreamDeckModule.cpp
+	Created: 22 Nov 2019 4:37:02pm
+	Author:  bkupe
 
   ==============================================================================
 */
 
 StreamDeckModule::StreamDeckModule(const String& name) :
 	Module(name),
-    isConnected(nullptr),
-    device(nullptr),
-    numRows(0),
-    numColumns(0),
-    colorsCC("Colors"),
+	isConnected(nullptr),
+	device(nullptr),
+	numRows(0),
+	numColumns(0),
+	colorsCC("Colors"),
 	imagesCC("Images")
 #if USE_FAKE_DEVICE
 	, fakeDevice(nullptr, "fake")
 #endif
 {
 	setupIOConfiguration(true, true);
-	
+
 	isConnected = moduleParams.addBoolParameter("Is Connected", "Is a streamdeck connected ?", false);
 	isConnected->setControllableFeedbackOnly(true);
 	connectionFeedbackRef = isConnected;
@@ -39,7 +39,7 @@ StreamDeckModule::StreamDeckModule(const String& name) :
 	deviceType->addOption("StreamDeck (15 buttons)", STANDARD)->addOption("StreamDeck XL (32 buttons)", XL)->addOption("StreamDeck Mini (6 buttons)", MINI);
 
 	brightness = moduleParams.addFloatParameter("Brightness", "Sets the brigthness of the deck's backlight", .75f, 0, 1);
-	
+
 	reset = moduleParams.addTrigger("Reset", "Resets the stream deck");
 	colorizeImages = moduleParams.addBoolParameter("Colorize images", "If checked, this will use both colors and images to set buttons", false);
 	highlightPressedButtons = moduleParams.addBoolParameter("Highlight pressed buttons", "If checked, this will automatically highlight the buttons when pressed", true);
@@ -64,12 +64,12 @@ StreamDeckModule::StreamDeckModule(const String& name) :
 
 StreamDeckModule::~StreamDeckModule()
 {
-	if(StreamDeckManager::getInstanceWithoutCreating() != nullptr) StreamDeckManager::getInstance()->removeStreamDeckManagerListener(this);
+	if (StreamDeckManager::getInstanceWithoutCreating() != nullptr) StreamDeckManager::getInstance()->removeStreamDeckManagerListener(this);
 	setDevice(nullptr);
 }
 
 void StreamDeckModule::rebuildValues()
-{ 
+{
 	if (isCurrentlyLoadingData) return;
 
 	DeviceType t = deviceType->getValueDataAsEnum<DeviceType>();
@@ -104,54 +104,52 @@ void StreamDeckModule::rebuildValues()
 	}
 
 
-	for (int i = 0; i < numRows; ++i)
+	while (buttonStates.size() < numRows)
 	{
-		if (buttonStates.size() <= i)
-		{
-			buttonStates.add(new Array<BoolParameter*>());
-			ControllableContainer* btCC = new ControllableContainer("Row " + String(i + 1));
-			buttonRowsCC.add(btCC);
-			valuesCC.addChildControllableContainer(btCC, true);
+		buttonStates.add(new Array<BoolParameter*>());
+		ControllableContainer* btCC = new ControllableContainer("Row " + String(buttonStates.size()));
+		buttonRowsCC.add(btCC);
+		valuesCC.addChildControllableContainer(btCC, true);
 
-			colors.add(new Array<ColorParameter*>());
-			ControllableContainer* cCC = new ControllableContainer("Row " + String(i + 1));
-			colorsCC.addChildControllableContainer(cCC, true);
+		colors.add(new Array<ColorParameter*>());
+		ControllableContainer* cCC = new ControllableContainer("Row " + String(colors.size()));
+		colorsCC.addChildControllableContainer(cCC, true);
 
-			images.add(new Array<FileParameter*>());
-			ControllableContainer* iCC = new ControllableContainer("Row " + String(i + 1));
-			imagesCC.addChildControllableContainer(iCC, true);
-
-
-		}
-
-		ControllableContainer* btCC = buttonRowsCC[i];
-		ControllableContainer* cCC = colorsCC.controllableContainers[i];
-		ControllableContainer* iCC = imagesCC.controllableContainers[i];
-
-		while (buttonStates[i]->size() > numColumns)
-		{
-			buttonStates[i]->remove(numColumns);
-			buttonRowsCC[i]->removeControllable(buttonRowsCC[i]->controllables[numColumns]);
-
-			colors[i]->remove(numColumns);
-			colorsCC.removeControllable(colorsCC.controllableContainers[i]->controllables[numColumns]);
-
-			images[i]->remove(numColumns);
-			imagesCC.removeControllable(imagesCC.controllableContainers[i]->controllables[numColumns]);
-		}
-
-		for (int j = 0; j < numColumns; j++)
-		{
-			String btId = String(j + 1);
-			buttonStates[i]->add(btCC->addBoolParameter("Button " + btId, "Is row "+String(i+1)+", button " + btId + " pressed ?", false));
-			colors[i]->add(cCC->addColorParameter("Color " + btId, "If not image, color for row " + String(i + 1) + ", button " + btId, Colours::black));
-			images[i]->add(iCC->addFileParameter("Image " + btId, "Image for row " + String(i + 1) + ", button" + btId + " (overrides color)"));
-		}
-
+		images.add(new Array<FileParameter*>());
+		ControllableContainer* iCC = new ControllableContainer("Row " + String(images.size()));
+		imagesCC.addChildControllableContainer(iCC, true);
 	}
 
-	
-	
+	for (int r = 0; r < numRows; r++)
+	{
+		Array<BoolParameter*>* btStates = buttonStates[r];
+		Array<ColorParameter*>* cColors = colors[r];
+		Array<FileParameter *> * cImages = images[r];
+		ControllableContainer* btCC = buttonRowsCC[r];
+		ControllableContainer* cCC = colorsCC.controllableContainers[r];
+		ControllableContainer* iCC = imagesCC.controllableContainers[r];
+
+		while (btStates->size() > numColumns)
+		{
+			btStates->remove(numColumns);
+			btCC->removeControllable(btCC->controllables[numColumns]);
+
+			cColors->remove(numColumns);
+			cCC->removeControllable(cCC->controllables[numColumns]);
+
+			cImages->remove(numColumns);
+			iCC->removeControllable(iCC->controllables[numColumns]);
+		}
+
+		while (btStates->size() < numColumns)
+		{
+			String btId = String(btStates->size() + 1);
+			btStates->add(btCC->addBoolParameter("Button " + btId, "Is row " + String(r + 1) + ", button " + btId + " pressed ?", false));
+			cColors->add(cCC->addColorParameter("Color " + btId, "If not image, color for row " + String(r + 1) + ", button " + btId, Colours::black));
+			cImages->add(iCC->addFileParameter("Image " + btId, "Image for row " + String(r + 1) + ", button" + btId + " (overrides color)"));
+		}
+	}
+
 }
 
 void StreamDeckModule::setDevice(StreamDeck* newDevice)
@@ -211,9 +209,9 @@ void StreamDeckModule::updateButton(int row, int column)
 	if (f.existsAsFile())
 	{
 		Image image = ImageCache::getFromFile(f);
-		if (logOutgoingData->boolValue()) NLOG(niceName, "Set image " << f.getFileName() << " to button " << String(column+1) << ":" << String(row+1));
+		if (logOutgoingData->boolValue()) NLOG(niceName, "Set image " << f.getFileName() << " to button " << String(column + 1) << ":" << String(row + 1));
 
-		if (colorizeImages->boolValue()) device->setImage(row, column, image, (*colors[row])[column]->getColor(), highlightPressedButtons->boolValue()?(*buttonStates[row])[column]->boolValue() :false);
+		if (colorizeImages->boolValue()) device->setImage(row, column, image, (*colors[row])[column]->getColor(), highlightPressedButtons->boolValue() ? (*buttonStates[row])[column]->boolValue() : false);
 		else device->setImage(row, column, image, highlightPressedButtons->boolValue() ? (*buttonStates[row])[column]->boolValue() : false);
 	}
 	else
@@ -249,7 +247,7 @@ void StreamDeckModule::setImage(int row, int column, const String& path)
 
 void StreamDeckModule::streamDeckButtonPressed(int row, int column)
 {
-	
+
 	if (logIncomingData->boolValue())
 	{
 		NLOG(niceName, "Button " + String(column + 1) << ":" << String(row + 1) + " pressed");
@@ -282,7 +280,7 @@ void StreamDeckModule::streamDeckButtonReleased(int row, int column)
 void StreamDeckModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
 {
 	Module::onControllableFeedbackUpdateInternal(cc, c);
-	
+
 	if (c == deviceType)
 	{
 		rebuildValues();
