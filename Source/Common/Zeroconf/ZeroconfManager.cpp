@@ -13,23 +13,18 @@
 #include <Ws2tcpip.h>
 #else
 #include <netdb.h>
+#include "ZeroconfManager.h"
 #endif /* _WIN32 */
 
 juce_ImplementSingleton(ZeroconfManager)
 
 ZeroconfManager::ZeroconfManager() :
-	Thread("Zeroconf"),
 	zeroconfAsyncNotifier(5)
 {
-	startThread();
-	startTimer(5000); //every 10s
-
 }
 
 ZeroconfManager::~ZeroconfManager()
 {
-	for (auto& s : searchers) s->servus.endBrowsing();
-	stopThread(3000);
 }
 
 ZeroconfManager::ZeroconfSearcher* ZeroconfManager::addSearcher(StringRef name, StringRef serviceName)
@@ -44,7 +39,7 @@ ZeroconfManager::ZeroconfSearcher* ZeroconfManager::addSearcher(StringRef name, 
 		searchers.getLock().exit();
 	}
 
-	search();
+	//search();
 
 	return s;
 }
@@ -97,118 +92,23 @@ ZeroconfManager::ServiceInfo* ZeroconfManager::showMenuAndGetService(StringRef s
 	return s->services[result - 1];
 }
 
-void ZeroconfManager::search()
-{
-	if (Engine::mainEngine->isClearing) return;
-	startThread();
-}
-
-void ZeroconfManager::timerCallback()
-{
-	search();
-}
-
-
-void ZeroconfManager::run()
-{
-	wait(300);
-
-	bool changed = false;
-
-	searchers.getLock().enter();
-	for (auto& se : searchers)
-	{
-		if (threadShouldExit()) return;
-		changed |= se->search();
-	}
-	searchers.getLock().exit();
-
-	if (changed) zeroconfAsyncNotifier.addMessage(new ZeroconfEvent(ZeroconfEvent::SERVICES_CHANGED));
-}
-
 ZeroconfManager::ZeroconfSearcher::ZeroconfSearcher(StringRef name, StringRef serviceName) :
+	Thread("Zeroconf Searcher "+name),
 	name(name),
-	serviceName(serviceName),
-	servus(String(serviceName).toStdString())
+	serviceName(serviceName)
 {
+	servus.reset(new Servus(String(serviceName).toStdString()));
+	servus->addListener(this);
+	startThread();
 }
 
 ZeroconfManager::ZeroconfSearcher::~ZeroconfSearcher()
 {
+	servus->endBrowsing();
+	servus.reset();
+	stopThread(4000);
 	services.clear();
 }
-
-bool ZeroconfManager::ZeroconfSearcher::search()
-{
-	if (Thread::getCurrentThread()->threadShouldExit()) return false;
-
-	Strings instances = servus.discover(Servus::Interface::IF_ALL, 200);
-	bool changed = false;
-
-	if (Thread::getCurrentThread()->threadShouldExit()) return false;
-
-	StringArray servicesArray;
-	for (auto& s : instances)  servicesArray.add(s);
-
-	Array<ServiceInfo*> servicesToRemove;
-
-	for (auto& ss : services)
-	{
-		if (servicesArray.contains(ss->name))
-		{
-			String host = servus.get(ss->name.toStdString(), "servus_host");
-			if (host.endsWithChar('.')) host = host.substring(0, host.length() - 1);
-			int port = String(servus.get(ss->name.toStdString(), "servus_port")).getIntValue();
-
-			if (ss->host != host || ss->port != port) servicesToRemove.add(ss);
-		}
-		else
-		{
-			servicesToRemove.add(ss);
-		}
-	}
-	for (auto& ss : servicesToRemove) removeService(ss);
-
-
-	for (auto& s : servicesArray)
-	{
-		if (Thread::getCurrentThread()->threadShouldExit()) return false;
-
-		Servus::Data d;
-		servus.getData(d);
-
-		String host = servus.get(s.toStdString(), "servus_host");
-		if (host.endsWithChar('.')) host = host.substring(0, host.length() - 1);
-
-		int port = String(servus.get(s.toStdString(), "servus_port")).getIntValue();
-		String ip = String(servus.get(s.toStdString(), "servus_ip"));
-
-		Strings skeys = servus.getKeys(s.toStdString());
-		HashMap<String, String> keys;
-		for (auto& k : skeys)
-		{
-			if (k == "" || k == "servus_port" || k == "servus_host") continue;
-			String kv = servus.get(s.toStdString(), k);
-			keys.set(k, kv);
-		}
-
-		ServiceInfo* info = getService(s, host, port);
-
-		if (info == nullptr)
-		{
-			changed = true;
-			addService(s, host, ip, port, keys);
-		}
-		else if (info->host != host || info->port != port || info->ip != ip)
-		{
-			changed = true;
-			updateService(info, host, ip, port, keys);
-		}
-	}
-
-	return changed;
-}
-
 
 ZeroconfManager::ServiceInfo* ZeroconfManager::ZeroconfSearcher::getService(StringRef sName, StringRef host, int port)
 {
@@ -253,10 +153,69 @@ void ZeroconfManager::ZeroconfSearcher::updateService(ServiceInfo* service, Stri
 	service->port = port;
 	service->setKeys(keys);
 
-	NLOG("Zeroconf", "New " << name << " service updated : " << service->name << " on " << service->host << ", " << service->ip << ":" << service->port << (service->isLocal ? " (local)" : ""));
+	//NLOG("Zeroconf", "New " << name << " service updated : " << service->name << " on " << service->host << ", " << service->ip << ":" << service->port << (service->isLocal ? " (local)" : ""));
 	listeners.call(&SearcherListener::serviceUpdated, service);
 }
 
+void ZeroconfManager::ZeroconfSearcher::instanceAdded(const std::string& instance)
+{
+	Servus::Data d;
+	servus->getData(d);
+
+	String host = servus->get(instance, "servus_host");
+	if (host.endsWithChar('.')) host = host.substring(0, host.length() - 1);
+
+	int port = String(servus->get(instance, "servus_port")).getIntValue();
+	String ip = String(servus->get(instance, "servus_ip"));
+
+	Strings skeys = servus->getKeys(instance);
+	HashMap<String, String> keys;
+	for (auto& k : skeys)
+	{
+		if (k == "" || k == "servus_port" || k == "servus_host") continue;
+		String kv = servus->get(instance, k);
+		keys.set(k, kv);
+	}
+
+	ServiceInfo* info = getService(instance, host, port);
+
+	if (info == nullptr)
+	{
+		addService(instance, host, ip, port, keys);
+	}
+	else if (info->host != host || info->port != port || info->ip != ip)
+	{
+		updateService(info, host, ip, port, keys);
+	}
+}
+
+void ZeroconfManager::ZeroconfSearcher::instanceRemoved(const std::string& instance)
+{
+	String s = instance;
+	//String host = servus->get(instance, "servus_host");
+	//if (host.endsWithChar('.')) host = host.substring(0, host.length() - 1);
+	//int port = String(servus->get(instance, "servus_port")).getIntValue();
+
+	for (auto& ss : services)
+	{
+		if (ss->name == s)
+		{
+			removeService(ss);
+			return;
+		}
+	}
+}
+
+void ZeroconfManager::ZeroconfSearcher::run()
+{
+	servus->beginBrowsing(Servus::Interface::IF_ALL);
+
+	while (!threadShouldExit())
+	{
+		servus->browse(1000);
+		wait(500);
+	}
+}
 
 ZeroconfManager::ServiceInfo::ServiceInfo(StringRef name, StringRef host, StringRef ip, int port, const HashMap<String, String>& _keys) :
 	name(name), host(host), ip(ip), port(port)

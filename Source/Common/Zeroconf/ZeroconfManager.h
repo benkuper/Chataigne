@@ -11,12 +11,9 @@
 #pragma once
 
 #include "servus/servus.h"
+#include "servus/listener.h"
 
-using namespace servus;
-
-class ZeroconfManager :
-	public Thread,
-	public Timer
+class ZeroconfManager
 {
 public:
 	juce_DeclareSingleton(ZeroconfManager, true);
@@ -51,7 +48,9 @@ public:
 
 	};
 
-	class ZeroconfSearcher
+	class ZeroconfSearcher :
+		public servus::Listener,
+		public Thread
 	{
 	public:
 		ZeroconfSearcher(StringRef name, StringRef serviceName);
@@ -59,15 +58,18 @@ public:
 
 		String name;
 		String serviceName;
-		Servus servus;
+		std::unique_ptr<servus::Servus> servus;
 		OwnedArray<ServiceInfo> services;
-
-		bool search();
 
 		ServiceInfo * getService(StringRef name, StringRef host, int port);
 		void addService(StringRef name, StringRef host, StringRef ip, int port, const HashMap<String, String> & keys = HashMap<String, String>());
 		void removeService(ServiceInfo * service);
 		void updateService(ServiceInfo * service, StringRef host, StringRef ip, int port, const HashMap<String, String>  &keys = HashMap<String, String>());
+
+		void instanceAdded(const std::string& instance) override;
+		void instanceRemoved(const std::string& instance) override;
+
+		void run() override;
 
 		class SearcherListener
 		{
@@ -92,11 +94,6 @@ public:
 
 	ServiceInfo * showMenuAndGetService(StringRef service, bool showLocal = true, bool showRemote = true, bool separateLocalAndRemote = true, bool excludeInternal = true);
 	
-	void search();
-
-	virtual void timerCallback() override;
-	virtual void run() override;
-
 	class ZeroconfEvent {
 	public:
 		enum Type { SERVICES_CHANGED };

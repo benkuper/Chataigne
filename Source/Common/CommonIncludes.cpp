@@ -30,4 +30,4 @@
 #include "Serial/SerialDeviceParameter.cpp"
 #include "Serial/SerialManager.cpp"
 #include "Serial/lib/cobs/cobs.cpp"
-#include "Zeroconf/ZeroconfManager.cpp"
+#include "Zeroconf/ZeroconfManager.cpp" 

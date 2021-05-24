@@ -281,7 +281,8 @@ void OSCModule::setupZeroConf()
 		portToAdvertise = localPort->intValue();
 
 		servus.withdraw();
-		
+		sleep(400);
+
 		if (!hasInput) return;
 
 		//DBG("ADVERTISE");
