@@ -138,6 +138,7 @@
 		046FA6955B23245D5819D9E3 /* ../../Source/Module/modules/osc/live/LiveOSCModule.h */ /* LiveOSCModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LiveOSCModule.h; path = ../../Source/Module/modules/osc/live/LiveOSCModule.h; sourceTree = SOURCE_ROOT; };
 		04C4B1D0745E80C293C0ED83 /* ../../Source/Common/DMX/device/DMXEnttecProDevice.h */ /* DMXEnttecProDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DMXEnttecProDevice.h; path = ../../Source/Common/DMX/device/DMXEnttecProDevice.h; sourceTree = SOURCE_ROOT; };
 		04CDC9F8DBC38B390BD5304F /* ../../Source/UI/AboutWindow.h */ /* AboutWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AboutWindow.h; path = ../../Source/UI/AboutWindow.h; sourceTree = SOURCE_ROOT; };
+		0613104F04B384C88B49A403 /* ../../Source/Module/modules/common/commands/generic/GenericControllableCommand.cpp */ /* GenericControllableCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = GenericControllableCommand.cpp; path = ../../Source/Module/modules/common/commands/generic/GenericControllableCommand.cpp; sourceTree = SOURCE_ROOT; };
 		062D0D43531255FFF58B5230 /* ../../Source/Module/modules/dmx/ui/DMXModuleUI.cpp */ /* DMXModuleUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DMXModuleUI.cpp; path = ../../Source/Module/modules/dmx/ui/DMXModuleUI.cpp; sourceTree = SOURCE_ROOT; };
 		063AB806516476558D9F032C /* ../../Source/Module/modules/controller/wiimote/lib/wiiuse/guitar_hero_3.c */ /* guitar_hero_3.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = guitar_hero_3.c; path = ../../Source/Module/modules/controller/wiimote/lib/wiiuse/guitar_hero_3.c; sourceTree = SOURCE_ROOT; };
 		066DA60AFB60B8BE77E819E7 /* ../../JuceLibraryCode/include_juce_organicui.cpp */ /* include_juce_organicui.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_juce_organicui.cpp; path = ../../JuceLibraryCode/include_juce_organicui.cpp; sourceTree = SOURCE_ROOT; };
@@ -419,6 +420,7 @@
 		693EFA1B8916691D7568591A /* ../../Source/TimeMachine/TimeMachineIncludes.cpp */ /* TimeMachineIncludes.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TimeMachineIncludes.cpp; path = ../../Source/TimeMachine/TimeMachineIncludes.cpp; sourceTree = SOURCE_ROOT; };
 		69BF96CC842FD476DD1F3946 /* ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/comparators/StringComparators.h */ /* StringComparators.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StringComparators.h; path = ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/comparators/StringComparators.h; sourceTree = SOURCE_ROOT; };
 		69DC77C2F77880760FAC313C /* ../../Source/Module/modules/generic/commands/GenericAppCommand.h */ /* GenericAppCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GenericAppCommand.h; path = ../../Source/Module/modules/generic/commands/GenericAppCommand.h; sourceTree = SOURCE_ROOT; };
+		6AA63A85C33D3477ED668448 /* ../../Source/Module/modules/common/commands/generic/GenericControllableCommand.h */ /* GenericControllableCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GenericControllableCommand.h; path = ../../Source/Module/modules/common/commands/generic/GenericControllableCommand.h; sourceTree = SOURCE_ROOT; };
 		6AB115D848E1553D7F5C50B6 /* ../../Source/Module/modules/controller/wiimote/lib/wiiuse/wiiboard.c */ /* wiiboard.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = wiiboard.c; path = ../../Source/Module/modules/controller/wiimote/lib/wiiuse/wiiboard.c; sourceTree = SOURCE_ROOT; };
 		6B267A36190DAF877689D537 /* ../../Source/Common/Command/Template/ui/CommandTemplateManagerUI.cpp */ /* CommandTemplateManagerUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CommandTemplateManagerUI.cpp; path = ../../Source/Common/Command/Template/ui/CommandTemplateManagerUI.cpp; sourceTree = SOURCE_ROOT; };
 		6B49F91B2A3C9EC69F04FB2D /* ../../Modules/juce_simpleweb */ /* juce_simpleweb */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_simpleweb; path = ../../Modules/juce_simpleweb; sourceTree = SOURCE_ROOT; };
@@ -2703,6 +2705,15 @@
 			name = Action;
 			sourceTree = "<group>";
 		};
+		C1FAE4E4AF45856F6C509EFA /* generic */ = {
+			isa = PBXGroup;
+			children = (
+				0613104F04B384C88B49A403,
+				6AA63A85C33D3477ED668448,
+			);
+			name = generic;
+			sourceTree = "<group>";
+		};
 		C220F6DC306F1E9F6178C370 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -2975,6 +2986,7 @@
 		DBD563325091B44357FF63F8 /* commands */ = {
 			isa = PBXGroup;
 			children = (
+				C1FAE4E4AF45856F6C509EFA,
 				01C1F807C4474B0B0E302940,
 				3722458946AD3C9232F47376,
 			);

@@ -54,6 +54,8 @@
 #include "modules/common/streaming/StreamingModule.h"
 #include "modules/common/streaming/NetworkStreamingModule.h"
 
+#include "modules/common/commands/generic/GenericControllableCommand.h"
+
 #include "modules/common/streaming/commands/StreamingCommand.h"
 #include "modules/common/streaming/commands/SendStreamValuesCommand.h"
 #include "modules/common/streaming/commands/SendStreamRawDataCommand.h"
@@ -110,7 +112,6 @@
 #include "modules/generic/ChataigneGenericModule.h"
 #include "modules/generic/commands/ChataigneLogCommand.h"
 #include "modules/generic/commands/GenericAppCommand.h"
-#include "modules/generic/commands/GenericControllableCommand.h"
 #include "modules/generic/commands/GenericScriptCommand.h"
 
 #include "modules/gpio/GPIOModule.h"
@@ -156,7 +157,6 @@
 #include "modules/osc/ui/OSCOutputEditor.h"
 
 #include "modules/oscquery/generic/GenericOSCQueryModule.h"
-#include "modules/oscquery/generic/GenericOSCQueryCommand.h"
 #include "modules/oscquery/generic/ui/OSCQueryModuleEditor.h"
 
 #include "modules/oscquery/MadMapperModule.h"

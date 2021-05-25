@@ -22,7 +22,7 @@ public:
 
 	CVGroupManager * manager;
 
-	enum Type { SET_VALUE, SET_PRESET, GO_TO_PRESET, KILL_GO_TO_PRESET, LERP_PRESETS, SET_PRESET_WEIGHT, SET_2DTARGET, LOAD_PRESET, SAVE_PRESET };
+	enum Type { SET_PRESET, GO_TO_PRESET, KILL_GO_TO_PRESET, LERP_PRESETS, SET_PRESET_WEIGHT, SET_2DTARGET, LOAD_PRESET, SAVE_PRESET };
 	Type type;
 
 	TargetParameter * target;
@@ -34,23 +34,10 @@ public:
 	FloatParameter* time;
 	Automation* automation;
 	
-	enum Operator { EQUAL, INVERSE, ADD, SUBTRACT, MULTIPLY, DIVIDE, MAX, MIN, NEXT_ENUM, PREV_ENUM };
-	EnumParameter * valueOperator; 
-	Parameter * value;
-	var ghostOperator;
-	var ghostValueData;
-
-	void updateValueFromTarget();
-	void updateOperatorOptions();
+	Parameter* value;
 
 	void onContainerParameterChanged(Parameter * p) override;
 	void triggerInternal(int multiplexIndex) override;
-
-	void linkUpdated(ParameterLink* pLink) override;
-
-
-	virtual void loadJSONDataInternal(var data) override;
-	virtual void loadGhostData(var data);
 
 	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex = nullptr);
 };

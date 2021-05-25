@@ -523,6 +523,9 @@
     <ClCompile Include="..\..\Source\Module\modules\audio\AudioModule.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\common\commands\generic\GenericControllableCommand.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\common\commands\scriptcallback\ScriptCallbackCommand.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -3962,6 +3965,7 @@
     <ClInclude Include="..\..\Source\Module\modules\audio\libs\pitch\PitchYIN.h"/>
     <ClInclude Include="..\..\Source\Module\modules\audio\ui\AudioModuleHardwareEditor.h"/>
     <ClInclude Include="..\..\Source\Module\modules\audio\AudioModule.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\common\commands\generic\GenericControllableCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\common\commands\scriptcallback\ScriptCallbackCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\common\commands\scriptcommands\ScriptCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\common\streaming\commands\SendStreamRawDataCommand.h"/>

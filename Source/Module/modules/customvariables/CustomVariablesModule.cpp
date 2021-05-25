@@ -15,7 +15,10 @@ CustomVariablesModule::CustomVariablesModule(CVGroupManager * manager) :
 {
 	manager->addBaseManagerListener(this);
 
-	defManager->add(CommandDefinition::createDef(this, "", "Set Value", &CVCommand::create, CommandContext::BOTH)->addParam("type", CVCommand::SET_VALUE));
+	defManager->add(CommandDefinition::createDef(this, "", "Set Value", &GenericControllableCommand::create, CommandContext::BOTH)
+		->addParam("action", GenericControllableCommand::SET_VALUE)
+		->addParam("root", (int64)(void *)&valuesCC));
+	
 	defManager->add(CommandDefinition::createDef(this, "", "Set Preset", &CVCommand::create)->addParam("type", CVCommand::SET_PRESET));
 	defManager->add(CommandDefinition::createDef(this, "", "Go to preset", &CVCommand::create)->addParam("type", CVCommand::GO_TO_PRESET));
 	defManager->add(CommandDefinition::createDef(this, "", "Kill Go to preset", &CVCommand::create, CommandContext::ACTION)->addParam("type", CVCommand::KILL_GO_TO_PRESET));

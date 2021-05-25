@@ -770,6 +770,12 @@
           </GROUP>
           <GROUP id="{01EC461B-4BC5-C8F7-D379-477B101B8032}" name="common">
             <GROUP id="{FAB3DA65-9EC2-9C28-3056-B0C9309EFBEE}" name="commands">
+              <GROUP id="{6E900916-1961-12B7-A73F-68D2A99E80C7}" name="generic">
+                <FILE id="m4dmLo" name="GenericControllableCommand.cpp" compile="0"
+                      resource="0" file="Source/Module/modules/common/commands/generic/GenericControllableCommand.cpp"/>
+                <FILE id="zVhnPE" name="GenericControllableCommand.h" compile="0" resource="0"
+                      file="Source/Module/modules/common/commands/generic/GenericControllableCommand.h"/>
+              </GROUP>
               <GROUP id="{D2E06C78-3A38-5C4B-026F-DE4BEE83F13E}" name="scriptcallback">
                 <FILE id="kJSyrI" name="ScriptCallbackCommand.cpp" compile="0" resource="0"
                       file="Source/Module/modules/common/commands/scriptcallback/ScriptCallbackCommand.cpp"/>

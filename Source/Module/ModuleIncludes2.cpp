@@ -20,8 +20,10 @@
 #include "modules/generic/ChataigneGenericModule.cpp"
 #include "modules/generic/commands/ChataigneLogCommand.cpp"
 #include "modules/generic/commands/GenericAppCommand.cpp"
-#include "modules/generic/commands/GenericControllableCommand.cpp"
 #include "modules/generic/commands/GenericScriptCommand.cpp"
+
+#include "modules/common/commands/generic/GenericControllableCommand.cpp"
+
 #include "modules/gpio/GPIOModule.cpp"
 #include "modules/gpio/commands/GPIOCommands.cpp"
 #include "modules/http/HTTPModule.cpp"
@@ -53,7 +55,6 @@
 #include "modules/osc/ui/OSCOutputEditor.cpp"
 #include "modules/oscquery/MadMapperModule.cpp"
 
-#include "modules/oscquery/generic/GenericOSCQueryCommand.cpp"
 #include "modules/oscquery/generic/GenericOSCQueryModule.cpp"
 #include "modules/oscquery/generic/ui/OSCQueryModuleEditor.cpp"
 

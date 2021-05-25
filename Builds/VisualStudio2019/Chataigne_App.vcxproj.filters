@@ -245,6 +245,9 @@
     <Filter Include="Chataigne\Source\Module\modules\audio">
       <UniqueIdentifier>{2B354B83-B099-8834-CDE4-DFF9707AC0F2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\common\commands\generic">
+      <UniqueIdentifier>{CAE5E708-335F-509C-A61A-584964B421FD}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Module\modules\common\commands\scriptcallback">
       <UniqueIdentifier>{2525C801-18A9-BF46-016E-85DAC6F543DA}</UniqueIdentifier>
     </Filter>
@@ -1872,6 +1875,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\audio\AudioModule.cpp">
       <Filter>Chataigne\Source\Module\modules\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\common\commands\generic\GenericControllableCommand.cpp">
+      <Filter>Chataigne\Source\Module\modules\common\commands\generic</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\common\commands\scriptcallback\ScriptCallbackCommand.cpp">
       <Filter>Chataigne\Source\Module\modules\common\commands\scriptcallback</Filter>
@@ -5876,6 +5882,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\audio\AudioModule.h">
       <Filter>Chataigne\Source\Module\modules\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\common\commands\generic\GenericControllableCommand.h">
+      <Filter>Chataigne\Source\Module\modules\common\commands\generic</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\common\commands\scriptcallback\ScriptCallbackCommand.h">
       <Filter>Chataigne\Source\Module\modules\common\commands\scriptcallback</Filter>

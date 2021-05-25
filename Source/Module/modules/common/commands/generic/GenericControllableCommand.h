@@ -2,8 +2,8 @@
   ==============================================================================
 
     GenericControllableCommand.h
-    Created: 28 Apr 2017 5:51:16pm
-    Author:  Ben
+    Created: 25 May 2021 10:34:11am
+    Author:  bkupe
 
   ==============================================================================
 */
@@ -16,17 +16,15 @@ class GenericControllableCommand :
 {
 public:
 
-	enum Action { SET_VALUE, TRIGGER};
-	
-	GenericControllableCommand(ChataigneGenericModule * _module, CommandContext context, var params, Multiplex* multiplex = nullptr);
-	virtual ~GenericControllableCommand();
-	
-	enum Operator { EQUAL, INVERSE, ADD, SUBTRACT, MULTIPLY, DIVIDE, MAX, MIN };
+	enum Action { SET_VALUE, TRIGGER };
 
-	ChataigneGenericModule * sequenceModule;
+	GenericControllableCommand(Module* _module, CommandContext context, var params, Multiplex* multiplex = nullptr);
+	virtual ~GenericControllableCommand();
+
+	enum Operator { EQUAL, INVERSE, ADD, SUBTRACT, MULTIPLY, DIVIDE, MAX, MIN, NEXT_ENUM, PREV_ENUM };
 
 	Action action;
-	TargetParameter * target;
+	TargetParameter* target;
 	EnumParameter* valueOperator;
 	WeakReference<Parameter> value;
 	var dataToLoad;
@@ -34,20 +32,18 @@ public:
 	var ghostOperator;
 
 	void updateValueFromTarget();
-	void setValueParameter(Parameter * p);
+	void setValueParameter(Parameter* p);
 
 	void updateOperatorOptions();
 
 	virtual void triggerInternal(int multiplexIndex) override;
 
 	void linkUpdated(ParameterLink* pLink) override;
-	void onContainerParameterChanged(Parameter *) override;
+	void onContainerParameterChanged(Parameter*) override;
 
 	virtual void loadJSONDataInternal(var data) override;
 	virtual void endLoadFile() override;
 	virtual void loadGhostData(var data);
 
-	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex = nullptr);
-
-	//InspectableEditor * getEditor(bool isRoot) override;
+	static BaseCommand* create(ControllableContainer* module, CommandContext context, var params, Multiplex* multiplex = nullptr);
 };
