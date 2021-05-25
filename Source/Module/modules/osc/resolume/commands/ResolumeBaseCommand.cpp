@@ -24,7 +24,7 @@ ResolumeBaseCommand::~ResolumeBaseCommand()
 
 void ResolumeBaseCommand::rebuildParameters()
 {
-	var data = getJSONData();
+	//var data = getJSONData();
 
 	//Remove all parameters
 	for (auto &c : resolumeControllables)
@@ -83,7 +83,7 @@ void ResolumeBaseCommand::rebuildParameters()
 	layerParam->hideInEditor = level != CLIP && level != LAYER;
 	clipParam->hideInEditor = level != CLIP && level != COLUMN && level != DECK;
 
-	loadJSONData(data);
+	//loadJSONData(data);
 	rebuildAddress();
 }
 
