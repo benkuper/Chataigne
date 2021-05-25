@@ -18,7 +18,7 @@ Point3DComparator::Point3DComparator(Parameter* sourceParam, Multiplex* multiple
 	addCompareOption("Magnitude >", magnGreaterId);
 	addCompareOption("Magnitude <", magnLessId);
 	addCompareOption("X >", xGreaterId);
-	addCompareOption("X <", xGreaterId);
+	addCompareOption("X <", xLessId);
 	addCompareOption("Y >", yGreaterId);
 	addCompareOption("Y <", yLessId);
 	addCompareOption("Z >", zGreaterId);
@@ -42,19 +42,24 @@ void Point3DComparator::onContainerParameterChanged(Parameter* p)
 
 void Point3DComparator::updateReferenceParam()
 {
+	var od;
+	Controllable::Type ot = Controllable::Type::CUSTOM;
 	if (reference != nullptr)
 	{
+		ot = reference->type;
+		od = reference->getJSONData();
 		removeControllable(reference);
 		reference = nullptr;
 	}
 
+	Parameter* newRef = nullptr;
 	if (currentFunctionId == equalsId)
 	{
 		if (reference == nullptr || reference->type != Parameter::POINT2D)
 		{
-			setReferenceParam(new Point3DParameter("Reference", "Comparison Reference to check against source value", sourceParam->value));
-			reference->setRange(sourceParam->minimumValue, sourceParam->maximumValue);
-			reference->setValue(sourceParam->value, false, true, true);
+			newRef = new Point3DParameter("Reference", "Comparison Reference to check against source value", sourceParam->value);
+			newRef->setRange(sourceParam->minimumValue, sourceParam->maximumValue);
+			newRef->setValue(sourceParam->value, false, true, true);
 		}
 
 	}
@@ -62,8 +67,16 @@ void Point3DComparator::updateReferenceParam()
 	{
 		if (reference == nullptr || reference->type != Parameter::FLOAT)
 		{
-			setReferenceParam(new FloatParameter("Reference", "Comparison Reference to check against source value", 0));
+			newRef = new FloatParameter("Reference", "Comparison Reference to check against source value", 0);
 		}
+	}
+
+
+	if (newRef != nullptr)
+	{
+		if (newRef->type == ot) newRef->loadJSONData(od);
+		else newRef->setValue(sourceParam->value, false, true, true);
+		setReferenceParam(newRef);
 	}
 }
 

@@ -16,7 +16,7 @@ Point2DComparator::Point2DComparator(Parameter* sourceParam, Multiplex* multiple
 	addCompareOption("Magnitude >", magnGreaterId);
 	addCompareOption("Magnitude <", magnLessId);
 	addCompareOption("X >", xGreaterId);
-	addCompareOption("X <", xGreaterId);
+	addCompareOption("X <", xLessId);
 	addCompareOption("Y >", yGreaterId);
 	addCompareOption("Y <", yLessId);;
 
@@ -39,30 +39,41 @@ void Point2DComparator::onContainerParameterChanged(Parameter* p)
 
 void Point2DComparator::updateReferenceParam()
 {
+	var od;
+	Controllable::Type ot = Controllable::Type::CUSTOM;
 	if (reference != nullptr)
 	{
+		ot = reference->type;
+		od = reference->getJSONData();
 		removeControllable(reference);
 		reference = nullptr;
 	}
 
+	Parameter* newRef = nullptr;
 	if (currentFunctionId == equalsId)
 	{
 		if (reference == nullptr || reference->type != Parameter::POINT2D)
 		{
 
-			setReferenceParam(new Point2DParameter("Reference", "Comparison Reference to check against source value"));
-			reference->setRange(sourceParam->minimumValue, sourceParam->maximumValue);
-			reference->setValue(sourceParam->value, false, true, true);
+			newRef = new Point2DParameter("Reference", "Comparison Reference to check against source value");
+			newRef->setRange(sourceParam->minimumValue, sourceParam->maximumValue);
+			
 		}
 	}
 	else
 	{
 		if (reference == nullptr || reference->type != Parameter::FLOAT)
 		{
-			setReferenceParam(new FloatParameter("Reference", "Comparison Reference to check against source value", 0));
+			newRef = new FloatParameter("Reference", "Comparison Reference to check against source value", 0);
 		}
 	}
-
+	
+	if (newRef != nullptr)
+	{
+		if (newRef->type == ot) newRef->loadJSONData(od);
+		else newRef->setValue(sourceParam->value, false, true, true);
+		setReferenceParam(newRef);
+	}
 }
 
 bool Point2DComparator::compare(Parameter* sourceParam, int multiplexIndex)
