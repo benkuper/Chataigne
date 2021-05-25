@@ -50,9 +50,9 @@ public:
 	void setBrightness(float brightness);
 	virtual void setBrightnessInternal(float brightness) {}
 
-	virtual void setColor(int row, int column, Colour color, bool highlight);
-	virtual void setImage(int row, int column, Image image, bool highlight);
-	virtual void setImage(int row, int column, Image image, Colour tint, bool highlight);
+	virtual void setColor(int row, int column, Colour color, bool highlight, const String& overlayText = "");
+	virtual void setImage(int row, int column, Image image, bool highlight, const String& overlayText = "");
+	virtual void setImage(int row, int column, Image image, Colour tint, bool highlight, const String &overlayText = "");
 	virtual void getFirmwareVersion() {}
 
 	int getIconBytes() const { return iconSize * iconSize * 3; }

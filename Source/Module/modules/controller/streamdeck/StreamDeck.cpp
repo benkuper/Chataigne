@@ -1,3 +1,4 @@
+#include "StreamDeck.h"
 /*
   ==============================================================================
 
@@ -45,21 +46,30 @@ void StreamDeck::setBrightness(float brightness)
 	sendFeatureReport(brightnessData.getRawDataPointer(), brightnessData.size());
 }
 
-void StreamDeck::setColor(int row, int column, Colour color, bool highlight)
+void StreamDeck::setColor(int row, int column, Colour color, bool highlight, const String& overlayText)
 {
 	if(highlight) color = color.brighter(1);
 	//const int numPixels = iconSize * iconSize;
 	Image iconImage(Image::RGB, iconSize, iconSize, true);
-	iconImage.clear(iconImage.getBounds(), color);
+	Graphics g(iconImage);
+	g.setColour(color);
+	g.fillAll();
+	
+	if (overlayText.isNotEmpty())
+	{
+		g.setColour(color.getPerceivedBrightness() > .5f ? Colours::black : Colours::white);
+		g.drawFittedText(overlayText, g.getClipBounds().reduced(5), Justification::centred, 5);
+	}
+
 	sendButtonImageData(row, column, iconImage);
 }
 
-void StreamDeck::setImage(int row, int column, Image image, bool highlight)
+void StreamDeck::setImage(int row, int column, Image image, bool highlight, const String& overlayText)
 {
-    setImage(row,column, image, Colours::black, highlight);
+    setImage(row,column, image, Colours::black, highlight, overlayText);
 }
 
-void StreamDeck::setImage(int row, int column, Image image, Colour tint, bool highlight)
+void StreamDeck::setImage(int row, int column, Image image, Colour tint, bool highlight, const String& overlayText)
 {
 	Image iconImage(Image::RGB, iconSize, iconSize, true);
 	Graphics g(iconImage);
@@ -68,6 +78,13 @@ void StreamDeck::setImage(int row, int column, Image image, Colour tint, bool hi
 	g.drawImage(image, g.getClipBounds().toFloat());
 	g.setColour(tint.withMultipliedAlpha(.5f).brighter((float)highlight));
 	g.fillAll();
+
+	if (overlayText.isNotEmpty())
+	{
+		g.setColour(tint.getPerceivedBrightness() > .5f ? Colours::black : Colours::white);
+		g.drawFittedText(overlayText, g.getClipBounds().reduced(5), Justification::centred, 5);
+	}
+
 	sendButtonImageData(row, column, iconImage);
 }
 

@@ -40,6 +40,8 @@ public:
 	OwnedArray<Array<ColorParameter*>> colors;
 	ControllableContainer imagesCC;
 	OwnedArray<Array<FileParameter*>> images;
+	ControllableContainer textsCC;
+	OwnedArray<Array<StringParameter*>> texts;
 
 	Array<ControllableContainer*> buttonRowsCC;
 	OwnedArray<Array<BoolParameter*>> buttonStates;
@@ -56,6 +58,8 @@ public:
 	void setColor(int row, int column, const Colour& c);
 	void setAllColor(const Colour& c);
 	void setImage(int row, int column, const String& path);
+	void setText(int row, int column, const String& text);
+	void clearTexts();
 
 	virtual void streamDeckButtonPressed(int row, int column) override;
 	virtual void streamDeckButtonReleased(int row, int column) override;

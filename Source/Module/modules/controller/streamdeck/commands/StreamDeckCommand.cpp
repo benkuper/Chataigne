@@ -17,7 +17,7 @@ StreamDeckCommand::StreamDeckCommand(StreamDeckModule* _module, CommandContext c
 {
 	action = (StreamDeckAction)(int)params.getProperty("action", SET_COLOR);
 
-	if (action == SET_COLOR || action == SET_IMAGE)
+	if (action == SET_COLOR || action == SET_IMAGE || action == SET_TEXT)
 	{
 		column = addIntParameter("Column", "The column of the button to set", 1, 1, STREAMDECK_MAX_COLUMNS);
 		row = addIntParameter("Row", "The row of button to set", 1, 1, STREAMDECK_MAX_ROWS);
@@ -33,6 +33,10 @@ StreamDeckCommand::StreamDeckCommand(StreamDeckModule* _module, CommandContext c
 	case SET_IMAGE:
 		valueParam = addFileParameter("Image", "The image to set the button to");
 		((FileParameter*)valueParam)->fileTypeFilter = "*.png; *.jpg; *.jpeg";
+		break;
+
+	case SET_TEXT:
+		valueParam = addStringParameter("Text", "The text to set the button to", "");
 		break;
 
 	case SET_BRIGHTNESS:
@@ -74,5 +78,12 @@ void StreamDeckCommand::triggerInternal(int multiplexIndex)
 		streamDeckModule->brightness->setValue(val);
 		break;
 
+	case SET_TEXT:
+		streamDeckModule->setText(r, c, val);
+		break;
+
+	case CLEAR_TEXTS:
+		streamDeckModule->clearTexts();
+		break;
 	}
 }

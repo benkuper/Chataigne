@@ -14,7 +14,7 @@ class StreamDeckCommand :
 	public BaseCommand
 {
 public:
-	enum StreamDeckAction { SET_COLOR, SET_IMAGE, SET_ALL_COLOR, SET_BRIGHTNESS};
+	enum StreamDeckAction { SET_COLOR, SET_IMAGE, SET_ALL_COLOR, SET_BRIGHTNESS, SET_TEXT, CLEAR_TEXTS};
 
 	StreamDeckCommand(StreamDeckModule* _module, CommandContext context, var params, Multiplex* multiplex = nullptr);
 	~StreamDeckCommand();
