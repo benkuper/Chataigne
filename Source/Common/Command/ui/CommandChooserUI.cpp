@@ -47,14 +47,14 @@ void CommandChooserUI::paint(Graphics& g)
 	Colour c = commandIsSet ? GREEN_COLOR : NORMAL_COLOR;
 	if (isMouseOver()) c = c.brighter();
 
-	g.setGradientFill(ColourGradient(c.brighter(), (float)getLocalBounds().getCentreX(), (float)getLocalBounds().getCentreY(), c.darker(), 2.f, 2.f, true));
-	g.fillRoundedRectangle(targetBT->getBounds().expanded(2).toFloat(), 2);
+	g.setGradientFill(ColourGradient(c.brighter(.2f), (float)getLocalBounds().getCentreX(), (float)getLocalBounds().getCentreY(), c.darker(), 2.f, 2.f, true));
+	g.fillRoundedRectangle(targetBT->getBounds().expanded(2).toFloat(), 6);
 }
 
 void CommandChooserUI::resized()
 {
 	Rectangle<int> r = getLocalBounds();
-	targetBT->setBounds(r.removeFromLeft(r.getHeight()).reduced(4));
+	targetBT->setBounds(r.removeFromLeft(r.getHeight()).reduced(5));
 	r.removeFromLeft(2);
 	label.setBounds(r.reduced(0, 2));
 }

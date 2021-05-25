@@ -17,7 +17,7 @@ LinkableParameterEditor::LinkableParameterEditor(ParameterLink* pLink, bool show
     InspectableEditor(pLink->parameter.get(), false),
     showMappingOptions(showMappingOptions),
     link(pLink)
-    
+
 {
     link->addAsyncParameterLinkListener(this);
 
@@ -26,12 +26,13 @@ LinkableParameterEditor::LinkableParameterEditor(ParameterLink* pLink, bool show
     //linkBT->setToggleState(link->linkType != link->NONE, dontSendNotification);
     addAndMakeVisible(linkBT.get());
 
-    
-    paramEditor.reset((ParameterEditor *)pLink->parameter->getEditor(false));
-  
-    bool visible = link->linkType == link->NONE || !link->isMultiplexed();
-    if(visible ) addAndMakeVisible(paramEditor.get());
+    paramEditor.reset((ParameterEditor*)pLink->parameter->getEditor(false));
 
+    bool visible = link->linkType == link->NONE || !link->isMultiplexed();
+    if (visible)
+    {
+        addAndMakeVisible(paramEditor.get());
+    }
     setSize(100, paramEditor->getHeight());
 }
 
@@ -70,10 +71,18 @@ void LinkableParameterEditor::paint(Graphics& g)
 
     if (!paramEditor->isShowing())
     {
+        Rectangle<int> r(paramEditor->getBounds());
+        if (paramEditor->showLabel)
+        {
+            int controlSpace = jmax<int>(jmin<int>(getWidth() - 160, getWidth() * .75f), 100);
+            g.setColour(c.brighter());
+            g.drawFittedText(link->parameter->niceName, r.removeFromLeft(r.getWidth() - controlSpace), Justification::centredLeft, 1);
+        }
+      
         g.setColour(c.darker(.6f));
-        g.fillRect(paramEditor->getBounds());
+        g.fillRect(r);
         g.setColour(c.brighter(.5f));
-        g.drawFittedText(getLinkLabel(), paramEditor->getBounds().reduced(1), Justification::centred, 1);
+        g.drawFittedText(getLinkLabel(), r.reduced(1), Justification::centred, 1);
     }
 
 
