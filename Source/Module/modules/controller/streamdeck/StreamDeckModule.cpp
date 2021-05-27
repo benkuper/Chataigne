@@ -230,13 +230,13 @@ void StreamDeckModule::updateButton(int row, int column)
 		Image image = ImageCache::getFromFile(f);
 		if (logOutgoingData->boolValue()) NLOG(niceName, "Set image " << f.getFileName() << " to button " << String(column + 1) << ":" << String(row + 1));
 
-		if (colorizeImages->boolValue()) device->setImage(row, column, image, (*colors[row])[column]->getColor(), highlightPressedButtons->boolValue() ? (*buttonStates[row])[column]->boolValue() : false, (*colors[row])[column]->stringValue());
-		else device->setImage(row, column, image, highlightPressedButtons->boolValue() ? (*buttonStates[row])[column]->boolValue() : false, (*colors[row])[column]->stringValue());
+		if (colorizeImages->boolValue()) device->setImage(row, column, image, (*colors[row])[column]->getColor(), highlightPressedButtons->boolValue() ? (*buttonStates[row])[column]->boolValue() : false, (*texts[row])[column]->stringValue());
+		else device->setImage(row, column, image, highlightPressedButtons->boolValue() ? (*buttonStates[row])[column]->boolValue() : false, (*texts[row])[column]->stringValue());
 	}
 	else
 	{
 		if (logOutgoingData->boolValue()) NLOG(niceName, "Set color " << (*colors[row])[column]->getColor().toString() << " to button " << String(column + 1) << ":" << String(row + 1));
-		device->setColor(row, column, (*colors[row])[column]->getColor(), highlightPressedButtons->boolValue() ? (*buttonStates[row])[column]->boolValue() : false, (*colors[row])[column]->stringValue());
+		device->setColor(row, column, (*colors[row])[column]->getColor(), highlightPressedButtons->boolValue() ? (*buttonStates[row])[column]->boolValue() : false, (*texts[row])[column]->stringValue());
 	}
 
 	outActivityTrigger->trigger();
