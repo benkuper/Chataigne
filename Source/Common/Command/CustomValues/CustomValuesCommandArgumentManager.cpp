@@ -62,6 +62,8 @@ void CustomValuesCommandArgumentManager::rebuildFromTemplate(bool clearItems)
 	
 	for (auto & i : linkedTemplateManager->items)
 	{
+		if (i == nullptr) continue;
+
 		CustomValuesCommandArgument* a = nullptr;
 		if (clearItems) a = addItemFromData(i->getJSONData());
 		else a = items[linkedTemplateManager->items.indexOf(i)];
