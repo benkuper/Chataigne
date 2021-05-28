@@ -154,7 +154,7 @@ void ChataigneSequence::onContainerParameterChangedInternal(Parameter* p)
 
 	if (mtcSender != nullptr)
 	{
-		float time = jlimit<float>(0, totalTime->floatValue(), currentTime->floatValue() - (mtcSyncOffset->floatValue() * (reverseOffset->boolValue() ? -1 : 1)));
+		float time = jmax<float>(0, currentTime->floatValue() - (mtcSyncOffset->floatValue() * (reverseOffset->boolValue() ? -1 : 1)));
 
 		if (p == currentTime)
 		{
