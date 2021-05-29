@@ -53,7 +53,11 @@ public:
 
 	void addNewMappingLayerFromValues(Array<Point<float>> keys);
 
+	void setupMidiSyncDevices();
+
 	virtual void onContainerParameterChangedInternal(Parameter *) override;
+	virtual void onControllableStateChanged(Controllable* c) override;
+
 	virtual void onContainerTriggerTriggered(Trigger *) override;
 	virtual void onExternalParameterValueChanged(Parameter *) override;
 

@@ -14,6 +14,7 @@ ChataigneSequence::ChataigneSequence() :
 	masterAudioLayer(nullptr)
 {
 	midiSyncDevice = new MIDIDeviceParameter("Sync Devices");
+	midiSyncDevice->canBeDisabledByUser = true;
 	addParameter(midiSyncDevice);
 	
 	mtcSyncOffset = addFloatParameter("Sync Offset", "The time to offset when sending and receiving", 0, 0);
@@ -148,11 +149,33 @@ void ChataigneSequence::addNewMappingLayerFromValues(Array<Point<float>> keys)
 	layer->automation->addFromPointsAndSimplifyBezier(keys, false);
 }
 
+void ChataigneSequence::setupMidiSyncDevices()
+{
+	if ((mtcSender != nullptr && midiSyncDevice->outputDevice != mtcSender->device) || midiSyncDevice->outputDevice != nullptr)
+	{
+		if (midiSyncDevice->outputDevice == nullptr || !midiSyncDevice->enabled) mtcSender.reset();
+		else
+		{
+			mtcSender.reset(new MTCSender(midiSyncDevice->outputDevice));
+			mtcSender->setSpeedFactor(playSpeed->floatValue());
+		}
+	}
+
+	if ((mtcReceiver != nullptr && midiSyncDevice->inputDevice != mtcReceiver->device) || midiSyncDevice->inputDevice != nullptr)
+	{
+		if (midiSyncDevice->inputDevice == nullptr || !midiSyncDevice->enabled) mtcReceiver.reset();
+		{
+			mtcReceiver.reset(new MTCReceiver(midiSyncDevice->inputDevice));
+			mtcReceiver->addMTCListener(this);
+		}
+	}
+}
+
 void ChataigneSequence::onContainerParameterChangedInternal(Parameter* p)
 {
 	Sequence::onContainerParameterChangedInternal(p);
 
-	if (mtcSender != nullptr)
+	if (mtcSender != nullptr && midiSyncDevice->enabled)
 	{
 		float time = jmax<float>(0, currentTime->floatValue() - (mtcSyncOffset->floatValue() * (reverseOffset->boolValue() ? -1 : 1)));
 
@@ -166,28 +189,23 @@ void ChataigneSequence::onContainerParameterChangedInternal(Parameter* p)
 			if (isPlaying->boolValue()) mtcSender->start(time);
 			else  mtcSender->pause();
 		}
+		else if (p == mtcSyncOffset)
+		{
+			mtcSender->setPosition(time, true);
+		}
 	}
 
 	if (p == midiSyncDevice)
 	{
-		if ((mtcSender != nullptr && midiSyncDevice->outputDevice != mtcSender->device) || midiSyncDevice->outputDevice != nullptr)
-		{
-			if (midiSyncDevice->outputDevice == nullptr) mtcSender.reset();
-			else
-			{
-				mtcSender.reset(new MTCSender(midiSyncDevice->outputDevice));
-				mtcSender->setSpeedFactor(playSpeed->floatValue());
-			}
-		}
-		
-		if ((mtcReceiver != nullptr && midiSyncDevice->inputDevice != mtcReceiver->device) || midiSyncDevice->inputDevice != nullptr)
-		{
-			if (midiSyncDevice->inputDevice == nullptr) mtcReceiver.reset();
-			{
-				mtcReceiver.reset(new MTCReceiver(midiSyncDevice->inputDevice));
-				mtcReceiver->addMTCListener(this);
-			}
-		}
+		setupMidiSyncDevices();
+	}
+}
+
+void ChataigneSequence::onControllableStateChanged(Controllable* c)
+{
+	if (c == midiSyncDevice)
+	{
+		setupMidiSyncDevices();
 	}
 }
 
