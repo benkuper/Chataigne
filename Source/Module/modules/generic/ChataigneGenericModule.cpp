@@ -13,6 +13,7 @@ ChataigneGenericModule::ChataigneGenericModule() :
 {
 	defManager->add(CommandDefinition::createDef(this, "", "Set Parameter Value", &GenericControllableCommand::create, CommandContext::BOTH)->addParam("action", GenericControllableCommand::SET_VALUE));
 	defManager->add(CommandDefinition::createDef(this, "", "Trigger a Control", &GenericControllableCommand::create, CommandContext::BOTH)->addParam("action", GenericControllableCommand::TRIGGER));
+	defManager->add(CommandDefinition::createDef(this, "", "Set Parameter Enabled", &GenericControllableCommand::create, CommandContext::BOTH)->addParam("action", GenericControllableCommand::SET_ENABLED));
 	
 	defManager->add(CommandDefinition::createDef(this, "", "Log a message", &ChataigneLogCommand::create)->addParam("type", ChataigneLogCommand::MESSAGE));
 	defManager->add(CommandDefinition::createDef(this, "", "Log a value", &ChataigneLogCommand::create)->addParam("type", ChataigneLogCommand::VALUE));

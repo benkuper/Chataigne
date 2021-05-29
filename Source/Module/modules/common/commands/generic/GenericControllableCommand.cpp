@@ -21,9 +21,11 @@ GenericControllableCommand::GenericControllableCommand(Module* _module, CommandC
 	ControllableContainer* rootCC = rootPtr == 0 ? nullptr : (ControllableContainer*)rootPtr;
 	target = addTargetParameter("Target ", "The target to set the value to or trigger", rootCC);
 	if (action == TRIGGER) target->typesFilter.add(Trigger::getTypeStringStatic());
-	else target->excludeTypesFilter.add(Trigger::getTypeStringStatic());
+	else if (action == SET_VALUE) target->excludeTypesFilter.add(Trigger::getTypeStringStatic());
+	else if (action == SET_ENABLED) target->customTargetFilterFunc = &GenericControllableCommand::checkEnableTargetFilter;
 
 	if (action == SET_VALUE) valueOperator = addEnumParameter("Operator", "The operator to apply. If you simply want to set the value, leave at the = option.", false);
+	else if (action == SET_ENABLED) value = addBoolParameter("Value", "If checked, this will enable this parameter, otherwise it will disable it. Simple. Efficient.", false);
 }
 
 GenericControllableCommand::~GenericControllableCommand()
@@ -216,6 +218,10 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 		}
 	}
 	break;
+
+	case SET_ENABLED:
+		c->setEnabled(value->boolValue());
+		break;
 	}
 }
 
@@ -261,6 +267,11 @@ void GenericControllableCommand::loadGhostData(var data)
 
 		updateValueFromTarget(); //force generate if not yet
 	}
+}
+
+bool GenericControllableCommand::checkEnableTargetFilter(Controllable* c)
+{
+	return c->canBeDisabledByUser;
 }
 
 BaseCommand* GenericControllableCommand::create(ControllableContainer* module, CommandContext context, var params, Multiplex* multiplex)

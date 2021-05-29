@@ -16,7 +16,7 @@ class GenericControllableCommand :
 {
 public:
 
-	enum Action { SET_VALUE, TRIGGER };
+	enum Action { SET_VALUE, TRIGGER, SET_ENABLED };
 
 	GenericControllableCommand(Module* _module, CommandContext context, var params, Multiplex* multiplex = nullptr);
 	virtual ~GenericControllableCommand();
@@ -32,7 +32,6 @@ public:
 	var ghostOperator;
 
 	void updateValueFromTarget();
-	void setValueParameter(Parameter* p);
 
 	void updateOperatorOptions();
 
@@ -44,6 +43,8 @@ public:
 	virtual void loadJSONDataInternal(var data) override;
 	virtual void endLoadFile() override;
 	virtual void loadGhostData(var data);
+
+	static bool checkEnableTargetFilter(Controllable* c);
 
 	static BaseCommand* create(ControllableContainer* module, CommandContext context, var params, Multiplex* multiplex = nullptr);
 };
