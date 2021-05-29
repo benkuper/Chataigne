@@ -34,13 +34,13 @@ void MTCSender::start(double position)
 	startThread();
 }
 
-void MTCSender::pause()
+void MTCSender::pause(bool resumeIfAlreadyPaused)
 {
 	if (isThreadRunning())
 	{
 		stopThread(10);
 	}
-    else
+    else if(resumeIfAlreadyPaused)
         startThread();
 }
 
@@ -113,8 +113,6 @@ void MTCSender::run()
 				}
 			}
 		}
-
-		DBG("Send " << m_quarter << ", " << m_frame << ", " << m_second);
 
 		lock.exit();
    }

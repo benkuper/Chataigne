@@ -16,7 +16,7 @@ ChataigneSequence::ChataigneSequence() :
 	midiSyncDevice = new MIDIDeviceParameter("Sync Devices");
 	midiSyncDevice->canBeDisabledByUser = true;
 	addParameter(midiSyncDevice);
-	
+
 	mtcSyncOffset = addFloatParameter("Sync Offset", "The time to offset when sending and receiving", 0, 0);
 	mtcSyncOffset->defaultUI = FloatParameter::TIME;
 	reverseOffset = addBoolParameter("Reverse Offset", "This allows negative offset", false);
@@ -26,8 +26,8 @@ ChataigneSequence::ChataigneSequence() :
 	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", Mapping2DLayer::getTypeStringStatic(), &Mapping2DLayer::create, this));
 	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Audio", &ChataigneAudioLayer::create, this, true));
 	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", ColorMappingLayer::getTypeStringStatic(), &ColorMappingLayer::create, this));
-	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Sequences", &SequenceBlockLayer::create, this)->addParam("manager",ChataigneSequenceManager::getInstance()->getControlAddress()));
-	 
+	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Sequences", &SequenceBlockLayer::create, this)->addParam("manager", ChataigneSequenceManager::getInstance()->getControlAddress()));
+
 	layerManager->addBaseManagerListener(this);
 }
 
@@ -145,30 +145,31 @@ bool ChataigneSequence::timeIsDrivenByAudio()
 
 void ChataigneSequence::addNewMappingLayerFromValues(Array<Point<float>> keys)
 {
-	Mapping1DLayer * layer = (Mapping1DLayer *)layerManager->addItem(layerManager->factory.create("Mapping"));
+	Mapping1DLayer* layer = (Mapping1DLayer*)layerManager->addItem(layerManager->factory.create("Mapping"));
 	layer->automation->addFromPointsAndSimplifyBezier(keys, false);
 }
 
 void ChataigneSequence::setupMidiSyncDevices()
 {
-	if ((mtcSender != nullptr && midiSyncDevice->outputDevice != mtcSender->device) || midiSyncDevice->outputDevice != nullptr)
+	//	if ((mtcSender != nullptr && midiSyncDevice->outputDevice != mtcSender->device) || midiSyncDevice->outputDevice != nullptr)
+	//	{
+	if (midiSyncDevice->outputDevice == nullptr || !midiSyncDevice->enabled) mtcSender.reset();
+	else
 	{
-		if (midiSyncDevice->outputDevice == nullptr || !midiSyncDevice->enabled) mtcSender.reset();
-		else
-		{
-			mtcSender.reset(new MTCSender(midiSyncDevice->outputDevice));
-			mtcSender->setSpeedFactor(playSpeed->floatValue());
-		}
+		mtcSender.reset(new MTCSender(midiSyncDevice->outputDevice));
+		mtcSender->setSpeedFactor(playSpeed->floatValue());
 	}
+	//	}
 
-	if ((mtcReceiver != nullptr && midiSyncDevice->inputDevice != mtcReceiver->device) || midiSyncDevice->inputDevice != nullptr)
+	//	if ((mtcReceiver != nullptr && midiSyncDevice->inputDevice != mtcReceiver->device) || midiSyncDevice->inputDevice != nullptr)
+	//	{
+	if (midiSyncDevice->inputDevice == nullptr || !midiSyncDevice->enabled) mtcReceiver.reset();
+	else
 	{
-		if (midiSyncDevice->inputDevice == nullptr || !midiSyncDevice->enabled) mtcReceiver.reset();
-		{
-			mtcReceiver.reset(new MTCReceiver(midiSyncDevice->inputDevice));
-			mtcReceiver->addMTCListener(this);
-		}
+		mtcReceiver.reset(new MTCReceiver(midiSyncDevice->inputDevice));
+		mtcReceiver->addMTCListener(this);
 	}
+	//	}
 }
 
 void ChataigneSequence::onContainerParameterChangedInternal(Parameter* p)
@@ -187,7 +188,7 @@ void ChataigneSequence::onContainerParameterChangedInternal(Parameter* p)
 		else if (p == isPlaying)
 		{
 			if (isPlaying->boolValue()) mtcSender->start(time);
-			else  mtcSender->pause();
+			else mtcSender->pause(false);
 		}
 		else if (p == mtcSyncOffset)
 		{
@@ -203,9 +204,15 @@ void ChataigneSequence::onContainerParameterChangedInternal(Parameter* p)
 
 void ChataigneSequence::onControllableStateChanged(Controllable* c)
 {
+	Sequence::onControllableStateChanged(c);
 	if (c == midiSyncDevice)
 	{
 		setupMidiSyncDevices();
+		if (mtcSender != nullptr && midiSyncDevice->enabled && isPlaying->boolValue())
+		{
+			float time = jmax<float>(0, currentTime->floatValue() - (mtcSyncOffset->floatValue() * (reverseOffset->boolValue() ? -1 : 1)));
+			mtcSender->start(time);
+		}
 	}
 }
 
