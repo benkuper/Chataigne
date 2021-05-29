@@ -138,7 +138,7 @@ void StreamDeckModule::rebuildValues()
 		Array<BoolParameter*>* btStates = buttonStates[r];
 		Array<ColorParameter*>* cColors = colors[r];
 		Array<FileParameter*>* cImages = images[r];
-		Array<StringParameter *> * cTexts = texts[r];
+		Array<StringParameter*>* cTexts = texts[r];
 		ControllableContainer* btCC = buttonRowsCC[r];
 		ControllableContainer* cCC = colorsCC.controllableContainers[r];
 		ControllableContainer* iCC = imagesCC.controllableContainers[r];
@@ -165,7 +165,7 @@ void StreamDeckModule::rebuildValues()
 			btStates->add(btCC->addBoolParameter("Button " + btId, "Is row " + String(r + 1) + ", button " + btId + " pressed ?", false));
 			cColors->add(cCC->addColorParameter("Color " + btId, "If not image, color for row " + String(r + 1) + ", button " + btId, Colours::black));
 			cImages->add(iCC->addFileParameter("Image " + btId, "Image for row " + String(r + 1) + ", button" + btId));
-			cTexts->add(tCC->addStringParameter("Text " + btId, "Text for row " + String(r + 1) + ", button" + btId,""));
+			cTexts->add(tCC->addStringParameter("Text " + btId, "Text for row " + String(r + 1) + ", button" + btId, ""));
 		}
 	}
 
@@ -228,15 +228,17 @@ void StreamDeckModule::updateButton(int row, int column)
 	if (f.existsAsFile())
 	{
 		Image image = ImageCache::getFromFile(f);
-		if (logOutgoingData->boolValue()) NLOG(niceName, "Set image " << f.getFileName() << " to button " << String(column + 1) << ":" << String(row + 1));
+		String overlayText = (*texts[row])[column]->stringValue();
 
+		if (logOutgoingData->boolValue()) NLOG(niceName, "Set image " << f.getFileName() << " to button " << String(column + 1) << ":" << String(row + 1) << (overlayText.isNotEmpty() ? "\nOverlay Text : " + overlayText : ""));
 		if (colorizeImages->boolValue()) device->setImage(row, column, image, (*colors[row])[column]->getColor(), highlightPressedButtons->boolValue() ? (*buttonStates[row])[column]->boolValue() : false, (*texts[row])[column]->stringValue());
-		else device->setImage(row, column, image, highlightPressedButtons->boolValue() ? (*buttonStates[row])[column]->boolValue() : false, (*texts[row])[column]->stringValue());
+		else device->setImage(row, column, image, highlightPressedButtons->boolValue() ? (*buttonStates[row])[column]->boolValue() : false, overlayText);
 	}
 	else
 	{
-		if (logOutgoingData->boolValue()) NLOG(niceName, "Set color " << (*colors[row])[column]->getColor().toString() << " to button " << String(column + 1) << ":" << String(row + 1));
-		device->setColor(row, column, (*colors[row])[column]->getColor(), highlightPressedButtons->boolValue() ? (*buttonStates[row])[column]->boolValue() : false, (*texts[row])[column]->stringValue());
+		String overlayText = (*texts[row])[column]->stringValue();
+		if (logOutgoingData->boolValue()) NLOG(niceName, "Set color " << (*colors[row])[column]->getColor().toString() << " to button " << String(column + 1) << ":" << String(row + 1) << (overlayText.isNotEmpty() ? "\nOverlay Text : " + overlayText : ""));
+		device->setColor(row, column, (*colors[row])[column]->getColor(), highlightPressedButtons->boolValue() ? (*buttonStates[row])[column]->boolValue() : false, overlayText);
 	}
 
 	outActivityTrigger->trigger();
