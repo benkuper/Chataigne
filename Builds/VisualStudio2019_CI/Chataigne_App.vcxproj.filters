@@ -5218,6 +5218,9 @@
     <ClCompile Include="..\..\Modules\juce_simpleweb\juce_simpleweb2.cpp">
       <Filter>JUCE Modules\juce_simpleweb</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_simpleweb\MIMETypes.cpp">
+      <Filter>JUCE Modules\juce_simpleweb</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_simpleweb\SimpleWebSocketClient.cpp">
       <Filter>JUCE Modules\juce_simpleweb</Filter>
     </ClCompile>
