@@ -97,15 +97,11 @@ ZeroconfManager::ZeroconfSearcher::ZeroconfSearcher(StringRef name, StringRef se
 	name(name),
 	serviceName(serviceName)
 {
-	servus.reset(new Servus(String(serviceName).toStdString()));
-	servus->addListener(this);
 	startThread();
 }
 
 ZeroconfManager::ZeroconfSearcher::~ZeroconfSearcher()
 {
-	servus->endBrowsing();
-	servus.reset();
 	stopThread(4000);
 	services.clear();
 }
@@ -208,6 +204,9 @@ void ZeroconfManager::ZeroconfSearcher::instanceRemoved(const std::string& insta
 
 void ZeroconfManager::ZeroconfSearcher::run()
 {
+	servus.reset(new Servus(String(serviceName).toStdString()));
+	servus->addListener(this);
+
 	servus->beginBrowsing(Servus::Interface::IF_ALL);
 
 	while (!threadShouldExit())
@@ -215,6 +214,9 @@ void ZeroconfManager::ZeroconfSearcher::run()
 		servus->browse(1000);
 		wait(500);
 	}
+
+	servus->endBrowsing();
+	servus.reset();
 }
 
 ZeroconfManager::ServiceInfo::ServiceInfo(StringRef name, StringRef host, StringRef ip, int port, const HashMap<String, String>& _keys) :
