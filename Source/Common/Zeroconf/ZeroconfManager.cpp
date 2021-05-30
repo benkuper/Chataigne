@@ -102,6 +102,8 @@ ZeroconfManager::ZeroconfSearcher::ZeroconfSearcher(StringRef name, StringRef se
 
 ZeroconfManager::ZeroconfSearcher::~ZeroconfSearcher()
 {
+	if (servus != nullptr && servus->isBrowsing()) servus->endBrowsing();
+	servus.reset();
 	stopThread(4000);
 	services.clear();
 }
@@ -215,8 +217,7 @@ void ZeroconfManager::ZeroconfSearcher::run()
 		wait(500);
 	}
 
-	servus->endBrowsing();
-	servus.reset();
+	
 }
 
 ZeroconfManager::ServiceInfo::ServiceInfo(StringRef name, StringRef host, StringRef ip, int port, const HashMap<String, String>& _keys) :
