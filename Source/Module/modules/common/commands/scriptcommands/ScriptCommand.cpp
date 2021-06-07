@@ -190,8 +190,7 @@ void ScriptCommand::triggerInternal(int multiplexIndex)
 	Array<var> args;
 	for (auto &p : scriptParams)
 	{
-		var val = p->value;
-		if (p->type == Controllable::ENUM) val = ((EnumParameter *)p)->getValueData();
+		var val = getLinkedValue(p, multiplexIndex);// ->value;
 		args.add(val);
 	}
 
