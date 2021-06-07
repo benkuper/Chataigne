@@ -25,9 +25,9 @@ MappingInputEditor::~MappingInputEditor()
 void MappingInputEditor::updateSourceUI()
 {
 	if (sourceFeedbackUI != nullptr) removeChildComponent(sourceFeedbackUI.get());
-	if (input->inputReference != nullptr)
+	if (Parameter * p = input->getInputAt(input->getPreviewIndex()))
 	{
-		sourceFeedbackUI.reset(input->inputReference->createDefaultUI());
+		sourceFeedbackUI.reset(p->createDefaultUI());
 		sourceFeedbackUI->showLabel = false;
 		//sourceFeedbackUI->setForceFeedbackOnly(true);
 		addAndMakeVisible(sourceFeedbackUI.get());
@@ -38,7 +38,7 @@ void MappingInputEditor::updateSourceUI()
 
 void MappingInputEditor::resizedInternalHeaderItemInternal(Rectangle<int>& r)
 {
-	if (sourceFeedbackUI != nullptr) sourceFeedbackUI->setBounds(r.removeFromRight(jmin(r.getWidth()-150,200)).reduced(2));
+	if (sourceFeedbackUI != nullptr) sourceFeedbackUI->setBounds(r.removeFromRight(jlimit(100,300,r.getWidth())).reduced(2));
 	BaseItemEditor::resizedInternalHeaderItemInternal(r);
 }
 
@@ -51,6 +51,10 @@ void MappingInputEditor::newMessage(const MappingInput::MappingInputEvent & e)
 		break;
 
 	case MappingInput::MappingInputEvent::PARAMETER_VALUE_CHANGED:
+		break;
+
+	case MappingInput::MappingInputEvent::INPUT_PREVIEW_CHANGED:
+		updateSourceUI();
 		break;
 	}
 }

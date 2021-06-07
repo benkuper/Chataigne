@@ -36,9 +36,12 @@ public:
 	void listReferenceUpdated() override;
 	void listItemUpdated(int multiplexIndex) override;
 
+
 	Parameter* getInputAt(int multiplexIndex);
 	
 	void parameterRangeChanged(Parameter * p) override;
+
+	void multiplexPreviewIndexChanged() override;
 
 	void clear() override;
 
@@ -61,7 +64,7 @@ public:
 
 	class MappingInputEvent {
 	public:
-		enum Type { INPUT_REFERENCE_CHANGED, PARAMETER_VALUE_CHANGED };
+		enum Type { INPUT_REFERENCE_CHANGED, PARAMETER_VALUE_CHANGED, INPUT_PREVIEW_CHANGED };
 		MappingInputEvent(Type type, MappingInput * i, int multiplexIndex = 0) : type(type), mappingInput(i), multiplexIndex(multiplexIndex) {}
 		Type type;
 		MappingInput * mappingInput;

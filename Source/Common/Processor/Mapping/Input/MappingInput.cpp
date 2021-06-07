@@ -9,6 +9,7 @@
 */
 
 #include "Module/ModuleIncludes.h"
+#include "MappingInput.h"
 
 MappingInput::MappingInput(var params, Multiplex * processor) :
 	BaseItem(getTypeStringStatic(params.getProperty("listMode", false)), false, false),
@@ -143,6 +144,11 @@ void MappingInput::parameterRangeChanged(Parameter* p)
 {
 	ControllableContainer::parameterRangeChanged(p);
 	mappinginputListeners.call(&MappingInput::Listener::inputParameterRangeChanged, this);
+}
+
+void MappingInput::multiplexPreviewIndexChanged()
+{
+	mappingInputAsyncNotifier.addMessage(new MappingInputEvent(MappingInputEvent::INPUT_PREVIEW_CHANGED, this, getPreviewIndex()));
 }
 
 void MappingInput::clear()

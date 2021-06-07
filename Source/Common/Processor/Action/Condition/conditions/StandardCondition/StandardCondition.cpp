@@ -114,6 +114,9 @@ void StandardCondition::updateSourceFromTarget()
 	}
 
 	updateComparatorFromSource();
+
+	conditionListeners.call(&ConditionListener::conditionSourceChanged, this);
+	conditionAsyncNotifier.addMessage(new ConditionEvent(ConditionEvent::SOURCE_CHANGED, this));
 }
 
 void StandardCondition::updateComparatorFromSource()
@@ -165,8 +168,6 @@ void StandardCondition::updateComparatorFromSource()
 		}
 	}
 
-	conditionListeners.call(&ConditionListener::conditionSourceChanged, this);
-	conditionAsyncNotifier.addMessage(new ConditionEvent(ConditionEvent::SOURCE_CHANGED, this));
 }
 
 Controllable* StandardCondition::getSourceControllableAt(int multiplexIndex)
