@@ -17,7 +17,7 @@ ChataigneApplication::ChataigneApplication() :
 void ChataigneApplication::initialiseInternal(const String &)
 {
 	engine.reset(new ChataigneEngine());
-	mainComponent.reset(new MainContentComponent());
+	if(useWindow) mainComponent.reset(new MainContentComponent());
 
 	//Call after engine init
 	AppUpdater::getInstance()->setURLs("http://benjamin.kuperberg.fr/chataigne/releases/update.json", "http://benjamin.kuperberg.fr/chataigne/user/data/", "Chataigne");
