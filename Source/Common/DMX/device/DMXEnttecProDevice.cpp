@@ -67,8 +67,14 @@ void DMXEnttecProDevice::changeDMXChannels()
 void DMXEnttecProDevice::serialDataReceived(const var& data)
 {
 	if (!inputCC->enabled->boolValue()) return;
+	if (!data.isBinaryData()) {
+		dmxPort->setMode(SerialDevice::PortMode::RAW);
+		return;
+	}
 
-	serialBuffer.addArray((const uint8_t*)data.getBinaryData()->getData(), (int)data.getBinaryData()->getSize());
+	MemoryBlock * binaryData = data.getBinaryData();
+
+	serialBuffer.addArray((const uint8_t *)binaryData->getData(), (int)binaryData->getSize());
 
 	int endIndex = 0;
 	Array<uint8> packet = getDMXPacket(serialBuffer, endIndex);
