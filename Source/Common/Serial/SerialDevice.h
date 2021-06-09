@@ -92,7 +92,7 @@ public:
 	void setMode(PortMode mode);
 	void setBaudRate(int baudRate);
 
-	void open(int baud = 9600);
+	void open(int baud = -1);
 	void close();
 
 

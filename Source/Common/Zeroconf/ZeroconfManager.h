@@ -60,6 +60,7 @@ public:
 		String serviceName;
 		std::unique_ptr<servus::Servus> servus;
 		OwnedArray<ServiceInfo> services;
+		CriticalSection browseLock;
 
 		ServiceInfo * getService(StringRef name, StringRef host, int port);
 		void addService(StringRef name, StringRef host, StringRef ip, int port, const HashMap<String, String> & keys = HashMap<String, String>());
@@ -92,7 +93,7 @@ public:
 
 	ZeroconfSearcher * getSearcher(StringRef name);
 
-	ServiceInfo * showMenuAndGetService(StringRef service, bool showLocal = true, bool showRemote = true, bool separateLocalAndRemote = true, bool excludeInternal = true);
+	ServiceInfo* showMenuAndGetService(StringRef service, bool showLocal = true, bool showRemote = true, bool separateLocalAndRemote = true, bool excludeInternal = true, const String &nameFilter = "");
 	
 	class ZeroconfEvent {
 	public:

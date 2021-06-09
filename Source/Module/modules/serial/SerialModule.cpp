@@ -39,9 +39,13 @@ SerialModule::~SerialModule()
 bool SerialModule::setPortStatus(bool status) {
 	bool connected = false;
 	if (port != nullptr) {
+
 		connected = port->isOpen();
+		
 		bool moduleEnabled = enabled->boolValue();
+		
 		if (status && !connected && moduleEnabled) { //We want to open the port, it's not already opened and the module is enabled
+		
 			port->open(baudRate->intValue());
 
 			connected = port->isOpen();

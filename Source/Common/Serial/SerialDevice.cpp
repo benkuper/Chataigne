@@ -67,7 +67,7 @@ void SerialDevice::open(int baud)
 	if (port == nullptr) return;
 	try
 	{
-		port->setBaudrate(baud);
+		if(baud != -1) port->setBaudrate(baud);
 		if (!port->isOpen())  port->open();
 		port->setDTR();
 		port->setRTS();

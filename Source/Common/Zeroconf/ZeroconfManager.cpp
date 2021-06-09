@@ -8,12 +8,12 @@
   ==============================================================================
 */
 
-#ifdef JUCE_WINDOWS
+#if JUCE_WINDOWS
 #include <Winsock2.h>
 #include <Ws2tcpip.h>
 #else
-#include <netdb.h>
 #include "ZeroconfManager.h"
+#include <netdb.h>
 #endif /* _WIN32 */
 
 juce_ImplementSingleton(ZeroconfManager)
@@ -61,7 +61,7 @@ ZeroconfManager::ZeroconfSearcher* ZeroconfManager::getSearcher(StringRef name)
 	return nullptr;
 }
 
-ZeroconfManager::ServiceInfo* ZeroconfManager::showMenuAndGetService(StringRef searcherName, bool showLocal, bool showRemote, bool separateLocalAndRemote, bool excludeInternal)
+ZeroconfManager::ServiceInfo* ZeroconfManager::showMenuAndGetService(StringRef searcherName, bool showLocal, bool showRemote, bool separateLocalAndRemote, bool excludeInternal, const String& nameFilter)
 {
 	ZeroconfSearcher* s = getSearcher(searcherName);
 
@@ -81,6 +81,7 @@ ZeroconfManager::ServiceInfo* ZeroconfManager::showMenuAndGetService(StringRef s
 		for (int i = 0; i < s->services.size(); i++)
 		{
 			ServiceInfo* info = s->services[i];
+			if (nameFilter.isNotEmpty() && !info->name.contains(nameFilter)) continue;
 			p.addItem(1 + i, info->name + " on " + info->host + " (" + info->getIP() + ":" + String(info->port) + ")");
 		}
 	}
@@ -93,7 +94,7 @@ ZeroconfManager::ServiceInfo* ZeroconfManager::showMenuAndGetService(StringRef s
 }
 
 ZeroconfManager::ZeroconfSearcher::ZeroconfSearcher(StringRef name, StringRef serviceName) :
-	Thread("Zeroconf Searcher "+name),
+	Thread("Zeroconf Searcher " + name),
 	name(name),
 	serviceName(serviceName)
 {
@@ -102,9 +103,14 @@ ZeroconfManager::ZeroconfSearcher::ZeroconfSearcher(StringRef name, StringRef se
 
 ZeroconfManager::ZeroconfSearcher::~ZeroconfSearcher()
 {
-	if (servus != nullptr && servus->isBrowsing()) servus->endBrowsing();
-	servus.reset();
-	stopThread(4000);
+	{
+		if (servus != nullptr && servus->isBrowsing()) servus->endBrowsing();
+		
+		ScopedLock lock(browseLock);
+		servus.reset();
+		stopThread(4000);
+	}
+	
 	services.clear();
 }
 
@@ -131,7 +137,7 @@ void ZeroconfManager::ZeroconfSearcher::addService(StringRef sName, StringRef ho
 	ServiceInfo* s = new ServiceInfo(sName, host, ip, port, keys);
 
 	services.add(s);
-	NLOG("Zeroconf", "New " << name << " service discovered : " << s->name << " on " << s->host << ", " << s->ip << ":" << s->port << (s->isLocal?" (local)":""));// << service->keys);
+	NLOG("Zeroconf", "New " << name << " service discovered : " << s->name << " on " << s->host << ", " << s->ip << ":" << s->port << (s->isLocal ? " (local)" : ""));// << service->keys);
 	listeners.call(&SearcherListener::serviceAdded, s);
 }
 
@@ -157,7 +163,7 @@ void ZeroconfManager::ZeroconfSearcher::updateService(ServiceInfo* service, Stri
 
 void ZeroconfManager::ZeroconfSearcher::instanceAdded(const std::string& instance)
 {
-	Servus::Data d;
+	servus::Servus::Data d;
 	servus->getData(d);
 
 	String host = servus->get(instance, "servus_host");
@@ -166,7 +172,7 @@ void ZeroconfManager::ZeroconfSearcher::instanceAdded(const std::string& instanc
 	int port = String(servus->get(instance, "servus_port")).getIntValue();
 	String ip = String(servus->get(instance, "servus_ip"));
 
-	Strings skeys = servus->getKeys(instance);
+	servus::Strings skeys = servus->getKeys(instance);
 	HashMap<String, String> keys;
 	for (auto& k : skeys)
 	{
@@ -206,18 +212,21 @@ void ZeroconfManager::ZeroconfSearcher::instanceRemoved(const std::string& insta
 
 void ZeroconfManager::ZeroconfSearcher::run()
 {
-	servus.reset(new Servus(String(serviceName).toStdString()));
+	servus.reset(new servus::Servus(String(serviceName).toStdString()));
 	servus->addListener(this);
 
-	servus->beginBrowsing(Servus::Interface::IF_ALL);
+	servus->beginBrowsing(servus::Servus::Interface::IF_ALL);
 
 	while (!threadShouldExit())
 	{
-		servus->browse(1000);
+		{
+			ScopedLock lock(browseLock);
+			if (threadShouldExit() || servus == nullptr) return;
+			servus->browse(1000);
+		}
 		wait(500);
 	}
 
-	
 }
 
 ZeroconfManager::ServiceInfo::ServiceInfo(StringRef name, StringRef host, StringRef ip, int port, const HashMap<String, String>& _keys) :
