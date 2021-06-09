@@ -40,8 +40,11 @@ void SerialDevice::setMode(PortMode _mode)
 
 	if (_mode == LINES) //must restart to make sure thread is not hanging in readLine
 	{
-		thread.stopThread(1000);
-		thread.startThread();
+		if (thread.isThreadRunning())
+		{
+			thread.stopThread(1000);
+			thread.startThread();
+		}
 	}
 
 	mode = _mode;

@@ -1,29 +1,29 @@
 /*
   ==============================================================================
 
-    SerialModule.cpp
-    Created: 15 Mar 2017 10:17:22am
-    Author:  Ben-Portable
+	SerialModule.cpp
+	Created: 15 Mar 2017 10:17:22am
+	Author:  Ben-Portable
 
   ==============================================================================
 */
 
-SerialModule::SerialModule(const String &name) :
+SerialModule::SerialModule(const String& name) :
 	StreamingModule(name),
 	port(nullptr)
 {
-	portParam = new SerialDeviceParameter("Port", "Serial Port to connect",true);
+	portParam = new SerialDeviceParameter("Port", "Serial Port to connect", true);
 	moduleParams.addParameter(portParam);
 	baudRate = moduleParams.addIntParameter("Baud Rate", "The connection speed. Common values are 9600, 57600, 115200", 115200, 9600, 1000000);
 	portParam->openBaudRate = baudRate->intValue();
-	
+
 	isConnected = moduleParams.addBoolParameter("Is Connected", "This is checked if a serial port is connected.", false);
 	isConnected->setControllableFeedbackOnly(true);
 	isConnected->isSavable = false;
 	connectionFeedbackRef = isConnected;
-	
+
 	SerialManager::getInstance()->addSerialManagerListener(this);
-	
+
 }
 
 SerialModule::~SerialModule()
@@ -36,38 +36,41 @@ SerialModule::~SerialModule()
 	setCurrentPort(nullptr);
 }
 
-bool SerialModule::setPortStatus(bool status) {
-	bool connected = false;
-	if (port != nullptr) {
+bool SerialModule::setPortStatus(bool status) 
+{
+	if (port == nullptr) 
+	{
+		isConnected->setValue(false);
+		return false;
+	}
 
-		connected = port->isOpen();
-		
-		bool moduleEnabled = enabled->boolValue();
-		
-		if (status && !connected && moduleEnabled) { //We want to open the port, it's not already opened and the module is enabled
-		
-			port->open(baudRate->intValue());
+	bool shouldOpen = status && enabled->boolValue();
 
-			connected = port->isOpen();
-			if (!connected) {
-				NLOG(niceName, "Could not open port : " << port->info->port);
-				port = nullptr; //Avoid crash if SerialPort is busy
-			}
-			else {
-				port->setMode(streamingType->getValueDataAsEnum<SerialDevice::PortMode>());
-			}
+	if (shouldOpen)  //We want to open the port, it's not already opened and the module is enabled
+	{
+		port->setMode(streamingType->getValueDataAsEnum<SerialDevice::PortMode>()); //always set mode, port might be already open with default mode
+		if (!port->isOpen()) port->open(baudRate->intValue());
+		if (!port->isOpen())
+		{
+			NLOGERROR(niceName, "Could not open port : " << port->info->port);
+			port = nullptr; //Avoid crash if SerialPort is busy
 		}
-		else if((!moduleEnabled || !status) && connected) { //We want to close the port or the module is disabled, and it's actually opened
-			NLOG(niceName, "Port disconnected : " << port->info->port);
-			port->close();
-			connected = port->isOpen();
+		else
+		{
+			NLOG(niceName, "Port " << port->info->port << " opened, have fun.");
 		}
 	}
-	isConnected->setValue(connected);
-	return connected;
+	else  //We want to close the port or the module is disabled, and it's actually opened
+	{
+		NLOG(niceName, "Port closed : " << port->info->port);
+		if (port->isOpen()) port->close();
+	}
+
+	isConnected->setValue(port->isOpen());
+	return port->isOpen();
 }
 
-void SerialModule::setCurrentPort(SerialDevice * _port)
+void SerialModule::setCurrentPort(SerialDevice* _port)
 {
 	if (port == _port) return;
 
@@ -104,7 +107,7 @@ void SerialModule::onContainerParameterChangedInternal(Parameter* p)
 	}
 }
 
-void SerialModule::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
+void SerialModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
 {
 	StreamingModule::onControllableFeedbackUpdateInternal(cc, c);
 
@@ -114,9 +117,9 @@ void SerialModule::onControllableFeedbackUpdateInternal(ControllableContainer * 
 		if (port != nullptr && port->isOpen())
 		{
 			SerialDevice* d = portParam->getDevice();
-			if(d != nullptr) d->setBaudRate(portParam->openBaudRate);
+			if (d != nullptr) d->setBaudRate(portParam->openBaudRate);
 		}
-		
+
 	}
 	if (c == portParam)
 	{
@@ -145,7 +148,7 @@ bool SerialModule::isReadyToSend()
 
 	return true;
 }
-void SerialModule::sendMessageInternal(const String & message, var)
+void SerialModule::sendMessageInternal(const String& message, var)
 {
 	if (port == nullptr) return;
 	port->writeString(message);
@@ -158,22 +161,22 @@ void SerialModule::sendBytesInternal(Array<uint8> data, var)
 }
 
 
-void SerialModule::portOpened(SerialDevice *)
+void SerialModule::portOpened(SerialDevice*)
 {
 	serialModuleListeners.call(&SerialModuleListener::portOpened);
 }
 
-void SerialModule::portClosed(SerialDevice *)
+void SerialModule::portClosed(SerialDevice*)
 {
 	serialModuleListeners.call(&SerialModuleListener::portClosed);
 }
 
-void SerialModule::portRemoved(SerialDevice *)
+void SerialModule::portRemoved(SerialDevice*)
 {
 	setCurrentPort(nullptr);
 }
 
-void SerialModule::serialDataReceived(const var & data)
+void SerialModule::serialDataReceived(const var& data)
 {
 	switch (port->mode)
 	{
@@ -194,7 +197,7 @@ void SerialModule::serialDataReceived(const var & data)
 		{
 			NLOGWARNING(niceName, "Wrong data type detected, skipping");
 		}
-	break;
+		break;
 
 	}
 }
@@ -209,18 +212,18 @@ var SerialModule::getJSONData()
 void SerialModule::loadJSONDataInternal(var data)
 {
 	StreamingModule::loadJSONDataInternal(data);
-	lastOpenedPortID = data.getProperty("portID","");
+	lastOpenedPortID = data.getProperty("portID", "");
 }
 
 void SerialModule::setupModuleFromJSONData(var data)
 {
 	if (data.hasProperty("vidFilter")) portParam->vidFilter = data.getDynamicObject()->getProperty("vidFilter").toString().getHexValue32();
 	if (data.hasProperty("pidFilter")) portParam->pidFilter = data.getDynamicObject()->getProperty("pidFilter").toString().getHexValue32();
-	
+
 	StreamingModule::setupModuleFromJSONData(data);
 }
 
-void SerialModule::portAdded(SerialDeviceInfo * info)
+void SerialModule::portAdded(SerialDeviceInfo* info)
 {
 	if (port == nullptr && lastOpenedPortID == info->deviceID)
 	{
@@ -228,7 +231,7 @@ void SerialModule::portAdded(SerialDeviceInfo * info)
 	}
 }
 
-void SerialModule::portRemoved(SerialDeviceInfo * p)
+void SerialModule::portRemoved(SerialDeviceInfo* p)
 {
-	if(port != nullptr && port->info == p) setCurrentPort(nullptr);
+	if (port != nullptr && port->info == p) setCurrentPort(nullptr);
 }
