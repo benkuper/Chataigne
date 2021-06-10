@@ -1,4 +1,3 @@
-#include "StreamDeckModule.h"
 /*
   ==============================================================================
 
@@ -30,6 +29,7 @@ StreamDeckModule::StreamDeckModule(const String& name) :
 
 	colorsCC.saveAndLoadRecursiveData = true;
 	imagesCC.saveAndLoadRecursiveData = true;
+	textsCC.saveAndLoadRecursiveData = true;
 
 	moduleParams.addChildControllableContainer(&colorsCC);
 	moduleParams.addChildControllableContainer(&imagesCC);
