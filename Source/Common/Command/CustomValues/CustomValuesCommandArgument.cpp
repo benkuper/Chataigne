@@ -88,31 +88,38 @@ void CustomValuesCommandArgument::linkToTemplate(CustomValuesCommandArgument * t
 	{
 		linkedTemplate->param->removeParameterListener(this);
 		linkedTemplate->editable->removeParameterListener(this);
-		linkedTemplate->sendPrecision->removeParameterListener(this);
+		if (linkedTemplate->sendPrecision != nullptr) linkedTemplate->sendPrecision->removeParameterListener(this);
 		linkedTemplate = nullptr;
 	}
 
 	linkedTemplate = t;
 
-	if (linkedTemplate != nullptr)
+	bool noTemplate = linkedTemplate == nullptr;
+
+	if (!noTemplate)
 	{
 		linkedTemplate->param->addParameterListener(this);
 		linkedTemplate->editable->addParameterListener(this);
-		linkedTemplate->sendPrecision->addParameterListener(this);
+		if (linkedTemplate->sendPrecision != nullptr) linkedTemplate->sendPrecision->addParameterListener(this);
 		if (!templateMode) updateParameterFromTemplate();
 	}
-	
 
 	if (param != nullptr)
 	{
-		param->saveValueOnly = linkedTemplate != nullptr;
-		param->isCustomizableByUser = linkedTemplate == nullptr;
+		param->saveValueOnly = !noTemplate;
+		param->isCustomizableByUser = noTemplate;
 	}
 
-	canBeReorderedInEditor = linkedTemplate == nullptr;
-	userCanRemove = linkedTemplate == nullptr;
-	userCanDuplicate = linkedTemplate == nullptr;
-	nameCanBeChangedByUser = linkedTemplate == nullptr;
+	if (sendPrecision != nullptr)
+	{
+		sendPrecision->saveValueOnly = !noTemplate;
+		sendPrecision->isCustomizableByUser = noTemplate;
+	}
+
+	canBeReorderedInEditor = noTemplate;
+	userCanRemove = noTemplate;
+	userCanDuplicate = noTemplate;
+	nameCanBeChangedByUser = noTemplate;
 
 
 }
@@ -123,7 +130,6 @@ void CustomValuesCommandArgument::updateParameterFromTemplate()
 	{
 		bool editEnabled = !linkedTemplate->editable->boolValue();
 		param->setControllableFeedbackOnly(editEnabled);
-		if(sendPrecision != nullptr) sendPrecision->setControllableFeedbackOnly(editEnabled);
 		if(linkedTemplate->param->hasRange()) param->setRange(linkedTemplate->param->minimumValue, linkedTemplate->param->maximumValue);
 
 		if (paramLink != nullptr && linkedTemplate->paramLink != nullptr) paramLink->loadJSONData(linkedTemplate->paramLink->getJSONData());
@@ -143,6 +149,15 @@ void CustomValuesCommandArgument::updateParameterFromTemplate()
 			}
 			
 			param->resetValue();
+		}
+
+		if (sendPrecision != nullptr)
+		{
+			sendPrecision->setControllableFeedbackOnly(true);
+			EnumParameter* lesP = linkedTemplate->sendPrecision;
+			sendPrecision->clearOptions();
+			sendPrecision->addOption(lesP->getValueKey(), lesP->getValue());
+			sendPrecision->value = lesP->value;
 		}
 	}
 }
