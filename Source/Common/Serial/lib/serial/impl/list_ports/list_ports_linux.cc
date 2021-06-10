@@ -183,14 +183,8 @@ get_sysfs_info(const string& device_path)
 
         string sys_id_path = sys_device_path + "/id";
 
-        if( path_exists( sys_id_path ) ){
+        if( path_exists( sys_id_path ) )
             hardware_id = read_line( sys_id_path );
-			if(hardware_id.compare(0,3,"PNP") == 0){ //ACPI port
-				hardware_id = "ACPI=0000:" + hardware_id.substring(3, 7);
-			}else{
-				hardware_id = "PCI=" + hardware_id;
-			}
-		}
     }
 
     if( friendly_name.empty() )
