@@ -1650,11 +1650,11 @@ static const unsigned char temp_binary_data_40[] =
 "\r\n"
 "Here are some examples to get you going :\r\n"
 "\r\n"
-"local.sendGET(\"https://httpbin.org/anything?myValue1=1&myValue2=super\", \"json\", \"Content-Type: text/plain\", \"some payload\");\r\n"
-"local.sendPUT(\"https://httpbin.org/anything?myValue1=1&myValue2=super\");\r\n"
-"local.sendPATCH(\"https://httpbin.org/anything?myValue1=1&myValue2=super\");\r\n"
-"local.sendDELETE(\"https://httpbin.org/anything?myValue1=1&myValue2=super\");\r\n"
-"local.sendPOST(\"https://httpbin.org/anything\", \"myValue1\", 1, \"myValue2\", \"super\"); //After address, values are taken 2 by 2 to form a name/value pair.\r\n"
+"local.sendGET(\"anything?myValue1=1&myValue2=super\", \"json\", \"Content-Type: text/plain\", \"some payload\");\r\n"
+"local.sendPUT(\"anything?myValue1=1&myValue2=super\");\r\n"
+"local.sendPATCH(\"anything?myValue1=1&myValue2=super\");\r\n"
+"local.sendDELETE(\"anything?myValue1=1&myValue2=super\");\r\n"
+"local.sendPOST(\"anything\", \"myValue1\", 1, \"myValue2\", \"super\"); //After address, values are taken 2 by 2 to form a name/value pair.\r\n"
 "\r\n"
 "\r\n"
 "2) Or you can create an object to hold the request parameters\r\n"
@@ -4700,7 +4700,7 @@ const char* getNamedResource (const char* resourceNameUTF8, int& numBytes)
         case 0x7fffe188:  numBytes = 5536; return conditionScriptTemplate_js;
         case 0x5c8768cb:  numBytes = 1373; return filterScriptTemplate_js;
         case 0xa23dd44c:  numBytes = 4774; return genericScriptTemplate_js;
-        case 0xf15eedbb:  numBytes = 2577; return httpScriptTemplate_js;
+        case 0xf15eedbb:  numBytes = 2477; return httpScriptTemplate_js;
         case 0x01c43842:  numBytes = 1853; return midiScriptTemplate_js;
         case 0xb21f5457:  numBytes = 1415; return moduleScriptTemplate_js;
         case 0x83ff2424:  numBytes = 798; return oscScriptTemplate_js;

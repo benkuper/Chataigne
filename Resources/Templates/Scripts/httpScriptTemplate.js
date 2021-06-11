@@ -16,11 +16,11 @@ local.sendPOST(address, argName1, argValue1, argName2, argValue2); //After addre
 
 Here are some examples to get you going :
 
-local.sendGET("https://httpbin.org/anything?myValue1=1&myValue2=super", "json", "Content-Type: text/plain", "some payload");
-local.sendPUT("https://httpbin.org/anything?myValue1=1&myValue2=super");
-local.sendPATCH("https://httpbin.org/anything?myValue1=1&myValue2=super");
-local.sendDELETE("https://httpbin.org/anything?myValue1=1&myValue2=super");
-local.sendPOST("https://httpbin.org/anything", "myValue1", 1, "myValue2", "super"); //After address, values are taken 2 by 2 to form a name/value pair.
+local.sendGET("anything?myValue1=1&myValue2=super", "json", "Content-Type: text/plain", "some payload");
+local.sendPUT("anything?myValue1=1&myValue2=super");
+local.sendPATCH("anything?myValue1=1&myValue2=super");
+local.sendDELETE("anything?myValue1=1&myValue2=super");
+local.sendPOST("anything", "myValue1", 1, "myValue2", "super"); //After address, values are taken 2 by 2 to form a name/value pair.
 
 
 2) Or you can create an object to hold the request parameters
