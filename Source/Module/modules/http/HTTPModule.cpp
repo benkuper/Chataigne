@@ -328,28 +328,62 @@ void HTTPModule::sendRequestFromScript(const var::NativeFunctionArgs& args, Requ
 	ResultDataType dataType = ResultDataType::DEFAULT;
 
 	String extraHeaders = "";
+	String payload = "";
 	StringPairArray requestParams;
 
-	if (method == GET)
+	if (args.numArguments >= 2)
 	{
-		if (args.numArguments >= 2)
+		if (args.arguments[1].isObject())
 		{
-			String dataTypeString = args.arguments[1].toString().toLowerCase();
+			var o = args.arguments[1];
+			extraHeaders = o.getProperty("extraHeaders", extraHeaders);
+
+			var pp = o.getProperty("payload", "");
+			if (pp.isObject()) payload = JSON::toString(pp, true);
+			else payload = pp.toString();
+
+			String dataTypeString = o.getProperty("dataType", "").toString().toLowerCase();
 			if (dataTypeString == jsonDataTypeId.toString()) dataType = ResultDataType::JSON;
 			else if (dataTypeString == rawDataTypeId.toString()) dataType = ResultDataType::RAW;
-			if (args.numArguments >= 3) extraHeaders = args.arguments[2].toString();
+			
+			var argArray = o.getProperty("arguments", var());
+			for (int i = 0; i < argArray.size(); i += 2)
+			{
+				if (i >= argArray.size() - 1) break;
+				requestParams.set(argArray[i], argArray[i + 1]);
+			}
 		}
-	}
-	else
-	{
-		for (int i = 1; i < args.numArguments; i += 2)
+		else
 		{
-			if (i >= args.numArguments - 1) break;
-			requestParams.set(args.arguments[i], args.arguments[i + 1]);
+			if (method == GET)
+			{
+				if (args.numArguments >= 2)
+				{
+					String dataTypeString = args.arguments[1].toString().toLowerCase();
+					if (dataTypeString == jsonDataTypeId.toString()) dataType = ResultDataType::JSON;
+					else if (dataTypeString == rawDataTypeId.toString()) dataType = ResultDataType::RAW;
+					if (args.numArguments >= 3) extraHeaders = args.arguments[2].toString();
+					if (args.numArguments >= 4)
+					{
+						var pp = args.arguments[3];
+						if (pp.isObject()) payload = JSON::toString(pp, true);
+						else payload = pp.toString();
+					}
+				}
+			}
+			else
+			{
+				for (int i = 1; i < args.numArguments; i += 2)
+				{
+					if (i >= args.numArguments - 1) break;
+					requestParams.set(args.arguments[i], args.arguments[i + 1]);
+				}
+			}
 		}
 	}
+	
 
-	sendRequest(args.arguments[0].toString(), method, dataType, requestParams, extraHeaders);
+	sendRequest(args.arguments[0].toString(), method, dataType, requestParams, extraHeaders, payload);
 	return;
 }
 
