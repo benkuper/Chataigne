@@ -17,6 +17,7 @@ CommandChooserUI::CommandChooserUI(CommandContext _context, bool multiplexMode) 
 	multiplexMode(multiplexMode),
 	lockedModule(nullptr),
 	commandIsSet(false),
+	commandIsGhost(false),
 	noTargetText("[Click to select a command]")
 {
 	setInterceptsMouseClicks(true, true);
@@ -33,8 +34,6 @@ CommandChooserUI::CommandChooserUI(CommandContext _context, bool multiplexMode) 
 	label.setInterceptsMouseClicks(false, false);
 	label.setText(noTargetText, dontSendNotification);
 	addAndMakeVisible(label);
-
-
 }
 
 CommandChooserUI::~CommandChooserUI()
@@ -44,7 +43,7 @@ CommandChooserUI::~CommandChooserUI()
 void CommandChooserUI::paint(Graphics& g)
 {
 
-	Colour c = commandIsSet ? GREEN_COLOR : NORMAL_COLOR;
+	Colour c = commandIsSet ? (commandIsGhost ? RED_COLOR : GREEN_COLOR) : NORMAL_COLOR;
 	if (isMouseOver()) c = c.brighter();
 
 	g.setGradientFill(ColourGradient(c.brighter(.2f), (float)getLocalBounds().getCentreX(), (float)getLocalBounds().getCentreY(), c.darker(), 2.f, 2.f, true));
@@ -60,10 +59,11 @@ void CommandChooserUI::resized()
 }
 
 
-void CommandChooserUI::setLabel(const String& text)
+void CommandChooserUI::setLabel(const String& text, bool ghostMode)
 {
 	label.setText(text.isNotEmpty() ? text : noTargetText, dontSendNotification);
 	commandIsSet = text.isNotEmpty();
+	commandIsGhost = ghostMode;
 	repaint();
 }
 

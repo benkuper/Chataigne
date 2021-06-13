@@ -20,6 +20,7 @@ BaseCommandHandler::BaseCommandHandler(const String & name, CommandContext _cont
 	trigger(nullptr),
 	handlerNotifier(5)
 {
+	showWarningInUI = true;
 	if (!isMultiplexed())
 	{
 		trigger = addTrigger("Trigger", "Trigger this consequence");

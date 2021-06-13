@@ -51,9 +51,20 @@ void BaseCommandHandlerEditor::resizedInternalHeaderItemInternal(Rectangle<int>&
 void BaseCommandHandlerEditor::updateChooserLabel()
 {
 	if (inspectable.wasObjectDeleted()) return;
-	if (handler->command == nullptr || handler->commandDefinition == nullptr) return;
 
-	chooser.setLabel(handler->command->module->niceName + " > " + handler->commandDefinition->commandType);
+	String t = "";
+	bool ghostMode = false;
+	if (handler->command != nullptr || handler->commandDefinition != nullptr)
+	{
+		t = handler->command->module->niceName + " > " + handler->commandDefinition->commandType;
+	}
+	else if (handler->ghostCommandName.isNotEmpty())
+	{
+		ghostMode = true;
+		t = "### " + handler->ghostModuleName + " > " + handler->ghostCommandName;
+	}
+
+	chooser.setLabel(t, ghostMode);
 	chooser.repaint();
 }
 

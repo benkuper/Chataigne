@@ -30,6 +30,7 @@ public:
 	Module * lockedModule;
 
 	bool commandIsSet;
+	bool commandIsGhost;
 	String noTargetText;
 	Label label;
 	std::unique_ptr<ImageButton> targetBT;
@@ -37,7 +38,7 @@ public:
 	void paint(Graphics &g) override;
 	void resized() override;
 
-	void setLabel(const String &text);
+	void setLabel(const String &text, bool ghostMode = false);
 
 	virtual void showPopupAndGetDefinition();//can be overriden to get specific PopupMenu
 	void mouseDown(const MouseEvent &e) override;
