@@ -1,3 +1,4 @@
+#include "ScriptFilter.h"
 /*
   ==============================================================================
 
@@ -11,10 +12,12 @@
 String ScriptFilter::scriptTemplate = "";
 
 ScriptFilter::ScriptFilter(var params, Multiplex* multiplex) :
-	MappingFilter(getTypeString(),params, multiplex)
+	MappingFilter(getTypeString(),params, multiplex),
+	script(this, false, false)
 {
-	filterParams.addChildControllableContainer(&script);
+	script.editorCanBeCollapsed = false;
 
+	filterParams.addChildControllableContainer(&script);
 
 	if (scriptTemplate.isEmpty()) scriptTemplate = ChataigneAssetManager::getInstance()->getScriptTemplateBundle(StringArray("generic","filter"));
 	script.scriptTemplate = &scriptTemplate;
@@ -22,6 +25,12 @@ ScriptFilter::ScriptFilter(var params, Multiplex* multiplex) :
 
 ScriptFilter::~ScriptFilter()
 {
+}
+
+void ScriptFilter::onContainerParameterChangedInternal(Parameter* p)
+{
+	if (p == enabled) script.forceDisabled = !enabled->boolValue();
+	MappingFilter::onContainerParameterChangedInternal(p);
 }
 
 MappingFilter::ProcessResult  ScriptFilter::processInternal(Array<Parameter*> inputs, int multiplexIndex)

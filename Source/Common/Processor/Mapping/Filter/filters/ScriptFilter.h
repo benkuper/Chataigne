@@ -20,6 +20,8 @@ public:
 	static String scriptTemplate;
 	Script script;
 
+	void onContainerParameterChangedInternal(Parameter* p) override;
+
 	ProcessResult processInternal(Array<Parameter *> inputs, int multiplexIndex) override;
 
 	var getJSONData() override;
