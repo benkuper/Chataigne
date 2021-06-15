@@ -62,6 +62,9 @@ public:
 	void itemAdded(Module * m) override;
 	void itemAdded(CommandTemplate * t) override;
 
+
+	static var setCommandFromScript(const var::NativeFunctionArgs& a);
+
 	class CommandHandlerListener
 	{
 	public:

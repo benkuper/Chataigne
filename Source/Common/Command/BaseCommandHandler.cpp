@@ -26,6 +26,8 @@ BaseCommandHandler::BaseCommandHandler(const String & name, CommandContext _cont
 		trigger = addTrigger("Trigger", "Trigger this consequence");
 		trigger->hideInEditor = true;
 	}
+
+	scriptObject.setMethod("setCommand", &BaseCommandHandler::setCommandFromScript);
 }
 
 BaseCommandHandler::~BaseCommandHandler()
@@ -230,6 +232,25 @@ void BaseCommandHandler::itemAdded(CommandTemplate * t)
 		Module * m = ModuleManager::getInstance()->getItemWithName(ghostModuleName);
 		if(m != nullptr) setCommand(m->getCommandDefinitionFor(ghostCommandMenuPath, ghostCommandName));
 	}
+}
+
+var BaseCommandHandler::setCommandFromScript(const var::NativeFunctionArgs& a)
+{
+	BaseCommandHandler* h = getObjectFromJS<BaseCommandHandler>(a);
+	
+	if (h == nullptr) return var();
+	if (!checkNumArgs("Command", a, 3)) return var();
+	
+	Module* m = ModuleManager::getInstance()->getModuleWithName(a.arguments[0].toString());
+	if (m != nullptr)
+	{
+		String menuPath = a.arguments[1].toString();
+		String commandType = a.arguments[2].toString();
+		h->setCommand(m->getCommandDefinitionFor(menuPath, commandType));
+		return h->command->getScriptObject();
+	}
+
+	return var();
 }
 
 InspectableEditor * BaseCommandHandler::getEditor(bool isRoot)
