@@ -96,8 +96,8 @@ MappingFilter::ProcessResult SimpleConversionFilter::processSingleParameterInter
 
 	case EXTRACT:
 	{
-		out->setValue(convertValue(source, source->value[(int)retargetComponent->getValueData()], multiplexIndex));
-		DBG("Extracted out value : " << out->floatValue());
+		int index = (int)retargetComponent->getValueData();
+		if (index < source->value.size()) out->setValue(convertValue(source, source->value[index], multiplexIndex));
 	}
 	break;
 
@@ -105,8 +105,12 @@ MappingFilter::ProcessResult SimpleConversionFilter::processSingleParameterInter
 	{
 		var val = var();
 		for (int i = 0; i < out->value.size(); ++i) val.append(0);
-		val[(int)retargetComponent->getValueData()] = convertValue(source, source->getValue(), multiplexIndex);
-		out->setValue(val);
+		int index = (int)retargetComponent->getValueData();
+		if (index < val.size())
+		{
+			val[index] = convertValue(source, source->getValue(), multiplexIndex);
+			out->setValue(val);
+		}
 	}
 	break;
 
