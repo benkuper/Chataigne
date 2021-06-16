@@ -19,10 +19,15 @@ public:
 	~MetronomeModule();
 
 	BoolParameter * tick;
-	FloatParameter * frequency;
+
+	enum MetroMode { FREQUENCY, TIME, BPM };
+	EnumParameter* mode;
+	FloatParameter * freqTimeBpm;
 	FloatParameter * onTime;
 	FloatParameter * random;
 	Random rnd;
+
+	void updateFreqParam();
 
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 

@@ -10,17 +10,22 @@
 
 MetronomeModule::MetronomeModule() :
 	Module(getTypeString()),
-	Thread("Metronome")
+	Thread("Metronome"),
+	freqTimeBpm(nullptr)
 {
 	setupIOConfiguration(true, false);
 
-	frequency = moduleParams.addFloatParameter("Frequency", "Frequency of the timer, in Hz (the greater the value, the faster the tempo)", 1, 0.0001f, 100);
+	mode = moduleParams.addEnumParameter("Mode", "The way to set the frequency");
+	mode->addOption("Frequency", FREQUENCY)->addOption("Time", TIME)->addOption("BPM", BPM);
+
 	onTime = moduleParams.addFloatParameter("ON Time", "Relative amount of time the metronome stays valid (depending on the frequency) when triggered", .5f, 0, 1);
 	random = moduleParams.addFloatParameter("Randomness", "Amount of randomness in each call", 0, 0, 1);
 
 	tick = valuesCC.addBoolParameter("Tick", "When the metronome is ticking", false);
 
 	for (auto &c : valuesCC.controllables) c->isControllableFeedbackOnly = true;
+
+	updateFreqParam();
 
 	startThread();
 }
@@ -30,12 +35,42 @@ MetronomeModule::~MetronomeModule()
 	stopThread(1000);
 }
 
+void MetronomeModule::updateFreqParam()
+{
+	if (freqTimeBpm != nullptr)
+	{
+		moduleParams.removeControllable(freqTimeBpm);
+		freqTimeBpm = nullptr;
+	}
+
+	MetroMode m = mode->getValueDataAsEnum<MetroMode>();
+	switch (m)
+	{
+	case FREQUENCY:
+		freqTimeBpm = moduleParams.addFloatParameter("Frequency", "Frequency of the timer, in Hz (the greater the value, the faster the tempo)", 1, 0.0001f, 100);
+		break;
+
+	case TIME:
+		freqTimeBpm = moduleParams.addFloatParameter("Time", "Time between each ticks (the greater the value, the lower the tempo)", 1, .001f);
+		freqTimeBpm->defaultUI = FloatParameter::TIME;
+		break;
+
+	case BPM:
+		freqTimeBpm = moduleParams.addFloatParameter("BPM", "Beats per minutes (the greater the value, the faster the tempo)", 60, 1);
+		break;
+
+	}
+	moduleParams.controllables.move(moduleParams.controllables.indexOf(freqTimeBpm), moduleParams.controllables.indexOf(mode)+1);
+	queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
+}
+
 void MetronomeModule::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
 {
 	Module::onControllableFeedbackUpdateInternal(cc, c);
 
-	if (c == frequency || c == random)
+	if (c == freqTimeBpm || c == random || c == mode)
 	{
+		if (c == mode) updateFreqParam();
 		notify(); //forces the thread to update
 	}
 }
@@ -46,8 +81,31 @@ void MetronomeModule::run()
 
 	Random r;
 	while (!threadShouldExit())
-	{
-		float freq = frequency->floatValue();
+	{	
+		if (freqTimeBpm == nullptr)
+		{
+			wait(10);
+			continue;
+		}
+
+		float freq = 1;
+		
+		MetroMode m = mode->getValueDataAsEnum<MetroMode>();
+		switch (m)
+		{
+		case FREQUENCY:
+			freq = freqTimeBpm->floatValue();
+			break;
+
+		case TIME:
+			freq = 1.0f / freqTimeBpm->floatValue();
+			break;
+
+		case BPM:
+			freq = freqTimeBpm->floatValue() / 60.f;
+			break;
+		}
+
 		if(random->floatValue() > 0) freq += (r.nextFloat() * 2 - 1) * random->floatValue();
 
 		//on phase
