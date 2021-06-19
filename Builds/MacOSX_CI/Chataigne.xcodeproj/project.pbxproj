@@ -318,6 +318,7 @@
 		43FF3B8ECBF69AB0CED363AE /* ../../Source/Module/modules/osc/live/LiveOSCModule.cpp */ /* LiveOSCModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LiveOSCModule.cpp; path = ../../Source/Module/modules/osc/live/LiveOSCModule.cpp; sourceTree = SOURCE_ROOT; };
 		4413B1B6C315E4E1F1CC0BC3 /* ../../Source/Module/modules/common/streaming/StreamingModule.cpp */ /* StreamingModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = StreamingModule.cpp; path = ../../Source/Module/modules/common/streaming/StreamingModule.cpp; sourceTree = SOURCE_ROOT; };
 		44595F730394CFE8407FDC81 /* ../../Source/Common/Processor/Multiplex/ui/MultiplexUI.cpp */ /* MultiplexUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MultiplexUI.cpp; path = ../../Source/Common/Processor/Multiplex/ui/MultiplexUI.cpp; sourceTree = SOURCE_ROOT; };
+		446C48CFB7279D722A57242C /* ../../Source/Common/Processor/Mapping/Filter/filters/TimeFilter.cpp */ /* TimeFilter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TimeFilter.cpp; path = ../../Source/Common/Processor/Mapping/Filter/filters/TimeFilter.cpp; sourceTree = SOURCE_ROOT; };
 		45293A26D5C1BC84EF82F6AE /* ../../Source/Module/ModuleFactory.h */ /* ModuleFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ModuleFactory.h; path = ../../Source/Module/ModuleFactory.h; sourceTree = SOURCE_ROOT; };
 		453B3234420A19837BF931C3 /* ../../JuceLibraryCode/include_juce_dsp.mm */ /* include_juce_dsp.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_dsp.mm; path = ../../JuceLibraryCode/include_juce_dsp.mm; sourceTree = SOURCE_ROOT; };
 		4627DD7B737C5E8FF7A54B42 /* ../../Source/Module/Routing/ModuleRouterController.h */ /* ModuleRouterController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ModuleRouterController.h; path = ../../Source/Module/Routing/ModuleRouterController.h; sourceTree = SOURCE_ROOT; };
@@ -347,6 +348,7 @@
 		4CE96507F1DE9FCD311D77C0 /* ../../Source/Module/modules/common/streaming/commands/SendStreamRawDataCommand.cpp */ /* SendStreamRawDataCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SendStreamRawDataCommand.cpp; path = ../../Source/Module/modules/common/streaming/commands/SendStreamRawDataCommand.cpp; sourceTree = SOURCE_ROOT; };
 		4D147E8D071C0C93CB433813 /* ../../JuceLibraryCode/include_juce_timeline.cpp */ /* include_juce_timeline.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_juce_timeline.cpp; path = ../../JuceLibraryCode/include_juce_timeline.cpp; sourceTree = SOURCE_ROOT; };
 		4D18D702523B6FF2C0AB90DE /* ../../Source/StateMachine/StateManager.h */ /* StateManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StateManager.h; path = ../../Source/StateMachine/StateManager.h; sourceTree = SOURCE_ROOT; };
+		4D354A7C9AA28CC752B3229B /* ../../Source/Common/Processor/Mapping/Filter/filters/number/OneEuroFilter.cpp */ /* OneEuroFilter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = OneEuroFilter.cpp; path = ../../Source/Common/Processor/Mapping/Filter/filters/number/OneEuroFilter.cpp; sourceTree = SOURCE_ROOT; };
 		4DBD7E60443674BDA016F673 /* ../../Source/Module/modules/system/os/commands/OSExecCommand.cpp */ /* OSExecCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = OSExecCommand.cpp; path = ../../Source/Module/modules/system/os/commands/OSExecCommand.cpp; sourceTree = SOURCE_ROOT; };
 		4DE022C03AD2CDF75870B6DE /* ../../Source/Common/DMX/DMXManager.cpp */ /* DMXManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DMXManager.cpp; path = ../../Source/Common/DMX/DMXManager.cpp; sourceTree = SOURCE_ROOT; };
 		4DFD263C9E82F18D49C8E12F /* ../../Resources/Modules/UDP.png */ /* UDP.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = UDP.png; path = ../../Resources/Modules/UDP.png; sourceTree = SOURCE_ROOT; };
@@ -596,6 +598,7 @@
 		A3A75BA91D31B2C71CCA4CBD /* ../../Source/Module/modules/osc/dlight/DLightModule.cpp */ /* DLightModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DLightModule.cpp; path = ../../Source/Module/modules/osc/dlight/DLightModule.cpp; sourceTree = SOURCE_ROOT; };
 		A3BEB8CF6471FD37FEFED3F9 /* ../../Source/Module/modules/oscquery/generic/ui/OSCQueryModuleEditor.h */ /* OSCQueryModuleEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OSCQueryModuleEditor.h; path = ../../Source/Module/modules/oscquery/generic/ui/OSCQueryModuleEditor.h; sourceTree = SOURCE_ROOT; };
 		A48ADB0BCE07CA8C68387D27 /* ../../Source/Module/modules/gpio/commands/GPIOCommands.cpp */ /* GPIOCommands.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = GPIOCommands.cpp; path = ../../Source/Module/modules/gpio/commands/GPIOCommands.cpp; sourceTree = SOURCE_ROOT; };
+		A49C324D7AAF7C3F83973E3F /* ../../Source/Common/Processor/Mapping/Filter/filters/TimeFilter.h */ /* TimeFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TimeFilter.h; path = ../../Source/Common/Processor/Mapping/Filter/filters/TimeFilter.h; sourceTree = SOURCE_ROOT; };
 		A50FF9242BE570B75142ACEE /* ../../Source/TimeMachine/TimeMachineIncludes.h */ /* TimeMachineIncludes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TimeMachineIncludes.h; path = ../../Source/TimeMachine/TimeMachineIncludes.h; sourceTree = SOURCE_ROOT; };
 		A58C745D1F37BDB174FAB845 /* ../../Resources/crash.png */ /* crash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = crash.png; path = ../../Resources/crash.png; sourceTree = SOURCE_ROOT; };
 		A60987F239C18CD85E333A80 /* ../../Source/MainComponent.h */ /* MainComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MainComponent.h; path = ../../Source/MainComponent.h; sourceTree = SOURCE_ROOT; };
@@ -883,6 +886,7 @@
 		FF5E71729960E873EBC84B3F /* ../../Source/CustomVariables/CVGroupManager.cpp */ /* CVGroupManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CVGroupManager.cpp; path = ../../Source/CustomVariables/CVGroupManager.cpp; sourceTree = SOURCE_ROOT; };
 		FF6C0CA4ED55813CDCC96C47 /* ../../Source/Module/modules/audio/analysis/ui/FFTAnalyzerEditor.cpp */ /* FFTAnalyzerEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FFTAnalyzerEditor.cpp; path = ../../Source/Module/modules/audio/analysis/ui/FFTAnalyzerEditor.cpp; sourceTree = SOURCE_ROOT; };
 		FF75DCCDA969DCD9F36F840C /* ../../Source/Common/Command/ui/BaseCommandHandlerManagerEditor.h */ /* BaseCommandHandlerManagerEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BaseCommandHandlerManagerEditor.h; path = ../../Source/Common/Command/ui/BaseCommandHandlerManagerEditor.h; sourceTree = SOURCE_ROOT; };
+		FFA037A6637A8E3EBB8670C5 /* ../../Source/Common/Processor/Mapping/Filter/filters/number/OneEuroFilter.h */ /* OneEuroFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OneEuroFilter.h; path = ../../Source/Common/Processor/Mapping/Filter/filters/number/OneEuroFilter.h; sourceTree = SOURCE_ROOT; };
 		FFBCF506733331DD868A68EE /* ../../Source/Common/Serial/SerialManager.cpp */ /* SerialManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SerialManager.cpp; path = ../../Source/Common/Serial/SerialManager.cpp; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -1554,6 +1558,8 @@
 		4545E10ABE8AF2EF652D28E0 /* filters */ = {
 			isa = PBXGroup;
 			children = (
+				446C48CFB7279D722A57242C,
+				A49C324D7AAF7C3F83973E3F,
 				1CDBBCAE5C4A0BFBBEE3A1EA,
 				C7C1CACBB0573C0418FED20D,
 				4F59D1E1AEFE8D974F187BE6,
@@ -2803,6 +2809,8 @@
 				E45ADC056D20AB660810AC6D,
 				29D04BA49B995123DB200E5E,
 				4AB737A3CFA4289120C76020,
+				4D354A7C9AA28CC752B3229B,
+				FFA037A6637A8E3EBB8670C5,
 				53784EA2F05A99905184F791,
 				2E93B8A7CF9DCDC3A41DEA0C,
 				9CB8705EAE553E539485DE5D,

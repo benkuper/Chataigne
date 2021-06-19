@@ -309,6 +309,9 @@
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\ui\MappingFilterEditor.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\TimeFilter.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\condition\ConditionFilter.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -328,6 +331,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\MathFilter.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\OneEuroFilter.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\SimpleRemapFilter.cpp">
@@ -3893,6 +3899,7 @@
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\MappingFilter.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\MappingFilterManager.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\ui\MappingFilterEditor.h"/>
+    <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\TimeFilter.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\condition\ConditionFilter.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\CropFilter.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\CurveMapFilter.h"/>
@@ -3900,6 +3907,7 @@
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\InverseFilter.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\LagFilter.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\MathFilter.h"/>
+    <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\OneEuroFilter.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\SimpleRemapFilter.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\SimpleSmoothFilter.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ConversionParamValueLink.h"/>

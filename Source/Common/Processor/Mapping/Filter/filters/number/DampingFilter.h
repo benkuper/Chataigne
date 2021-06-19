@@ -11,7 +11,7 @@
 #pragma once
 
 class DampingFilter :
-	public MappingFilter
+	public TimeFilter
 {
 public:
 	DampingFilter(var params, Multiplex* multiplex);
@@ -22,12 +22,13 @@ public:
 
 	HashMap<Parameter *, var> previousSpeedsMap;
 
-	double timeAtLastUpdate;
+	Array<double> timesAtLastUpdate; //multiplexed
+	Array<double> deltaTimes; //multiplexed
 	const float precision = .00001f;
 
 	void setupParametersInternal(int multiplexIndex, bool rangeOnly) override;
 	Parameter* setupSingleParameterInternal(Parameter* source, int multiplexIndex, bool rangeOnly) override;
-	ProcessResult processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;
+	virtual ProcessResult processSingleParameterTimeInternal(Parameter* source, Parameter* out, int multiplexIndex, double deltaTime) override;
 
 	String getTypeString() const override { return "Damping"; }
 };

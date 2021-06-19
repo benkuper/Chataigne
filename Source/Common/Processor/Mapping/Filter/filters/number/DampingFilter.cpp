@@ -9,14 +9,12 @@
 */
 
 DampingFilter::DampingFilter(var params, Multiplex* multiplex) :
-	MappingFilter(getTypeString(), params, multiplex)
+	TimeFilter(getTypeString(), params, multiplex)
 {
 	processOnSameValue = true;
 
 	force = filterParams.addFloatParameter("Force", "Attraction force", .6f, 0, 1);
 	friction = filterParams.addFloatParameter("Friction", "Friction to apply to the attraction force", .2f, 0, 1);
-
-	timeAtLastUpdate = Time::getMillisecondCounter() / 1000.0;
 
 	filterTypeFilters.add(Controllable::BOOL, Controllable::FLOAT, Controllable::INT, Controllable::COLOR, Controllable::POINT2D, Controllable::POINT3D);
 }
@@ -30,7 +28,7 @@ DampingFilter::~DampingFilter()
 void DampingFilter::setupParametersInternal(int multiplexIndex, bool rangeOnly)
 {
 	if(!rangeOnly) previousSpeedsMap.clear();
-	MappingFilter::setupParametersInternal(multiplexIndex, rangeOnly);
+	TimeFilter::setupParametersInternal(multiplexIndex, rangeOnly);
 }
 
 Parameter* DampingFilter::setupSingleParameterInternal(Parameter* source, int multiplexIndex, bool rangeOnly)
@@ -45,7 +43,7 @@ Parameter* DampingFilter::setupSingleParameterInternal(Parameter* source, int mu
 	}
 	else
 	{
-		p = MappingFilter::setupSingleParameterInternal(source, multiplexIndex, rangeOnly);
+		p = TimeFilter::setupSingleParameterInternal(source, multiplexIndex, rangeOnly);
 	}
 
 	if (!rangeOnly)
@@ -65,22 +63,18 @@ Parameter* DampingFilter::setupSingleParameterInternal(Parameter* source, int mu
 	return p;
 }
 
-MappingFilter::ProcessResult DampingFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
+MappingFilter::ProcessResult DampingFilter::processSingleParameterTimeInternal(Parameter* source, Parameter* out, int multiplexIndex, double deltaTime)
 {
 	if (!previousSpeedsMap.contains(source)) return UNCHANGED;
 
 	var oldVal = out->getValue();
 	var newVal = source->getValue();
 
-	double curTime = Time::getMillisecondCounter() / 1000.0;
 
 	if (source->checkValueIsTheSame(oldVal, newVal))
 	{
-		timeAtLastUpdate = curTime;
 		return UNCHANGED;
 	}
-
-	double deltaTime = jmax<double>(curTime - timeAtLastUpdate, 0);
 
 	float forceVal = (float)filterParams.getLinkedValue(force, multiplexIndex) * 100;
 	float frictionVal = (float)filterParams.getLinkedValue(friction, multiplexIndex) * 100;
@@ -126,9 +120,6 @@ MappingFilter::ProcessResult DampingFilter::processSingleParameterInternal(Param
 
 		previousSpeedsMap.set(source, targetSpeedVal);
 	}
-	
-
-	timeAtLastUpdate = curTime;
 
 	return CHANGED;
 }

@@ -1645,6 +1645,9 @@
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\ui\MappingFilterEditor.cpp">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\ui</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\TimeFilter.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\condition\ConditionFilter.cpp">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\condition</Filter>
     </ClCompile>
@@ -1664,6 +1667,9 @@
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\number</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\MathFilter.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\number</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\OneEuroFilter.cpp">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\number</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\SimpleRemapFilter.cpp">
@@ -5664,6 +5670,9 @@
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\ui\MappingFilterEditor.h">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\ui</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\TimeFilter.h">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\condition\ConditionFilter.h">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\condition</Filter>
     </ClInclude>
@@ -5683,6 +5692,9 @@
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\number</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\MathFilter.h">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\number</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\OneEuroFilter.h">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\number</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\SimpleRemapFilter.h">

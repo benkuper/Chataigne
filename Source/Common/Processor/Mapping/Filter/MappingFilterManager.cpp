@@ -34,6 +34,7 @@ MappingFilterManager::MappingFilterManager(Multiplex * multiplex) :
 		
 	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<SimpleSmoothFilter>("Time", "Smooth", multiplex));
 	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<DampingFilter>("Time", "Damping", multiplex));
+	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<OneEuroFilter>("Time", "One Euro", multiplex));
 	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<LagFilter>("Time", "FPS", multiplex));
 
 	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<ColorShiftFilter>("Color", ColorShiftFilter::getTypeStringStatic(), multiplex));

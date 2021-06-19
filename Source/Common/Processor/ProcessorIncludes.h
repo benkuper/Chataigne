@@ -69,6 +69,7 @@
 #include "Mapping/Filter/filters/conversion/ConvertedParameterManager.h"
 #include "Mapping/Filter/filters/conversion/ConversionFilter.h"
 
+#include "Mapping/Filter/filters/TimeFilter.h"
 #include "Mapping/Filter/filters/number/CropFilter.h"
 #include "Mapping/Filter/filters/number/DampingFilter.h"
 #include "Mapping/Filter/filters/number/InverseFilter.h"
@@ -77,6 +78,7 @@
 #include "Mapping/Filter/filters/number/SimpleRemapFilter.h"
 #include "Mapping/Filter/filters/number/CurveMapFilter.h"
 #include "Mapping/Filter/filters/number/SimpleSmoothFilter.h"
+#include "Mapping/Filter/filters/number/OneEuroFilter.h"
 
 
 #include "Mapping/Filter/ui/MappingFilterEditor.h"

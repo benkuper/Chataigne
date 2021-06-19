@@ -84,6 +84,8 @@ void ConversionFilterEditor::rebuildSourcesUI()
 	Array<WeakReference<Parameter>> previewSourceParams = cf->sourceParams[cf->getPreviewIndex()];
 	for (auto& s : previewSourceParams)
 	{
+		if (s == nullptr || s.wasObjectDeleted()) continue;
+
 		ConversionSourceParameterUI* sui = new ConversionSourceParameterUI(s);
 		sui->addMouseListener(this, true);
 		addAndMakeVisible(sui);
@@ -97,7 +99,6 @@ void ConversionFilterEditor::rebuildSourcesUI()
 
 void ConversionFilterEditor::rebuildLinksUI()
 {
-	{
 		GenericScopedLock lock(linksUI.getLock());
 
 		for (auto& l : linksUI) removeChildComponent(l);

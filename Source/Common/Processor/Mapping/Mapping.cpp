@@ -102,6 +102,7 @@ void Mapping::checkFiltersNeedContinuousProcess()
 	}
 
 	updateRate->setEnabled(need);
+	if(updateRate->enabled) sendOnOutputChangeOnly->setValue(true);
 }
 
 void Mapping::updateMappingChain(MappingFilter* afterThisFilter, bool processAfter, bool rangeOnly)
