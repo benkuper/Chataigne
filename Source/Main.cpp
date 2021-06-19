@@ -44,6 +44,11 @@ void ChataigneApplication::afterInit()
 
 	DashboardManager::getInstance()->setupDownloadURL("http://benjamin.kuperberg.fr/download/dashboard/dashboard.php?folder=dashboard");
 
+	if (mainWindow != nullptr)
+	{
+		mainWindow->setMenuBarComponent(new ChataigneMenuBarComponent((MainContentComponent*)mainComponent.get(), (ChataigneEngine*)engine.get()));
+	}
+
 }
 
 void ChataigneApplication::shutdown()

@@ -9,9 +9,44 @@
 #pragma once
 
 #include "JuceHeader.h"
-#
+
 ApplicationProperties& getAppProperties();
 ApplicationCommandManager& getCommandManager();
+
+class MainContentComponent;
+class ChataigneEngine;
+
+class ChataigneMenuBarComponent :
+    public Component,
+    public Thread,
+    public Timer
+{
+public:
+    ChataigneMenuBarComponent(MainContentComponent * mainComp, ChataigneEngine * engine);
+    ~ChataigneMenuBarComponent();
+
+#if !JUCE_MAC
+    MenuBarComponent menuBarComp;
+#endif
+
+    struct DonationData
+    {
+        String name;
+        bool isSponsor;
+    };
+
+    OwnedArray<DonationData> sponsors;
+    bool sponsorsLoaded;
+    DonationData * curSponsor;
+
+    void paint(Graphics& g) override;
+    void resized() override;
+    
+    void timerCallback() override;
+    void run() override;
+
+};
+
 
 class MainContentComponent   : public OrganicMainContentComponent
 {
@@ -19,6 +54,7 @@ public:
     //==============================================================================
     MainContentComponent();
     ~MainContentComponent();
+    
 
 	void init() override;
 
