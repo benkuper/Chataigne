@@ -99,6 +99,7 @@ void ConversionFilterEditor::rebuildSourcesUI()
 
 void ConversionFilterEditor::rebuildLinksUI()
 {
+	{
 		GenericScopedLock lock(linksUI.getLock());
 
 		for (auto& l : linksUI) removeChildComponent(l);
