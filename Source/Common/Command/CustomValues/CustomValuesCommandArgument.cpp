@@ -156,8 +156,8 @@ void CustomValuesCommandArgument::updateParameterFromTemplate()
 			sendPrecision->setControllableFeedbackOnly(true);
 			EnumParameter* lesP = linkedTemplate->sendPrecision;
 			sendPrecision->clearOptions();
-			sendPrecision->addOption(lesP->getValueKey(), lesP->getValue());
-			sendPrecision->value = lesP->value;
+			for (auto& ev : lesP->enumValues) sendPrecision->addOption(ev->key, ev->value);
+			sendPrecision->setValue(lesP->getValueKey());
 		}
 	}
 }
