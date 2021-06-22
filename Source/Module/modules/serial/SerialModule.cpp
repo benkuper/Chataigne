@@ -74,6 +74,8 @@ void SerialModule::setCurrentPort(SerialDevice* _port)
 {
 	if (port == _port) return;
 
+	setPortStatus(false);
+
 	if (port != nullptr)
 	{
 		port->removeSerialDeviceListener(this);
@@ -123,7 +125,6 @@ void SerialModule::onControllableFeedbackUpdateInternal(ControllableContainer* c
 	}
 	if (c == portParam)
 	{
-		setPortStatus(false);
 		SerialDevice* newDevice = portParam->getDevice();
 		SerialDevice* prevPort = port;
 		setCurrentPort(newDevice);

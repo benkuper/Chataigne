@@ -29,9 +29,11 @@ DMXSerialDevice::~DMXSerialDevice()
 	setCurrentPort(nullptr);
 }
 
-bool DMXSerialDevice::setPortStatus(bool status) {
+bool DMXSerialDevice::setPortStatus(bool status)
+{
 
-	if (dmxPort == nullptr) {
+	if (dmxPort == nullptr)
+	{
 		setConnected(false);
 		return false;
 	}
@@ -73,6 +75,8 @@ void DMXSerialDevice::refreshEnabled()
 void DMXSerialDevice::setCurrentPort(SerialDevice* port)
 {
 	if (dmxPort == port) return;
+
+	setPortStatus(false);
 
 	if (dmxPort != nullptr)
 	{
@@ -118,7 +122,6 @@ void DMXSerialDevice::onContainerParameterChanged(Parameter* p)
 
 	if (p == portParam)
 	{
-		setPortStatus(false);
 		SerialDevice* newDevice = portParam->getDevice();
 		SerialDevice* prevPort = dmxPort;
 		setCurrentPort(newDevice);
