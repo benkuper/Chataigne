@@ -115,11 +115,37 @@ void ChataigneSequence::targetAudioModuleChanged(ChataigneAudioLayer* layer)
 
 void ChataigneSequence::itemAdded(SequenceLayer* layer)
 {
-	ChataigneAudioLayer* a = dynamic_cast<ChataigneAudioLayer*>(layer);
-	if (a != nullptr)
+	ChataigneAudioLayer* audioLayer = dynamic_cast<ChataigneAudioLayer*>(layer);
+	if (audioLayer != nullptr)
 	{
-		a->addAudioLayerListener(this);
-		if (a->audioModule != nullptr) updateTargetAudioLayer();
+		audioLayer->addAudioLayerListener(this);
+
+		//if already an audio module, assign it
+		if (!isCurrentlyLoadingData)
+		{
+			for (auto& i : ModuleManager::getInstance()->items)
+			{
+				AudioModule* a = dynamic_cast<AudioModule*>(i);
+				if (a != nullptr)
+				{
+					audioLayer->setAudioModule(a);
+					break;
+				}
+			}
+
+			if (audioLayer->audioModule == nullptr)
+			{
+				int result = AlertWindow::showYesNoCancelBox(AlertWindow::WarningIcon, "Sound Card Module is required", "This Audio layer needs a Sound Card module to be able to actually output sound. Do you want to create one now ?", "Yes", "No", "Cancel");
+				if (result == 1)
+				{
+					AudioModule* m = AudioModule::create();
+					ModuleManager::getInstance()->addItem(m);
+					audioLayer->setAudioModule(m);
+				}
+			}
+		}
+
+		if (audioLayer->audioModule != nullptr) updateTargetAudioLayer();
 	}
 }
 

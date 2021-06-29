@@ -18,33 +18,10 @@ ChataigneAudioLayer::ChataigneAudioLayer(ChataigneSequence* _sequence, var param
 	
 	helpID = "AudioLayer";
 
-
-	//if already an audio module, assign it
-	for (auto &i : ModuleManager::getInstance()->items)
-	{
-		AudioModule * a = dynamic_cast<AudioModule *>(i);
-		if (a != nullptr)
-		{
-			setAudioModule(a);
-			break;
-		}
-	}
-
-	//Should move that in UI stuff ?
-	if (audioModule == nullptr)
-	{
-		int result = AlertWindow::showYesNoCancelBox(AlertWindow::WarningIcon, "Sound Card Module is required", "This Audio layer needs a Sound Card module to be able to actually output sound. Do you want to create one now ?","Yes", "No", "Cancel");
-		if (result == 1)
-		{
-			AudioModule * m = AudioModule::create();
-			ModuleManager::getInstance()->addItem(m);
-			setAudioModule(m);
-		}
-	}
-
 	arm = addBoolParameter("Arm", "If checked, this will record audio and save it", false);
 	autoDisarm = addBoolParameter("Auto Disarm", "If checked, this will automatically set Arm to false when the sequence stops", false);
 
+	
 	uiHeight->setValue(80);
 }
 
