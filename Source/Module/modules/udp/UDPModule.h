@@ -20,6 +20,7 @@ public:
 	std::unique_ptr<DatagramSocket> receiver;
 	std::unique_ptr<DatagramSocket> sender;
 	DatagramSocket* proxySender; //if receiver is enabled, then proxy sender is receiver. Allows for feedback
+	BoolParameter* listenToOutputFeedback;
 
 	virtual void setupReceiver() override;
 	virtual void setupSender() override;

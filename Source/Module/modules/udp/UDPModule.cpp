@@ -14,6 +14,8 @@ UDPModule::UDPModule(const String & name, bool canHaveInput, bool canHaveOutput,
 	scriptObject.setMethod("sendTo", &UDPModule::sendBytesToFromScript);
 	scriptObject.setMethod("sendMessageTo", &UDPModule::sendMessageToFromScript);
 	
+	listenToOutputFeedback = sendCC->addBoolParameter("Listen to Feedback", "If checked, this will listen to the (randomly set) bound port of this sender. This is useful when some softwares automatically detect incoming host and port to send back messages.", false);
+
 	if(!Engine::mainEngine->isLoadingFile) setupReceiver();
 	setupSender();
 }
@@ -27,6 +29,9 @@ void UDPModule::setupReceiver()
 	clearThread();
 	clearInternal();
 
+	receiverIsBound->setValue(false);
+
+	if (!enabled->boolValue()) return;
 	if (receiveCC == nullptr) return;
 	if (!receiveCC->enabled->boolValue())
 	{
@@ -35,26 +40,24 @@ void UDPModule::setupReceiver()
 	}
 
 	receiver.reset(new DatagramSocket());
+	
+	bool syncSenderPort = sender != nullptr && sendCC != nullptr && sendCC->enabled->boolValue() && listenToOutputFeedback->boolValue();
+	receiver->setEnablePortReuse(syncSenderPort);
+
 	receiver->bindToPort(localPort->intValue());
 	receiverIsBound->setValue(receiver->getBoundPort() != -1);
 	if (receiverIsBound->boolValue())
 	{
-		receiver->setEnablePortReuse(true);
-
 		NLOG(niceName, "UDP Receiver bound to port " << localPort->intValue());
 		localPort->clearWarning();
-
-		setupSender(); //force using same port
-
+		if (syncSenderPort) setupSender();
 		startThread();
 	}
 	else
 	{
-		NLOGERROR(niceName, "UDP Receiver bound to port " << localPort->intValue());
+		NLOGERROR(niceName, "Error binding to port " << localPort->intValue());
 		localPort->setWarningMessage("Could not bind to port " + String(localPort->intValue()));
 	}
-
-
 
 	Array<IPAddress> ad;
 	IPAddress::findAllAddresses(ad);
@@ -69,12 +72,23 @@ void UDPModule::setupSender()
 {
 	sender.reset();
 	proxySender = nullptr;
+
+	if (!enabled->boolValue()) return;
 	if (sendCC == nullptr) return;
 	if (!sendCC->enabled->boolValue()) return;
 	
 	sender.reset(new DatagramSocket(true));
-	if(receiver != nullptr) sender->bindToPort(receiver->getBoundPort());
-	sender->setEnablePortReuse(true);
+
+	bool syncReceiverPort = receiver != nullptr && receiveCC != nullptr && receiveCC->enabled->boolValue() && receiverIsBound->boolValue() && listenToOutputFeedback->boolValue();
+	if (syncReceiverPort)
+	{
+		sender->setEnablePortReuse(true);
+		sender->bindToPort(receiver->getBoundPort());
+	}
+	else
+	{
+		sender->bindToPort(0);
+	}
 
 	senderIsConnected->setValue(true);
 }
