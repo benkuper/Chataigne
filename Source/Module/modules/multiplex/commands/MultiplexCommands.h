@@ -10,28 +10,21 @@
 
 #pragma once
 
-#include "../MultiplexModule.h"
-
 class MultiplexCommand :
-    public BaseCommand
+    public GenericControllableCommand
 {
 public:
 public:
 	MultiplexCommand(MultiplexModule * _module, CommandContext context, var params, Multiplex* multiplex = nullptr);
 	~MultiplexCommand();
 
-	enum Type { SET_LIST_VALUE};
-	Type type;
+	//enum Type { SET_LIST_VALUE};
+	//Type type;
 
+	//void onContainerParameterChanged(Parameter* p) override;
+	Controllable* getControllableFromTarget() override;
+	Controllable * getTargetControllableAtIndex(int multiplexIndex) override;
 
-	TargetParameter* listTarget;
-	Parameter* value;
-
-	void onContainerParameterChanged(Parameter* p) override;
-	void updateValueParameter();
-
-	void triggerInternal(int multiplexIndex) override;
-
-
+	//void triggerInternal(int multiplexIndex) override;
 	static BaseCommand* create(ControllableContainer* cc, CommandContext context, var params, Multiplex* multiplex = nullptr) { return new MultiplexCommand((MultiplexModule*)cc, context, params, multiplex); }
 };

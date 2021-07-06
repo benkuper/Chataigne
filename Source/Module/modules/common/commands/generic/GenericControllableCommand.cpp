@@ -1,3 +1,4 @@
+#include "GenericControllableCommand.h"
 /*
   ==============================================================================
 
@@ -43,7 +44,7 @@ void GenericControllableCommand::updateValueFromTarget()
 
 	if (target == nullptr) return;
 
-	Controllable* cTarget = getLinkedTargetAs<Controllable>(target, 0); //use multiplex 0 to create param, should be better
+	Controllable* cTarget = getControllableFromTarget();
 
 	if (cTarget != nullptr) value = ControllableFactory::createParameterFrom(cTarget);
 	else value = nullptr;
@@ -59,6 +60,11 @@ void GenericControllableCommand::updateValueFromTarget()
 		addParameter(value);
 		linkParamToMappingIndex(value, 0);
 	}
+}
+
+Controllable* GenericControllableCommand::getControllableFromTarget()
+{
+	return getLinkedTargetAs<Controllable>(target, 0); //use multiplex 0 to create param, should be better;
 }
 
 void GenericControllableCommand::updateOperatorOptions()
@@ -130,7 +136,7 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 {
 	if (isCurrentlyLoadingData) return;
 
-	Controllable* c = getLinkedTargetAs<Controllable>(target, multiplexIndex);
+	Controllable* c = getTargetControllableAtIndex(multiplexIndex);
 	if (c == nullptr) return;
 
 	switch (action)
@@ -223,6 +229,11 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 		c->setEnabled(value->boolValue());
 		break;
 	}
+}
+
+Controllable* GenericControllableCommand::getTargetControllableAtIndex(int multiplexIndex)
+{
+	return getLinkedTargetAs<Controllable>(target, multiplexIndex);
 }
 
 void GenericControllableCommand::linkUpdated(ParameterLink* pLink)

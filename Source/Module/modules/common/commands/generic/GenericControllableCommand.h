@@ -31,14 +31,17 @@ public:
 	var ghostValueData; // to keep when target is lost
 	var ghostOperator;
 
-	void updateValueFromTarget();
+	virtual void updateValueFromTarget();
 
-	void updateOperatorOptions();
+	virtual Controllable* getControllableFromTarget();
+
+	virtual void updateOperatorOptions();
 
 	virtual void triggerInternal(int multiplexIndex) override;
+	virtual Controllable* getTargetControllableAtIndex(int multiplexIndex);
 
-	void linkUpdated(ParameterLink* pLink) override;
-	void onContainerParameterChanged(Parameter*) override;
+	virtual void linkUpdated(ParameterLink* pLink) override;
+	virtual void onContainerParameterChanged(Parameter*) override;
 
 	virtual void loadJSONDataInternal(var data) override;
 	virtual void endLoadFile() override;
