@@ -2056,9 +2056,6 @@
     <ClCompile Include="..\..\Source\Module\modules\generic\commands\GenericAppCommand.cpp">
       <Filter>Chataigne\Source\Module\modules\generic\commands</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\generic\commands\GenericControllableCommand.cpp">
-      <Filter>Chataigne\Source\Module\modules\generic\commands</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\generic\commands\GenericScriptCommand.cpp">
       <Filter>Chataigne\Source\Module\modules\generic\commands</Filter>
     </ClCompile>
@@ -6028,9 +6025,6 @@
       <Filter>Chataigne\Source\Module\modules\generic\commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\generic\commands\GenericAppCommand.h">
-      <Filter>Chataigne\Source\Module\modules\generic\commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Module\modules\generic\commands\GenericControllableCommand.h">
       <Filter>Chataigne\Source\Module\modules\generic\commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\generic\commands\GenericScriptCommand.h">

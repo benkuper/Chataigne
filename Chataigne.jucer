@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.8.0"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.8.1b1"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="VST_LOGGING=0&#10;"
@@ -1008,10 +1008,6 @@
                     file="Source/Module/modules/generic/commands/GenericAppCommand.cpp"/>
               <FILE id="BFIwYv" name="GenericAppCommand.h" compile="0" resource="0"
                     file="Source/Module/modules/generic/commands/GenericAppCommand.h"/>
-              <FILE id="b5ieQu" name="GenericControllableCommand.cpp" compile="0"
-                    resource="0" file="Source/Module/modules/generic/commands/GenericControllableCommand.cpp"/>
-              <FILE id="wKdZSf" name="GenericControllableCommand.h" compile="0" resource="0"
-                    file="Source/Module/modules/generic/commands/GenericControllableCommand.h"/>
               <FILE id="Df8tfL" name="GenericScriptCommand.cpp" compile="0" resource="0"
                     file="Source/Module/modules/generic/commands/GenericScriptCommand.cpp"/>
               <FILE id="uU5f3k" name="GenericScriptCommand.h" compile="0" resource="0"
