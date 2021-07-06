@@ -12,6 +12,10 @@ WebSocketClientModule::WebSocketClientModule(const String& name, const String& d
 	StreamingModule(name),
 	connectFirstTry(true)
 {
+	streamingType->clearOptions();
+	streamingType->addOption("Lines", LINES);
+	streamingType->addOption("JSON", TYPE_JSON);
+
 	useSecureConnection = moduleParams.addBoolParameter("Use Secure Connection", "If checked, this will use a secure connection. Use this if the server you're connecting to is using wss://", false);
 	serverPath = moduleParams.addStringParameter("Server Path", "Path to the server, meaning ip:port/path WITHOUT ws:// or wss://", defaultServerPath);
 	isConnected = moduleParams.addBoolParameter("Connected", "Is the socket sucessfully bound and listening", false);
@@ -88,6 +92,9 @@ void WebSocketClientModule::setupClient()
 
 	void WebSocketClientModule::messageReceived(const String & message)
 	{
+		if (!enabled->boolValue()) return;
+		scriptManager->callFunctionOnAllItems(wsMessageReceivedId, message);
+
 		StreamingType t = streamingType->getValueDataAsEnum<StreamingType>();
 		switch (t)
 		{
@@ -109,7 +116,7 @@ void WebSocketClientModule::setupClient()
 		break;
 
 		default:
-			DBG("Not handled");
+			//DBG("Not handled");
 			break;
 		}
 	}
