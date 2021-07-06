@@ -101,6 +101,7 @@ public:
     void sendLoupedeckCommand(LDCommand command, Array<uint8> data);
 
 
+    void updateButton(int buttonId);
     void updatePadContent(int padID, bool refresh = true);
     void updateSliderContent(int sliderID, bool refresh = true);
     void setScreenContent(int screenIndex, const Rectangle<int>& r, const Image& img = Image(), const Colour& color = Colours::black, const String& text= "", bool refresh = true);

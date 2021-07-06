@@ -1,3 +1,4 @@
+#include "LoupedeckModule.h"
 /*
   ==============================================================================
 
@@ -280,6 +281,7 @@ void LoupedeckModule::onControllableFeedbackUpdateInternal(ControllableContainer
 	if (c == isConnected)
 	{
 		for (int i = 0; i < pads.size(); i++) updatePadContent(i, false);
+		for (int i = 0; i < buttons.size(); i++) updateButton(i);
 		refreshScreen(2);
 
 	}
@@ -297,10 +299,8 @@ void LoupedeckModule::onControllableFeedbackUpdateInternal(ControllableContainer
 		{
 			if (ColorParameter* colP = dynamic_cast<ColorParameter*>(c))
 			{
-				Colour col = colP->getColor();
-				col.withMultipliedBrightness(col.getAlpha());
-				uint8 index = buttonColors.indexOf(colP) + 7;
-				sendLoupedeckCommand(ButtonColor, { index, col.getRed(), col.getGreen(), col.getBlue() });
+				uint8 index = buttonColors.indexOf(colP);
+				updateButton(index);
 			}
 		}
 		else if (c->parentContainer == &padParamsCC)
@@ -375,6 +375,16 @@ void LoupedeckModule::sendLoupedeckCommand(LDCommand command, Array<uint8> data)
 	dataToSend.addArray(data);
 
 	sendBytes(dataToSend);
+}
+
+void LoupedeckModule::updateButton(int buttonId)
+{
+	ColorParameter* colP = buttonColors[buttonId];
+
+	Colour col = colP->getColor();
+	col.withMultipliedBrightness(col.getAlpha());
+
+	sendLoupedeckCommand(ButtonColor, { (uint8_t)(buttonId + 7), col.getRed(), col.getGreen(), col.getBlue() });
 }
 
 void LoupedeckModule::updatePadContent(int padID, bool refresh)
