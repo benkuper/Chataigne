@@ -11,7 +11,7 @@
 MultiplexModule::MultiplexModule() :
 	Module("Multiplex")
 {
-    defManager->add(CommandDefinition::createDef(this, "", "Set List Value", &MultiplexCommand::create)->addParam("type", MultiplexCommand::SET_LIST_VALUE));
+    defManager->add(CommandDefinition::createDef(this, "", "Set List Value", &MultiplexCommand::create));
 }
 
 MultiplexModule::~MultiplexModule()

@@ -50,6 +50,8 @@ public:
 
 	void createControllablesFromJSONResult(var data, ControllableContainer* container);
 
+	void afterLoadJSONDataInternal() override;
+
 	ModuleUI* getModuleUI() override;
 
 	static WebSocketServerModule* create() { return new WebSocketServerModule(); }

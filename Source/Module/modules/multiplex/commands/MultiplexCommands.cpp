@@ -18,7 +18,6 @@ MultiplexCommand::MultiplexCommand(MultiplexModule* _module, CommandContext cont
 
     if (isMultiplexed())
     {
-        target = addTargetParameter("List", "The list to set the value", &multiplex->listManager );
         target->targetType = TargetParameter::CONTAINER;
         std::function<ControllableContainer* ()> getListFunc = std::bind(&Multiplex::showAndGetList, multiplex);
         target->customGetTargetContainerFunc = getListFunc;
@@ -35,18 +34,16 @@ MultiplexCommand::~MultiplexCommand()
 Controllable* MultiplexCommand::getControllableFromTarget()
 {
     BaseMultiplexList* list = dynamic_cast<BaseMultiplexList*>(target->targetContainer.get());
-    if (list == nullptr) return;
+    if (list == nullptr) return nullptr;
 
-    Parameter* firstParam = dynamic_cast<Parameter*>(list->list[0]);
-    if (firstParam == nullptr) return;
+    return list->list[0];
 }
 
 Controllable* MultiplexCommand::getTargetControllableAtIndex(int multiplexIndex)
 {
     if (BaseMultiplexList* list = dynamic_cast<BaseMultiplexList*>(target->targetContainer.get()))
     {
-
-        return dynamic_cast<Parameter*>(list->list[multiplexIndex]);
+        return list->list[multiplexIndex];
     }
 
     return nullptr;

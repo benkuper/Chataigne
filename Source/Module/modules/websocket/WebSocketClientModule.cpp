@@ -1,3 +1,4 @@
+#include "WebSocketClientModule.h"
 /*
   ==============================================================================
 
@@ -211,6 +212,12 @@ void WebSocketClientModule::setupClient()
 			if (connectFirstTry) startTimer(5000);
 			connectFirstTry = false;
 		}
+	}
+
+	void WebSocketClientModule::afterLoadJSONDataInternal()
+	{
+		StreamingModule::afterLoadJSONDataInternal();
+		setupClient();
 	}
 
 

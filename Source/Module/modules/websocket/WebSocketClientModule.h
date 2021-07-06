@@ -52,6 +52,8 @@ public:
 
 	virtual void timerCallback() override;
 
+	void afterLoadJSONDataInternal() override;
+
 	ModuleUI* getModuleUI() override;
 
 	static WebSocketClientModule* create() { return new WebSocketClientModule(); }

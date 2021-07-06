@@ -1,3 +1,4 @@
+#include "WebSocketServerModule.h"
 /*
   ==============================================================================
 
@@ -317,6 +318,12 @@ void WebSocketServerModule::createControllablesFromJSONResult(var data, Controll
 			}
 		}
 	}
+}
+
+void WebSocketServerModule::afterLoadJSONDataInternal()
+{
+	StreamingModule::afterLoadJSONDataInternal();
+	setupServer();
 }
 
 
