@@ -1,3 +1,4 @@
+#include "ConversionFilterEditor.h"
 /*
   ==============================================================================
 
@@ -30,6 +31,13 @@ ConversionFilterEditor::~ConversionFilterEditor()
 		cf->removeAsyncConversionFilterListener(this);
 		cf->cpm.removeAsyncManagerListener(this);
 	}
+}
+
+void ConversionFilterEditor::setCollapsed(bool value, bool force, bool animate, bool doNotRebuild)
+{
+	MappingFilterEditor::setCollapsed(value, force, animate, doNotRebuild);
+	cpmEditor.setVisible(!filter->editorIsCollapsed);
+	if(!doNotRebuild) rebuildSourcesUI();
 }
 
 void ConversionFilterEditor::resizedInternalContent(Rectangle<int>& r)
@@ -74,26 +82,28 @@ void ConversionFilterEditor::rebuildSourcesUI()
 	for (auto& sui : sourcesUI) removeChildComponent(sui);
 	sourcesUI.clear();
 
+	if (!filter->editorIsCollapsed)
 	{
-		GenericScopedLock lock(linksUI.getLock());
-		for (auto& l : linksUI) removeChildComponent(l);
-		linksUI.clear();
-	}
+		{
+			GenericScopedLock lock(linksUI.getLock());
+			for (auto& l : linksUI) removeChildComponent(l);
+			linksUI.clear();
+		}
 
 
-	Array<WeakReference<Parameter>> previewSourceParams = cf->sourceParams[cf->getPreviewIndex()];
-	for (auto& s : previewSourceParams)
-	{
-		if (s == nullptr || s.wasObjectDeleted()) continue;
+		Array<WeakReference<Parameter>> previewSourceParams = cf->sourceParams[cf->getPreviewIndex()];
+		for (auto& s : previewSourceParams)
+		{
+			if (s == nullptr || s.wasObjectDeleted()) continue;
 
-		ConversionSourceParameterUI* sui = new ConversionSourceParameterUI(s);
-		sui->addMouseListener(this, true);
-		addAndMakeVisible(sui);
-		sourcesUI.add(sui);
+			ConversionSourceParameterUI* sui = new ConversionSourceParameterUI(s);
+			sui->addMouseListener(this, true);
+			addAndMakeVisible(sui);
+			sourcesUI.add(sui);
+		}
 	}
 
 	rebuildLinksUI();
-
 	resized();
 }
 
@@ -104,6 +114,8 @@ void ConversionFilterEditor::rebuildLinksUI()
 
 		for (auto& l : linksUI) removeChildComponent(l);
 		linksUI.clear();
+
+		if (filter->editorIsCollapsed) return;
 
 		for (auto& l : cf->links)
 		{
