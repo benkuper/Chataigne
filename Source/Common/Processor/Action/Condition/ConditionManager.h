@@ -21,8 +21,8 @@ public:
 	~ConditionManager();
 
 	Factory<Condition> factory;
-	Factory<Condition>::Definition* activateDef;
-	Factory<Condition>::Definition* deactivateDef;
+	BaseFactoryDefinition<Condition> * activateDef;
+	BaseFactoryDefinition<Condition> * deactivateDef;
 
 	enum ConditionOperator { AND, OR, SEQUENTIAL };
 	EnumParameter* conditionOperator;
