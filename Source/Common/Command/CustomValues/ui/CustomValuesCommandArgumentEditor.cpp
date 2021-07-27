@@ -63,7 +63,7 @@ void CustomValuesCommandArgumentEditor::resizedInternalHeaderItemInternal(Rectan
 
 	if (paramUI != nullptr)
 	{
-		paramUI->setBounds(r.reduced(2));
+		paramUI->setBounds(r.reduced(2).withHeight(paramUI->getHeight()));
 	}
 
 }
