@@ -1,4 +1,3 @@
-#include "SimpleConversionFilters.h"
 /*
   ==============================================================================
 
@@ -12,16 +11,25 @@
 SimpleConversionFilter::SimpleConversionFilter(const String& name, var params, StringRef outTypeString, Multiplex* multiplex) :
 	MappingFilter(name, params, multiplex),
 	retargetComponent(nullptr),
-	outTypeString(outTypeString)
+	outTypeString(outTypeString),
+	autoLoadDataOnSetup(true)
 {
 	autoSetRange = false;
 	retargetComponent = filterParams.addEnumParameter("Extract Component", "This is the component of the source parameter to extract");
 	retargetComponent->setCustomShortName("retargetComponent");
-	retargetComponent->forceSaveValue = true;
+	//retargetComponent->forceSaveValue = true;
 }
 
 SimpleConversionFilter::~SimpleConversionFilter()
 {
+}
+
+void SimpleConversionFilter::setupParametersInternal(int multiplexIndex, bool rangeOnly)
+{
+	var prevData;
+	if (autoLoadDataOnSetup) prevData = getJSONData();
+	MappingFilter::setupParametersInternal(multiplexIndex, rangeOnly);
+	if (autoLoadDataOnSetup) loadJSONData(prevData);
 }
 
 Parameter* SimpleConversionFilter::setupSingleParameterInternal(Parameter* source, int multiplexIndex, bool rangeOnly)
@@ -373,7 +381,7 @@ void ToColorFilter::setupParametersInternal(int multiplexIndex, bool rangeOnly)
 
 	
 
-	if (ghostOptions.isObject())
+	if (ghostOptions.isObject() && baseColor != nullptr)
 	{
 		if (ghostOptions.hasProperty("color")) baseColor->setValue(ghostOptions.getDynamicObject()->getProperty("color"));
 		ghostOptions = var();
@@ -387,9 +395,6 @@ void ToColorFilter::addExtraRetargetOptions()
 
 	case TARGET:
 		retargetComponent->addOption("Hue", HUE)->addOption("Saturation", SAT)->addOption("Brightness", VAL);
-		//if (oldKey.isNotEmpty()) retargetComponent->setValueWithKey(oldKey);
-	//	else retargetComponent->setValueWithData(ghostOptions.getProperty("retarget", HUE));
-
 		if (baseColor != nullptr) baseColor->hideInEditor = false;
 		break;
 

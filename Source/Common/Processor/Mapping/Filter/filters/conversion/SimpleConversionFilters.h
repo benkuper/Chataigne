@@ -23,12 +23,15 @@ public:
 
 	var ghostOptions;
 
+	bool autoLoadDataOnSetup;
+
 	var getJSONData() override;
 	void loadJSONDataItemInternal(var data) override;
 	
 	enum TransferType { DIRECT, EXTRACT, TARGET};
 	TransferType transferType;
 
+	virtual void setupParametersInternal(int mutiplexIndex, bool rangeOnly = false);
 	virtual Parameter* setupSingleParameterInternal(Parameter* source, int multiplexIndex, bool rangeOnly) override;
 	virtual void addExtraRetargetOptions() {}
 
