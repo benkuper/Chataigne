@@ -21,11 +21,11 @@ BaseCommandHandler::BaseCommandHandler(const String & name, CommandContext _cont
 	handlerNotifier(5)
 {
 	showWarningInUI = true;
-	if (!isMultiplexed())
-	{
-		trigger = addTrigger("Trigger", "Trigger this consequence");
+	//if (!isMultiplexed())
+	//{
+		trigger = addTrigger("Trigger", "Trigger this command");
 		trigger->hideInEditor = true;
-	}
+	//}
 
 	scriptObject.setMethod("setCommand", &BaseCommandHandler::setCommandFromScript);
 }
@@ -207,7 +207,7 @@ void BaseCommandHandler::commandTemplateDestroyed()
 void BaseCommandHandler::onContainerTriggerTriggered(Trigger* t)
 {
 	BaseItem::onContainerTriggerTriggered(t);
-	if (t == trigger) triggerCommand(); //should have some sort of "current iteration" here
+	if (t == trigger) triggerCommand(getPreviewIndex());
 }
 
 void BaseCommandHandler::inspectableDestroyed(Inspectable *)
