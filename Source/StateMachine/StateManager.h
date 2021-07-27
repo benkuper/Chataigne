@@ -11,10 +11,12 @@
 #pragma once
 
 
-class Action;
-class Mapping;
-class StandardCondition;
-class StateModule;
+//class Action;
+//class Mapping;
+//class StandardCondition;
+//class StateModule;
+//class ProcessorManager;
+//class Processor;
 
 class StateManager :
 	public BaseManager<State>,
@@ -57,8 +59,10 @@ public:
 	static State * showMenuAndGetState();
 	static Action * showMenuAndGetAction();
 	static Mapping * showMenuAndGetMapping();
-	static StandardCondition * showMenuAndGetToggleCondition();
+	static PopupMenu getProcessorMenuForManager(ProcessorManager* manager, Processor::ProcessorType type, Array<Processor*> *arrayToFill);
 
+	static StandardCondition* showMenuAndGetToggleCondition();
+	static PopupMenu getConditionMenuForAction(Action * a, Array<StandardCondition *> * arrayToFill);
 
 	Array<State *> getLinkedStates(State * s, Array<State *> * statesToAvoid = nullptr);
 

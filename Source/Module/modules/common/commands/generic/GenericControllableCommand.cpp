@@ -38,7 +38,7 @@ void GenericControllableCommand::updateValueFromTarget()
 {
 	if (value != nullptr && !value.wasObjectDeleted())
 	{
-		ghostValueData = value->getJSONData();
+		if(ghostValueData.isVoid()) ghostValueData = value->getJSONData();
 		removeControllable(value.get());
 	}
 
@@ -59,6 +59,8 @@ void GenericControllableCommand::updateValueFromTarget()
 
 		addParameter(value);
 		linkParamToMappingIndex(value, 0);
+
+		ghostValueData = var();
 	}
 }
 
@@ -261,8 +263,8 @@ void GenericControllableCommand::endLoadFile()
 
 void GenericControllableCommand::loadGhostData(var data)
 {
-	if (value == nullptr)
-	{
+	//if (value == nullptr)
+	//{
 		var paramsData = data.getProperty("parameters", var());
 		for (int i = 0; i < paramsData.size(); i++)
 		{
@@ -277,7 +279,7 @@ void GenericControllableCommand::loadGhostData(var data)
 		}
 
 		updateValueFromTarget(); //force generate if not yet
-	}
+	//}
 }
 
 bool GenericControllableCommand::checkEnableTargetFilter(Controllable* c)

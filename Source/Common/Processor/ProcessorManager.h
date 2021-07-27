@@ -27,8 +27,8 @@ public:
 
 	bool canAddItemOfType(const String &typeToCheck) override;
 
-	Array<Action *> getAllActions();
-	Array<Mapping *> getAllMappings();
+	Array<Action *> getAllActions(bool includeMultiplexes = true);
+	Array<Mapping *> getAllMappings(bool includeMultiplexes = true);
 	void checkAllActivateActions();
 	void checkAllDeactivateActions();
 	void processAllMappings();

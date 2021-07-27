@@ -190,25 +190,16 @@ Action* StateManager::showMenuAndGetAction()
 	PopupMenu menu;
 	StateManager* sm = StateManager::getInstance();
 
-	Array<Action*> actions;
-
+	Array<Processor *> actions;
 	for (auto& s : sm->items)
 	{
-		PopupMenu sMenu;
-		for (auto& p : s->pm->items)
-		{
-			if (p->type == Processor::ACTION)
-			{
-				actions.add((Action*)p);
-				sMenu.addItem(actions.size(), p->niceName);
-			}
-		}
+		PopupMenu sMenu = getProcessorMenuForManager(s->pm.get(), Processor::ACTION, &actions);
 		menu.addSubMenu(s->niceName, sMenu);
 	}
 
 	int result = menu.show();
 	if (result <= 0) return nullptr;
-	return actions[result - 1];
+	return (Action*)(actions[result - 1]);
 }
 
 Mapping* StateManager::showMenuAndGetMapping()
@@ -216,25 +207,37 @@ Mapping* StateManager::showMenuAndGetMapping()
 	PopupMenu menu;
 	StateManager* sm = StateManager::getInstance();
 
-	Array<Mapping*> mappings;
+	Array<Processor*> mappings;
 
 	for (auto& s : sm->items)
 	{
-		PopupMenu sMenu;
-		for (auto& p : s->pm->items)
-		{
-			if (p->type == Processor::MAPPING)
-			{
-				mappings.add((Mapping*)p);
-				sMenu.addItem(mappings.size(), p->niceName);
-			}
-		}
+		PopupMenu sMenu = getProcessorMenuForManager(s->pm.get(), Processor::MAPPING, &mappings);
 		menu.addSubMenu(s->niceName, sMenu);
 	}
 
 	int result = menu.show();
 	if (result <= 0) return nullptr;
-	return mappings[result - 1];
+	return (Mapping*)(mappings[result - 1]);
+}
+
+PopupMenu StateManager::getProcessorMenuForManager(ProcessorManager* manager, Processor::ProcessorType type, Array<Processor*> * arrayToFill)
+{
+	PopupMenu result;
+	for (auto& p : manager->items)
+	{
+		if (p->type == type)
+		{
+			arrayToFill->add(p);
+			result.addItem(arrayToFill->size(), p->niceName);
+		}
+		else if (p->type == Processor::MULTIPLEX)
+		{
+			PopupMenu mp = getProcessorMenuForManager(&((Multiplex*)p)->processorManager, type, arrayToFill);
+			result.addSubMenu(p->niceName, mp);
+		}
+	}
+
+	return result;
 }
 
 StandardCondition* StateManager::showMenuAndGetToggleCondition()
@@ -247,24 +250,29 @@ StandardCondition* StateManager::showMenuAndGetToggleCondition()
 	for (auto& s : sm->items)
 	{
 		PopupMenu sMenu;
+
 		for (auto& p : s->pm->items)
 		{
 			if (p->type == Processor::ACTION)
 			{
 				Action* a = (Action*)p;
-				PopupMenu aMenu;
-				for (auto& c : a->cdm.items)
+				PopupMenu aMenu = getConditionMenuForAction(a, &conditions);
+				sMenu.addSubMenu(a->niceName, aMenu);
+			}
+			else if (p->type == Processor::MULTIPLEX)
+			{
+				PopupMenu mpMenu;
+				Multiplex* mp = (Multiplex*)p;
+				for (auto& p : mp->processorManager.items)
 				{
-					if (StandardCondition* sc = dynamic_cast<StandardCondition*>(c))
+					if (p->type == Processor::ACTION)
 					{
-						if (sc->comparator != nullptr && sc->toggleMode->boolValue())
-						{
-							conditions.add(sc);
-							aMenu.addItem(conditions.size(), sc->niceName);
-						}
+						Action* a = (Action*)p;
+						PopupMenu aMenu = getConditionMenuForAction(a, &conditions);
+						mpMenu.addSubMenu(a->niceName, aMenu);
 					}
 				}
-				sMenu.addSubMenu(a->niceName, aMenu);
+				sMenu.addSubMenu(mp->niceName, mpMenu);
 			}
 		}
 		menu.addSubMenu(s->niceName, sMenu);
@@ -273,6 +281,23 @@ StandardCondition* StateManager::showMenuAndGetToggleCondition()
 	int result = menu.show();
 	if (result <= 0) return nullptr;
 	return conditions[result - 1];
+}
+
+PopupMenu StateManager::getConditionMenuForAction(Action* a, Array<StandardCondition*>* arrayToFill)
+{
+	PopupMenu result;
+	for (auto& c : a->cdm.items)
+	{
+		if (StandardCondition* sc = dynamic_cast<StandardCondition*>(c))
+		{
+			if (sc->comparator != nullptr && sc->toggleMode->boolValue())
+			{
+				arrayToFill->add(sc);
+				result.addItem(arrayToFill->size(), sc->niceName);
+			}
+		}
+	}
+	return result;
 }
 
 
