@@ -151,7 +151,10 @@ void Action::onContainerTriggerTriggered(Trigger* t)
 
 	if (t == triggerOn)
 	{
-		if(enabled->boolValue()) triggerConsequences(true, getPreviewIndex());
+		if (enabled->boolValue())
+		{
+			for (int i = 0; i < getMultiplexCount(); i++) triggerConsequences(true, i);
+		}
 	}
 }
 

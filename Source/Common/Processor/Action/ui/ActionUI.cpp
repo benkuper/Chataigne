@@ -11,23 +11,22 @@
 #include "Module/ModuleIncludes.h"
 #include "StateMachine/StateMachineIncludes.h"
 #include "CustomVariables/CustomVariablesIncludes.h"
+#include "ActionUI.h"
 
 
 ActionUI::ActionUI(Action* _action) :
 	ProcessorUI(_action),
-	action(_action)
+	action(_action),
+	triggerPreview("Trigger" + (action->isMultiplexed() ? " (" + String(action->getPreviewIndex() + 1) + ")":""), "Trigger this action. If multiplexed this will trigger only for the preview index.")
 {
 	acceptedDropTypes.add("Module");
 	acceptedDropTypes.add("CommandTemplate");
 
 	action->addAsyncActionListener(this);
 
-	if (action->triggerOn != nullptr)
-	{
-		triggerAllUI.reset(action->triggerOn->createButtonUI());
-		if (action->isMultiplexed()) triggerAllUI->customLabel = "Trigger (" + String(action->getPreviewIndex() + 1) + ")";
-		addAndMakeVisible(triggerAllUI.get());
-	}
+	triggerPreview.addAsyncTriggerListener(this);
+	triggerPreviewUI.reset(triggerPreview.createButtonUI());
+	addAndMakeVisible(triggerPreviewUI.get());
 
 	if (action->cdm.validationProgressFeedback != nullptr)
 	{
@@ -87,7 +86,7 @@ void ActionUI::resizedInternalHeader(Rectangle<int>& r)
 {
 	BaseItemUI::resizedInternalHeader(r);
 
-	if (triggerAllUI != nullptr) triggerAllUI->setBounds(r.removeFromRight(70));
+	if (triggerPreviewUI != nullptr) triggerPreviewUI->setBounds(r.removeFromRight(70));
 	if (progressionUI != nullptr && progressionUI->isVisible())
 	{
 		progressionUI->setBounds(r.removeFromRight(40).reduced(2, 6));
@@ -191,13 +190,21 @@ void ActionUI::newMessage(const Action::ActionEvent& e)
 	case Action::ActionEvent::MULTIPLEX_PREVIEW_CHANGED:
 		if (action->isMultiplexed())
 		{
-			triggerAllUI->customLabel = "Trigger (" + String(action->getPreviewIndex() + 1) + ")";
-			triggerAllUI->repaint();
+			triggerPreviewUI->customLabel = "Trigger (" + String(action->getPreviewIndex() + 1) + ")";
+			triggerPreviewUI->repaint();
 
 			repaint();
 		}
 		break;
 
+	}
+}
+
+void ActionUI::newMessage(const WeakReference<Trigger>& trigger)
+{
+	if (trigger == &triggerPreview)
+	{
+		action->triggerConsequences(true, action->getPreviewIndex());
 	}
 }
 

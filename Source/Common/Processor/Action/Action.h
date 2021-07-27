@@ -34,7 +34,7 @@ public:
 	std::unique_ptr<ConsequenceManager> csmOn;
 	std::unique_ptr<ConsequenceManager> csmOff;
 
-	Trigger* triggerOn; //if not iterative, there will be only one element in this
+	Trigger* triggerOn;
 
 	//to allow for checking before conditions sending it, to overcome listener-order problems
 	bool forceChecking;
