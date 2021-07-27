@@ -48,6 +48,8 @@ void ChataigneAudioLayerPanel::resizedInternalContent(Rectangle<int>& r)
 	//armUI->setBounds(r.removeFromTop(14));
 	//r.removeFromTop(2);
 
+	volumeUI->setBounds(r.removeFromTop(18).reduced(2));
+
 	Rectangle<int> gr = r.reduced(2).removeFromTop(16);
 	moduleChooser.setBounds(gr.removeFromLeft(80));
 	r.removeFromTop(2);
