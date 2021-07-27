@@ -22,7 +22,7 @@ SimpleRemapFilter::SimpleRemapFilter(const String& name, var params, Multiplex* 
 	targetOut->isCustomizableByUser = false;
 	targetOut->setPoint(0, 1);
 
-	forceFloatOutput = filterParams.addBoolParameter("Force Float", "If checked, this will force transforming integer in floats", false);
+	forceFloatOutput = filterParams.addBoolParameter("Force Float", "If checked, this will force transforming integer in floats", true);
 
 	filterTypeFilters.add(Controllable::FLOAT, Controllable::INT, Controllable::BOOL, Controllable::POINT2D, Controllable::POINT3D);
 	autoSetRange = false;
