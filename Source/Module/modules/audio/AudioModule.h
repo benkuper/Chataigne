@@ -56,6 +56,9 @@ public:
 	FloatParameter * activityThreshold;
     FloatParameter * outVolume;
 
+	ControllableContainer channelParams;
+	Array<FloatParameter*> channelVolumes;
+
 	ControllableContainer monitorParams;
 	FloatParameter * monitorVolume;
 	Array<BoolParameter *> monitorOutChannels;
@@ -80,6 +83,7 @@ public:
 
 	std::unique_ptr<PitchDetector> pitchDetector;
 
+	virtual void updateAudioSetup();
 	void updateSelectedMonitorChannels();
 
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;

@@ -1,3 +1,4 @@
+#include "AudioModule.h"
 /*
   ==============================================================================
 
@@ -13,6 +14,7 @@ AudioModule::AudioModule(const String & name) :
 	hs(&am),
 	uidIncrement(100),
 	curBufferIndex(0),
+	channelParams("Channels"),
     monitorParams("Monitor"),
     numActiveMonitorOutputs(0),
 	noteCC("Pitch Detection"),
@@ -28,6 +30,10 @@ AudioModule::AudioModule(const String & name) :
     outVolume = moduleParams.addFloatParameter("Out Volume","Global volume multiplier for all sound that is played through this module",1,0,10);
 	pitchDetectionMethod = moduleParams.addEnumParameter("Pitch Detection Method", "Choose how to detect the pitch.\nNone will disable the detection (for performance),\nMPM is better suited for monophonic sounds,\nYIN is better suited for high-pitched voices and music");
 	pitchDetectionMethod->addOption("None", NONE)->addOption("MPM", MPM)->addOption("YIN", YIN);
+
+
+	moduleParams.addChildControllableContainer(&channelParams);
+	
 
 	moduleParams.addChildControllableContainer(&monitorParams);
 	monitorVolume = monitorParams.addFloatParameter("Monitor Volume", "Volume multiplier for the monitor output. This will affect all the input channels and all the selected output channels", 1, 0, 10);
@@ -101,6 +107,57 @@ AudioModule::~AudioModule()
 	am.removeChangeListener(this);
 }
 
+void AudioModule::updateAudioSetup()
+{
+	AudioDeviceManager::AudioDeviceSetup setup;
+	am.getAudioDeviceSetup(setup);
+	currentSampleRate = setup.sampleRate;
+	currentBufferSize = setup.bufferSize;
+
+	int numSelectedInputChannelsInSetup = setup.inputChannels.countNumberOfSetBits();
+	int numSelectedOutputChannelsInSetup = setup.outputChannels.countNumberOfSetBits();
+
+	graph.setPlayConfigDetails(numSelectedInputChannelsInSetup, numSelectedOutputChannelsInSetup, currentSampleRate, currentBufferSize);
+	graph.prepareToPlay(currentSampleRate, currentBufferSize);
+
+
+	var mData = monitorParams.getJSONData();
+	for (auto& c : monitorOutChannels) monitorParams.removeControllable(c);
+	monitorOutChannels.clear();
+
+	int numChannels = graph.getMainBusNumOutputChannels();
+	AudioChannelSet channelSet = graph.getChannelLayoutOfBus(false, 0);
+	for (int i = 0; i < numChannels; ++i)
+	{
+		String channelName = AudioChannelSet::getChannelTypeName(channelSet.getTypeOfChannel(i));
+		BoolParameter* b = monitorParams.addBoolParameter("Monitor Out : " + channelName, "If enabled, sends audio from this layer to this channel", i < selectedMonitorOutChannels.size());
+		monitorOutChannels.add(b);
+	}
+
+	monitorParams.loadJSONData(mData);
+	updateSelectedMonitorChannels();
+
+	var chData = channelParams.getJSONData();
+	for (auto& c : channelVolumes) channelParams.removeControllable(c);
+	channelVolumes.clear();
+
+	int numInputChannels = graph.getMainBusNumInputChannels();
+	AudioChannelSet inputChannelSet = graph.getChannelLayoutOfBus(false, 0);
+	for (int i = 0; i < numInputChannels; ++i)
+	{
+		String channelName = AudioChannelSet::getChannelTypeName(inputChannelSet.getTypeOfChannel(i));
+		FloatParameter* v = channelParams.addFloatParameter(channelName + " Gain", "Gain to apply to this input channel", 1, 0);
+		channelVolumes.add(v);
+	}
+	channelParams.loadJSONData(chData);
+
+	audioModuleListeners.call(&AudioModuleListener::audioSetupChanged);
+	audioModuleListeners.call(&AudioModuleListener::monitorSetupChanged);
+
+	if (setup.outputDeviceName.isEmpty()) setWarningMessage("Module is not connected to an audio output");
+	else clearWarning();
+}
+
 void AudioModule::updateSelectedMonitorChannels()
 {
 	selectedMonitorOutChannels.clear();
@@ -161,15 +218,14 @@ var AudioModule::getJSONData()
 	}
 
 	data.getDynamicObject()->setProperty("analyzer", analyzerManager.getJSONData());
-
-	
+	//data.getDynamicObject()->setProperty("monitorParams", monitorParams.getJSONData());
+	//data.getDynamicObject()->setProperty("channelParams", channelParams.getJSONData());
 
 	return data;
 }
 
 void AudioModule::loadJSONDataInternal(var data)
 {
-	Module::loadJSONDataInternal(data);
 	if (data.getDynamicObject()->hasProperty("audioSettings"))
 	{
 
@@ -177,10 +233,20 @@ void AudioModule::loadJSONDataInternal(var data)
 		am.initialise(0, 2, elem.get(), true);
 	}
 
-	analyzerManager.loadJSONData(data.getProperty("analyzer", var()));
+	updateAudioSetup();
 
+	
+
+	Module::loadJSONDataInternal(data);
+
+
+	analyzerManager.loadJSONData(data.getProperty("analyzer", var()));
+	//monitorParams.loadJSONData(data.getProperty("monitorParams", var()));
+	//channelParams.loadJSONData(data.getProperty("channelParams", var()));
+
+	
 	AudioDeviceManager::AudioDeviceSetup setup;
-	am.getAudioDeviceSetup(setup);
+	am.getAudioDeviceSetup(setup); 
 	if (setup.outputDeviceName.isEmpty()) setWarningMessage("Module is not connected to an audio output");
 	else clearWarning();
 }
@@ -195,10 +261,12 @@ void AudioModule::audioDeviceIOCallback(const float ** inputChannelData, int num
 
 	for (int i = 0; i < numInputChannels; ++i)
 	{
+		float channelVolume = i < channelVolumes.size() ? channelVolumes[i]->floatValue() : 1;
+
 		if (i == 0) //take only the first channel for analysis (later, should be able to select which channel is used for analysis)
 		{
 			if (buffer.getNumSamples() != numSamples) buffer.setSize(1, numSamples);
-			buffer.copyFromWithRamp(0, 0, inputChannelData[0], numSamples, 1, inputGain->floatValue());
+			buffer.copyFromWithRamp(0, 0, inputChannelData[0], numSamples, 1, inputGain->floatValue() * channelVolume);
 			detectedVolume->setValue(buffer.getRMSLevel(0, 0, numSamples));
 
 			if (detectedVolume->floatValue() > activityThreshold->floatValue())
@@ -239,7 +307,7 @@ void AudioModule::audioDeviceIOCallback(const float ** inputChannelData, int num
 		{
 			int outputIndex = selectedMonitorOutChannels[j];
 			if (outputIndex >= numOutputChannels) continue;
-			FloatVectorOperations::addWithMultiply(outputChannelData[outputIndex], inputChannelData[i], monitorVolume->floatValue(), numSamples);
+			FloatVectorOperations::addWithMultiply(outputChannelData[outputIndex], inputChannelData[i], monitorVolume->floatValue() * channelVolume, numSamples);
 		}
 	}
 }
@@ -255,39 +323,7 @@ void AudioModule::audioDeviceStopped()
 
 void AudioModule::changeListenerCallback(ChangeBroadcaster *)
 {
-	AudioDeviceManager::AudioDeviceSetup setup;
-	am.getAudioDeviceSetup(setup);
-	currentSampleRate = setup.sampleRate;
-	currentBufferSize = setup.bufferSize;
-
-	
-
-	int numSelectedInputChannelsInSetup = setup.inputChannels.countNumberOfSetBits();
-	int numSelectedOutputChannelsInSetup = setup.outputChannels.countNumberOfSetBits();
-
-	graph.setPlayConfigDetails(numSelectedInputChannelsInSetup, numSelectedOutputChannelsInSetup, currentSampleRate, currentBufferSize);
-	graph.prepareToPlay(currentSampleRate, currentBufferSize);
-
-
-	for (auto &c : monitorOutChannels) monitorParams.removeControllable(c);
-	monitorOutChannels.clear();
-
-	int numChannels = graph.getMainBusNumOutputChannels();
-	AudioChannelSet channelSet = graph.getChannelLayoutOfBus(false, 0);
-	for (int i = 0; i < numChannels; ++i)
-	{
-		String channelName = AudioChannelSet::getChannelTypeName(channelSet.getTypeOfChannel(i));
-		BoolParameter * b = monitorParams.addBoolParameter("Monitor Out : "+channelName, "If enabled, sends audio from this layer to this channel", i < selectedMonitorOutChannels.size());
-		monitorOutChannels.add(b);
-	}
-
-	updateSelectedMonitorChannels();
-    
-    audioModuleListeners.call(&AudioModuleListener::audioSetupChanged);
-	audioModuleListeners.call(&AudioModuleListener::monitorSetupChanged);
-
-	if (setup.outputDeviceName.isEmpty()) setWarningMessage("Module is not connected to an audio output");
-	else clearWarning();
+	updateAudioSetup();
 }
 
 void AudioModule::itemAdded(FFTAnalyzer* item)
