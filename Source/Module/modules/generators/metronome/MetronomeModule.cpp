@@ -1,3 +1,4 @@
+#include "MetronomeModule.h"
 /*
   ==============================================================================
 
@@ -62,6 +63,17 @@ void MetronomeModule::updateFreqParam()
 	}
 	moduleParams.controllables.move(moduleParams.controllables.indexOf(freqTimeBpm), moduleParams.controllables.indexOf(mode)+1);
 	queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
+}
+
+void MetronomeModule::onContainerParameterChangedInternal(Parameter* p)
+{
+	Module::onContainerParameterChangedInternal(p);
+
+	if (p == enabled)
+	{
+		if (enabled->boolValue()) startThread();
+		else stopThread(1000);
+	}
 }
 
 void MetronomeModule::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)

@@ -28,7 +28,8 @@ public:
 	Random rnd;
 
 	void updateFreqParam();
-
+	
+	void onContainerParameterChangedInternal(Parameter* p) override;
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 
 	virtual void run() override;
