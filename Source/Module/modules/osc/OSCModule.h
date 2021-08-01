@@ -114,8 +114,8 @@ public:
 
 
 	//save / load
-	virtual var getJSONData() override;
 	virtual void loadJSONDataInternal(var data) override;
+	virtual void afterLoadJSONDataInternal() override;
 
 	//Routing
 	class OSCRouteParams :

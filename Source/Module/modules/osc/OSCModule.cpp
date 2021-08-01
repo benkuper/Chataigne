@@ -238,7 +238,15 @@ void OSCModule::itemAdded(OSCOutput* output)
 
 void OSCModule::setupSenders()
 {
-	for (auto &o : outputManager->items) o->setupSender();
+	for (auto& o : outputManager->items)
+	{
+		o->setupSender();
+		if (o->receiver != nullptr && o->listenToOutputFeedback->boolValue())
+		{
+			NLOG(niceName, "Feedback enabled, listening also on port " << o->socket->getBoundPort());
+			o->receiver->addListener(this);
+		}
+	}
 }
 
 void OSCModule::sendOSC(const OSCMessage & msg, String ip, int port)
@@ -488,43 +496,12 @@ var OSCModule::argumentToVar(const OSCArgument & a)
 	return var("error");
 }
 
-var OSCModule::getJSONData()
-{
-	var data = Module::getJSONData();
-	/*if (receiveCC != nullptr)
-	{
-		var inputData = receiveCC->getJSONData();
-		if (!inputData.isVoid()) data.getDynamicObject()->setProperty("input", inputData);
-	}
-
-	if (outputManager != nullptr)
-	{
-		var outputsData = outputManager->getJSONData();
-		if (!outputsData.isVoid()) data.getDynamicObject()->setProperty("outputs", outputsData);
-	}
-
-	if (thruManager != nullptr)
-	{
-		var thruData = thruManager->getJSONData();
-		if (!thruData.isVoid()) data.getDynamicObject()->setProperty("thru", thruData);
-	}
-	*/
-	return data;
-}
 
 void OSCModule::loadJSONDataInternal(var data)
 {
 	Module::loadJSONDataInternal(data);
-	//if (receiveCC != nullptr) receiveCC->loadJSONData(data.getProperty("input", var()));
-	if (outputManager != nullptr)
-	{
-		//outputManager->loadJSONData(data.getProperty("outputs", var()));
-		setupSenders();
-	}
-
 	if (thruManager != nullptr)
 	{
-		//thruManager->loadJSONData(data.getProperty("thru", var()));
 		for (auto& c : thruManager->controllables)
 		{
 			if (TargetParameter* mt = dynamic_cast<TargetParameter *>(c))
@@ -537,9 +514,19 @@ void OSCModule::loadJSONDataInternal(var data)
 		}
 	}
 
-	if(!isThreadRunning()) startThread();
-
 	setupReceiver();
+	if(!isThreadRunning()) startThread();
+}
+
+void OSCModule::afterLoadJSONDataInternal()
+{
+	if (outputManager != nullptr)
+	{
+		//outputManager->loadJSONData(data.getProperty("outputs", var()));
+		setupSenders();
+
+		
+	}
 }
 
 
@@ -727,7 +714,6 @@ void OSCOutput::setForceDisabled(bool value)
 
 void OSCOutput::onContainerParameterChangedInternal(Parameter * p)
 {
-
 	if (p == remoteHost || p == remotePort || p == useLocal)
 	{
 		if(!Engine::mainEngine->isLoadingFile) setupSender();
@@ -750,6 +736,8 @@ InspectableEditor * OSCOutput::getEditor(bool isRoot)
 
 void OSCOutput::setupSender()
 {
+	if (isCurrentlyLoadingData) return;
+
 	if (isThreadRunning())
 	{
 		stopThread(1000);
