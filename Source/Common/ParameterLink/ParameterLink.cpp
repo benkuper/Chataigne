@@ -244,7 +244,7 @@ String ParameterLink::getReplacementString(int multiplexIndex)
 	if (parameter->type != parameter->STRING) return parameter->stringValue();
 
 	std::string s = parameter->stringValue().toStdString();
-	std::regex source_regex("\\{[^\\}]+\\}");
+	std::regex source_regex("\\{\\w+:\\w+\\}");
 
 	auto source_begin = std::sregex_iterator(s.begin(), s.end(), source_regex);
 	auto source_end = std::sregex_iterator();
