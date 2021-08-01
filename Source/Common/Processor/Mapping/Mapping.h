@@ -50,7 +50,7 @@ public:
 	virtual void multiplexCountChanged() override;
 	virtual void multiplexPreviewIndexChanged() override;
 
-	void process(bool forceOutput = false, int multiplexIndex = 0);
+	void process(bool forceOutput = false, int multiplexIndex = -1);
 
 	void updateContinuousProcess();
 

@@ -201,6 +201,12 @@ void Mapping::process(bool forceOutput, int multiplexIndex)
 	if (im.items.size() == 0) return;
 	if (isCurrentlyLoadingData || isRebuilding || isProcessing || isClearing) return;
 
+	if (multiplexIndex == -1) // -1 makes process all
+	{
+		for (int i = 0; i < getMultiplexCount(); i++) process(forceOutput, i);
+		return;
+	}
+
 	//DBG("[PROCESS] Enter lock");
 	{
 		GenericScopedLock lock(mappingLock);
@@ -318,14 +324,7 @@ void Mapping::inputParameterValueChanged(MappingInput*, int multiplexIndex)
 {
 	if (processMode == VALUE_CHANGE)
 	{
-		if (multiplexIndex == -1)
-		{
-			for (int i = 0; i < getMultiplexCount(); i++) process(false, i); //process all if value updated from a non-iterative input
-		}
-		else
-		{
-			process(false, multiplexIndex);
-		}
+		process(false, multiplexIndex);
 	}
 }
 
@@ -395,7 +394,7 @@ void Mapping::run()
 
 		millis = Time::getMillisecondCounter();
 
-		for (int i = 0; i < getMultiplexCount(); i++) process(false, i);
+		process(false, -1);
 
 		uint32 newMillis = Time::getMillisecondCounter();
 
