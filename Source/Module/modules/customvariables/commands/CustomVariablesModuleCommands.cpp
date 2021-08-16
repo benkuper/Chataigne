@@ -27,7 +27,7 @@ CVCommand::CVCommand(CustomVariablesModule* _module, CommandContext context, var
 	type = (Type)(int)params.getProperty("type", 0);
 	manager = _module->manager;
 
-	if (type == SET_2DTARGET || type == KILL_GO_TO_PRESET)
+	if (type == SET_2DTARGET || type == KILL_GO_TO_PRESET || type == RANDOMIZE)
 	{
 		target = addTargetParameter("Target Group", "The group to target for this command", CVGroupManager::getInstance());
 		target->targetType = TargetParameter::CONTAINER;
@@ -229,6 +229,18 @@ void CVCommand::triggerInternal(int multiplexIndex)
 			}
 		}
 	}
+
+	case RANDOMIZE:
+	{
+
+		if (!target->targetContainer.wasObjectDeleted() && target->targetContainer != nullptr)
+		{
+			CVGroup* g = dynamic_cast<CVGroup*>(target->targetContainer.get());
+			g->randomizeValues();
+		}
+	}
+	break;
+
 	break;
 	}
 

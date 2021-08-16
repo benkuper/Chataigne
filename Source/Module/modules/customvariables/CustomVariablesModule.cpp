@@ -25,6 +25,7 @@ CustomVariablesModule::CustomVariablesModule(CVGroupManager * manager) :
 	defManager->add(CommandDefinition::createDef(this, "", "Interpolate presets", &CVCommand::create)->addParam("type", CVCommand::LERP_PRESETS));
 	defManager->add(CommandDefinition::createDef(this, "", "Set Preset Weight", &CVCommand::create)->addParam("type", CVCommand::SET_PRESET_WEIGHT));
 	defManager->add(CommandDefinition::createDef(this, "", "Set Morpher Target", &CVCommand::create)->addParam("type", CVCommand::SET_2DTARGET));
+	defManager->add(CommandDefinition::createDef(this, "", "Randomize", &CVCommand::create)->addParam("type", CVCommand::RANDOMIZE));
 	defManager->add(CommandDefinition::createDef(this, "", "Load Preset from file", &CVCommand::create)->addParam("type", CVCommand::LOAD_PRESET));
 	defManager->add(CommandDefinition::createDef(this, "", "Save Preset to file", &CVCommand::create)->addParam("type", CVCommand::SAVE_PRESET));
 }

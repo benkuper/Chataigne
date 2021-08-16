@@ -215,25 +215,15 @@ void ZeroconfManager::ZeroconfSearcher::instanceRemoved(const std::string& insta
 String ZeroconfManager::ZeroconfSearcher::getIPForHost(String host)
 {
 	struct hostent* he;
-	struct in_addr** addr_list;
-	int i;
-
 	if ((he = gethostbyname(host.toStdString().c_str())) == NULL)
 	{
-		// get the host info
-		//herror("gethostbyname");
 		DBG("Could not resolve Host : " << host);
 		return "";
 	}
 
-	addr_list = (struct in_addr**)he->h_addr_list;
+	struct in_addr** addr_list = (struct in_addr**)he->h_addr_list;
 
-	for (i = 0; addr_list[i] != NULL; i++)
-	{
-		//Return the first one;
-		return String(inet_ntoa(*addr_list[i]));
-	}
-
+	if(addr_list[0] != nullptr) return String(inet_ntoa(*addr_list[0]));
 	DBG("Could not resolve Host : " << host);
 	return "";
 }

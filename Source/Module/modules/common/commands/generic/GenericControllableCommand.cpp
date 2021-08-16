@@ -1,4 +1,3 @@
-#include "GenericControllableCommand.h"
 /*
   ==============================================================================
 
@@ -38,7 +37,7 @@ void GenericControllableCommand::updateValueFromTarget()
 {
 	if (value != nullptr && !value.wasObjectDeleted())
 	{
-		if(ghostValueData.isVoid()) ghostValueData = value->getJSONData();
+		if (ghostValueData.isVoid()) ghostValueData = value->getJSONData();
 		removeControllable(value.get());
 	}
 
@@ -101,6 +100,8 @@ void GenericControllableCommand::updateOperatorOptions()
 		break;
 	}
 
+	valueOperator->addOption("Random", RANDOM);
+
 	if (oldData.isNotEmpty()) valueOperator->setValueWithKey(oldData);
 	else valueOperator->setValueWithData(EQUAL);
 
@@ -109,7 +110,7 @@ void GenericControllableCommand::updateOperatorOptions()
 	if (value != nullptr)
 	{
 		Operator o = valueOperator->getValueDataAsEnum<Operator>();
-		bool shouldHideValue = o == INVERSE || o == NEXT_ENUM || o == PREV_ENUM;
+		bool shouldHideValue = o == INVERSE || o == NEXT_ENUM || o == PREV_ENUM || o == RANDOM;
 		value->hideInEditor = shouldHideValue;
 	}
 
@@ -128,7 +129,7 @@ void GenericControllableCommand::onContainerParameterChanged(Parameter* p)
 			Operator o = valueOperator->getValueDataAsEnum<Operator>();
 			if (o != EQUAL) value->clearRange(); //to clean more
 			bool curHide = value->hideInEditor;
-			value->hideInEditor = o == INVERSE || o == NEXT_ENUM || o == PREV_ENUM;
+			value->hideInEditor = o == INVERSE || o == NEXT_ENUM || o == PREV_ENUM || o == RANDOM;
 			if (curHide != value->hideInEditor) queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 		}
 	}
@@ -221,6 +222,34 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 				case PREV_ENUM:
 					if (EnumParameter* ep = dynamic_cast<EnumParameter*>(p)) ep->setPrev();
 					break;
+
+				case RANDOM:
+				{
+					Random r;
+					if (p->type == Parameter::BOOL) p->setValue(r.nextBool());
+					else if (p->type == Parameter::FLOAT || p->type == Parameter::INT)
+					{
+						if (p->hasRange()) p->setNormalizedValue(r.nextFloat());
+						else p->setValue(p->type == Parameter::INT ? r.nextInt() : r.nextFloat());
+					}
+					else if (p->type == Parameter::COLOR) ((ColorParameter*)p)->setColor(r.nextInt());
+					else if (p->type == Parameter::ENUM)
+					{
+						EnumParameter* ep = (EnumParameter*)p;
+						int index = r.nextInt() % ep->enumValues.size();
+						while (index < 0) index += ep->enumValues.size();
+						ep->setValueWithKey((ep->enumValues[index]->key));
+					}
+					else if (p->isComplex())
+					{
+						var v;
+						for (int i = 0; i < p->value.size(); i++)
+						{
+							v.append(jmap<float>(r.nextFloat(), p->minimumValue[i], p->maximumValue[i]));
+						}
+						p->setValue(v);
+					}
+				}
 				}
 			}
 		}
@@ -265,21 +294,21 @@ void GenericControllableCommand::loadGhostData(var data)
 {
 	//if (value == nullptr)
 	//{
-		var paramsData = data.getProperty("parameters", var());
-		for (int i = 0; i < paramsData.size(); i++)
+	var paramsData = data.getProperty("parameters", var());
+	for (int i = 0; i < paramsData.size(); i++)
+	{
+		if (paramsData[i].getProperty("controlAddress", "") == "/value")
 		{
-			if (paramsData[i].getProperty("controlAddress", "") == "/value")
-			{
-				ghostValueData = paramsData[i];
-			}
-			else if (paramsData[i].getProperty("controlAddress", "") == "/operator")
-			{
-				ghostOperator = paramsData[i].getProperty("value", var());
-			}
+			ghostValueData = paramsData[i];
 		}
+		else if (paramsData[i].getProperty("controlAddress", "") == "/operator")
+		{
+			ghostOperator = paramsData[i].getProperty("value", var());
+		}
+	}
 
-		updateValueFromTarget(); //force generate if not yet
-	//}
+	updateValueFromTarget(); //force generate if not yet
+//}
 }
 
 bool GenericControllableCommand::checkEnableTargetFilter(Controllable* c)

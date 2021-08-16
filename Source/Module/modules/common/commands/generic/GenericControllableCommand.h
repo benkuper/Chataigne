@@ -21,7 +21,7 @@ public:
 	GenericControllableCommand(Module* _module, CommandContext context, var params, Multiplex* multiplex = nullptr);
 	virtual ~GenericControllableCommand();
 
-	enum Operator { EQUAL, INVERSE, ADD, SUBTRACT, MULTIPLY, DIVIDE, MAX, MIN, NEXT_ENUM, PREV_ENUM };
+	enum Operator { EQUAL, INVERSE, ADD, SUBTRACT, MULTIPLY, DIVIDE, MAX, MIN, NEXT_ENUM, PREV_ENUM, RANDOM };
 
 	Action action;
 	TargetParameter* target;

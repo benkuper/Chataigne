@@ -33,6 +33,8 @@ Weights mode locks the values and interpolate them continuously depending on pre
 Voronoi and Gradient Band (not implemented yet) also locks values but interpolates them using 2D interpolators");
 	controlMode->addOption("Free", FREE)->addOption("Weights", WEIGHTS)->addOption("2D Voronoi", VORONOI);// ->addOption("Gradient Band", GRADIENT_BAND);
 
+	randomize = params.addTrigger("Randomize", "Randomize all values");
+
 	defaultInterpolation.isSelectable = false;
 	defaultInterpolation.length->setValue(1);
 	defaultInterpolation.addKey(0, 0, false);
@@ -160,6 +162,40 @@ void CVGroup::stopInterpolation()
 	stopThread(1000);
 }
 
+void CVGroup::randomizeValues()
+{
+	for (auto& v : values.items)
+	{
+		if (Parameter* p = dynamic_cast<Parameter*>(v->controllable))
+		{
+			Random r;
+			if (p->type == Parameter::BOOL) p->setValue(r.nextBool());
+			else if (p->type == Parameter::FLOAT || p->type == Parameter::INT)
+			{
+				if (p->hasRange()) p->setNormalizedValue(r.nextFloat());
+				else p->setValue(p->type == Parameter::INT ? r.nextInt() : r.nextFloat());
+			}
+			else if (p->type == Parameter::COLOR) ((ColorParameter*)p)->setColor(r.nextInt());
+			else if (p->type == Parameter::ENUM)
+			{
+				EnumParameter* ep = (EnumParameter*)p;
+				int index = r.nextInt() % ep->enumValues.size();
+				while (index < 0) index += ep->enumValues.size();
+				ep->setValueWithKey((ep->enumValues[index]->key));
+			}
+			else if (p->isComplex())
+			{
+				var v;
+				for (int i = 0; i < p->value.size(); i++)
+				{
+					v.append(jmap<float>(r.nextFloat(), p->minimumValue[i], p->maximumValue[i]));
+				}
+				p->setValue(v);
+			}
+		}
+	}
+}
+
 void CVGroup::computeValues()
 {
 	if (!enabled->boolValue()) return;
@@ -226,7 +262,11 @@ void CVGroup::onControllableFeedbackUpdateInternal(ControllableContainer * cc, C
 {
 	BaseItem::onControllableFeedbackUpdateInternal(cc, c);
 	
-	if (c == controlMode)
+	if (c == randomize)
+	{
+		randomizeValues();
+	}
+	else if (c == controlMode)
 	{
 		ControlMode cm = controlMode->getValueDataAsEnum<ControlMode>();
 		//values.setForceItemsFeedbackOnly(cm != FREE); //tmp comment to find a better way to have feedbackOnly but with range change possible. OR maybe leave it editable is ok ?
@@ -252,18 +292,22 @@ void CVGroup::onControllableFeedbackUpdateInternal(ControllableContainer * cc, C
 				morpher.reset();
 			}
 		}
-		
 
-		if(cm != FREE) computeValues();
-
-	} else if(controlMode->getValueDataAsEnum<ControlMode>() == WEIGHTS)
-	{
-		CVPreset * p = c->getParentAs<CVPreset>();
-		if (p == nullptr) p = dynamic_cast<CVPreset *>(c->parentContainer->parentContainer.get()); //if value
-		if (p != nullptr)
+		for (auto& pr : pm->items)
 		{
-			computeValues();
+			pr->weight->setControllableFeedbackOnly(useMorpher);
 		}
+
+		if (cm != FREE) computeValues();
+
+
+	}
+
+	if (controlMode->getValueDataAsEnum<ControlMode>() == WEIGHTS)
+	{
+		CVPreset* p = c->getParentAs<CVPreset>();
+		if (p == nullptr) p = dynamic_cast<CVPreset*>(c->parentContainer->parentContainer.get()); //if value
+		if (p != nullptr) computeValues();
 	}
 }
 

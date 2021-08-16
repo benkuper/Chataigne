@@ -28,6 +28,7 @@ public:
 
 	enum ControlMode { FREE, WEIGHTS, VORONOI, GRADIENT_BAND };
 	EnumParameter * controlMode;
+	Trigger* randomize;
 
 	GenericControllableManager values;
 
@@ -51,6 +52,8 @@ public:
 
 	void goToPreset(CVPreset* p, float time, Automation* curve);
 	void stopInterpolation();
+
+	void randomizeValues();
 
 	void computeValues();
 	Array<float> getNormalizedPresetWeights();
