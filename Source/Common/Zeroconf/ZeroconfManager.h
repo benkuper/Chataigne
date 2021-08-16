@@ -70,6 +70,8 @@ public:
 		void instanceAdded(const std::string& instance) override;
 		void instanceRemoved(const std::string& instance) override;
 
+		String getIPForHost(String host);
+
 		void run() override;
 
 		class SearcherListener

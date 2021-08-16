@@ -172,6 +172,8 @@ void ZeroconfManager::ZeroconfSearcher::instanceAdded(const std::string& instanc
 	int port = String(servus->get(instance, "servus_port")).getIntValue();
 	String ip = String(servus->get(instance, "servus_ip"));
 
+	if (ip.isEmpty()) ip = getIPForHost(host);
+
 	servus::Strings skeys = servus->getKeys(instance);
 	HashMap<String, String> keys;
 	for (auto& k : skeys)
@@ -208,6 +210,32 @@ void ZeroconfManager::ZeroconfSearcher::instanceRemoved(const std::string& insta
 			return;
 		}
 	}
+}
+
+String ZeroconfManager::ZeroconfSearcher::getIPForHost(String host)
+{
+	struct hostent* he;
+	struct in_addr** addr_list;
+	int i;
+
+	if ((he = gethostbyname(host.toStdString().c_str())) == NULL)
+	{
+		// get the host info
+		//herror("gethostbyname");
+		DBG("Could not resolve Host : " << host);
+		return "";
+	}
+
+	addr_list = (struct in_addr**)he->h_addr_list;
+
+	for (i = 0; addr_list[i] != NULL; i++)
+	{
+		//Return the first one;
+		return String(inet_ntoa(*addr_list[i]));
+	}
+
+	DBG("Could not resolve Host : " << host);
+	return "";
 }
 
 void ZeroconfManager::ZeroconfSearcher::run()
