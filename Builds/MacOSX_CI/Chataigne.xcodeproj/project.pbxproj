@@ -455,7 +455,6 @@
 		70E1471749F3AF5353951EC5 /* ../../Resources/Modules/Reaper.png */ /* Reaper.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Reaper.png; path = ../../Resources/Modules/Reaper.png; sourceTree = SOURCE_ROOT; };
 		70E432BF3298C3CB1C29AC5D /* ../../Source/Module/Routing/ui/ModuleRouterView.h */ /* ModuleRouterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ModuleRouterView.h; path = ../../Source/Module/Routing/ui/ModuleRouterView.h; sourceTree = SOURCE_ROOT; };
 		712B39A79176F387DC023DCF /* ../../Source/Common/Processor/Mapping/ui/MappingUI.cpp */ /* MappingUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MappingUI.cpp; path = ../../Source/Common/Processor/Mapping/ui/MappingUI.cpp; sourceTree = SOURCE_ROOT; };
-		716824D41028C3D53BDA009B /* ../../Source/Module/modules/controller/joystick/JoystickModule.h */ /* JoystickModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = JoystickModule.h; path = ../../Source/Module/modules/controller/joystick/JoystickModule.h; sourceTree = SOURCE_ROOT; };
 		719A771F1A0FFD9A6C5B1447 /* ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConversionSourceParameterUI.h */ /* ConversionSourceParameterUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ConversionSourceParameterUI.h; path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConversionSourceParameterUI.h; sourceTree = SOURCE_ROOT; };
 		722557AC1AA50559314AAC74 /* ../../Source/StateMachine/ui/StateMachineView.h */ /* StateMachineView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StateMachineView.h; path = ../../Source/StateMachine/ui/StateMachineView.h; sourceTree = SOURCE_ROOT; };
 		723AC83C92C5656505F6409C /* ../../Source/Module/modules/system/os/OSModule.cpp */ /* OSModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = OSModule.cpp; path = ../../Source/Module/modules/system/os/OSModule.cpp; sourceTree = SOURCE_ROOT; };
@@ -806,7 +805,6 @@
 		E45FA3B841CA50679596AE4C /* ../../Source/Guider/GuideComponents.cpp */ /* GuideComponents.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = GuideComponents.cpp; path = ../../Source/Guider/GuideComponents.cpp; sourceTree = SOURCE_ROOT; };
 		E45FB289FAE0B1C007DC9C96 /* ../../Source/Common/ParameterLink/ui/LinkableParameterEditor.h */ /* LinkableParameterEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LinkableParameterEditor.h; path = ../../Source/Common/ParameterLink/ui/LinkableParameterEditor.h; sourceTree = SOURCE_ROOT; };
 		E49476A81DB93D0B8094E56F /* ../../Source/Common/Processor/Mapping/Mapping.cpp */ /* Mapping.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Mapping.cpp; path = ../../Source/Common/Processor/Mapping/Mapping.cpp; sourceTree = SOURCE_ROOT; };
-		E4F8764330C0A93E8E182D22 /* ../../Source/Module/modules/controller/joystick/JoystickModule.cpp */ /* JoystickModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = JoystickModule.cpp; path = ../../Source/Module/modules/controller/joystick/JoystickModule.cpp; sourceTree = SOURCE_ROOT; };
 		E595B2574DFE9E303F2916E2 /* ../../Source/Module/modules/system/time/TimeModule.h */ /* TimeModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TimeModule.h; path = ../../Source/Module/modules/system/time/TimeModule.h; sourceTree = SOURCE_ROOT; };
 		E5AA04B82683E9B39FCBFDD3 /* ../../Source/Module/modules/controller/wiimote/lib/wiiuse/util.c */ /* util.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = util.c; path = ../../Source/Module/modules/controller/wiimote/lib/wiiuse/util.c; sourceTree = SOURCE_ROOT; };
 		E5D31E96C95008AB78305C46 /* ../../Source/CustomVariables/CVGroupManager.h */ /* CVGroupManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CVGroupManager.h; path = ../../Source/CustomVariables/CVGroupManager.h; sourceTree = SOURCE_ROOT; };
@@ -2232,15 +2230,6 @@
 			name = serial;
 			sourceTree = "<group>";
 		};
-		8F6EAC12C7E1A5C5DC92DA84 /* joystick */ = {
-			isa = PBXGroup;
-			children = (
-				E4F8764330C0A93E8E182D22,
-				716824D41028C3D53BDA009B,
-			);
-			name = joystick;
-			sourceTree = "<group>";
-		};
 		8F78B22D3F56E8A969021F9F /* ui */ = {
 			isa = PBXGroup;
 			children = (
@@ -3199,7 +3188,6 @@
 				C06277AE11620744E584C6AC,
 				6FCADFA56546ADD440BAE600,
 				F3330C384960BC2EFE9674FD,
-				8F6EAC12C7E1A5C5DC92DA84,
 				FE04D271FB3D733172FD0288,
 				5196179CA1A0DDE3AAF00F3C,
 				FDC3BCE022FBCF6F430EC94B,
@@ -3602,7 +3590,7 @@
 					"VST_LOGGING=0",
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.8.1b3",
+					"JUCE_APP_VERSION=1.8.1b4",
 					"JUCE_APP_VERSION_HEX=0x10801",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -3667,7 +3655,7 @@
 					"VST_LOGGING=0",
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.8.1b3",
+					"JUCE_APP_VERSION=1.8.1b4",
 					"JUCE_APP_VERSION_HEX=0x10801",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",

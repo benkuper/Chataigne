@@ -290,9 +290,6 @@
     <Filter Include="Chataigne\Source\Module\modules\controller\streamdeck">
       <UniqueIdentifier>{8B21480E-FB52-AD3C-6BC5-EACF9DDD9542}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\controller\joystick">
-      <UniqueIdentifier>{6DA3C3D4-EC70-8927-8E2C-CFF5F088926D}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Chataigne\Source\Module\modules\controller\gamepad">
       <UniqueIdentifier>{BA37F7B1-5569-18A7-B747-EA1F7C820F64}</UniqueIdentifier>
     </Filter>
@@ -1956,9 +1953,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\controller\streamdeck\StreamDeckModule.cpp">
       <Filter>Chataigne\Source\Module\modules\controller\streamdeck</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\controller\joystick\JoystickModule.cpp">
-      <Filter>Chataigne\Source\Module\modules\controller\joystick</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\controller\gamepad\GamepadModule.cpp">
       <Filter>Chataigne\Source\Module\modules\controller\gamepad</Filter>
@@ -5972,9 +5966,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\controller\streamdeck\StreamDeckModule.h">
       <Filter>Chataigne\Source\Module\modules\controller\streamdeck</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Module\modules\controller\joystick\JoystickModule.h">
-      <Filter>Chataigne\Source\Module\modules\controller\joystick</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\controller\gamepad\GamepadModule.h">
       <Filter>Chataigne\Source\Module\modules\controller\gamepad</Filter>

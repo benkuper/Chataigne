@@ -14,22 +14,31 @@
 
 class GamepadModule :
 	public Module,
-	public InputSystemManager::InputManagerListener
+	public InputSystemManager::InputManagerListener,
+	public Gamepad::GamepadListener
 {
 public:
 	GamepadModule(const String &name = "Gamepad");
 	~GamepadModule();
 
 	GamepadParameter * gamepadParam;
+	Gamepad* gamepad;
+
+	ControllableContainer axesCC;
+	ControllableContainer buttonsCC;
 
 	ControllableContainer calibCC;
 	Array<FloatParameter*> axisOffset;
 	Array<FloatParameter*> axisDeadzone;
 	
-	void rebuildValues();
+	//void rebuildValues();
+
+	void setGamepad(Gamepad* g);
 
 	void gamepadAdded(Gamepad *) override;
 	void gamepadRemoved(Gamepad *) override;
+
+	void gamepadValuesUpdated(Array<float> axes, Array<bool> buttons) override;
 
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 

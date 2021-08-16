@@ -10,87 +10,6 @@
 
 #include "InputDeviceHelpers.h"
 
-
-JoystickParameterUI::JoystickParameterUI(JoystickParameter * p) :
-	ParameterUI(p),
-	joystickParam(p)
-{
-	chooser.setTextWhenNoChoicesAvailable("No joystick connected");
-	chooser.setTextWhenNothingSelected("Select a joystick");
-	chooser.addListener(this);
-	addAndMakeVisible(&chooser);
-	InputSystemManager::getInstance()->addAsyncInputListener(this);
-
-	rebuild();
-}
-
-JoystickParameterUI::~JoystickParameterUI()
-{
-	if(InputSystemManager::getInstanceWithoutCreating() != nullptr) InputSystemManager::getInstance()->removeAsyncInputListener(this);
-}
-
-WeakReference<Joystick> JoystickParameterUI::getJoystick()
-{
-	return chooser.getSelectedId() > 0 ? joysticks[chooser.getSelectedId() - 1] : nullptr;
-}
-
-void JoystickParameterUI::rebuild()
-{
-	WeakReference<Joystick> selectedJoystick = getJoystick();
-
-	chooser.clear(dontSendNotification);
-	chooser.setTextWhenNothingSelected(joystickParam->ghostName.isNotEmpty() ? joystickParam->ghostName + " disconnected" : "Select a joystick");
-	chooser.addItem("Not connected", -2);
-
-	if (InputSystemManager::getInstance()->joysticks.size() == 0) return;
-
-	int id = 1;
-	int idToSelect = -1;
-	for (auto &j : InputSystemManager::getInstance()->joysticks)
-	{
-		joysticks.add(j);
-		chooser.addItem(SDL_JoystickName(j->joystick), id);
-		if (j == selectedJoystick || j == joystickParam->joystick) idToSelect = id;
-		id++;
-	}
-	
-	chooser.setSelectedId(idToSelect, dontSendNotification);
-}
-
-void JoystickParameterUI::resized()
-{
-	chooser.setBounds(getLocalBounds());
-}
-
-void JoystickParameterUI::newMessage(const InputSystemManager::InputSystemEvent & e)
-{
-	switch(e.type)
-	{
-	case InputSystemManager::InputSystemEvent::JOYSTICK_ADDED:
-	case InputSystemManager::InputSystemEvent::JOYSTICK_REMOVED:
-		rebuild();
-		break;
-
-	default:
-		break;
-	}
-}
-
-
-void JoystickParameterUI::comboBoxChanged(ComboBox *)
-{
-	if (!parameter.wasObjectDeleted())
-	{
-		if (chooser.getSelectedId() == -2)
-		{
-			joystickParam->ghostID = SDL_JoystickGUID();
-			joystickParam->ghostName = "";
-		}
-		if (!parameter.wasObjectDeleted()) joystickParam->setJoystick(getJoystick());
-	}
-}
-
-
 GamepadParameterUI::GamepadParameterUI(GamepadParameter * p) :
 	ParameterUI(p),
 	gamepadParam(p)
@@ -130,7 +49,7 @@ void GamepadParameterUI::rebuild()
 	for (auto &g : InputSystemManager::getInstance()->gamepads)
 	{
 		gamepads.add(g);
-		String gName = SDL_GameControllerName(g->gamepad);
+		String gName = g->getName();
 		chooser.addItem(gName, id);
 		if (g == selectedGamepad || g == gamepadParam->gamepad) idToSelect = id;
 		id++;

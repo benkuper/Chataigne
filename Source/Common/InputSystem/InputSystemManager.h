@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    InputSystemManager.h
-    Created: 17 Jun 2018 5:57:00pm
-    Author:  Ben
+	InputSystemManager.h
+	Created: 17 Jun 2018 5:57:00pm
+	Author:  Ben
 
   ==============================================================================
 */
@@ -13,78 +13,50 @@
 #include "JuceHeader.h"
 #include "SDL.h"
 
-class Joystick
-{
-public:
-	Joystick(SDL_Joystick * joystick);
-	virtual ~Joystick();
-
-	SDL_Joystick * joystick;
-
-	ControllableContainer axesCC;
-	ControllableContainer buttonsCC;
-
-	float axisOffset[SDL_JOYSTICK_AXIS_MAX];
-	float axisDeadZone[SDL_JOYSTICK_AXIS_MAX];
-
-	virtual void update();
-
-	WeakReference<Joystick>::Master masterReference;
-};
-
 class Gamepad
 {
 public:
-	Gamepad(SDL_GameController * gamepad);
+	Gamepad(SDL_GameController* gamepad);
+	Gamepad(SDL_Joystick* joystick);
 	virtual ~Gamepad();
 
-	SDL_GameController * gamepad;
+	SDL_GameController* gamepad;
+	SDL_Joystick* joystick;
 
-	ControllableContainer axesCC;
-	ControllableContainer buttonsCC;
+	//ControllableContainer axesCC;
+	//ControllableContainer buttonsCC;
 
-
-	float axisOffset[SDL_JOYSTICK_AXIS_MAX];
-	float axisDeadZone[SDL_JOYSTICK_AXIS_MAX];
+	//float axisOffset[SDL_JOYSTICK_AXIS_MAX];
+	//float axisDeadZone[SDL_JOYSTICK_AXIS_MAX];
 
 	virtual void update();
+	SDL_JoystickID getDevID();
+
+	String getName();
+
+	static String getAxisName(int index);
+	static String getButtonName(int index);
+
+	class GamepadListener
+	{
+	public:
+		virtual ~GamepadListener() {}
+		virtual void gamepadValuesUpdated(Array<float> axes, Array<bool> buttons) {}
+	};
+
+	ListenerList<GamepadListener> gamepadListeners;
+	void addGamepadListener(GamepadListener* newListener) { gamepadListeners.add(newListener); }
+	void removeGamepadListener(GamepadListener* listener) { gamepadListeners.remove(listener); }
 
 
 	WeakReference<Gamepad>::Master masterReference;
 };
 
-class JoystickParameter :
-	public Parameter
-{
-public:
-	JoystickParameter(const String &name, const String &description);
-	~JoystickParameter();
-
-	WeakReference<Joystick> joystick;
-
-	//Ghosting
-	SDL_JoystickGUID ghostID;
-	String ghostName;
-
-	void setJoystick(Joystick * j);
-
-	var getJSONDataInternal() override;
-	void loadJSONDataInternal(var data) override;
-
-
-	// Inherited via Parameter
-	virtual ControllableUI * createDefaultUI() override;
-
-	String getTypeString() const override { return "JoystickParam"; }
-};
-
-
-
 class GamepadParameter :
 	public Parameter
 {
 public:
-	GamepadParameter(const String &name, const String &description);
+	GamepadParameter(const String& name, const String& description);
 	~GamepadParameter();
 
 	WeakReference<Gamepad> gamepad;
@@ -93,13 +65,13 @@ public:
 	SDL_JoystickGUID ghostID;
 	String ghostName;
 
-	void setGamepad(Gamepad * j);
+	void setGamepad(Gamepad* j);
 
 	var getJSONDataInternal() override;
 	void loadJSONDataInternal(var data) override;
 
 	// Inherited via Parameter
-	virtual ControllableUI * createDefaultUI() override;
+	virtual ControllableUI* createDefaultUI() override;
 
 	String getTypeString() const override { return "GamepadParam"; }
 };
@@ -118,20 +90,18 @@ public:
 	const uint32 checkDeviceTime = 1000; //ms
 	uint32 lastCheckTime;
 
-	OwnedArray<Joystick, CriticalSection> joysticks;
+	//OwnedArray<Joystick, CriticalSection> joysticks;
 	OwnedArray<Gamepad, CriticalSection> gamepads;
 
-	Gamepad * addGamepad(SDL_GameController * controller);
-	void removeGamepad(Gamepad * g);
-	Joystick * addJoystick(SDL_Joystick * sdlJ);
-	void removeJoystick(Joystick * j);
+	Gamepad* addGamepad(Gamepad * controller);
+	void removeGamepad(Gamepad* g);
+	//Gamepad* addJoystick(SDL_Joystick * sdlJ);
+	//void removeJoystick(Gamepad * j);
 
-	Joystick * getJoystickForSDL(SDL_Joystick * j);
-	Gamepad * getGamepadForSDL(SDL_GameController * g);
-	Joystick * getJoystickForID(SDL_JoystickGUID id);
-	Gamepad * getGamepadForID(SDL_JoystickGUID id);
-	Joystick * getJoystickForName(String name);
-	Gamepad * getGamepadForName(String name);
+	Gamepad* getGamepadForSDL(SDL_GameController* g);
+	Gamepad* getGamepadForSDL(SDL_Joystick* j);
+	Gamepad* getGamepadForID(SDL_JoystickGUID id);
+	Gamepad* getGamepadForName(String name);
 
 	void run() override;
 
@@ -140,10 +110,8 @@ public:
 	{
 	public:
 		virtual ~InputManagerListener() {}
-		virtual void joystickAdded(Joystick  *) {}
-		virtual void joystickRemoved(Joystick  *) {}
-		virtual void gamepadAdded(Gamepad  *info) {}
-		virtual void gamepadRemoved(Gamepad  *info) {}
+		virtual void gamepadAdded(Gamepad* info) {}
+		virtual void gamepadRemoved(Gamepad* info) {}
 	};
 
 	ListenerList<InputManagerListener> inputListeners;
@@ -154,14 +122,12 @@ public:
 	class  InputSystemEvent
 	{
 	public:
-		enum Type { JOYSTICK_ADDED, JOYSTICK_REMOVED, GAMEPAD_ADDED, GAMEPAD_REMOVED };
+		enum Type { GAMEPAD_ADDED, GAMEPAD_REMOVED };
 
-		InputSystemEvent(Type t, Joystick * j) : type(t), joystick(j), gamepad(nullptr), devID(SDL_JoystickInstanceID(j->joystick)) {}
-		InputSystemEvent(Type t, Gamepad * g) : type(t),  joystick(nullptr), gamepad(g), devID(SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(g->gamepad))) {}
+		InputSystemEvent(Type t, Gamepad* g) : type(t), gamepad(g), devID(g->getDevID()) {}
 
 		Type type;
-		Joystick * joystick;
-		Gamepad * gamepad;
+		Gamepad* gamepad;
 		SDL_JoystickID devID;
 	};
 

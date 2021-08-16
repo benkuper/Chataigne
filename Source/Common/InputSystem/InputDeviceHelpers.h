@@ -10,31 +10,7 @@
 
 #pragma once
 #include "JuceHeader.h"
-
 #include "InputSystemManager.h"
-
-class JoystickParameterUI :
-	public ParameterUI,
-	public InputSystemManager::AsyncListener,
-	public ComboBox::Listener
-{
-public :
-	JoystickParameterUI(JoystickParameter * p);
-	~JoystickParameterUI();
-
-	JoystickParameter * joystickParam;
-	ComboBox chooser;
-
-	Array<WeakReference<Joystick>> joysticks;
-	WeakReference<Joystick> getJoystick();
-
-	void rebuild();
-    void resized() override;
-
-	void newMessage(const InputSystemManager::InputSystemEvent &e) override;
-
-	virtual void comboBoxChanged(ComboBox *) override;
-};
 
 class GamepadParameterUI :
 	public ParameterUI,

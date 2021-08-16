@@ -32,7 +32,7 @@ ModuleFactory::ModuleFactory() {
 	defs.add(new ModuleDefinition("Hardware", "Mouse", &MouseModule::create));
 	defs.add(new ModuleDefinition("Hardware", "KinectV2", &KinectV2Module::create));
 	defs.add(new ModuleDefinition("Hardware", "Gamepad", &GamepadModule::create));
-	defs.add(new ModuleDefinition("Hardware", "Joystick", &JoystickModule::create));
+	//defs.add(new ModuleDefinition("Hardware", "Joystick", &JoystickModule::create));
 	defs.add(new ModuleDefinition("Hardware", "Stream Deck", &StreamDeckModule::create));
 	defs.add(new ModuleDefinition("Hardware", "Loupedeck", &LoupedeckModule::create));
 	defs.add(new ModuleDefinition("Hardware", "GPIO", &GPIOModule::create));

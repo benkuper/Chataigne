@@ -25,7 +25,7 @@
 //include those here to avoid conflict with SDL lib
 #include "modules/controller/gamepad/GamepadModule.h"
 #include "modules/controller/joycon/JoyConModule.h"
-#include "modules/controller/joystick/JoystickModule.h"
+//#include "modules/controller/joystick/JoystickModule.h"
 
 #include "ModuleFactory.cpp"
 
@@ -62,7 +62,6 @@
 #include "modules/common/ui/EnablingNetworkControllableContainerEditor.cpp"
 #include "modules/controller/gamepad/GamepadModule.cpp"
 #include "modules/controller/joycon/JoyConModule.cpp"
-#include "modules/controller/joystick/JoystickModule.cpp"
 #include "modules/controller/keyboard/KeyboardModule.cpp"
 #include "modules/controller/keyboard/commands/KeyboardModuleCommands.cpp"
 #include "modules/controller/kinect/KinectV2Module.cpp"

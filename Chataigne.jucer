@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.8.1b3"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.8.1b4"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="VST_LOGGING=0&#10;"
@@ -897,12 +897,6 @@
                     file="Source/Module/modules/controller/streamdeck/StreamDeckModule.cpp"/>
               <FILE id="MRe3Zu" name="StreamDeckModule.h" compile="0" resource="0"
                     file="Source/Module/modules/controller/streamdeck/StreamDeckModule.h"/>
-            </GROUP>
-            <GROUP id="{1D8065A9-6361-47B1-8256-D348748068B3}" name="joystick">
-              <FILE id="LydpTA" name="JoystickModule.cpp" compile="0" resource="0"
-                    file="Source/Module/modules/controller/joystick/JoystickModule.cpp"/>
-              <FILE id="aiNFeG" name="JoystickModule.h" compile="0" resource="0"
-                    file="Source/Module/modules/controller/joystick/JoystickModule.h"/>
             </GROUP>
             <GROUP id="{81CA9ED1-A78B-1B6C-6449-0316B6990BA0}" name="gamepad">
               <FILE id="qZW7y5" name="GamepadModule.cpp" compile="0" resource="0"
