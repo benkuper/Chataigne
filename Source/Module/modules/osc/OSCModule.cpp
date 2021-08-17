@@ -206,6 +206,7 @@ void OSCModule::processMessage(const OSCMessage & msg)
 		var args = var(Array<var>()); //initialize force array
 		for (auto &a : msg) args.append(OSCModule::argumentToVar(a));
 		params.add(args);
+		params.add(msg.getSenderIPAddress());
 		scriptManager->callFunctionOnAllItems(oscEventId, params);
 
 		for (auto& entry : scriptCallbacks)
