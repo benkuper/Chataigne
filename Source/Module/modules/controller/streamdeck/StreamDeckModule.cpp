@@ -76,7 +76,7 @@ StreamDeckModule::~StreamDeckModule()
 
 void StreamDeckModule::rebuildValues()
 {
-	if (isCurrentlyLoadingData) return;
+	//if (isCurrentlyLoadingData) return;
 
 	DeviceType t = deviceType->getValueDataAsEnum<DeviceType>();
 
@@ -211,7 +211,7 @@ void StreamDeckModule::setDevice(StreamDeck* newDevice)
 		//}
 	}
 
-	rebuildValues();
+	//rebuildValues();
 
 	isConnected->setValue(device != nullptr);
 
@@ -380,5 +380,5 @@ void StreamDeckModule::deviceRemoved(StreamDeck* d)
 void StreamDeckModule::afterLoadJSONDataInternal()
 {
 	Module::afterLoadJSONDataInternal();
-	rebuildValues();
+	//rebuildValues();
 }
