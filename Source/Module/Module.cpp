@@ -367,7 +367,6 @@ Controllable * Module::getControllableForJSONDefinition(const String &name, var 
 	{
 		if (def.hasProperty("min") || def.hasProperty("max")) ((Parameter *)c)->setRange(def.getProperty("min",INT32_MIN), def.getProperty("max", INT32_MAX));
 		
-		if (d->hasProperty("default")) ((Parameter *)c)->setValue(d->getProperty("default"));
 
 		if (c->type == Controllable::ENUM)
 		{
@@ -396,6 +395,8 @@ Controllable * Module::getControllableForJSONDefinition(const String &name, var 
 				else if (ui == "time") ep->defaultUI = FloatParameter::TIME;
 			}
 		}
+
+		if (d->hasProperty("default")) ((Parameter*)c)->setValue(d->getProperty("default"));
 
 		if (d->hasProperty("readOnly"))
 		{
