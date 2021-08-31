@@ -35,6 +35,7 @@ public:
 	std::unique_ptr<ConsequenceManager> csmOff;
 
 	Trigger* triggerOn;
+	Trigger* triggerPreview;
 
 	//to allow for checking before conditions sending it, to overcome listener-order problems
 	bool forceChecking;

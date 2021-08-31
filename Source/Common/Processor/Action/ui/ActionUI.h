@@ -12,18 +12,14 @@
 
 class ActionUI :
 	public ProcessorUI,
-	public Action::AsyncListener,
-	public Trigger::AsyncListener
+	public Action::AsyncListener
 {
 public:
 	ActionUI(Action *);
 	virtual ~ActionUI();
 
 	Action* action;
-
-	Trigger triggerPreview;
-
-	std::unique_ptr<TriggerButtonUI> triggerPreviewUI;
+	std::unique_ptr<TriggerButtonUI> triggerUI;
 	std::unique_ptr<FloatSliderUI> progressionUI;
 
 	void paint(Graphics &g) override;
@@ -38,7 +34,6 @@ public:
 	void itemDropped(const SourceDetails &details) override;
 
 	void newMessage(const Action::ActionEvent &e) override;
-	void newMessage(const WeakReference<Trigger>& trigger) override;
 
 	virtual void addContextMenuItems(PopupMenu& p) override;
 	virtual void handleContextMenuResult(int result) override;

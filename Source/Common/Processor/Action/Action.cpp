@@ -16,6 +16,7 @@ Action::Action(var params, Multiplex * multiplex) :
 	hasOffConsequences(false),
 	cdm(multiplex),
     triggerOn(nullptr),
+	triggerPreview(nullptr),
     forceChecking(false),
     actionAsyncNotifier(10)
 {
@@ -25,6 +26,11 @@ Action::Action(var params, Multiplex * multiplex) :
 
 	triggerOn = addTrigger("Trigger", "This will trigger as if the conditions have been validated, and trigger all the Consequences:TRUE");
 	triggerOn->hideInEditor = true;
+	if (isMultiplexed())
+	{
+		triggerPreview = addTrigger("Trigger Preview", "This will trigger the currently previewed action in this multiplex and trigger all the Consequences:TRUE at the previewed index");
+		triggerPreview->hideInEditor = true;
+	}
 
 	cdm.setHasActivationDefinitions(params.getProperty("hasActivationDefinitions",true));
 	cdm.addConditionManagerListener(this);
@@ -154,6 +160,13 @@ void Action::onContainerTriggerTriggered(Trigger* t)
 		if (enabled->boolValue())
 		{
 			for (int i = 0; i < getMultiplexCount(); i++) triggerConsequences(true, i);
+		}
+	}
+	else if (t == triggerPreview)
+	{
+		if (enabled->boolValue())
+		{
+			triggerConsequences(true, getPreviewIndex());
 		}
 	}
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.8.1b8"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.8.1b9"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
-              companyEmail="benjamin@kuperberg.fr" defines="VST_LOGGING=0&#10;"
+              companyEmail="benjamin@kuperberg.fr" defines="VST_LOGGING=0&#10;JUCE_MODAL_LOOPS_PERMITTED=1&#10;"
               splashScreenColour="Dark" cppLanguageStandard="17" companyCopyright="Ben Kuper"
               headerPath="../../Source" projectLineFeed="&#10;" jucerFormatVersion="1">
   <MAINGROUP id="EDDVhd" name="Chataigne">
@@ -1612,11 +1612,12 @@
       </MODULEPATHS>
     </VS2019>
     <XCODE_MAC targetFolder="Builds/MacOSX" smallIcon="nVz6Li" bigIcon="nVz6Li"
-               extraFrameworks="IOBluetooth, ForceFeedback, IOKit" extraCompilerFlags=""
-               documentExtensions="noisette" customPList="&lt;plist&gt;&#10;&lt;dict&gt;&#10;&lt;key&gt;NSAppTransportSecurity&lt;/key&gt;&#10;&#9;&lt;dict&gt;&#10;&#9;&#9;&lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;&#10;&#9;&#9;&lt;true/&gt;&#10;&#9;&lt;/dict&gt;&#10;&lt;/dict&gt;&#10;&lt;/plist&gt;"
+               extraFrameworks="IOBluetooth, ForceFeedback, IOKit" documentExtensions="noisette"
+               customPList="&lt;plist&gt;&#10;&lt;dict&gt;&#10;&lt;key&gt;NSAppTransportSecurity&lt;/key&gt;&#10;&#9;&lt;dict&gt;&#10;&#9;&#9;&lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;&#10;&#9;&#9;&lt;true/&gt;&#10;&#9;&lt;/dict&gt;&#10;&lt;/dict&gt;&#10;&lt;/plist&gt;"
                externalLibraries="Servus&#10;hidapi&#10;SDL2&#10;iconv&#10;JoyShockLibrary"
                microphonePermissionNeeded="1" hardenedRuntimeOptions="com.apple.security.cs.allow-jit,com.apple.security.device.audio-input"
-               extraDefs="JUCE_SUPPORT_CARBON=0" xcodeValidArchs="x86_64">
+               extraDefs="JUCE_SUPPORT_CARBON=0&#10;JUCE_COREGRAPHICS_DRAW_ASYNC=1"
+               xcodeValidArchs="x86_64">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="Chataigne"
                        headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/libartnet/include&#10;../../External/joycon/include&#10;../../External/sdl/include&#10;../../External/hidapi/include"
@@ -1746,15 +1747,15 @@
                smallIcon="nVz6Li" bigIcon="nVz6Li" hardenedRuntimeOptions="com.apple.security.cs.allow-jit"
                customPList="&lt;plist&gt;&#10;&lt;dict&gt;&#10;&lt;key&gt;NSAppTransportSecurity&lt;/key&gt;&#10;&#9;&lt;dict&gt;&#10;&#9;&#9;&lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;&#10;&#9;&#9;&lt;true/&gt;&#10;&#9;&lt;/dict&gt;&#10;&lt;/dict&gt;&#10;&lt;/plist&gt;"
                microphonePermissionNeeded="1" extraFrameworks="IOBluetooth, ForceFeedback, IOKit"
-               documentExtensions="noisette" extraDefs="JUCE_SUPPORT_CARBON=0&#10;"
+               documentExtensions="noisette" extraDefs="JUCE_SUPPORT_CARBON=0&#10;JUCE_COREGRAPHICS_DRAW_ASYNC=1"
                xcodeValidArchs="x86_64">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/joycon/include&#10;../../External/sdl/include&#10;../../External/hidapi/include"
                        libraryPath="../../External/servus/lib/osx/debug&#10;../../External/joycon/lib/osx&#10;../../External/sdl/lib/osx"
-                       osxCompatibility="10.8 SDK"/>
+                       osxCompatibility="10.8 SDK" macOSDeploymentTarget="10.8"/>
         <CONFIGURATION isDebug="0" name="Release" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/joycon/include&#10;../../External/sdl/include&#10;../../External/hidapi/include"
                        libraryPath="../../External/servus/lib/osx/release&#10;../../External/joycon/lib/osx&#10;../../External/sdl/lib/osx"
-                       osxCompatibility="10.8 SDK"/>
+                       osxCompatibility="10.8 SDK" macOSDeploymentTarget="10.8"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_timeline" path="Modules"/>
