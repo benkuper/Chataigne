@@ -43,6 +43,11 @@ Controllable* MultiplexCommand::getTargetControllableAtIndex(int multiplexIndex)
 {
     if (BaseMultiplexList* list = dynamic_cast<BaseMultiplexList*>(target->targetContainer.get()))
     {
+        if (InputValueMultiplexList* il = dynamic_cast<InputValueMultiplexList *>(list))
+        {
+            return il->inputControllables[multiplexIndex];
+        }
+
         return list->list[multiplexIndex];
     }
 
