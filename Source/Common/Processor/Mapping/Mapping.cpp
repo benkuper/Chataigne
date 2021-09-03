@@ -108,7 +108,11 @@ void Mapping::checkFiltersNeedContinuousProcess()
 void Mapping::updateMappingChain(MappingFilter* afterThisFilter, bool processAfter, bool rangeOnly)
 {
 	if (isCurrentlyLoadingData || isClearing) return;
-	if (isRebuilding) return;
+	if (isRebuilding)
+	{
+		rebuildPending = true;
+		return;
+	}
 
 	if (isProcessing && !rangeOnly)
 	{
@@ -120,6 +124,7 @@ void Mapping::updateMappingChain(MappingFilter* afterThisFilter, bool processAft
 		//enter in scope for lock
 		GenericScopedLock lock(mappingLock);
 		isRebuilding = true;
+		rebuildPending = false;
 
 		if (!rangeOnly) outValuesCC.clear();
 
@@ -179,6 +184,7 @@ void Mapping::updateMappingChain(MappingFilter* afterThisFilter, bool processAft
 		isRebuilding = false;
 	}
 
+	if (rebuildPending) updateMappingChain();
 
 	if (processAfter) process();
 }

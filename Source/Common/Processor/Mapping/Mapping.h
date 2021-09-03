@@ -39,6 +39,7 @@ public:
 	bool isRebuilding;
 	bool isProcessing;
 	bool shouldRebuildAfterProcess;
+	bool rebuildPending; //force rebuilding if a rebuild has been called while already rebuilding
 
 	void setProcessMode(ProcessMode mode);
 
