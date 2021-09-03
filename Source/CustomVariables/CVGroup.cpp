@@ -199,6 +199,7 @@ void CVGroup::randomizeValues()
 void CVGroup::computeValues()
 {
 	if (!enabled->boolValue()) return;
+	if (isCurrentlyLoadingData) return;
 
 	ControlMode cm = controlMode->getValueDataAsEnum<ControlMode>();
 	if (cm == FREE) return;
@@ -303,11 +304,10 @@ void CVGroup::onControllableFeedbackUpdateInternal(ControllableContainer * cc, C
 
 	}
 
-	if (controlMode->getValueDataAsEnum<ControlMode>() == WEIGHTS)
+	if (controlMode->getValueDataAsEnum<ControlMode>() == WEIGHTS && cc == pm.get())
 	{
-		CVPreset* p = c->getParentAs<CVPreset>();
-		if (p == nullptr) p = dynamic_cast<CVPreset*>(c->parentContainer->parentContainer.get()); //if value
-		if (p != nullptr) computeValues();
+		CVPreset* p = ControllableUtil::findParentAs<CVPreset>(c,4);
+		if (p != nullptr && p->weight->floatValue() > 0) computeValues();
 	}
 }
 
@@ -368,12 +368,12 @@ void CVGroup::run()
 	a.hideInEditor = true;
 	a.loadJSONData(interpolationAutomation->getJSONData());
 
-	float timeAtStart = Time::getMillisecondCounter() / 1000.0f;
+	double timeAtStart = Time::getMillisecondCounter() / 1000.0;
 
 	while (!threadShouldExit() && !automationRef.wasObjectDeleted())
 	{
-		float curTime = Time::getMillisecondCounter() / 1000.0f;
-		float rel = jlimit(0.f, 1.f, (curTime - timeAtStart) / interpolationTime);
+		double curTime = Time::getMillisecondCounter() / 1000.0;
+		double rel = jlimit<double>(0., 1., (curTime - timeAtStart) / interpolationTime);
 
 		float weight = interpolationAutomation->getValueAtPosition(rel);
 		lerpPresets(sourceValues, &p2, weight);

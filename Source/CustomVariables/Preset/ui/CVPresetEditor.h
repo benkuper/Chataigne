@@ -44,5 +44,5 @@ public:
 	std::unique_ptr<ControllableUI> modeUI;
 
 	void resized() override;
-
+	void childBoundsChanged(Component* c) override;
 };

@@ -1,3 +1,4 @@
+#include "CVPresetEditor.h"
 /*
   ==============================================================================
 
@@ -91,7 +92,7 @@ ParameterPresetEditor::ParameterPresetEditor(ParameterPreset* pp, bool isRoot) :
 	modeUI.reset(pp->interpolationMode->createDefaultUI());
 	addAndMakeVisible(modeUI.get());
 
-	setSize(100, 18);
+	setSize(100, pui->getHeight());
 }
 
 ParameterPresetEditor::~ParameterPresetEditor()
@@ -105,4 +106,10 @@ void ParameterPresetEditor::resized()
 	modeUI->setBounds(r.removeFromRight(100));
 	r.removeFromRight(8);
 	pui->setBounds(r);
+}
+
+void ParameterPresetEditor::childBoundsChanged(Component* c)
+{
+	InspectableEditor::childBoundsChanged(c);
+	if (c == pui.get()) setSize(getWidth(), pui->getHeight());
 }

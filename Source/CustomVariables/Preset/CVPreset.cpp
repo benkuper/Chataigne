@@ -29,7 +29,7 @@ CVPreset::CVPreset(CVGroup * group) :
 
 	CVGroup::ControlMode cm = group->controlMode->getValueDataAsEnum<CVGroup::ControlMode>();
 
-	weight->setControllableFeedbackOnly(cm == CVGroup::FREE || cm == CVGroup::WEIGHTS);
+	weight->setControllableFeedbackOnly(cm == CVGroup::FREE || cm == CVGroup::VORONOI || cm == CVGroup::GRADIENT_BAND);
 	
 	addChildControllableContainer(&values);
 	
