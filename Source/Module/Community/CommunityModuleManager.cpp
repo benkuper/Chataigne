@@ -93,7 +93,7 @@ var CommunityModuleManager::getJSONDataForURL(URL url)
 
 	StringPairArray responseHeaders;
 	int statusCode = 0;
-	std::unique_ptr<InputStream> stream(url.createInputStream(false, openStreamProgressCallback, this, String(),
+	std::unique_ptr<InputStream> stream(url.createInputStream(false, openStreamProgressCallback, this, "Cache-Control: no-cache",
 		2000, // timeout in millisecs
 		&responseHeaders, &statusCode));
 
