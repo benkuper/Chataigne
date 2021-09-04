@@ -49,6 +49,7 @@ bool SerialModule::setPortStatus(bool status)
 	if (shouldOpen)  //We want to open the port, it's not already opened and the module is enabled
 	{
 		port->setMode(streamingType->getValueDataAsEnum<SerialDevice::PortMode>()); //always set mode, port might be already open with default mode
+		port->setBaudRate(baudRate->intValue());
 		if (!port->isOpen()) port->open(baudRate->intValue());
 		if (!port->isOpen())
 		{
