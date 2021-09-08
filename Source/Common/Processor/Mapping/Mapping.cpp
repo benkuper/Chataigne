@@ -110,7 +110,7 @@ void Mapping::updateMappingChain(MappingFilter* afterThisFilter, bool processAft
 	if (isCurrentlyLoadingData || isClearing) return;
 	if (isRebuilding)
 	{
-		rebuildPending = true;
+		if(afterThisFilter == nullptr && !rangeOnly) rebuildPending = true; //avoid infinite rebuilding
 		return;
 	}
 
@@ -184,7 +184,10 @@ void Mapping::updateMappingChain(MappingFilter* afterThisFilter, bool processAft
 		isRebuilding = false;
 	}
 
-	if (rebuildPending) updateMappingChain();
+	if (rebuildPending)
+	{
+		updateMappingChain();
+	}
 
 	if (processAfter) process();
 }
