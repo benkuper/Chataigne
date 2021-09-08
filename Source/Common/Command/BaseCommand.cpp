@@ -215,7 +215,7 @@ void BaseCommand::setValue(var value, int multiplexIndex)
 
 void BaseCommand::updateMappingInputValue(var value, int multiplexIndex)
 {
-	for (auto& pLink : paramLinks) pLink->updateMappingInputValue(value, multiplexIndex);
+	for (auto& pLink : paramLinks) if(pLink != nullptr) pLink->updateMappingInputValue(value, multiplexIndex);
 	if (customValuesManager != nullptr)
 	{
 		for (auto& cv : customValuesManager->items)

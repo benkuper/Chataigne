@@ -15,6 +15,7 @@
 ParameterLink::ParameterLink(WeakReference<Parameter> p, Multiplex* multiplex) :
 	MultiplexTarget(multiplex),
 	isLinkable(true),
+	canLinkToMapping(true),
 	linkType(NONE),
 	parameter(p),
 	mappingValueIndex(0),
@@ -492,6 +493,7 @@ void ParamLinkContainer::linkParamToMappingIndex(Parameter* p, int mappingIndex)
 
 	if (ParameterLink* pLink = getLinkedParam(p))
 	{
+		if (!pLink->canLinkToMapping) return;
 		pLink->setLinkType(pLink->MAPPING_INPUT);
 		pLink->mappingValueIndex = mappingIndex;
 	}
@@ -516,7 +518,10 @@ void ParamLinkContainer::setInputNamesFromParams(Array<WeakReference<Parameter>>
 		}
 	}
 
-	for (auto& pLink : paramLinks) pLink->inputValueNames = inputNames;
+	for (auto& pLink : paramLinks)
+	{
+		if (pLink->canLinkToMapping) pLink->inputValueNames = inputNames;
+	}
 }
 
 var ParamLinkContainer::getJSONData()

@@ -28,11 +28,13 @@ public:
     ~ParameterLink();
 
     bool isLinkable;
+    bool canLinkToMapping;
 
     LinkType linkType;
     WeakReference<Parameter> parameter;
 
     //links
+    
     int mappingValueIndex;
     BaseMultiplexList* list;
     WeakReference<Inspectable> listRef;

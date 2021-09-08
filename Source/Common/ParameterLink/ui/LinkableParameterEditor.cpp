@@ -15,7 +15,7 @@
 
 LinkableParameterEditor::LinkableParameterEditor(ParameterLink* pLink, bool showMappingOptions) :
     InspectableEditor(pLink->parameter.get(), false),
-    showMappingOptions(showMappingOptions),
+    showMappingOptions(showMappingOptions && pLink->canLinkToMapping),
     link(pLink)
 
 {

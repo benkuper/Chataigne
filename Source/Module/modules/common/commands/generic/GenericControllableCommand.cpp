@@ -20,6 +20,8 @@ GenericControllableCommand::GenericControllableCommand(Module* _module, CommandC
 	int64 rootPtr = (int64)params.getProperty("root", 0);
 	ControllableContainer* rootCC = rootPtr == 0 ? nullptr : (ControllableContainer*)rootPtr;
 	target = addTargetParameter("Target ", "The target to set the value to or trigger", rootCC);
+	if(ParameterLink * pLink = getLinkedParam(target)) pLink->canLinkToMapping = false;
+
 	if (action == TRIGGER) target->typesFilter.add(Trigger::getTypeStringStatic());
 	else if (action == SET_VALUE) target->excludeTypesFilter.add(Trigger::getTypeStringStatic());
 	else if (action == SET_ENABLED) target->customTargetFilterFunc = &GenericControllableCommand::checkEnableTargetFilter;
