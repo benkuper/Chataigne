@@ -258,7 +258,8 @@ void ChataigneSequence::onExternalParameterValueChanged(Parameter* p)
 
 void ChataigneSequence::mtcStarted()
 {
-	playTrigger->trigger();
+	double time = mtcReceiver->getTime() + (mtcSyncOffset->floatValue() * (reverseOffset->boolValue() ? -1 : 1));
+	if(time >= 0 && time < totalTime->floatValue()) playTrigger->trigger();
 }
 
 void ChataigneSequence::mtcStopped()
@@ -270,7 +271,8 @@ void ChataigneSequence::mtcTimeUpdated(bool isFullFrame)
 {
 	if (mtcReceiver == nullptr) return;
 
-	double time = jlimit<float>(0, totalTime->floatValue(), mtcReceiver->getTime() + (mtcSyncOffset->floatValue() * (reverseOffset->boolValue() ? -1 : 1)));
+	double time = mtcReceiver->getTime() + (mtcSyncOffset->floatValue() * (reverseOffset->boolValue() ? -1 : 1));
 	double diff = fabs(currentTime->floatValue() - time);
+	if (!isPlaying->boolValue() && time >= 0 && time < totalTime->floatValue()) playTrigger->trigger();
 	setCurrentTime(time, diff > 0.1, isFullFrame && !mtcReceiver->isPlaying);
 }
