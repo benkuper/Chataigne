@@ -203,7 +203,15 @@ void Action::conditionManagerValidationChanged(ConditionManager *, int multiplex
 
 	if (autoTriggerWhenAllConditionAreActives)
 	{
-		if (cdm.getIsValid(multiplexIndex, false)) triggerConsequences(true, multiplexIndex); //force trigger from onContainerTriggerTriggered, for derivating child classes
+		if (cdm.getIsValid(multiplexIndex, false))
+		{
+			if (isMultiplexed())
+			{
+				if (getPreviewIndex() == multiplexIndex) triggerPreview->trigger();
+				else triggerConsequences(true, multiplexIndex); //if multiplex and not in preview, direct trigger. Must find a way to use the same workflow
+			}
+			else triggerOn->trigger(); //this forces use of the trigger control for proper workflow, but not working for multiplexes. this is also useful for automatic UI feedback
+		}
 		else if (hasOffConsequences) triggerConsequences(false, multiplexIndex);
 	}
 
