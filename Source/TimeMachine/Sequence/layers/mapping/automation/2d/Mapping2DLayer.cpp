@@ -11,8 +11,6 @@
 Mapping2DLayer::Mapping2DLayer(Sequence* s, var params) :
 	AutomationMappingLayer(getTypeString(), s, params)
 {
-	saveAndLoadRecursiveData = true;
-
 	helpID = "Mapping2DLayer";
 
 	addChildControllableContainer(&curve);
