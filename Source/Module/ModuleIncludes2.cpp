@@ -21,6 +21,7 @@
 #include "modules/generic/commands/ChataigneLogCommand.cpp"
 #include "modules/generic/commands/GenericAppCommand.cpp"
 #include "modules/generic/commands/GenericScriptCommand.cpp"
+#include "modules/generic/commands/ChataigneDashboardCommand.cpp"
 
 #include "modules/common/commands/generic/GenericControllableCommand.cpp"
 

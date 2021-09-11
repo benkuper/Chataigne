@@ -137,6 +137,7 @@
 		046FA6955B23245D5819D9E3 /* LiveOSCModule.h */ /* LiveOSCModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LiveOSCModule.h; path = ../../Source/Module/modules/osc/live/LiveOSCModule.h; sourceTree = SOURCE_ROOT; };
 		04C4B1D0745E80C293C0ED83 /* DMXEnttecProDevice.h */ /* DMXEnttecProDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DMXEnttecProDevice.h; path = ../../Source/Common/DMX/device/DMXEnttecProDevice.h; sourceTree = SOURCE_ROOT; };
 		04CDC9F8DBC38B390BD5304F /* AboutWindow.h */ /* AboutWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AboutWindow.h; path = ../../Source/UI/AboutWindow.h; sourceTree = SOURCE_ROOT; };
+		0581290063FB39A6152797FA /* ChataigneDashboardCommand.cpp */ /* ChataigneDashboardCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ChataigneDashboardCommand.cpp; path = ../../Source/Module/modules/generic/commands/ChataigneDashboardCommand.cpp; sourceTree = SOURCE_ROOT; };
 		0613104F04B384C88B49A403 /* GenericControllableCommand.cpp */ /* GenericControllableCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = GenericControllableCommand.cpp; path = ../../Source/Module/modules/common/commands/generic/GenericControllableCommand.cpp; sourceTree = SOURCE_ROOT; };
 		062D0D43531255FFF58B5230 /* DMXModuleUI.cpp */ /* DMXModuleUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DMXModuleUI.cpp; path = ../../Source/Module/modules/dmx/ui/DMXModuleUI.cpp; sourceTree = SOURCE_ROOT; };
 		063AB806516476558D9F032C /* guitar_hero_3.c */ /* guitar_hero_3.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = guitar_hero_3.c; path = ../../Source/Module/modules/controller/wiimote/lib/wiiuse/guitar_hero_3.c; sourceTree = SOURCE_ROOT; };
@@ -774,6 +775,7 @@
 		D96A3F39FFB1F1FFBE297C29 /* CropFilter.cpp */ /* CropFilter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CropFilter.cpp; path = ../../Source/Common/Processor/Mapping/Filter/filters/number/CropFilter.cpp; sourceTree = SOURCE_ROOT; };
 		DA1455ABA352149A51F70529 /* Accelerate.framework */ /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		DA313B773F3BE136635AC538 /* ChataigneAssetManager.h */ /* ChataigneAssetManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ChataigneAssetManager.h; path = ../../Source/UI/ChataigneAssetManager.h; sourceTree = SOURCE_ROOT; };
+		DA52D796BA7AA5C353087590 /* ChataigneDashboardCommand.h */ /* ChataigneDashboardCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ChataigneDashboardCommand.h; path = ../../Source/Module/modules/generic/commands/ChataigneDashboardCommand.h; sourceTree = SOURCE_ROOT; };
 		DB0E4F2C9CE337746D9A4530 /* GenericOSCQueryCommand.cpp */ /* GenericOSCQueryCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = GenericOSCQueryCommand.cpp; path = ../../Source/Module/modules/oscquery/generic/GenericOSCQueryCommand.cpp; sourceTree = SOURCE_ROOT; };
 		DB5A8BBFA2411FFC8DCCEE77 /* MultiplexModule.h */ /* MultiplexModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MultiplexModule.h; path = ../../Source/Module/modules/multiplex/MultiplexModule.h; sourceTree = SOURCE_ROOT; };
 		DB828084FAA4E440E44D4934 /* BaseComparatorUI.cpp */ /* BaseComparatorUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BaseComparatorUI.cpp; path = ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/ui/BaseComparatorUI.cpp; sourceTree = SOURCE_ROOT; };
@@ -1141,6 +1143,8 @@
 		19FB798FF72A5337130FA5B1 /* commands */ = {
 			isa = PBXGroup;
 			children = (
+				0581290063FB39A6152797FA,
+				DA52D796BA7AA5C353087590,
 				CFE8B29F9B948CF706C3EC75,
 				E282A320F0E547C1419D5D5A,
 				8D3AFD7B0479583F5D50856C,
@@ -3592,8 +3596,8 @@
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCE_COREGRAPHICS_DRAW_ASYNC=1",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.8.2",
-					"JUCE_APP_VERSION_HEX=0x10802",
+					"JUCE_APP_VERSION=1.8.3b1",
+					"JUCE_APP_VERSION_HEX=0x10803",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
 					"JucePlugin_Build_AU=0",
@@ -3660,8 +3664,8 @@
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCE_COREGRAPHICS_DRAW_ASYNC=1",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.8.2",
-					"JUCE_APP_VERSION_HEX=0x10802",
+					"JUCE_APP_VERSION=1.8.3b1",
+					"JUCE_APP_VERSION_HEX=0x10803",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
 					"JucePlugin_Build_AU=0",

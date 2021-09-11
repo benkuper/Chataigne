@@ -113,6 +113,7 @@
 #include "modules/generic/commands/ChataigneLogCommand.h"
 #include "modules/generic/commands/GenericAppCommand.h"
 #include "modules/generic/commands/GenericScriptCommand.h"
+#include "modules/generic/commands/ChataigneDashboardCommand.h"
 
 #include "modules/gpio/GPIOModule.h"
 #include "modules/gpio/commands/GPIOCommands.h"

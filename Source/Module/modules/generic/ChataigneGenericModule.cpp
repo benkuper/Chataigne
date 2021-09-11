@@ -18,6 +18,8 @@ ChataigneGenericModule::ChataigneGenericModule() :
 	defManager->add(CommandDefinition::createDef(this, "", "Log a message", &ChataigneLogCommand::create)->addParam("type", ChataigneLogCommand::MESSAGE));
 	defManager->add(CommandDefinition::createDef(this, "", "Log a value", &ChataigneLogCommand::create)->addParam("type", ChataigneLogCommand::VALUE));
 	defManager->add(CommandDefinition::createDef(this, "", "Script", &GenericScriptCommand::create));
+	defManager->add(CommandDefinition::createDef(this, "", "Select Dashboard", &ChataigneDashboardCommand::create)->addParam("type", ChataigneDashboardCommand::SELECT_DASHBOARD));
+	defManager->add(CommandDefinition::createDef(this, "", "Select Dashboard Index", &ChataigneDashboardCommand::create)->addParam("type", ChataigneDashboardCommand::SELECT_DASHBOARD_INDEX));
 	defManager->add(CommandDefinition::createDef(this, "", "New Session", &GenericAppCommand::create, CommandContext::ACTION)->addParam("type", GenericAppCommand::NEW_SESSION));
 	defManager->add(CommandDefinition::createDef(this, "", "Open Session", &GenericAppCommand::create, CommandContext::ACTION)->addParam("type", GenericAppCommand::OPEN_SESSION));
 	defManager->add(CommandDefinition::createDef(this, "", "Close App", &GenericAppCommand::create, CommandContext::ACTION)->addParam("type", GenericAppCommand::CLOSE_APP));

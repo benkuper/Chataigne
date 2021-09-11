@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.8.2"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.8.3b1"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="VST_LOGGING=0&#10;JUCE_MODAL_LOOPS_PERMITTED=1&#10;"
@@ -994,6 +994,10 @@
           </GROUP>
           <GROUP id="{A3667F6F-03F6-7734-8482-D48D3C9DFDA3}" name="generic">
             <GROUP id="{DEF53CAE-03FA-CF0E-98A7-40ADDB9226DB}" name="commands">
+              <FILE id="sTMkJk" name="ChataigneDashboardCommand.cpp" compile="0"
+                    resource="0" file="Source/Module/modules/generic/commands/ChataigneDashboardCommand.cpp"/>
+              <FILE id="ND0ka5" name="ChataigneDashboardCommand.h" compile="0" resource="0"
+                    file="Source/Module/modules/generic/commands/ChataigneDashboardCommand.h"/>
               <FILE id="E7ahvm" name="ChataigneLogCommand.cpp" compile="0" resource="0"
                     file="Source/Module/modules/generic/commands/ChataigneLogCommand.cpp"/>
               <FILE id="ozjwZn" name="ChataigneLogCommand.h" compile="0" resource="0"
