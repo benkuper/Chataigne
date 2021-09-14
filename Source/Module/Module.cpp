@@ -365,9 +365,6 @@ Controllable * Module::getControllableForJSONDefinition(const String &name, var 
 
 	if (c->type != Controllable::TRIGGER)
 	{
-		if (def.hasProperty("min") || def.hasProperty("max")) ((Parameter *)c)->setRange(def.getProperty("min",INT32_MIN), def.getProperty("max", INT32_MAX));
-		
-
 		if (c->type == Controllable::ENUM)
 		{
 			EnumParameter * ep = dynamic_cast<EnumParameter *>(c);
@@ -396,7 +393,18 @@ Controllable * Module::getControllableForJSONDefinition(const String &name, var 
 			}
 		}
 
-		if (d->hasProperty("default")) ((Parameter*)c)->setValue(d->getProperty("default"));
+		if (Parameter* p = dynamic_cast<Parameter*>(c))
+		{
+			if (def.hasProperty("min") || def.hasProperty("max")) p->setRange(def.getProperty("min", INT32_MIN), def.getProperty("max", INT32_MAX));
+			
+			if (d->hasProperty("default"))
+			{
+				p->defaultValue = d->getProperty("default");
+				p->setValue(d->getProperty("default"));
+			}
+
+			if (d->hasProperty("alwaysNotify")) p->alwaysNotify = d->getProperty("alwaysNotify");
+		}
 
 		if (d->hasProperty("readOnly"))
 		{
@@ -412,7 +420,6 @@ Controllable * Module::getControllableForJSONDefinition(const String &name, var 
 		{
 			c->description = d->getProperty("description").toString();
 		}
-		
 	}
 
 	return c;
