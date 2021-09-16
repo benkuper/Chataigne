@@ -112,7 +112,7 @@ MappingFilter::ProcessResult SimpleConversionFilter::processSingleParameterInter
 	case TARGET:
 	{
 		var val = var();
-		for (int i = 0; i < out->value.size(); ++i) val.append(0);
+		for (int i = 0; i < out->value.size(); ++i) val.append(0.f);
 		int index = (int)retargetComponent->getValueData();
 		if (index < val.size())
 		{
