@@ -80,7 +80,6 @@ void HTTPModule::processRequest(Request* request)
 	if (statusCode != 200 && !request->url.isLocalFile())
 	{
 		NLOGWARNING(niceName, "Failed to connect to " << request->url.toString(true) << ", status code = " << String(statusCode));
-		return;
 	}
 #endif
 
