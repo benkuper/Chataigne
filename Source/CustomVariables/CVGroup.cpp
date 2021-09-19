@@ -144,6 +144,12 @@ void CVGroup::lerpPresets(Array<var> sourceValues, CVPreset* endPreset, float we
 
 void CVGroup::goToPreset(CVPreset* p, float time, Automation* curve)
 {
+	if (time == 0)
+	{
+		setValuesToPreset(p);
+		return;
+	}
+
 	stopThread(1000);
 
 	targetPreset = p;
