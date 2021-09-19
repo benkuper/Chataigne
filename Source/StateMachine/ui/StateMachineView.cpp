@@ -110,7 +110,7 @@ void StateMachineView::resized()
 	
 	if (commentManagerUI != nullptr)
 	{
-		commentManagerUI->viewOffset = viewOffset;
+		commentManagerUI->manager->viewOffset = manager->viewOffset;
 		commentManagerUI->setBounds(getLocalBounds());
 		commentManagerUI->resized();
 	}
