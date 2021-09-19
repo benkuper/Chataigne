@@ -91,6 +91,7 @@ void ScriptCommand::createControllablesForContainer(var data, ControllableContai
 			Controllable * c = getControllableForJSONDefinition(p.name.toString(), p.value);
 			if (c == nullptr) continue;
 			cc->addControllable(c);
+
 			if (c->type != Controllable::TRIGGER)
 			{
 				Parameter * param = (Parameter *)c;
@@ -117,6 +118,11 @@ void ScriptCommand::createControllablesForContainer(var data, ControllableContai
 						LOGWARNING("Dependency definition is not complete, requires source, value, check and action");
 					}
 				}
+
+				if (p.value.hasProperty("mappingIndex"))
+				{
+					linkParamToMappingIndex(param, p.value.getProperty("mappingIndex", 0));
+				}
 			}
 		}
 	}
@@ -132,11 +138,11 @@ Controllable * ScriptCommand::getControllableForJSONDefinition(const String &nam
 
 	DynamicObject * d = def.getDynamicObject();
 
-	if (c->type != Controllable::TRIGGER)
+	if (Parameter * p = dynamic_cast<Parameter *>(c))
 	{
-		if (d->hasProperty("min") && d->hasProperty("max")) ((Parameter *)c)->setRange(d->getProperty("min"), d->getProperty("max"));
+		if (d->hasProperty("min") && d->hasProperty("max")) p->setRange(d->getProperty("min"), d->getProperty("max"));
 
-		if (d->hasProperty("default")) ((Parameter *)c)->setValue(d->getProperty("default"));
+		if (d->hasProperty("default")) p->setValue(d->getProperty("default"));
 
 		if (c->type == Controllable::ENUM)
 		{
@@ -165,12 +171,16 @@ Controllable * ScriptCommand::getControllableForJSONDefinition(const String &nam
 				else if (ui == "time") ep->defaultUI = FloatParameter::TIME;
 			}
 		}
+
+		
 	}
 
 	if (d->hasProperty("readOnly"))
 	{
 		c->setControllableFeedbackOnly(d->getProperty("readOnly"));
 	}
+
+	
 
 	if (d->hasProperty("shortName"))
 	{
