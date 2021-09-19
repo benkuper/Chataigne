@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.8.3b2"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.8.3b3"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="VST_LOGGING=0&#10;JUCE_MODAL_LOOPS_PERMITTED=1&#10;"
@@ -1051,12 +1051,7 @@
                 <FILE id="Cm6wY6" name="OSCQueryModuleEditor.h" compile="0" resource="0"
                       file="Source/Module/modules/oscquery/generic/ui/OSCQueryModuleEditor.h"/>
               </GROUP>
-              <GROUP id="{3754DBAA-42A4-087C-B68E-B1E881D2D0E0}" name="commands">
-                <FILE id="pNjHwd" name="GenericOSCQueryCommand.cpp" compile="0" resource="0"
-                      file="Source/Module/modules/oscquery/generic/GenericOSCQueryCommand.cpp"/>
-                <FILE id="lQP4P5" name="GenericOSCQueryCommand.h" compile="0" resource="0"
-                      file="Source/Module/modules/oscquery/generic/GenericOSCQueryCommand.h"/>
-              </GROUP>
+              <GROUP id="{3754DBAA-42A4-087C-B68E-B1E881D2D0E0}" name="commands"/>
               <FILE id="Z3VTSG" name="GenericOSCQueryModule.cpp" compile="0" resource="0"
                     file="Source/Module/modules/oscquery/generic/GenericOSCQueryModule.cpp"/>
               <FILE id="YNR13N" name="GenericOSCQueryModule.h" compile="0" resource="0"

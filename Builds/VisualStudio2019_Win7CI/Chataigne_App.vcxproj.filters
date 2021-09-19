@@ -362,9 +362,6 @@
     <Filter Include="Chataigne\Source\Module\modules\oscquery\generic\ui">
       <UniqueIdentifier>{80445B17-1F33-F6A5-2E35-E6F3E782DE69}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\oscquery\generic\commands">
-      <UniqueIdentifier>{853ADAB8-B4E3-9CA3-87CE-D338DC043327}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Chataigne\Source\Module\modules\oscquery\generic">
       <UniqueIdentifier>{48F0F8E0-7438-0208-E550-1AD89128E38E}</UniqueIdentifier>
     </Filter>
@@ -2094,9 +2091,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\oscquery\generic\ui\OSCQueryModuleEditor.cpp">
       <Filter>Chataigne\Source\Module\modules\oscquery\generic\ui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\oscquery\generic\GenericOSCQueryCommand.cpp">
-      <Filter>Chataigne\Source\Module\modules\oscquery\generic\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\oscquery\generic\GenericOSCQueryModule.cpp">
       <Filter>Chataigne\Source\Module\modules\oscquery\generic</Filter>
@@ -6113,9 +6107,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\oscquery\generic\ui\OSCQueryModuleEditor.h">
       <Filter>Chataigne\Source\Module\modules\oscquery\generic\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Module\modules\oscquery\generic\GenericOSCQueryCommand.h">
-      <Filter>Chataigne\Source\Module\modules\oscquery\generic\commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\oscquery\generic\GenericOSCQueryModule.h">
       <Filter>Chataigne\Source\Module\modules\oscquery\generic</Filter>
