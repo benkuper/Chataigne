@@ -39,7 +39,8 @@ StateMachineView::StateMachineView(const String &contentName, StateManager * _ma
 
 	setShowPane(true);
 
-	frameView();
+	setViewZoom(manager->viewZoom);
+	//frameView();
 }
 
 StateMachineView::~StateMachineView()

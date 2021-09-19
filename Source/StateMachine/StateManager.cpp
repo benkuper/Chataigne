@@ -338,9 +338,10 @@ var StateManager::getJSONData()
 	return data;
 }
 
-void StateManager::loadJSONDataInternal(var data)
+void StateManager::loadJSONDataManagerInternal(var data)
 {
-	BaseManager::loadJSONDataInternal(data);
+	BaseManager::loadJSONDataManagerInternal(data);
+
 	stm.loadJSONData(data.getProperty(stm.shortName, var()));
 	commentManager.loadJSONData(data.getProperty(commentManager.shortName, var()));
 

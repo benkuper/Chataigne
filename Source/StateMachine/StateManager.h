@@ -67,7 +67,7 @@ public:
 	Array<State *> getLinkedStates(State * s, Array<State *> * statesToAvoid = nullptr);
 
 	var getJSONData() override;
-	void loadJSONDataInternal(var data) override;
+	void loadJSONDataManagerInternal(var data) override;
 
 	void endLoadFile() override;
 
