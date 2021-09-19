@@ -145,7 +145,7 @@ MorpherViewUI::MorpherViewUI(Morpher* morpher) :
 	//mainTargetUI.addItemUIListener(this);
 	//mainTargetUI.removeBT->setVisible(false);
 	//mainTargetUI.enabledBT->setVisible(false);
-	mainTargetUI.setViewZoom(viewZoom);
+	mainTargetUI.setViewZoom(manager->viewZoom);
 	mainTargetUI.setAlwaysOnTop(true);
 	addAndMakeVisible(mainTargetUI);
 
@@ -391,7 +391,7 @@ void MorpherViewUI::mouseDown(const MouseEvent& e)
 	BaseManagerViewUI::mouseDown(e);
 	if (e.mods.isLeftButtonDown() && e.mods.isCommandDown())
 	{
-		morpher->mainTarget.viewUIPosition->setPoint(getViewMousePosition().toFloat() / viewZoom);
+		morpher->mainTarget.viewUIPosition->setPoint(getViewMousePosition().toFloat() / manager->viewZoom);
 	}
 }
 
@@ -401,7 +401,7 @@ void MorpherViewUI::mouseDrag(const MouseEvent& e)
 
 	if (e.mods.isLeftButtonDown() && e.mods.isCommandDown())
 	{
-		morpher->mainTarget.viewUIPosition->setPoint(getViewMousePosition().toFloat() / viewZoom);
+		morpher->mainTarget.viewUIPosition->setPoint(getViewMousePosition().toFloat() / manager->viewZoom);
 	}
 }
 
