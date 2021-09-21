@@ -29,6 +29,7 @@ MappingFilterManager::MappingFilterManager(Multiplex * multiplex) :
 	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<ToPoint2DFilter>("Conversion", "Convert To Point2D", multiplex));
 	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<ToPoint3DFilter>("Conversion", "Convert To Point3D", multiplex));
 	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<ToColorFilter>("Conversion", "Convert To Color", multiplex));
+	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<MergeFilter>("Conversion", "Merge", multiplex));
 
 	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<ConversionFilter>("Conversion", ConversionFilter::getTypeStringStatic(), multiplex));
 		

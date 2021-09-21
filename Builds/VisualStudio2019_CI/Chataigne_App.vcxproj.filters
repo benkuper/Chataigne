@@ -1690,6 +1690,9 @@
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\SimpleSmoothFilter.cpp">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\number</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\MergeFilter.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\conversion</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ConversionParamValueLink.cpp">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\conversion</Filter>
     </ClCompile>
@@ -5756,6 +5759,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\SimpleSmoothFilter.h">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\number</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\MergeFilter.h">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\conversion</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ConversionParamValueLink.h">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\conversion</Filter>

@@ -534,6 +534,7 @@
 		8E3E93C35A0A71C64796898E /* juce_organicui */ /* juce_organicui */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_organicui; path = ../../Modules/juce_organicui; sourceTree = SOURCE_ROOT; };
 		8E93C7D90650CE468073A0C1 /* ConversionFilter.cpp */ /* ConversionFilter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ConversionFilter.cpp; path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ConversionFilter.cpp; sourceTree = SOURCE_ROOT; };
 		8EA7B502B21B808319BF9498 /* e131.h */ /* e131.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = e131.h; path = ../../Source/Common/DMX/device/sacn/e131.h; sourceTree = SOURCE_ROOT; };
+		8EAE45830C7DE886C140D709 /* MergeFilter.h */ /* MergeFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MergeFilter.h; path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/MergeFilter.h; sourceTree = SOURCE_ROOT; };
 		8EB292748351756688228DCB /* Point2DComparators.h */ /* Point2DComparators.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Point2DComparators.h; path = ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/comparators/Point2DComparators.h; sourceTree = SOURCE_ROOT; };
 		8EFE304B0BBA3DFA624E0D0F /* DMXOpenUSBDevice.h */ /* DMXOpenUSBDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DMXOpenUSBDevice.h; path = ../../Source/Common/DMX/device/DMXOpenUSBDevice.h; sourceTree = SOURCE_ROOT; };
 		8F138647B18B05C8E209974A /* WatchoutCommand.h */ /* WatchoutCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WatchoutCommand.h; path = ../../Source/Module/modules/tcp/tcpclient/watchout/commands/WatchoutCommand.h; sourceTree = SOURCE_ROOT; };
@@ -677,6 +678,7 @@
 		BCFC0BB3E475D8AD41B05535 /* Mapping1DLayerPanel.cpp */ /* Mapping1DLayerPanel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Mapping1DLayerPanel.cpp; path = ../../Source/TimeMachine/Sequence/layers/mapping/automation/1d/ui/Mapping1DLayerPanel.cpp; sourceTree = SOURCE_ROOT; };
 		BDA85DB254FB6555E7BC6680 /* FFTAnalyzerManager.cpp */ /* FFTAnalyzerManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FFTAnalyzerManager.cpp; path = ../../Source/Module/modules/audio/analysis/FFTAnalyzerManager.cpp; sourceTree = SOURCE_ROOT; };
 		BDB99CA1C253489009BCD225 /* Morpher.h */ /* Morpher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Morpher.h; path = ../../Source/CustomVariables/Preset/Morpher/Morpher.h; sourceTree = SOURCE_ROOT; };
+		BDD749FA254591C8E052CB10 /* MergeFilter.cpp */ /* MergeFilter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MergeFilter.cpp; path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/MergeFilter.cpp; sourceTree = SOURCE_ROOT; };
 		BE4924D424A41C0A3275F3C4 /* ModuleUI.cpp */ /* ModuleUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ModuleUI.cpp; path = ../../Source/Module/ui/ModuleUI.cpp; sourceTree = SOURCE_ROOT; };
 		BEB54714E4B90120D22D47D6 /* BaseCommand.h */ /* BaseCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BaseCommand.h; path = ../../Source/Common/Command/BaseCommand.h; sourceTree = SOURCE_ROOT; };
 		BEB5FC676103F81A003208E8 /* WakeOnLanCommand.cpp */ /* WakeOnLanCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = WakeOnLanCommand.cpp; path = ../../Source/Module/modules/system/os/commands/WakeOnLanCommand.cpp; sourceTree = SOURCE_ROOT; };
@@ -1669,6 +1671,8 @@
 		4F59D1E1AEFE8D974F187BE6 /* conversion */ = {
 			isa = PBXGroup;
 			children = (
+				BDD749FA254591C8E052CB10,
+				8EAE45830C7DE886C140D709,
 				9B0FE7E968406A8B38CDC2E8,
 				738E296A5EF0DA62F12E13C9,
 				4582B5B6C9398D7C13B0E4B3,
@@ -3584,7 +3588,7 @@
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCE_COREGRAPHICS_DRAW_ASYNC=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.8.3b3",
+					"JUCE_APP_VERSION=1.8.3b4",
 					"JUCE_APP_VERSION_HEX=0x10803",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -3654,7 +3658,7 @@
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCE_COREGRAPHICS_DRAW_ASYNC=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.8.3b3",
+					"JUCE_APP_VERSION=1.8.3b4",
 					"JUCE_APP_VERSION_HEX=0x10803",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",

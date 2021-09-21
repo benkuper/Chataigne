@@ -68,6 +68,7 @@
 #include "Mapping/Filter/filters/conversion/ConvertedParameter.h"
 #include "Mapping/Filter/filters/conversion/ConvertedParameterManager.h"
 #include "Mapping/Filter/filters/conversion/ConversionFilter.h"
+#include "Mapping/Filter/filters/conversion/MergeFilter.h"
 
 #include "Mapping/Filter/filters/TimeFilter.h"
 #include "Mapping/Filter/filters/number/CropFilter.h"

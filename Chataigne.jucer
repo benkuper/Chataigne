@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.8.3b3"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.8.3b4"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="VST_LOGGING=0&#10;JUCE_MODAL_LOOPS_PERMITTED=1&#10;"
@@ -470,6 +470,8 @@
                         file="Source/Common/Processor/Mapping/Filter/filters/number/SimpleSmoothFilter.h"/>
                 </GROUP>
                 <GROUP id="{B7FF85C8-5933-B0A6-01EB-956029CA3808}" name="conversion">
+                  <FILE id="qk6OPl" name="MergeFilter.cpp" compile="0" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/conversion/MergeFilter.cpp"/>
+                  <FILE id="rFtfq7" name="MergeFilter.h" compile="0" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/conversion/MergeFilter.h"/>
                   <FILE id="w9wUtl" name="ConversionParamValueLink.cpp" compile="0" resource="0"
                         file="Source/Common/Processor/Mapping/Filter/filters/conversion/ConversionParamValueLink.cpp"/>
                   <FILE id="zPkcSd" name="ConversionParamValueLink.h" compile="0" resource="0"

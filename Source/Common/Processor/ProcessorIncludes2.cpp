@@ -24,6 +24,7 @@
 #include "Mapping/Filter/filters/conversion/ConvertedParameter.cpp"
 #include "Mapping/Filter/filters/conversion/ConvertedParameterManager.cpp"
 #include "Mapping/Filter/filters/conversion/SimpleConversionFilters.cpp"
+#include "Mapping/Filter/filters/conversion/MergeFilter.cpp"
 #include "Mapping/Filter/filters/conversion/ui/ConversionConnector.cpp"
 #include "Mapping/Filter/filters/conversion/ui/ConversionFilterEditor.cpp"
 #include "Mapping/Filter/filters/conversion/ui/ConversionParamValueLinkUI.cpp"

@@ -43,30 +43,22 @@ MappingFilter::ProcessResult CurveMapFilter::processSingleParameterInternal(Para
 		else normVal = jmap<float>((float)remappedVal, out->minimumValue, out->maximumValue, 0.f, 1.f);
 
 		curve.position->setValue(normVal); //for feedback
-
 	}
 
-	if (source->hasRange())
+	if (source->isComplex())
 	{
-		if (source->isComplex())
+		var normCurveVal;
+		for (int i = 0; i < source->value.size(); i++)
 		{
-			var normCurveVal;
-			for (int i = 0; i < source->value.size(); i++)
-			{
-				float normVal = jmap<float>(remappedVal[i], (float)out->minimumValue[i], (float)out->maximumValue[i], 0.f, 1.f);
-				normCurveVal.append(curve.getValueAtPosition(normVal));
-			}
-			out->setNormalizedValue(normCurveVal);
+			float normVal = jmap<float>(remappedVal[i], (float)out->minimumValue[i], (float)out->maximumValue[i], 0.f, 1.f);
+			normCurveVal.append(curve.getValueAtPosition(normVal));
 		}
-		else
-		{
-			float normVal = jmap<float>((float)remappedVal, out->minimumValue, out->maximumValue, 0.f, 1.f); 
-			out->setNormalizedValue(curve.getValueAtPosition(normVal));
-		}
+		out->setNormalizedValue(normCurveVal);
 	}
 	else
 	{
-		out->setValue(source->getValue());
+		float normVal = jmap<float>((float)remappedVal, out->minimumValue, out->maximumValue, 0.f, 1.f); 
+		out->setNormalizedValue(curve.getValueAtPosition(normVal));
 	}
 
 	return CHANGED;
