@@ -11,7 +11,7 @@
 MergeFilter::MergeFilter(var params, Multiplex* multiplex)
 {
 	op = filterParams.addEnumParameter("Operator", "Operator to merge the input values to");
-	op->addOption("Min", MIN)->addOption("Max", MAX)->addOption("Average", AVERAGE);
+	op->addOption("Min", MIN)->addOption("Max", MAX)->addOption("Average", AVERAGE)->addOption("Sum", SUM);
 
 	filterTypeFilters.add(Controllable::FLOAT, Controllable::INT, Controllable::BOOL, Controllable::COLOR, Controllable::POINT2D, Controllable::POINT3D);
 }
@@ -59,7 +59,7 @@ MappingFilter::ProcessResult MergeFilter::processInternal(Array<Parameter*> inpu
 
 		for (auto& i : inputs)
 		{
-			if (o == AVERAGE) val += i->floatValue();
+			if (o == AVERAGE || o == SUM) val += i->floatValue();
 			else val = o == MIN ? jmin(val, i->floatValue()) : jmax(val, i->floatValue());
 		}
 		if (o == AVERAGE) val /= inputs.size();
@@ -78,7 +78,7 @@ MappingFilter::ProcessResult MergeFilter::processInternal(Array<Parameter*> inpu
 			for (int j = 0; j < i->value.size() && j < vals.size(); j++)
 			{
 				float iVal = i->value[j];
-				if (o == AVERAGE) vals[j] =(float)vals[j] + iVal;
+				if (o == AVERAGE || o == SUM) vals[j] =(float)vals[j] + iVal;
 				else vals[j] = o == MIN ? jmin((float)vals[j], iVal) : jmax((float)vals[j], iVal);
 			}
 		}
