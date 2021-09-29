@@ -160,6 +160,8 @@ void HTTPModule::createControllablesFromJSONResult(var data, ControllableContain
 
 	for (auto& p : props)
 	{
+		if (!p.name.isValid()) continue;
+
 		if (p.value.isArray())
 		{
 			for (int i = 0; i < p.value.size(); ++i)
