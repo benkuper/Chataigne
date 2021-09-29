@@ -19,11 +19,13 @@ KeyboardModuleCommands::KeyboardModuleCommands(KeyboardModule* _module, CommandC
 	
 	keyID = addEnumParameter("Key", "The key to hit");
 
+#if JUCE_WINDOWS
 	HashMap<int, String>::Iterator it(WindowsHooker::getInstance()->keyMap);
 	while(it.next())
 	{
 		keyID->addOption(it.getValue(), it.getKey());
 	}
+#endif
 
 	if (type == KEY_HIT)
 	{
