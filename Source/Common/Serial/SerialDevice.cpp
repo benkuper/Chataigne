@@ -315,6 +315,6 @@ SerialDeviceInfo::SerialDeviceInfo(String _port, String _description, String _ha
     }
     
 	deviceID = hardwareID;
-    uniqueDescription = description + "(SN : " + sn + ")";
+    uniqueDescription = (vid == 0 && pid == 0)? _port : description + "(SN : " + sn + ")";
 #endif
 }
