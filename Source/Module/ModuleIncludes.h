@@ -70,6 +70,7 @@
 #include "modules/websocket/WebSocketServerModule.h"
 
 //#include "modules/controller/keyboard/KeyboardMacFunctions.h" //with #if JUCE_MAC inside KeyboardModule.cpp
+#include "modules/controller/keyboard/WindowsHooker.h"
 #include "modules/controller/keyboard/KeyboardModule.h"
 #include "modules/controller/keyboard/commands/KeyboardModuleCommands.h"
 

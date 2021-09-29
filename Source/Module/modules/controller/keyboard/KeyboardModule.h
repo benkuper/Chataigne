@@ -13,8 +13,12 @@
 using namespace juce;
 
 class KeyboardModule :
-	public Module,
-	public KeyListener
+	public Module
+#if JUCE_WINDOWS
+	,public WindowsHooker::Listener
+#else
+	,public KeyListener
+#endif
 {
 public:
 	KeyboardModule();
@@ -30,15 +34,23 @@ public:
 	BoolParameter * alt;
 
 	ControllableContainer keysCC;
+	HashMap<int, BoolParameter*> keyMap;
 
 	void sendKeyDown(int keyID);
 	void sendKeyUp(int keyID);
 	void sendKeyHit(int keyID, bool ctrlPressed, bool altPressed, bool shiftPressed);
 
+
+#if JUCE_WINDOWS
+	void keyChanged(int keyCode, bool pressed);
+
+#else
 	virtual bool keyPressed(const KeyPress& key, Component* originatingComponent) override;
 	virtual bool keyStateChanged(bool isKeyDown, Component* originatingComponent) override;
+#endif
 
 	static KeyboardModule * create() { return new KeyboardModule(); }
 	virtual String getDefaultTypeString() const override { return "Keyboard"; }
+
 
 };

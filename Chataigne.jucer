@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.8.3b5"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.8.3b6"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="VST_LOGGING=0&#10;JUCE_MODAL_LOOPS_PERMITTED=1&#10;"
@@ -923,6 +923,9 @@
                     file="Source/Module/modules/controller/keyboard/KeyboardModule.cpp"/>
               <FILE id="CYr9Wv" name="KeyboardModule.h" compile="0" resource="0"
                     file="Source/Module/modules/controller/keyboard/KeyboardModule.h"/>
+              <FILE id="KPN1AM" name="WindowsHooker.cpp" compile="0" resource="0"
+                    file="Source/Module/modules/controller/keyboard/WindowsHooker.cpp"/>
+              <FILE id="UGSpnr" name="WindowsHooker.h" compile="0" resource="0" file="Source/Module/modules/controller/keyboard/WindowsHooker.h"/>
             </GROUP>
             <GROUP id="{122191F4-B849-F53D-521E-9F1E09A3A5C0}" name="kinect">
               <FILE id="vmVn7s" name="KinectV2Module.cpp" compile="0" resource="0"

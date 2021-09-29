@@ -1984,6 +1984,9 @@
     <ClCompile Include="..\..\Source\Module\modules\controller\keyboard\KeyboardModule.cpp">
       <Filter>Chataigne\Source\Module\modules\controller\keyboard</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\controller\keyboard\WindowsHooker.cpp">
+      <Filter>Chataigne\Source\Module\modules\controller\keyboard</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\controller\kinect\KinectV2Module.cpp">
       <Filter>Chataigne\Source\Module\modules\controller\kinect</Filter>
     </ClCompile>
@@ -6049,6 +6052,9 @@
       <Filter>Chataigne\Source\Module\modules\controller\keyboard</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\controller\keyboard\KeyboardModule.h">
+      <Filter>Chataigne\Source\Module\modules\controller\keyboard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\controller\keyboard\WindowsHooker.h">
       <Filter>Chataigne\Source\Module\modules\controller\keyboard</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\controller\kinect\KinectV2Module.h">

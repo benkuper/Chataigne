@@ -65,6 +65,10 @@ ChataigneEngine::~ChataigneEngine()
 
 	isClearing = true;
 
+#if JUCE_WINDOWS
+	WindowsHooker::deleteInstance();
+#endif
+
 	ZeroconfManager::deleteInstance();
 	CommunityModuleManager::deleteInstance();
 	ModuleRouterManager::deleteInstance();

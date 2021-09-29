@@ -335,6 +335,7 @@
 		484D96DB30E2DDEA4E9AA343 /* ModuleCommandTesterEditor.cpp */ /* ModuleCommandTesterEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ModuleCommandTesterEditor.cpp; path = ../../Source/Module/ui/ModuleCommandTesterEditor.cpp; sourceTree = SOURCE_ROOT; };
 		4882C84B587A01AB6A9177D0 /* ChataigneAudioLayerPanel.h */ /* ChataigneAudioLayerPanel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ChataigneAudioLayerPanel.h; path = ../../Source/TimeMachine/Sequence/layers/audio/ui/ChataigneAudioLayerPanel.h; sourceTree = SOURCE_ROOT; };
 		48D6B341F756699DA2054362 /* CoreAudio.framework */ /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		4940D086A0FEB08B35EF76A8 /* WindowsHooker.h */ /* WindowsHooker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WindowsHooker.h; path = ../../Source/Module/modules/controller/keyboard/WindowsHooker.h; sourceTree = SOURCE_ROOT; };
 		498E36E4BBEBDCC6F4155CB4 /* Module.cpp */ /* Module.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Module.cpp; path = ../../Source/Module/Module.cpp; sourceTree = SOURCE_ROOT; };
 		4A2D120957D96E42971F3697 /* Carbon.framework */ /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		4A2E002198407598BE5F2D27 /* BinaryData.h */ /* BinaryData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BinaryData.h; path = ../../JuceLibraryCode/BinaryData.h; sourceTree = SOURCE_ROOT; };
@@ -789,6 +790,7 @@
 		DE11D226FA3C16D2908002A7 /* FFTAnalyzerManager.h */ /* FFTAnalyzerManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FFTAnalyzerManager.h; path = ../../Source/Module/modules/audio/analysis/FFTAnalyzerManager.h; sourceTree = SOURCE_ROOT; };
 		DF7E4C10AE96476C8D27E827 /* PowerPoint.png */ /* PowerPoint.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PowerPoint.png; path = ../../Resources/Modules/PowerPoint.png; sourceTree = SOURCE_ROOT; };
 		E001D75A29B5AF290246E897 /* ActivationCondition.cpp */ /* ActivationCondition.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ActivationCondition.cpp; path = ../../Source/Common/Processor/Action/Condition/conditions/ActivationCondition/ActivationCondition.cpp; sourceTree = SOURCE_ROOT; };
+		E08D835A5E1D91FDDEA88D11 /* WindowsHooker.cpp */ /* WindowsHooker.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = WindowsHooker.cpp; path = ../../Source/Module/modules/controller/keyboard/WindowsHooker.cpp; sourceTree = SOURCE_ROOT; };
 		E0DAA85E4ED4F51B9EFB98B8 /* Morpher.cpp */ /* Morpher.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Morpher.cpp; path = ../../Source/CustomVariables/Preset/Morpher/Morpher.cpp; sourceTree = SOURCE_ROOT; };
 		E19D6C3FD6EB1EF65F6461E2 /* TCP Server.png */ /* TCP Server.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TCP Server.png"; path = "../../Resources/Modules/TCP Server.png"; sourceTree = SOURCE_ROOT; };
 		E1DC8CBAF35FAAB742559C6B /* list_ports_win.cc */ /* list_ports_win.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = list_ports_win.cc; path = ../../Source/Common/Serial/lib/serial/impl/list_ports/list_ports_win.cc; sourceTree = SOURCE_ROOT; };
@@ -3228,6 +3230,8 @@
 				3F35FA52B76126D0BEC152CC,
 				53A5A48ED7FEF0F32D648EA3,
 				6DDE46B937874C068E754258,
+				E08D835A5E1D91FDDEA88D11,
+				4940D086A0FEB08B35EF76A8,
 			);
 			name = keyboard;
 			sourceTree = "<group>";
@@ -3588,7 +3592,7 @@
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCE_COREGRAPHICS_DRAW_ASYNC=1",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.8.3b5",
+					"JUCE_APP_VERSION=1.8.3b6",
 					"JUCE_APP_VERSION_HEX=0x10803",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -3656,7 +3660,7 @@
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCE_COREGRAPHICS_DRAW_ASYNC=1",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.8.3b5",
+					"JUCE_APP_VERSION=1.8.3b6",
 					"JUCE_APP_VERSION_HEX=0x10803",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",

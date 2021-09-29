@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    KeyboardModule.cpp
-    Created: 15 Mar 2018 9:36:44am
-    Author:  Ben
+	KeyboardModule.cpp
+	Created: 15 Mar 2018 9:36:44am
+	Author:  Ben
 
   ==============================================================================
 */
@@ -15,8 +15,10 @@ OrganicApplication::MainWindow* getMainWindow();
 #define KEY_CTRL VK_CONTROL
 #define KEY_ALT VK_MENU
 #define KEY_SHIFT VK_SHIFT
+
 #elif JUCE_MAC
 #include "KeyboardMacFunctions.h"
+#include "KeyboardModule.h"
 #define KEY_CTRL 55
 #define KEY_ALT 58
 #define KEY_SHIFT 57
@@ -29,14 +31,35 @@ OrganicApplication::MainWindow* getMainWindow();
 KeyboardModule::KeyboardModule() :
 	Module(getDefaultTypeString()),
 	window(nullptr),
-	keysCC("Keys")
+	keysCC("Keys"),
+	combination(nullptr),
+	lastKey(nullptr),
+	ctrl(nullptr),
+	shift(nullptr),
+	command(nullptr)
 {
 	setupIOConfiguration(true, true);
 
-	window = getMainWindow();
-	if(window != nullptr) window->addKeyListener(this);
-
 	lastKey = valuesCC.addStringParameter("Last Key", "Last Key pressed", "");
+
+#if JUCE_WINDOWS
+	WindowsHooker::getInstance()->addListener(this);
+
+	for (int i = 0; i <= 255; i++)
+	{
+		String s = WindowsHooker::getInstance()->getKeyName(i);
+		if (s.isEmpty()) continue;
+		String sn = "key" + String(i);
+		BoolParameter* p = new BoolParameter(s, "Is this key pressed ?", false);
+		p->setCustomShortName(sn);
+		keysCC.addParameter(p);
+		keyMap.set(i, p);
+	}
+
+#else
+	window = getMainWindow();
+	if (window != nullptr) window->addKeyListener(this);
+
 	combination = valuesCC.addStringParameter("Current Combination", "The current combination in a string representation", "");
 	ctrl = valuesCC.addBoolParameter("Ctrl", "Is Control down ?", false);
 	shift = valuesCC.addBoolParameter("Shift", "Is shift down ?", false);
@@ -48,22 +71,27 @@ KeyboardModule::KeyboardModule() :
 		String s = KeyPress(i).getTextDescription();
 		if (i >= 97 && i <= 122) continue;
 		String sn = "key" + String(i - 33);
-		BoolParameter * p = new BoolParameter(s, "Is this key pressed ?", false);
+		BoolParameter* p = new BoolParameter(s, "Is this key pressed ?", false);
 		p->setCustomShortName(sn);
 		keysCC.addParameter(p);
 	}
+#endif
 
 	valuesCC.addChildControllableContainer(&keysCC);
 
 	defManager->add(CommandDefinition::createDef(this, "", "Key Down", &KeyboardModuleCommands::create)->addParam("type", KeyboardModuleCommands::KEY_DOWN));
 	defManager->add(CommandDefinition::createDef(this, "", "Key Up", &KeyboardModuleCommands::create)->addParam("type", KeyboardModuleCommands::KEY_UP));
 	defManager->add(CommandDefinition::createDef(this, "", "Key hit", &KeyboardModuleCommands::create)->addParam("type", KeyboardModuleCommands::KEY_HIT));
-
 }
 
 KeyboardModule::~KeyboardModule()
 {
-	if(TopLevelWindow::getActiveTopLevelWindow() == window) window->removeKeyListener(this);
+
+#if JUCE_WINDOWS
+	if (WindowsHooker::getInstanceWithoutCreating() != nullptr) WindowsHooker::getInstance()->removeListener(this);
+#else
+	if (TopLevelWindow::getActiveTopLevelWindow() == window) window->removeKeyListener(this);
+#endif
 }
 
 void KeyboardModule::sendKeyDown(int keyID)
@@ -85,7 +113,7 @@ void KeyboardModule::sendKeyDown(int keyID)
 	ip.ki.dwFlags = 0; // 0 for key press
 	SendInput(1, &ip, sizeof(INPUT));
 #elif JUCE_MAC
-   // keyboardmac::sendMacKeyEvent(keyID, true);
+	// keyboardmac::sendMacKeyEvent(keyID, true);
 #endif
 }
 
@@ -106,9 +134,9 @@ void KeyboardModule::sendKeyUp(int keyID)
 	ip.ki.wVk = keyID; // virtual-key code for the "a" key
 	ip.ki.dwFlags = KEYEVENTF_KEYUP; // KEYEVENTF_KEYUP for key release
 	SendInput(1, &ip, sizeof(INPUT));
-    
+
 #elif JUCE_MAC
-   // keyboardmac::sendMacKeyEvent(keyID, false);
+	// keyboardmac::sendMacKeyEvent(keyID, false);
 #endif
 
 }
@@ -123,7 +151,7 @@ void KeyboardModule::sendKeyHit(int keyID, bool ctrlPressed, bool altPressed, bo
 
 	sendKeyDown(keyID);
 	sendKeyUp(keyID);
-    
+
 	if (ctrlPressed) sendKeyUp(KEY_CTRL);
 	if (altPressed) sendKeyUp(KEY_ALT);
 	if (shiftPressed) sendKeyUp(KEY_SHIFT);
@@ -131,10 +159,29 @@ void KeyboardModule::sendKeyHit(int keyID, bool ctrlPressed, bool altPressed, bo
 	outActivityTrigger->trigger();
 }
 
-bool KeyboardModule::keyPressed(const KeyPress & key, juce::Component * originatingComponent)
+
+
+#if JUCE_WINDOWS
+void KeyboardModule::keyChanged(int keyCode, bool pressed)
+{
+	if (!enabled->boolValue()) return;
+	
+	String kn = WindowsHooker::getInstance()->getKeyName(keyCode);
+	inActivityTrigger->trigger();
+	if (logIncomingData->boolValue())
+	{
+		NLOG(niceName, "Key " << String(pressed ? "pressed" : "released") << " : " << kn << " (keyCode : " << keyCode << ")");
+	}
+	
+	lastKey->setValue(pressed ? kn : "");
+	if (keyMap.contains(keyCode)) keyMap[keyCode]->setValue(pressed);
+}
+#else
+
+bool KeyboardModule::keyPressed(const KeyPress& key, juce::Component* originatingComponent)
 {
 	if (!enabled->boolValue()) return false;
-	
+
 	char k = (char)key.getTextCharacter();
 	String ks = String::fromUTF8(&k, 1);
 	lastKey->setValue(ks.toLowerCase());
@@ -151,7 +198,7 @@ bool KeyboardModule::keyPressed(const KeyPress & key, juce::Component * originat
 	return false;
 }
 
-bool KeyboardModule::keyStateChanged(bool isKeyDown, juce::Component * originatingComponent)
+bool KeyboardModule::keyStateChanged(bool isKeyDown, juce::Component* originatingComponent)
 {
 	if (!enabled->boolValue()) return false;
 
@@ -176,3 +223,5 @@ bool KeyboardModule::keyStateChanged(bool isKeyDown, juce::Component * originati
 	}
 	return false;
 }
+
+#endif
