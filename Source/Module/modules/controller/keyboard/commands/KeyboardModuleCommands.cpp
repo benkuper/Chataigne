@@ -18,11 +18,11 @@ KeyboardModuleCommands::KeyboardModuleCommands(KeyboardModule* _module, CommandC
 	type = (Type)(int)params.getProperty("type", KEY_HIT);
 	
 	keyID = addEnumParameter("Key", "The key to hit");
-	for (int i = 0; i < 127; ++i)
+
+	HashMap<int, String>::Iterator it(WindowsHooker::getInstance()->keyMap);
+	while(it.next())
 	{
-		KeyPress p = KeyPress(i);
-		if (p.getTextDescription().isEmpty()) continue;
-		keyID->addOption(p.getTextDescriptionWithIcons(), i);
+		keyID->addOption(it.getValue(), it.getKey());
 	}
 
 	if (type == KEY_HIT)
