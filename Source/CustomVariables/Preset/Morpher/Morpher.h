@@ -66,8 +66,10 @@ public:
 	void onContainerParameterChanged(Parameter* p) override;
 	void onControllableFeedbackUpdate(ControllableContainer * cc, Controllable* c) override;
 
-	void itemAdded(CVPreset *) override;
+	void itemAdded(CVPreset*) override;
+	void itemsAdded(Array<CVPreset *>) override;
 	void itemRemoved(CVPreset*) override;
+	void itemsRemoved(Array<CVPreset*>) override;
 
 	void run() override;
 

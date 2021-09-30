@@ -10,6 +10,7 @@
 
 #define JC_VORONOI_IMPLEMENTATION
 #include "jc_voronoi.h"
+#include "Morpher.h"
 
 Morpher::Morpher(CVPresetManager* presetManager) :
 	ControllableContainer("Morpher"),
@@ -85,6 +86,8 @@ Array<Point<float>> Morpher::getNormalizedTargetPoints()
 
 CVPreset* Morpher::getEnabledTargetAtIndex(int index)
 {
+	ScopedLock lock(presetManager->items.getLock());
+
 	int i = 0;
 	for (auto& mt : presetManager->items)
 	{
@@ -311,9 +314,21 @@ void Morpher::itemAdded(CVPreset* cvp)
 	computeZones();
 }
 
+void Morpher::itemsAdded(Array<CVPreset*> it)
+{
+	for(auto & cvp : it) cvp->addControllableContainerListener(this);
+	computeZones();
+}
+
 void Morpher::itemRemoved(CVPreset* cvp)
 {
-	cvp->addControllableContainerListener(this);
+	cvp->removeControllableContainerListener(this);
+	computeZones();
+}
+
+void Morpher::itemsRemoved(Array<CVPreset*> it)
+{
+	for (auto& cvp : it) cvp->removeControllableContainerListener(this);
 	computeZones();
 }
 

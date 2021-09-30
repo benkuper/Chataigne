@@ -178,12 +178,15 @@ void MorpherViewUI::paintBackground(Graphics& g)
 	{
 		if (morpher->diagram == nullptr || manager->items.size() == 0) break;
 
+		GenericScopedLock lock(morpher->voronoiLock);
+
 		const jcv_site* sites = jcv_diagram_get_sites(morpher->diagram.get());
 		for (int i = 0; i < morpher->diagram->numsites; ++i)
 		{
 			jcv_site s = sites[i];
 			jcv_graphedge* e = s.edges;
 			MorphTarget* target = morpher->getEnabledTargetAtIndex(s.index);
+			if (target == nullptr) continue;
 			Colour c = target->targetColor->getColor();
 			float alpha = morpher->diagramOpacity->floatValue();
 			//if (i == manager->curZoneIndex->intValue()) alpha = jmin<float>(alpha*2,1);
