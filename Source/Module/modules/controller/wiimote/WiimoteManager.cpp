@@ -62,7 +62,7 @@ void WiimoteManager::reconnect(bool autoPairIfNotFound)
 
 	//only support for windows for now
 #if JUCE_WINDOWS
-	if (wiimotes.size() == 0 && autoPairIfNotFound)
+	if (numConnected == 0 && autoPairIfNotFound)
 	{
 		NLOG("Wiimote", "No wiimote found, trying auto-pairing..");
 		int  pairResult = WiiPairUtil::pair();
@@ -143,6 +143,7 @@ void Wiimote::setDevice(wiimote_t* _device)
 	wiiuse_motion_sensing(device, 1);
 	wiiuse_set_flags(device, WIIUSE_SMOOTHING, 0);
 	wiiuse_set_smooth_alpha(device, smoothing);
+	wiiuse_set_ir(device, 1);
 
 	switch (id)
 	{
@@ -287,7 +288,7 @@ void Wiimote::setConnected(bool value)
 	if (isConnected != value)
 	{
 		isConnected = value;
-		listeners.call(isConnected ? &Listener::wiimoteDisconnected : &Listener::wiimoteDisconnected, this);
+		listeners.call(isConnected ? &Listener::wiimoteConnected : &Listener::wiimoteDisconnected, this);
 	}
 }
 

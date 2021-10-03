@@ -49,7 +49,7 @@ DWORD WiiPairUtil::ShowErrorCode(LPTSTR msg, DWORD dw)
 		NULL
 	);
 
-	DBG(String(msg) << " : "<< String((LPSTR)lpMsgBuf));
+	NLOGERROR("Wiimote Pairing", String(msg) << " : "<< String((LPSTR)lpMsgBuf));
 
 	LocalFree(lpMsgBuf);
 

@@ -65,6 +65,7 @@ public:
 	{
 	public:
 		virtual ~Listener() {}
+		virtual void wiimoteConnected(Wiimote*) {}
 		virtual void wiimoteDisconnected(Wiimote *) {}
 		virtual void wiimoteButtonPressed(Wiimote *,WiimoteButton) {}
 		virtual void wiimoteButtonReleased(Wiimote *,WiimoteButton) {}

@@ -75,6 +75,7 @@ WiimoteModule::WiimoteModule(const String & name) :
 
 	for (auto &c : valuesCC.controllables) c->isControllableFeedbackOnly = true;
 
+	connectionFeedbackRef = connected;
 
 	WiimoteManager::getInstance()->addListener(this);
 }
@@ -91,7 +92,7 @@ WiimoteModule::~WiimoteModule()
 
 void WiimoteModule::deviceConnected(Wiimote * w)
 {
-	if (w != device) return;
+	if (device != nullptr || w == device) return;
 
 	device = w;
 	w->addListener(this);
