@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    WiimoteManager.cpp
-    Created: 27 Dec 2016 1:15:35am
-    Author:  Ben
+	WiimoteManager.cpp
+	Created: 27 Dec 2016 1:15:35am
+	Author:  Ben
 
   ==============================================================================
 */
@@ -13,8 +13,8 @@ juce_ImplementSingleton(WiimoteManager)
 
 WiimoteManager::WiimoteManager() :
 	Thread("wiimoteManager"),
-    wiiuseIsInit(false),
-    reinitWiimotes(false)
+	wiiuseIsInit(false),
+	reinitWiimotes(false)
 {
 	startThread();
 }
@@ -27,14 +27,14 @@ WiimoteManager::~WiimoteManager()
 
 }
 
-void WiimoteManager::addWiimote(wiimote_t * device)
+void WiimoteManager::addWiimote(wiimote_t* device)
 {
-	Wiimote * w = new Wiimote(wiimotes.size(),device);
+	Wiimote* w = new Wiimote(wiimotes.size(), device);
 	wiimotes.add(w);
 	listeners.call(&Listener::deviceConnected, w);
 }
 
-void WiimoteManager::removeWiimote(Wiimote * w)
+void WiimoteManager::removeWiimote(Wiimote* w)
 {
 	wiimotes.removeObject(w, false);
 	listeners.call(&Listener::deviceDisconnected, w);
@@ -87,28 +87,28 @@ void WiimoteManager::reconnect(bool autoPairIfNotFound)
 void WiimoteManager::run()
 {
 	devices = wiiuse_init(MAX_WIIMOTES);
-	
-	reconnect(true);
 
+	reconnect(true);
 
 	int i = 0;
 	numReconnectTries = 0;
 	while (!threadShouldExit())
 	{
-		
+
 		if (reinitWiimotes)
 		{
 			reconnect(true);
 		}
 
 		if (wiiuse_poll(devices, MAX_WIIMOTES)) {
-			for (auto &w : wiimotes)
+			for (auto& w : wiimotes)
 			{
 				w->update();
 			}
 
 			i = 0;
-		} else
+		}
+		else
 		{
 			i++;
 		}
@@ -123,7 +123,7 @@ void WiimoteManager::run()
 	}
 }
 
-Wiimote::Wiimote(int _id, wiimote_t * _device) :
+Wiimote::Wiimote(int _id, wiimote_t* _device) :
 	id(_id),
 	smoothing(.5f)
 {
@@ -136,10 +136,10 @@ Wiimote::~Wiimote()
 
 
 
-void Wiimote::setDevice(wiimote_t * _device)
+void Wiimote::setDevice(wiimote_t* _device)
 {
 	device = _device;
-	
+
 	wiiuse_motion_sensing(device, 1);
 	wiiuse_set_flags(device, WIIUSE_SMOOTHING, 0);
 	wiiuse_set_smooth_alpha(device, smoothing);
@@ -174,12 +174,26 @@ void Wiimote::update()
 	switch (device->event)
 	{
 	case WIIUSE_EVENT_TYPE::WIIUSE_EVENT:
+	{
+
 		for (int i = 0; i < NUM_WIIMOTE_BUTTONS; ++i) setButton(i, device->btns >> i & 1);
 
-		setAccel(device->gforce.x,device->gforce.y,device->gforce.z,device->accel.x, device->accel.y, device->accel.z);
-		setYPR(device->orient.yaw/180, -device->orient.pitch/90, device->orient.roll/180);
+		setAccel(device->gforce.x, device->gforce.y, device->gforce.z, device->accel.x, device->accel.y, device->accel.z);
+		setYPR(device->orient.yaw / 180, -device->orient.pitch / 90, device->orient.roll / 180);
 		setNunchuckXY(device->exp.nunchuk.js.x, device->exp.nunchuk.js.y);
-		break;
+
+		Array<Point<float>> points;
+
+		Point<int> vres(device->ir.vres[0], device->ir.vres[1]);
+
+		for (int i = 0; i < (int)device->ir.num_dots; i++)
+		{
+			points.add({ (device->ir.dot[i].x * 1.0f / vres.x - .5f) * 2, (device->ir.dot[i].y * 1.0f / vres.y - .5f) * 2 }); //normalize -1 / 1
+		}
+
+		setIRPoints((int)device->ir.num_dots, device->ir.distance, Vector3D<float>(device->ir.x, device->ir.y, device->ir.z), points);
+	}
+	break;
 
 	case WIIUSE_EVENT_TYPE::WIIUSE_CONNECT:
 		NLOG("Wiimote", "Wiimote disconnected");
@@ -187,21 +201,21 @@ void Wiimote::update()
 
 	case WIIUSE_EVENT_TYPE::WIIUSE_DISCONNECT:
 	case WIIUSE_EVENT_TYPE::WIIUSE_UNEXPECTED_DISCONNECT:
-		NLOG("Wiimote","Wiimote disconnected");
+		NLOG("Wiimote", "Wiimote disconnected");
 		//WiimoteManager::getInstance()->reloadWiimotes = true;
 		break;
 
 	case WIIUSE_EVENT_TYPE::WIIUSE_NUNCHUK_INSERTED:
 		NLOG("Wiimote", "Nunchuck plugged");
-		listeners.call(&Listener::wiimoteNunchuckPlugged,this);
+		listeners.call(&Listener::wiimoteNunchuckPlugged, this);
 		break;
 
-		
+
 	case WIIUSE_EVENT_TYPE::WIIUSE_NUNCHUK_REMOVED:
 		NLOG("Wiimote", "Nunchuck unplugged");
 		listeners.call(&Listener::wiimoteNunchuckUnplugged, this);
 		break;
-		
+
 	case WIIUSE_EVENT_TYPE::WIIUSE_MOTION_PLUS_ACTIVATED:
 		NLOG("Wiimote", "Motionplus plugged");
 		listeners.call(&Listener::wiimoteMotionPlusPlugged, this);
@@ -220,14 +234,15 @@ void Wiimote::update()
 		NLOG("Wiimote", "Classic unplugged");
 		break;
 
-        default:
-            break;
+
+	default:
+		break;
 	}
 }
 
 void Wiimote::setButton(int index, bool value)
 {
-//	if(value) DBG("Push button " << index);
+	//	if(value) DBG("Push button " << index);
 	if (buttons[index] == value) return;
 
 	buttons[index] = value;
@@ -272,7 +287,7 @@ void Wiimote::setConnected(bool value)
 	if (isConnected != value)
 	{
 		isConnected = value;
-		listeners.call(isConnected?&Listener::wiimoteDisconnected:&Listener::wiimoteDisconnected,this);
+		listeners.call(isConnected ? &Listener::wiimoteDisconnected : &Listener::wiimoteDisconnected, this);
 	}
 }
 
@@ -283,4 +298,13 @@ void Wiimote::setBatteryLevel(float value)
 		batteryLevel = value;
 		listeners.call(&Listener::wiimoteBatteryLevelChanged, this);
 	}
+}
+
+void Wiimote::setIRPoints(int numDots, float distance, Vector3D<float> estimatedPos, Array<Point<float>> points)
+{
+	irPoints = points;
+	irNumDots = numDots;
+	irDistance = distance;
+	irPos = estimatedPos;
+	listeners.call(&Listener::wiimoteIRPointsUpdated, this);
 }

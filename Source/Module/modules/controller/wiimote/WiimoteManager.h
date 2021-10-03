@@ -49,6 +49,11 @@ public:
 	float joystickX;
 	float joystickY;
 
+	float irDistance;
+	int irNumDots;
+	Vector3D<float> irPos;
+	Array<Point<float>> irPoints;
+
 
 	void setDevice(wiimote_t * _device);
 	void setSmoothing(float value);
@@ -66,11 +71,12 @@ public:
 		virtual void wiimoteAccelUpdated(Wiimote *) {}
 		virtual void wiimoteOrientationUpdated(Wiimote *) {}
 		virtual void wiimoteJoystickUpdated(Wiimote *) {}
+		virtual void wiimoteIRPointsUpdated(Wiimote*) {}
 		virtual void wiimoteNunchuckPlugged(Wiimote *) {}
 		virtual void wiimoteNunchuckUnplugged(Wiimote *) {}
 		virtual void wiimoteMotionPlusPlugged(Wiimote *) {}
 		virtual void wiimoteMotionPlusUnplugged(Wiimote *) {}
-		virtual void wiimoteBatteryLevelChanged(Wiimote *) {}
+		virtual void wiimoteBatteryLevelChanged(Wiimote*) {}
 	};
 
 	ListenerList<Listener> listeners;
@@ -85,6 +91,7 @@ private :
 	void setNunchuckXY(float x, float y);
 	void setConnected(bool value);
 	void setBatteryLevel(float value);
+	void setIRPoints(int numDots, float distance, Vector3D<float> estimatedPos, Array<Point<float>> points);
 
 };
 

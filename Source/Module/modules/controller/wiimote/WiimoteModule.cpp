@@ -11,7 +11,8 @@
 
 WiimoteModule::WiimoteModule(const String & name) :
 	Module(name),
-	device(nullptr)
+	device(nullptr),
+	irCC("IR")
 {
 	setupIOConfiguration(true, false);
 
@@ -60,6 +61,18 @@ WiimoteModule::WiimoteModule(const String & name) :
 
 	buttons.addArray({ bt_2,bt_1,bt_b,bt_a,bt_mi,bt_c,bt_z,bt_h,bt_le,bt_ri,bt_do,bt_up,bt_pl });
 
+	irNumPoints = irCC.addIntParameter("Num Points", "Number of detected Infrared sources by the wiimote", 0, 0, 4);
+	irDistance = irCC.addFloatParameter("Point Distance", "Distance detected by the first 2 points", 0, 0);
+	irPos = irCC.addPoint3DParameter("Position", "Estimated 3D position from the detected points");
+	for (int i = 0; i < 4; i++)
+	{
+		Point2DParameter* p2d = irCC.addPoint2DParameter("Point " + String(i + 1), "Normalized -1/1 position of this point");
+		p2d->setBounds(-1, -1, 1, 1);
+		irPoints.add(p2d);
+	}
+
+	valuesCC.addChildControllableContainer(&irCC);
+
 	for (auto &c : valuesCC.controllables) c->isControllableFeedbackOnly = true;
 
 
@@ -78,23 +91,20 @@ WiimoteModule::~WiimoteModule()
 
 void WiimoteModule::deviceConnected(Wiimote * w)
 {
-	if (device == nullptr)
-	{
-		device = w;
-		w->addListener(this);
-		connected->setValue(true);
-		smoothing->setValue(device->smoothing);
-	}
+	if (w != device) return;
+
+	device = w;
+	w->addListener(this);
+	connected->setValue(true);
+	smoothing->setValue(device->smoothing);
 }
 
 void WiimoteModule::deviceDisconnected(Wiimote * w)
 {
-	if (device == w)
-	{
-		device->removeListener(this);
-		device = nullptr;
-		connected->setValue(false);
-	}
+	if (w != device) return;
+	device->removeListener(this);
+	device = nullptr;
+	connected->setValue(false);
 }
 
 void WiimoteModule::wiimoteButtonPressed(Wiimote * w, Wiimote::WiimoteButton b)
@@ -138,28 +148,42 @@ void WiimoteModule::wiimoteJoystickUpdated(Wiimote * w)
 	nunchuckY->setValue(device->joystickY);
 }
 
-void WiimoteModule::wiimoteBatteryLevelChanged(Wiimote *)
+void WiimoteModule::wiimoteIRPointsUpdated(Wiimote* w)
 {
+	if (w != device) return;
+	irNumPoints->setValue(device->irNumDots);
+	irDistance->setValue(device->irDistance);
+	irPos->setVector(device->irPos);
+	for (int i = 0; i < device->irNumDots; i++) irPoints[i]->setPoint(device->irPoints[i]);
+}
+
+void WiimoteModule::wiimoteBatteryLevelChanged(Wiimote * w)
+{
+	if (w != device) return;
 	batteryLevel->setValue(device->batteryLevel);
 }
 
-void WiimoteModule::wiimoteNunchuckPlugged(Wiimote *)
+void WiimoteModule::wiimoteNunchuckPlugged(Wiimote *w)
 {
+	if (w != device) return;
 	nunchuckConnected->setValue(true);
 }
 
-void WiimoteModule::wiimoteNunchuckUnplugged(Wiimote *)
+void WiimoteModule::wiimoteNunchuckUnplugged(Wiimote *w)
 {
+	if (w != device) return;
 	nunchuckConnected->setValue(false);
 }
 
-void WiimoteModule::wiimoteMotionPlusPlugged(Wiimote *)
+void WiimoteModule::wiimoteMotionPlusPlugged(Wiimote *w)
 {
+	if (w != device) return;
 	motionPlusConnected->setValue(true);
 }
 
-void WiimoteModule::wiimoteMotionPlusUnplugged(Wiimote *)
+void WiimoteModule::wiimoteMotionPlusUnplugged(Wiimote *w)
 {
+	if (w != device) return;
 	motionPlusConnected->setValue(false);
 }
 

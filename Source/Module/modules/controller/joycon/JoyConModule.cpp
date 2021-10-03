@@ -18,13 +18,13 @@ JoyConModule::JoyConModule() :
 	valuesCC.addChildControllableContainer(&leftValues);
 	valuesCC.addChildControllableContainer(&rightValues);
 
+	reconnectControllers = moduleParams.addTrigger("Reconnect Controllers", "If the controllers were not powered on at initialization, then you can connect by clicking here");
 
-	leftAccelX = leftValues.addFloatParameter("Left Accel X", "", 0, -1, 1);
-	leftAccelY = leftValues.addFloatParameter("Left Accel Y", "", 0, -1, 1);
-	leftAccelZ = leftValues.addFloatParameter("Left Accel Z", "", 0, -1, 1);
-
-	leftRoll = leftValues.addFloatParameter("Left Roll", "", 0, -1, 1);
-	leftPitch = leftValues.addFloatParameter("Left Pitch", "", 0, -1, 1);
+	leftAccel = leftValues.addPoint3DParameter("Left Accel", "");
+	leftAccel->setBounds(-1, -1, -1, 1, 1, 1);
+	leftOrientation = leftValues.addPoint3DParameter("Left Roll", "");
+	leftOrientation->setBounds(-1, -1, -1, 1, 1, 1);
+	
 	leftAxis = leftValues.addPoint2DParameter("Left Axis", "");
 	leftAxis->setBounds(-1, -1, 1, 1);
 	lStick = leftValues.addBoolParameter("Left Stick", "", false);
@@ -39,12 +39,11 @@ JoyConModule::JoyConModule() :
 	minus = leftValues.addBoolParameter("-", "", false);
 	capture = leftValues.addBoolParameter("Capture", "", false);
 
-	rightAccelX = rightValues.addFloatParameter("Right Accel X", "", 0, -1, 1);
-	rightAccelY = rightValues.addFloatParameter("Right Accel Y", "", 0, -1, 1);
-	rightAccelZ = rightValues.addFloatParameter("Right Accel Z", "", 0, -1, 1);
-
-	rightRoll = rightValues.addFloatParameter("Right Roll", "", 0, -1, 1);
-	rightPitch = rightValues.addFloatParameter("Right Pitch", "", 0, -1, 1);
+	rightAccel = rightValues.addPoint3DParameter("Right Accel", "");
+	rightAccel->setBounds(-1, -1, -1, 1, 1, 1);
+	rightOrientation = rightValues.addPoint3DParameter("Right Roll", "");
+	rightOrientation->setBounds(-1, -1, -1, 1, 1, 1);
+	
 	rightAxis = rightValues.addPoint2DParameter("Right Axis", "");
 	rightAxis->setBounds(-1, -1, 1, 1);
 	rStick = rightValues.addBoolParameter("Right Stick", "", false);
@@ -62,12 +61,32 @@ JoyConModule::JoyConModule() :
 	for (auto &c : leftValues.controllables) c->isControllableFeedbackOnly = true;
 	for (auto &c : rightValues.controllables) c->isControllableFeedbackOnly = true;
 
+
 	startThread();
 }
 
 JoyConModule::~JoyConModule()
 {
 	stopThread(1000);
+}
+
+void JoyConModule::connectControllers()
+{
+	
+	LOG("Connecting Joycons...");
+	int numConnected = JslConnectDevices();
+	int connectedDevices[32];
+	int deviceHandles = JslGetConnectedDeviceHandles(connectedDevices, numConnected);
+
+	controllers.clear();
+
+	for (int i = 0; i < deviceHandles; i++) {
+		controllers.add(connectedDevices[i]);
+		JslSetPlayerNumber(connectedDevices[i], i + 1);
+	}
+
+	
+	LOG(controllers.size() << " controllers found.");
 }
 
 void JoyConModule::updateController(int controller)
@@ -81,8 +100,6 @@ void JoyConModule::updateController(int controller)
 
 	if (type == 1)
 	{
-		
-		//Left Joycon
 		up->setValue((state.buttons >> 0) & 1);
 		down->setValue((state.buttons >> 1) & 1);
 		left->setValue((state.buttons >> 2) & 1);
@@ -97,15 +114,12 @@ void JoyConModule::updateController(int controller)
 		leftSL->setValue((state.buttons >> 18) & 1);
 		leftSR->setValue((state.buttons >> 19) & 1);
 
-		leftAccelX->setValue(motion.accelX);
-		leftAccelY->setValue(motion.accelY);
-		leftAccelZ->setValue(motion.accelZ);
+		leftAccel->setVector(motion.accelX, motion.accelY, motion.accelZ);
+		leftOrientation->setVector(motion.gravX, motion.gravY, motion.gravZ);
 
 		leftAxis->setPoint(state.stickLX, state.stickLY);
 	} else if (type == 2)
 	{
-		//Right controller
-
 		plus->setValue((state.buttons >> 4) & 1);
 		rStick->setValue((state.buttons >> 7) & 1);
 		r->setValue((state.buttons >> 9) & 1);
@@ -121,11 +135,8 @@ void JoyConModule::updateController(int controller)
 		rightSL->setValue((state.buttons >> 18) & 1);
 		rightSR->setValue((state.buttons >> 19) & 1);
 
-
-
-		rightAccelX->setValue(motion.accelX);
-		rightAccelX->setValue(motion.accelY);
-		rightAccelX->setValue(motion.accelZ);
+		rightAccel->setVector(motion.accelX, motion.accelY, motion.accelZ);
+		rightOrientation->setVector(motion.gravX, motion.gravY, motion.gravZ);
 
 		rightAxis->setPoint(state.stickRX, state.stickRY);
 	}
@@ -138,43 +149,35 @@ void JoyConModule::onControllableFeedbackUpdateInternal(ControllableContainer * 
 	{
 		inActivityTrigger->trigger();
 	}
+	else if (c == reconnectControllers)
+	{
+		stopThread(20000);
+		startThread();
+	}
 }
 
 void JoyConModule::run()
-{
-	int numConnected = JslConnectDevices();
-	int connectedDevices[32];
-	int deviceHandles = JslGetConnectedDeviceHandles(connectedDevices, numConnected);
+{	
+	connectControllers();
 
-	controllers.clear();
+	float rate = jmax(50.0f, 100.0f, JslGetPollRate(0));
+	int msToWait = 1000 / rate;
 
-	for (int i = 0; i < deviceHandles;i++) {
-		controllers.add(connectedDevices[i]);
-		JslSetPlayerNumber(connectedDevices[i], i + 1);
-	}
-	
-	LOG(controllers.size() << " controllers found.");
-
-	if (controllers.size() > 0)
+	while (!threadShouldExit())
 	{
-		float rate = JslGetPollRate(0);
-		int msToWait = 1000 / rate;
-
-		while (!threadShouldExit())
+		try
 		{
-			try
-			{
-				for (auto& controller : controllers) updateController(controller);
-				wait(msToWait);
-			}
-			catch (std::exception e)
-			{
-				LOGERROR("Error while updating the joycon : " << e.what());
-				break;
-			}
+			for (auto& controller : controllers) updateController(controller);
+			wait(msToWait);
+		}
+		catch (std::exception e)
+		{
+			LOGERROR("Error while updating the joycon : " << e.what());
+			break;
 		}
 	}
-	
+
 	controllers.clear();
 	JslDisconnectAndDisposeAll();
+
 }

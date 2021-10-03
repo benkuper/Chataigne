@@ -42,6 +42,11 @@ public:
 	FloatParameter * rawAccelY;
 	FloatParameter * rawAccelZ;
 	FloatParameter * batteryLevel;
+	ControllableContainer irCC;
+	IntParameter* irNumPoints;
+	FloatParameter* irDistance;
+	Point3DParameter* irPos;
+	Array<Point2DParameter*> irPoints;
 
 	Array<BoolParameter *> buttons;
 	Wiimote * device;
@@ -53,7 +58,8 @@ public:
 	void wiimoteButtonReleased(Wiimote *, Wiimote::WiimoteButton b) override;
 	void wiimoteOrientationUpdated(Wiimote *) override;
 	void wiimoteAccelUpdated(Wiimote *) override;
-	void wiimoteJoystickUpdated(Wiimote *) override;
+	void wiimoteJoystickUpdated(Wiimote*) override;
+	void wiimoteIRPointsUpdated(Wiimote *) override;
 	void wiimoteBatteryLevelChanged(Wiimote *) override;
 	void wiimoteNunchuckPlugged(Wiimote *) override;
 	void wiimoteNunchuckUnplugged(Wiimote *) override;

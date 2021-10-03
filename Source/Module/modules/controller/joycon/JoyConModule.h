@@ -20,17 +20,16 @@ public:
 	JoyConModule();
 	~JoyConModule();
 
+	Trigger* reconnectControllers;
 	Array<int> controllers;
+	SpinLock controllerLock;
 
 	ControllableContainer leftValues;
 	ControllableContainer rightValues;
 
 	//Left controller
-	FloatParameter * leftAccelX;
-	FloatParameter * leftAccelY;
-	FloatParameter * leftAccelZ;
-	FloatParameter * leftRoll;
-	FloatParameter * leftPitch;
+	Point3DParameter* leftAccel;
+	Point3DParameter* leftOrientation;
 	Point2DParameter * leftAxis;
 	BoolParameter * lStick;
 	BoolParameter * down;
@@ -45,11 +44,8 @@ public:
 	BoolParameter *  minus;
 
 	//Right controller
-	FloatParameter * rightAccelX;
-	FloatParameter * rightAccelY;
-	FloatParameter * rightAccelZ;
-	FloatParameter * rightRoll;
-	FloatParameter * rightPitch;
+	Point3DParameter* rightAccel;
+	Point3DParameter * rightOrientation;
 	Point2DParameter * rightAxis;
 	BoolParameter * rStick;
 	BoolParameter * a;
@@ -76,6 +72,7 @@ public:
 	Vector3D<float> i_b_;
 	Vector3D<float> w_a, w_g;
 
+	void connectControllers();
 	void updateController(int id);
     void onControllableFeedbackUpdateInternal(ControllableContainer *, Controllable *c) override;
 

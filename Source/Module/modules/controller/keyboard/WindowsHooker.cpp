@@ -17,7 +17,8 @@ juce_ImplementSingleton(WindowsHooker)
 WindowsHooker::WindowsHooker() :
 	keyboardhook(nullptr)
 {
-	if (!(keyboardhook = SetWindowsHookEx(WH_KEYBOARD_LL, &WindowsHooker::keyboardCallback, NULL, 0)))
+	keyboardhook = SetWindowsHookEx(WH_KEYBOARD_LL, &WindowsHooker::keyboardCallback, NULL, 0);
+	if (keyboardhook == nullptr)
 	{
 		LOGERROR("Error hooking keyboard :\n" << String(GetLastError()));
 	}
