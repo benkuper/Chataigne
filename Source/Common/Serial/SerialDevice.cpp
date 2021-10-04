@@ -116,7 +116,7 @@ void SerialDevice::close()
 		try
 		{
 			port->close();
-			
+
 		}
 		catch (std::exception e)
 		{
@@ -151,7 +151,7 @@ int SerialDevice::writeString(String message)
 		LOGWARNING("Error writing to serial : " << e.what());
 		return 0;
 	}
-	
+
 #else
 	return 0;
 #endif
@@ -203,7 +203,7 @@ SerialReadThread::~SerialReadThread()
 void SerialReadThread::run()
 {
 #if SERIALSUPPORT
-	
+
 	std::vector<uint8_t> byteBuffer; //for cobs and data255
 
 	DBG("START SERIAL THREAD");
@@ -274,7 +274,7 @@ void SerialReadThread::run()
 						serialThreadListeners.call(&SerialThreadListener::dataReceived, var(decodedData, numDecoded - 1));
 						byteBuffer.clear();
 					}
-				}				
+				}
 			}
 			break;
 			}
@@ -284,7 +284,7 @@ void SerialReadThread::run()
 			DBG("### Serial Problem ");
 		}
 
-		
+
 	}
 
 	DBG("END SERIAL THREAD");
@@ -301,19 +301,27 @@ SerialDeviceInfo::SerialDeviceInfo(String _port, String _description, String _ha
 	deviceID = description;
 	uniqueDescription = description; //COM port integrated in description
 #else
-    StringArray eqSplit;
-    eqSplit.addTokens(hardwareID,"=","\"");
-    String sn = "not found";
-    if(eqSplit.size() >= 1)
-    {
-        vid = eqSplit[1].substring(0, 4).getHexValue32();
-        pid = eqSplit[1].substring(5, 9).getHexValue32();
-        sn = eqSplit[eqSplit.size()-1];
-    }else{
-        vid = 0;
-        pid = 0;
-    }
-    
+	String sn = "not found";
+	vid = 0;
+	pid = 0;
+
+	if (hardwareID.startsWith("USB VID:PID=")) // USB COM port
+	{
+		StringArray eqSplit;
+		eqSplit.addTokens(hardwareID, "=", "\"");
+		if (eqSplit.size() > 1)
+		{
+			vid = eqSplit[1].substring(0, 4).getHexValue32();
+			pid = eqSplit[1].substring(5, 9).getHexValue32();
+			sn = eqSplit[eqSplit.size() - 1];
+		}
+	}
+	else if (hardwareID.startsWith("PNP")) // Hardware COM port
+	{
+		pid = hardwareID.substring(3, 7).getHexValue32();
+		sn = hardwareID;
+	}
+
 	deviceID = hardwareID;
     uniqueDescription = (vid == 0 && pid == 0)? _port : description + "(SN : " + sn + ")";
 #endif
