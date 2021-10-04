@@ -39,7 +39,12 @@ void Guider::setCurrentGuide(BaseGuide * g)
 	if (guide != nullptr)
 	{
 		FileBasedDocument::SaveResult result = Engine::mainEngine->saveIfNeededAndUserAgrees();
-		if (result == FileBasedDocument::SaveResult::failedToWriteToFile) LOGERROR("Could not save the document (Failed to write to file)\nCancelled loading of the new document");
+		if (result == FileBasedDocument::userCancelledSave) return;
+		if (result == FileBasedDocument::SaveResult::failedToWriteToFile)
+		{
+			LOGERROR("Could not save the document (Failed to write to file)");
+			return;
+		}
 		else Engine::mainEngine->createNewGraph();
 
 		ShapeShifterManager::getInstance()->loadDefaultLayoutFile();
