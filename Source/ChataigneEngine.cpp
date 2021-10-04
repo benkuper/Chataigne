@@ -19,7 +19,6 @@
 #include "StateMachine/StateMachineIncludes.h"
 #include "Common/CommonIncludes.h"
 
-
 ControllableContainer* getAppSettings();
 
 ChataigneEngine::ChataigneEngine() :
@@ -193,7 +192,7 @@ void ChataigneEngine::importSelection(File f)
 	CVGroupManager::getInstance()->addItemsFromData(data.getProperty(CVGroupManager::getInstance()->shortName,var()));
 	StateManager::getInstance()->addItemsFromData(data.getProperty(StateManager::getInstance()->shortName,var()));
 	ChataigneSequenceManager::getInstance()->addItemsFromData(data.getProperty(ChataigneSequenceManager::getInstance()->shortName,var()));
-	ModuleRouterManager::getInstance()->addItemsFromData(data.getProperty(ModuleRouterManager::getInstance()->shortName,var()));
+	ModuleRouterManager::getInstance()->addItemsFromData(data.getProperty(ModuleRouterManager::getInstance()->shortName, var()));
 }
 
 void ChataigneEngine::exportSelection()
@@ -218,5 +217,5 @@ void ChataigneEngine::exportSelection()
 
 String ChataigneEngine::getMinimumRequiredFileVersion()
 {
-	return "1.5.0";
+	return "1.6.12b5";
 }
