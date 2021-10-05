@@ -8,8 +8,8 @@
   ==============================================================================
 */
 
-ActionUI::ActionUI(Action* _action) :
-	ProcessorUI(_action),
+ActionUI::ActionUI(Action* _action, bool showMiniModeBT) :
+	ProcessorUI(_action, showMiniModeBT),
 	action(_action)
 {
 	acceptedDropTypes.add("Module");
@@ -22,12 +22,12 @@ ActionUI::ActionUI(Action* _action) :
 
 	addAndMakeVisible(triggerUI.get());
 
-	if (action->cdm.validationProgressFeedback != nullptr)
+	if (action->cdm != nullptr && action->cdm->validationProgressFeedback != nullptr)
 	{
-		progressionUI.reset(action->cdm.validationProgressFeedback->createSlider());
+		progressionUI.reset(action->cdm->validationProgressFeedback->createSlider());
 		progressionUI->showValue = false;
 		addChildComponent(progressionUI.get());
-		progressionUI->setVisible(action->cdm.validationTime->floatValue() > 0);
+		progressionUI->setVisible(action->cdm->validationTime->floatValue() > 0);
 	}
 
 	updateBGColor();
@@ -65,9 +65,9 @@ void ActionUI::updateBGColor()
 void ActionUI::controllableFeedbackUpdateInternal(Controllable* c)
 {
 	ProcessorUI::controllableFeedbackUpdateInternal(c);
-	if (c == action->cdm.validationTime && progressionUI != nullptr)
+	if (action->cdm != nullptr && c == action->cdm->validationTime && progressionUI != nullptr)
 	{
-		bool v = action->cdm.validationTime->floatValue() > 0;
+		bool v = action->cdm->validationTime->floatValue() > 0;
 		if (progressionUI->isVisible() != v)
 		{
 			progressionUI->setVisible(v);
@@ -90,7 +90,7 @@ void ActionUI::resizedInternalHeader(Rectangle<int>& r)
 void ActionUI::paintOverChildren(Graphics& g)
 {
 	BaseItemUI::paintOverChildren(g);
-	if (action->cdm.getIsValid(action->getPreviewIndex()) && action->actionRoles.size() == 0) //no special roles like activate or deactivate
+	if (action->cdm != nullptr && action->cdm->getIsValid(action->getPreviewIndex()) && action->actionRoles.size() == 0) //no special roles like activate or deactivate
 	{
 		g.setColour(GREEN_COLOR);
 		g.drawRoundedRectangle(getMainBounds().toFloat(), rounderCornerSize, 2);
@@ -116,7 +116,7 @@ void ActionUI::itemDropped(const SourceDetails& details)
 		PopupMenu actionCommandMenuTrue = mui->item->getCommandMenu(20000, CommandContext::ACTION);
 		PopupMenu actionCommandMenuFalse = mui->item->getCommandMenu(30000, CommandContext::ACTION);
 
-		pm.addSubMenu("Input", actionInputMenu);
+		if(action->cdm != nullptr) pm.addSubMenu("Input", actionInputMenu);
 		pm.addSubMenu("Consequence TRUE", actionCommandMenuTrue);
 		pm.addSubMenu("Consequence FALSE", actionCommandMenuFalse);
 
@@ -128,9 +128,12 @@ void ActionUI::itemDropped(const SourceDetails& details)
 
 			if (isInput)
 			{
-				StandardCondition* c = dynamic_cast<StandardCondition*>(action->cdm.addItem(action->cdm.factory.create(StandardCondition::getTypeStringStatic(false))));
-				Controllable* target = actionInputMenu.getControllableForResult(result);
-				if (c != nullptr) c->sourceTarget->setValueFromTarget(target);
+				if (action->cdm != nullptr)
+				{
+					StandardCondition* c = dynamic_cast<StandardCondition*>(action->cdm->addItem(action->cdm->factory.create(StandardCondition::getTypeStringStatic(false))));
+					Controllable* target = actionInputMenu.getControllableForResult(result);
+					if (c != nullptr) c->sourceTarget->setValueFromTarget(target);
+				}
 			}
 			else //command
 			{
@@ -196,8 +199,12 @@ void ActionUI::newMessage(const Action::ActionEvent& e)
 
 void ActionUI::addContextMenuItems(PopupMenu& p)
 {
-	p.addItem(100, "Copy conditions");
-	p.addItem(101, "Paste conditions");
+	if (action->cdm != nullptr)
+	{
+		p.addItem(100, "Copy conditions");
+		p.addItem(101, "Paste conditions");
+	}
+	
 
 	if (action->csmOn != nullptr)
 	{
@@ -214,10 +221,11 @@ void ActionUI::addContextMenuItems(PopupMenu& p)
 
 void ActionUI::handleContextMenuResult(int result)
 {
+
 	switch (result)
 	{
-	case 100: SystemClipboard::copyTextToClipboard(JSON::toString(action->cdm.getJSONData())); break;
-	case 101: action->cdm.loadJSONData(JSON::fromString(SystemClipboard::getTextFromClipboard())); break;
+	case 100: SystemClipboard::copyTextToClipboard(JSON::toString(action->cdm->getJSONData())); break;
+	case 101: action->cdm->loadJSONData(JSON::fromString(SystemClipboard::getTextFromClipboard())); break;
 	case 102: SystemClipboard::copyTextToClipboard(JSON::toString(action->csmOn->getJSONData())); break;
 	case 103: action->csmOn->loadJSONData(JSON::fromString(SystemClipboard::getTextFromClipboard())); break;
 	case 104: SystemClipboard::copyTextToClipboard(JSON::toString(action->csmOff->getJSONData())); break;

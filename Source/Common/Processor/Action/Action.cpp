@@ -8,13 +8,17 @@
   ==============================================================================
 */
 
-Action::Action(var params, Multiplex * multiplex) :
-	Processor(getTypeString()),
+Action::Action(var params, Multiplex* it) :
+	Action("Action", params, it, true, true)
+{
+}
+
+Action::Action(const String &name, var params, Multiplex * multiplex, bool hasConditions, bool _hasOffConsequences) :
+	Processor(name),
 	MultiplexTarget(multiplex),
     autoTriggerWhenAllConditionAreActives(true),
-    forceNoOffConsequences(false),
+	forceNoOffConsequences(false),
 	hasOffConsequences(false),
-	cdm(multiplex),
     triggerOn(nullptr),
 	triggerPreview(nullptr),
     forceChecking(false),
@@ -32,17 +36,20 @@ Action::Action(var params, Multiplex * multiplex) :
 		triggerPreview->hideInEditor = true;
 	}
 
-	cdm.setHasActivationDefinitions(params.getProperty("hasActivationDefinitions",true));
-	cdm.addConditionManagerListener(this);
-	cdm.addBaseManagerListener(this);
-	addChildControllableContainer(&cdm);
+	if (hasConditions)
+	{
+		cdm.reset(new ConditionManager(multiplex));
+		cdm->setHasActivationDefinitions(params.getProperty("hasActivationDefinitions", true));
+		cdm->addConditionManagerListener(this);
+		cdm->addBaseManagerListener(this);
+		addChildControllableContainer(cdm.get());
+	}
 
 	csmOn.reset(new ConsequenceManager("Consequences : TRUE", multiplex));
 
 	addChildControllableContainer(csmOn.get());
 
-	forceNoOffConsequences = params.getProperty("forceNoOffConsequences", false);
-
+	forceNoOffConsequences = params.getProperty("forceNoOffConsequences", !_hasOffConsequences);
 	updateConditionRoles();
 }
 
@@ -55,12 +62,15 @@ void Action::updateConditionRoles()
 	if (Engine::mainEngine->isClearing) return;
 	
 	actionRoles.clear();
-	for (auto &c : cdm.items)
+	if (cdm != nullptr)
 	{
-		ActivationCondition * ac = dynamic_cast<ActivationCondition *>(c);
-		if (ac != nullptr && ac->enabled->boolValue())
+		for (auto& c : cdm->items)
 		{
-			actionRoles.addIfNotAlreadyThere((ac->type == ActivationCondition::ON_ACTIVATE)  ? ACTIVATE : DEACTIVATE);
+			ActivationCondition* ac = dynamic_cast<ActivationCondition*>(c);
+			if (ac != nullptr && ac->enabled->boolValue())
+			{
+				actionRoles.addIfNotAlreadyThere((ac->type == ActivationCondition::ON_ACTIVATE) ? ACTIVATE : DEACTIVATE);
+			}
 		}
 	}
 
@@ -95,7 +105,7 @@ void Action::setHasOffConsequences(bool value)
 void Action::updateDisables(bool force)
 {
 	Processor::updateDisables();
-	cdm.setForceDisabled(forceDisabled || !enabled->boolValue(), force);
+	if(cdm != nullptr) cdm->setForceDisabled(forceDisabled || !enabled->boolValue(), force);
 	csmOn->setForceDisabled(forceDisabled || !enabled->boolValue(), force);
 	if (hasOffConsequences) csmOff->setForceDisabled(forceDisabled || !enabled->boolValue(), force);
 }
@@ -103,7 +113,7 @@ void Action::updateDisables(bool force)
 void Action::forceCheck(bool triggerIfChanged)
 {
 	if (!triggerIfChanged) forceChecking = true;
-	cdm.forceCheck();
+	if(cdm != nullptr) cdm->forceCheck();
 	forceChecking = false;
 }
 
@@ -122,7 +132,7 @@ void Action::triggerConsequences(bool triggerTrue, int multiplexIndex)
 var Action::getJSONData()
 {
 	var data = Processor::getJSONData();
-	data.getDynamicObject()->setProperty("conditions", cdm.getJSONData());
+	if(cdm != nullptr) data.getDynamicObject()->setProperty("conditions", cdm->getJSONData());
 	data.getDynamicObject()->setProperty("consequences", csmOn->getJSONData());
 	if(hasOffConsequences) data.getDynamicObject()->setProperty("consequencesOff", csmOff->getJSONData());
 	return data;
@@ -132,7 +142,7 @@ void Action::loadJSONDataItemInternal(var data)
 {
 	Processor::loadJSONDataItemInternal(data);
 
-	cdm.loadJSONData(data.getProperty("conditions", var()));
+	if(cdm != nullptr) cdm->loadJSONData(data.getProperty("conditions", var()));
 	csmOn->loadJSONData(data.getProperty("consequences", var()));
 
 	updateConditionRoles();
@@ -145,9 +155,9 @@ void Action::loadJSONDataItemInternal(var data)
 void Action::endLoadFile()
 {
 	Engine::mainEngine->removeEngineListener(this);
-	if (actionRoles.contains(Role::ACTIVATE))
+	if (actionRoles.contains(Role::ACTIVATE) && cdm != nullptr)
 	{
-		for (int i = 0; i < getMultiplexCount(); i++) if (cdm.getIsValid(i, false)) triggerConsequences(true, i);
+		for (int i = 0; i < getMultiplexCount(); i++) if (cdm->getIsValid(i, false)) triggerConsequences(true, i);
 	}
 }
 
@@ -203,7 +213,7 @@ void Action::conditionManagerValidationChanged(ConditionManager *, int multiplex
 
 	if (autoTriggerWhenAllConditionAreActives)
 	{
-		if (cdm.getIsValid(multiplexIndex, false))
+		if (cdm != nullptr && cdm->getIsValid(multiplexIndex, false))
 		{
 			if (isMultiplexed())
 			{
@@ -236,7 +246,7 @@ void Action::itemRemoved(Condition *)
 void Action::highlightLinkedInspectables(bool value)
 {
 	Processor::highlightLinkedInspectables(value);
-	for (auto & cd : cdm.items) cd->highlightLinkedInspectables(value);
+	if(cdm != nullptr) for (auto & cd : cdm->items) cd->highlightLinkedInspectables(value);
 	if (csmOn != nullptr) for (auto & cs : csmOn->items) cs->highlightLinkedInspectables(value);
 	if (csmOff != nullptr) for (auto & cs : csmOff->items) cs->highlightLinkedInspectables(value);
 }

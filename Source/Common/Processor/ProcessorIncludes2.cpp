@@ -50,3 +50,8 @@
 #include "Mapping/Output/MappingOutputManager.cpp"
 #include "Mapping/Output/ui/MappingOutputManagerEditor.cpp"
 #include "Mapping/ui/MappingUI.cpp"
+
+#include "Conductor/Conductor.cpp"
+#include "Conductor/ConductorCue.cpp"
+#include "Conductor/ui/ConductorUI.cpp"
+#include "Conductor/ui/ConductorCueUI.cpp"

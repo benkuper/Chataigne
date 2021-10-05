@@ -25,7 +25,7 @@ ProcessorUI::~ProcessorUI()
 void ProcessorUI::updateBGColor()
 {
 	bgColor = baseBGColor;
-	if(item->forceDisabled) bgColor = bgColor.withSaturation(bgColor.getSaturation()*.2f);
+	if(item->forceDisabled) bgColor = bgColor.withMultipliedSaturation(.2f);
 	shouldRepaint = true;
 }
 

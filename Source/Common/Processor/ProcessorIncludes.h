@@ -109,3 +109,8 @@
 
 #include "Multiplex/List/ui/MultiplexListEditor.h"
 #include "Multiplex/ui/MultiplexUI.h"
+
+#include "Conductor/Conductor.h"
+#include "Conductor/ConductorCue.h"
+#include "Conductor/ui/ConductorUI.h"
+#include "Conductor/ui/ConductorCueUI.h"

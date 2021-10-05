@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    Action.h
-    Created: 28 Oct 2016 8:05:02pm
-    Author:  bkupe
+	Action.h
+	Created: 28 Oct 2016 8:05:02pm
+	Author:  bkupe
 
   ==============================================================================
 */
@@ -19,18 +19,19 @@ class Action :
 	public EngineListener
 {
 public:
-	Action(var params = var(), Multiplex * it = nullptr);
+	Action(var params = var(), Multiplex* it = nullptr);
+	Action(const String& name, var params, Multiplex* it, bool hasConditions, bool hasOffConsequences);
 	virtual ~Action();
 
-	enum Role {ACTIVATE, DEACTIVATE};
+	enum Role { ACTIVATE, DEACTIVATE };
 	Array<Role> actionRoles;
 
 	bool autoTriggerWhenAllConditionAreActives; //default true, but if false, let use Actions as user check tool without auto behavior (like TimeTriggers)
-	
+
 	bool forceNoOffConsequences; // independent of roles
 	bool hasOffConsequences;
 
-	ConditionManager cdm;
+	std::unique_ptr<ConditionManager> cdm;
 	std::unique_ptr<ConsequenceManager> csmOn;
 	std::unique_ptr<ConsequenceManager> csmOff;
 
@@ -42,7 +43,7 @@ public:
 
 	void updateConditionRoles();
 	void setHasOffConsequences(bool value);
-    virtual void updateDisables(bool force = false) override;
+	virtual void updateDisables(bool force = false) override;
 
 	void forceCheck(bool triggerIfChanged);
 
@@ -51,13 +52,13 @@ public:
 	void multiplexPreviewIndexChanged() override;
 
 	void onContainerTriggerTriggered(Trigger* t) override;
-	void onContainerParameterChangedInternal(Parameter * p) override;
-	void controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c) override;
+	void onContainerParameterChangedInternal(Parameter* p) override;
+	void controllableFeedbackUpdate(ControllableContainer* cc, Controllable* c) override;
 
-	void conditionManagerValidationChanged(ConditionManager *, int multiplexIndex, bool dispatchOnChangeOnly) override;
+	void conditionManagerValidationChanged(ConditionManager*, int multiplexIndex, bool dispatchOnChangeOnly) override;
 
-	void itemAdded(Condition *) override;
-	void itemRemoved(Condition *) override;
+	void itemAdded(Condition*) override;
+	void itemRemoved(Condition*) override;
 
 	virtual void highlightLinkedInspectables(bool value) override;
 
@@ -65,15 +66,15 @@ public:
 	void loadJSONDataItemInternal(var data) override;
 	void endLoadFile() override;
 
-	ProcessorUI * getUI() override;
+	virtual ProcessorUI* getUI() override;
 
 	class ActionListener
 	{
 	public:
 		virtual ~ActionListener() {}
-		virtual void actionEnableChanged(Action *) {}
-		virtual void actionRoleChanged(Action *) {}
-		virtual void actionValidationChanged(Action *) {}
+		virtual void actionEnableChanged(Action*) {}
+		virtual void actionRoleChanged(Action*) {}
+		virtual void actionValidationChanged(Action*) {}
 	};
 
 	ListenerList<ActionListener> actionListeners;
@@ -84,9 +85,9 @@ public:
 	class ActionEvent {
 	public:
 		enum Type { ENABLED_CHANGED, ROLE_CHANGED, VALIDATION_CHANGED, MULTIPLEX_PREVIEW_CHANGED };
-		ActionEvent(Type type, Action * c) : type(type), action(c) {}
+		ActionEvent(Type type, Action* c) : type(type), action(c) {}
 		Type type;
-		Action * action;
+		Action* action;
 	};
 	QueuedNotifier<ActionEvent> actionAsyncNotifier;
 	typedef QueuedNotifier<ActionEvent>::Listener AsyncListener;

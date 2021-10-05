@@ -23,7 +23,8 @@ public:
 
 	bool forceDisabled;
 	void setForceDisabled(bool value, bool force = false);
-	void addItemInternal(Processor * item, var data) override;
+	void addItemInternal(Processor* item, var data) override;
+	void addItemsInternal(Array<Processor *> item, var data) override;
 
 	bool canAddItemOfType(const String &typeToCheck) override;
 

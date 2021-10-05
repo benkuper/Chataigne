@@ -167,7 +167,7 @@ void StateTransitionUI::paint(Graphics & g)
 	Line<float> sLine(sourceP.x, sourceP.y, ap.x, ap.y); 
 	int thickness = c == NORMAL_COLOR ? 1 : 2;
 
-	if (item->cdm.items.isEmpty())
+	if (item->cdm != nullptr && item->cdm->items.isEmpty())
 	{
 		float dl[] = { 5,5 };
 		g.drawDashedLine(sLine, dl, 2, thickness);

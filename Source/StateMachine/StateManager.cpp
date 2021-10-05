@@ -286,7 +286,9 @@ StandardCondition* StateManager::showMenuAndGetToggleCondition()
 PopupMenu StateManager::getConditionMenuForAction(Action* a, Array<StandardCondition*>* arrayToFill)
 {
 	PopupMenu result;
-	for (auto& c : a->cdm.items)
+	if (a->cdm == nullptr) return result;
+
+	for (auto& c : a->cdm->items)
 	{
 		if (StandardCondition* sc = dynamic_cast<StandardCondition*>(c))
 		{

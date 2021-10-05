@@ -93,7 +93,7 @@ void StateCommand::triggerInternal(int multiplexIndex)
 		break;
 
 	case SET_SEQUENTIAL_CONDITION_INDEX:
-		if (Action* a = getLinkedTargetContainerAs<Action>(target, multiplexIndex)) a->cdm.setSequentialConditionIndices(val->intValue());
+		if (Action* a = getLinkedTargetContainerAs<Action>(target, multiplexIndex)) if(a->cdm != nullptr) a->cdm->setSequentialConditionIndices(val->intValue());
 		break;
 
 	case SET_TOGGLE_STATE:

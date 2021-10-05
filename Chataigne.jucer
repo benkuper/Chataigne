@@ -307,6 +307,21 @@
           <FILE id="Y5NAoh" name="MTCSender.h" compile="0" resource="0" file="Source/Common/MIDI/MTCSender.h"/>
         </GROUP>
         <GROUP id="{54EAB5D0-4FF9-8475-F580-32A4B6B32B16}" name="Processor">
+          <GROUP id="{C18C00AC-5B12-6D10-D793-5EDD0873F892}" name="Conductor">
+            <GROUP id="{BBEAAC22-49B6-F5A5-BCEE-BD2BF62D969F}" name="ui">
+              <FILE id="uqpITD" name="ConductorCueUI.cpp" compile="0" resource="0"
+                    file="Source/Common/Processor/Conductor/ui/ConductorCueUI.cpp"/>
+              <FILE id="AeV7SJ" name="ConductorCueUI.h" compile="0" resource="0"
+                    file="Source/Common/Processor/Conductor/ui/ConductorCueUI.h"/>
+              <FILE id="GmTIKP" name="ConductorUI.cpp" compile="0" resource="0" file="Source/Common/Processor/Conductor/ui/ConductorUI.cpp"/>
+              <FILE id="oxFF7y" name="ConductorUI.h" compile="0" resource="0" file="Source/Common/Processor/Conductor/ui/ConductorUI.h"/>
+            </GROUP>
+            <FILE id="F6DFjZ" name="Conductor.cpp" compile="0" resource="0" file="Source/Common/Processor/Conductor/Conductor.cpp"/>
+            <FILE id="GXahO3" name="Conductor.h" compile="0" resource="0" file="Source/Common/Processor/Conductor/Conductor.h"/>
+            <FILE id="QkjX42" name="ConductorCue.cpp" compile="0" resource="0"
+                  file="Source/Common/Processor/Conductor/ConductorCue.cpp"/>
+            <FILE id="JC5CoA" name="ConductorCue.h" compile="0" resource="0" file="Source/Common/Processor/Conductor/ConductorCue.h"/>
+          </GROUP>
           <GROUP id="{797800DA-0DCB-1B89-AF24-83A7716BB83C}" name="Action">
             <GROUP id="{769E1555-7F3A-B046-7FF9-5B14A6197BBD}" name="Condition">
               <GROUP id="{D6ADE71C-FE26-85F8-193D-108C1D0EF059}" name="conditions">

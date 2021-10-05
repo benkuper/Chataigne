@@ -71,6 +71,12 @@
     <Filter Include="Chataigne\Source\Common\MIDI">
       <UniqueIdentifier>{75043559-B023-5E51-A43F-22A6CA1A1042}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Common\Processor\Conductor\ui">
+      <UniqueIdentifier>{33B94F94-A07E-5E33-6A72-C5DC4C3C877B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Common\Processor\Conductor">
+      <UniqueIdentifier>{AB762D6B-82AF-347D-2084-E878BCF86F1B}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Common\Processor\Action\Condition\conditions\ActivationCondition">
       <UniqueIdentifier>{D8DA1A28-055B-3ADC-1082-1CCF339BC5AE}</UniqueIdentifier>
     </Filter>
@@ -1593,6 +1599,18 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\MIDI\MTCSender.cpp">
       <Filter>Chataigne\Source\Common\MIDI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Conductor\ui\ConductorCueUI.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Conductor\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Conductor\ui\ConductorUI.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Conductor\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Conductor\Conductor.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Conductor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Conductor\ConductorCue.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Conductor</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\ActivationCondition\ActivationCondition.cpp">
       <Filter>Chataigne\Source\Common\Processor\Action\Condition\conditions\ActivationCondition</Filter>
@@ -5681,6 +5699,18 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\MIDI\MTCSender.h">
       <Filter>Chataigne\Source\Common\MIDI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Conductor\ui\ConductorCueUI.h">
+      <Filter>Chataigne\Source\Common\Processor\Conductor\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Conductor\ui\ConductorUI.h">
+      <Filter>Chataigne\Source\Common\Processor\Conductor\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Conductor\Conductor.h">
+      <Filter>Chataigne\Source\Common\Processor\Conductor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Conductor\ConductorCue.h">
+      <Filter>Chataigne\Source\Common\Processor\Conductor</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\conditions\ActivationCondition\ActivationCondition.h">
       <Filter>Chataigne\Source\Common\Processor\Action\Condition\conditions\ActivationCondition</Filter>

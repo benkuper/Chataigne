@@ -15,7 +15,7 @@ class ActionUI :
 	public Action::AsyncListener
 {
 public:
-	ActionUI(Action *);
+	ActionUI(Action *, bool showMiniModeBT = false);
 	virtual ~ActionUI();
 
 	Action* action;
@@ -24,7 +24,7 @@ public:
 
 	void paint(Graphics &g) override;
 
-	void updateBGColor() override;
+	virtual void updateBGColor() override;
 
 	void controllableFeedbackUpdateInternal(Controllable * c) override;
 

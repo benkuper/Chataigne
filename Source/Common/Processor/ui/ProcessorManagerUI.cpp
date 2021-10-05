@@ -74,9 +74,9 @@ void ProcessorManagerUI::itemDropped(const SourceDetails & details)
 				if (isForAction)
 				{
 					Action * a = dynamic_cast<Action *>(manager->addItem(manager->factory.create("Action")));
-					if (a != nullptr)
+					if (a != nullptr && a->cdm != nullptr)
 					{
-						StandardCondition * c = dynamic_cast<StandardCondition *>(a->cdm.addItem(a->cdm.factory.create(StandardCondition::getTypeStringStatic(false))));
+						StandardCondition * c = dynamic_cast<StandardCondition *>(a->cdm->addItem(a->cdm->factory.create(StandardCondition::getTypeStringStatic(false))));
 						Controllable * target = actionInputMenu.getControllableForResult(result);
 						if (c != nullptr) c->sourceTarget->setValueFromTarget(target);
 					}
@@ -160,7 +160,7 @@ void ProcessorManagerUI::addItemFromMenu(Processor* item, bool isFromAddButton, 
 
 	if (Action* a = dynamic_cast<Action*>(item))
 	{
-		a->cdm.addItem(a->cdm.factory.create(StandardCondition::getTypeStringStatic(a->isMultiplexed()))); //add one condition by default if done through UI
+		if(a->cdm != nullptr) a->cdm->addItem(a->cdm->factory.create(StandardCondition::getTypeStringStatic(a->isMultiplexed()))); //add one condition by default if done through UI
 	}
 	else if (Mapping* m = dynamic_cast<Mapping*>(item))
 	{
