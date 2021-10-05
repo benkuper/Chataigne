@@ -20,10 +20,11 @@ namespace ChataigneCommandIDs
 {
 	static const int showAbout = 0x60000;
 	static const int gotoWebsite = 0x60001;
-	static const int gotoForum = 0x60002;
+	static const int gotoDiscord = 0x60002;
 	static const int gotoDocs = 0x60003;
 	static const int postGithubIssue = 0x60004;
 	static const int donate = 0x60005;
+	static const int sponsor = 0x60055;
 	static const int showWelcome = 0x60006;
 	static const int gotoChangelog = 0x60007;
 
@@ -58,11 +59,15 @@ void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationComman
 		result.setInfo("Be cool and donate", "", "General", result.readOnlyInKeyEditor);
 		break;
 
+	case ChataigneCommandIDs::sponsor:
+		result.setInfo("Be even cooler and sponsor !", "", "General", result.readOnlyInKeyEditor);
+		break;
+
 	case ChataigneCommandIDs::gotoWebsite:
 		result.setInfo("Go to website", "", "Help", result.readOnlyInKeyEditor);
 		break;
-	case ChataigneCommandIDs::gotoForum:
-		result.setInfo("Go to forum", "", "Help", result.readOnlyInKeyEditor);
+	case ChataigneCommandIDs::gotoDiscord:
+		result.setInfo("Go to Discord", "", "Help", result.readOnlyInKeyEditor);
 		break;
 
 	case ChataigneCommandIDs::gotoDocs:
@@ -120,8 +125,9 @@ void MainContentComponent::getAllCommands(Array<CommandID>& commands) {
 		ChataigneCommandIDs::showAbout,
 		ChataigneCommandIDs::showWelcome,
 		ChataigneCommandIDs::donate,
+		ChataigneCommandIDs::sponsor,
 		ChataigneCommandIDs::gotoWebsite,
-		ChataigneCommandIDs::gotoForum,
+		ChataigneCommandIDs::gotoDiscord,
 		ChataigneCommandIDs::gotoDocs,
 		ChataigneCommandIDs::gotoChangelog,
 		ChataigneCommandIDs::postGithubIssue,
@@ -146,9 +152,10 @@ PopupMenu MainContentComponent::getMenuForIndex(int topLevelMenuIndex, const Str
 		menu.addCommandItem(&getCommandManager(), ChataigneCommandIDs::showAbout);
 		menu.addCommandItem(&getCommandManager(), ChataigneCommandIDs::showWelcome);
 		menu.addCommandItem(&getCommandManager(), ChataigneCommandIDs::donate);
+		menu.addCommandItem(&getCommandManager(), ChataigneCommandIDs::sponsor);
 		menu.addSeparator();
 		menu.addCommandItem(&getCommandManager(), ChataigneCommandIDs::gotoWebsite);
-		menu.addCommandItem(&getCommandManager(), ChataigneCommandIDs::gotoForum);
+		menu.addCommandItem(&getCommandManager(), ChataigneCommandIDs::gotoDiscord);
 		menu.addCommandItem(&getCommandManager(), ChataigneCommandIDs::gotoDocs);
 		menu.addCommandItem(&getCommandManager(), ChataigneCommandIDs::gotoChangelog);
 		menu.addCommandItem(&getCommandManager(), ChataigneCommandIDs::postGithubIssue);
@@ -207,12 +214,16 @@ bool MainContentComponent::perform(const InvocationInfo& info)
 		URL("https://www.paypal.me/benkuper").launchInDefaultBrowser();
 		break;
 
+	case ChataigneCommandIDs::sponsor:
+		URL("https://github.com/sponsors/benkuper").launchInDefaultBrowser();
+		break;
+
 	case ChataigneCommandIDs::gotoWebsite:
 		URL("http://benjamin.kuperberg.fr/chataigne").launchInDefaultBrowser();
 		break;
 
-	case ChataigneCommandIDs::gotoForum:
-		URL("http://benjamin.kuperberg.fr/chataigne/forum").launchInDefaultBrowser();
+	case ChataigneCommandIDs::gotoDiscord:
+		URL("https://discord.gg/wYNB3rK").launchInDefaultBrowser();
 		break;
 
 	case ChataigneCommandIDs::gotoDocs:
