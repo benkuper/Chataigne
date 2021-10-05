@@ -51,7 +51,6 @@ public:
 	void onControllableFeedbackUpdate(ControllableContainer * cc, Controllable *c) override;
 
 	void createControllablesForContainer (var data, ControllableContainer * cc);
-	Controllable * getControllableForJSONDefinition(const String &name, var def);
 
 	void triggerInternal(int multiplexIndex) override;
 

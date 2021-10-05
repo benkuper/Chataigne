@@ -4783,6 +4783,9 @@
     <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\dashboard\ui\DashboardParameterItemUI.cpp">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter\dashboard\ui</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\dashboard\DashboardParameterColorStyle.cpp">
+      <Filter>JUCE Modules\juce_organicui\controllable\parameter\dashboard</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\dashboard\DashboardParameterItem.cpp">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter\dashboard</Filter>
     </ClCompile>
@@ -9191,6 +9194,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\dashboard\ui\DashboardParameterItemUI.h">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter\dashboard\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\dashboard\DashboardParameterColorStyle.h">
+      <Filter>JUCE Modules\juce_organicui\controllable\parameter\dashboard</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\dashboard\DashboardParameterItem.h">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter\dashboard</Filter>

@@ -88,7 +88,7 @@ void ScriptCommand::createControllablesForContainer(var data, ControllableContai
 
 		} else
 		{
-			Controllable * c = getControllableForJSONDefinition(p.name.toString(), p.value);
+			Controllable * c = ControllableFactory::createControllableFromJSON(p.name.toString(), p.value);
 			if (c == nullptr) continue;
 			cc->addControllable(c);
 
@@ -126,73 +126,6 @@ void ScriptCommand::createControllablesForContainer(var data, ControllableContai
 			}
 		}
 	}
-}
-
-Controllable * ScriptCommand::getControllableForJSONDefinition(const String &name, var def)
-{
-	String valType = def.getProperty("type", "").toString();
-	Controllable * c = ControllableFactory::createControllable(valType);
-	if (c == nullptr) return nullptr;
-
-	c->setNiceName(name);
-
-	DynamicObject * d = def.getDynamicObject();
-
-	if (Parameter * p = dynamic_cast<Parameter *>(c))
-	{
-		if (d->hasProperty("min") && d->hasProperty("max")) p->setRange(d->getProperty("min"), d->getProperty("max"));
-
-		if (d->hasProperty("default")) p->setValue(d->getProperty("default"));
-
-		if (c->type == Controllable::ENUM)
-		{
-			EnumParameter * ep = dynamic_cast<EnumParameter *>(c);
-
-			if (d->hasProperty("options") && d->getProperty("options").isObject())
-			{
-				NamedValueSet options = d->getProperty("options").getDynamicObject()->getProperties();
-				for (auto &o : options)
-				{
-					ep->addOption(o.name.toString(), o.value);
-				}
-			} else
-			{
-				LOGWARNING("Options property is not valid : " << d->getProperty("options").toString());
-			}
-		} else if (c->type == Controllable::FLOAT)
-		{
-			FloatParameter * ep = dynamic_cast<FloatParameter *>(c);
-			if (d->hasProperty("ui"))
-			{
-				String ui = d->getProperty("ui");
-				if (ui == "slider") ep->defaultUI = FloatParameter::SLIDER;
-				else if (ui == "stepper") ep->defaultUI = FloatParameter::STEPPER;
-				else if (ui == "label") ep->defaultUI = FloatParameter::LABEL;
-				else if (ui == "time") ep->defaultUI = FloatParameter::TIME;
-			}
-		}
-
-		
-	}
-
-	if (d->hasProperty("readOnly"))
-	{
-		c->setControllableFeedbackOnly(d->getProperty("readOnly"));
-	}
-
-	
-
-	if (d->hasProperty("shortName"))
-	{
-		c->setCustomShortName(d->getProperty("shortName").toString());
-	}
-
-	if (d->hasProperty("description"))
-	{
-		c->description = d->getProperty("description").toString();
-	}
-
-	return c;
 }
 
 void ScriptCommand::triggerInternal(int multiplexIndex)

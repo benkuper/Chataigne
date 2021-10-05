@@ -131,8 +131,6 @@ public:
 
 	virtual void onContainerNiceNameChanged() override;
 
-	Controllable * getControllableForJSONDefinition(const String &name, var def);
-
 	String getTypeString() const override { if (customType.isNotEmpty()) return customType; else return getDefaultTypeString(); } //should be overriden
 	virtual String getDefaultTypeString() const { jassert(false); return ""; }
 
