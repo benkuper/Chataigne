@@ -9,9 +9,11 @@
 */
 
 PJLinkModule::PJLinkModule() :
-	TCPClientModule(getDefaultTypeString(), 4352),
+	TCPClientModule(getDefaultTypeString(), 4352, false),
 	passBytes(0)
 {
+	autoReconnect = false;
+
 	alwaysShowValues = true;
 	includeValuesInSave = true;
 
@@ -46,12 +48,37 @@ void PJLinkModule::sendMessageInternal(const String& message, var params)
 	String encodedPass = juce::MD5((passBytes + password->stringValue()).toUTF8()).toHexString();
 	String encodedMessage = password->stringValue().isEmpty() ? message : (encodedPass + message);
 	
-	TCPClientModule::sendMessageInternal(encodedMessage, params);
+	if (!isThreadRunning() || !sender.isConnected())
+	{
+		if (!isThreadRunning()) stopThread(1000);
+		startThread();
+	}
+	while (isThreadRunning() && !sender.isConnected()) {} // wait for the thread
+	if (sender.isConnected()) TCPClientModule::sendMessageInternal(encodedMessage, params);
+	else LOGERROR("Could not send message : " << message);
 }
 
 CommandDefinition * PJLinkModule::getBasePJCommand(const String & menu, const String & commandName, const String & command, CommandContext context)
 {
 	return CommandDefinition::createDef(this, menu, commandName, &SendStreamStringCommand::create, context)->addParam("fixedValue", command)->addParam("forceCR", true)->addParam("forceNL", false);
+}
+
+
+void PJLinkModule::initThread()
+{
+	TCPClientModule::initThread();
+	if (sender.isConnected()) timeAtConnect = Time::getMillisecondCounter() / 1000.0f;
+	else signalThreadShouldExit();
+}
+
+void PJLinkModule::runInternal()
+{
+	TCPClientModule::runInternal();
+	if (Time::getMillisecondCounter() / 1000.0f > timeAtConnect + 1)
+	{
+		sender.close();
+		signalThreadShouldExit();
+	}
 }
 
 void PJLinkModule::processDataLineInternal(const String & message)

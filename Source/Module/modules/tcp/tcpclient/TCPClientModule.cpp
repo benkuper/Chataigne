@@ -8,8 +8,10 @@
   ==============================================================================
 */
 
-TCPClientModule::TCPClientModule(const String & name, int defaultRemotePort) :
-	NetworkStreamingModule(name,false, true, 0, defaultRemotePort)
+TCPClientModule::TCPClientModule(const String & name, int defaultRemotePort, bool autoConnect) :
+	NetworkStreamingModule(name,false, true, 0, defaultRemotePort),
+	autoConnect(autoConnect),
+	autoReconnect(true)
 {
 	connectionFeedbackRef = senderIsConnected;
 
@@ -40,16 +42,12 @@ void TCPClientModule::setupSender()
 		return;
 	}
 
-	startThread();
+	if(autoConnect) startThread();
 }
 
 void TCPClientModule::initThread()
 {
-	//if (sender.isConnected()) sender.close();
-
 	if (!enabled->boolValue()) return;
-
-	DBG("Init Thread");
 
 	if (senderIsConnected->boolValue() || sender.isConnected())
 	{
@@ -59,23 +57,14 @@ void TCPClientModule::initThread()
 
 	while (!senderIsConnected->boolValue() && !threadShouldExit())
 	{
-		String targetHost = useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue();
-		bool result = sender.connect(targetHost, remotePort->intValue(), 200);
-		if (result) NLOG(niceName, "Sender bound to port " << sender.getBoundPort());
-		senderIsConnected->setValue(result);
-
-		if (result)
+		bool result = connect();
+		if (!result)
 		{
-			NLOG(niceName, "Client is connected to " << remoteHost->stringValue() << ":" << remotePort->intValue());
-			sendCC->clearWarning();
-		}
-		else
-		{
-			String s = "Could not connect to " + remoteHost->stringValue() + ":" + remotePort->stringValue();
-			if (sendCC->getWarningMessage().isEmpty()) NLOGERROR(niceName, s);
-			sendCC->setWarningMessage(s);
-
-			wait(1000);
+			if (!autoReconnect)
+			{
+				signalThreadShouldExit();
+				break;
+			}else wait(1000);
 		}
 	}
 }
@@ -106,7 +95,7 @@ bool TCPClientModule::checkReceiverIsReady()
 
 bool TCPClientModule::isReadyToSend()
 {
-	return senderIsConnected->boolValue();
+	return !autoConnect || senderIsConnected->boolValue();
 }
 
 void TCPClientModule::sendMessageInternal(const String & message, var)
@@ -159,6 +148,28 @@ void TCPClientModule::runInternal()
 		senderIsConnected->setValue(false);
 		wait(1000);
 		if (threadShouldExit()) return;
-		initThread();
+		if(autoReconnect) initThread();
 	}
+}
+
+bool TCPClientModule::connect()
+{
+	String targetHost = useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue();
+	bool result = sender.connect(targetHost, remotePort->intValue(), 200);
+	if (result && autoConnect) NLOG(niceName, "Sender bound to port " << sender.getBoundPort());
+	senderIsConnected->setValue(result);
+
+	if (result)
+	{
+		NLOG(niceName, "Client is connected to " << remoteHost->stringValue() << ":" << remotePort->intValue());
+		sendCC->clearWarning();
+	}
+	else
+	{
+		String s = "Could not connect to " + remoteHost->stringValue() + ":" + remotePort->stringValue();
+		if (sendCC->getWarningMessage().isEmpty()) NLOGERROR(niceName, s);
+		sendCC->setWarningMessage(s);
+	}
+
+	return result;
 }

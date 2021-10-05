@@ -14,10 +14,13 @@ class TCPClientModule :
 	public NetworkStreamingModule
 {
 public:
-	TCPClientModule(const String &name = "TCP Client", int defaultRemotePort = 5001);
+	TCPClientModule(const String &name = "TCP Client", int defaultRemotePort = 5001, bool autoConnect = true);
 	virtual ~TCPClientModule();
 
 	StreamingSocket sender;
+
+	bool autoConnect;
+	bool autoReconnect;
 
 	virtual void setupSender() override;
 	virtual void initThread() override;
@@ -34,6 +37,8 @@ public:
 	virtual void clearInternal() override;
 
 	virtual void runInternal() override;
+
+	bool connect();
 
 	static TCPClientModule * create() { return new TCPClientModule(); }
 	virtual String getDefaultTypeString() const override { return "TCP Client"; }

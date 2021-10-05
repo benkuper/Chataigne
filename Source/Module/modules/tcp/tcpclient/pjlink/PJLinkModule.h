@@ -26,6 +26,7 @@ public:
 	BoolParameter * shutterAudioStatus;
 
 	String passBytes;
+	float timeAtConnect;
 
 	virtual void sendMessageInternal(const String& message, var) override;
 
@@ -33,6 +34,9 @@ public:
 
 	static PJLinkModule * create() { return new PJLinkModule(); }
 	virtual String getDefaultTypeString() const override { return "PJLink"; }
+
+	void initThread() override;
+	void runInternal() override;
 
 	void processDataLineInternal(const String &message) override;
 

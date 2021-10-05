@@ -220,6 +220,4 @@ void NetworkStreamingModule::run()
 			}
 		}
 	}
-
-	DBG("Exit thread");
 }
