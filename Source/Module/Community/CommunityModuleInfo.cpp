@@ -119,7 +119,7 @@ void CommunityModuleInfo::progress(URL::DownloadTask * /*task*/, int64 /*bytesDo
 }
 
 
-InspectableEditor * CommunityModuleInfo::getEditor(bool isRoot)
+InspectableEditor * CommunityModuleInfo::getEditorInternal(bool isRoot)
 {
 	return new CommunityModuleInfoEditor(this, isRoot);
 }

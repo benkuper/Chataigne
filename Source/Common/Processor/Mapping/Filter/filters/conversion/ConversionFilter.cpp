@@ -222,7 +222,7 @@ void ConversionFilter::loadJSONDataItemInternal(var data)
 	relinkGhostData();
 }
 
-InspectableEditor* ConversionFilter::getEditor(bool isRoot)
+InspectableEditor* ConversionFilter::getEditorInternal(bool isRoot)
 {
 	return new ConversionFilterEditor(this, isRoot);
 }

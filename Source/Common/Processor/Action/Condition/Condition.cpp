@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    Condition.cpp
-    Created: 28 Oct 2016 8:06:58pm
-    Author:  bkupe
+	Condition.cpp
+	Created: 28 Oct 2016 8:06:58pm
+	Author:  bkupe
 
   ==============================================================================
 */
@@ -12,7 +12,7 @@
 
 #include "Module/ModuleIncludes.h"
 
-Condition::Condition(const String& n, var params, Multiplex * multiplex) :
+Condition::Condition(const String& n, var params, Multiplex* multiplex) :
 	BaseItem(n),
 	MultiplexTarget(multiplex),
 	forceDisabled(false),
@@ -53,7 +53,7 @@ void Condition::setValid(int multiplexIndex, bool value, bool dispatchOnChangeOn
 	conditionAsyncNotifier.addMessage(new ConditionEvent(ConditionEvent::VALIDATION_CHANGED, this, multiplexIndex));
 }
 
-void Condition::onContainerParameterChangedInternal(Parameter * p)
+void Condition::onContainerParameterChangedInternal(Parameter* p)
 {
 	BaseItem::onContainerParameterChangedInternal(p);
 	if (p == enabled)
@@ -68,7 +68,7 @@ void Condition::setForceDisabled(bool value, bool force)
 	forceDisabled = value;
 }
 
-InspectableEditor * Condition::getEditor(bool isRoot)
+InspectableEditor* Condition::getEditorInternal(bool isRoot)
 {
 	return new ConditionEditor(this, isRoot);
 }

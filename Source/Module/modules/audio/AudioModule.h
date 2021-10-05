@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    AudioModule.h
-    Created: 6 Feb 2017 8:46:11pm
-    Author:  Ben
+	AudioModule.h
+	Created: 6 Feb 2017 8:46:11pm
+	Author:  Ben
 
   ==============================================================================
 */
@@ -18,11 +18,11 @@ class AudioModuleHardwareSettings :
 	public ControllableContainer
 {
 public:
-	AudioModuleHardwareSettings(AudioDeviceManager * am);
+	AudioModuleHardwareSettings(AudioDeviceManager* am);
 	~AudioModuleHardwareSettings() {}
-	AudioDeviceManager * am;
+	AudioDeviceManager* am;
 
-	InspectableEditor * getEditor(bool isRoot) override;
+	InspectableEditor* getEditorInternal(bool isRoot) override;
 };
 
 class AudioModule :
@@ -32,19 +32,19 @@ class AudioModule :
 	public FFTAnalyzerManager::ManagerListener
 {
 public:
-	AudioModule(const String &name = "Sound Card");
+	AudioModule(const String& name = "Sound Card");
 	~AudioModule();
 
 	AudioModuleHardwareSettings hs;
 	AudioDeviceManager am;
 	AudioProcessorPlayer player;
 	AudioProcessorGraph graph;
-	
+
 	double currentSampleRate;
 	int currentBufferSize;
 
-	BoolParameter * keepLastDetectedValues;
-	
+	BoolParameter* keepLastDetectedValues;
+
 	int uidIncrement;
 
 	const int analysisSamples = 1024;
@@ -52,30 +52,30 @@ public:
 	AudioBuffer<float> buffer;
 
 	//Parameters
-	FloatParameter * inputGain;
-	FloatParameter * activityThreshold;
-    FloatParameter * outVolume;
+	FloatParameter* inputGain;
+	FloatParameter* activityThreshold;
+	FloatParameter* outVolume;
 
 	ControllableContainer channelParams;
 	Array<FloatParameter*> channelVolumes;
 
 	ControllableContainer monitorParams;
-	FloatParameter * monitorVolume;
-	Array<BoolParameter *> monitorOutChannels;
+	FloatParameter* monitorVolume;
+	Array<BoolParameter*> monitorOutChannels;
 	Array<int> selectedMonitorOutChannels;
 	int numActiveMonitorOutputs;
 
 	enum PitchDetectionMethod { NONE, MPM, YIN };
-	EnumParameter * pitchDetectionMethod;
+	EnumParameter* pitchDetectionMethod;
 
 	//Values
-	FloatParameter * detectedVolume;
+	FloatParameter* detectedVolume;
 
 	ControllableContainer noteCC;
-	FloatParameter * frequency;
-	IntParameter * pitch;
-	EnumParameter * note;
-	IntParameter * octave;
+	FloatParameter* frequency;
+	IntParameter* pitch;
+	EnumParameter* note;
+	IntParameter* octave;
 
 	ControllableContainer fftCC;
 
@@ -86,27 +86,27 @@ public:
 	virtual void updateAudioSetup();
 	void updateSelectedMonitorChannels();
 
-	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
-	void onContainerParameterChangedInternal(Parameter * p) override;
+	void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
+	void onContainerParameterChangedInternal(Parameter* p) override;
 
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
 	// Inherited via AudioIODeviceCallback
-	virtual void audioDeviceIOCallback(const float ** inputChannelData, int numInputChannels, float ** outputChannelData, int numOutputChannels, int numSamples) override;
-	virtual void audioDeviceAboutToStart(AudioIODevice * device) override;
+	virtual void audioDeviceIOCallback(const float** inputChannelData, int numInputChannels, float** outputChannelData, int numOutputChannels, int numSamples) override;
+	virtual void audioDeviceAboutToStart(AudioIODevice* device) override;
 	virtual void audioDeviceStopped() override;
 
 	// Inherited via ChangeListener
-	virtual void changeListenerCallback(ChangeBroadcaster * source) override;
+	virtual void changeListenerCallback(ChangeBroadcaster* source) override;
 
 
 	void itemAdded(FFTAnalyzer* item) override;
 	void itemRemoved(FFTAnalyzer* item) override;
 
 
-	static AudioModule * create() { return new AudioModule(); }
+	static AudioModule* create() { return new AudioModule(); }
 	virtual String getDefaultTypeString() const override { return "Sound Card"; }
 
 	class AudioModuleListener
@@ -114,7 +114,7 @@ public:
 	public:
 		virtual ~AudioModuleListener() {}
 		virtual void monitorSetupChanged() {}
-        virtual void audioSetupChanged() {}
+		virtual void audioSetupChanged() {}
 	};
 
 	ListenerList<AudioModuleListener> audioModuleListeners;

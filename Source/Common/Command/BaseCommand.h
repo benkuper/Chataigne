@@ -88,7 +88,7 @@ public:
 	void removeCommandListener(CommandListener* listener) { commandListeners.remove(listener); }
 
 
-	InspectableEditor* getEditor(bool isRoot) override;
+	InspectableEditor* getEditorInternal(bool isRoot) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(BaseCommand)
 };

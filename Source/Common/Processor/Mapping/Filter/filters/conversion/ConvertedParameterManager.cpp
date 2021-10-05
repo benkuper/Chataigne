@@ -29,7 +29,7 @@ ConvertedParameterManager::~ConvertedParameterManager()
 {
 }
 
-InspectableEditor* ConvertedParameterManager::getEditor(bool isRoot)
+InspectableEditor* ConvertedParameterManager::getEditorInternal(bool isRoot)
 {
 	return new ConvertedParameterManagerEditor(this, isRoot);
 }

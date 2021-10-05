@@ -732,7 +732,7 @@ OSCQueryOutput::~OSCQueryOutput()
 {
 }
 
-InspectableEditor* OSCQueryOutput::getEditor(bool isRoot)
+InspectableEditor* OSCQueryOutput::getEditorInternal(bool isRoot)
 {
 	return new OSCQueryModuleOutputEditor(this, isRoot);
 }
@@ -784,7 +784,7 @@ GenericOSCQueryValueContainer::~GenericOSCQueryValueContainer()
 {
 }
 
-InspectableEditor* GenericOSCQueryValueContainer::getEditor(bool isRoot)
+InspectableEditor* GenericOSCQueryValueContainer::getEditorInternal(bool isRoot)
 {
 	return new GenericOSCQueryValueContainerEditor(this, isRoot);
 }

@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    BaseCommandHandler.h
-    Created: 19 Jan 2017 6:42:31pm
-    Author:  Ben
+	BaseCommandHandler.h
+	Created: 19 Jan 2017 6:42:31pm
+	Author:  Ben
 
   ==============================================================================
 */
@@ -26,7 +26,7 @@ class BaseCommandHandler :
 	public CommandTemplateManager::ManagerListener
 {
 public:
-	BaseCommandHandler(const String &name = "BaseCommandHandler", CommandContext context = CommandContext::ACTION, Module * lockedModule = nullptr, Multiplex * multiplex = nullptr);
+	BaseCommandHandler(const String& name = "BaseCommandHandler", CommandContext context = CommandContext::ACTION, Module* lockedModule = nullptr, Multiplex* multiplex = nullptr);
 	virtual ~BaseCommandHandler();
 
 	virtual void clearItem() override;
@@ -35,7 +35,7 @@ public:
 	std::unique_ptr<BaseCommand> command;
 	WeakReference<CommandDefinition> commandDefinition;
 
-	Module * lockedModule;
+	Module* lockedModule;
 	Trigger* trigger;
 
 	//ghosting
@@ -45,22 +45,22 @@ public:
 	var ghostCommandData;
 
 	virtual void triggerCommand(int multiplexIndex = 0); //to override and call back for checking (e.g. enable in Consequence)
-	
-	virtual void setCommand(CommandDefinition *);
+
+	virtual void setCommand(CommandDefinition*);
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
-	InspectableEditor * getEditor(bool isRoot) override;
+	InspectableEditor* getEditorInternal(bool isRoot) override;
 
 	void commandContentChanged() override; //from BaseCommand
 	void commandTemplateDestroyed() override;
 
 	virtual void onContainerTriggerTriggered(Trigger* t) override;
-	virtual void inspectableDestroyed(Inspectable *) override;
+	virtual void inspectableDestroyed(Inspectable*) override;
 
-	void itemAdded(Module * m) override;
-	void itemAdded(CommandTemplate * t) override;
+	void itemAdded(Module* m) override;
+	void itemAdded(CommandTemplate* t) override;
 
 
 	static var setCommandFromScript(const var::NativeFunctionArgs& a);
@@ -69,8 +69,8 @@ public:
 	{
 	public:
 		virtual ~CommandHandlerListener() {}
-		virtual void commandChanged(BaseCommandHandler *) {}
-		virtual void commandUpdated(BaseCommandHandler *) {}
+		virtual void commandChanged(BaseCommandHandler*) {}
+		virtual void commandUpdated(BaseCommandHandler*) {}
 	};
 
 	ListenerList<CommandHandlerListener> commandHandlerListeners;
@@ -80,9 +80,9 @@ public:
 	class CommandHandlerEvent {
 	public:
 		enum Type { COMMAND_CHANGED, COMMAND_UPDATED };
-		CommandHandlerEvent(Type type, BaseCommandHandler * h) : type(type), handler(h) {}
+		CommandHandlerEvent(Type type, BaseCommandHandler* h) : type(type), handler(h) {}
 		Type type;
-		BaseCommandHandler * handler;
+		BaseCommandHandler* handler;
 	};
 
 	QueuedNotifier<CommandHandlerEvent> handlerNotifier;

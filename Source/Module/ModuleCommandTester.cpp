@@ -1,14 +1,14 @@
 /*
   ==============================================================================
 
-    ModuleCommandTester.cpp
-    Created: 11 Mar 2019 2:13:19pm
-    Author:  bkupe
+	ModuleCommandTester.cpp
+	Created: 11 Mar 2019 2:13:19pm
+	Author:  bkupe
 
   ==============================================================================
 */
 
-ModuleCommandTester::ModuleCommandTester(Module * module) :
+ModuleCommandTester::ModuleCommandTester(Module* module) :
 	BaseCommandHandler("Command Tester", ACTION, module)
 {
 
@@ -26,7 +26,7 @@ ModuleCommandTester::~ModuleCommandTester()
 {
 }
 
-void ModuleCommandTester::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
+void ModuleCommandTester::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
 {
 	BaseCommandHandler::onControllableFeedbackUpdateInternal(cc, c);
 
@@ -36,7 +36,7 @@ void ModuleCommandTester::onControllableFeedbackUpdateInternal(ControllableConta
 	}
 }
 
-InspectableEditor * ModuleCommandTester::getEditor(bool isRoot)
+InspectableEditor* ModuleCommandTester::getEditorInternal(bool isRoot)
 {
 	return new ModuleCommandTesterEditor(this, isRoot);
 }

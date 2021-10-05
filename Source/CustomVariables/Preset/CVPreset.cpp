@@ -83,7 +83,7 @@ void CVPreset::onContainerTriggerTriggered(Trigger* t)
 	if (t == loadTrigger) group->goToPreset(this, defaultLoadTime->floatValue(), &group->defaultInterpolation);
 }
 
-InspectableEditor * CVPreset::getEditor(bool isRoot)
+InspectableEditor * CVPreset::getEditorInternal(bool isRoot)
 {
 	return new CVPresetEditor(this, isRoot);
 }
@@ -289,7 +289,7 @@ ParameterPreset::~ParameterPreset()
 {
 }
 
-InspectableEditor* ParameterPreset::getEditor(bool isRoot)
+InspectableEditor* ParameterPreset::getEditorInternal(bool isRoot)
 {
 	return new ParameterPresetEditor(this, isRoot);
 }

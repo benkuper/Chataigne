@@ -41,5 +41,5 @@ public:
 	void process(const float* samples, int numSamples);
 	void pushNextSampleIntoFifo(float sample);
 
-	InspectableEditor* getEditor(bool isRoot) override;
+	InspectableEditor* getEditorInternal(bool isRoot) override;
 };

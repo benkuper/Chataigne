@@ -63,7 +63,7 @@ void FFTAnalyzer::onContainerNiceNameChanged()
 	value->setNiceName(niceName + " value");
 }
 
-InspectableEditor* FFTAnalyzer::getEditor(bool isRoot)
+InspectableEditor* FFTAnalyzer::getEditorInternal(bool isRoot)
 {
 	return new FFTAnalyzerEditor(this, isRoot);
 }

@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    WakeOnLanCommand.h
-    Created: 31 Mar 2018 11:06:18am
-    Author:  Ben
+	WakeOnLanCommand.h
+	Created: 31 Mar 2018 11:06:18am
+	Author:  Ben
 
   ==============================================================================
 */
@@ -15,22 +15,22 @@ class WakeOnLanCommand :
 	public BaseCommand
 {
 public:
-	WakeOnLanCommand(OSModule * _module, CommandContext context, var params, Multiplex * multiplex = nullptr);
+	WakeOnLanCommand(OSModule* _module, CommandContext context, var params, Multiplex* multiplex = nullptr);
 	~WakeOnLanCommand();
 
-	OSModule * osModule;
+	OSModule* osModule;
 
-	Trigger * autoSet;
-	StringParameter * macAddress;
+	Trigger* autoSet;
+	StringParameter* macAddress;
 	MACAddress mac;
 
 	void generateMacFromString();
 
-	void onContainerParameterChanged(Parameter * p) override;
+	void onContainerParameterChanged(Parameter* p) override;
 	void triggerInternal(int multiplexIndex) override;
 
-	InspectableEditor * getEditor(bool isRoot) override;
+	InspectableEditor* getEditorInternal(bool isRoot) override;
 
-	static WakeOnLanCommand * create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex) { return new WakeOnLanCommand((OSModule *)module, context, params, multiplex); }
+	static WakeOnLanCommand* create(ControllableContainer* module, CommandContext context, var params, Multiplex* multiplex) { return new WakeOnLanCommand((OSModule*)module, context, params, multiplex); }
 
 };

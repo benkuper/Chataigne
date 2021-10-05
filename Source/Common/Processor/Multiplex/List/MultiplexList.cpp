@@ -177,7 +177,7 @@ void InputValueMultiplexList::fillFromExpression(const String& s)
     }
 }
 
-InspectableEditor* InputValueMultiplexList::getEditor(bool isRoot)
+InspectableEditor* InputValueMultiplexList::getEditorInternal(bool isRoot)
 {
     return new InputValueListEditor(this, isRoot);
 }
@@ -268,7 +268,7 @@ void EnumMultiplexList::loadJSONDataMultiplexInternal(var data)
     }
 }
 
-InspectableEditor* EnumMultiplexList::getEditor(bool isRoot)
+InspectableEditor* EnumMultiplexList::getEditorInternal(bool isRoot)
 {
     return new EnumMultiplexListEditor(this, isRoot);
 }
@@ -338,7 +338,7 @@ Parameter* CVPresetMultiplexList::getPresetParameterAt(int multiplexIndex, const
     return nullptr;
 }
 
-InspectableEditor* CVPresetMultiplexList::getEditor(bool isRoot)
+InspectableEditor* CVPresetMultiplexList::getEditorInternal(bool isRoot)
 {
     return new CVPresetMultiplexListEditor(this, isRoot);
 }

@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    CommunityModuleInfo.h
-    Created: 29 Jan 2019 3:52:31pm
-    Author:  bkupe
+	CommunityModuleInfo.h
+	Created: 29 Jan 2019 3:52:31pm
+	Author:  bkupe
 
   ==============================================================================
 */
@@ -27,22 +27,22 @@ public:
 
 	std::unique_ptr<URL::DownloadTask> downloadTask;
 
-	BoolParameter * isLocal;
-	BoolParameter * isOnline; 
-	Trigger * installTriger;
-	Trigger * uninstallTrigger;
+	BoolParameter* isLocal;
+	BoolParameter* isOnline;
+	Trigger* installTriger;
+	Trigger* uninstallTrigger;
 
 	void installModule();
 	File getDownloadFilePath();
 
 	void updateLocalData();
 
-	void onContainerTriggerTriggered(Trigger * t) override;
+	void onContainerTriggerTriggered(Trigger* t) override;
 
 	// Inherited via Listener
 	virtual void progress(URL::DownloadTask* task, int64 bytesDownloaded, int64 totalLength) override;
-	virtual void finished(URL::DownloadTask * task, bool success) override;
+	virtual void finished(URL::DownloadTask* task, bool success) override;
 
 
-	InspectableEditor * getEditor(bool isRoot) override;
+	InspectableEditor* getEditorInternal(bool isRoot) override;
 };

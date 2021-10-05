@@ -369,7 +369,7 @@ void Module::processDependencies(Parameter * p)
 	}
 }
 
-InspectableEditor * Module::getEditor(bool isRoot)
+InspectableEditor * Module::getEditorInternal(bool isRoot)
 {
 	return new ModuleEditor(this, isRoot); //temp, should have a proper base module editor
 }

@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    BaseCommandHandler.cpp
-    Created: 19 Jan 2017 6:42:31pm
-    Author:  Ben
+	BaseCommandHandler.cpp
+	Created: 19 Jan 2017 6:42:31pm
+	Author:  Ben
 
   ==============================================================================
 */
@@ -12,7 +12,7 @@
 #include "CommandFactory.h"
 #include "ui/BaseCommandHandlerEditor.h"
 
-BaseCommandHandler::BaseCommandHandler(const String & name, CommandContext _context, Module * _lockedModule, Multiplex * multiplex) :
+BaseCommandHandler::BaseCommandHandler(const String& name, CommandContext _context, Module* _lockedModule, Multiplex* multiplex) :
 	BaseItem(name),
 	MultiplexTarget(multiplex),
 	context(_context),
@@ -23,8 +23,8 @@ BaseCommandHandler::BaseCommandHandler(const String & name, CommandContext _cont
 	showWarningInUI = true;
 	//if (!isMultiplexed())
 	//{
-		trigger = addTrigger("Trigger", "Trigger this command");
-		trigger->hideInEditor = true;
+	trigger = addTrigger("Trigger", "Trigger this command");
+	trigger->hideInEditor = true;
 	//}
 
 	scriptObject.setMethod("setCommand", &BaseCommandHandler::setCommandFromScript);
@@ -38,8 +38,8 @@ BaseCommandHandler::~BaseCommandHandler()
 void BaseCommandHandler::clearItem()
 {
 	BaseItem::clearItem();
-    if (ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->removeBaseManagerListener(this);
-    setCommand(nullptr);
+	if (ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->removeBaseManagerListener(this);
+	setCommand(nullptr);
 }
 
 
@@ -48,7 +48,7 @@ void BaseCommandHandler::triggerCommand(int multiplexIndex)
 	if (command != nullptr) command->trigger(multiplexIndex);
 }
 
-void BaseCommandHandler::setCommand(CommandDefinition * commandDef)
+void BaseCommandHandler::setCommand(CommandDefinition* commandDef)
 {
 	if (!commandDefinition.wasObjectDeleted() && commandDefinition == commandDef) return;
 
@@ -82,7 +82,7 @@ void BaseCommandHandler::setCommand(CommandDefinition * commandDef)
 		addChildControllableContainer(command.get());
 
 		/*if(!prevCommandData.isVoid()) command->loadPreviousCommandData(prevCommandData); //keep as much as similar parameter possible
-		else */ 
+		else */
 		if (!ghostCommandData.isVoid()) command->loadJSONData(ghostCommandData);
 		//else if (!isCurrentlyLoadingData) setNiceName(commandDef->commandType);
 
@@ -95,14 +95,14 @@ void BaseCommandHandler::setCommand(CommandDefinition * commandDef)
 		command->module->addInspectableListener(this);
 		command->module->templateManager->removeBaseManagerListener(this);
 
-		 clearWarning();
+		clearWarning();
 
 		registerLinkedInspectable(command->module);
 
 
 		if (ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->removeBaseManagerListener(this);
 	}
-	else if(ghostModuleName.isNotEmpty() && ghostCommandName.isNotEmpty())
+	else if (ghostModuleName.isNotEmpty() && ghostCommandName.isNotEmpty())
 	{
 		if (!Engine::mainEngine->isClearing && !isClearing)
 		{
@@ -126,7 +126,7 @@ var BaseCommandHandler::getJSONData()
 	var data = BaseItem::getJSONData();
 	if (command != nullptr && !commandDefinition.wasObjectDeleted())
 	{
-		if(command->module != nullptr) data.getDynamicObject()->setProperty("commandModule", command->module->shortName);
+		if (command->module != nullptr) data.getDynamicObject()->setProperty("commandModule", command->module->shortName);
 		data.getDynamicObject()->setProperty("commandPath", commandDefinition->menuPath);
 		data.getDynamicObject()->setProperty("commandType", commandDefinition->commandType);
 		data.getDynamicObject()->setProperty("command", command->getJSONData());
@@ -145,15 +145,15 @@ var BaseCommandHandler::getJSONData()
 void BaseCommandHandler::loadJSONDataInternal(var data)
 {
 	BaseItem::loadJSONDataInternal(data);
-	
+
 	ghostCommandData = data.getProperty("ghostCommandData", var());
 	ghostModuleName = data.getProperty("ghostModuleName", "");
 	ghostCommandMenuPath = data.getProperty("ghostCommandMenuPath", "");
 	ghostCommandName = data.getProperty("ghostCommandName", "");
-	
+
 	if (data.getDynamicObject()->hasProperty("commandModule"))
 	{
-		Module * m = ModuleManager::getInstance()->getModuleWithName(data.getProperty("commandModule",""));
+		Module* m = ModuleManager::getInstance()->getModuleWithName(data.getProperty("commandModule", ""));
 		if (m != nullptr)
 		{
 			String menuPath = data.getProperty("commandPath", "");
@@ -163,7 +163,8 @@ void BaseCommandHandler::loadJSONDataInternal(var data)
 			{
 				command->loadJSONData(data.getProperty("command", var()));
 			}
-		} else
+		}
+		else
 		{
 			DBG("Output not found : " << data.getProperty("commandModule", "").toString());
 		}
@@ -198,7 +199,7 @@ void BaseCommandHandler::commandTemplateDestroyed()
 	{
 		ghostCommandData = command->getJSONData();
 		//DBG("Template destroyed, command data = "+JSON::toString(ghostCommandData));
-		if(command->module != nullptr && command->module->templateManager != nullptr) command->module->templateManager->addBaseManagerListener(this);
+		if (command->module != nullptr && command->module->templateManager != nullptr) command->module->templateManager->addBaseManagerListener(this);
 		if (!Engine::mainEngine->isClearing && ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->addBaseManagerListener(this);
 	}
 	setCommand(nullptr);
@@ -210,14 +211,14 @@ void BaseCommandHandler::onContainerTriggerTriggered(Trigger* t)
 	if (t == trigger) triggerCommand(getPreviewIndex());
 }
 
-void BaseCommandHandler::inspectableDestroyed(Inspectable *)
+void BaseCommandHandler::inspectableDestroyed(Inspectable*)
 {
 	if (command != nullptr) ghostCommandData = command->getJSONData();
 	setCommand(nullptr);
-	if(!isClearing && !Engine::mainEngine->isClearing && ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->addBaseManagerListener(this);
+	if (!isClearing && !Engine::mainEngine->isClearing && ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->addBaseManagerListener(this);
 }
 
-void BaseCommandHandler::itemAdded(Module * m)
+void BaseCommandHandler::itemAdded(Module* m)
 {
 	if (command == nullptr && m->shortName == ghostModuleName)
 	{
@@ -225,22 +226,22 @@ void BaseCommandHandler::itemAdded(Module * m)
 	}
 }
 
-void BaseCommandHandler::itemAdded(CommandTemplate * t)
+void BaseCommandHandler::itemAdded(CommandTemplate* t)
 {
 	if (command == nullptr && ghostCommandMenuPath == "Templates" && t->niceName == ghostCommandName)
 	{
-		Module * m = ModuleManager::getInstance()->getItemWithName(ghostModuleName);
-		if(m != nullptr) setCommand(m->getCommandDefinitionFor(ghostCommandMenuPath, ghostCommandName));
+		Module* m = ModuleManager::getInstance()->getItemWithName(ghostModuleName);
+		if (m != nullptr) setCommand(m->getCommandDefinitionFor(ghostCommandMenuPath, ghostCommandName));
 	}
 }
 
 var BaseCommandHandler::setCommandFromScript(const var::NativeFunctionArgs& a)
 {
 	BaseCommandHandler* h = getObjectFromJS<BaseCommandHandler>(a);
-	
+
 	if (h == nullptr) return var();
 	if (!checkNumArgs("Command", a, 3)) return var();
-	
+
 	Module* m = ModuleManager::getInstance()->getModuleWithName(a.arguments[0].toString());
 	if (m != nullptr)
 	{
@@ -253,7 +254,7 @@ var BaseCommandHandler::setCommandFromScript(const var::NativeFunctionArgs& a)
 	return var();
 }
 
-InspectableEditor * BaseCommandHandler::getEditor(bool isRoot)
+InspectableEditor* BaseCommandHandler::getEditorInternal(bool isRoot)
 {
-	return new BaseCommandHandlerEditor(this,isRoot);
+	return new BaseCommandHandlerEditor(this, isRoot);
 }

@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    StandardCondition.h
-    Created: 21 Feb 2017 11:37:26am
-    Author:  Ben
+	StandardCondition.h
+	Created: 21 Feb 2017 11:37:26am
+	Author:  Ben
 
   ==============================================================================
 */
@@ -20,7 +20,7 @@ public:
 
 	bool multiplexListMode;
 
-	TargetParameter * sourceTarget;
+	TargetParameter* sourceTarget;
 	WeakReference<Controllable> sourceControllable; //for non-multiplex conditions
 	BaseMultiplexList* sourceList;
 
@@ -55,7 +55,7 @@ public:
 
 	void forceCheck() override;
 
-	void onContainerParameterChangedInternal(Parameter * p) override;
+	void onContainerParameterChangedInternal(Parameter* p) override;
 	void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
 
 	void onExternalParameterValueChanged(Parameter* p) override;
@@ -66,7 +66,7 @@ public:
 	void loadJSONDataInternal(var data) override;
 	void afterLoadJSONDataInternal() override;
 
-	InspectableEditor * getEditor(bool isRoot) override;
+	InspectableEditor* getEditorInternal(bool isRoot) override;
 
 	String getTypeString() const override { return getTypeStringStatic(multiplexListMode); }
 	static String getTypeStringStatic(bool listMode) { return listMode ? "From Multiplex List" : "From Input Value"; }

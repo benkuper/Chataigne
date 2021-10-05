@@ -74,7 +74,7 @@ void FFTAnalyzerManager::pushNextSampleIntoFifo(float sample)
 	fifo[fifoIndex++] = sample;  // [12]
 }
 
-InspectableEditor* FFTAnalyzerManager::getEditor(bool isRoot)
+InspectableEditor* FFTAnalyzerManager::getEditorInternal(bool isRoot)
 {
 	return new FFTAnalyzerManagerEditor(this, isRoot);
 }

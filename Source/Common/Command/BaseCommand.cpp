@@ -260,7 +260,7 @@ BaseCommand* BaseCommand::create(ControllableContainer* module, CommandContext c
 	return commandTemplate->createCommand(m, context, params, multiplex);
 }
 
-InspectableEditor* BaseCommand::getEditor(bool isRoot)
+InspectableEditor* BaseCommand::getEditorInternal(bool isRoot)
 {
 	return new BaseCommandContainerEditor(this, this, isRoot);
 }

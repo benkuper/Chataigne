@@ -730,7 +730,7 @@ void OSCOutput::onContainerParameterChangedInternal(Parameter * p)
 	}
 }
 
-InspectableEditor * OSCOutput::getEditor(bool isRoot)
+InspectableEditor * OSCOutput::getEditorInternal(bool isRoot)
 {
 	return new OSCOutputEditor(this, isRoot);
 }

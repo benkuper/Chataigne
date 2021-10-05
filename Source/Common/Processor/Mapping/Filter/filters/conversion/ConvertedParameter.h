@@ -39,7 +39,7 @@ public:
 	String getTypeString() const override { return defaultParam->getTypeString(); }
 	static ConvertedParameter* create(var params) { return new ConvertedParameter(params); }
 
-	InspectableEditor* getEditor(bool isRoot) override;
+	InspectableEditor* getEditorInternal(bool isRoot) override;
 
 
 	class CPEvent {

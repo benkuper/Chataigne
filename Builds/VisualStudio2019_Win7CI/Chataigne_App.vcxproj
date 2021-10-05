@@ -3217,9 +3217,6 @@
     <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\dashboard\ui\DashboardParameterItemUI.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\dashboard\DashboardParameterColorStyle.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\dashboard\DashboardParameterItem.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -3251,6 +3248,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\ui\ColorParameterUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\ui\ColorStatusUI.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\ui\DoubleSliderUI.cpp">
@@ -5108,7 +5108,6 @@
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\detective\ControllableDetectiveWatcher.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\detective\Detective.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\dashboard\ui\DashboardParameterItemUI.h"/>
-    <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\dashboard\DashboardParameterColorStyle.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\dashboard\DashboardParameterItem.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\detective\ui\ParameterDetectiveWatcherUI.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\detective\ParameterDetectiveWatcher.h"/>
@@ -5120,6 +5119,7 @@
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\ui\BetterStepper.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\ui\BoolToggleUI.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\ui\ColorParameterUI.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\ui\ColorStatusUI.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\ui\DoubleSliderUI.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\ui\EnumParameterUI.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\ui\FloatParameterLabelUI.h"/>

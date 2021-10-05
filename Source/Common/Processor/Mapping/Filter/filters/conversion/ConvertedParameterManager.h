@@ -19,5 +19,5 @@ public:
 
 	Factory<ConvertedParameter> factory;
 
-	InspectableEditor* getEditor(bool isRoot) override;
+	InspectableEditor* getEditorInternal(bool isRoot) override;
 };

@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    CommandTemplateParameter.h
-    Created: 31 May 2018 11:27:54am
-    Author:  Ben
+	CommandTemplateParameter.h
+	Created: 31 May 2018 11:27:54am
+	Author:  Ben
 
   ==============================================================================
 */
@@ -16,13 +16,13 @@ class CommandTemplateParameter :
 	public ControllableContainer
 {
 public:
-	CommandTemplateParameter(Parameter * sourceParam);
+	CommandTemplateParameter(Parameter* sourceParam);
 	~CommandTemplateParameter();
 
-	Parameter * parameter;
-	BoolParameter * editable;
+	Parameter* parameter;
+	BoolParameter* editable;
 
-	InspectableEditor * getEditor(bool isRoot) override;
+	InspectableEditor* getEditorInternal(bool isRoot) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CommandTemplateParameter)
 };

@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    MappingInput.h
-    Created: 28 Oct 2016 8:11:30pm
-    Author:  bkupe
+	MappingInput.h
+	Created: 28 Oct 2016 8:11:30pm
+	Author:  bkupe
 
   ==============================================================================
 */
@@ -16,45 +16,45 @@ class MappingInput :
 	public MultiplexListListener
 {
 public:
-	MappingInput(var params = var(), Multiplex * multiplex = nullptr);
+	MappingInput(var params = var(), Multiplex* multiplex = nullptr);
 	~MappingInput();
 
 	bool multiplexListMode;
 
-	TargetParameter * inputTarget;
+	TargetParameter* inputTarget;
 	WeakReference<Parameter> inputReference;
 	BaseMultiplexList* list;
 
-	void lockInput(Parameter * input);
-	void setInput(Parameter * input);
+	void lockInput(Parameter* input);
+	void setInput(Parameter* input);
 
 	void setList(BaseMultiplexList* newList);
 
-	void onContainerParameterChangedInternal(Parameter * p) override;
-	void onExternalParameterValueChanged(Parameter *p) override;
+	void onContainerParameterChangedInternal(Parameter* p) override;
+	void onExternalParameterValueChanged(Parameter* p) override;
 
 	void listReferenceUpdated() override;
 	void listItemUpdated(int multiplexIndex) override;
 
 
 	Parameter* getInputAt(int multiplexIndex);
-	
-	void parameterRangeChanged(Parameter * p) override;
+
+	void parameterRangeChanged(Parameter* p) override;
 
 	void multiplexPreviewIndexChanged() override;
 
 	void clear() override;
 
-	InspectableEditor * getEditor(bool isRoot) override;
+	InspectableEditor* getEditorInternal(bool isRoot) override;
 
 	class  Listener
 	{
 	public:
 		/** Destructor. */
 		virtual ~Listener() {}
-		virtual void inputReferenceChanged(MappingInput *) {};
-		virtual void inputParameterValueChanged(MappingInput *, int multiplexIndex) {};
-		virtual void inputParameterRangeChanged(MappingInput *) {};
+		virtual void inputReferenceChanged(MappingInput*) {};
+		virtual void inputParameterValueChanged(MappingInput*, int multiplexIndex) {};
+		virtual void inputParameterRangeChanged(MappingInput*) {};
 	};
 
 	ListenerList<Listener> mappinginputListeners;
@@ -65,9 +65,9 @@ public:
 	class MappingInputEvent {
 	public:
 		enum Type { INPUT_REFERENCE_CHANGED, PARAMETER_VALUE_CHANGED, INPUT_PREVIEW_CHANGED };
-		MappingInputEvent(Type type, MappingInput * i, int multiplexIndex = 0) : type(type), mappingInput(i), multiplexIndex(multiplexIndex) {}
+		MappingInputEvent(Type type, MappingInput* i, int multiplexIndex = 0) : type(type), mappingInput(i), multiplexIndex(multiplexIndex) {}
 		Type type;
-		MappingInput * mappingInput;
+		MappingInput* mappingInput;
 		int multiplexIndex;
 	};
 	QueuedNotifier<MappingInputEvent> mappingInputAsyncNotifier;

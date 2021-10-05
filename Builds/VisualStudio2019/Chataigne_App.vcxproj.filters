@@ -4783,9 +4783,6 @@
     <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\dashboard\ui\DashboardParameterItemUI.cpp">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter\dashboard\ui</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\dashboard\DashboardParameterColorStyle.cpp">
-      <Filter>JUCE Modules\juce_organicui\controllable\parameter\dashboard</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\dashboard\DashboardParameterItem.cpp">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter\dashboard</Filter>
     </ClCompile>
@@ -4817,6 +4814,9 @@
       <Filter>JUCE Modules\juce_organicui\controllable\parameter\ui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\ui\ColorParameterUI.cpp">
+      <Filter>JUCE Modules\juce_organicui\controllable\parameter\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\ui\ColorStatusUI.cpp">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter\ui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\ui\DoubleSliderUI.cpp">
@@ -9195,9 +9195,6 @@
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\dashboard\ui\DashboardParameterItemUI.h">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter\dashboard\ui</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\dashboard\DashboardParameterColorStyle.h">
-      <Filter>JUCE Modules\juce_organicui\controllable\parameter\dashboard</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\dashboard\DashboardParameterItem.h">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter\dashboard</Filter>
     </ClInclude>
@@ -9229,6 +9226,9 @@
       <Filter>JUCE Modules\juce_organicui\controllable\parameter\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\ui\ColorParameterUI.h">
+      <Filter>JUCE Modules\juce_organicui\controllable\parameter\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\ui\ColorStatusUI.h">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\ui\DoubleSliderUI.h">

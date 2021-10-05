@@ -19,7 +19,7 @@ public:
 
 	BoolParameter* enableListen;
 
-	InspectableEditor* getEditor(bool isRoot) override;
+	InspectableEditor* getEditorInternal(bool isRoot) override;
 };
 
 class GenericOSCQueryModule;
@@ -31,7 +31,7 @@ public:
 	~OSCQueryOutput();
 
 	GenericOSCQueryModule* module;
-	InspectableEditor* getEditor(bool isRoot) override;
+	InspectableEditor* getEditorInternal(bool isRoot) override;
 };
 
 class GenericOSCQueryModule :

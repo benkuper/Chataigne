@@ -257,7 +257,7 @@ BaseCommand* SequenceCommand::create(ControllableContainer* module, CommandConte
 }
 
 /*
-InspectableEditor * SequenceCommand::getEditor(bool isRoot)
+InspectableEditor * SequenceCommand::getEditorInternal(bool isRoot)
 {
 	return new SequenceCommandEditor(this, isRoot);
 }

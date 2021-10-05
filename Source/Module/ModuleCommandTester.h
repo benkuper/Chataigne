@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    ModuleCommandTester.h
-    Created: 11 Mar 2019 2:13:19pm
-    Author:  bkupe
+	ModuleCommandTester.h
+	Created: 11 Mar 2019 2:13:19pm
+	Author:  bkupe
 
   ==============================================================================
 */
@@ -16,12 +16,12 @@ class ModuleCommandTester :
 	public BaseCommandHandler
 {
 public:
-	ModuleCommandTester(Module * module);
+	ModuleCommandTester(Module* module);
 	~ModuleCommandTester();
 
-	BoolParameter * autoTrigger;
+	BoolParameter* autoTrigger;
 
-	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
+	void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
 
-	InspectableEditor * getEditor(bool isRoot) override;
+	InspectableEditor* getEditorInternal(bool isRoot) override;
 };

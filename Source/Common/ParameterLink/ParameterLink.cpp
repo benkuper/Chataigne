@@ -560,7 +560,7 @@ void ParamLinkContainer::loadJSONDataInternal(var data)
 
 }
 
-InspectableEditor* ParamLinkContainer::getEditor(bool isRoot)
+InspectableEditor* ParamLinkContainer::getEditorInternal(bool isRoot)
 {
 	if (!paramsCanBeLinked) return new GenericControllableContainerEditor(this, isRoot);
 

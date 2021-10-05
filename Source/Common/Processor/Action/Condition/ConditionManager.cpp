@@ -349,7 +349,7 @@ void ConditionManager::dispatchConditionValidationChanged(int multiplexIndex, bo
 }
 
 
-InspectableEditor* ConditionManager::getEditor(bool isRoot)
+InspectableEditor* ConditionManager::getEditorInternal(bool isRoot)
 {
 	return new ConditionManagerEditor(this, isRoot);
 }

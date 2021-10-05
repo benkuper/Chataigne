@@ -134,7 +134,7 @@ public:
 	String getTypeString() const override { if (customType.isNotEmpty()) return customType; else return getDefaultTypeString(); } //should be overriden
 	virtual String getDefaultTypeString() const { jassert(false); return ""; }
 
-	virtual InspectableEditor * getEditor(bool isRoot) override;
+	virtual InspectableEditor * getEditorInternal(bool isRoot) override;
 	virtual ModuleUI* getModuleUI();
 
 	class ModuleListener

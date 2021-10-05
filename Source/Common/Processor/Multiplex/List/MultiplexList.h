@@ -88,7 +88,7 @@ public:
     var getJSONData() override;
     void loadJSONDataMultiplexInternal(var data) override;
 
-    InspectableEditor* getEditor(bool isRoot) override;
+    InspectableEditor* getEditorInternal(bool isRoot) override;
 
     String getTypeString() const override { return EnumParameter::getTypeStringStatic(); }
 };
@@ -114,7 +114,7 @@ public:
 
     virtual Controllable* getTargetControllableAt(int multiplexIndex) override { return inputControllables[multiplexIndex]; }
 
-    InspectableEditor* getEditor(bool isRoot) override;
+    InspectableEditor* getEditorInternal(bool isRoot) override;
 
     String getTypeString() const override { return getTypeStringStatic(); }
     static String getTypeStringStatic() { return "Input Values"; }
@@ -141,7 +141,7 @@ public:
     Parameter* getPresetParameter(CVPreset* preset, const String& paramName);
     Parameter* getPresetParameterAt(int multiplexIndex, const String& paramName);
 
-    InspectableEditor* getEditor(bool isRoot) override;
+    InspectableEditor* getEditorInternal(bool isRoot) override;
 
     String getTypeString() const override { return getTypeStringStatic(); }
     static String getTypeStringStatic() { return "Custom Variable Presets"; }

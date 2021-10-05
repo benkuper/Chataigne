@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    MappingFilter.h
-    Created: 28 Oct 2016 8:08:53pm
-    Author:  bkupe
+	MappingFilter.h
+	Created: 28 Oct 2016 8:08:53pm
+	Author:  bkupe
 
   ==============================================================================
 */
@@ -19,12 +19,12 @@ class MappingFilter :
 	public ParamLinkContainer::ParamLinkContainerListener
 {
 public:
-	MappingFilter(const String &name = "MappingFilter", var params = var(), Multiplex* multiplex = nullptr);
+	MappingFilter(const String& name = "MappingFilter", var params = var(), Multiplex* multiplex = nullptr);
 	virtual ~MappingFilter();
 
 	enum ProcessResult { CHANGED, UNCHANGED, STOP_HERE };
 	ParamLinkContainer filterParams;
-	
+
 	Array<Controllable::Type> filterTypeFilters; //if not empty, this will filter out the parameters passed to the processSingleParameterInternal function
 
 	Array<Array<WeakReference<Parameter>>> sourceParams;
@@ -37,17 +37,17 @@ public:
 
 	bool filterParamsAreDirty; //This is use to force processing even if input has not changed when a filterParam has been changed
 
-	virtual bool setupSources(Array<Parameter *> sources, int multiplexIndex, bool rangeOnly = false);
+	virtual bool setupSources(Array<Parameter*> sources, int multiplexIndex, bool rangeOnly = false);
 	virtual void setupParametersInternal(int mutiplexIndex, bool rangeOnly = false);
-	virtual Parameter * setupSingleParameterInternal(Parameter * source, int multiplexIndex, bool rangeOnly = false);
+	virtual Parameter* setupSingleParameterInternal(Parameter* source, int multiplexIndex, bool rangeOnly = false);
 
 	ProcessResult process(Array<Parameter*> inputs, int multiplexIndex);
 	virtual ProcessResult processInternal(Array<Parameter*> inputs, int multiplexIndex);
 	virtual ProcessResult processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) { return UNCHANGED; }
 
 	virtual void onContainerParameterChangedInternal(Parameter* p) override;
-	virtual void onControllableFeedbackUpdateInternal(ControllableContainer *, Controllable * p) override;
-	virtual void filterParamChanged(Parameter * ) {};
+	virtual void onControllableFeedbackUpdateInternal(ControllableContainer*, Controllable* p) override;
+	virtual void filterParamChanged(Parameter*) {};
 
 	void linkUpdated(ParamLinkContainer* c, ParameterLink* pLink) override;
 
@@ -58,9 +58,9 @@ public:
 	virtual var getJSONData() override;
 	virtual void loadJSONDataInternal(var data) override;
 
-	InspectableEditor * getEditor(bool isRoot) override;
+	InspectableEditor* getEditorInternal(bool isRoot) override;
 
-	virtual void parameterRangeChanged(Parameter *) override;
+	virtual void parameterRangeChanged(Parameter*) override;
 
 	class  FilterListener
 	{
@@ -68,9 +68,9 @@ public:
 		/** Destructor. */
 		virtual ~FilterListener() {}
 		virtual void filterStateChanged(MappingFilter*) {}
-		virtual void filterNeedsProcess(MappingFilter *) {};
+		virtual void filterNeedsProcess(MappingFilter*) {};
 		virtual void filteredParamsChanged(MappingFilter*) {}
-		virtual void filteredParamRangeChanged(MappingFilter *) {}
+		virtual void filteredParamRangeChanged(MappingFilter*) {}
 	};
 
 	ListenerList<FilterListener> mappingFilterListeners;
@@ -82,7 +82,7 @@ public:
 		enum Type { FILTER_REBUILT };
 		FilterEvent(Type type, MappingFilter* f) : type(type), filter(f) {}
 		Type type;
-		MappingFilter * filter;
+		MappingFilter* filter;
 	};
 
 	QueuedNotifier<FilterEvent> filterAsyncNotifier;

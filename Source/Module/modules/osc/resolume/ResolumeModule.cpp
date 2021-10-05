@@ -40,7 +40,7 @@ ResolumeModule::ResolumeModule() :
 }
 
 /*
-InspectableEditor * ResolumeModule::getEditor(bool isRoot)
+InspectableEditor * ResolumeModule::getEditorInternal(bool isRoot)
 {
 	return new ResolumeModuleEditor(this,isRoot);
 }

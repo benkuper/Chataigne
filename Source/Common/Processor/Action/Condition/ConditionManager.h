@@ -78,7 +78,7 @@ public:
 
 	void afterLoadJSONDataInternal() override;
 
-	InspectableEditor* getEditor(bool isRoot) override;
+	InspectableEditor* getEditorInternal(bool isRoot) override;
 
 	class ConditionManagerListener
 	{

@@ -361,7 +361,7 @@ void CustomOSCModule::addColorArgumentToMessage(OSCMessage& m, const Colour& c)
 }
 
 /*
-InspectableEditor * CustomOSCModule::getEditor(bool isRoot)
+InspectableEditor * CustomOSCModule::getEditorInternal(bool isRoot)
 {
 	return new ModuleEditor(this,isRoot);
 }

@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    MappingOutputManager.h
-    Created: 28 Oct 2016 8:11:54pm
-    Author:  bkupe
+	MappingOutputManager.h
+	Created: 28 Oct 2016 8:11:54pm
+	Author:  bkupe
 
   ==============================================================================
 */
@@ -16,7 +16,7 @@ class MappingOutputManager :
 	public BaseCommandHandler::CommandHandlerListener
 {
 public:
-	MappingOutputManager(Multiplex * multiplex = nullptr);
+	MappingOutputManager(Multiplex* multiplex = nullptr);
 	~MappingOutputManager();
 
 	bool forceDisabled;
@@ -30,22 +30,22 @@ public:
 
 	void setForceDisabled(bool value);
 
-	void setOutParams(Array<Parameter *> params, int multiplexIndex);
+	void setOutParams(Array<Parameter*> params, int multiplexIndex);
 
 	void updateOutputValues(int multiplexIndex, bool sendOnOutputChangedOnly = false);
-	void updateOutputValue(MappingOutput * o, int multiplexIndex);
+	void updateOutputValue(MappingOutput* o, int multiplexIndex);
 
 	var getMergedOutValue(int multiplexIndex);
 
-	void addItemInternal(MappingOutput * o, var) override;
-	void removeItemInternal(MappingOutput * o) override;
+	void addItemInternal(MappingOutput* o, var) override;
+	void removeItemInternal(MappingOutput* o) override;
 
-	void commandChanged(BaseCommandHandler * h) override;
-	void commandUpdated(BaseCommandHandler * h) override;
+	void commandChanged(BaseCommandHandler* h) override;
+	void commandUpdated(BaseCommandHandler* h) override;
 
 	void multiplexPreviewIndexChanged() override;
 
-	InspectableEditor * getEditor(bool isRoot) override;
+	InspectableEditor* getEditorInternal(bool isRoot) override;
 
 	class OutputManagerEvent {
 	public:
