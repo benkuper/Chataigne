@@ -9,7 +9,7 @@
 */
 
 ColorRemapFilter::ColorRemapFilter(var params, Multiplex* multiplex) :
-	MappingFilter(getTypeString(), params, multiplex),
+	MappingFilter(getTypeString(), params, multiplex, true),
 	targetIn(nullptr)
 {
 	useCustomInputRange = filterParams.addBoolParameter("Use Custom Input Range", "If enabled, the input range will be set from the source input range", false);

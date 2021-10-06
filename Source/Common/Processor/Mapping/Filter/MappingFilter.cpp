@@ -8,23 +8,22 @@
   ==============================================================================
 */
 
-MappingFilter::MappingFilter(const String& name, var params, Multiplex* multiplex) :
+MappingFilter::MappingFilter(const String& name, var params, Multiplex* multiplex, bool hasChannelFilter) :
 	BaseItem(name),
 	MultiplexTarget(multiplex),
+	canFilterChannels(hasChannelFilter),
 	filterParams("filterParams", multiplex),
 	processOnSameValue(false),
 	autoSetRange(true),
 	filterParamsAreDirty(false),
 	filterAsyncNotifier(10)
 {
-
 	isSelectable = false;
-	
+
 	filterParams.paramsCanBeLinked = isMultiplexed();
 	filterParams.hideEditorHeader = true;
 	addChildControllableContainer(&filterParams);
 	filterParams.addControllableContainerListener(this);
-
 	filterParams.addParamLinkContainerListener(this);
 }
 
@@ -97,7 +96,7 @@ void MappingFilter::setupParametersInternal(int multiplexIndex, bool rangeOnly)
 {
 
 	if (multiplexIndex >= 0 && filteredParameters.size() <= multiplexIndex || sourceParams.size() <= multiplexIndex) return;
-	
+
 	if (multiplexIndex == -1)
 	{
 		for (int i = 0; i < getMultiplexCount(); i++) setupParametersInternal(i);
@@ -106,10 +105,13 @@ void MappingFilter::setupParametersInternal(int multiplexIndex, bool rangeOnly)
 
 	if (!rangeOnly) filteredParameters[multiplexIndex]->clear();
 
+	int index = 0;
 	for (auto& source : sourceParams[multiplexIndex])
 	{
-		Parameter* p = setupSingleParameterInternal(source, multiplexIndex, rangeOnly);
+		//here if not eligible, force not setting up internal filters but generic mappingFilter setup
+		Parameter* p = isChannelEligible(index) ? setupSingleParameterInternal(source, multiplexIndex, rangeOnly) : MappingFilter::setupSingleParameterInternal(source, multiplexIndex, rangeOnly);
 		if (!rangeOnly) filteredParameters[multiplexIndex]->add(p);
+		index++;
 	}
 
 }
@@ -129,7 +131,7 @@ Parameter* MappingFilter::setupSingleParameterInternal(Parameter* source, int mu
 		if (index >= 0) p = (*filteredParameters[multiplexIndex])[index];
 		if (p != nullptr && p->hasRange()) p->setRange(source->minimumValue, source->maximumValue);
 	}
-	
+
 	return p;
 }
 
@@ -137,6 +139,7 @@ void MappingFilter::onContainerParameterChangedInternal(Parameter* p)
 {
 	if (p == enabled) mappingFilterListeners.call(&FilterListener::filterStateChanged, this);
 }
+
 
 void MappingFilter::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* p)
 {
@@ -200,16 +203,28 @@ MappingFilter::ProcessResult  MappingFilter::processInternal(Array<Parameter*> i
 
 		if (mSourceParams[i].wasObjectDeleted() || mSourceParams[i] == nullptr) continue;
 
-		if (!filterTypeFilters.isEmpty() && !filterTypeFilters.contains(mSourceParams[i]->type))
+		bool isTypeEligible = filterTypeFilters.isEmpty() || filterTypeFilters.contains(mSourceParams[i]->type);
+
+		if (!isTypeEligible)
 		{
 			fParam->setValue(inputs[i]->getValue()); //direct transfer if not supposed to be taken
 			continue;
 		}
 
-		if (autoSetRange && filteredParameters.size() == inputs.size() && (fParam->minimumValue != inputs[i]->minimumValue
-			|| fParam->maximumValue != inputs[i]->maximumValue))
+		bool channelEligible = isChannelEligible(i);
+
+		if ((!channelEligible || autoSetRange)
+			&& filteredParameters.size() == inputs.size()
+			&& (fParam->minimumValue != inputs[i]->minimumValue || fParam->maximumValue != inputs[i]->maximumValue))
 		{
 			fParam->setRange(inputs[i]->minimumValue, inputs[i]->maximumValue);
+		}
+
+		if (!channelEligible)
+		{
+			if (fParam->checkValueIsTheSame(fParam->getValue(), inputs[i]->getValue())) result = CHANGED;
+			fParam->setValue(inputs[i]->getValue()); //direct transfer if not supposed to be taken, but after setting range
+			continue;
 		}
 
 		ProcessResult r = processSingleParameterInternal(inputs[i], fParam, multiplexIndex);
@@ -225,6 +240,17 @@ MappingFilter::ProcessResult  MappingFilter::processInternal(Array<Parameter*> i
 void MappingFilter::linkUpdated(ParamLinkContainer* c, ParameterLink* pLink)
 {
 	filterParamChanged(pLink->parameter);
+}
+
+void MappingFilter::setExcludedChannels(Array<int> channels)
+{
+	excludedChannels = channels;
+	mappingFilterListeners.call(&FilterListener::filterStateChanged, this);
+}
+
+bool MappingFilter::isChannelEligible(int index)
+{
+	return !canFilterChannels || sourceParams[0].size() <= 1 || excludedChannels.isEmpty() || !excludedChannels.contains(index);
 }
 
 void MappingFilter::multiplexPreviewIndexChanged()
@@ -255,11 +281,21 @@ var MappingFilter::getJSONData()
 {
 	var data = BaseItem::getJSONData();
 	data.getDynamicObject()->setProperty("filterParams", filterParams.getJSONData());
+	if (!excludedChannels.isEmpty())
+	{
+		var eData;
+		for (auto & c : excludedChannels) eData.append(c);
+		data.getDynamicObject()->setProperty("excludedChannels", eData);
+	}
+
 	return data;
 }
 
 void MappingFilter::loadJSONDataInternal(var data)
 {
+	var eData = data.getProperty("excludedChannels", var());
+	for (int i = 0; i < eData.size(); i++) excludedChannels.add((int)eData[i]);
+
 	BaseItem::loadJSONDataInternal(data);
 	filterParams.loadJSONData(data.getProperty("filterParams", var()));
 }
@@ -273,27 +309,21 @@ void MappingFilter::parameterRangeChanged(Parameter* p)
 	for (int i = 0; i < sourceParams.size(); i++) //iterate on all multiplexes
 	{
 		int pIndex = sourceParams[i].indexOf(p);
+		if (pIndex == -1 || pIndex >= filteredParameters[i]->size()) continue;
 
-		bool changed = false;
-
-		if (pIndex != -1 && filteredParameters[i]->size() > pIndex)
+		if (Parameter* filteredParameter = filteredParameters[i]->getUnchecked(pIndex))
 		{
-			if (Parameter* filteredParameter = filteredParameters[i]->getUnchecked(pIndex))
+
+			if ((!isChannelEligible(pIndex) || autoSetRange)
+				&& (filteredParameter->minimumValue != p->minimumValue || filteredParameter->maximumValue != p->maximumValue)
+				&& filteredParameter->type == p->type
+				)
 			{
-				if (autoSetRange
-					&& (filteredParameter->minimumValue != p->minimumValue || filteredParameter->maximumValue != p->maximumValue)
-					&& filteredParameter->type == p->type)
-				{
-					filteredParameter->setRange(p->minimumValue, p->maximumValue);
-					changed = true;
-				}
-			}
-		}
+				filteredParameter->setRange(p->minimumValue, p->maximumValue);
 
-		if (changed)
-		{
-			filterParamsAreDirty = true;
-			mappingFilterListeners.call(&FilterListener::filteredParamRangeChanged, this);
+				filterParamsAreDirty = true;
+				mappingFilterListeners.call(&FilterListener::filteredParamRangeChanged, this);
+			}
 		}
 	}
 }

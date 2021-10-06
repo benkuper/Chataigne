@@ -10,7 +10,7 @@
 
 
 CropFilter::CropFilter(var params, Multiplex * multiplex) :
-	MappingFilter(getTypeString(), params, multiplex)
+	MappingFilter(getTypeString(), params, multiplex, true)
 {
 
 	targetMin = filterParams.addFloatParameter("Target Min", "New minimum for output", 0, 0, 1);

@@ -9,11 +9,8 @@
 */
 
 InverseFilter::InverseFilter(var params, Multiplex* multiplex) :
-	MappingFilter(getTypeString(), params, multiplex)
+	MappingFilter(getTypeString(), params, multiplex, true)
 {
-	editorCanBeCollapsed = false;
-	editorIsCollapsed = true;
-
 	filterTypeFilters.add(Controllable::FLOAT, Controllable::INT, Controllable::BOOL);
 }
 

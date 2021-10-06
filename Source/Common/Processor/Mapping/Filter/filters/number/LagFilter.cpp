@@ -9,7 +9,7 @@
 */
 
 LagFilter::LagFilter(var params, Multiplex* multiplex) :
-	MappingFilter(getTypeString(), params, multiplex)
+	MappingFilter(getTypeString(), params, multiplex, true)
 {
 	frequency = filterParams.addFloatParameter("Frequency", "Lag frequency in Hz", 5, .01f, 50);
 	startTimer(1000 / frequency->floatValue());

@@ -19,8 +19,11 @@ class MappingFilter :
 	public ParamLinkContainer::ParamLinkContainerListener
 {
 public:
-	MappingFilter(const String& name = "MappingFilter", var params = var(), Multiplex* multiplex = nullptr);
+	MappingFilter(const String& name = "MappingFilter", var params = var(), Multiplex* multiplex = nullptr, bool hasChannelFilter = false);
 	virtual ~MappingFilter();
+
+	bool canFilterChannels;
+	Array<int> excludedChannels;
 
 	enum ProcessResult { CHANGED, UNCHANGED, STOP_HERE };
 	ParamLinkContainer filterParams;
@@ -51,7 +54,11 @@ public:
 
 	void linkUpdated(ParamLinkContainer* c, ParameterLink* pLink) override;
 
+	void setExcludedChannels(Array<int> channels);
+	bool isChannelEligible(int index);
+
 	void multiplexPreviewIndexChanged() override;
+
 
 	virtual void clearItem() override;
 

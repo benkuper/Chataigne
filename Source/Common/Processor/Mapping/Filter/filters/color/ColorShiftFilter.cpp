@@ -9,7 +9,7 @@
 */
 
 ColorShiftFilter::ColorShiftFilter(var params, Multiplex * multiplex) :
-	MappingFilter(getTypeString(), params, multiplex)
+	MappingFilter(getTypeString(), params, multiplex, true)
 {
 
 	const String hsvNames[3] = { "Hue", "Saturation","Brightness" };

@@ -9,7 +9,7 @@
 */
 
 TimeFilter::TimeFilter(StringRef name, var params, Multiplex* multiplex) :
-    MappingFilter(name, params, multiplex)
+    MappingFilter(name, params, multiplex, true)
 {
     deltaTimes.resize(getMultiplexCount());
     for (int i = 0; i < timesAtLastUpdate.size(); i++) timesAtLastUpdate.set(i, Time::getMillisecondCounter() / 1000.0);

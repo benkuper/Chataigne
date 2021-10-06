@@ -9,7 +9,7 @@
 */
 
 SimpleRemapFilter::SimpleRemapFilter(const String& name, var params, Multiplex* multiplex) :
-	MappingFilter(name, params, multiplex),
+	MappingFilter(name, params, multiplex, true),
 	targetIn(nullptr),
 	targetOut(nullptr)
 {
@@ -196,8 +196,15 @@ void SimpleRemapFilter::computeOutRanges()
 	{
 		auto mFilteredParams = filteredParameters[i];
 
-		for (auto& f : *mFilteredParams)
+		for (int j = 0; j < mFilteredParams->size(); j++)
 		{
+			Parameter* f = mFilteredParams->getUnchecked(j);
+			if (!isChannelEligible(j))
+			{
+				if (Parameter* source = sourceParams[i][j]) f->setRange(source->minimumValue, source->maximumValue);
+				continue;
+			}
+			
 			var mRange = filterParams.getLinkedValue(targetOut, i);
 
 			if (f->type == Controllable::FLOAT || f->type == Controllable::INT)

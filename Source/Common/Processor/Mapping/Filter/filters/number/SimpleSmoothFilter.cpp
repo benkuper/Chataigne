@@ -9,7 +9,7 @@
 */
 
 SimpleSmoothFilter::SimpleSmoothFilter(var params, Multiplex* multiplex) :
-	MappingFilter(getTypeString(),params, multiplex)
+	MappingFilter(getTypeString(),params, multiplex, true)
 {
 	processOnSameValue = true;
 

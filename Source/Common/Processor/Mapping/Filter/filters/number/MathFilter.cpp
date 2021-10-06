@@ -9,7 +9,7 @@
 */
 
 MathFilter::MathFilter(var params, Multiplex* multiplex) :
-	MappingFilter(getTypeString(), params, multiplex),
+	MappingFilter(getTypeString(), params, multiplex, true),
 	operationValue(nullptr)
 {
 	operation = filterParams.addEnumParameter("Operation", "The operation to use for this filter");
