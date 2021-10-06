@@ -38,8 +38,8 @@ CVPresetEditor::CVPresetEditor(CVPreset * preset, bool isRoot) :
 	triggerUI->customBGColor = PANEL_COLOR;
 	addAndMakeVisible(triggerUI.get());
 
-	triggerUI->useCustomBGColor = true;
-	triggerUI->customBGColor = PANEL_COLOR;
+	updateUI->useCustomBGColor = true;
+	updateUI->customBGColor = PANEL_COLOR;
 	addAndMakeVisible(updateUI.get());
 
 
