@@ -11,8 +11,8 @@
 #include "Common/Command/ui/BaseCommandHandlerManagerEditor.h"
 
 ConsequenceManager::ConsequenceManager(const String& name, Multiplex* multiplex) :
-    BaseManager<Consequence>(name),
-    MultiplexTarget(multiplex),
+	BaseManager<BaseItem>(name),
+	MultiplexTarget(multiplex),
 	forceDisabled(false)
 {
 	canBeDisabled = false;
@@ -20,6 +20,10 @@ ConsequenceManager::ConsequenceManager(const String& name, Multiplex* multiplex)
 
 	selectItemWhenCreated = false;
 
+	factory.defs.add(MultiplexTargetDefinition<BaseItem>::createDef<Consequence>("", "BaseItem", multiplex)); //for legacy support, should be removed after 1.9 is widely used !
+	factory.defs.add(MultiplexTargetDefinition<BaseItem>::createDef<Consequence>("", "Consequence", multiplex));
+	factory.defs.add(MultiplexTargetDefinition<BaseItem>::createDef<ConsequenceGroup>("", "Group", multiplex));
+	managerFactory = &factory;
 
 	delay = addFloatParameter("Delay", "Delay the triggering of the commands", 0, 0);
 	delay->defaultUI = FloatParameter::TIME;
@@ -31,13 +35,9 @@ ConsequenceManager::ConsequenceManager(const String& name, Multiplex* multiplex)
 
 ConsequenceManager::~ConsequenceManager()
 {
-	
+
 }
 
-Consequence* ConsequenceManager::createItem()
-{
-	return new Consequence(multiplex);
-}
 
 void ConsequenceManager::triggerAll(int multiplexIndex)
 {
@@ -45,9 +45,10 @@ void ConsequenceManager::triggerAll(int multiplexIndex)
 	{
 		if (delay->floatValue() == 0 && stagger->floatValue() == 0)
 		{
-			for (auto& c : items)
+			for (auto& bi : items)
 			{
-				c->triggerCommand(multiplexIndex);
+				if (Consequence* c = dynamic_cast<Consequence*>(bi)) c->triggerCommand(multiplexIndex);
+				else if (ConsequenceGroup* g = dynamic_cast<ConsequenceGroup*>(bi)) g->csm.triggerAll(multiplexIndex);
 			}
 		}
 		else
@@ -61,7 +62,11 @@ void ConsequenceManager::setForceDisabled(bool value, bool force)
 {
 	if (forceDisabled == value && !force) return;
 	forceDisabled = value;
-	for (auto& i : items) i->forceDisabled = value;
+	for (auto& i : items)
+	{
+		if (Consequence* c = dynamic_cast<Consequence*>(i)) c->forceDisabled = value;
+		else if (ConsequenceGroup* g = dynamic_cast<ConsequenceGroup*>(i)) g->csm.setForceDisabled(value);
+	}
 }
 
 void ConsequenceManager::onContainerTriggerTriggered(Trigger* t)
@@ -71,15 +76,17 @@ void ConsequenceManager::onContainerTriggerTriggered(Trigger* t)
 	BaseManager::onContainerTriggerTriggered(t);
 }
 
-void ConsequenceManager::addItemInternal(Consequence* c, var data)
+void ConsequenceManager::addItemInternal(BaseItem* bi, var data)
 {
-	c->forceDisabled = forceDisabled;
+	if (Consequence* c = dynamic_cast<Consequence*>(bi)) c->forceDisabled = forceDisabled;
+	else if (ConsequenceGroup* g = dynamic_cast<ConsequenceGroup*>(bi)) g->csm.setForceDisabled(forceDisabled);
+
 	//triggerAll->hideInEditor = items.size() == 0;
 	delay->hideInEditor = items.size() == 0;
 	stagger->hideInEditor = items.size() < 2;
 }
 
-void ConsequenceManager::removeItemInternal(Consequence*)
+void ConsequenceManager::removeItemInternal(BaseItem*)
 {
 	//triggerAll->hideInEditor = items.size() == 0;
 	delay->hideInEditor = items.size() == 0;
@@ -93,7 +100,7 @@ void ConsequenceManager::launcherFinished(StaggerLauncher* launcher)
 
 InspectableEditor* ConsequenceManager::getEditorInternal(bool isRoot)
 {
-	return new BaseCommandHandlerManagerEditor<Consequence>(this, CommandContext::ACTION, isRoot, isMultiplexed());
+	return new ConsequenceManagerEditor(this, CommandContext::ACTION, isRoot, isMultiplexed());
 }
 
 ConsequenceManager::StaggerLauncher::StaggerLauncher(ConsequenceManager* csm, int multiplexIndex) :
@@ -131,7 +138,10 @@ void ConsequenceManager::StaggerLauncher::run()
 		}
 
 		if (triggerIndex >= csm->items.size()) return;
-		csm->items[triggerIndex]->triggerCommand(multiplexIndex);
+		BaseItem* bi = csm->items[triggerIndex];
+		if (Consequence* c = dynamic_cast<Consequence*>(bi)) c->triggerCommand(multiplexIndex);
+		else if (ConsequenceGroup* g = dynamic_cast<ConsequenceGroup*>(bi)) g->csm.triggerAll(multiplexIndex);
+
 		triggerIndex++;
 	}
 }

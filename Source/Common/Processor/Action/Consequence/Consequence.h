@@ -16,13 +16,16 @@ class Consequence :
 	public BaseCommandHandler
 {
 public:
-	Consequence(Multiplex * multiplex = nullptr);
+	Consequence(var params = var(), Multiplex * multiplex = nullptr);
 	virtual ~Consequence();
 
 	bool forceDisabled;
 	
 	virtual void triggerCommand(int multiplexIndex = 0) override;
+	virtual void triggerCommandInternal(int multiplexIndex = 0) {};
 
+	String getTypeString() const override { return "Consequence"; }
+	
 	class ConsequenceListener
 	{
 	public:

@@ -42,6 +42,8 @@
 #include "Action/Condition/ui/ConditionManagerEditor.cpp"
 #include "Action/Consequence/Consequence.cpp"
 #include "Action/Consequence/ConsequenceManager.cpp"
+#include "Action/Consequence/ConsequenceGroup.cpp"
+#include "Action/Consequence/ui/ConsequenceManagerEditor.cpp"
 #include "Action/ui/ActionUI.cpp"
 
 #include "Processor.cpp"

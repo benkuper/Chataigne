@@ -301,7 +301,13 @@
     <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\ConditionManager.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Action\Consequence\ui\ConsequenceManagerEditor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Action\Consequence\Consequence.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Action\Consequence\ConsequenceGroup.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Action\Consequence\ConsequenceManager.cpp">
@@ -3971,7 +3977,9 @@
     <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\ui\ConditionManagerEditor.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\Condition.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\ConditionManager.h"/>
+    <ClInclude Include="..\..\Source\Common\Processor\Action\Consequence\ui\ConsequenceManagerEditor.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Action\Consequence\Consequence.h"/>
+    <ClInclude Include="..\..\Source\Common\Processor\Action\Consequence\ConsequenceGroup.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Action\Consequence\ConsequenceManager.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Action\ui\ActionUI.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Action\Action.h"/>

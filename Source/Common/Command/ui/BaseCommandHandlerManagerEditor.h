@@ -32,7 +32,7 @@ public:
 	~BaseCommandHandlerManagerEditor() {}
 
 	
-	void showMenuAndAddItem(bool /*isFromAddButton*/) override
+	virtual void showMenuAndAddItem(bool /*isFromAddButton*/) override
 	{
 		CommandDefinition * def = CommandFactory::showMenuAndGetCommand(context, nullptr, multiplexMode);
 		if (def == nullptr) return;

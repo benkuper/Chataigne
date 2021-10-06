@@ -417,8 +417,19 @@
                     file="Source/Common/Processor/Action/Condition/ConditionManager.h"/>
             </GROUP>
             <GROUP id="{E5695483-8CF1-233B-B7FA-0DB866638800}" name="Consequence">
+              <GROUP id="{9FB564A9-C7BD-8893-5458-027460564BC3}" name="ui">
+                <FILE id="H5TtXi" name="ConsequenceManagerEditor.cpp" compile="0" resource="0"
+                      file="Source/Common/Processor/Action/Consequence/ui/ConsequenceManagerEditor.cpp"
+                      skipPCH="0"/>
+                <FILE id="sTwzoR" name="ConsequenceManagerEditor.h" compile="0" resource="0"
+                      file="Source/Common/Processor/Action/Consequence/ui/ConsequenceManagerEditor.h"/>
+              </GROUP>
               <FILE id="E2eOmj" name="Consequence.cpp" compile="0" resource="0" file="Source/Common/Processor/Action/Consequence/Consequence.cpp"/>
               <FILE id="GaKqm6" name="Consequence.h" compile="0" resource="0" file="Source/Common/Processor/Action/Consequence/Consequence.h"/>
+              <FILE id="vVBQWY" name="ConsequenceGroup.cpp" compile="0" resource="0"
+                    file="Source/Common/Processor/Action/Consequence/ConsequenceGroup.cpp"/>
+              <FILE id="YfINv0" name="ConsequenceGroup.h" compile="0" resource="0"
+                    file="Source/Common/Processor/Action/Consequence/ConsequenceGroup.h"/>
               <FILE id="ZxEgdB" name="ConsequenceManager.cpp" compile="0" resource="0"
                     file="Source/Common/Processor/Action/Consequence/ConsequenceManager.cpp"/>
               <FILE id="lmGMzF" name="ConsequenceManager.h" compile="0" resource="0"

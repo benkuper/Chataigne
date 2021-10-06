@@ -110,6 +110,9 @@
     <Filter Include="Chataigne\Source\Common\Processor\Action\Condition">
       <UniqueIdentifier>{295FABB5-2C3C-09D2-EB79-CBB74B1681D0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Common\Processor\Action\Consequence\ui">
+      <UniqueIdentifier>{4D82D610-FF0B-5C0F-C9A6-E8E5E1B55D86}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Common\Processor\Action\Consequence">
       <UniqueIdentifier>{69628AD8-695A-8C2F-46F2-521D57C5103C}</UniqueIdentifier>
     </Filter>
@@ -1660,7 +1663,13 @@
     <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\ConditionManager.cpp">
       <Filter>Chataigne\Source\Common\Processor\Action\Condition</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Action\Consequence\ui\ConsequenceManagerEditor.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Action\Consequence\ui</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Action\Consequence\Consequence.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Action\Consequence</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Action\Consequence\ConsequenceGroup.cpp">
       <Filter>Chataigne\Source\Common\Processor\Action\Consequence</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Action\Consequence\ConsequenceManager.cpp">
@@ -5766,7 +5775,13 @@
     <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\ConditionManager.h">
       <Filter>Chataigne\Source\Common\Processor\Action\Condition</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Action\Consequence\ui\ConsequenceManagerEditor.h">
+      <Filter>Chataigne\Source\Common\Processor\Action\Consequence\ui</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Action\Consequence\Consequence.h">
+      <Filter>Chataigne\Source\Common\Processor\Action\Consequence</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Action\Consequence\ConsequenceGroup.h">
       <Filter>Chataigne\Source\Common\Processor\Action\Consequence</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Action\Consequence\ConsequenceManager.h">

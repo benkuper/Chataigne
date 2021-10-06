@@ -43,6 +43,8 @@
 
 #include "Action/Consequence/Consequence.h"
 #include "Action/Consequence/ConsequenceManager.h"
+#include "Action/Consequence/ConsequenceGroup.h"
+#include "Action/Consequence/ui/ConsequenceManagerEditor.h"
 
 
 #include "Action/Action.h"

@@ -11,7 +11,7 @@
 #pragma once
 
 class ConsequenceManager :
-	public BaseManager<Consequence>,
+	public BaseManager<BaseItem>,
 	public MultiplexTarget,
 	public Consequence::ConsequenceListener
 {
@@ -22,18 +22,17 @@ public:
 	FloatParameter* delay;
 	FloatParameter* stagger;
 
-	bool forceDisabled;
+	Factory<BaseItem> factory;
 
-	Consequence* createItem() override;
+	bool forceDisabled;
 
 	void triggerAll(int multiplexIndex = 0);
 
 	void setForceDisabled(bool value, bool force = false);
 
 	void onContainerTriggerTriggered(Trigger*) override;
-	void addItemInternal(Consequence*, var data) override;
-	void removeItemInternal(Consequence*) override;
-
+	void addItemInternal(BaseItem*, var data) override;
+	void removeItemInternal(BaseItem*) override;
 
 	class StaggerLauncher :
 		public Thread
@@ -53,7 +52,6 @@ public:
 	OwnedArray<StaggerLauncher> staggerLaunchers;
 
 	void launcherFinished(StaggerLauncher* launcher);
-
 	InspectableEditor* getEditorInternal(bool isRoot) override;
 
 	class ConsequenceManagerListener

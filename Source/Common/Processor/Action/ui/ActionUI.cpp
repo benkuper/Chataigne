@@ -164,8 +164,10 @@ void ActionUI::itemDropped(const SourceDetails& details)
 
 	if (!isInput && def != nullptr)
 	{
-		Consequence* c = isConsequenceTrue ? action->csmOn->addItem() : action->csmOff->addItem();
-		if (c != nullptr) c->setCommand(def);
+		Consequence* c = new Consequence(var(), action->multiplex);
+		if (isConsequenceTrue) action->csmOn->addItem(c);
+		else action->csmOff->addItem(c);
+		c->setCommand(def);
 	}
 }
 

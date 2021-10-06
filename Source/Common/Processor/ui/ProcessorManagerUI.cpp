@@ -125,7 +125,8 @@ void ProcessorManagerUI::itemDropped(const SourceDetails & details)
 			Action * a = dynamic_cast<Action *>(manager->addItem(manager->factory.create("Action")));
 			if (a != nullptr)
 			{
-				Consequence * c = a->csmOn->addItem();
+				Consequence* c = new Consequence(var(), a->multiplex);
+				a->csmOn->addItem(c);
 				c->setCommand(def);
 
 				if (manager->items.size() > 0)

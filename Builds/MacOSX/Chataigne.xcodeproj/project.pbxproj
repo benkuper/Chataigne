@@ -138,6 +138,7 @@
 		046FA6955B23245D5819D9E3 /* LiveOSCModule.h */ /* LiveOSCModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LiveOSCModule.h; path = ../../Source/Module/modules/osc/live/LiveOSCModule.h; sourceTree = SOURCE_ROOT; };
 		04C4B1D0745E80C293C0ED83 /* DMXEnttecProDevice.h */ /* DMXEnttecProDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DMXEnttecProDevice.h; path = ../../Source/Common/DMX/device/DMXEnttecProDevice.h; sourceTree = SOURCE_ROOT; };
 		04CDC9F8DBC38B390BD5304F /* AboutWindow.h */ /* AboutWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AboutWindow.h; path = ../../Source/UI/AboutWindow.h; sourceTree = SOURCE_ROOT; };
+		0551F01900908CFF18CE737E /* ConsequenceGroup.cpp */ /* ConsequenceGroup.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ConsequenceGroup.cpp; path = ../../Source/Common/Processor/Action/Consequence/ConsequenceGroup.cpp; sourceTree = SOURCE_ROOT; };
 		0581290063FB39A6152797FA /* ChataigneDashboardCommand.cpp */ /* ChataigneDashboardCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ChataigneDashboardCommand.cpp; path = ../../Source/Module/modules/generic/commands/ChataigneDashboardCommand.cpp; sourceTree = SOURCE_ROOT; };
 		0613104F04B384C88B49A403 /* GenericControllableCommand.cpp */ /* GenericControllableCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = GenericControllableCommand.cpp; path = ../../Source/Module/modules/common/commands/generic/GenericControllableCommand.cpp; sourceTree = SOURCE_ROOT; };
 		062D0D43531255FFF58B5230 /* DMXModuleUI.cpp */ /* DMXModuleUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DMXModuleUI.cpp; path = ../../Source/Module/modules/dmx/ui/DMXModuleUI.cpp; sourceTree = SOURCE_ROOT; };
@@ -493,6 +494,7 @@
 		7A33EADEDCB3B4815709D2C4 /* ConversionSourceParameterUI.cpp */ /* ConversionSourceParameterUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ConversionSourceParameterUI.cpp; path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConversionSourceParameterUI.cpp; sourceTree = SOURCE_ROOT; };
 		7A91E8D798CAD8D2754205F1 /* Resolume.png */ /* Resolume.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Resolume.png; path = ../../Resources/Modules/Resolume.png; sourceTree = SOURCE_ROOT; };
 		7BF5117D14F60545839C618F /* ConvertedParameter.cpp */ /* ConvertedParameter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ConvertedParameter.cpp; path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ConvertedParameter.cpp; sourceTree = SOURCE_ROOT; };
+		7CB032A893DBFEF23EF4F330 /* ConsequenceManagerEditor.h */ /* ConsequenceManagerEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ConsequenceManagerEditor.h; path = ../../Source/Common/Processor/Action/Consequence/ui/ConsequenceManagerEditor.h; sourceTree = SOURCE_ROOT; };
 		7CC48BF5AC5A35CF1B60C67F /* DampingFilter.cpp */ /* DampingFilter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DampingFilter.cpp; path = ../../Source/Common/Processor/Mapping/Filter/filters/number/DampingFilter.cpp; sourceTree = SOURCE_ROOT; };
 		7D1B09D24AF2AA1A035C862F /* CustomVariablesModuleCommands.cpp */ /* CustomVariablesModuleCommands.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CustomVariablesModuleCommands.cpp; path = ../../Source/Module/modules/customvariables/commands/CustomVariablesModuleCommands.cpp; sourceTree = SOURCE_ROOT; };
 		7D43A9E8A3FA6786D8D869FD /* BaseCommandEditor.h */ /* BaseCommandEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BaseCommandEditor.h; path = ../../Source/Common/Command/ui/BaseCommandEditor.h; sourceTree = SOURCE_ROOT; };
@@ -649,6 +651,7 @@
 		AE5E1271E6FEE99A8E7B23C4 /* SendStreamStringCommand.cpp */ /* SendStreamStringCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SendStreamStringCommand.cpp; path = ../../Source/Module/modules/common/streaming/commands/SendStreamStringCommand.cpp; sourceTree = SOURCE_ROOT; };
 		AEE94AD7E1C97D1DE72EF414 /* juce_audio_formats */ /* juce_audio_formats */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_audio_formats; path = "~/JUCE/modules/juce_audio_formats"; sourceTree = "<absolute>"; };
 		AF52F768B78BA08E716F431A /* PowerpointModule.h */ /* PowerpointModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PowerpointModule.h; path = ../../Source/Module/modules/osc/powerpoint/PowerpointModule.h; sourceTree = SOURCE_ROOT; };
+		AF7FA2B06071451BD3532954 /* ConsequenceManagerEditor.cpp */ /* ConsequenceManagerEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ConsequenceManagerEditor.cpp; path = ../../Source/Common/Processor/Action/Consequence/ui/ConsequenceManagerEditor.cpp; sourceTree = SOURCE_ROOT; };
 		AFA63ADA9DF83E578D4FC7E0 /* Mapping1DLayer.h */ /* Mapping1DLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Mapping1DLayer.h; path = ../../Source/TimeMachine/Sequence/layers/mapping/automation/1d/Mapping1DLayer.h; sourceTree = SOURCE_ROOT; };
 		AFDAEB70EAEA484C53D8F1B0 /* ChataigneTriggerLayer.h */ /* ChataigneTriggerLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ChataigneTriggerLayer.h; path = ../../Source/TimeMachine/Sequence/layers/trigger/ChataigneTriggerLayer.h; sourceTree = SOURCE_ROOT; };
 		B041687DBC635A565CFE93F4 /* juce_opengl */ /* juce_opengl */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_opengl; path = "~/JUCE/modules/juce_opengl"; sourceTree = "<absolute>"; };
@@ -786,6 +789,7 @@
 		DA313B773F3BE136635AC538 /* ChataigneAssetManager.h */ /* ChataigneAssetManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ChataigneAssetManager.h; path = ../../Source/UI/ChataigneAssetManager.h; sourceTree = SOURCE_ROOT; };
 		DA52D796BA7AA5C353087590 /* ChataigneDashboardCommand.h */ /* ChataigneDashboardCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ChataigneDashboardCommand.h; path = ../../Source/Module/modules/generic/commands/ChataigneDashboardCommand.h; sourceTree = SOURCE_ROOT; };
 		DB5A8BBFA2411FFC8DCCEE77 /* MultiplexModule.h */ /* MultiplexModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MultiplexModule.h; path = ../../Source/Module/modules/multiplex/MultiplexModule.h; sourceTree = SOURCE_ROOT; };
+		DB61FF091FF33D2A25491A12 /* ConsequenceGroup.h */ /* ConsequenceGroup.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ConsequenceGroup.h; path = ../../Source/Common/Processor/Action/Consequence/ConsequenceGroup.h; sourceTree = SOURCE_ROOT; };
 		DB828084FAA4E440E44D4934 /* BaseComparatorUI.cpp */ /* BaseComparatorUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BaseComparatorUI.cpp; path = ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/ui/BaseComparatorUI.cpp; sourceTree = SOURCE_ROOT; };
 		DB8586997DF3708490DAEBB5 /* tray_icon.png */ /* tray_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tray_icon.png; path = ../../Resources/tray_icon.png; sourceTree = SOURCE_ROOT; };
 		DBA7609C19925D70182B83C2 /* CommandTemplateManagerUI.h */ /* CommandTemplateManagerUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CommandTemplateManagerUI.h; path = ../../Source/Common/Command/Template/ui/CommandTemplateManagerUI.h; sourceTree = SOURCE_ROOT; };
@@ -1311,6 +1315,15 @@
 				0DD04E60A5E6174F61924D04,
 			);
 			name = "JUCE Library Code";
+			sourceTree = "<group>";
+		};
+		25A8EB2C4A8FE01153B56B8B /* ui */ = {
+			isa = PBXGroup;
+			children = (
+				AF7FA2B06071451BD3532954,
+				7CB032A893DBFEF23EF4F330,
+			);
+			name = ui;
 			sourceTree = "<group>";
 		};
 		28B8A9A4DC7BDC9ACD854720 /* impl */ = {
@@ -2111,8 +2124,11 @@
 		7B2356A9E34D2EF6C2FD9095 /* Consequence */ = {
 			isa = PBXGroup;
 			children = (
+				25A8EB2C4A8FE01153B56B8B,
 				F0125278582079E86238C74E,
 				0E0C3BD22A615072B34BFC26,
+				0551F01900908CFF18CE737E,
+				DB61FF091FF33D2A25491A12,
 				786CF34A60DCB23F26EB0F48,
 				78C84326D3A277B976137BA7,
 			);
