@@ -1,4 +1,3 @@
-#include "CVPresetEditor.h"
 /*
   ==============================================================================
 
@@ -19,6 +18,7 @@ CVPresetEditor::CVPresetEditor(CVPreset * preset, bool isRoot) :
 
 	timeUI.reset(preset->defaultLoadTime->createDefaultUI());
 	triggerUI.reset(preset->loadTrigger->createButtonUI());
+	updateUI.reset(preset->updateTrigger->createButtonUI());
 
 	addChildComponent(weightUI.get());
 	addChildComponent(colorUI.get());
@@ -37,6 +37,10 @@ CVPresetEditor::CVPresetEditor(CVPreset * preset, bool isRoot) :
 	triggerUI->useCustomBGColor = true;
 	triggerUI->customBGColor = PANEL_COLOR;
 	addAndMakeVisible(triggerUI.get());
+
+	triggerUI->useCustomBGColor = true;
+	triggerUI->customBGColor = PANEL_COLOR;
+	addAndMakeVisible(updateUI.get());
 
 
 	CVGroup::ControlMode cm = preset->group->controlMode->getValueDataAsEnum<CVGroup::ControlMode>();
@@ -60,6 +64,8 @@ void CVPresetEditor::resizedInternalHeaderItemInternal(Rectangle<int>& r)
 	triggerUI->setBounds(r.removeFromRight(60).reduced(2));
 	r.removeFromRight(2);
 	timeUI->setBounds(r.removeFromRight(100).reduced(2));
+	r.removeFromRight(2);
+	updateUI->setBounds(r.removeFromRight(60).reduced(2));
 	r.removeFromRight(2);
 
 	if (colorUI->isVisible()) colorUI->setBounds(r.removeFromLeft(r.getHeight()).reduced(2));

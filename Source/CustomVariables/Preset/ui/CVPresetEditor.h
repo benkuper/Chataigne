@@ -24,6 +24,7 @@ public:
 
 	std::unique_ptr<ControllableUI> timeUI;
 	std::unique_ptr<TriggerButtonUI> triggerUI;
+	std::unique_ptr<TriggerButtonUI> updateUI;
 
 	CVPreset * preset;
 	

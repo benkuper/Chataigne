@@ -88,6 +88,7 @@ public:
 	CVGroup* group;
 	FloatParameter* defaultLoadTime;
 	Trigger* loadTrigger;
+	Trigger* updateTrigger;
 
 	PresetParameterContainer values;
 

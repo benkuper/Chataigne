@@ -22,6 +22,9 @@ CVPreset::CVPreset(CVGroup * group) :
 	loadTrigger = addTrigger("Load", "Load this preset with the default time and the default interpolation curve");
 	loadTrigger->hideInEditor = true;
 
+	updateTrigger = addTrigger("Update", "This will update all the preset's values with the current ones from the Group");
+	updateTrigger->hideInEditor = true;
+
 	values.hideEditorHeader = true;
 	values.editorCanBeCollapsed = false;
 
@@ -81,6 +84,7 @@ void CVPreset::onContainerTriggerTriggered(Trigger* t)
 {
 	MorphTarget::onContainerTriggerTriggered(t);
 	if (t == loadTrigger) group->goToPreset(this, defaultLoadTime->floatValue(), &group->defaultInterpolation);
+	else if (t == updateTrigger) values.syncItems(true);
 }
 
 InspectableEditor * CVPreset::getEditorInternal(bool isRoot)
