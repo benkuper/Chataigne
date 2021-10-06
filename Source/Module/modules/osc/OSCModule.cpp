@@ -13,7 +13,8 @@ OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemot
 	Thread("OSCZeroconf"),
 	localPort(nullptr),
     servus("_osc._udp"),
-	receiveCC(nullptr)
+	receiveCC(nullptr),
+	defaultRemotePort(defaultRemotePort)
 {
 	
 	setupIOConfiguration(canHaveInput, canHaveOutput);
@@ -53,12 +54,6 @@ OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemot
 		moduleParams.addChildControllableContainer(outputManager.get());
 
 		outputManager->setCanBeDisabled(true);
-		if (!Engine::mainEngine->isLoadingFile)
-		{
-			OSCOutput * o = outputManager->addItem(nullptr, var(), false);
-			o->remotePort->setValue(defaultRemotePort);
-			if (!Engine::mainEngine->isLoadingFile) setupSenders();
-		}
 	} else
 	{
 		if (outputManager != nullptr) removeChildControllableContainer(outputManager.get());
@@ -498,6 +493,16 @@ var OSCModule::argumentToVar(const OSCArgument & a)
 }
 
 
+void OSCModule::setupFromManualCreation()
+{
+	if (outputManager != nullptr)
+	{
+		OSCOutput* o = outputManager->addItem(nullptr, var(), false);
+		o->remotePort->setValue(defaultRemotePort);
+		if (!Engine::mainEngine->isLoadingFile) setupSenders();
+	}
+}
+
 void OSCModule::loadJSONDataInternal(var data)
 {
 	Module::loadJSONDataInternal(data);
@@ -792,6 +797,7 @@ void OSCOutput::sendOSC(const OSCMessage & m)
 	}
 	notify();
 }
+
 
 void OSCOutput::run()
 {

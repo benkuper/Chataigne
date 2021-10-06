@@ -66,6 +66,7 @@ public:
 	BoolParameter * isConnected;
 	OSCReceiver receiver;
 	OSCSender genericSender;
+	int defaultRemotePort;
 
 	//ZEROCONF
 	Servus servus;
@@ -114,6 +115,8 @@ public:
 
 
 	//save / load
+	virtual void setupFromManualCreation() override;
+
 	virtual void loadJSONDataInternal(var data) override;
 	virtual void afterLoadJSONDataInternal() override;
 

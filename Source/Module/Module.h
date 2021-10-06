@@ -63,6 +63,8 @@ public:
 
 	virtual void setupIOConfiguration(bool _hasInput, bool _hasOutput);
 
+	virtual void setupFromManualCreation() {} //for some module to setup a base configuration when creating from UI
+
 	//ROUTING
 	bool canHandleRouteValues;
 

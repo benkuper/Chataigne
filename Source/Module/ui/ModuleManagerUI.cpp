@@ -1,3 +1,4 @@
+#include "ModuleManagerUI.h"
 /*
   ==============================================================================
 
@@ -24,4 +25,10 @@ ModuleManagerUI::~ModuleManagerUI()
 ModuleUI* ModuleManagerUI::createUIForItem(Module* item)
 {
 	return item->getModuleUI();
+}
+
+void ModuleManagerUI::addItemFromMenu(Module* m, bool fromAddButton, Point<int> pos)
+{
+	BaseManagerShapeShifterUI::addItemFromMenu(m, fromAddButton, pos);
+	m->setupFromManualCreation();
 }
