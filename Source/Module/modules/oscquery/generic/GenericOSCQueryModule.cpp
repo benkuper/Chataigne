@@ -197,8 +197,15 @@ void GenericOSCQueryModule::updateTreeFromData(var data)
 	}
 	
 
-	var vData;
-	if (keepValuesOnSync->boolValue()) vData = valuesCC.getJSONData();
+	var vData(new DynamicObject());
+	if (keepValuesOnSync->boolValue())
+	{
+		Array<WeakReference<Parameter>> params = valuesCC.getAllParameters(true);
+		for (auto& p : params)
+		{
+			if (p->isOverriden) vData.getDynamicObject()->setProperty(p->getControlAddress(&valuesCC), p->value);
+		}
+	}
 
 	//valuesCC.clear();
 
@@ -206,7 +213,14 @@ void GenericOSCQueryModule::updateTreeFromData(var data)
 
 	if (keepValuesOnSync->boolValue())
 	{
-		if (!vData.isVoid()) valuesCC.loadJSONData(vData);
+		NamedValueSet nvs = vData.getDynamicObject()->getProperties();
+		for (auto& nv : nvs)
+		{
+			if (Parameter* p = dynamic_cast<Parameter*>(valuesCC.getControllableForAddress(nv.name.toString())))
+			{
+				p->setValue(nv.value);
+			}
+		}
 	}
 	else
 	{
