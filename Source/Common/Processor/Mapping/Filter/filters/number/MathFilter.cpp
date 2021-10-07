@@ -21,7 +21,7 @@ MathFilter::MathFilter(var params, Multiplex* multiplex) :
 	autoSetRange = false;
 	rangeRemapMode = filterParams.addEnumParameter("Range Remap Mode", "How to setup the output range.\nKeep will keep the input's range, adjust will ajdust automatically depending on the operator. \
 													\nFree will remove the range");
-	rangeRemapMode->addOption("Adjust", AJDUST)->addOption("Keep", KEEP)->addOption("Free", FREE);
+	rangeRemapMode->addOption("Free", FREE)->addOption("Adjust", AJDUST)->addOption("Keep", KEEP);
 
 	filterTypeFilters.add(Controllable::FLOAT, Controllable::INT, Controllable::POINT2D, Controllable::POINT3D);
 }
