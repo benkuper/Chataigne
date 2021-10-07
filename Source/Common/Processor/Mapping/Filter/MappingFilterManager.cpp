@@ -72,6 +72,7 @@ MappingFilter::ProcessResult MappingFilterManager::processFilters(Array<Paramete
 
 
 	jassert(inputs.size() == inputSources[multiplexIndex].size());
+	if (inputs.size() != inputSources[multiplexIndex].size()) return MappingFilter::STOP_HERE;
 
 	Array<Parameter *> fp = inputs;
 	MappingFilter::ProcessResult result = MappingFilter::UNCHANGED;
