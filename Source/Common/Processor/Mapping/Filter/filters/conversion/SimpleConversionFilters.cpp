@@ -37,14 +37,15 @@ Parameter* SimpleConversionFilter::setupSingleParameterInternal(Parameter* sourc
 	if (rangeOnly)
 	{
 		int index = sourceParams[multiplexIndex].indexOf(source);
-		if (index >= 0)
+		jassert(index >= 0);
+
+		Parameter* fp = filteredParameters[multiplexIndex]->getUnchecked(index);
+		if (fp->isComplex() == source->isComplex())
 		{
-			Parameter* fp = (*filteredParameters[multiplexIndex])[index];
-			if (fp->isComplex() == source->isComplex())
-			{
-				if (source->hasRange() && fp->canHaveRange) fp->setRange(source->minimumValue, source->maximumValue);
-			}
+			if (source->hasRange() && fp->canHaveRange) fp->setRange(source->minimumValue, source->maximumValue);
 		}
+			
+		return fp;
 	}
 
 	Parameter* p = (Parameter*)ControllableFactory::getInstance()->createControllable(outTypeString);
