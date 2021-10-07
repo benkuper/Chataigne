@@ -13,12 +13,11 @@ ConvertedParameterEditor::ConvertedParameterEditor(ConvertedParameter* cp, bool 
 	cp(cp)
 {
 
-	for (auto& e : childEditors)
+	for (auto& ce : childEditors)
 	{
-		if (ControllableEditor* ce = dynamic_cast<ControllableEditor*>(e))
+		if (ControllableEditor* cce = dynamic_cast<ControllableEditor*>(ce))
 		{
-			ce->setShowLabel(false);
-			ce->setVisible(!cp->areAllSlotsConnected());
+			cce->setShowLabel(false);
 		}
 	}
 
@@ -50,10 +49,7 @@ ConvertedParameterEditor::~ConvertedParameterEditor()
 InspectableEditor* ConvertedParameterEditor::addEditorUI(ControllableContainer* cc, bool resize)
 {
 	InspectableEditor * e = BaseItemEditor::addEditorUI(cc, resize);
-	if (ControllableEditor* ce = dynamic_cast<ControllableEditor*>(e))
-	{
-		ce->setShowLabel(false);
-	}
+	if (ControllableEditor* ce = dynamic_cast<ControllableEditor*>(e)) ce->setShowLabel(false);
 	return e;
 }
 
@@ -82,7 +78,6 @@ void ConvertedParameterEditor::resizedInternalContent(Rectangle<int>& r)
 		int th = connectors.size() == 1?cr.getHeight()/2:margin + (cr.getHeight() - margin*2) * i * 1.0f / (connectors.size() - 1);
 		connectors[i]->setBounds(Rectangle<int>(5, cr.getY() + th- connectorHeight /2, cr.getWidth(), connectorHeight));
 	}
-
 }
 
 void ConvertedParameterEditor::controllableFeedbackUpdate(Controllable* c)
@@ -114,13 +109,6 @@ void ConvertedParameterEditor::newMessage(const ConvertedParameter::CPEvent& e)
 	}
 	else if (e.type == ConvertedParameter::CPEvent::SLOT_CONNECTION_CHANGED)
 	{
-		for (auto& ce : childEditors)
-		{
-			if (ControllableEditor* cce = dynamic_cast<ControllableEditor*>(ce))
-			{
-				cce->setVisible(!cp->areAllSlotsConnected());
-			}
-		}
 	}
 
 }

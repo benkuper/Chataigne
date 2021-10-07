@@ -40,12 +40,14 @@ bool ConvertedParameter::areAllSlotsConnected() const
 void ConvertedParameter::connectSlot(int index)
 {
 	connectedSlots.set(index, true);
+	defaultParam->setEnabled(!areAllSlotsConnected());
 	cpAsyncNotifier.addMessage(new CPEvent(CPEvent::SLOT_CONNECTION_CHANGED));
 }
 
 void ConvertedParameter::disconnectSlot(int index)
 {
 	connectedSlots.set(index, false);
+	defaultParam->setEnabled(true);
 	cpAsyncNotifier.addMessage(new CPEvent(CPEvent::SLOT_CONNECTION_CHANGED));
 }
 

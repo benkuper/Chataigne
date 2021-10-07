@@ -1,4 +1,3 @@
-#include "ConversionFilterEditor.h"
 /*
   ==============================================================================
 
@@ -17,11 +16,11 @@ ConversionFilterEditor::ConversionFilterEditor(ConversionFilter* filter, bool is
 	addAndMakeVisible(&cpmEditor);
 
 	cf->addAsyncCoalescedConversionFilterListener(this);
-	cf->cpm.addAsyncManagerListener(this);
+	cpmEditor.addContainerEditorListener(this);
 	cpmEditor.addMouseListener(this,true);
 	
 	rebuildSourcesUI();
-	rebuildLinksUI();
+	//rebuildLinksUI();
 }
 
 ConversionFilterEditor::~ConversionFilterEditor()
@@ -29,9 +28,11 @@ ConversionFilterEditor::~ConversionFilterEditor()
 	if (!inspectable.wasObjectDeleted())
 	{
 		cf->removeAsyncConversionFilterListener(this);
-		cf->cpm.removeAsyncManagerListener(this);
 	}
+
+	cpmEditor.removeContainerEditorListener(this);
 }
+
 
 void ConversionFilterEditor::setCollapsed(bool value, bool force, bool animate, bool doNotRebuild)
 {
@@ -230,7 +231,7 @@ void ConversionFilterEditor::newMessage(const ConversionFilter::ConversionFilter
 	}
 }
 
-void ConversionFilterEditor::newMessage(const ConvertedParameterManager::BManagerEvent& e)
+void ConversionFilterEditor::containerRebuilt(GenericControllableContainerEditor* gce)
 {
-	rebuildLinksUI();
+	if(gce == &cpmEditor) rebuildLinksUI();
 }

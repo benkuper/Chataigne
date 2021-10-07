@@ -13,7 +13,7 @@
 class ConversionFilterEditor :
 	public MappingFilterEditor,
 	public ConversionFilter::AsyncConversionFilterListener,
-	public ConvertedParameterManager::AsyncListener
+	public GenericControllableContainerEditor::ContainerEditorListener
 {
 public:
 	ConversionFilterEditor(ConversionFilter* filter, bool isRoot);
@@ -37,5 +37,5 @@ public:
 	void mouseUp(const MouseEvent& e) override;
 
 	void newMessage(const ConversionFilter::ConversionFilterEvent& e) override;
-	void newMessage(const ConvertedParameterManager::BManagerEvent& e) override;
+	void containerRebuilt(GenericControllableContainerEditor* gce) override;
 };

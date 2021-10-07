@@ -17,4 +17,5 @@ public:
 	ConvertedParameterManagerEditor(ConvertedParameterManager* manager, bool isRoot);
 	~ConvertedParameterManagerEditor();
 
+
 };

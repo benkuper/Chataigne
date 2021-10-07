@@ -27,6 +27,7 @@ public:
 	void resizedInternalHeaderItemInternal(Rectangle<int>& r) override;
 	void resizedInternalContent(Rectangle<int> &r) override;
 
+
 	void controllableFeedbackUpdate(Controllable* c) override;
 	void newMessage(const ConvertedParameter::CPEvent& e) override;
 
