@@ -4870,6 +4870,9 @@
     <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\ui\IntStepperUI.cpp">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter\ui</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\ui\P2DUI.cpp">
+      <Filter>JUCE Modules\juce_organicui\controllable\parameter\ui</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\ui\ParameterEditor.cpp">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter\ui</Filter>
     </ClCompile>
@@ -4900,13 +4903,7 @@
     <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\FloatParameter.cpp">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\FloatRangeParameter.cpp">
-      <Filter>JUCE Modules\juce_organicui\controllable\parameter</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\IntParameter.cpp">
-      <Filter>JUCE Modules\juce_organicui\controllable\parameter</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\IntRangeParameter.cpp">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\Parameter.cpp">
@@ -9300,6 +9297,9 @@
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\ui\IntStepperUI.h">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter\ui</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\ui\P2DUI.h">
+      <Filter>JUCE Modules\juce_organicui\controllable\parameter\ui</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\ui\ParameterEditor.h">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter\ui</Filter>
     </ClInclude>
@@ -9330,13 +9330,7 @@
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\FloatParameter.h">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\FloatRangeParameter.h">
-      <Filter>JUCE Modules\juce_organicui\controllable\parameter</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\IntParameter.h">
-      <Filter>JUCE Modules\juce_organicui\controllable\parameter</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\IntRangeParameter.h">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\Parameter.h">

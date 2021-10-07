@@ -389,11 +389,11 @@ void Mapping::run()
 {
 	wait(50); //make sure direct calls have been done before running this (especially if it was loading)
 
-	uint32 millis;
+	double millis;
 
 	while (!threadShouldExit())
 	{
-		uint32 rateMillis = 1000 / updateRate->intValue();
+		double rateMillis = 1000.0 / updateRate->intValue();
 
 		if ((canBeDisabled && !enabled->boolValue()) || forceDisabled)
 		{
@@ -401,14 +401,13 @@ void Mapping::run()
 			continue;
 		}
 
-		millis = Time::getMillisecondCounter();
+		millis = Time::getMillisecondCounterHiRes();
 
 		process(false, -1);
 
-		uint32 newMillis = Time::getMillisecondCounter();
+		double newMillis = Time::getMillisecondCounterHiRes();
 
-
-		uint32 millisToWait = rateMillis - jmax<uint32>(newMillis - millis, 0);
+		double millisToWait = rateMillis - jlimit<double>(0, rateMillis, newMillis - millis);
 		millis = newMillis;
 
 		if (millisToWait > 0) wait(millisToWait);
