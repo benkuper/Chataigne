@@ -10,11 +10,15 @@
 
 MIDIValueComparator MIDIModule::midiValueComparator;
 
-MIDIModule::MIDIModule(const String & name, bool _useGenericControls) :
+MIDIModule::MIDIModule(const String& name, bool _useGenericControls) :
 	Module(name),
 	manualAddMode(false),
-    inputDevice(nullptr),
+	inputDevice(nullptr),
 	outputDevice(nullptr),
+	tempoCC("Tempo"),
+	lastClockReceiveTimeIndex(0),
+	lastClockReceiveTime(0),
+	mtcCC("MTC"),
     useGenericControls(_useGenericControls)
 {
 	valuesCC.customControllableComparator = &MIDIModule::midiValueComparator;
@@ -64,6 +68,17 @@ MIDIModule::MIDIModule(const String & name, bool _useGenericControls) :
 	valuesCC.customUserCreateControllableFunc = &MIDIModule::showMenuAndCreateValue;
 	alwaysShowValues = true;
 
+	bpm = tempoCC.addFloatParameter("BPM", "BPM detected by the incoming MIDI Clock", 0, 0, 999);
+	midiStartTrigger = tempoCC.addTrigger("Start", "Clock Start signal");
+	midiStopTrigger = tempoCC.addTrigger("Stop", "Clock Stop signal");
+	midiContinueTrigger = tempoCC.addTrigger("Continue", "Clock Continue signal");
+	for (int i = 0; i < 24; i++) clockDeltaTimes[i] = 0;
+	valuesCC.addChildControllableContainer(&tempoCC);
+
+	mtcTime = mtcCC.addFloatParameter("MTC Time", "Time sent by the MTC.", 0, 0);
+	mtcTime->defaultUI = FloatParameter::TIME;
+	mtcIsPlaying = mtcCC.addBoolParameter("Is MTC Playing", "Is MTC currently playing ?", false);
+	valuesCC.addChildControllableContainer(&mtcCC);
 
 	thruManager.reset(new ControllableContainer("Pass-through"));
 	thruManager->userCanAddControllables = true;
@@ -216,11 +231,16 @@ void MIDIModule::updateMIDIDevices()
 		if (inputDevice != nullptr)
 		{
 			inputDevice->removeMIDIInputListener(this);
+			mtcReceiver.reset();
 		}
+
 		inputDevice = newInput;
+		
 		if (inputDevice != nullptr)
 		{
 			inputDevice->addMIDIInputListener(this);
+			mtcReceiver.reset(new MTCReceiver(inputDevice));
+			mtcReceiver->addMTCListener(this);
 		}
 	//}
 
@@ -298,7 +318,11 @@ void MIDIModule::fullFrameTimecodeReceived(const MidiMessage& msg)
 	int hours = 0, minutes = 0, seconds = 0, frames = 0;
 	MidiMessage::SmpteTimecodeType timecodeType;
 	msg.getFullFrameParameters(hours, minutes, seconds, frames,timecodeType);
-	NLOG(niceName, "Full frame timecode received : " << hours << ":" << minutes << ":" << seconds << "." << frames << " / " << timecodeType);
+
+	if (logIncomingData->boolValue())
+	{
+		NLOG(niceName, "Full frame timecode received : " << hours << ":" << minutes << ":" << seconds << "." << frames << " / " << timecodeType);
+	}
 }
 
 void MIDIModule::pitchWheelReceived(const int &channel, const int &value)
@@ -354,6 +378,98 @@ void MIDIModule::midiMessageReceived(const MidiMessage& msg)
 		}
 	}
 }
+
+void MIDIModule::midiClockReceived()
+{
+	if (!enabled->boolValue()) return;
+	inActivityTrigger->trigger();
+	//if (logIncomingData->boolValue())
+	//{
+	//	NLOG(niceName, "MIDI Clock received");
+	//}
+
+
+	
+	//for (int i = 0; i < 24; i++)
+	//{
+	//	int prev = i == 0 ? 23 : i - 1;
+	//	double diff = lastClockReceiveTimes[i] - lastClockReceiveTimes[prev];
+	//	targetBPM += diff;
+	//	DBG("Target BPM Here (" << i << ") : " << targetBPM);
+	//}
+
+	//DBG("Target BPM end of loop : " << targetBPM);
+	//targetBPM /= 24.0;
+	
+	double t = Time::getMillisecondCounterHiRes() / 1000.0;
+	double diff = jmax<double>(0, t - lastClockReceiveTime);
+	clockDeltaTimes[lastClockReceiveTimeIndex] = diff;
+
+	if (lastClockReceiveTimeIndex == 0)
+	{
+		double quarterNoteDiff = 0;
+		for (int i = 0; i < 24; i++) quarterNoteDiff += clockDeltaTimes[i];
+		if (quarterNoteDiff > 0)
+		{
+			double targetBPM = 60.0 / quarterNoteDiff;
+			bpm->setValue(targetBPM);
+		}
+	}
+
+	lastClockReceiveTimeIndex = (lastClockReceiveTimeIndex + 1) % 24;
+	lastClockReceiveTime = t;
+
+}
+
+void MIDIModule::midiStartReceived()
+{
+	if (!enabled->boolValue()) return;
+	inActivityTrigger->trigger();
+	if (logIncomingData->boolValue())
+	{
+		NLOG(niceName, "MIDI Start received");
+	}
+	midiStartTrigger->trigger();
+}
+
+void MIDIModule::midiStopReceived()
+{
+	if (!enabled->boolValue()) return;
+	inActivityTrigger->trigger();
+	if (logIncomingData->boolValue())
+	{
+		NLOG(niceName, "MIDI Stop received");
+	}
+	midiStopTrigger->trigger();
+}
+
+void MIDIModule::midiContinueReceived()
+{
+	if (!enabled->boolValue()) return;
+	inActivityTrigger->trigger();
+	if (logIncomingData->boolValue())
+	{
+		NLOG(niceName, "MIDI Continue received");
+	}
+	midiContinueTrigger->trigger();
+}
+
+void MIDIModule::mtcStarted()
+{
+	mtcIsPlaying->setValue(true);
+}
+
+void MIDIModule::mtcStopped()
+{
+	mtcIsPlaying->setValue(false);
+}
+
+void MIDIModule::mtcTimeUpdated(bool isFullFrame)
+{
+	//if(isFullFrame) mtcIsPlaying->setValue(true);
+	mtcTime->setValue(mtcReceiver->getTime());
+}
+
 
 var MIDIModule::sendNoteOnFromScript(const var::NativeFunctionArgs & args)
 {

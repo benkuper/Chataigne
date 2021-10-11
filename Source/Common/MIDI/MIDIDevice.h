@@ -49,6 +49,10 @@ public:
 		virtual void channelPressureReceived(const int&/*channel*/, const int&/*value*/) {}
 		virtual void afterTouchReceived(const int &/*channel*/, const int & /*note*/, const int &/*value*/){}
 		virtual void midiMessageReceived(const MidiMessage& message) {}
+		virtual void midiClockReceived() {}
+		virtual void midiStartReceived() {}
+		virtual void midiStopReceived() {}
+		virtual void midiContinueReceived() {}
 	};
 
 	ListenerList<MIDIInputListener> inputListeners;

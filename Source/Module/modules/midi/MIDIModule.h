@@ -61,7 +61,8 @@ public:
 
 class MIDIModule :
 	public Module,
-	public MIDIInputDevice::MIDIInputListener
+	public MIDIInputDevice::MIDIInputListener,
+	public MTCReceiver::MTCListener
 {
 public:
 	MIDIModule(const String &name = "MIDI", bool useGenericControls = true);
@@ -76,6 +77,20 @@ public:
 
 	MIDIInputDevice * inputDevice;
 	MIDIOutputDevice * outputDevice;
+
+	ControllableContainer tempoCC;
+	Trigger* midiStartTrigger;
+	Trigger* midiStopTrigger;
+	Trigger* midiContinueTrigger;
+	FloatParameter* bpm;
+	double lastClockReceiveTime;
+	double clockDeltaTimes[24];
+	int lastClockReceiveTimeIndex;
+
+	ControllableContainer mtcCC;
+	FloatParameter* mtcTime;
+	BoolParameter* mtcIsPlaying;
+	std::unique_ptr<MTCReceiver> mtcReceiver;
 
 	BoolParameter * isConnected;
 
@@ -128,6 +143,16 @@ public:
 	virtual void afterTouchReceived(const int &channel, const int &note, const int &value) override;
 
 	virtual void midiMessageReceived(const MidiMessage& msg) override;
+
+	virtual void midiClockReceived() override;
+	virtual void midiStartReceived() override;
+	virtual void midiStopReceived() override;
+	virtual void midiContinueReceived() override;
+
+	virtual void mtcStarted() override;
+	virtual void mtcStopped() override;
+	virtual void mtcTimeUpdated(bool isFullFrame) override;
+
 
 	//Script
 	static var sendNoteOnFromScript(const var::NativeFunctionArgs &args);

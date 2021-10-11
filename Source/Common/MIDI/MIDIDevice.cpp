@@ -73,6 +73,10 @@ void MIDIInputDevice::handleIncomingMidiMessage(MidiInput * source, const MidiMe
 	else if (message.isPitchWheel()) inputListeners.call(&MIDIInputListener::pitchWheelReceived, message.getChannel(), message.getPitchWheelValue());
 	else if (message.isChannelPressure()) inputListeners.call(&MIDIInputListener::channelPressureReceived, message.getChannel(), message.getChannelPressureValue());
 	else if (message.isAftertouch()) inputListeners.call(&MIDIInputListener::afterTouchReceived, message.getChannel(), message.getNoteNumber(), message.getAfterTouchValue());
+	else if (message.isMidiClock()) inputListeners.call(&MIDIInputListener::midiClockReceived);
+	else if (message.isMidiStart()) inputListeners.call(&MIDIInputListener::midiStartReceived);
+	else if (message.isMidiStop()) inputListeners.call(&MIDIInputListener::midiStopReceived);
+	else if (message.isMidiContinue()) inputListeners.call(&MIDIInputListener::midiContinueReceived);
 	else
 	{
 		DBG("Not handled : " << message.getDescription());

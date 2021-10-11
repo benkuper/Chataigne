@@ -20,6 +20,7 @@ MTCReceiver::MTCReceiver(MIDIInputDevice* device) :
 MTCReceiver::~MTCReceiver()
 {
 	if(MIDIManager::getInstanceWithoutCreating() != nullptr) MIDIManager::getInstance()->removeMIDIManagerListener(this);
+	stopTimer();
 	setDevice(nullptr);
 }
 
