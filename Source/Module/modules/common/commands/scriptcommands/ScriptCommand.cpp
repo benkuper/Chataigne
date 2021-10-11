@@ -22,7 +22,11 @@ ScriptCommand::ScriptCommand(Module * module, CommandContext context, var params
 		callback = commandData.getProperty("callback", "defaultCallback").toString();
 		var pData = commandData.getProperty("parameters", var());
 		createControllablesForContainer(pData, this);
+
+		String setupCallback = commandData.getProperty("setupCallback", "");
+		if (setupCallback.isNotEmpty()) module->scriptManager->callFunctionOnAllItems(setupCallback, getScriptObject());
 	}
+
 
 	//process all dependencies
 	for (auto &dep : dependencies) dep->process();
@@ -35,49 +39,49 @@ ScriptCommand::~ScriptCommand()
 
 void ScriptCommand::processDependencies(Parameter * p)
 {
-	//Dependencies
-	bool changed = false;
-	for (auto &d : dependencies)
-	{
+//Dependencies
+bool changed = false;
+for (auto& d : dependencies)
+{
 
-		if (d->source == p) if (d->process()) changed = true;
-	}
-
-	if (changed)
-	{
-		queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
-	}
+	if (d->source == p) if (d->process()) changed = true;
 }
 
-void ScriptCommand::onContainerParameterChanged(Parameter * p)
+if (changed)
+{
+	queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
+}
+}
+
+void ScriptCommand::onContainerParameterChanged(Parameter* p)
 {
 	BaseCommand::onContainerParameterChanged(p);
 	processDependencies(p);
-	
+
 }
 
-void ScriptCommand::onControllableFeedbackUpdate(ControllableContainer * cc, Controllable * c)
+void ScriptCommand::onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* c)
 {
 	BaseCommand::onControllableFeedbackUpdate(cc, c);
 
 	//check dependency
 	if (c->type != Controllable::TRIGGER)
 	{
-		Parameter * p = dynamic_cast<Parameter *>(c);
+		Parameter* p = dynamic_cast<Parameter*>(c);
 		processDependencies(p);
 	}
 }
 
-void ScriptCommand::createControllablesForContainer(var data, ControllableContainer * cc)
+void ScriptCommand::createControllablesForContainer(var data, ControllableContainer* cc)
 {
 	if (data.isVoid()) return;
 
 	NamedValueSet valueProps = data.getDynamicObject()->getProperties();
-	for (auto &p : valueProps)
+	for (auto& p : valueProps)
 	{
 		if (p.value.getProperty("type", "") == "Container")
 		{
-			ControllableContainer * childCC = cc->getControllableContainerByName(p.name.toString(), true);
+			ControllableContainer* childCC = cc->getControllableContainerByName(p.name.toString(), true);
 			if (childCC == nullptr)
 			{
 				childCC = new ControllableContainer(p.name.toString());
@@ -86,15 +90,16 @@ void ScriptCommand::createControllablesForContainer(var data, ControllableContai
 			}
 			createControllablesForContainer(p.value, childCC);
 
-		} else
+		}
+		else
 		{
-			Controllable * c = ControllableFactory::createControllableFromJSON(p.name.toString(), p.value);
+			Controllable* c = ControllableFactory::createControllableFromJSON(p.name.toString(), p.value);
 			if (c == nullptr) continue;
 			cc->addControllable(c);
 
 			if (c->type != Controllable::TRIGGER)
 			{
-				Parameter * param = (Parameter *)c;
+				Parameter* param = (Parameter*)c;
 				scriptParams.add(param);
 
 				if (p.value.hasProperty("dependency"))
@@ -102,12 +107,12 @@ void ScriptCommand::createControllablesForContainer(var data, ControllableContai
 					var depVar = p.value.getDynamicObject()->getProperty("dependency");
 					if (depVar.hasProperty("source") && depVar.hasProperty("value") && depVar.hasProperty("check") && depVar.hasProperty("action"))
 					{
-						Parameter * sourceP= cc->getParameterByName(depVar.getProperty("source", ""), true);
+						Parameter* sourceP = cc->getParameterByName(depVar.getProperty("source", ""), true);
 						if (sourceP != nullptr)
 						{
-							Dependency * d = new Dependency(sourceP, param, depVar.getProperty("value", 0), depVar.getProperty("check", "").toString(), depVar.getProperty("action", "").toString());
+							Dependency* d = new Dependency(sourceP, param, depVar.getProperty("value", 0), depVar.getProperty("check", "").toString(), depVar.getProperty("action", "").toString());
 							dependencies.add(d);
-						} 
+						}
 						else
 						{
 							LOGWARNING("Could not find dependency source with name " << depVar.getProperty("source", "").toString());
@@ -131,11 +136,14 @@ void ScriptCommand::createControllablesForContainer(var data, ControllableContai
 void ScriptCommand::triggerInternal(int multiplexIndex)
 {
 	Array<var> args;
-	for (auto &p : scriptParams)
+
+	Array<WeakReference<Parameter>> params = getAllParameters();
+	for (auto& p : params)
 	{
 		var val = getLinkedValue(p, multiplexIndex);// ->value;
 		args.add(val);
 	}
+
 
 	if (module != nullptr) module->scriptManager->callFunctionOnAllItems(callback, args);
 }
