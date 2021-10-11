@@ -275,10 +275,6 @@ void ChataigneSequence::mtcTimeUpdated(bool isFullFrame)
 	double diff = fabs(currentTime->floatValue() - time);
 	bool isJump = diff > 0.1;
 	bool seekMode = isJump || !mtcReceiver->isPlaying;
-	if (seekMode)
-	{
-		LOG("seek mode !");
-	}
 	if (!isPlaying->boolValue() && time >= 0 && time < totalTime->floatValue()) playTrigger->trigger();
 	setCurrentTime(time, isJump, seekMode);
 }
