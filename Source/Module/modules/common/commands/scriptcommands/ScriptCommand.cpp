@@ -140,7 +140,7 @@ void ScriptCommand::triggerInternal(int multiplexIndex)
 	Array<WeakReference<Parameter>> params = getAllParameters();
 	for (auto& p : params)
 	{
-		var val = getLinkedValue(p, multiplexIndex);// ->value;
+		var val = getLinkedValue(p, multiplexIndex);
 		args.add(val);
 	}
 
