@@ -1690,6 +1690,9 @@
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\ui\MappingFilterEditor.cpp">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\ui</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\DelayFilter.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\TimeFilter.cpp">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters</Filter>
     </ClCompile>
@@ -5798,6 +5801,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\ui\MappingFilterEditor.h">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\DelayFilter.h">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\TimeFilter.h">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters</Filter>

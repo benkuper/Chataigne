@@ -77,6 +77,7 @@
 #include "Mapping/Filter/filters/number/DampingFilter.h"
 #include "Mapping/Filter/filters/number/InverseFilter.h"
 #include "Mapping/Filter/filters/number/LagFilter.h"
+#include "Mapping/Filter/filters/DelayFilter.h"
 #include "Mapping/Filter/filters/number/MathFilter.h"
 #include "Mapping/Filter/filters/number/SimpleRemapFilter.h"
 #include "Mapping/Filter/filters/number/CurveMapFilter.h"

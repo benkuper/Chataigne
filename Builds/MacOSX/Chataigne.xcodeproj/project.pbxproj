@@ -741,6 +741,7 @@
 		CE846B4CD970FE96AD866873 /* MetronomeModule.h */ /* MetronomeModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MetronomeModule.h; path = ../../Source/Module/modules/generators/metronome/MetronomeModule.h; sourceTree = SOURCE_ROOT; };
 		CE9837F0BBB91B9A4C09E2C9 /* DLightModule.h */ /* DLightModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DLightModule.h; path = ../../Source/Module/modules/osc/dlight/DLightModule.h; sourceTree = SOURCE_ROOT; };
 		CF04D613489A49CB8D6C417F /* Point3DComparators.cpp */ /* Point3DComparators.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Point3DComparators.cpp; path = ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/comparators/Point3DComparators.cpp; sourceTree = SOURCE_ROOT; };
+		CF6BBDEFC5E44064A6FFE9DB /* DelayFilter.cpp */ /* DelayFilter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DelayFilter.cpp; path = ../../Source/Common/Processor/Mapping/Filter/filters/DelayFilter.cpp; sourceTree = SOURCE_ROOT; };
 		CFDFDA098CB0A28A21BB937C /* ModuleRouterView.cpp */ /* ModuleRouterView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ModuleRouterView.cpp; path = ../../Source/Module/Routing/ui/ModuleRouterView.cpp; sourceTree = SOURCE_ROOT; };
 		CFE4F3C8D5417D715DDE367A /* SequenceCommand.h */ /* SequenceCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SequenceCommand.h; path = ../../Source/Module/modules/sequence/commands/SequenceCommand.h; sourceTree = SOURCE_ROOT; };
 		CFE8B29F9B948CF706C3EC75 /* ChataigneLogCommand.cpp */ /* ChataigneLogCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ChataigneLogCommand.cpp; path = ../../Source/Module/modules/generic/commands/ChataigneLogCommand.cpp; sourceTree = SOURCE_ROOT; };
@@ -810,6 +811,7 @@
 		E282A320F0E547C1419D5D5A /* ChataigneLogCommand.h */ /* ChataigneLogCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ChataigneLogCommand.h; path = ../../Source/Module/modules/generic/commands/ChataigneLogCommand.h; sourceTree = SOURCE_ROOT; };
 		E296E51ECCF351063B8CB8C6 /* WebSocketServerModuleUI.h */ /* WebSocketServerModuleUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WebSocketServerModuleUI.h; path = ../../Source/Module/modules/websocket/ui/WebSocketServerModuleUI.h; sourceTree = SOURCE_ROOT; };
 		E2E597186A12CD91B5651747 /* MappingOutput.h */ /* MappingOutput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MappingOutput.h; path = ../../Source/Common/Processor/Mapping/Output/MappingOutput.h; sourceTree = SOURCE_ROOT; };
+		E2EAF430B045BAA5F0C3CA19 /* DelayFilter.h */ /* DelayFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DelayFilter.h; path = ../../Source/Common/Processor/Mapping/Filter/filters/DelayFilter.h; sourceTree = SOURCE_ROOT; };
 		E3334C7CE4EE2A23F2323183 /* snap.png */ /* snap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = snap.png; path = ../../Resources/snap.png; sourceTree = SOURCE_ROOT; };
 		E38E60FCD973037D93F81F80 /* StreamingCommand.h */ /* StreamingCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StreamingCommand.h; path = ../../Source/Module/modules/common/streaming/commands/StreamingCommand.h; sourceTree = SOURCE_ROOT; };
 		E3D27DA7DF3C13FFDA2468FB /* BasicsGuide.cpp */ /* BasicsGuide.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BasicsGuide.cpp; path = ../../Source/Guider/guides/BasicsGuide.cpp; sourceTree = SOURCE_ROOT; };
@@ -1583,6 +1585,8 @@
 		4545E10ABE8AF2EF652D28E0 /* filters */ = {
 			isa = PBXGroup;
 			children = (
+				CF6BBDEFC5E44064A6FFE9DB,
+				E2EAF430B045BAA5F0C3CA19,
 				446C48CFB7279D722A57242C,
 				A49C324D7AAF7C3F83973E3F,
 				1CDBBCAE5C4A0BFBBEE3A1EA,
@@ -3640,7 +3644,7 @@
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCE_COREGRAPHICS_DRAW_ASYNC=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.9.0b4",
+					"JUCE_APP_VERSION=1.9.0b5",
 					"JUCE_APP_VERSION_HEX=0x10900",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -3710,7 +3714,7 @@
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCE_COREGRAPHICS_DRAW_ASYNC=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.9.0b4",
+					"JUCE_APP_VERSION=1.9.0b5",
 					"JUCE_APP_VERSION_HEX=0x10900",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",

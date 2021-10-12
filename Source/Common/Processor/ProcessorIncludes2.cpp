@@ -37,6 +37,7 @@
 #include "Mapping/Filter/filters/number/DampingFilter.cpp"
 #include "Mapping/Filter/filters/number/InverseFilter.cpp"
 #include "Mapping/Filter/filters/number/LagFilter.cpp"
+#include "Mapping/Filter/filters/DelayFilter.cpp"
 #include "Mapping/Filter/filters/number/MathFilter.cpp"
 #include "Mapping/Filter/filters/number/SimpleRemapFilter.cpp"
 #include "Mapping/Filter/filters/number/SimpleSmoothFilter.cpp"
