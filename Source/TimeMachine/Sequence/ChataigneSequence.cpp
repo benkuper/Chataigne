@@ -20,6 +20,7 @@ ChataigneSequence::ChataigneSequence() :
 	mtcSyncOffset = addFloatParameter("Sync Offset", "The time to offset when sending and receiving", 0, 0);
 	mtcSyncOffset->defaultUI = FloatParameter::TIME;
 	reverseOffset = addBoolParameter("Reverse Offset", "This allows negative offset", false);
+	resetTimeOnMTCStopped = addBoolParameter("Reset on MTC Stop", "If checked, sequence will stop and reset time when MTC doesn't send data anymore. If not checked, sequence will just keep its current time", false);
 
 	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Trigger", &ChataigneTriggerLayer::create, this));
 	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", Mapping1DLayer::getTypeStringStatic(), &Mapping1DLayer::create, this));
@@ -264,7 +265,8 @@ void ChataigneSequence::mtcStarted()
 
 void ChataigneSequence::mtcStopped()
 {
-	stopTrigger->trigger();
+	if (resetTimeOnMTCStopped->boolValue()) stopTrigger->trigger();
+	else pauseTrigger->trigger();
 }
 
 void ChataigneSequence::mtcTimeUpdated(bool isFullFrame)

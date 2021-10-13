@@ -34,6 +34,7 @@ public:
 	std::unique_ptr<MTCReceiver> mtcReceiver;
 	FloatParameter* mtcSyncOffset;
 	BoolParameter* reverseOffset;
+	BoolParameter* resetTimeOnMTCStopped;
 
 	Factory<SequenceLayer> layerFactory;
 
