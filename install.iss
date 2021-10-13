@@ -23,6 +23,10 @@ ArchitecturesInstallIn64BitMode=x64
 OutputDir=/
 OutputBaseFilename={#ApplicationName}-win-x64-bleedingedge
 SetupIconFile=setup.ico
+WizardImageAlphaFormat=premultiplied
+WizardImageFile=install_bg.bmp          
+WizardSmallImageFile=install_smallicon.bmp
+WizardStyle=modern
 
 [Messages]
 SetupWindowTitle={#ApplicationName} {#ApplicationVersion} Setup
