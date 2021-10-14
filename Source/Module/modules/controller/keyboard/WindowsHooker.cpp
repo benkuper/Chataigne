@@ -35,26 +35,28 @@ WindowsHooker::~WindowsHooker()
 
 LRESULT __stdcall WindowsHooker::keyboardCallback(int nCode, WPARAM wParam, LPARAM lParam)
 {
-	if (Engine::mainEngine->isClearing || WindowsHooker::getInstanceWithoutCreating() == nullptr) return;
-
-	KBDLLHOOKSTRUCT* pKeyStruct = (KBDLLHOOKSTRUCT*)lParam;
-
-	if (nCode == 0)
+	if (!Engine::mainEngine->isClearing && WindowsHooker::getInstanceWithoutCreating() != nullptr)
 	{
-		switch (wParam)
-		{
-		case WM_SYSKEYDOWN:
-		case WM_KEYDOWN:
-		{
-			//printf_s("Not Sys Key\n");
-			WindowsHooker::getInstance()->listeners.call(&Listener::keyChanged, pKeyStruct->vkCode, true);
-		}
-		break;
 
-		case WM_KEYUP:
-		case WM_SYSKEYUP:
-			WindowsHooker::getInstance()->listeners.call(&Listener::keyChanged, pKeyStruct->vkCode, false);
+		KBDLLHOOKSTRUCT* pKeyStruct = (KBDLLHOOKSTRUCT*)lParam;
+
+		if (nCode == 0)
+		{
+			switch (wParam)
+			{
+			case WM_SYSKEYDOWN:
+			case WM_KEYDOWN:
+			{
+				//printf_s("Not Sys Key\n");
+				WindowsHooker::getInstance()->listeners.call(&Listener::keyChanged, pKeyStruct->vkCode, true);
+			}
 			break;
+
+			case WM_KEYUP:
+			case WM_SYSKEYUP:
+				WindowsHooker::getInstance()->listeners.call(&Listener::keyChanged, pKeyStruct->vkCode, false);
+				break;
+			}
 		}
 	}
 
