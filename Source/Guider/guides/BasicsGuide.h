@@ -60,7 +60,7 @@ public:
 	ModuleManagerUI * mmui; 
 	StateViewUI * svui;
 	GenericManagerEditor<Condition> * cme;
-	BaseCommandHandlerManagerEditor<Consequence> * csme;
+	ConsequenceManagerEditor * csme;
 	StandardConditionEditor * ce;
 	BaseCommandHandlerEditor * cse;
 
