@@ -35,6 +35,8 @@ WindowsHooker::~WindowsHooker()
 
 LRESULT __stdcall WindowsHooker::keyboardCallback(int nCode, WPARAM wParam, LPARAM lParam)
 {
+	if (Engine::mainEngine->isClearing || WindowsHooker::getInstanceWithoutCreating() == nullptr) return;
+
 	KBDLLHOOKSTRUCT* pKeyStruct = (KBDLLHOOKSTRUCT*)lParam;
 
 	if (nCode == 0)
