@@ -11,7 +11,8 @@
 ConductorCue::ConductorCue(var params, Multiplex * multiplex) :
     Action("Cue", params, multiplex, false, false),
     conductorCueNotifier(5),
-    isCurrent(false)
+    isCurrent(false),
+    index(-1)
 {
 }
 
@@ -25,6 +26,14 @@ void ConductorCue::setIsCurrent(bool value)
     isCurrent = value;
     conductorCueNotifier.addMessage(new ConductorCueEvent(ConductorCueEvent::CURRENT_CHANGED, this));
 }
+
+void ConductorCue::setIndex(int value)
+{
+    if (index == value) return;
+    index = value;
+    conductorCueNotifier.addMessage(new ConductorCueEvent(ConductorCueEvent::INDEX_CHANGED, this));
+}
+
 
 ProcessorUI* ConductorCue::getUI()
 {

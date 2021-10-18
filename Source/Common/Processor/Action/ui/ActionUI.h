@@ -22,16 +22,16 @@ public:
 	std::unique_ptr<TriggerButtonUI> triggerUI;
 	std::unique_ptr<FloatSliderUI> progressionUI;
 
-	void paint(Graphics &g) override;
+	virtual void paint(Graphics &g) override;
 
 	virtual void updateBGColor() override;
 
 	void controllableFeedbackUpdateInternal(Controllable * c) override;
 
-	void resizedInternalHeader(Rectangle<int> &r) override;
-	void paintOverChildren(Graphics &g) override;
+	virtual void resizedInternalHeader(Rectangle<int> &r) override;
+	virtual void paintOverChildren(Graphics &g) override;
 
-	void itemDropped(const SourceDetails &details) override;
+	virtual void itemDropped(const SourceDetails &details) override;
 
 	void newMessage(const Action::ActionEvent &e) override;
 

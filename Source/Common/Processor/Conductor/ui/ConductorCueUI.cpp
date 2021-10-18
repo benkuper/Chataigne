@@ -21,6 +21,21 @@ ConductorCueUI::~ConductorCueUI()
     if(!inspectable.wasObjectDeleted()) cue->removeAsyncConductorCueListener(this);
 }
 
+void ConductorCueUI::paint(Graphics& g)
+{
+    ActionUI::paint(g);
+    g.setColour(bgColor.brighter(.2f));
+    g.setFont(indexRect.getHeight() - 4);
+    g.drawFittedText(String(cue->index), indexRect, Justification::centred, 1);
+
+}
+
+void ConductorCueUI::resizedHeader(Rectangle<int>& r)
+{
+    indexRect = r.removeFromLeft(r.getHeight());
+    ActionUI::resizedHeader(r);
+}
+
 void ConductorCueUI::updateBGColor()
 {
     baseBGColor = Colours::mediumpurple.withMultipliedSaturation(cue->isCurrent ? .8f : .3f);
@@ -32,5 +47,9 @@ void ConductorCueUI::newMessage(const ConductorCue::ConductorCueEvent& e)
     if (e.type == e.CURRENT_CHANGED)
     {
         updateBGColor();
+    }
+    else if (e.type == e.INDEX_CHANGED)
+    {
+        repaint();
     }
 }

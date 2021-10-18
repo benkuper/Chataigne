@@ -44,21 +44,40 @@ void Conductor::updateDisables(bool force)
 void Conductor::itemAdded(Processor* p)
 {
 	if(!isCurrentlyLoadingData && !isClearing) cueIndex->setRange(1, jmax(processorManager.items.size()+1, 2));
+	updateIndices();
 }
 
 void Conductor::itemsAdded(Array<Processor*> pList)
 {
 	if (!isCurrentlyLoadingData && !isClearing) cueIndex->setRange(1, jmax(processorManager.items.size()+1,2));
+	updateIndices();
 }
 
 void Conductor::itemRemoved(Processor* p)
 {
 	if (!isCurrentlyLoadingData && !isClearing) cueIndex->setRange(1, jmax(processorManager.items.size()+1, 2));
+	updateIndices();
 }
 
 void Conductor::itemsRemoved(Array<Processor*> p)
 {
 	if (!isCurrentlyLoadingData && !isClearing) cueIndex->setRange(1, jmax(processorManager.items.size()+1, 2));
+	updateIndices();
+}
+
+void Conductor::itemsReordered()
+{
+	updateIndices();
+}
+
+void Conductor::updateIndices()
+{
+	if (isCurrentlyLoadingData) return;
+
+	for (int i = 0; i < processorManager.items.size(); i++)
+	{
+		((ConductorCue*)processorManager.items[i])->setIndex(i + 1);
+	}
 }
 
 void Conductor::triggerConsequences(bool triggerTrue, int multiplexIndex)
@@ -116,6 +135,7 @@ void Conductor::afterLoadJSONDataInternal()
 	Action::afterLoadJSONDataInternal();
 	updateCurrentCue();
 	cueIndex->setRange(1, jmax(processorManager.items.size()+1, 2));
+	updateIndices();
 }
 
 ProcessorUI* Conductor::getUI()

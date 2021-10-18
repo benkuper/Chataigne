@@ -18,8 +18,11 @@ public:
     ConductorCueUI(ConductorCue* cue);
     ~ConductorCueUI();
 
+    Rectangle<int> indexRect;
     ConductorCue* cue;
 
+    void paint(Graphics& g) override;
+    void resizedHeader(Rectangle<int> &r) override;
     void updateBGColor() override;
     void newMessage(const ConductorCue::ConductorCueEvent& e) override;
 };

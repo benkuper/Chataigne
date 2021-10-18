@@ -18,12 +18,14 @@ public:
     ~ConductorCue();
 
     bool isCurrent;
+    int index;
 
     void setIsCurrent(bool value);
+    void setIndex(int value);
 
     ProcessorUI* getUI() override;
     
     String getTypeString() const override { return "Cue"; }
 
-    DECLARE_ASYNC_EVENT(ConductorCue, ConductorCue, conductorCue, { CURRENT_CHANGED });
+    DECLARE_ASYNC_EVENT(ConductorCue, ConductorCue, conductorCue, ENUM_LIST(CURRENT_CHANGED, INDEX_CHANGED));
 };

@@ -30,6 +30,9 @@ public:
     void itemsAdded(Array<Processor*> p) override;
     void itemRemoved(Processor* p) override;
     void itemsRemoved(Array<Processor *> p) override;
+    void itemsReordered() override;
+
+    void updateIndices();
 
     void triggerConsequences(bool triggerTrue, int multiplexIndex = 0) override;
 
