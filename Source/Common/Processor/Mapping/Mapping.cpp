@@ -357,7 +357,7 @@ void Mapping::onControllableStateChanged(Controllable* c)
 	Processor::onControllableStateChanged(c);
 	if (c == updateRate)
 	{
-		if (updateRate->enabled && enabled->boolValue()) startThread();
+		if (updateRate->enabled && !forceDisabled && (!canBeDisabled || enabled->boolValue())) startThread();
 		else stopThread(1000);
 	}
 }
