@@ -376,7 +376,7 @@ void DMXModule::DMXModuleRouterController::triggerTriggered(Trigger* t)
 {
 	if (t == autoSetChannels)
 	{
-		int startChannel = 0;
+		int startChannel = 1;
 		for (auto& mrv : router->sourceValues.items)
 		{
 			if (DMXRouteParams* dp = dynamic_cast<DMXRouteParams*>(mrv->routeParams.get()))
