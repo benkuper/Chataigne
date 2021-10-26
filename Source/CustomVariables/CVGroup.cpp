@@ -313,7 +313,7 @@ void CVGroup::onControllableFeedbackUpdateInternal(ControllableContainer * cc, C
 	if (controlMode->getValueDataAsEnum<ControlMode>() == WEIGHTS && cc == pm.get())
 	{
 		CVPreset* p = ControllableUtil::findParentAs<CVPreset>(c,4);
-		if (p != nullptr && p->weight->floatValue() > 0) computeValues();
+		if (p != nullptr) computeValues();
 	}
 }
 
