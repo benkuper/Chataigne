@@ -62,7 +62,7 @@ public:
 	static PopupMenu getProcessorMenuForManager(ProcessorManager* manager, Processor::ProcessorType type, Array<Processor*> *arrayToFill);
 
 	static StandardCondition* showMenuAndGetToggleCondition();
-	static PopupMenu getConditionMenuForAction(Action * a, Array<StandardCondition *> * arrayToFill);
+	static PopupMenu getToggleConditionMenuForConditionManager(ConditionManager * a, Array<StandardCondition *> * arrayToFill);
 
 	Array<State *> getLinkedStates(State * s, Array<State *> * statesToAvoid = nullptr);
 

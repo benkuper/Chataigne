@@ -256,7 +256,7 @@ StandardCondition* StateManager::showMenuAndGetToggleCondition()
 			if (p->type == Processor::ACTION)
 			{
 				Action* a = (Action*)p;
-				PopupMenu aMenu = getConditionMenuForAction(a, &conditions);
+				PopupMenu aMenu = getToggleConditionMenuForConditionManager(a->cdm.get(), &conditions);
 				sMenu.addSubMenu(a->niceName, aMenu);
 			}
 			else if (p->type == Processor::MULTIPLEX)
@@ -268,7 +268,7 @@ StandardCondition* StateManager::showMenuAndGetToggleCondition()
 					if (p->type == Processor::ACTION)
 					{
 						Action* a = (Action*)p;
-						PopupMenu aMenu = getConditionMenuForAction(a, &conditions);
+						PopupMenu aMenu = getToggleConditionMenuForConditionManager(a->cdm.get(), &conditions);
 						mpMenu.addSubMenu(a->niceName, aMenu);
 					}
 				}
@@ -283,20 +283,25 @@ StandardCondition* StateManager::showMenuAndGetToggleCondition()
 	return conditions[result - 1];
 }
 
-PopupMenu StateManager::getConditionMenuForAction(Action* a, Array<StandardCondition*>* arrayToFill)
+PopupMenu StateManager::getToggleConditionMenuForConditionManager(ConditionManager* cdm, Array<StandardCondition*>* arrayToFill)
 {
 	PopupMenu result;
-	if (a->cdm == nullptr) return result;
+	if (cdm == nullptr) return result;
 
-	for (auto& c : a->cdm->items)
+	for (auto& c : cdm->items)
 	{
 		if (StandardCondition* sc = dynamic_cast<StandardCondition*>(c))
 		{
-			if (sc->comparator != nullptr && sc->toggleMode->boolValue())
+			if (sc->toggleMode->boolValue())
 			{
 				arrayToFill->add(sc);
 				result.addItem(arrayToFill->size(), sc->niceName);
 			}
+		}
+		else if (ConditionGroup* gc = dynamic_cast<ConditionGroup*>(c))
+		{
+			PopupMenu gcMenu = getToggleConditionMenuForConditionManager(&gc->manager, arrayToFill);
+			result.addSubMenu(gc->niceName, gcMenu);
 		}
 	}
 	return result;
