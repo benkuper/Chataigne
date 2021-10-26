@@ -192,6 +192,7 @@
 		177DC5C34CD7158022576694 /* SignalModule.h */ /* SignalModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SignalModule.h; path = ../../Source/Module/modules/generators/signal/SignalModule.h; sourceTree = SOURCE_ROOT; };
 		17AF8E6632B75805AD969E9E /* ModuleManager.cpp */ /* ModuleManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ModuleManager.cpp; path = ../../Source/Module/ModuleManager.cpp; sourceTree = SOURCE_ROOT; };
 		17B9F2E8CF397C3FA28A2550 /* ConvertedParameterManager.h */ /* ConvertedParameterManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ConvertedParameterManager.h; path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ConvertedParameterManager.h; sourceTree = SOURCE_ROOT; };
+		1801A84E852A7D8B922A5D78 /* keyframe_on.png */ /* keyframe_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = keyframe_on.png; path = ../../Resources/keyframe_on.png; sourceTree = SOURCE_ROOT; };
 		18BEE3D308EBE1EB8F857535 /* MappingOutputManager.h */ /* MappingOutputManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MappingOutputManager.h; path = ../../Source/Common/Processor/Mapping/Output/MappingOutputManager.h; sourceTree = SOURCE_ROOT; };
 		18C577D40DFB00A4DCA92D40 /* Mapping2DLayerTimeline.h */ /* Mapping2DLayerTimeline.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Mapping2DLayerTimeline.h; path = ../../Source/TimeMachine/Sequence/layers/mapping/automation/2d/ui/Mapping2DLayerTimeline.h; sourceTree = SOURCE_ROOT; };
 		1919D8FF97CC9BF35C683A94 /* PJLinkModule.cpp */ /* PJLinkModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PJLinkModule.cpp; path = ../../Source/Module/modules/tcp/tcpclient/pjlink/PJLinkModule.cpp; sourceTree = SOURCE_ROOT; };
@@ -291,6 +292,7 @@
 		37E289E87C093EDA2DD5E0A9 /* StreamDeck.cpp */ /* StreamDeck.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = StreamDeck.cpp; path = ../../Source/Module/modules/controller/streamdeck/StreamDeck.cpp; sourceTree = SOURCE_ROOT; };
 		37F77FEEC679769D2DEAFF71 /* MultiplexListEditor.h */ /* MultiplexListEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MultiplexListEditor.h; path = ../../Source/Common/Processor/Multiplex/List/ui/MultiplexListEditor.h; sourceTree = SOURCE_ROOT; };
 		37FEFAEB18EF718BF7E845C1 /* Mapping2DLayerPanel.cpp */ /* Mapping2DLayerPanel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Mapping2DLayerPanel.cpp; path = ../../Source/TimeMachine/Sequence/layers/mapping/automation/2d/ui/Mapping2DLayerPanel.cpp; sourceTree = SOURCE_ROOT; };
+		3817618A6541867A57699C53 /* keyframe_off.png */ /* keyframe_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = keyframe_off.png; path = ../../Resources/keyframe_off.png; sourceTree = SOURCE_ROOT; };
 		38FCCBBA980FF4FF2D1F2DF5 /* MultiplexModule.cpp */ /* MultiplexModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MultiplexModule.cpp; path = ../../Source/Module/modules/multiplex/MultiplexModule.cpp; sourceTree = SOURCE_ROOT; };
 		394CDA5516B2A8FB43FF8A6C /* BaseCommandHandler.cpp */ /* BaseCommandHandler.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BaseCommandHandler.cpp; path = ../../Source/Common/Command/BaseCommandHandler.cpp; sourceTree = SOURCE_ROOT; };
 		3A3AF980101072D7A8F10F63 /* WiimoteModule.cpp */ /* WiimoteModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = WiimoteModule.cpp; path = ../../Source/Module/modules/controller/wiimote/WiimoteModule.cpp; sourceTree = SOURCE_ROOT; };
@@ -661,6 +663,8 @@
 		B1FD26BF556916851197C97B /* PJLink.png */ /* PJLink.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PJLink.png; path = ../../Resources/Modules/PJLink.png; sourceTree = SOURCE_ROOT; };
 		B253B745FAA7F0D0265B51AA /* SimpleConversionFilters.cpp */ /* SimpleConversionFilters.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SimpleConversionFilters.cpp; path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/SimpleConversionFilters.cpp; sourceTree = SOURCE_ROOT; };
 		B2AE5AB8212F91ACEEB0E80E /* ForceFeedback.framework */ /* ForceFeedback.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ForceFeedback.framework; path = System/Library/Frameworks/ForceFeedback.framework; sourceTree = SDKROOT; };
+		B304D7517FFA94986E5C1C15 /* nextkey.png */ /* nextkey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = nextkey.png; path = ../../Resources/nextkey.png; sourceTree = SOURCE_ROOT; };
+		B30CCDC51639FDE93F557033 /* prevkey.png */ /* prevkey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = prevkey.png; path = ../../Resources/prevkey.png; sourceTree = SOURCE_ROOT; };
 		B35A56BDE9676886EBB52791 /* DMXSACNDevice.h */ /* DMXSACNDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DMXSACNDevice.h; path = ../../Source/Common/DMX/device/DMXSACNDevice.h; sourceTree = SOURCE_ROOT; };
 		B3C3ED01C6D0D020BC0E895C /* server.crt */ /* server.crt */ = {isa = PBXFileReference; lastKnownFileType = file.crt; name = server.crt; path = ../../Resources/server/server.crt; sourceTree = SOURCE_ROOT; };
 		B3F9109E23EBCBBC1AD7FD5F /* CropFilter.h */ /* CropFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CropFilter.h; path = ../../Source/Common/Processor/Mapping/Filter/filters/number/CropFilter.h; sourceTree = SOURCE_ROOT; };
@@ -2758,6 +2762,10 @@
 		C220F6DC306F1E9F6178C370 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3817618A6541867A57699C53,
+				1801A84E852A7D8B922A5D78,
+				B304D7517FFA94986E5C1C15,
+				B30CCDC51639FDE93F557033,
 				566A82CF510CED74A78A0074,
 				C425CBE1320141CCBDD71858,
 				D79CC2C49C8F65182898823E,

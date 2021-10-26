@@ -8,6 +8,11 @@
               headerPath="../../Source" projectLineFeed="&#10;" jucerFormatVersion="1">
   <MAINGROUP id="EDDVhd" name="Chataigne">
     <GROUP id="{E61F6705-4C4B-3F04-F742-20CC91F590E4}" name="Resources">
+      <FILE id="r0e3yz" name="keyframe_off.png" compile="0" resource="1"
+            file="Resources/keyframe_off.png"/>
+      <FILE id="n4WkHv" name="keyframe_on.png" compile="0" resource="1" file="Resources/keyframe_on.png"/>
+      <FILE id="qYtgST" name="nextkey.png" compile="0" resource="1" file="Resources/nextkey.png"/>
+      <FILE id="u52B0j" name="prevkey.png" compile="0" resource="1" file="Resources/prevkey.png"/>
       <GROUP id="{E76DD811-2DF8-08AB-DDD7-B10137EC79FD}" name="Server">
         <FILE id="wnNj7l" name="server.crt" compile="0" resource="0" file="Resources/server/server.crt"
               xcodeResource="1"/>

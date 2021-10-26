@@ -12743,6 +12743,18 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Resources\keyframe_off.png">
+      <Filter>Chataigne\Resources</Filter>
+    </None>
+    <None Include="..\..\Resources\keyframe_on.png">
+      <Filter>Chataigne\Resources</Filter>
+    </None>
+    <None Include="..\..\Resources\nextkey.png">
+      <Filter>Chataigne\Resources</Filter>
+    </None>
+    <None Include="..\..\Resources\prevkey.png">
+      <Filter>Chataigne\Resources</Filter>
+    </None>
     <None Include="..\..\Resources\Modules\Ableton Live.png">
       <Filter>Chataigne\Resources\Modules</Filter>
     </None>

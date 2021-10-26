@@ -6301,6 +6301,10 @@
     <ClInclude Include="..\..\JuceLibraryCode\JuceHeader.h"/>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Resources\keyframe_off.png"/>
+    <None Include="..\..\Resources\keyframe_on.png"/>
+    <None Include="..\..\Resources\nextkey.png"/>
+    <None Include="..\..\Resources\prevkey.png"/>
     <None Include="..\..\Resources\Modules\Ableton Live.png"/>
     <None Include="..\..\Resources\Modules\DLight.png"/>
     <None Include="..\..\Resources\Modules\DMX.png"/>

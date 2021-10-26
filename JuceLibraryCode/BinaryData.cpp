@@ -7,8 +7,105 @@
 namespace BinaryData
 {
 
-//================== Ableton Live.png ==================
+//================== keyframe_off.png ==================
 static const unsigned char temp_binary_data_0[] =
+"\x89PNG\r\n"
+"\x1a\n"
+"\0\0\0\rIHDR\0\0\0\x14\0\0\0\x14\x08\x06\0\0\0\x8d\x89\x1d\r\0\0\0\tpHYs\0\0\x0b\x13\0\0\x0b\x13\x01\0\x9a\x9c\x18\0\0\x05\xc8iTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe"
+":ns:meta/\" x:xmptk=\"Adobe XMP Core 5.6-c148 79.164036, 2019/08/13-01:06:57        \"> <rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"> <rdf:Description rdf:about=\"\" xmlns:xmp=\"http://ns.adobe.com/xap/1.0/\" xmlns:xmpMM=\"http:"
+"//ns.adobe.com/xap/1.0/mm/\" xmlns:stEvt=\"http://ns.adobe.com/xap/1.0/sType/ResourceEvent#\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:photoshop=\"http://ns.adobe.com/photoshop/1.0/\" xmp:CreatorTool=\"Adobe Photoshop 21.1 (Windows)\" xmp:"
+"CreateDate=\"2021-10-23T12:44:57+02:00\" xmp:MetadataDate=\"2021-10-23T12:44:57+02:00\" xmp:ModifyDate=\"2021-10-23T12:44:57+02:00\" xmpMM:InstanceID=\"xmp.iid:c65f6f6d-80a0-3245-a1ac-f8eaf3296118\" xmpMM:DocumentID=\"adobe:docid:photoshop:b5018de6-c"
+"fe8-c349-95d6-430e78c8650a\" xmpMM:OriginalDocumentID=\"xmp.did:92962b8c-9ed4-d144-9f0c-5126dae55cb0\" dc:format=\"image/png\" photoshop:ColorMode=\"3\"> <xmpMM:History> <rdf:Seq> <rdf:li stEvt:action=\"created\" stEvt:instanceID=\"xmp.iid:92962b8c-9"
+"ed4-d144-9f0c-5126dae55cb0\" stEvt:when=\"2021-10-23T12:44:57+02:00\" stEvt:softwareAgent=\"Adobe Photoshop 21.1 (Windows)\"/> <rdf:li stEvt:action=\"saved\" stEvt:instanceID=\"xmp.iid:c65f6f6d-80a0-3245-a1ac-f8eaf3296118\" stEvt:when=\"2021-10-23T12"
+":44:57+02:00\" stEvt:softwareAgent=\"Adobe Photoshop 21.1 (Windows)\" stEvt:changed=\"/\"/> </rdf:Seq> </xmpMM:History> </rdf:Description> </rdf:RDF> </x:xmpmeta> <?xpacket end=\"r\"?>\x8el(g\0\0\x02\x80IDAT8\x8d\xad\x95\xc1\xb1\xe4""6\x0c""D\x1f\0J\xfa"
+"{\xf3\xc5\x17\x07\xe0$\x9c\xc2\x86""4\x9c\xc3\xec""8\x11'\xe0\x14\x1c\xd6\xee\x90@\xfb@\xfd\xffg\xec\xeb\xaa\n"
+"\xa5\x12Iuu7\x1b\xa4I\xe2g>\r\xe0\xf7?\xbe\xfeo\xc2\xdcW\x99\x03v\xfb\xed\xd7_@\\AH\x85J\x88W2\xff\xfc\xfd\xd7\x02|\x01""2\xc3\"p\x0f<\x1a\x98\xdf\xcc\xac\xb7\xed@\x08IW$*\x13\xe5|\x1f{e\xf8\t\xe6xkx\x9c\xd5\xda\xcd=\xba\x99\xb3\x1do\x08\xba*\xa9\xac"
+"\xab\xdb\xa4\xdc\xa9\x9c\x0b\xfc""d\xdb\x9e\x99ykDkD\xdb\xf1\xb6\xdf\xbcm\xdd#0w\xda\xf1\x05$T\xd9\xab\x8a\xcaq\x9d""c 3\x1c\xa8\xcc\xff\0\xc6\x92\x18\xed \xb6\xfd\x16\xdb\xd1""c\xdb\x88\xb6""a\x1el\xc7\xdb\tXd\xcd\x9e\xc3\xc1\xfc\xca\x03R\xc2T\x9f\x80"
+"\xe6\xfe\xe1\x99\xb7\xed\x16\xfb\xd1\xdb~\xd0\xda\x81o\x1b\x1e\x8dm\xff\x82$\xaa&\x96\x01\xb2\x0e\x80\xea\xaa*\xe4\xf1\x04h\x0b""0\xa2\xdd|k=\xda""Fl\x07\xb1\xbf\x11\xdbND\xa3\xbd}\x01\x15""5's\x0e\x10`tU\xe1\x91\xd7\xaa|\x05""4\xf7o\x16qq\xdf\xf0\xb6"
+"\xa4\xc6\xb6\xd3\xf6\x83\x88\x8dm;(\x15\xe6\x01\x06\xaa$\x94\xa4{ww\xdc\xed\xfa\xe9\xa1\xd9""7\xcc/\xef\xd9s\x0f\xdc\xdb\xe9\xe9;\xdb\x1d\xaf$\x01Ua1a\x8e\xd3*\xef\x0c\x07\xb8\x9e\x0c""1\xc3\x80\xb5""c\x98\x81\xfb\xca\xa4""9v\xfa[\x80y\x9e\xe3\x86""a"
+"\xe0\xb6\xd6\x9b\x19\xb0\xfe\x07.B\x7f\xa2\x95&IP\x85\xc4\xd9\x15I\xe5""D\x95\xab""C$(\x01\xeb-\xe9\x0e\xea\x1f\x92%\x81\xea\"IUyQ&UI\xe5 \xa7\x03""F\x8e@Ug\x90\x07\xaa\xb9\xd6T\xdd\x95\xd5\xd1S\xb0%Q*\x94\xb3\x9f@\x97\x9a\x0f\xd2\x97\x80\xca""d<\xfc"
+"c\x97s\x0erN2\xf3\xae\xca\xbe\xe2\xf4\x94""Ce\"\x0f*\x12\x1b\xa3\xa7\x05\xe6~Y\xc4\x13\x8b\xc6\xfc\xe1\x94\x84""2\xa9""9\xc8""9\xee""5G\xaf\x1c""d\x0e\xf4\x1c\x9b\xe5\xd3\\\xf2\xcc""1_\xa1U\xe9\xa2\x9c\x10\xc1\xf8\xe1PZ2U\xf7\x1c\x8f^\xf3\xc1\x1cg/?3"
+"\x04\xc8L\xb0\t\x18 T\xeaUIF\\\xdc\x83\xf1h\xcb\xeb\xcc{U\xf5\xca\xc1\x1c\x93\xcc""A\xcd\xe5\xe7\xebi#Qs\xbe\x7f \t\xaf\xd9\xdd\x03\xcc/\xf3{C\xd8]\x95\xbd\xb2\xa8|\xdf\xf9\xf9!\xf7\x15\xf0\x94\x9es\x9c\x16\x14\xe5\x81\xb9w7g|?\xd6\xf1\xc5\x9a[5\x91^"
+"\x0fZ\xfb\xd9W\xc0\xbf""d\xe3\xe4YK\x7f\xb0\xd3\0\0\0\0IEND\xae""B`\x82";
+
+const char* keyframe_off_png = (const char*) temp_binary_data_0;
+
+//================== keyframe_on.png ==================
+static const unsigned char temp_binary_data_1[] =
+"\x89PNG\r\n"
+"\x1a\n"
+"\0\0\0\rIHDR\0\0\0\x14\0\0\0\x14\x08\x06\0\0\0\x8d\x89\x1d\r\0\0\0\tpHYs\0\0\x0b\x13\0\0\x0b\x13\x01\0\x9a\x9c\x18\0\0\x05\xc8iTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe"
+":ns:meta/\" x:xmptk=\"Adobe XMP Core 5.6-c148 79.164036, 2019/08/13-01:06:57        \"> <rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"> <rdf:Description rdf:about=\"\" xmlns:xmp=\"http://ns.adobe.com/xap/1.0/\" xmlns:xmpMM=\"http:"
+"//ns.adobe.com/xap/1.0/mm/\" xmlns:stEvt=\"http://ns.adobe.com/xap/1.0/sType/ResourceEvent#\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:photoshop=\"http://ns.adobe.com/photoshop/1.0/\" xmp:CreatorTool=\"Adobe Photoshop 21.1 (Windows)\" xmp:"
+"CreateDate=\"2021-10-23T12:45:45+02:00\" xmp:MetadataDate=\"2021-10-23T12:45:45+02:00\" xmp:ModifyDate=\"2021-10-23T12:45:45+02:00\" xmpMM:InstanceID=\"xmp.iid:b1e01993-bc51-8b44-ae90-7e23d7f97d9a\" xmpMM:DocumentID=\"adobe:docid:photoshop:3a6ec607-9"
+"64d-e74c-b74d-b35ce4a34214\" xmpMM:OriginalDocumentID=\"xmp.did:3692e5aa-b9f2-e442-80d9-d21ca56e2b41\" dc:format=\"image/png\" photoshop:ColorMode=\"3\"> <xmpMM:History> <rdf:Seq> <rdf:li stEvt:action=\"created\" stEvt:instanceID=\"xmp.iid:3692e5aa-b"
+"9f2-e442-80d9-d21ca56e2b41\" stEvt:when=\"2021-10-23T12:45:45+02:00\" stEvt:softwareAgent=\"Adobe Photoshop 21.1 (Windows)\"/> <rdf:li stEvt:action=\"saved\" stEvt:instanceID=\"xmp.iid:b1e01993-bc51-8b44-ae90-7e23d7f97d9a\" stEvt:when=\"2021-10-23T12"
+":45:45+02:00\" stEvt:softwareAgent=\"Adobe Photoshop 21.1 (Windows)\" stEvt:changed=\"/\"/> </rdf:Seq> </xmpMM:History> </rdf:Description> </rdf:RDF> </x:xmpmeta> <?xpacket end=\"r\"?>1c\x8b""E\0\0\x02&IDAT8\x8d\xad\x95""A\xb2\xe4""4\x10\x05\xf3\x95\x1a"
+"V\x1c\x80\x1dW\xe2\x12\xdc\xc2""61\xdd\x03\x17\xe0\xae,\xc0\xaa""d!\xf7\xa7\xfb\xcfv\x1c!;lK\xe9\xaaWO\xe5\xa8|\xcf\xe3\x06\xd0\xbf\xfd\xfa\xed\x9b\xf8""1\x8c\xf7\xbf\x7f\xfe\x05\xe0\x88""A\x01!\xe6m\xc9O\x8f\xbf\x16\xf0\x1d\x04\xa4\xb1\xc4""4\x89_\x8c"
+"\xbb""9\x01\x90\x1c$\x84\x82\x16-\xf2\x92\xe4;0b\t5\xb1\x1a\xca\xbb\xe9\xdd\xa8\xb7\t\xb0!\xd0""9\xb0\xa0\x8a\xeb\x1e\xaeh\xdf\x80\xa6qL\xa8\xc6""1\xefV\xefTKL\x8f\x7f\xaf)\xb5Q\x81\xf6\xb0\xa5\x1aL\x11>\x01\xad\xc6\xd1\x0bv;\xef\x8e\xde/xL\xeb\x0f""3"
+"\x10\x98\r\x9d\x1d\x06\tG\x03""e\x96\xa8O\xa0\x11\xea\x82\x8d\xbe;zs\x9cz;at\x8cX\xff\x88\x85#T\x86\x86\x8d)\xa9\xdb\xa1\x13\xfaU\xc3\x08%V\x7f\xb1\xe6\xe6\x98p[\xa3\xc7\x84\xf4\xc7\xb5:\xf4\x94\xca\0\xb2KK\xe7wR\xaf@\x10\x1f\xa4\xb7\x0b,c\xd2""5aL\x1d"
+"\x93\x1e'1tU\n"
+"l\x93\xa4-\xb2\x93\n"
+"\xe9\xe3""5\xc2G\xe2""f\xd0\xf4\xb2M\x0c\xa3\xf1\x02""2&\x1a\x98h\x15I\xcb\x10\xa6!n$\0G=\xcd\xe5:'\x98\x04\x88\x82\xba\x8c\xcd\xfa\xd0""et?\\\xbd\xaa\x91|\xf8\xa6\0\x12""7\xc8\x9f\x17{\x15\xcc\xa7""5s\x8dZk\x84$\xc1\x98\xce\xda\xb8\xf2\x15\xd9\xff\xaf"
+"\xb2!\xb8iu\xcc\xd6\xd6\x02ta\x93\x80\xcc\x01\x86""8H\xc7\xf8\x8c\xa5\x1e\xc8\xc1\xab\x0f""c\xb0\x8bt\x1fXI\xd7\xe6""9L\xa4\x98X\xa1\xe6\x92\xbb\xac""0\x87PI\xd7#\xe6X\x91\xbf\x1a\xfb\xf9\xa0\x0b""f\xed""a\x08n\xe6\x92*\xa6\xce!\xac\xb4\xd3\x83X\x0f""f"
+"\x1d\\\xd9\xe4\x1b`\x17\x89\xd0\x03\xe0Xrg\xb7""CEk\xfe\x88I\"d\xd6\x1f\x99u\xe0X\xeb\xd6\x07\xde\xb7^,l\xe1\x94\x0c\0\x8eT\xb0k3&s\xac\xfd\xda|\x85\xda\xb9""4\xce\xac\xcb\xc8\x9f\x9b\x83\x90\xae'\x1e\x0cV\x1f\x89I\xb9""ei\xf8X\x9d""f\xb5\xaf""5\xbf\xae"
+"n\xc3'\xe0\x95z\xaej\xf2\xb4\n"
+"\xee""Fr\xde\x96\x14,\x1b\xbd\xea\xfe\xda""f\xf3\xbd\x7f\x01\xff\x01%\x10\x8d\x8c>x\xb7\0\0\0\0\0IEND\xae""B`\x82";
+
+const char* keyframe_on_png = (const char*) temp_binary_data_1;
+
+//================== nextkey.png ==================
+static const unsigned char temp_binary_data_2[] =
+"\x89PNG\r\n"
+"\x1a\n"
+"\0\0\0\rIHDR\0\0\0 \0\0\0 \x08\x06\0\0\0szz\xf4\0\0\0\tpHYs\0\0\r\xd7\0\0\r\xd7\x01""B(\x9bx\0\0\x06\xb8iTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:meta/\" x:xmptk=\""
+"Adobe XMP Core 5.6-c148 79.164036, 2019/08/13-01:06:57        \"> <rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"> <rdf:Description rdf:about=\"\" xmlns:xmp=\"http://ns.adobe.com/xap/1.0/\" xmlns:dc=\"http://purl.org/dc/elements/1."
+"1/\" xmlns:photoshop=\"http://ns.adobe.com/photoshop/1.0/\" xmlns:xmpMM=\"http://ns.adobe.com/xap/1.0/mm/\" xmlns:stEvt=\"http://ns.adobe.com/xap/1.0/sType/ResourceEvent#\" xmp:CreatorTool=\"Adobe Photoshop CC (Windows)\" xmp:CreateDate=\"2017-04-23T"
+"21:06:06+02:00\" xmp:ModifyDate=\"2021-10-23T12:48:40+02:00\" xmp:MetadataDate=\"2021-10-23T12:48:40+02:00\" dc:format=\"image/png\" photoshop:ColorMode=\"3\" photoshop:ICCProfile=\"sRGB IEC61966-2.1\" xmpMM:InstanceID=\"xmp.iid:b5a51882-59c6-f24c-bd"
+"64-a4af9a1c8aaa\" xmpMM:DocumentID=\"adobe:docid:photoshop:38d88523-8a6a-c64c-a3c5-073bfe96d1e4\" xmpMM:OriginalDocumentID=\"xmp.did:f3fa921f-8ec6-ea46-a08e-9013d0e125b5\"> <xmpMM:History> <rdf:Seq> <rdf:li stEvt:action=\"created\" stEvt:instanceID=\""
+"xmp.iid:f3fa921f-8ec6-ea46-a08e-9013d0e125b5\" stEvt:when=\"2017-04-23T21:06:06+02:00\" stEvt:softwareAgent=\"Adobe Photoshop CC (Windows)\"/> <rdf:li stEvt:action=\"saved\" stEvt:instanceID=\"xmp.iid:2c7ab82d-ea2e-e249-ac5b-a61c8fe54910\" stEvt:when"
+"=\"2018-06-21T17:49:31+02:00\" stEvt:softwareAgent=\"Adobe Photoshop CC (Windows)\" stEvt:changed=\"/\"/> <rdf:li stEvt:action=\"saved\" stEvt:instanceID=\"xmp.iid:b5a51882-59c6-f24c-bd64-a4af9a1c8aaa\" stEvt:when=\"2021-10-23T12:48:40+02:00\" stEvt:"
+"softwareAgent=\"Adobe Photoshop 21.1 (Windows)\" stEvt:changed=\"/\"/> </rdf:Seq> </xmpMM:History> </rdf:Description> </rdf:RDF> </x:xmpmeta> <?xpacket end=\"r\"?>@\x12o\x8c\0\0\x03 IDATX\x85\xedW;\xb2\xe3""D\x14=\xa7[\x96\xe4\xdf{~\xf3\x82\t)VAB\x15"
+"D,`\x02v@\xc2\x12\xd8\xc6\xd4L\0\xc9TAB\xc0\x02(\x8a\x80\x0c\x96\x01\x19U\x14\xfe<\xcb\x96\xf5\xe9""3AwK\xb2\xc7""f<\x93L\xc0\x93\xad\xb2\xd4\xba}\xef\xe9{\xce\xbd-S\x12>\xe4""a>h\xf4G\0\x8f\0\0$\x97\x1e\xcc~ip\xd7>|\xb6\xb4\xf3\xdf\x8c\x03(\xc1\xb6\x82"
+"q\x80m\x85)\x8aI*=+\x0f\xe3\x1f\x92""FHZ\xff<\xa9\x01\xeb\x04\xdb\xc8\xff\x86""9\xc6)\x9c\xc0\xaf\xdf\xdc\xbf\x1d\0\x05-\xed\x1c\xd6\t\xb7u\xb1X\xdb\xe9\x1a$\x08_\xb6\x87vR4\xad\x90H\xdf\xdb\xac\\\xa8\xc8\xd6\x10!\xca[p\xe8M\xa0\x04\x9e\xa9\xf8\x8b\x14"
+"(8h\r\xb1J\xa7\xab;\xb7\xfb\x1d!\xf8""D\xbb\x91\xe0\xef\x1c\x80\xb6\xccWyV\xfe\xec\xe3\n"
+"\xe1\x0b\x85\xdf\x08[|3\xceu\x1a\x10\xb0\xb4\x93O\x92""FN\0v\x9c\xd4\xd1\x17\xe9W[V\xf9\x17\xc6""9iR\xdd\x86!\xff,\xda!\x8e\xbe\x07\0\x05O\x8d%\x01(m\xdaV\x04HB\xea\x1d;C`\x97\xad""F\x93\xf2\xc7\x08\x9c\0\x14/\xf0&\x07W\0\x08\xc9\x96\x07""B\x01ub\rD\xef"
+"8\x9c\xecV'T\xfb\xfcK\xe3\xa4\xe6\xb6\x9a\0\0\x03\x15g\xe2\xff\x07\x80\xce\x98\xe1\xe3\x07\xd5)\xc9\x8b\x8a\xc1\xe6\xd8\xdek'\xd9\xa4\x85\x99\x1d~\xea\x82\xf3](\x18\xdaz%u,j0||\xc5\xee""6\xe2l\xb7\xf9""3\x1a\xb9\xc3]3\xe2\xfbQ\xe0""9T\xa8\xad""a\x89\r"
+"\xc1tT\xe1X\xed\x84 \x19\xe6\xcb\xa4\xc2M\xf5\xed)\x0fW\x01\xe0 Z\xd4\x12\xe9\x03""1\xa4_\xbd%\x86\x97}\xfa\x01m\xd2\xaf\xb4\xa8\xbe~g\0=w\x82\xa2\x1a\xba\xc2\xf6h\xd8\xa9\xfcx\x85\xddL\x01<\xd3\x08\xae\x10\xe1\x99q\xf6""7:\"b\xb0\xec\xc1|R \x01\xce\x0f"
+"/\xb8\xca^\x0e\xdd]l\xc5\xa7\"\xe4""0FP4\xa1\xa0\x8aX\x05\x0e\0""A:\x88=\x0eR\xae\x9a\xd7y\xbeJ\xeb\xd3\x1c\\\xbd\x1b\xc6~\xd3+Ya\x8c\x81\x0f\x8f\xce\xe3""c\x07""8\x1b\xef_9\x19;\xda\xa4\xf5""9\xbf\x97""3p\x12\x9c\x0e""Al\xec\x9b\xbc""Bl\"\xa4H\x1d""C"
+"\x89sB^eU1\xae\xe3*\x8f\xd8\x0b\xc7[20\xd0""6C'\x04pS4\xae\x1b\x0f\x16\xb1L\x01`f\x8b\xe7\x8d\xa1\xd1>\xab\xa3\x1b\x9en\x0e\xd7""e`0A\xc0\xbch\xb4\xcb\xad\xd9L\x13X\x17\xdf\xa7""C+&\x91W\xb5K\x92""C\xbe\xad\xa7\xb5\xa5\x17N\xc4%7\xa4\xef\xea\x0c\xa0\xab"
+"\xf1\x8f\xd6\x9b?\xb6Sk\0\xe1\xe9\xc3\xc3\xa8\xeb\t\xe1\xb8o\xb6\xdf\x95\xa9\xb5{\x8dk\x0c\x05\x88>\x83\xe7v\xc3\x8b\x19\xc8\x0f\x0e""ef0/\x1a<)\x8b\xc5\x9f\x8b\x9b\xb5q\xde\xe5\xdf\xf3y=\xf2,`\xb6oU\xa6\xc6\xfc""cgH\\\xc8\x89""4\xd8\xfc\xfc\xa6""e\xe4"
+"\xdf\xaa\xae\xce@\x99\x19~\xfc\xef\xf2\xf3\x87Y\xc2\xbf\xeeo\xd6Q\xe1Q\x17\x8e\xe4\xd3\xdd\xfa\xd3\xed\xd8z\x1fG}Y\xc7-Z}\x15\x9d\x1e|\xfcg\xf4\x08\xe0\x7f\x0f\xe0""5\xf4\xf4\x8a""E\x90.\x93\xda\0\0\0\0IEND\xae""B`\x82";
+
+const char* nextkey_png = (const char*) temp_binary_data_2;
+
+//================== prevkey.png ==================
+static const unsigned char temp_binary_data_3[] =
+"\x89PNG\r\n"
+"\x1a\n"
+"\0\0\0\rIHDR\0\0\0 \0\0\0 \x08\x06\0\0\0szz\xf4\0\0\0\tpHYs\0\0\r\xd7\0\0\r\xd7\x01""B(\x9bx\0\0\x06\xb8iTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:meta/\" x:xmptk=\""
+"Adobe XMP Core 5.6-c148 79.164036, 2019/08/13-01:06:57        \"> <rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"> <rdf:Description rdf:about=\"\" xmlns:xmp=\"http://ns.adobe.com/xap/1.0/\" xmlns:dc=\"http://purl.org/dc/elements/1."
+"1/\" xmlns:photoshop=\"http://ns.adobe.com/photoshop/1.0/\" xmlns:xmpMM=\"http://ns.adobe.com/xap/1.0/mm/\" xmlns:stEvt=\"http://ns.adobe.com/xap/1.0/sType/ResourceEvent#\" xmp:CreatorTool=\"Adobe Photoshop CC (Windows)\" xmp:CreateDate=\"2017-04-23T"
+"21:06:06+02:00\" xmp:ModifyDate=\"2021-10-23T12:48:51+02:00\" xmp:MetadataDate=\"2021-10-23T12:48:51+02:00\" dc:format=\"image/png\" photoshop:ColorMode=\"3\" photoshop:ICCProfile=\"sRGB IEC61966-2.1\" xmpMM:InstanceID=\"xmp.iid:59f422a2-4e7e-7644-a7"
+"22-af4baefa686e\" xmpMM:DocumentID=\"adobe:docid:photoshop:134be2bf-791f-fd4d-8fcb-286f592873bd\" xmpMM:OriginalDocumentID=\"xmp.did:f3fa921f-8ec6-ea46-a08e-9013d0e125b5\"> <xmpMM:History> <rdf:Seq> <rdf:li stEvt:action=\"created\" stEvt:instanceID=\""
+"xmp.iid:f3fa921f-8ec6-ea46-a08e-9013d0e125b5\" stEvt:when=\"2017-04-23T21:06:06+02:00\" stEvt:softwareAgent=\"Adobe Photoshop CC (Windows)\"/> <rdf:li stEvt:action=\"saved\" stEvt:instanceID=\"xmp.iid:2c7ab82d-ea2e-e249-ac5b-a61c8fe54910\" stEvt:when"
+"=\"2018-06-21T17:49:31+02:00\" stEvt:softwareAgent=\"Adobe Photoshop CC (Windows)\" stEvt:changed=\"/\"/> <rdf:li stEvt:action=\"saved\" stEvt:instanceID=\"xmp.iid:59f422a2-4e7e-7644-a722-af4baefa686e\" stEvt:when=\"2021-10-23T12:48:51+02:00\" stEvt:"
+"softwareAgent=\"Adobe Photoshop 21.1 (Windows)\" stEvt:changed=\"/\"/> </rdf:Seq> </xmpMM:History> </rdf:Description> </rdf:RDF> </x:xmpmeta> <?xpacket end=\"r\"?>&N\xa4\x87\0\0\x02\x8aIDATX\x85\xed\x97\xbdr\xd3P\x10\x85\xbf\xbd\xb2""d\xc9""2\xfe\t<\x0c"
+"3\x14""044t\x14T\xb4)\xe0m\x18&\x05\x14\xf4\x14<\0\x1d\x05""3\xf0\x14\x0c\x14""d2\x03L\x82""c[R$-\xc5\xd5\xaf\xe3\xd8\x8e(R\xe0m|\xbd\xab\xb9{\xf6\xec\xb9{%QUn\xd2\xcc\x8d""f\xdf\x03\xd8\x03\0z\xcd?\x0f\x8f~ \xb9\xb0t\x04w\xe1""b\x06""1\x91q \xf2p\x83"
+"\x88X\x0ci\xda\xc7\xf7""bN\xfa""C\xfc$'0\xf3{\xc7\xc3\xf1\xa7\x83\xe5\x1c\x80S?d\x92-\xc8\x14~\xfb!w\x92\xd9\xfd\xe3p\xfc\xf1\xe7""co;\x80\x0e\x96\x9f\x0c\xc6R\xac""e%6\x06N\xbf\x1eL\xf1\xe3|]\x1c\xe8\xde\x82\xd7\x80\x9e\x07\x8e\0\xe4\"\0n#\xfe\xf9\xfb"
+"\xed\xf1\xe9,\xb4\xf5""E\xfd\xab\xd3\\\x97\x01\x17\x88~\xf5\x86\xd5\x8e\n"
+"em\x17\xc7\x93\x11""A\x94\xe5\xdf\xc6#\x11@\xd7\xd6\xdc\xb6\xeb""0\xf0r\xa9\x83$\xf2z\xc6NO\x01\xc4\xe6VX\x9a \x03t\x16\xf6\xa4M\xf6\xe6I\xbb\x0b\x03.\x10\x9fg\xa1\xe0\xd8\r\xc5\xd6\x07H\xb5\xfd\x9f\xb0g\x14\x10UPi\xa4\xddL\xc3""6\x06\xde\xe6Q?I\x8d\x91"
+"\xb2""f\x10\xcb\xad\x82\x08%\x11 \x05\x9cr\xbd\xe3\x15s\x15\x03.\x10\xc5\xcb\xc0\xe0\xd8|\x82\xa2\xd4\x95#\x02\xaa\x88\x96\x08\xb0q\xb5\xc9w\xe9?\xacg\xe0\x95""7\xf3\x12U1Uq\n"
+"\xaa\xcd\xe4\n"
+"\x05 \x05(o\xd4\xf2\xa7\xc6\xd4\xf2\xef\x02\xe0\xb9\xce\xfa/\xb4JXXkC\xad\x9c""B\xdd\x98\xe6\xf2\x92m`\xe3\x12\x03*j{\xbb\x16\xb8""E\xa2JQ\xb5""e\xa3|\xbe\rh7\x11\xac\x02""8\x92Q\xf2\xa6""b\xba""B\xd5\x82h\xfdR4Ak,\xd5L\xd0m\x87\xefj\0\0\x87\xd1""4\xf5"
+"Dr\xd5\x06w\xb5\xaa\xeb~\x94\xaa(AVR\x94jBt\x02\0p\x01\x18g\x18\xbd\x87UQ\xd5\x1a\xa0\xe1.\xc1h\xf9HG\x11\xae\xda\x93t\x94\x84N\xae\xc5\x1e\xda\xc8m}*\x95\xa3:\x92ZG\x9bX;\x01\0X\0\xe2\x05\xd1\xbb\x9a\xe4\xe6(\xb6""Bt\xd3,W)&a\x05j{\x1b\xaes\x17<e\x10"
+"OL^\xf2\xa9\x88(\xaaZ\xea\xc3\x01\xa4\x97Y\xf9K\xc7S\xb0\xcd\xce\0\xf1\xbd\xe8\x03Jk\xfe\xf4\x9c\xd8\xbd\x95\xce\x01\xcc""4[|\xd9Q\x83\x9d\xdf\x07\x1e""9~41\xb4\x88\xbeh\xc4\xefN\x92\xf9\xc4)\xd8\xdat/\xfc\xcb;\xe1\x19 \x03w\xf1\xac\xef,B\x11\xdb\x92"
+"\xd5\xf8""4\x9b=`\x83\x18""d\xff""e\xb4\x07\xf0\xdf\x03\xf8\x0b\xc4\x9b\xfa\xa2""C\xf6\xb8\xf1\0\0\0\0IEND\xae""B`\x82";
+
+const char* prevkey_png = (const char*) temp_binary_data_3;
+
+//================== Ableton Live.png ==================
+static const unsigned char temp_binary_data_4[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,32,0,0,0,32,8,6,0,0,0,115,122,122,244,0,0,0,9,112,72,89,115,0,0,11,19,0,0,11,19,1,0,154,156,24,0,0,5,22,105,84,88,116,88,77,76,58,99,111,109,46,97,100,111,98,101,46,120,109,112,0,0,0,0,0,60,63,120,112,
 97,99,107,101,116,32,98,101,103,105,110,61,34,239,187,191,34,32,105,100,61,34,87,53,77,48,77,112,67,101,104,105,72,122,114,101,83,122,78,84,99,122,107,99,57,100,34,63,62,32,60,120,58,120,109,112,109,101,116,97,32,120,109,108,110,115,58,120,61,34,97,100,
 111,98,101,58,110,115,58,109,101,116,97,47,34,32,120,58,120,109,112,116,107,61,34,65,100,111,98,101,32,88,77,80,32,67,111,114,101,32,53,46,54,45,99,49,52,53,32,55,57,46,49,54,51,52,57,57,44,32,50,48,49,56,47,48,56,47,49,51,45,49,54,58,52,48,58,50,50,
@@ -54,10 +151,10 @@ static const unsigned char temp_binary_data_0[] =
 122,15,243,148,178,19,27,27,131,132,77,100,227,151,234,220,100,26,245,183,180,180,28,57,117,234,244,215,129,64,208,253,220,180,69,1,96,182,135,243,242,181,107,215,188,143,167,163,45,58,221,146,18,60,27,102,60,107,187,33,198,126,60,55,62,197,110,218,141,
 103,130,115,216,83,142,205,204,248,236,81,241,38,90,0,243,241,36,37,37,100,97,139,85,211,63,34,110,183,219,129,145,49,81,37,190,136,18,17,192,203,148,127,0,191,139,102,83,136,78,167,115,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
 
-const char* Ableton_Live_png = (const char*) temp_binary_data_0;
+const char* Ableton_Live_png = (const char*) temp_binary_data_4;
 
 //================== DLight.png ==================
-static const unsigned char temp_binary_data_1[] =
+static const unsigned char temp_binary_data_5[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,32,0,0,0,32,8,3,0,0,0,68,164,138,198,0,0,3,0,80,76,84,69,237,238,227,179,195,139,210,219,187,246,249,241,109,173,37,209,226,186,230,229,219,146,182,91,222,220,203,220,235,203,121,175,54,186,195,147,
 190,193,153,198,204,169,179,188,138,112,170,39,130,171,69,121,180,54,134,179,72,151,187,96,169,187,125,171,193,128,111,172,40,189,204,156,250,252,247,178,206,138,232,234,219,254,254,253,194,201,163,181,196,146,114,172,44,233,240,222,214,221,193,162,182,
 115,125,177,60,143,180,87,241,246,234,134,168,71,112,174,40,116,173,47,119,173,50,111,168,39,179,210,140,166,202,122,112,177,41,153,188,101,161,191,113,134,174,73,225,230,209,118,166,46,146,187,90,213,227,192,170,165,114,198,212,170,168,203,124,142,187,
@@ -104,10 +201,10 @@ static const unsigned char temp_binary_data_1[] =
 59,241,66,120,101,102,122,166,18,44,6,211,79,76,228,116,36,1,176,49,211,106,181,210,7,50,103,126,114,228,176,210,3,133,170,225,242,105,48,81,209,74,105,158,26,68,254,55,7,97,24,219,44,195,188,183,216,57,12,166,125,177,36,15,43,191,93,109,25,69,177,60,
 245,149,97,19,109,238,64,249,94,101,224,148,49,154,125,182,86,242,185,37,150,247,97,41,245,166,48,54,86,120,188,174,242,114,201,237,238,118,111,45,75,125,255,188,63,127,188,127,246,15,8,54,205,0,248,36,50,139,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
 
-const char* DLight_png = (const char*) temp_binary_data_1;
+const char* DLight_png = (const char*) temp_binary_data_5;
 
 //================== DMX.png ==================
-static const unsigned char temp_binary_data_2[] =
+static const unsigned char temp_binary_data_6[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,32,0,0,0,32,8,6,0,0,0,115,122,122,244,0,0,0,4,115,66,73,84,8,8,8,8,124,8,100,136,0,0,0,9,112,72,89,115,0,0,0,242,0,0,0,242,1,148,181,45,137,0,0,0,25,116,69,88,116,83,111,102,116,119,97,114,101,0,119,
 119,119,46,105,110,107,115,99,97,112,101,46,111,114,103,155,238,60,26,0,0,4,143,73,68,65,84,88,133,173,151,93,136,84,101,24,199,127,207,121,207,57,243,177,174,31,232,174,90,129,23,77,185,95,73,184,116,211,93,95,132,55,69,23,93,72,246,65,153,10,17,68,
 6,74,16,180,213,133,33,66,8,6,182,173,134,55,129,119,93,4,33,25,65,32,66,88,228,186,51,230,14,97,138,33,164,44,219,206,236,249,62,79,23,179,51,187,59,58,59,179,171,207,221,59,231,255,252,159,223,60,239,121,222,115,142,168,42,43,141,98,113,114,47,192,
@@ -127,10 +224,10 @@ static const unsigned char temp_binary_data_2[] =
 222,56,73,54,0,27,238,34,245,45,177,58,126,123,233,24,32,235,102,215,103,221,204,147,64,125,230,102,82,77,111,196,113,58,21,70,97,224,251,161,237,5,65,183,31,132,27,163,68,147,165,188,22,198,178,62,76,246,142,140,228,67,214,184,165,223,47,190,20,199,
 209,23,11,175,217,198,28,237,223,254,248,145,164,18,71,167,14,127,208,242,241,123,79,0,141,36,17,217,246,252,206,79,197,226,69,148,110,133,239,3,55,119,240,242,119,99,51,237,179,23,199,255,89,30,7,92,31,236,23,62,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
 
-const char* DMX_png = (const char*) temp_binary_data_2;
+const char* DMX_png = (const char*) temp_binary_data_6;
 
 //================== Gamepad.png ==================
-static const unsigned char temp_binary_data_3[] =
+static const unsigned char temp_binary_data_7[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,32,0,0,0,32,8,6,0,0,0,115,122,122,244,0,0,0,9,112,72,89,115,0,0,11,19,0,0,11,19,1,0,154,156,24,0,0,8,92,105,84,88,116,88,77,76,58,99,111,109,46,97,100,111,98,101,46,120,109,112,0,0,0,0,0,60,63,120,112,
 97,99,107,101,116,32,98,101,103,105,110,61,34,239,187,191,34,32,105,100,61,34,87,53,77,48,77,112,67,101,104,105,72,122,114,101,83,122,78,84,99,122,107,99,57,100,34,63,62,32,60,120,58,120,109,112,109,101,116,97,32,120,109,108,110,115,58,120,61,34,97,100,
 111,98,101,58,110,115,58,109,101,116,97,47,34,32,120,58,120,109,112,116,107,61,34,65,100,111,98,101,32,88,77,80,32,67,111,114,101,32,53,46,54,45,99,49,52,53,32,55,57,46,49,54,51,52,57,57,44,32,50,48,49,56,47,48,56,47,49,51,45,49,54,58,52,48,58,50,50,
@@ -186,10 +283,10 @@ static const unsigned char temp_binary_data_3[] =
 35,96,146,40,254,186,166,188,242,24,211,69,74,81,104,241,228,121,172,133,58,150,169,32,53,132,72,116,225,48,53,113,136,138,55,242,191,39,80,84,136,193,25,6,216,237,112,126,229,180,217,7,76,162,9,165,165,94,190,101,133,141,255,11,54,0,108,0,248,223,3,
 248,11,220,150,20,142,149,153,59,33,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
 
-const char* Gamepad_png = (const char*) temp_binary_data_3;
+const char* Gamepad_png = (const char*) temp_binary_data_7;
 
 //================== HeavyM.png ==================
-static const unsigned char temp_binary_data_4[] =
+static const unsigned char temp_binary_data_8[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,32,0,0,0,32,8,6,0,0,0,115,122,122,244,0,0,0,9,112,72,89,115,0,0,11,19,0,0,11,19,1,0,154,156,24,0,0,5,28,105,84,88,116,88,77,76,58,99,111,109,46,97,100,111,98,101,46,120,109,112,0,0,0,0,0,60,63,120,112,
 97,99,107,101,116,32,98,101,103,105,110,61,34,239,187,191,34,32,105,100,61,34,87,53,77,48,77,112,67,101,104,105,72,122,114,101,83,122,78,84,99,122,107,99,57,100,34,63,62,32,60,120,58,120,109,112,109,101,116,97,32,120,109,108,110,115,58,120,61,34,97,100,
 111,98,101,58,110,115,58,109,101,116,97,47,34,32,120,58,120,109,112,116,107,61,34,65,100,111,98,101,32,88,77,80,32,67,111,114,101,32,53,46,54,45,99,49,52,53,32,55,57,46,49,54,51,52,57,57,44,32,50,48,49,56,47,48,56,47,49,51,45,49,54,58,52,48,58,50,50,
@@ -241,10 +338,10 @@ static const unsigned char temp_binary_data_4[] =
 225,124,153,238,123,169,61,200,155,210,130,129,216,31,153,13,201,59,219,36,31,8,226,142,123,244,116,85,252,58,207,57,76,199,39,165,167,0,250,82,205,101,59,39,243,198,103,223,94,11,99,75,193,221,81,16,240,4,12,33,156,195,116,252,31,215,29,28,225,87,5,
 68,237,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
 
-const char* HeavyM_png = (const char*) temp_binary_data_4;
+const char* HeavyM_png = (const char*) temp_binary_data_8;
 
 //================== HTTP.png ==================
-static const unsigned char temp_binary_data_5[] =
+static const unsigned char temp_binary_data_9[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,32,0,0,0,32,8,6,0,0,0,115,122,122,244,0,0,0,4,115,66,73,84,8,8,8,8,124,8,100,136,0,0,0,9,112,72,89,115,0,0,0,221,0,0,0,221,1,112,83,162,7,0,0,0,25,116,69,88,116,83,111,102,116,119,97,114,101,0,119,119,
 119,46,105,110,107,115,99,97,112,101,46,111,114,103,155,238,60,26,0,0,3,203,73,68,65,84,88,133,197,150,191,79,27,103,24,199,63,207,249,238,28,92,99,171,54,65,228,47,232,208,17,20,215,9,67,27,133,156,105,220,48,165,82,201,144,49,99,75,167,12,36,150,3,
 67,187,68,101,107,70,150,86,106,59,20,130,130,77,40,98,160,113,92,225,173,149,154,165,98,163,1,108,26,39,33,226,124,190,183,131,237,4,28,27,99,236,170,223,233,116,247,62,239,231,185,231,209,243,67,148,82,116,83,159,164,10,81,165,113,29,212,16,240,30,
@@ -262,10 +359,10 @@ static const unsigned char temp_binary_data_5[] =
 36,144,5,53,236,244,120,23,155,69,34,153,41,134,42,112,53,12,100,75,122,57,222,9,28,14,12,163,186,65,244,183,18,249,210,40,147,78,68,3,133,100,166,24,42,121,176,68,169,187,192,64,5,238,90,95,13,54,239,112,109,59,0,221,95,191,218,118,160,166,110,46,160,
 173,244,47,12,36,1,66,66,138,153,227,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
 
-const char* HTTP_png = (const char*) temp_binary_data_5;
+const char* HTTP_png = (const char*) temp_binary_data_9;
 
 //================== JoyCon.png ==================
-static const unsigned char temp_binary_data_6[] =
+static const unsigned char temp_binary_data_10[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,32,0,0,0,32,8,6,0,0,0,115,122,122,244,0,0,0,9,112,72,89,115,0,0,11,19,0,0,11,19,1,0,154,156,24,0,0,5,209,105,84,88,116,88,77,76,58,99,111,109,46,97,100,111,98,101,46,120,109,112,0,0,0,0,0,60,63,120,
 112,97,99,107,101,116,32,98,101,103,105,110,61,34,239,187,191,34,32,105,100,61,34,87,53,77,48,77,112,67,101,104,105,72,122,114,101,83,122,78,84,99,122,107,99,57,100,34,63,62,32,60,120,58,120,109,112,109,101,116,97,32,120,109,108,110,115,58,120,61,34,
 97,100,111,98,101,58,110,115,58,109,101,116,97,47,34,32,120,58,120,109,112,116,107,61,34,65,100,111,98,101,32,88,77,80,32,67,111,114,101,32,53,46,54,45,99,49,52,53,32,55,57,46,49,54,51,52,57,57,44,32,50,48,49,56,47,48,56,47,49,51,45,49,54,58,52,48,58,
@@ -312,10 +409,10 @@ static const unsigned char temp_binary_data_6[] =
 109,53,54,182,59,173,173,47,36,55,111,62,43,34,168,84,234,246,215,241,176,111,152,157,182,206,63,86,99,175,254,135,205,211,113,173,214,118,13,135,11,125,33,141,33,186,75,92,43,166,162,115,117,105,135,120,235,18,172,129,254,79,232,189,210,86,25,105,227,
 103,176,172,146,157,205,118,218,139,22,29,212,13,13,31,201,232,40,209,165,75,168,233,211,145,114,153,255,2,43,156,221,43,21,153,50,72,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
 
-const char* JoyCon_png = (const char*) temp_binary_data_6;
+const char* JoyCon_png = (const char*) temp_binary_data_10;
 
 //================== Joystick.png ==================
-static const unsigned char temp_binary_data_7[] =
+static const unsigned char temp_binary_data_11[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,32,0,0,0,32,16,6,0,0,0,35,234,166,183,0,0,0,9,112,72,89,115,0,0,11,19,0,0,11,19,1,0,154,156,24,0,0,5,250,105,84,88,116,88,77,76,58,99,111,109,46,97,100,111,98,101,46,120,109,112,0,0,0,0,0,60,63,120,
 112,97,99,107,101,116,32,98,101,103,105,110,61,34,239,187,191,34,32,105,100,61,34,87,53,77,48,77,112,67,101,104,105,72,122,114,101,83,122,78,84,99,122,107,99,57,100,34,63,62,32,60,120,58,120,109,112,109,101,116,97,32,120,109,108,110,115,58,120,61,34,
 97,100,111,98,101,58,110,115,58,109,101,116,97,47,34,32,120,58,120,109,112,116,107,61,34,65,100,111,98,101,32,88,77,80,32,67,111,114,101,32,53,46,54,45,99,49,52,53,32,55,57,46,49,54,51,52,57,57,44,32,50,48,49,56,47,48,56,47,49,51,45,49,54,58,52,48,58,
@@ -395,10 +492,10 @@ static const unsigned char temp_binary_data_7[] =
 7,33,156,136,201,107,64,109,68,23,63,3,176,209,62,32,214,247,134,45,128,17,169,45,11,112,16,118,108,161,183,168,246,249,14,16,166,147,112,236,8,168,187,168,5,160,195,247,145,52,216,167,37,238,95,226,104,194,127,250,231,241,255,3,152,157,110,251,211,157,
 247,136,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
 
-const char* Joystick_png = (const char*) temp_binary_data_7;
+const char* Joystick_png = (const char*) temp_binary_data_11;
 
 //================== Keyboard.png ==================
-static const unsigned char temp_binary_data_8[] =
+static const unsigned char temp_binary_data_12[] =
 "\x89PNG\r\n"
 "\x1a\n"
 "\0\0\0\rIHDR\0\0\0 \0\0\0 \x08\x04\0\0\0\xd9s\xb2\x7f\0\0\0\tpHYs\0\0\x0e\xc4\0\0\x0e\xc4\x01\x95+\x0e\x1b\0\0\x05\x17iTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:meta"
@@ -416,10 +513,10 @@ static const unsigned char temp_binary_data_8[] =
 "\xfeQ\xff\x11 \xdfp|\xb2(j\x91\xf9\xfaU\xb2`%s\xf8\x8a\x05G\x9b\xc7""8\xaaG\x9fK[\x8e\xb5U\xeb\x9e\xeb\xa9\xdd\x8fI}?\xccz\xe0M\xc6\x87\xe5\x96\x89Zd\xe2[\xfd \xdfi\xa3\x87_\xf3&w\xd9\xbe\xe6VN\n"
 "1\x16\x8bm=\xef\x8bq-\xfc\x06\xd3\xebG\x12\x1ck\xcfy\0\0\0\0IEND\xae""B`\x82";
 
-const char* Keyboard_png = (const char*) temp_binary_data_8;
+const char* Keyboard_png = (const char*) temp_binary_data_12;
 
 //================== KinectV2.png ==================
-static const unsigned char temp_binary_data_9[] =
+static const unsigned char temp_binary_data_13[] =
 "\x89PNG\r\n"
 "\x1a\n"
 "\0\0\0\rIHDR\0\0\0 \0\0\0 \x08\x06\0\0\0szz\xf4\0\0\0\tpHYs\0\0\x0b\x13\0\0\x0b\x13\x01\0\x9a\x9c\x18\0\0\x05\xfaiTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:meta/\" x"
@@ -442,10 +539,10 @@ static const unsigned char temp_binary_data_9[] =
 "\xe6\x1dMRf\x06""3M`\x12\x18\x82\xef]\\\\\xbeo\xb5Z\x9d\x10\x92\xd2\x81\x07$H\xd2\xcc\"\xeb\xf5\x0f#\x16\x99\x9f`\xf8\xd5\xca\xdf""c\xb4\xb2\x89\xfe""89F\x08\xdf\x87y\xef\xc7\xd6\x9b\xdc\xe3""A\xf3\xc0\xbf*uT\x1d\xf3\x99p>\x13\xce\x7fL\x1e""B`\x16""1"
 "hB\xce\xaa\t\x7f\x03\x1a""C\xdc\x0b\xb8X\r\xa1\0\0\0\0IEND\xae""B`\x82";
 
-const char* KinectV2_png = (const char*) temp_binary_data_9;
+const char* KinectV2_png = (const char*) temp_binary_data_13;
 
 //================== Loupedeck.png ==================
-static const unsigned char temp_binary_data_10[] =
+static const unsigned char temp_binary_data_14[] =
 "\x89PNG\r\n"
 "\x1a\n"
 "\0\0\0\rIHDR\0\0\0 \0\0\0 \x08\x04\0\0\0\xd9s\xb2\x7f\0\0\0\tpHYs\0\0\x1c \0\0\x1c \x01\xcd\x0f\x9b\x9e\0\0\x05\xc8iTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:meta/\""
@@ -466,10 +563,10 @@ static const unsigned char temp_binary_data_10[] =
 "\xdd\x9d:\xdfp\xe1\xb3\xf8\xbd\xa3)l\xfc\x08t\xb8\xfb.K\x14\xf2\xe9""d\t\xb1\xbc\xe4)\xac\xe8\xe9\xber\xab\xd6{7\x1c""d\x19#J\xb3\xad\x90""D\xb2\xe2\xe7Z\xcb:\x0c\xa8\xcc\xcc|\xea\x89\xb4\xfbG\x03""a},\x19'\xf9""a\xf0YoI\xd6\x8e\x14~\x01'U-\xc2\x06\xfb"
 "\t?\0\0\0\0IEND\xae""B`\x82";
 
-const char* Loupedeck_png = (const char*) temp_binary_data_10;
+const char* Loupedeck_png = (const char*) temp_binary_data_14;
 
 //================== MadMapper.png ==================
-static const unsigned char temp_binary_data_11[] =
+static const unsigned char temp_binary_data_15[] =
 "\x89PNG\r\n"
 "\x1a\n"
 "\0\0\0\rIHDR\0\0\0 \0\0\0 \x08\x06\0\0\0szz\xf4\0\0\0\tpHYs\0\0\x0b\x13\0\0\x0b\x13\x01\0\x9a\x9c\x18\0\0\tMiTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:meta/\" x:xmpt"
@@ -502,10 +599,10 @@ static const unsigned char temp_binary_data_11[] =
 "\x86\xaf\xaf\xaf\xa1\xa0\xa0\xe0\xca\x91#G\xc4N\xb9\xb5\xb5\x95\x05\xc7\xf9\xf3\xe7\xcfr,\x19\x9c;w\xee\xb5\xfc\xfc\xfc<\x1a\xb3\x12""6G\xcd\xe9gT\\\xd4\xe3\xe3\xe3\xb8~\xfd\xfa\x86\xda\xf3\xd8\xd8X\x84\x85\x85\x81\xba\xa0\xe4K\x97.\x9d$\xf3\x0e\xd2\xe1"
 "\xbc\xbc\xbc+\x04\xa0\xe1O)\x1a\x13\xa8\xc9zt\xac\0\0\0\0IEND\xae""B`\x82";
 
-const char* MadMapper_png = (const char*) temp_binary_data_11;
+const char* MadMapper_png = (const char*) temp_binary_data_15;
 
 //================== Metronome.png ==================
-static const unsigned char temp_binary_data_12[] =
+static const unsigned char temp_binary_data_16[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,32,0,0,0,32,8,3,0,0,0,68,164,138,198,0,0,0,3,115,66,73,84,8,8,8,219,225,79,224,0,0,0,9,112,72,89,115,0,0,7,130,0,0,7,130,1,112,64,113,181,0,0,0,25,116,69,88,116,83,111,102,116,119,97,114,101,0,119,119,
 119,46,105,110,107,115,99,97,112,101,46,111,114,103,155,238,60,26,0,0,2,40,80,76,84,69,255,255,255,0,0,0,85,85,85,85,85,85,73,73,109,32,159,128,223,96,32,28,170,142,227,113,28,77,77,102,78,78,98,68,68,102,59,78,98,58,124,131,146,102,87,65,72,98,64,77,
 96,67,78,100,66,71,94,19,162,134,218,107,28,68,76,96,67,75,94,66,73,95,83,90,110,22,160,132,221,104,28,65,74,95,67,73,97,67,75,96,19,160,133,220,106,30,66,74,97,67,75,96,69,76,98,66,75,96,20,160,134,220,106,29,66,75,96,66,74,96,68,75,98,67,76,97,73,82,
@@ -526,10 +623,10 @@ static const unsigned char temp_binary_data_12[] =
 212,217,95,226,92,121,48,244,120,229,126,110,220,228,33,181,14,185,217,56,156,235,133,51,68,137,101,83,170,246,5,206,206,114,161,93,53,85,150,40,130,1,11,207,248,236,250,209,233,158,158,233,209,250,236,120,79,11,252,207,196,62,52,50,174,184,56,46,50,
 212,222,4,58,255,0,44,18,178,95,85,207,168,38,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
 
-const char* Metronome_png = (const char*) temp_binary_data_12;
+const char* Metronome_png = (const char*) temp_binary_data_16;
 
 //================== MIDI.png ==================
-static const unsigned char temp_binary_data_13[] =
+static const unsigned char temp_binary_data_17[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,32,0,0,0,32,8,6,0,0,0,115,122,122,244,0,0,0,9,112,72,89,115,0,0,11,19,0,0,11,19,1,0,154,156,24,0,0,5,28,105,84,88,116,88,77,76,58,99,111,109,46,97,100,111,98,101,46,120,109,112,0,0,0,0,0,60,63,120,112,
 97,99,107,101,116,32,98,101,103,105,110,61,34,239,187,191,34,32,105,100,61,34,87,53,77,48,77,112,67,101,104,105,72,122,114,101,83,122,78,84,99,122,107,99,57,100,34,63,62,32,60,120,58,120,109,112,109,101,116,97,32,120,109,108,110,115,58,120,61,34,97,100,
 111,98,101,58,110,115,58,109,101,116,97,47,34,32,120,58,120,109,112,116,107,61,34,65,100,111,98,101,32,88,77,80,32,67,111,114,101,32,53,46,54,45,99,49,52,53,32,55,57,46,49,54,51,52,57,57,44,32,50,48,49,56,47,48,56,47,49,51,45,49,54,58,52,48,58,50,50,
@@ -584,10 +681,10 @@ static const unsigned char temp_binary_data_13[] =
 125,108,40,80,249,252,191,104,209,34,127,202,121,123,123,171,15,15,254,38,78,156,168,246,46,95,190,92,181,246,232,170,242,12,255,51,208,15,186,177,140,211,72,126,71,84,53,224,23,31,167,76,33,39,39,39,53,39,71,16,68,136,165,39,234,250,143,168,11,5,80,
 164,190,3,201,124,76,79,2,143,233,74,142,96,70,128,243,83,209,57,89,33,181,151,158,61,123,54,134,181,130,4,69,236,224,75,89,101,135,241,153,255,7,216,99,225,84,117,58,184,47,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
 
-const char* MIDI_png = (const char*) temp_binary_data_13;
+const char* MIDI_png = (const char*) temp_binary_data_17;
 
 //================== Millumin.png ==================
-static const unsigned char temp_binary_data_14[] =
+static const unsigned char temp_binary_data_18[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,32,0,0,0,32,8,6,0,0,0,115,122,122,244,0,0,0,9,112,72,89,115,0,0,11,19,0,0,11,19,1,0,154,156,24,0,0,6,194,105,84,88,116,88,77,76,58,99,111,109,46,97,100,111,98,101,46,120,109,112,0,0,0,0,0,60,63,120,
 112,97,99,107,101,116,32,98,101,103,105,110,61,34,239,187,191,34,32,105,100,61,34,87,53,77,48,77,112,67,101,104,105,72,122,114,101,83,122,78,84,99,122,107,99,57,100,34,63,62,32,60,120,58,120,109,112,109,101,116,97,32,120,109,108,110,115,58,120,61,34,
 97,100,111,98,101,58,110,115,58,109,101,116,97,47,34,32,120,58,120,109,112,116,107,61,34,65,100,111,98,101,32,88,77,80,32,67,111,114,101,32,53,46,54,45,99,49,52,53,32,55,57,46,49,54,51,52,57,57,44,32,50,48,49,56,47,48,56,47,49,51,45,49,54,58,52,48,58,
@@ -637,10 +734,10 @@ static const unsigned char temp_binary_data_14[] =
 104,251,27,198,40,100,50,190,230,242,12,81,10,165,52,49,120,162,119,84,195,237,157,241,206,250,143,167,154,3,65,4,81,134,88,214,131,122,176,253,194,176,204,191,32,72,98,197,153,16,180,142,17,85,148,251,191,212,205,25,116,144,247,170,221,173,151,38,33,
 92,12,101,126,47,214,213,78,8,126,224,203,252,190,173,227,198,84,255,134,255,171,248,23,88,28,30,92,91,136,41,87,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
 
-const char* Millumin_png = (const char*) temp_binary_data_14;
+const char* Millumin_png = (const char*) temp_binary_data_18;
 
 //================== Mouse.png ==================
-static const unsigned char temp_binary_data_15[] =
+static const unsigned char temp_binary_data_19[] =
 "\x89PNG\r\n"
 "\x1a\n"
 "\0\0\0\rIHDR\0\0\0 \0\0\0 \x08\x06\0\0\0szz\xf4\0\0\0\tpHYs\0\0\x0b\x13\0\0\x0b\x13\x01\0\x9a\x9c\x18\0\0\tSiTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:meta/\" x:xmpt"
@@ -660,10 +757,10 @@ static const unsigned char temp_binary_data_15[] =
 "H\xb5""4q\0\xac\x10\x92%B\xad -\x1c\xa0\t\xc4N\x03\x19\x02J$4\xc1\x04i\x91\rOB\rU#B\xad""8T\xed\x07j:`;\xd4PbZ\xc4\xb0\xf2\xe1\x0c""5\x1d\x90\x0c""5t!\x11j\xe7""C\xd5\xb6R\xd3\x01\x8c\xd0""6\0\x08""D\x12\xe1P\x10\x90\xa6v{\xc0\x1d\xc9\xf0\x19@\xac\x88"
 "\xd6X\x99\x83$\x9f""D\xab&\x99\x07Z\x13\xec\x17\x14#\x83""dZ7J\x05\xa0\xf1\xfb\x14\xc9\xd2\xd7@<\r\x88\xe5\xe9\xd9,\x07""a^h\xbe'K?\0`\xaf\x7f\xe8""d\x1c\xd9\xc9\0\0\0\0IEND\xae""B`\x82";
 
-const char* Mouse_png = (const char*) temp_binary_data_15;
+const char* Mouse_png = (const char*) temp_binary_data_19;
 
 //================== OS.png ==================
-static const unsigned char temp_binary_data_16[] =
+static const unsigned char temp_binary_data_20[] =
 "\x89PNG\r\n"
 "\x1a\n"
 "\0\0\0\rIHDR\0\0\0 \0\0\0 \x08\x04\0\0\0\xd9s\xb2\x7f\0\0\0\tpHYs\0\0\x0e\xc4\0\0\x0e\xc4\x01\x95+\x0e\x1b\0\0\x05\x17iTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:meta"
@@ -677,10 +774,10 @@ static const unsigned char temp_binary_data_16[] =
 "\xd6R\x01\xc9""F\xcaS'p\xd2\x8fi\x14\xa0\xcd&\xc7\xd1\x84\x11\xa6""9\x15q\xdf\"\xc6""a\xa3\0\x85{\"n\x0f\xdc\xfe{\x80\xea\x91\x15q\xfd\xe7)\xbe[\xe2\x06K@\x93\x8fqv\xa0\xd7.\x8au\xef\xc7\x93p\xeb\x8c\xb8\xf6uo\xbb\x96""E\xc4\x9awq\x12\xdexg\x8b+\xea\0"
 "\xbc\xd2\x1b\xbewb\xad\xdc!\x1b\xe6\x05\xcf\xf4\x01\xa8\xb2\xf0?o\xa1\x9d\xd4\x9f\x07""3V\x13\0Oa\xf2?\xd7O.\x1e\x02~8\xe8\x03\xd1\0\0\0\0IEND\xae""B`\x82";
 
-const char* OS_png = (const char*) temp_binary_data_16;
+const char* OS_png = (const char*) temp_binary_data_20;
 
 //================== OSC.png ==================
-static const unsigned char temp_binary_data_17[] =
+static const unsigned char temp_binary_data_21[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,32,0,0,0,32,8,6,0,0,0,115,122,122,244,0,0,0,9,112,72,89,115,0,0,11,19,0,0,11,19,1,0,154,156,24,0,0,5,209,105,84,88,116,88,77,76,58,99,111,109,46,97,100,111,98,101,46,120,109,112,0,0,0,0,0,60,63,120,
 112,97,99,107,101,116,32,98,101,103,105,110,61,34,239,187,191,34,32,105,100,61,34,87,53,77,48,77,112,67,101,104,105,72,122,114,101,83,122,78,84,99,122,107,99,57,100,34,63,62,32,60,120,58,120,109,112,109,101,116,97,32,120,109,108,110,115,58,120,61,34,
 97,100,111,98,101,58,110,115,58,109,101,116,97,47,34,32,120,58,120,109,112,116,107,61,34,65,100,111,98,101,32,88,77,80,32,67,111,114,101,32,53,46,54,45,99,49,52,53,32,55,57,46,49,54,51,52,57,57,44,32,50,48,49,56,47,48,56,47,49,51,45,49,54,58,52,48,58,
@@ -732,10 +829,10 @@ static const unsigned char temp_binary_data_17[] =
 122,175,201,23,76,92,76,80,84,95,134,168,79,248,129,40,253,55,246,184,180,100,92,110,137,151,175,174,90,181,170,184,182,182,118,11,209,111,57,53,14,5,196,17,78,238,218,41,43,208,228,6,243,96,229,3,159,93,214,53,189,75,54,168,58,125,105,251,136,53,223,
 18,155,214,84,84,84,156,123,245,234,149,155,101,178,87,254,3,175,126,154,46,129,160,14,7,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
 
-const char* OSC_png = (const char*) temp_binary_data_17;
+const char* OSC_png = (const char*) temp_binary_data_21;
 
 //================== OSCQuery.png ==================
-static const unsigned char temp_binary_data_18[] =
+static const unsigned char temp_binary_data_22[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,32,0,0,0,32,8,6,0,0,0,115,122,122,244,0,0,0,9,112,72,89,115,0,0,11,19,0,0,11,19,1,0,154,156,24,0,0,6,202,105,84,88,116,88,77,76,58,99,111,109,46,97,100,111,98,101,46,120,109,112,0,0,0,0,0,60,63,120,
 112,97,99,107,101,116,32,98,101,103,105,110,61,34,239,187,191,34,32,105,100,61,34,87,53,77,48,77,112,67,101,104,105,72,122,114,101,83,122,78,84,99,122,107,99,57,100,34,63,62,32,60,120,58,120,109,112,109,101,116,97,32,120,109,108,110,115,58,120,61,34,
 97,100,111,98,101,58,110,115,58,109,101,116,97,47,34,32,120,58,120,109,112,116,107,61,34,65,100,111,98,101,32,88,77,80,32,67,111,114,101,32,53,46,54,45,99,49,52,53,32,55,57,46,49,54,51,52,57,57,44,32,50,48,49,56,47,48,56,47,49,51,45,49,54,58,52,48,58,
@@ -791,10 +888,10 @@ static const unsigned char temp_binary_data_18[] =
 183,123,150,125,175,120,126,201,110,125,72,135,154,53,216,130,158,24,90,235,230,238,95,216,188,176,169,235,216,133,245,103,39,58,151,142,165,199,234,153,118,51,216,65,10,139,231,172,200,13,214,219,239,141,156,46,231,188,172,58,43,6,251,210,30,171,210,
 170,250,154,156,115,62,158,247,157,249,111,78,156,25,235,231,37,158,221,199,255,13,208,164,224,190,93,112,245,237,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
 
-const char* OSCQuery_png = (const char*) temp_binary_data_18;
+const char* OSCQuery_png = (const char*) temp_binary_data_22;
 
 //================== PJLink.png ==================
-static const unsigned char temp_binary_data_19[] =
+static const unsigned char temp_binary_data_23[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,32,0,0,0,32,8,3,0,0,0,68,164,138,198,0,0,0,3,115,66,73,84,8,8,8,219,225,79,224,0,0,0,9,112,72,89,115,0,0,0,224,0,0,0,224,1,162,95,254,202,0,0,0,25,116,69,88,116,83,111,102,116,119,97,114,101,0,119,119,
 119,46,105,110,107,115,99,97,112,101,46,111,114,103,155,238,60,26,0,0,1,176,80,76,84,69,255,255,255,128,128,128,36,36,73,170,170,198,36,55,55,48,48,64,85,99,128,170,182,182,173,184,184,179,179,187,173,180,188,83,103,124,177,183,190,177,183,188,39,49,
 54,83,107,121,176,180,189,85,106,119,177,180,188,178,182,185,42,49,57,175,182,186,176,183,187,85,92,99,175,182,188,177,183,187,173,181,184,104,114,120,176,181,186,177,182,187,40,50,55,41,50,55,46,55,61,39,50,57,84,106,121,40,50,56,176,182,188,122,137,
@@ -810,10 +907,10 @@ static const unsigned char temp_binary_data_19[] =
 88,42,110,82,59,255,99,58,36,217,0,172,169,168,79,152,30,167,91,242,72,237,215,153,225,247,1,201,87,64,72,153,194,64,59,153,39,14,198,25,242,2,193,85,165,214,23,129,201,22,210,33,150,49,198,233,156,4,16,152,131,238,45,57,102,17,177,57,203,60,30,79,145,
 243,90,78,51,76,3,149,181,101,78,155,24,210,39,246,251,30,202,141,196,130,242,214,222,170,194,186,253,137,116,137,177,187,172,114,139,213,101,151,123,55,254,3,130,4,155,162,172,65,61,55,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
 
-const char* PJLink_png = (const char*) temp_binary_data_19;
+const char* PJLink_png = (const char*) temp_binary_data_23;
 
 //================== PowerPoint.png ==================
-static const unsigned char temp_binary_data_20[] =
+static const unsigned char temp_binary_data_24[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,32,0,0,0,32,8,6,0,0,0,115,122,122,244,0,0,0,9,112,72,89,115,0,0,11,19,0,0,11,19,1,0,154,156,24,0,0,5,28,105,84,88,116,88,77,76,58,99,111,109,46,97,100,111,98,101,46,120,109,112,0,0,0,0,0,60,63,120,112,
 97,99,107,101,116,32,98,101,103,105,110,61,34,239,187,191,34,32,105,100,61,34,87,53,77,48,77,112,67,101,104,105,72,122,114,101,83,122,78,84,99,122,107,99,57,100,34,63,62,32,60,120,58,120,109,112,109,101,116,97,32,120,109,108,110,115,58,120,61,34,97,100,
 111,98,101,58,110,115,58,109,101,116,97,47,34,32,120,58,120,109,112,116,107,61,34,65,100,111,98,101,32,88,77,80,32,67,111,114,101,32,53,46,54,45,99,49,52,53,32,55,57,46,49,54,51,52,57,57,44,32,50,48,49,56,47,48,56,47,49,51,45,49,54,58,52,48,58,50,50,
@@ -851,10 +948,10 @@ static const unsigned char temp_binary_data_20[] =
 0,167,101,224,179,59,184,23,108,148,129,61,192,150,59,160,252,48,176,174,127,30,120,214,220,90,111,23,14,2,245,215,63,195,249,192,98,147,204,125,230,54,43,254,167,245,92,6,18,192,113,115,41,93,211,47,248,7,43,60,131,215,66,247,97,233,0,0,0,0,73,69,78,
 68,174,66,96,130,0,0 };
 
-const char* PowerPoint_png = (const char*) temp_binary_data_20;
+const char* PowerPoint_png = (const char*) temp_binary_data_24;
 
 //================== QLab.png ==================
-static const unsigned char temp_binary_data_21[] =
+static const unsigned char temp_binary_data_25[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,32,0,0,0,32,8,6,0,0,0,115,122,122,244,0,0,0,4,103,65,77,65,0,0,177,143,11,252,97,5,0,0,0,9,112,72,89,115,0,0,11,19,0,0,11,19,1,0,154,156,24,0,0,1,89,105,84,88,116,88,77,76,58,99,111,109,46,97,100,111,
 98,101,46,120,109,112,0,0,0,0,0,60,120,58,120,109,112,109,101,116,97,32,120,109,108,110,115,58,120,61,34,97,100,111,98,101,58,110,115,58,109,101,116,97,47,34,32,120,58,120,109,112,116,107,61,34,88,77,80,32,67,111,114,101,32,53,46,52,46,48,34,62,10,32,
 32,32,60,114,100,102,58,82,68,70,32,120,109,108,110,115,58,114,100,102,61,34,104,116,116,112,58,47,47,119,119,119,46,119,51,46,111,114,103,47,49,57,57,57,47,48,50,47,50,50,45,114,100,102,45,115,121,110,116,97,120,45,110,115,35,34,62,10,32,32,32,32,32,
@@ -901,10 +998,10 @@ static const unsigned char temp_binary_data_21[] =
 217,119,174,238,136,255,142,70,240,137,173,191,110,105,235,238,110,77,52,196,154,130,65,45,22,210,35,97,157,250,190,249,130,81,167,194,80,184,193,38,204,84,75,102,165,152,153,203,231,11,70,97,246,244,200,224,244,75,233,45,211,36,79,72,254,120,144,126,
 170,79,248,231,191,15,146,250,248,47,133,7,239,201,240,183,114,126,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
 
-const char* QLab_png = (const char*) temp_binary_data_21;
+const char* QLab_png = (const char*) temp_binary_data_25;
 
 //================== Reaper.png ==================
-static const unsigned char temp_binary_data_22[] =
+static const unsigned char temp_binary_data_26[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,32,0,0,0,32,8,6,0,0,0,115,122,122,244,0,0,0,9,112,72,89,115,0,0,11,19,0,0,11,19,1,0,154,156,24,0,0,5,250,105,84,88,116,88,77,76,58,99,111,109,46,97,100,111,98,101,46,120,109,112,0,0,0,0,0,60,63,120,
 112,97,99,107,101,116,32,98,101,103,105,110,61,34,239,187,191,34,32,105,100,61,34,87,53,77,48,77,112,67,101,104,105,72,122,114,101,83,122,78,84,99,122,107,99,57,100,34,63,62,32,60,120,58,120,109,112,109,101,116,97,32,120,109,108,110,115,58,120,61,34,
 97,100,111,98,101,58,110,115,58,109,101,116,97,47,34,32,120,58,120,109,112,116,107,61,34,65,100,111,98,101,32,88,77,80,32,67,111,114,101,32,53,46,54,45,99,49,52,53,32,55,57,46,49,54,51,52,57,57,44,32,50,48,49,56,47,48,56,47,49,51,45,49,54,58,52,48,58,
@@ -957,10 +1054,10 @@ static const unsigned char temp_binary_data_22[] =
 170,156,67,221,169,206,27,158,254,215,194,115,25,252,156,74,179,79,87,106,141,107,106,215,213,173,74,220,116,249,193,90,26,55,148,146,141,88,36,194,126,50,5,139,205,31,52,109,124,232,245,61,171,128,244,185,22,167,226,179,84,199,37,151,4,151,126,111,198,
 156,21,87,107,83,190,152,11,186,226,112,87,255,206,23,14,52,63,126,184,167,255,173,243,173,142,199,173,108,207,179,249,71,250,103,106,74,41,254,7,205,136,222,196,149,71,119,245,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
 
-const char* Reaper_png = (const char*) temp_binary_data_22;
+const char* Reaper_png = (const char*) temp_binary_data_26;
 
 //================== Resolume.png ==================
-static const unsigned char temp_binary_data_23[] =
+static const unsigned char temp_binary_data_27[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,32,0,0,0,32,8,6,0,0,0,115,122,122,244,0,0,0,9,112,72,89,115,0,0,11,19,0,0,11,19,1,0,154,156,24,0,0,6,98,105,84,88,116,88,77,76,58,99,111,109,46,97,100,111,98,101,46,120,109,112,0,0,0,0,0,60,63,120,112,
 97,99,107,101,116,32,98,101,103,105,110,61,34,239,187,191,34,32,105,100,61,34,87,53,77,48,77,112,67,101,104,105,72,122,114,101,83,122,78,84,99,122,107,99,57,100,34,63,62,32,60,120,58,120,109,112,109,101,116,97,32,120,109,108,110,115,58,120,61,34,97,100,
 111,98,101,58,110,115,58,109,101,116,97,47,34,32,120,58,120,109,112,116,107,61,34,65,100,111,98,101,32,88,77,80,32,67,111,114,101,32,53,46,54,45,99,49,52,53,32,55,57,46,49,54,51,52,57,57,44,32,50,48,49,56,47,48,56,47,49,51,45,49,54,58,52,48,58,50,50,
@@ -1021,10 +1118,10 @@ static const unsigned char temp_binary_data_23[] =
 232,208,133,14,247,56,204,123,7,235,38,214,215,176,214,111,253,136,127,75,71,217,67,27,94,68,71,124,1,31,103,120,96,194,10,163,82,84,179,131,209,190,215,103,93,192,223,21,27,45,186,175,43,225,134,53,236,190,246,31,124,190,38,177,63,143,104,210,0,0,0,
 0,73,69,78,68,174,66,96,130,0,0 };
 
-const char* Resolume_png = (const char*) temp_binary_data_23;
+const char* Resolume_png = (const char*) temp_binary_data_27;
 
 //================== Serial.png ==================
-static const unsigned char temp_binary_data_24[] =
+static const unsigned char temp_binary_data_28[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,32,0,0,0,32,8,6,0,0,0,115,122,122,244,0,0,0,9,112,72,89,115,0,0,11,19,0,0,11,19,1,0,154,156,24,0,0,5,28,105,84,88,116,88,77,76,58,99,111,109,46,97,100,111,98,101,46,120,109,112,0,0,0,0,0,60,63,120,112,
 97,99,107,101,116,32,98,101,103,105,110,61,34,239,187,191,34,32,105,100,61,34,87,53,77,48,77,112,67,101,104,105,72,122,114,101,83,122,78,84,99,122,107,99,57,100,34,63,62,32,60,120,58,120,109,112,109,101,116,97,32,120,109,108,110,115,58,120,61,34,97,100,
 111,98,101,58,110,115,58,109,101,116,97,47,34,32,120,58,120,109,112,116,107,61,34,65,100,111,98,101,32,88,77,80,32,67,111,114,101,32,53,46,54,45,99,49,52,53,32,55,57,46,49,54,51,52,57,57,44,32,50,48,49,56,47,48,56,47,49,51,45,49,54,58,52,48,58,50,50,
@@ -1058,10 +1155,10 @@ static const unsigned char temp_binary_data_24[] =
 235,55,218,30,253,86,227,86,117,126,213,83,2,74,76,83,248,41,185,8,207,225,96,223,194,113,205,40,174,195,117,228,207,167,1,118,84,90,141,219,241,9,78,246,125,59,130,151,137,17,236,232,95,52,224,159,118,28,79,225,0,174,210,176,113,16,159,99,207,105,252,
 103,218,219,56,170,217,190,47,196,41,124,71,236,192,177,153,206,49,251,95,48,11,96,22,192,255,30,192,223,250,248,104,145,243,253,139,14,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
 
-const char* Serial_png = (const char*) temp_binary_data_24;
+const char* Serial_png = (const char*) temp_binary_data_28;
 
 //================== Signal.png ==================
-static const unsigned char temp_binary_data_25[] =
+static const unsigned char temp_binary_data_29[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,32,0,0,0,32,8,6,0,0,0,115,122,122,244,0,0,0,4,115,66,73,84,8,8,8,8,124,8,100,136,0,0,0,9,112,72,89,115,0,0,0,177,0,0,0,177,1,198,45,73,141,0,0,0,25,116,69,88,116,83,111,102,116,119,97,114,101,0,119,
 119,119,46,105,110,107,115,99,97,112,101,46,111,114,103,155,238,60,26,0,0,6,82,73,68,65,84,88,133,197,151,123,80,148,215,25,198,127,223,183,55,88,46,66,6,42,32,32,184,92,84,16,136,18,59,66,162,105,65,29,37,196,24,139,109,3,99,74,66,209,68,237,16,59,37,
 77,51,100,176,45,74,53,4,77,188,4,148,100,66,147,33,99,51,209,17,49,82,140,138,130,104,180,165,160,166,1,5,76,21,52,194,194,178,220,246,198,158,254,65,195,100,93,212,73,210,232,251,223,57,239,243,60,239,51,231,188,231,155,239,149,132,16,60,200,80,2,72,
@@ -1088,10 +1185,10 @@ static const unsigned char temp_binary_data_25[] =
 234,79,213,242,100,202,66,100,149,74,53,216,250,191,38,187,159,209,218,218,130,74,165,26,252,222,163,217,107,249,5,77,217,107,214,117,230,231,189,162,179,142,90,229,130,77,175,95,94,243,235,95,69,29,170,220,63,245,110,188,241,209,76,8,241,125,135,211,
 163,66,136,65,73,146,252,1,73,8,209,37,73,82,48,48,251,30,188,177,225,244,65,143,231,255,5,254,34,201,183,145,32,207,119,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
 
-const char* Signal_png = (const char*) temp_binary_data_25;
+const char* Signal_png = (const char*) temp_binary_data_29;
 
 //================== Sound Card.png ==================
-static const unsigned char temp_binary_data_26[] =
+static const unsigned char temp_binary_data_30[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,32,0,0,0,32,8,6,0,0,0,115,122,122,244,0,0,0,4,115,66,73,84,8,8,8,8,124,8,100,136,0,0,0,9,112,72,89,115,0,0,0,226,0,0,0,226,1,221,161,61,67,0,0,0,25,116,69,88,116,83,111,102,116,119,97,114,101,0,119,
 119,119,46,105,110,107,115,99,97,112,101,46,111,114,103,155,238,60,26,0,0,4,111,73,68,65,84,88,133,197,151,109,108,147,85,20,199,127,231,233,179,210,109,160,46,204,105,88,52,130,211,48,152,110,24,49,97,138,216,181,99,8,242,34,132,196,68,18,77,36,134,
 16,81,250,116,49,81,204,16,99,132,196,174,29,226,75,128,15,106,252,132,160,96,144,151,37,235,22,8,1,229,197,128,17,55,93,52,18,3,202,8,139,97,101,235,235,115,252,192,203,186,133,150,173,197,248,79,238,151,115,206,61,247,119,79,239,189,207,169,168,42,
@@ -1111,10 +1208,10 @@ static const unsigned char temp_binary_data_26[] =
 129,142,34,162,201,236,87,117,252,61,204,13,91,204,111,107,228,199,140,144,163,1,0,232,240,211,149,72,80,245,71,175,113,238,157,214,34,46,246,27,244,197,12,91,148,11,195,99,191,92,74,246,38,50,23,0,128,86,139,63,47,199,165,250,98,191,113,234,155,211,
 78,146,41,186,156,78,118,231,146,11,85,205,107,204,126,95,203,242,153,159,243,159,211,91,165,127,1,11,83,242,111,102,80,8,151,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
 
-const char* Sound_Card_png = (const char*) temp_binary_data_26;
+const char* Sound_Card_png = (const char*) temp_binary_data_30;
 
 //================== Stream Deck.png ==================
-static const unsigned char temp_binary_data_27[] =
+static const unsigned char temp_binary_data_31[] =
 "\x89PNG\r\n"
 "\x1a\n"
 "\0\0\0\rIHDR\0\0\0 \0\0\0 \x08\x06\0\0\0szz\xf4\0\0\0\tpHYs\0\0\x0b\x13\0\0\x0b\x13\x01\0\x9a\x9c\x18\0\0\x06\xd2iTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:meta/\" x"
@@ -1139,10 +1236,10 @@ static const unsigned char temp_binary_data_27[] =
 "\xa5\x9e\xbc\x8c\xd8\x8b\xc9(\xf5\x9bV\xbeyIG\xaf""f\xa6\xf3\xd9\x05\xfa\xc4\xa0\x81r\xa6kC\xb4\x97SS\x1d\xb7\x80""e\xaaw\xf0\xb3;\xbc\x9c\x96\xc6z;\xb6""f\xba\xa0\x99\xac\x92\xc9\xec\xa2\xe3\xa9#\x13\xe2OL\xafJ\xbe\xf5\x8b \x8b\xfe\x07\x80{\xe5U#\xf3"
 "\xcdk\0\0\0\0IEND\xae""B`\x82";
 
-const char* Stream_Deck_png = (const char*) temp_binary_data_27;
+const char* Stream_Deck_png = (const char*) temp_binary_data_31;
 
 //================== TCP Client.png ==================
-static const unsigned char temp_binary_data_28[] =
+static const unsigned char temp_binary_data_32[] =
 "\x89PNG\r\n"
 "\x1a\n"
 "\0\0\0\rIHDR\0\0\0 \0\0\0 \x08\x06\0\0\0szz\xf4\0\0\0\tpHYs\0\0\0\xec\0\0\0\xec\x01y(q\xbd\0\0\x06\xcaiTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:meta/\" x:xmptk=\"Ad"
@@ -1168,10 +1265,10 @@ static const unsigned char temp_binary_data_28[] =
 "\0^\\\x0cz&&\xae=\x05\xc2\xb9x\x9a\xdc\xbf\xe6\xba\xfa\xbd""c\xafUh\xea""8\0""e\xb4\xff\x97\xf3\xc1\xc9\t+\t\xfe""5V<\x1d\xcc""B\xa1&\xeb\xcf\x01l7\x1aW\xcd\x86\xc3\x0b\x16\0\x17\x8c\xa4\xd6u\xf8""8\x1c\x0f\x84#\xdfP-\t>I\x92\x94n2g\x06\x17\x02""3\x19"
 "\0\x1fw\xfa\xd5\xb7""b\x02""03\x1c%\x94J!\xfd\xab\0\x97\x10\xf3\xa5\xebSt\xa2\x97\x15\xedQ\xc6\xad#\x97\xf2t\xa4\xdf\xcd`+3\xfa]\x93\xca\xa9x\xe2(\xf1_\x90\0H\0\xfc\xef\x01\xfe\x01\x9b\xce\xdc\x8dK\xf6m?\0\0\0\0IEND\xae""B`\x82";
 
-const char* TCP_Client_png = (const char*) temp_binary_data_28;
+const char* TCP_Client_png = (const char*) temp_binary_data_32;
 
 //================== TCP Server.png ==================
-static const unsigned char temp_binary_data_29[] =
+static const unsigned char temp_binary_data_33[] =
 "\x89PNG\r\n"
 "\x1a\n"
 "\0\0\0\rIHDR\0\0\0 \0\0\0 \x08\x06\0\0\0szz\xf4\0\0\0\tpHYs\0\0\0\xec\0\0\0\xec\x01y(q\xbd\0\0\x06\xcaiTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:meta/\" x:xmptk=\"Ad"
@@ -1197,10 +1294,10 @@ static const unsigned char temp_binary_data_29[] =
 "\0^\\\x0cz&&\xae=\x05\xc2\xb9x\x9a\xdc\xbf\xe6\xba\xfa\xbd""c\xafUh\xea""8\0""e\xb4\xff\x97\xf3\xc1\xc9\t+\t\xfe""5V<\x1d\xcc""B\xa1&\xeb\xcf\x01l7\x1aW\xcd\x86\xc3\x0b\x16\0\x17\x8c\xa4\xd6u\xf8""8\x1c\x0f\x84#\xdfP-\t>I\x92\x94n2g\x06\x17\x02""3\x19"
 "\0\x1fw\xfa\xd5\xb7""b\x02""03\x1c%\x94J!\xfd\xab\0\x97\x10\xf3\xa5\xebSt\xa2\x97\x15\xedQ\xc6\xad#\x97\xf2t\xa4\xdf\xcd`+3\xfa]\x93\xca\xa9x\xe2(\xf1_\x90\0H\0\xfc\xef\x01\xfe\x01\x9b\xce\xdc\x8dK\xf6m?\0\0\0\0IEND\xae""B`\x82";
 
-const char* TCP_Server_png = (const char*) temp_binary_data_29;
+const char* TCP_Server_png = (const char*) temp_binary_data_33;
 
 //================== Time.png ==================
-static const unsigned char temp_binary_data_30[] =
+static const unsigned char temp_binary_data_34[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,32,0,0,0,32,8,3,0,0,0,68,164,138,198,0,0,0,3,115,66,73,84,8,8,8,219,225,79,224,0,0,0,9,112,72,89,115,0,0,7,98,0,0,7,98,1,56,122,153,219,0,0,0,25,116,69,88,116,83,111,102,116,119,97,114,101,0,119,119,
 119,46,105,110,107,115,99,97,112,101,46,111,114,103,155,238,60,26,0,0,0,216,80,76,84,69,255,255,255,223,223,223,137,78,59,143,80,48,136,85,51,230,230,230,229,229,229,230,230,230,158,109,83,230,230,230,230,230,230,230,230,230,158,108,83,156,106,81,169,
 126,106,230,230,230,179,136,92,231,231,231,195,150,71,230,230,230,138,83,54,230,230,230,138,83,54,157,106,81,230,227,215,230,227,217,230,228,221,230,228,222,230,228,223,230,229,223,230,229,224,230,230,228,230,230,230,231,217,168,231,217,170,231,219,179,
@@ -1212,10 +1309,10 @@ static const unsigned char temp_binary_data_30[] =
 190,220,118,238,174,37,173,182,184,240,230,55,123,91,17,195,114,184,48,227,113,60,138,113,35,222,184,88,125,255,206,179,143,162,112,245,69,183,159,65,224,247,18,33,244,162,100,59,244,255,37,176,209,43,148,142,40,132,70,239,220,240,158,30,255,61,176,44,
 70,188,110,2,3,59,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
 
-const char* Time_png = (const char*) temp_binary_data_30;
+const char* Time_png = (const char*) temp_binary_data_34;
 
 //================== UDP.png ==================
-static const unsigned char temp_binary_data_31[] =
+static const unsigned char temp_binary_data_35[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,32,0,0,0,32,8,6,0,0,0,115,122,122,244,0,0,0,9,112,72,89,115,0,0,0,236,0,0,0,236,1,121,40,113,189,0,0,5,250,105,84,88,116,88,77,76,58,99,111,109,46,97,100,111,98,101,46,120,109,112,0,0,0,0,0,60,63,120,
 112,97,99,107,101,116,32,98,101,103,105,110,61,34,239,187,191,34,32,105,100,61,34,87,53,77,48,77,112,67,101,104,105,72,122,114,101,83,122,78,84,99,122,107,99,57,100,34,63,62,32,60,120,58,120,109,112,109,101,116,97,32,120,109,108,110,115,58,120,61,34,
 97,100,111,98,101,58,110,115,58,109,101,116,97,47,34,32,120,58,120,109,112,116,107,61,34,65,100,111,98,101,32,88,77,80,32,67,111,114,101,32,53,46,54,45,99,49,52,53,32,55,57,46,49,54,51,52,57,57,44,32,50,48,49,56,47,48,56,47,49,51,45,49,54,58,52,48,58,
@@ -1255,10 +1352,10 @@ static const unsigned char temp_binary_data_31[] =
 104,158,247,35,2,48,51,10,200,149,16,52,210,219,96,228,48,83,215,144,222,119,142,249,140,254,56,113,235,32,215,42,50,26,118,130,217,206,224,102,191,234,253,37,170,152,142,253,23,196,0,98,0,255,123,128,127,1,165,214,218,89,248,124,238,185,0,0,0,0,73,69,
 78,68,174,66,96,130,0,0 };
 
-const char* UDP_png = (const char*) temp_binary_data_31;
+const char* UDP_png = (const char*) temp_binary_data_35;
 
 //================== Watchout.png ==================
-static const unsigned char temp_binary_data_32[] =
+static const unsigned char temp_binary_data_36[] =
 "\x89PNG\r\n"
 "\x1a\n"
 "\0\0\0\rIHDR\0\0\0 \0\0\0 \x08\x06\0\0\0szz\xf4\0\0\0\tpHYs\0\0\x0b\x13\0\0\x0b\x13\x01\0\x9a\x9c\x18\0\0\x06""biTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:meta/\" x:"
@@ -1279,10 +1376,10 @@ static const unsigned char temp_binary_data_32[] =
 "\xc1""7V\x8c+\x02\xbf\xf5)\x19\xf0qP\rVS\xff\x80\xce\x83\xf9""8\xef\x86<\x07^\x83\t\x8f\x1c\xf2L\xbaq\xac\x88""avd\xbb\xd1'\xcb\xec\x06""8o\x86\xdc\x14+\x86\xb0\xff\x02\xb3\xba\xfe_\xea\xed'E\xd7\xb5\xb4\xf2\x0fr_\xe1\xdc\x8d\xe8\x93j\0\0\0\0IEND\xae"
 "B`\x82";
 
-const char* Watchout_png = (const char*) temp_binary_data_32;
+const char* Watchout_png = (const char*) temp_binary_data_36;
 
 //================== WebSocket Client.png ==================
-static const unsigned char temp_binary_data_33[] =
+static const unsigned char temp_binary_data_37[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,32,0,0,0,32,8,6,0,0,0,115,122,122,244,0,0,0,9,112,72,89,115,0,0,0,236,0,0,0,236,1,121,40,113,189,0,0,6,143,105,84,88,116,88,77,76,58,99,111,109,46,97,100,111,98,101,46,120,109,112,0,0,0,0,0,60,63,120,
 112,97,99,107,101,116,32,98,101,103,105,110,61,34,239,187,191,34,32,105,100,61,34,87,53,77,48,77,112,67,101,104,105,72,122,114,101,83,122,78,84,99,122,107,99,57,100,34,63,62,32,60,120,58,120,109,112,109,101,116,97,32,120,109,108,110,115,58,120,61,34,
 97,100,111,98,101,58,110,115,58,109,101,116,97,47,34,32,120,58,120,109,112,116,107,61,34,65,100,111,98,101,32,88,77,80,32,67,111,114,101,32,53,46,54,45,99,49,52,56,32,55,57,46,49,54,52,48,51,54,44,32,50,48,49,57,47,48,56,47,49,51,45,48,49,58,48,54,58,
@@ -1334,10 +1431,10 @@ static const unsigned char temp_binary_data_33[] =
 251,51,15,133,188,226,247,173,16,164,174,134,154,140,70,16,14,183,20,198,214,220,22,205,245,254,142,140,158,12,64,95,75,6,202,240,68,177,129,204,87,180,84,23,232,253,127,195,255,123,128,255,2,231,48,112,91,196,128,66,195,0,0,0,0,73,69,78,68,174,66,96,
 130,0,0 };
 
-const char* WebSocket_Client_png = (const char*) temp_binary_data_33;
+const char* WebSocket_Client_png = (const char*) temp_binary_data_37;
 
 //================== WebSocket Server.png ==================
-static const unsigned char temp_binary_data_34[] =
+static const unsigned char temp_binary_data_38[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,32,0,0,0,32,8,6,0,0,0,115,122,122,244,0,0,0,9,112,72,89,115,0,0,0,236,0,0,0,236,1,121,40,113,189,0,0,6,143,105,84,88,116,88,77,76,58,99,111,109,46,97,100,111,98,101,46,120,109,112,0,0,0,0,0,60,63,120,
 112,97,99,107,101,116,32,98,101,103,105,110,61,34,239,187,191,34,32,105,100,61,34,87,53,77,48,77,112,67,101,104,105,72,122,114,101,83,122,78,84,99,122,107,99,57,100,34,63,62,32,60,120,58,120,109,112,109,101,116,97,32,120,109,108,110,115,58,120,61,34,
 97,100,111,98,101,58,110,115,58,109,101,116,97,47,34,32,120,58,120,109,112,116,107,61,34,65,100,111,98,101,32,88,77,80,32,67,111,114,101,32,53,46,54,45,99,49,52,56,32,55,57,46,49,54,52,48,51,54,44,32,50,48,49,57,47,48,56,47,49,51,45,48,49,58,48,54,58,
@@ -1388,10 +1485,10 @@ static const unsigned char temp_binary_data_34[] =
 146,21,136,37,140,23,206,156,242,195,41,134,5,32,188,112,35,21,27,73,234,216,70,128,206,223,150,91,210,104,212,157,123,231,21,63,178,154,156,232,155,200,47,130,197,69,9,152,16,165,242,247,91,191,242,125,56,65,234,66,144,59,50,32,29,116,167,202,173,55,
 87,19,195,191,113,100,102,3,48,255,171,7,38,7,19,85,147,249,175,196,141,26,160,247,255,13,255,239,1,252,23,204,250,95,202,228,255,169,175,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
 
-const char* WebSocket_Server_png = (const char*) temp_binary_data_34;
+const char* WebSocket_Server_png = (const char*) temp_binary_data_38;
 
 //================== Wiimote.png ==================
-static const unsigned char temp_binary_data_35[] =
+static const unsigned char temp_binary_data_39[] =
 "\x89PNG\r\n"
 "\x1a\n"
 "\0\0\0\rIHDR\0\0\0 \0\0\0 \x08\x06\0\0\0szz\xf4\0\0\0\tpHYs\0\0\x0b\x13\0\0\x0b\x13\x01\0\x9a\x9c\x18\0\0\x06""biTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:meta/\" x:"
@@ -1409,10 +1506,10 @@ static const unsigned char temp_binary_data_35[] =
 "\x95""e\x8a\x7f\xe9\x81 $\x11\xd6l\xc5\xd1\xde\x89M=\x98*i\x0c\x02\xa3\xa1^\x0c\xb6~C\x13\x82\xa7@\";U\t_\xf8\xd5\xca""D\x0f\xb7_\x90\xb3\x8dN\xf4\x85V9\xd7\"\x17""A\xa2""fR\xae""9\xe5\xac\x11\xcd\x7f""B e\x0b""B\xe1\xf4\x9c\xd6\x9dG\"\xfa\xf4P|qY>\x8d"
 "oTx\xd1{\xee{\x0b\x02\0\0\0\0IEND\xae""B`\x82";
 
-const char* Wiimote_png = (const char*) temp_binary_data_35;
+const char* Wiimote_png = (const char*) temp_binary_data_39;
 
 //================== commandScriptTemplate.js ==================
-static const unsigned char temp_binary_data_36[] =
+static const unsigned char temp_binary_data_40[] =
 "/* ********** COMMAND SPECIFIC SCRIPTING ********************** */\r\n"
 "\r\n"
 "\r\n"
@@ -1432,10 +1529,10 @@ static const unsigned char temp_binary_data_36[] =
 "\tscript.log(\"Trigger !\");\r\n"
 "}";
 
-const char* commandScriptTemplate_js = (const char*) temp_binary_data_36;
+const char* commandScriptTemplate_js = (const char*) temp_binary_data_40;
 
 //================== conditionScriptTemplate.js ==================
-static const unsigned char temp_binary_data_37[] =
+static const unsigned char temp_binary_data_41[] =
 "/* ********** GENERAL SCRIPTING **********************\r\n"
 "\r\n"
 "\t\tThis templates shows what you can do in this is module script\r\n"
@@ -1520,10 +1617,10 @@ static const unsigned char temp_binary_data_37[] =
 "\tYou can check its usage in the scriptParameterChanged\r\n"
 "*/";
 
-const char* conditionScriptTemplate_js = (const char*) temp_binary_data_37;
+const char* conditionScriptTemplate_js = (const char*) temp_binary_data_41;
 
 //================== filterScriptTemplate.js ==================
-static const unsigned char temp_binary_data_38[] =
+static const unsigned char temp_binary_data_42[] =
 "/* ********** FILTER SPECIFIC SCRIPTING **********************\r\n"
 "\r\n"
 "\tThe \"local\" variable refers to the object containing the scripts. In this case, the local variable refers to the filter.\r\n"
@@ -1556,10 +1653,10 @@ static const unsigned char temp_binary_data_38[] =
 "\treturn result;\r\n"
 "}";
 
-const char* filterScriptTemplate_js = (const char*) temp_binary_data_38;
+const char* filterScriptTemplate_js = (const char*) temp_binary_data_42;
 
 //================== genericScriptTemplate.js ==================
-static const unsigned char temp_binary_data_39[] =
+static const unsigned char temp_binary_data_43[] =
 "/* ********** GENERAL SCRIPTING **********************\r\n"
 "\r\n"
 "\t\tThis templates shows what you can do in this is module script\r\n"
@@ -1628,10 +1725,10 @@ static const unsigned char temp_binary_data_39[] =
 "*/\r\n"
 "\r\n";
 
-const char* genericScriptTemplate_js = (const char*) temp_binary_data_39;
+const char* genericScriptTemplate_js = (const char*) temp_binary_data_43;
 
 //================== httpScriptTemplate.js ==================
-static const unsigned char temp_binary_data_40[] =
+static const unsigned char temp_binary_data_44[] =
 "\r\n"
 "\r\n"
 "/* ********** HTTP MODULE SPECIFIC SCRIPTING ********************* */\r\n"
@@ -1691,10 +1788,10 @@ static const unsigned char temp_binary_data_40[] =
 "\tscript.log(\"Data received, request URL :\"+requestURL+\"\\nContent :\\n\" +data);\r\n"
 "}";
 
-const char* httpScriptTemplate_js = (const char*) temp_binary_data_40;
+const char* httpScriptTemplate_js = (const char*) temp_binary_data_44;
 
 //================== midiScriptTemplate.js ==================
-static const unsigned char temp_binary_data_41[] =
+static const unsigned char temp_binary_data_45[] =
 "/* ********** MIDI MODULE SPECIFIC SCRIPTING ********************* */\r\n"
 "/*\r\n"
 "\r\n"
@@ -1761,10 +1858,10 @@ static const unsigned char temp_binary_data_41[] =
 "\tscript.log(\"After Touch received \"+channel+\", \"+note+\", \"+value);\r\n"
 "}";
 
-const char* midiScriptTemplate_js = (const char*) temp_binary_data_41;
+const char* midiScriptTemplate_js = (const char*) temp_binary_data_45;
 
 //================== moduleScriptTemplate.js ==================
-static const unsigned char temp_binary_data_42[] =
+static const unsigned char temp_binary_data_46[] =
 "/* ********** MODULE SPECIFIC SCRIPTING **********************\r\n"
 "\r\n"
 "\tThe \"local\" variable refers to the object containing the scripts. In this case, the local variable refers to the module.\r\n"
@@ -1803,10 +1900,10 @@ static const unsigned char temp_binary_data_42[] =
 "\t}\r\n"
 "}";
 
-const char* moduleScriptTemplate_js = (const char*) temp_binary_data_42;
+const char* moduleScriptTemplate_js = (const char*) temp_binary_data_46;
 
 //================== oscScriptTemplate.js ==================
-static const unsigned char temp_binary_data_43[] =
+static const unsigned char temp_binary_data_47[] =
 "/* ********** OSC MODULE SPECIFIC SCRIPTING ********************* */\r\n"
 "/*\r\n"
 "\r\n"
@@ -1832,10 +1929,10 @@ static const unsigned char temp_binary_data_43[] =
 "\t}\r\n"
 "}";
 
-const char* oscScriptTemplate_js = (const char*) temp_binary_data_43;
+const char* oscScriptTemplate_js = (const char*) temp_binary_data_47;
 
 //================== streamingScriptTemplate.js ==================
-static const unsigned char temp_binary_data_44[] =
+static const unsigned char temp_binary_data_48[] =
 "/* ********** WEBSOCKET  MODULE SPECIFIC SCRIPTING ********************* */\r\n"
 "/*\r\n"
 "\r\n"
@@ -1865,10 +1962,10 @@ static const unsigned char temp_binary_data_44[] =
 "\t}\r\n"
 "}";
 
-const char* streamingScriptTemplate_js = (const char*) temp_binary_data_44;
+const char* streamingScriptTemplate_js = (const char*) temp_binary_data_48;
 
 //================== wsClientScriptTemplate.js ==================
-static const unsigned char temp_binary_data_45[] =
+static const unsigned char temp_binary_data_49[] =
 "\r\n"
 "\r\n"
 "/* ********** STREAMING MODULE (UDP, TCP, SERIAL, WEBSOCKET) SPECIFIC SCRIPTING ********************* */\r\n"
@@ -1889,10 +1986,10 @@ static const unsigned char temp_binary_data_45[] =
 "\tscript.log(\"Websocket data received : \" +data);\r\n"
 "}";
 
-const char* wsClientScriptTemplate_js = (const char*) temp_binary_data_45;
+const char* wsClientScriptTemplate_js = (const char*) temp_binary_data_49;
 
 //================== wsServerScriptTemplate.js ==================
-static const unsigned char temp_binary_data_46[] =
+static const unsigned char temp_binary_data_50[] =
 "\r\n"
 "\r\n"
 "/* ********** WEBSOCKET SERVER SPECIFIC SCRIPTING ********************* */\r\n"
@@ -1914,10 +2011,10 @@ static const unsigned char temp_binary_data_46[] =
 "\tscript.log(\"Websocket data received from \"+connectionId+\" : \" +data);\r\n"
 "}";
 
-const char* wsServerScriptTemplate_js = (const char*) temp_binary_data_46;
+const char* wsServerScriptTemplate_js = (const char*) temp_binary_data_50;
 
 //================== about.png ==================
-static const unsigned char temp_binary_data_47[] =
+static const unsigned char temp_binary_data_51[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,3,32,0,0,1,224,8,6,0,0,0,93,7,9,245,0,0,0,9,112,72,89,115,0,0,14,196,0,0,14,196,1,149,43,14,27,0,0,6,233,105,84,88,116,88,77,76,58,99,111,109,46,97,100,111,98,101,46,120,109,112,0,0,0,0,0,60,63,120,112,
 97,99,107,101,116,32,98,101,103,105,110,61,34,239,187,191,34,32,105,100,61,34,87,53,77,48,77,112,67,101,104,105,72,122,114,101,83,122,78,84,99,122,107,99,57,100,34,63,62,32,60,120,58,120,109,112,109,101,116,97,32,120,109,108,110,115,58,120,61,34,97,100,
 111,98,101,58,110,115,58,109,101,116,97,47,34,32,120,58,120,109,112,116,107,61,34,65,100,111,98,101,32,88,77,80,32,67,111,114,101,32,53,46,54,45,99,49,52,50,32,55,57,46,49,54,48,57,50,52,44,32,50,48,49,55,47,48,55,47,49,51,45,48,49,58,48,54,58,51,57,
@@ -2435,10 +2532,10 @@ static const unsigned char temp_binary_data_47[] =
 1,4,0,0,0,0,1,4,0,0,0,0,1,4,0,0,0,0,8,32,0,0,0,0,8,32,0,0,0,0,64,0,1,0,0,0,64,0,1,0,0,0,0,78,2,0,0,0,0,2,8,0,0,0,0,2,8,0,0,0,0,16,64,0,0,0,0,16,64,0,0,0,0,128,0,2,0,0,0,128,0,2,0,0,0,128,0,2,0,0,0,0,4,16,0,0,0,0,4,16,0,0,0,0,32,128,0,0,0,0,32,128,0,0,
 0,0,32,128,0,0,0,0,0,1,4,0,0,0,0,1,4,0,0,0,0,8,32,0,0,0,0,8,32,0,0,0,0,8,32,0,0,0,0,80,19,254,31,186,211,221,255,42,1,230,166,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
 
-const char* about_png = (const char*) temp_binary_data_47;
+const char* about_png = (const char*) temp_binary_data_51;
 
 //================== add.png ==================
-static const unsigned char temp_binary_data_48[] =
+static const unsigned char temp_binary_data_52[] =
 "\x89PNG\r\n"
 "\x1a\n"
 "\0\0\0\rIHDR\0\0\0\x18\0\0\0\x18\x08\x06\0\0\0\xe0w=\xf8\0\0\0\tpHYs\0\0\x0b\x13\0\0\x0b\x13\x01\0\x9a\x9c\x18\0\0\x07\xd0iTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:"
@@ -2468,10 +2565,10 @@ static const unsigned char temp_binary_data_48[] =
 "\xa2/\xcf\x81Ln\x0fv\xc7\x85#\xa2[d\x7f\"\x8d&\x9bi0\xbe,Ex4\x86\xe2\x01\r\xa1\x87""C\xf2""4\xca)\xbd""fS\x7f\xbe\x18u\x9e\xf2y?/\"w\x94\x0fw]\x99""7g\xb5\xbc\x98-mH\x93\xaf\x8a\xd8\x87]\xe2\n"
 ".n\xd2\xec""fO\x17\xdd\xf5/\x04\xae\x89\xca]\xa5\x89\xdck\xd9\xf2?+iWPrc{^\0\0\0\0IEND\xae""B`\x82";
 
-const char* add_png = (const char*) temp_binary_data_48;
+const char* add_png = (const char*) temp_binary_data_52;
 
 //================== connected.png ==================
-static const unsigned char temp_binary_data_49[] =
+static const unsigned char temp_binary_data_53[] =
 "\x89PNG\r\n"
 "\x1a\n"
 "\0\0\0\rIHDR\0\0\0\x18\0\0\0\x18\x08\x06\0\0\0\xe0w=\xf8\0\0\0\tpHYs\0\0\x0b\x13\0\0\x0b\x13\x01\0\x9a\x9c\x18\0\0\n"
@@ -2507,10 +2604,10 @@ static const unsigned char temp_binary_data_49[] =
 "^gK\x87~{\x84\xae\xec\0\x02\x9c\xe7\x1a\xd7|\xb2\xb1\xe9\x8e\x07""2\xdeT\xcf\x85\x9fRq\xa3\t\x04\xb6\xe7\xfc\xbb\xa1\xb1\xfd\x11\xa5\xfc\x8f\x83\x9a\xb9\xb6s\xa4\xbbu\xac\x98[X\xf4\xbd*@\xc5\xccP\xa1\xa1j\xce\xc9\x9bj\x9a;\xf3\x9e\xfb\xf5\x86\xc6\xf6"
 "=\xbf\x8d\xf5\xc9\xe9\xf7@E\x0f.\x16.\xfa_\xc5\x7f\xae\xe8""9sg\xfd;Y\0\0\0\0IEND\xae""B`\x82";
 
-const char* connected_png = (const char*) temp_binary_data_49;
+const char* connected_png = (const char*) temp_binary_data_53;
 
 //================== crash.png ==================
-static const unsigned char temp_binary_data_50[] =
+static const unsigned char temp_binary_data_54[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,3,32,0,0,2,88,8,2,0,0,0,21,20,21,39,0,0,0,9,112,72,89,115,0,0,11,19,0,0,11,19,1,0,154,156,24,0,0,14,87,105,84,88,116,88,77,76,58,99,111,109,46,97,100,111,98,101,46,120,109,112,0,0,0,0,0,60,63,120,112,
 97,99,107,101,116,32,98,101,103,105,110,61,34,239,187,191,34,32,105,100,61,34,87,53,77,48,77,112,67,101,104,105,72,122,114,101,83,122,78,84,99,122,107,99,57,100,34,63,62,32,60,120,58,120,109,112,109,101,116,97,32,120,109,108,110,115,58,120,61,34,97,100,
 111,98,101,58,110,115,58,109,101,116,97,47,34,32,120,58,120,109,112,116,107,61,34,65,100,111,98,101,32,88,77,80,32,67,111,114,101,32,53,46,54,45,99,49,52,56,32,55,57,46,49,54,52,48,51,54,44,32,50,48,49,57,47,48,56,47,49,51,45,48,49,58,48,54,58,53,55,
@@ -3493,10 +3590,10 @@ static const unsigned char temp_binary_data_50[] =
 8,176,0,0,0,0,4,67,128,5,0,0,0,32,24,2,44,0,0,0,0,193,16,96,1,0,0,0,8,134,0,11,0,0,0,64,48,4,88,0,0,0,0,130,33,192,2,0,0,0,16,12,1,22,0,0,0,128,96,8,176,0,0,0,0,4,67,128,5,0,0,0,32,24,2,44,0,0,0,0,193,254,127,17,16,105,90,101,252,216,190,0,0,0,0,73,69,
 78,68,174,66,96,130,0,0 };
 
-const char* crash_png = (const char*) temp_binary_data_50;
+const char* crash_png = (const char*) temp_binary_data_54;
 
 //================== default.chalayout ==================
-static const unsigned char temp_binary_data_51[] =
+static const unsigned char temp_binary_data_55[] =
 "{\r\n"
 "  \"mainLayout\": {\r\n"
 "    \"type\": 1,\r\n"
@@ -3633,10 +3730,10 @@ static const unsigned char temp_binary_data_51[] =
 "  \"windows\": null\r\n"
 "}";
 
-const char* default_chalayout = (const char*) temp_binary_data_51;
+const char* default_chalayout = (const char*) temp_binary_data_55;
 
 //================== disconnected.png ==================
-static const unsigned char temp_binary_data_52[] =
+static const unsigned char temp_binary_data_56[] =
 "\x89PNG\r\n"
 "\x1a\n"
 "\0\0\0\rIHDR\0\0\0\x18\0\0\0\x18\x08\x06\0\0\0\xe0w=\xf8\0\0\0\tpHYs\0\0\x0b\x13\0\0\x0b\x13\x01\0\x9a\x9c\x18\0\0\tUiTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:meta/"
@@ -3669,10 +3766,10 @@ static const unsigned char temp_binary_data_52[] =
 "\xb8@\xb4\xad\xe5|\xf3\x8b{\x7f\x9a\xf8\xe6\xfd\x03""E\xa5\x10J!\xa5\xac$\xf0<\x0f\xdb.o8\xfeL\xb6i\xf2`\xdf\xe3\xd9\xf7\x8fn\xf2\xc6.\xde\x8c'bB\x9a\xe5\x9d\xc1""b\xce\xba""a\xd5\xb9\xc4\xc6\xfb\xfeX\xff\xf8\xf7\x0eY\x8d\xe9\xe1k\xcaJ.\x8aJ\x82\xebu"
 "\xae\xfb_\xc5\x7f\x01\x12\xcf[\x9a\xfb\xa3""bi\0\0\0\0IEND\xae""B`\x82";
 
-const char* disconnected_png = (const char*) temp_binary_data_52;
+const char* disconnected_png = (const char*) temp_binary_data_56;
 
 //================== icon.png ==================
-static const unsigned char temp_binary_data_53[] =
+static const unsigned char temp_binary_data_57[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,1,0,0,0,1,0,8,6,0,0,0,92,114,168,102,0,0,0,9,112,72,89,115,0,0,11,19,0,0,11,19,1,0,154,156,24,0,0,10,79,105,67,67,80,80,104,111,116,111,115,104,111,112,32,73,67,67,32,112,114,111,102,105,108,101,0,0,120,
 218,157,83,103,84,83,233,22,61,247,222,244,66,75,136,128,148,75,111,82,21,8,32,82,66,139,128,20,145,38,42,33,9,16,74,136,33,161,217,21,81,193,17,69,69,4,27,200,160,136,3,142,142,128,140,21,81,44,12,138,10,216,7,228,33,162,142,131,163,136,138,202,251,
 225,123,163,107,214,188,247,230,205,254,181,215,62,231,172,243,157,179,207,7,192,8,12,150,72,51,81,53,128,12,169,66,30,17,224,131,199,196,198,225,228,46,64,129,10,36,112,0,16,8,179,100,33,115,253,35,1,0,248,126,60,60,43,34,192,7,190,0,1,120,211,11,8,
@@ -4241,10 +4338,10 @@ static const unsigned char temp_binary_data_53[] =
 52,26,45,0,26,141,70,11,128,70,163,209,2,160,209,104,180,0,104,52,26,45,0,26,141,70,11,128,70,163,5,64,163,209,104,1,208,104,52,90,0,52,26,141,22,0,141,70,163,5,64,163,209,104,1,208,104,52,187,39,255,63,0,251,9,211,62,187,88,73,220,0,0,0,0,73,69,78,68,
 174,66,96,130,0,0 };
 
-const char* icon_png = (const char*) temp_binary_data_53;
+const char* icon_png = (const char*) temp_binary_data_57;
 
 //================== in.png ==================
-static const unsigned char temp_binary_data_54[] =
+static const unsigned char temp_binary_data_58[] =
 "\x89PNG\r\n"
 "\x1a\n"
 "\0\0\0\rIHDR\0\0\0\x18\0\0\0\x18\x08\x06\0\0\0\xe0w=\xf8\0\0\0\tpHYs\0\0\x0b\x13\0\0\x0b\x13\x01\0\x9a\x9c\x18\0\0\x0b\xaciTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:"
@@ -4271,10 +4368,10 @@ static const unsigned char temp_binary_data_54[] =
 "\xc3oK\xb7v\xda\r4\x13""F\xfb\x8d\xff\x8eo2/\xfa\0p\"\x0b\xd3\xe1\xbc#\x88\xc6\x9a\xff\x95\xf0Q\x9f\xe1\xa3""bG\xf9\xba^\xc2)\x1c_\x95\xb9\x95:\x8a\x8f\x95\x9e\xce\xaa:\xf8\x15\x1f\x88\x99""9\x8d\x9d\n"
 "\xd7oI-\x9c\x13\x9f\xcc\x0fq\xa5<aP\xa1\xb5\xf0\x0e\x9e\x12\x1f\xa1\xa7""1je\xc2\xcc\xe1{\x9c\xc6\x8f\xe5\x9d\xe7Jn\xf7\xdf\x96\x7f\0Q\x10\xb1\xe8\x15`\xe8""7\0\0\0\0IEND\xae""B`\x82";
 
-const char* in_png = (const char*) temp_binary_data_54;
+const char* in_png = (const char*) temp_binary_data_58;
 
 //================== link.png ==================
-static const unsigned char temp_binary_data_55[] =
+static const unsigned char temp_binary_data_59[] =
 "\x89PNG\r\n"
 "\x1a\n"
 "\0\0\0\rIHDR\0\0\0\x14\0\0\0\x14\x08\x06\0\0\0\x8d\x89\x1d\r\0\0\0\tpHYs\0\0\x0b\x13\0\0\x0b\x13\x01\0\x9a\x9c\x18\0\0\x05\x16iTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe"
@@ -4289,10 +4386,10 @@ static const unsigned char temp_binary_data_55[] =
 "l\xe1\0\xd3h\xb4""d\xa7izg%q\xf4#\x89\xa3""4\x89\xa3\xafI\x1cI\xe2h3;\x9fg\xfbN\x12G\xaf\xb2XK~Y\xc9\xbf\xd1\x8bZ\xce=\xa5""9\xdd\x7f\x9a\x83\xb9\xba\r\x14\xef""aY\xc9\x87\xe8\xc7{T\xf0\t?q\x81\xed<Y\x99\x95)\xac""a?\xa7h(\xeb\xd9\x1c\xce\x8a\x04\xed"
 "\xbe\x94\xd7\x98\xcf\xf6_XBT\xa6\xe8""A\xc2\xc7\xda\xd3\xff\xbe:Nx\x03\xb2\x18\x9b\xec\xd1\xbd:(\0\0\0\0IEND\xae""B`\x82";
 
-const char* link_png = (const char*) temp_binary_data_55;
+const char* link_png = (const char*) temp_binary_data_59;
 
 //================== nextcue.png ==================
-static const unsigned char temp_binary_data_56[] =
+static const unsigned char temp_binary_data_60[] =
 "\x89PNG\r\n"
 "\x1a\n"
 "\0\0\0\rIHDR\0\0\0 \0\0\0 \x08\x06\0\0\0szz\xf4\0\0\0\tpHYs\0\0\r\xd7\0\0\r\xd7\x01""B(\x9bx\0\0\x06\xbbiTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:meta/\" x:xmptk=\""
@@ -4317,10 +4414,10 @@ static const unsigned char temp_binary_data_56[] =
 "4\xb4W~3\xd0\xea\xd6""7A\xe5\x82\xcdi\xb8\xb5\xd1\xbeU<\xd4\xb2\xe2""6\0\xd0\x0e-*\xd6\x9b\xe8}\x9f\xd6\x89`\x07\xeeuF]H\xb7oc\xa7\xdb\xcc\xcf""F\x16\xba_\xfe&\x95\xc4KVl\xbf^\xa9%\"\xe8\x86\x98v\x92/\xd7#\xb3\xdc\x12\xfa+S\xd0\x8f\xcb\xefu<V\xfaw\xa7"
 "\xe2q\x80\xff\x06\xe0\x1bS}\xda\xa9YIiq\0\0\0\0IEND\xae""B`\x82";
 
-const char* nextcue_png = (const char*) temp_binary_data_56;
+const char* nextcue_png = (const char*) temp_binary_data_60;
 
 //================== out.png ==================
-static const unsigned char temp_binary_data_57[] =
+static const unsigned char temp_binary_data_61[] =
 "\x89PNG\r\n"
 "\x1a\n"
 "\0\0\0\rIHDR\0\0\0\x18\0\0\0\x18\x08\x06\0\0\0\xe0w=\xf8\0\0\0\tpHYs\0\0\x0b\x13\0\0\x0b\x13\x01\0\x9a\x9c\x18\0\0\x0b\xaciTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:"
@@ -4350,10 +4447,10 @@ static const unsigned char temp_binary_data_57[] =
 "\0\xc0\t\xf8""c\xbf\xa0O\xb5Uk\x8b\xc8\xac\xe9\xd3n\xc0\x1f%\x82\x8d\xc5l\x9f\xba-C\xfe""4\xf7@\x9f\x92\x01G[%\x96!\xc7\xd9U}\xc6\tyj\xb6O\xddn\xec""7\xcd\xc1\x95^\xb5\x08\xe0\xe0\xc8\xa3\xcc\x89\xd0\xa3""7#\x87zC\x97<~L\x9b\x13\x03""2\xe0@\x86\\pk|a"
 "\xde/\x1e""FW\xb3M\xc7I\x9e\xf7\x8bGR\xca\xbc\x9dV\xe6\xb4W\xe1\x92\xa5\xdb\x7f\x06\x96""av\xab\\N\x97\xcc\xf9.e&\xe7\xfd\xe2\xe1\xceN<\xe1_\xc5\xbf\xbe""E\xff\x17\x7f\x03\xa3\xd7\x9d+\x7f\xb5\xf0s\0\0\0\0IEND\xae""B`\x82";
 
-const char* out_png = (const char*) temp_binary_data_57;
+const char* out_png = (const char*) temp_binary_data_61;
 
 //================== play.png ==================
-static const unsigned char temp_binary_data_58[] =
+static const unsigned char temp_binary_data_62[] =
 "\x89PNG\r\n"
 "\x1a\n"
 "\0\0\0\rIHDR\0\0\0 \0\0\0 \x08\x06\0\0\0szz\xf4\0\0\0\tpHYs\0\0\0\xec\0\0\0\xec\x01y(q\xbd\0\0\x05\x1ciTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:meta/\" x:xmptk=\"Ad"
@@ -4370,10 +4467,10 @@ static const unsigned char temp_binary_data_58[] =
 "\xea@]\x82O\x82\xa1\x12\xde;\xc9\xabQ\xd5\x15\xb1""4\x1et\x01\xb0\xa5\xdc\xf7\x81\xc7""D\xed\xa0R\x84\xc1\xca""8\xe0""BO\x80\x85\"\x91_\x8d\x0c`\xb3.q\xa6@\xd1k\x11\x86\x90""6|\x8e\x7f""1\xa0\xe7\xbbG\xa3\x9a:\xf0H\xd6\xd1\\\xf9&hYh\xe3O\xc9\xc6\x91\xfa"
 "\x1f\x93\x1e\xa0\x07\x98""4\xc0O\xfa>\x94|W\xa9(E\0\0\0\0IEND\xae""B`\x82";
 
-const char* play_png = (const char*) temp_binary_data_58;
+const char* play_png = (const char*) temp_binary_data_62;
 
 //================== prevcue.png ==================
-static const unsigned char temp_binary_data_59[] =
+static const unsigned char temp_binary_data_63[] =
 "\x89PNG\r\n"
 "\x1a\n"
 "\0\0\0\rIHDR\0\0\0 \0\0\0 \x08\x06\0\0\0szz\xf4\0\0\0\tpHYs\0\0\r\xd7\0\0\r\xd7\x01""B(\x9bx\0\0\x06\xbbiTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:meta/\" x:xmptk=\""
@@ -4396,10 +4493,10 @@ static const unsigned char temp_binary_data_59[] =
 "\x1b\xe0""0 Z\x82y\xcf""F\xfc\xc1\x84 \xa6\xba\xdeL`\xd3\x95\xee\x9d\x1b\xa3\x96\x86t\x84\x01HRt\xfc=\xeb""D\xe9\xfb\xfd\0\xdb\xaf~\xd9\xb6%j9\x91\xea\x88\xaf)\xc6\xb4\x01\x8c\xaa\xa9$P\xa6\xb6\x04s\x1b\xd0\xfa\xe9\xd5\x17\x0c""3~k=/\t\x94\xa9-\xa1\xbc"
 ":\x1c""a\xbe""D\x17vM7\0\xc4\xd2""8\xd1Y\x96~\xfcSq\xb2S1q*\xe6\x9f\xfe\xd6\xa3\x9dGR\x01_\xbc\"b\xfeg4\x0f\xf0\xdf\x03\xfc\x02\x08\xe3\xfc,\xa1\xf5\xdd\xd8\0\0\0\0IEND\xae""B`\x82";
 
-const char* prevcue_png = (const char*) temp_binary_data_59;
+const char* prevcue_png = (const char*) temp_binary_data_63;
 
 //================== smallstripe.png ==================
-static const unsigned char temp_binary_data_60[] =
+static const unsigned char temp_binary_data_64[] =
 "\x89PNG\r\n"
 "\x1a\n"
 "\0\0\0\rIHDR\0\0\0\x0b\0\0\0\x16\x08\x02\0\0\0\x99\x86\xf1""4\0\0\0\tpHYs\0\0\x0b\x13\0\0\x0b\x13\x01\0\x9a\x9c\x18\0\0\x05\xebiTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adob"
@@ -4417,10 +4514,10 @@ static const unsigned char temp_binary_data_60[] =
 "!6\x9b\x8dm\xdbI\xc6x<62\x80\xc1`\x10\xaf\xe9\x97\x11\x04""A\xb3\xd9""4\xb2\xeb\xba\xcb\xe5\xf2""7\x8f\xf8""0C\x8c\xab\xd3\xe9\x98\x9e\xe2\0>D\xd7u\xf9\x9a\x08\xc0h4\xfa/\0\x80<\x9dN\xc7\xe3\xd1\xfc\xc5R\xa9\xf4g\xcf_\x82\xfd\x89\"\x99\x91\xa5\xe2\0\0"
 "\0\0IEND\xae""B`\x82";
 
-const char* smallstripe_png = (const char*) temp_binary_data_60;
+const char* smallstripe_png = (const char*) temp_binary_data_64;
 
 //================== snap.png ==================
-static const unsigned char temp_binary_data_61[] =
+static const unsigned char temp_binary_data_65[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,32,0,0,0,32,8,6,0,0,0,115,122,122,244,0,0,0,9,112,72,89,115,0,0,11,19,0,0,11,19,1,0,154,156,24,0,0,6,182,105,84,88,116,88,77,76,58,99,111,109,46,97,100,111,98,101,46,120,109,112,0,0,0,0,0,60,63,120,
 112,97,99,107,101,116,32,98,101,103,105,110,61,34,239,187,191,34,32,105,100,61,34,87,53,77,48,77,112,67,101,104,105,72,122,114,101,83,122,78,84,99,122,107,99,57,100,34,63,62,32,60,120,58,120,109,112,109,101,116,97,32,120,109,108,110,115,58,120,61,34,
 97,100,111,98,101,58,110,115,58,109,101,116,97,47,34,32,120,58,120,109,112,116,107,61,34,65,100,111,98,101,32,88,77,80,32,67,111,114,101,32,53,46,54,45,99,49,52,50,32,55,57,46,49,54,48,57,50,52,44,32,50,48,49,55,47,48,55,47,49,51,45,48,49,58,48,54,58,
@@ -4473,10 +4570,10 @@ static const unsigned char temp_binary_data_61[] =
 111,198,135,9,25,33,129,146,15,82,242,115,23,208,169,18,8,24,134,97,68,26,30,173,5,149,163,227,145,125,191,240,126,218,227,55,86,42,97,165,178,177,236,218,253,180,85,142,163,5,65,156,243,5,134,97,102,136,8,31,38,52,179,251,84,117,76,68,94,3,14,139,10,
 228,158,112,37,195,54,4,32,252,139,97,24,198,144,138,52,2,194,70,102,25,113,24,17,106,206,144,55,195,204,248,111,252,19,142,97,179,28,126,185,64,78,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
 
-const char* snap_png = (const char*) temp_binary_data_61;
+const char* snap_png = (const char*) temp_binary_data_65;
 
 //================== stop.png ==================
-static const unsigned char temp_binary_data_62[] =
+static const unsigned char temp_binary_data_66[] =
 "\x89PNG\r\n"
 "\x1a\n"
 "\0\0\0\rIHDR\0\0\0 \0\0\0 \x08\x06\0\0\0szz\xf4\0\0\0\tpHYs\0\0\r\xd7\0\0\r\xd7\x01""B(\x9bx\0\0\x05\x1ciTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:meta/\" x:xmptk=\""
@@ -4495,10 +4592,10 @@ static const unsigned char temp_binary_data_62[] =
 "T\x85\xc0Zk]\xc9*\xc4V\xe1PK\x06\x02\x89\xc0&\xc2\xed\xb2(\xbb\xd5\r\x17\x98\xf2?i. \x11\xed\x02v\xf3>\xdb\x06H\x08Z\xf0l9\xe6'Ku:\x11\x1a\0\x10\x01Pb\x17\xd7\xc3\x89i\x8f]\xd9\t\r\xfa=&\xf1""2\xcb\x9d\x95v\xd0\xb8wim\xef\\\xd4\x13\xe4\xf4\x83\0@\xa3"
 "_\xb3\x11`\xd8\x80\xaf""F0\xdb\x08\xf1\x03\xcb \0\0\0\0IEND\xae""B`\x82";
 
-const char* stop_png = (const char*) temp_binary_data_62;
+const char* stop_png = (const char*) temp_binary_data_66;
 
 //================== stripe.png ==================
-static const unsigned char temp_binary_data_63[] =
+static const unsigned char temp_binary_data_67[] =
 "\x89PNG\r\n"
 "\x1a\n"
 "\0\0\0\rIHDR\0\0\0.\0\0\0\\\x08\x02\0\0\0\x9e""1\x10\xaa\0\0\0\tpHYs\0\0\x0b\x13\0\0\x0b\x13\x01\0\x9a\x9c\x18\0\0\x05\xddiTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:"
@@ -4521,10 +4618,10 @@ static const unsigned char temp_binary_data_63[] =
 ")Z$\xd2\x14""E\x12i\x8a\"\x89(E\x97""D\x94\xa2K\xd2\x9e\xa2N\xd2\x9e\xa2N\xd2\x98""bA\xd2\x98""bA\xd2\x92""bD\xd2\x92""bDR\x9d""bGR\x9d""bGR\x97""bJR\x97""bJR\x91""bMR\x91""bMR\x9a\xe2@R\x9a\xe2@R\x94\xe2""CR\x94\xe2""C\x92Oq#\xc9\xa7\xb8\x91""dR<I2)"
 "\x9e$O)\xce$O)\xce$\xb7)\xfe$\xb7)\xfe$\xe9\x94\x10\x92tJ\x08I\"%\x8a$\x91\x12""ErM\t$\xb9\xa6\x04\x92\x9cRbIN)\xb1$GJ8\xc9\x91\x12N\xf2My\x03\t\xf0\x0b""D\xda\x9b\t\xb2\x19\xe1S\0\0\0\0IEND\xae""B`\x82";
 
-const char* stripe_png = (const char*) temp_binary_data_63;
+const char* stripe_png = (const char*) temp_binary_data_67;
 
 //================== toggle.png ==================
-static const unsigned char temp_binary_data_64[] =
+static const unsigned char temp_binary_data_68[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,24,0,0,0,24,8,6,0,0,0,224,119,61,248,0,0,0,4,115,66,73,84,8,8,8,8,124,8,100,136,0,0,0,9,112,72,89,115,0,0,0,133,0,0,0,133,1,226,236,255,193,0,0,0,25,116,69,88,116,83,111,102,116,119,97,114,101,0,119,
 119,119,46,105,110,107,115,99,97,112,101,46,111,114,103,155,238,60,26,0,0,2,21,73,68,65,84,72,137,197,148,189,107,147,81,20,198,127,231,190,209,84,177,17,29,106,75,211,146,4,151,32,111,22,65,7,113,80,146,10,129,76,233,38,154,110,253,7,68,18,232,16,93,
 90,234,31,160,99,210,65,23,183,218,88,77,68,28,59,105,173,31,80,48,196,152,146,116,49,144,26,252,124,223,235,80,223,144,12,86,242,133,191,233,62,156,123,159,115,134,115,31,193,225,249,123,31,150,149,2,162,32,19,160,13,186,66,44,208,85,208,107,24,174,
@@ -4536,10 +4633,10 @@ static const unsigned char temp_binary_data_64[] =
 250,176,92,67,9,59,219,176,76,149,73,167,74,136,12,62,236,68,102,87,210,201,178,1,240,234,197,211,226,217,139,87,30,104,209,35,32,99,192,49,64,117,105,106,1,21,45,220,215,134,117,53,123,235,230,75,128,223,239,47,177,238,142,58,206,110,0,0,0,0,73,69,78,
 68,174,66,96,130,0,0 };
 
-const char* toggle_png = (const char*) temp_binary_data_64;
+const char* toggle_png = (const char*) temp_binary_data_68;
 
 //================== tray_icon.png ==================
-static const unsigned char temp_binary_data_65[] =
+static const unsigned char temp_binary_data_69[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,32,0,0,0,32,8,6,0,0,0,115,122,122,244,0,0,0,9,112,72,89,115,0,0,11,19,0,0,11,19,1,0,154,156,24,0,0,5,236,105,84,88,116,88,77,76,58,99,111,109,46,97,100,111,98,101,46,120,109,112,0,0,0,0,0,60,63,120,
 112,97,99,107,101,116,32,98,101,103,105,110,61,34,239,187,191,34,32,105,100,61,34,87,53,77,48,77,112,67,101,104,105,72,122,114,101,83,122,78,84,99,122,107,99,57,100,34,63,62,32,60,120,58,120,109,112,109,101,116,97,32,120,109,108,110,115,58,120,61,34,
 97,100,111,98,101,58,110,115,58,109,101,116,97,47,34,32,120,58,120,109,112,116,107,61,34,65,100,111,98,101,32,88,77,80,32,67,111,114,101,32,53,46,54,45,99,49,52,53,32,55,57,46,49,54,51,52,57,57,44,32,50,48,49,56,47,48,56,47,49,51,45,49,54,58,52,48,58,
@@ -4588,10 +4685,10 @@ static const unsigned char temp_binary_data_65[] =
 9,233,44,19,36,245,11,1,7,145,32,158,171,22,52,12,194,81,74,44,26,26,217,139,106,208,41,174,138,72,175,125,161,115,95,68,239,254,25,238,34,122,185,40,210,169,157,222,125,222,114,71,105,197,213,47,197,168,58,232,189,169,191,255,17,141,208,201,133,41,220,
 251,14,122,126,94,106,145,209,158,212,125,63,255,251,127,199,127,0,172,82,169,33,168,103,19,117,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
 
-const char* tray_icon_png = (const char*) temp_binary_data_65;
+const char* tray_icon_png = (const char*) temp_binary_data_69;
 
 //================== custom.cext ==================
-static const unsigned char temp_binary_data_66[] =
+static const unsigned char temp_binary_data_70[] =
 "/*\r\n"
 "This version is for pigpio version 26+\r\n"
 "\r\n"
@@ -4647,7 +4744,7 @@ static const unsigned char temp_binary_data_66[] =
 "}\r\n"
 "\r\n";
 
-const char* custom_cext = (const char*) temp_binary_data_66;
+const char* custom_cext = (const char*) temp_binary_data_70;
 
 
 const char* getNamedResource (const char* resourceNameUTF8, int& numBytes);
@@ -4661,6 +4758,10 @@ const char* getNamedResource (const char* resourceNameUTF8, int& numBytes)
 
     switch (hash)
     {
+        case 0x0fd5c688:  numBytes = 2210; return keyframe_off_png;
+        case 0xd7a63eba:  numBytes = 2120; return keyframe_on_png;
+        case 0xbcc505f6:  numBytes = 2610; return nextkey_png;
+        case 0x1cf746b6:  numBytes = 2460; return prevkey_png;
         case 0x7046805c:  numBytes = 3172; return Ableton_Live_png;
         case 0x83d7c79c:  numBytes = 3180; return DLight_png;
         case 0x9591dad9:  numBytes = 1298; return DMX_png;
@@ -4737,6 +4838,10 @@ const char* getNamedResource (const char* resourceNameUTF8, int& numBytes)
 
 const char* namedResourceList[] =
 {
+    "keyframe_off_png",
+    "keyframe_on_png",
+    "nextkey_png",
+    "prevkey_png",
     "Ableton_Live_png",
     "DLight_png",
     "DMX_png",
@@ -4808,6 +4913,10 @@ const char* namedResourceList[] =
 
 const char* originalFilenames[] =
 {
+    "keyframe_off.png",
+    "keyframe_on.png",
+    "nextkey.png",
+    "prevkey.png",
     "Ableton Live.png",
     "DLight.png",
     "DMX.png",

@@ -18,7 +18,6 @@ public:
 	~MappingLayerPanel();
 
 	MappingLayer * mappingLayer;
-
 	std::unique_ptr<ControllableEditor> mappingOutputUI;
 
 
@@ -28,4 +27,5 @@ public:
 
 	virtual void addContextMenuItems(PopupMenu& p) override;
 	virtual void handleContextMenuResult(int result) override;
+
 };
