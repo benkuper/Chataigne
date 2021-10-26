@@ -22,7 +22,7 @@ JoyConModule::JoyConModule() :
 
 	leftAccel = leftValues.addPoint3DParameter("Left Accel", "");
 	leftAccel->setBounds(-1, -1, -1, 1, 1, 1);
-	leftOrientation = leftValues.addPoint3DParameter("Left Roll", "");
+	leftOrientation = leftValues.addPoint3DParameter("Left Orientation", "");
 	leftOrientation->setBounds(-1, -1, -1, 1, 1, 1);
 	
 	leftAxis = leftValues.addPoint2DParameter("Left Axis", "");
@@ -41,7 +41,7 @@ JoyConModule::JoyConModule() :
 
 	rightAccel = rightValues.addPoint3DParameter("Right Accel", "");
 	rightAccel->setBounds(-1, -1, -1, 1, 1, 1);
-	rightOrientation = rightValues.addPoint3DParameter("Right Roll", "");
+	rightOrientation = rightValues.addPoint3DParameter("Right Orientation", "");
 	rightOrientation->setBounds(-1, -1, -1, 1, 1, 1);
 	
 	rightAxis = rightValues.addPoint2DParameter("Right Axis", "");
@@ -91,6 +91,7 @@ void JoyConModule::connectControllers()
 
 void JoyConModule::updateController(int controller)
 {
+	if (isClearing || !enabled->boolValue()) return;
 
 	//Left controller
 	int type = JslGetControllerType(controller);
