@@ -21,7 +21,14 @@ ConductorUI::ConductorUI(Conductor* conductor) :
     addAndMakeVisible(cueUI.get());
 
     baseBGColor = Colours::rebeccapurple.darker().withSaturation(.5f);
-    updateBGColor(); //not using ActionUI
+
+    nextCueUI.reset(conductor->nextCueName->createStringParameterUI());
+    nextCueUI->showLabel = false;
+    nextCueUI->useCustomTextColor = true;
+    nextCueUI->customTextColor = TEXT_COLOR;
+    nextCueUI->updateUIParams();
+    addAndMakeVisible(nextCueUI.get());
+
 
     processorManagerUI.resized();
     updateProcessorManagerBounds();
@@ -40,6 +47,7 @@ void ConductorUI::resizedInternalHeader(Rectangle<int>& r)
 {
     ActionUI::resizedInternalHeader(r);
     cueUI->setBounds(r.removeFromRight(60).reduced(1));
+    nextCueUI->setBounds(r.removeFromRight(80));
 }
 
 void ConductorUI::resizedInternalContent(Rectangle<int>& r)

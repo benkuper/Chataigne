@@ -23,6 +23,7 @@ public:
 	ProcessorManagerUI processorManagerUI;
 
 	std::unique_ptr<IntStepperUI> cueUI;
+	std::unique_ptr<StringParameterUI> nextCueUI;
 
 	void updateBGColor() override;
 

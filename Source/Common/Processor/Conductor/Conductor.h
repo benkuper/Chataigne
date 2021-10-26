@@ -20,6 +20,8 @@ public:
 
     IntParameter* cueIndex;
     BoolParameter* loop;
+    StringParameter* lastCueName;
+    StringParameter* nextCueName;
 
     ProcessorManager processorManager;
 
