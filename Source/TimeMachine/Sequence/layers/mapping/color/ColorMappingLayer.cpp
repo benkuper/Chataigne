@@ -88,6 +88,19 @@ bool ColorMappingLayer::paste()
     return SequenceLayer::paste();
 }
 
+void ColorMappingLayer::getSnapTimes(Array<float>* arrayToFill)
+{
+    for (auto& i : colorManager.items)
+    {
+        arrayToFill->addIfNotAlreadyThere(i->position->floatValue());
+    }
+}
+
+void ColorMappingLayer::getSequenceSnapTimesForManager(Array<float>* arrayToFill)
+{
+    sequence->getSnapTimes(arrayToFill);
+}
+
 void ColorMappingLayer::sequenceCurrentTimeChanged(Sequence* s, float prevTime, bool seeking)
 {
     colorManager.position->setValue(sequence->currentTime->floatValue());

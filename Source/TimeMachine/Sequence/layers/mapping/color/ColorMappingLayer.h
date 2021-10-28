@@ -31,6 +31,8 @@ public:
 
     virtual bool paste() override;
 
+    virtual void getSnapTimes(Array<float>* arrayToFill) override;
+    virtual void getSequenceSnapTimesForManager(Array<float>* arrayToFill);
 
     virtual void sequenceCurrentTimeChanged(Sequence* s, float prevTime, bool seeking) override;
     virtual void sequenceTotalTimeChanged(Sequence* s) override;

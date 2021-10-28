@@ -89,6 +89,34 @@ Array<UndoableAction*> AutomationMappingLayer::getRemoveTimespanInternal(float s
     return automation->getRemoveTimespan(start, end);
 }
 
+void AutomationMappingLayer::getSnapTimes(Array<float>* arrayToFill)
+{
+    if (automation == nullptr) return;
+    for (auto& i : automation->items)
+    {
+        arrayToFill->addIfNotAlreadyThere(i->position->floatValue());
+    }
+}
+
+void AutomationMappingLayer::getSequenceSnapTimesForAutomation(Array<float>* arrayToFill, AutomationKey * k)
+{
+    sequence->getSnapTimes(arrayToFill);
+    int index = automation->items.indexOf(k);
+    AutomationKey* k1 = index > 0 ? automation->items[index - 1] : nullptr;
+    AutomationKey* k2 = index < automation->items.size() - 1 ? automation->items[index + 1] : nullptr;
+
+    float t1 = k1 != nullptr ? k1->position->floatValue() : 0;
+    float t2 = k2 != nullptr ? k2->position->floatValue() : sequence->totalTime->floatValue();
+
+    Array<float> keysToRemove;
+    for (auto& t : *arrayToFill)
+    {
+        if (t <= t1 || t >= t2) keysToRemove.add(t);
+    }
+
+    for (auto& t : keysToRemove) arrayToFill->removeAllInstancesOf(t);
+}
+
 
 void AutomationMappingLayer::sequenceCurrentTimeChangedInternal(Sequence* s, float prevTime, bool seeking)
 {

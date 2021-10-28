@@ -685,7 +685,7 @@ void MIDIModule::showMenuAndCreateValue(ControllableContainer * container)
 	if (mResult != 3 && mResult != 4)
 	{
 		String mName = mResult == 1 ? "Pitch" : "Number";
-		window.addTextEditor("pitch", "1", mName + "(1-127)");
+		window.addTextEditor("pitch", "1", mName + "(0-127)");
 	}
 
 	window.addButton("OK", 1, KeyPress(KeyPress::returnKey));
@@ -711,7 +711,7 @@ void MIDIModule::showMenuAndCreateValue(ControllableContainer * container)
 		}
 		else
 		{
-			int pitch = jlimit<int>(1, 127, window.getTextEditorContents("pitch").getIntValue());
+			int pitch = jlimit<int>(0, 127, window.getTextEditorContents("pitch").getIntValue());
 			
 			module->manualAddMode = true;
 			if (mResult == 1) module->noteOnReceived(channel, pitch, 0);

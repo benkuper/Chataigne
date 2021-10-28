@@ -13,6 +13,8 @@ ColorMappingLayerTimeline::ColorMappingLayerTimeline(ColorMappingLayer* layer) :
 	cml(layer)
 {
 	colorManagerUI = ((GradientColorManagerUI*)mainComponent.get());
+	std::function<void(Array<float>*)> func = std::bind(&ColorMappingLayer::getSequenceSnapTimesForManager, layer, std::placeholders::_1);
+	colorManagerUI->getSnapTimesFunc = func;
 	updateMiniModeUI();
 }
 

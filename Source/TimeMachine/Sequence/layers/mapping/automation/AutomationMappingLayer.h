@@ -22,7 +22,6 @@ public:
     enum RecordSendMode { DONOTSEND, SEND_ORIGINAL, SEND_NEW };
     EnumParameter* recordSendMode;
     AutomationRecorder recorder;
-
    
     virtual void setupAutomation(Automation* a);
 
@@ -36,6 +35,8 @@ public:
     Array<UndoableAction*>  getInsertTimespanInternal(float start, float length) override;
     Array<UndoableAction*>  getRemoveTimespanInternal(float start, float end) override;
 
+    virtual void getSnapTimes(Array<float>* arrayToFill) override;
+    virtual void getSequenceSnapTimesForAutomation(Array<float>* arrayToFill, AutomationKey * k);
 
     virtual void sequenceCurrentTimeChangedInternal(Sequence* s, float prevTime, bool seeking) override;
     virtual void sequenceTotalTimeChanged(Sequence* s) override;
