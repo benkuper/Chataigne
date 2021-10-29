@@ -144,6 +144,8 @@ public:
 
     virtual void linkParamToMappingIndex(Parameter* p, int mappingIndex);
 
+    static var linkParamToMappingIndexFromScript(const var::NativeFunctionArgs& a);
+
     virtual void setInputNamesFromParams(Array<WeakReference<Parameter>> outParams);
 
     class ParamLinkContainerListener

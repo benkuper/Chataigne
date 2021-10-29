@@ -23,6 +23,7 @@ ParameterLink::ParameterLink(WeakReference<Parameter> p, Multiplex* multiplex) :
 	replacementHasMappingInputToken(false),
 	paramLinkNotifier(5)
 {
+
 }
 
 ParameterLink::~ParameterLink()
@@ -186,7 +187,7 @@ void ParameterLink::setLinkedList(BaseMultiplexList* _list)
 		listRef = _list;;
 		list->addListListener(this);
 
-		if(shouldNotify) notifyLinkUpdated();
+		if (shouldNotify) notifyLinkUpdated();
 	}
 	else
 	{
@@ -411,7 +412,7 @@ ParamLinkContainer::ParamLinkContainer(const String& name, Multiplex* multiplex)
 	canLinkToMapping(true),
 	ghostData(new DynamicObject())
 {
-
+	scriptObject.setMethod("linkParamToMappingIndex", &ParamLinkContainer::linkParamToMappingIndexFromScript);
 }
 
 ParamLinkContainer::~ParamLinkContainer()
@@ -497,6 +498,34 @@ void ParamLinkContainer::linkParamToMappingIndex(Parameter* p, int mappingIndex)
 		pLink->setLinkType(pLink->MAPPING_INPUT);
 		pLink->mappingValueIndex = mappingIndex;
 	}
+}
+
+var ParamLinkContainer::linkParamToMappingIndexFromScript(const var::NativeFunctionArgs& a)
+{
+	if (!checkNumArgs("linkToMappingIndex", a, 2)) return false;
+
+	if (ParamLinkContainer* linkC = getObjectFromJS<ParamLinkContainer>(a))
+	{
+		var targetPData = a.arguments[0];
+		Parameter* p = nullptr;
+		if (targetPData.isObject()) p = static_cast<Parameter*>((Parameter*)(int64)targetPData.getDynamicObject()->getProperty(scriptPtrIdentifier));
+		else if (targetPData.isString()) p = dynamic_cast<Parameter*>(linkC->getControllableForAddress("/" + targetPData.toString()));
+
+		if (p == nullptr)
+		{
+			LOGWARNING("Set target from script, Target not found " << targetPData.toString());
+			return false;
+		}
+
+		int index = jmax((int)a.arguments[1] - 1, 0);
+		linkC->linkParamToMappingIndex(p, index);
+	}
+	else
+	{
+		return false;
+	}
+
+	return true;
 }
 
 void ParamLinkContainer::setInputNamesFromParams(Array<WeakReference<Parameter>> outParams)
