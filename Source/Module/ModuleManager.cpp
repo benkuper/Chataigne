@@ -42,7 +42,7 @@ Module * ModuleManager::getModuleWithName(const String & moduleName)
 	if (moduleName == CVGroupManager::getInstance()->module->shortName) return CVGroupManager::getInstance()->module.get();
 	if (moduleName == static_cast<ChataigneEngine*>(Engine::mainEngine)->module.shortName) return &static_cast<ChataigneEngine*>(Engine::mainEngine)->module;
 	if (moduleName == static_cast<ChataigneEngine *>(Engine::mainEngine)->multiplexModule.shortName) return &static_cast<ChataigneEngine *>(Engine::mainEngine)->multiplexModule;
-	else return getItemWithName(moduleName);
+	else return getItemWithName(moduleName, true);
 }
 
 void ModuleManager::addItemInternal(Module * module, var data)
