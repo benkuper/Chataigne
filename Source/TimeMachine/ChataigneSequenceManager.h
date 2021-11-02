@@ -24,6 +24,8 @@ public:
 	ChataigneSequenceManager();
 	~ChataigneSequenceManager();
 
+	BoolParameter* snapKeysToFrames;
+
 	Sequence * createItem() override;
 
 	std::unique_ptr<SequenceModule> module;

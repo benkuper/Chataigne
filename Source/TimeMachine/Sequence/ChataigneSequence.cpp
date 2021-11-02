@@ -1,3 +1,4 @@
+#include "ChataigneSequence.h"
 /*
   ==============================================================================
 
@@ -30,10 +31,16 @@ ChataigneSequence::ChataigneSequence() :
 	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Sequences", &SequenceBlockLayer::create, this)->addParam("manager", ChataigneSequenceManager::getInstance()->getControlAddress()));
 
 	layerManager->addBaseManagerListener(this);
+
+	ChataigneSequenceManager::getInstance()->snapKeysToFrames->addParameterListener(this);
 }
 
 ChataigneSequence::~ChataigneSequence()
 {
+	if (ChataigneSequenceManager::getInstanceWithoutCreating())
+	{
+		ChataigneSequenceManager::getInstance()->snapKeysToFrames->removeParameterListener(this);
+	}
 	clearItem();
 }
 
@@ -176,6 +183,17 @@ void ChataigneSequence::addNewMappingLayerFromValues(Array<Point<float>> keys)
 	layer->automation->addFromPointsAndSimplifyBezier(keys, false);
 }
 
+void ChataigneSequence::updateLayersSnapKeys()
+{
+	bool snap = ChataigneSequenceManager::getInstance()->snapKeysToFrames->boolValue();
+
+	Array<AutomationMappingLayer*> aLayers = layerManager->getItemsWithType<AutomationMappingLayer>();
+	for (auto& l : aLayers)
+	{
+		if (l->automation != nullptr) l->automation->setUnitSteps(snap ? fps->intValue() : 0);
+	}
+}
+
 void ChataigneSequence::setupMidiSyncDevices()
 {
 	//	if ((mtcSender != nullptr && midiSyncDevice->outputDevice != mtcSender->device) || midiSyncDevice->outputDevice != nullptr)
@@ -203,7 +221,11 @@ void ChataigneSequence::onContainerParameterChangedInternal(Parameter* p)
 {
 	Sequence::onContainerParameterChangedInternal(p);
 
-	if (mtcSender != nullptr && midiSyncDevice->enabled)
+	if (p == fps)
+	{
+		updateLayersSnapKeys();
+	}
+	else if (mtcSender != nullptr && midiSyncDevice->enabled)
 	{
 		float time = jmax<float>(0, currentTime->floatValue() - (mtcSyncOffset->floatValue() * (reverseOffset->boolValue() ? -1 : 1)));
 
@@ -254,7 +276,14 @@ void ChataigneSequence::onContainerTriggerTriggered(Trigger* t)
 
 void ChataigneSequence::onExternalParameterValueChanged(Parameter* p)
 {
-	if (masterAudioModule != nullptr && p == masterAudioModule->enabled) sequenceListeners.call(&SequenceListener::sequenceMasterAudioModuleChanged, this);
+	if (masterAudioModule != nullptr && p == masterAudioModule->enabled)
+	{
+		sequenceListeners.call(&SequenceListener::sequenceMasterAudioModuleChanged, this);
+	}
+	else if (p == ChataigneSequenceManager::getInstance()->snapKeysToFrames)
+	{
+		updateLayersSnapKeys();
+	}
 }
 
 void ChataigneSequence::mtcStarted()

@@ -10,6 +10,8 @@
 
 juce_ImplementSingleton(ChataigneSequenceManager)
 
+ControllableContainer* getAppSettings();
+
 ChataigneSequenceManager::ChataigneSequenceManager() :
 	SequenceManager()
 {
@@ -17,6 +19,8 @@ ChataigneSequenceManager::ChataigneSequenceManager() :
 
 	itemDataType = "Sequence";
 	helpID = "TimeMachine";
+
+	snapKeysToFrames = getAppSettings()->addBoolParameter("Snap Keys to Frames", "If checked, all mapping keys in sequences, will be automatically snapped to frames", false);
 }
 
 ChataigneSequenceManager::~ChataigneSequenceManager()

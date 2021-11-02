@@ -54,6 +54,8 @@ public:
 
 	void addNewMappingLayerFromValues(Array<Point<float>> keys);
 
+	void updateLayersSnapKeys();
+
 	void setupMidiSyncDevices();
 
 	virtual void onContainerParameterChangedInternal(Parameter *) override;

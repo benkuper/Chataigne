@@ -37,6 +37,7 @@ void AutomationMappingLayer::setupAutomation(Automation* a)
     automation->setLength(sequence->totalTime->floatValue(), true);
     automation->length->setControllableFeedbackOnly(true); //force not saving and not changing from user
     automation->length->isSavable = false;
+    if(ChataigneSequenceManager::getInstance()->snapKeysToFrames->boolValue()) automation->setUnitSteps(sequence->fps->intValue());
 }
 
 void AutomationMappingLayer::updateMappingInputValueInternal()
