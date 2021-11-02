@@ -71,10 +71,10 @@ MappingFilter::ProcessResult DampingFilter::processSingleParameterTimeInternal(P
 	var newVal = source->getValue();
 
 
-	if (source->checkValueIsTheSame(oldVal, newVal))
-	{
-		return UNCHANGED;
-	}
+	//if (source->checkValueIsTheSame(oldVal, newVal))
+	//{
+	//	return UNCHANGED;
+	//}
 
 	float forceVal = (float)filterParams.getLinkedValue(force, multiplexIndex) * 100;
 	float frictionVal = (float)filterParams.getLinkedValue(friction, multiplexIndex) * 100;

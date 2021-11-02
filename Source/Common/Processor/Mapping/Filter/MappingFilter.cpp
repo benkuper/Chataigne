@@ -129,7 +129,7 @@ Parameter* MappingFilter::setupSingleParameterInternal(Parameter* source, int mu
 	{
 		int index = sourceParams[multiplexIndex].indexOf(source);
 		if (index >= 0) p = (*filteredParameters[multiplexIndex])[index];
-		if (p != nullptr && p->hasRange()) p->setRange(source->minimumValue, source->maximumValue);
+		if (autoSetRange && p != nullptr && p->hasRange()) p->setRange(source->minimumValue, source->maximumValue);
 	}
 
 	return p;

@@ -501,6 +501,8 @@
                         file="Source/Common/Processor/Mapping/Filter/filters/number/SimpleSmoothFilter.cpp"/>
                   <FILE id="wT0961" name="SimpleSmoothFilter.h" compile="0" resource="0"
                         file="Source/Common/Processor/Mapping/Filter/filters/number/SimpleSmoothFilter.h"/>
+                  <FILE id="Ju4GNW" name="SpeedFilter.cpp" compile="0" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/number/SpeedFilter.cpp"/>
+                  <FILE id="qflh5w" name="SpeedFilter.h" compile="0" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/number/SpeedFilter.h"/>
                 </GROUP>
                 <GROUP id="{B7FF85C8-5933-B0A6-01EB-956029CA3808}" name="conversion">
                   <FILE id="qk6OPl" name="MergeFilter.cpp" compile="0" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/conversion/MergeFilter.cpp"/>

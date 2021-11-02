@@ -1,8 +1,8 @@
 /*
   ==============================================================================
 
-    DampingFilter.h
-    Created: 8 Dec 2020 11:36:15am
+    SpeedFilter.h
+    Created: 2 Nov 2021 3:11:00pm
     Author:  bkupe
 
   ==============================================================================
@@ -10,23 +10,20 @@
 
 #pragma once
 
-class DampingFilter :
+class SpeedFilter :
 	public TimeFilter
 {
 public:
-	DampingFilter(var params, Multiplex* multiplex);
-	~DampingFilter();
+	SpeedFilter(var params, Multiplex* multiplex);
+	~SpeedFilter();
 
-	FloatParameter* force;
-	FloatParameter* friction;
-
-	HashMap<Parameter *, var> previousSpeedsMap;
-
-	const float precision = .00001f;
+	HashMap<Parameter*, var> prevValueMap;
+	HashMap<Parameter*, var> speedMap;
+	const int smoothCount = 10;
 
 	void setupParametersInternal(int multiplexIndex, bool rangeOnly) override;
 	Parameter* setupSingleParameterInternal(Parameter* source, int multiplexIndex, bool rangeOnly) override;
 	virtual ProcessResult processSingleParameterTimeInternal(Parameter* source, Parameter* out, int multiplexIndex, double deltaTime) override;
 
-	String getTypeString() const override { return "Damping"; }
+	String getTypeString() const override { return "Speed"; }
 };

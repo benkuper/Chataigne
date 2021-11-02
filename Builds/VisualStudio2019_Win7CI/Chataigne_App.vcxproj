@@ -364,6 +364,9 @@
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\SimpleSmoothFilter.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\SpeedFilter.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\MergeFilter.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -3998,6 +4001,7 @@
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\OneEuroFilter.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\SimpleRemapFilter.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\SimpleSmoothFilter.h"/>
+    <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\SpeedFilter.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\MergeFilter.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ConversionParamValueLink.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\ui\ConversionConnector.h"/>

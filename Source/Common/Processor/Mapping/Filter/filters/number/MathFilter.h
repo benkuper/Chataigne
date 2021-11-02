@@ -23,7 +23,6 @@ public:
 	Parameter * operationValue;
 
 	EnumParameter* rangeRemapMode;
-	
 	var opValueData; //for loading after setupParamInternal
 
 	void setupParametersInternal(int multiplexIndex, bool rangeOnly) override;

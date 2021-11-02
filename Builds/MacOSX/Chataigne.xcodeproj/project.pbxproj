@@ -368,6 +368,7 @@
 		4F4CD5D9A170370658E12C6D /* SequenceAudioCommand.cpp */ /* SequenceAudioCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SequenceAudioCommand.cpp; path = ../../Source/Module/modules/sequence/commands/SequenceAudioCommand.cpp; sourceTree = SOURCE_ROOT; };
 		4F83B5397387A9D6D179A881 /* QLabModule.cpp */ /* QLabModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = QLabModule.cpp; path = ../../Source/Module/modules/osc/qlab/QLabModule.cpp; sourceTree = SOURCE_ROOT; };
 		4FA5781315A5657F555CCE52 /* MIDICommands.h */ /* MIDICommands.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MIDICommands.h; path = ../../Source/Module/modules/midi/commands/MIDICommands.h; sourceTree = SOURCE_ROOT; };
+		4FA68B3C0FA6694B5F420FA8 /* SpeedFilter.cpp */ /* SpeedFilter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SpeedFilter.cpp; path = ../../Source/Common/Processor/Mapping/Filter/filters/number/SpeedFilter.cpp; sourceTree = SOURCE_ROOT; };
 		5025C5BAF50937621E4ACEA9 /* CustomVariablesModule.cpp */ /* CustomVariablesModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CustomVariablesModule.cpp; path = ../../Source/Module/modules/customvariables/CustomVariablesModule.cpp; sourceTree = SOURCE_ROOT; };
 		50F4C9323D195AD213E37F98 /* ScriptCommand.cpp */ /* ScriptCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ScriptCommand.cpp; path = ../../Source/Module/modules/common/commands/scriptcommands/ScriptCommand.cpp; sourceTree = SOURCE_ROOT; };
 		5163443F8020E6D7801B6CC0 /* Signal.png */ /* Signal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Signal.png; path = ../../Resources/Modules/Signal.png; sourceTree = SOURCE_ROOT; };
@@ -394,6 +395,7 @@
 		5781A95A86CBB04AF916EC28 /* MappingFilter.h */ /* MappingFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MappingFilter.h; path = ../../Source/Common/Processor/Mapping/Filter/MappingFilter.h; sourceTree = SOURCE_ROOT; };
 		579D8252F12FE4BBB337B155 /* ColorRemapFilter.cpp */ /* ColorRemapFilter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ColorRemapFilter.cpp; path = ../../Source/Common/Processor/Mapping/Filter/filters/color/ColorRemapFilter.cpp; sourceTree = SOURCE_ROOT; };
 		5835F7B7E9A758B2CB9F0DA4 /* CVPresetMorphUI.h */ /* CVPresetMorphUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CVPresetMorphUI.h; path = ../../Source/CustomVariables/Preset/Morpher/ui/CVPresetMorphUI.h; sourceTree = SOURCE_ROOT; };
+		587F69893417851F2E752369 /* SpeedFilter.h */ /* SpeedFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SpeedFilter.h; path = ../../Source/Common/Processor/Mapping/Filter/filters/number/SpeedFilter.h; sourceTree = SOURCE_ROOT; };
 		589D06AF4BF9A0E8EC90AE00 /* SerialDevice.h */ /* SerialDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SerialDevice.h; path = ../../Source/Common/Serial/SerialDevice.h; sourceTree = SOURCE_ROOT; };
 		5A09E732212BD7F0F838B951 /* OSC.png */ /* OSC.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = OSC.png; path = ../../Resources/Modules/OSC.png; sourceTree = SOURCE_ROOT; };
 		5A60F64718B023B15C6B6F70 /* Metronome.png */ /* Metronome.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Metronome.png; path = ../../Resources/Modules/Metronome.png; sourceTree = SOURCE_ROOT; };
@@ -2858,6 +2860,8 @@
 				2E93B8A7CF9DCDC3A41DEA0C,
 				9CB8705EAE553E539485DE5D,
 				21E4E451D91AF4AFB25C5C4D,
+				4FA68B3C0FA6694B5F420FA8,
+				587F69893417851F2E752369,
 			);
 			name = number;
 			sourceTree = "<group>";

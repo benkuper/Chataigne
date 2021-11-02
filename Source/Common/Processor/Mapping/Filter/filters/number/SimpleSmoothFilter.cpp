@@ -73,6 +73,11 @@ MappingFilter::ProcessResult SimpleSmoothFilter::processSingleParameterInternal(
 		
 		if (fabsf(targetVal - (float)newVal) < precision) val = newVal;
 		else val = targetVal;
+		if (isnan((float)val))
+		{
+			jassertfalse;
+			return UNCHANGED;
+		}
 	}
 
 	out->setValue(val);

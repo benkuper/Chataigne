@@ -331,7 +331,7 @@ void Mapping::inputReferenceChanged(MappingInput*)
 
 void Mapping::inputParameterValueChanged(MappingInput*, int multiplexIndex)
 {
-	if (processMode == VALUE_CHANGE)
+	if (processMode == VALUE_CHANGE && !isThreadRunning())
 	{
 		process(false, multiplexIndex);
 	}

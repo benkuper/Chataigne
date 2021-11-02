@@ -1726,6 +1726,9 @@
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\SimpleSmoothFilter.cpp">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\number</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\SpeedFilter.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\number</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\MergeFilter.cpp">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\conversion</Filter>
     </ClCompile>
@@ -5836,6 +5839,9 @@
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\number</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\SimpleSmoothFilter.h">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\number</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\SpeedFilter.h">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\number</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\conversion\MergeFilter.h">
