@@ -530,8 +530,6 @@ void OSCModule::afterLoadJSONDataInternal()
 	{
 		//outputManager->loadJSONData(data.getProperty("outputs", var()));
 		setupSenders();
-
-		
 	}
 }
 
