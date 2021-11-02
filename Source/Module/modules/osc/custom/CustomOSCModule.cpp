@@ -35,7 +35,7 @@ void CustomOSCModule::processMessageInternal(const OSCMessage& msg)
 	if (autoAdd == nullptr || useHierarchy == nullptr || autoFeedback == nullptr) return;
 
 	String cNiceName = msg.getAddressPattern().toString();
-	String cShortName = cNiceName.replaceCharacters("/", "_");
+	String cShortName = cNiceName.replaceCharacter('/', ' ');
 	Controllable* c = nullptr;
 	ControllableContainer* cParentContainer = &valuesCC;
 
@@ -304,7 +304,7 @@ void CustomOSCModule::updateControllableAddressMap()
 	for (auto& c : cont)
 	{
 		if (c.wasObjectDeleted()) continue;
-		String address = useHierarchy->boolValue() ? c->getControlAddress(&valuesCC) : c->niceName.replaceCharacter(' ', '_');
+		String address = useHierarchy->boolValue() ? c->getControlAddress(&valuesCC) : c->niceName;
 		controllableAddressMap.set(address, c);
 	}
 }
@@ -312,7 +312,7 @@ void CustomOSCModule::updateControllableAddressMap()
 void CustomOSCModule::childStructureChanged(ControllableContainer* cc)
 {
 	ControllableContainer::childStructureChanged(cc);
-	if(!isCurrentlyLoadingData && !hierarchyStructureSwitch) updateControllableAddressMap();
+	if (!isCurrentlyLoadingData && !hierarchyStructureSwitch) updateControllableAddressMap();
 }
 
 
@@ -374,7 +374,7 @@ void CustomOSCModule::onControllableFeedbackUpdateInternal(ControllableContainer
 			for (auto& c : cont)
 			{
 				OSCMessage m = OSCHelpers::getOSCMessageForControllable(c, &valuesCC);
-				if(useHierarchy->boolValue()) m.setAddressPattern(c->niceName.replaceCharacter(' ','_'));
+				if (useHierarchy->boolValue()) m.setAddressPattern(c->niceName.replaceCharacter(' ', '_'));
 				msg.add(m);
 			}
 
