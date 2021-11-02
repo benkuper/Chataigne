@@ -1,27 +1,24 @@
 /*
   ==============================================================================
 
-    NumberComparators.cpp
-    Created: 2 Nov 2016 8:57:34pm
-    Author:  bkupe
+	NumberComparators.cpp
+	Created: 2 Nov 2016 8:57:34pm
+	Author:  bkupe
 
   ==============================================================================
 */
 
-NumberComparator::NumberComparator(Parameter * sourceParam, Multiplex* multiplex) :
-	BaseComparator(multiplex)
+NumberComparator::NumberComparator(Parameter* sourceParam, Multiplex* multiplex) :
+	BaseComparator(multiplex),
+	isFloat(dynamic_cast<FloatParameter*>(sourceParam) != nullptr)
 {
-	if (FloatParameter * fp = dynamic_cast<FloatParameter *>(sourceParam))
-	{
-		setReferenceParam(new FloatParameter("Reference", "Comparison Reference to check against source value", sourceParam->floatValue(), sourceParam->minimumValue, sourceParam->maximumValue));
-		((FloatParameter *)reference)->defaultUI = ((FloatParameter *)sourceParam)->defaultUI;
-	}
-	else if (IntParameter* ip = dynamic_cast<IntParameter*>(sourceParam))
-	{
-		setReferenceParam(new IntParameter("Reference", "Comparison Reference to check against source value", sourceParam->intValue(), sourceParam->minimumValue, sourceParam->maximumValue));
-	}
-	
+
+	sourceRange.append(sourceParam->minimumValue);
+	sourceRange.append(sourceParam->maximumValue);
+
+	setupReferenceParam();
 	reference->setValue(sourceParam->floatValue(), false, true, true);
+	if (isFloat)((FloatParameter*)reference)->defaultUI = ((FloatParameter*)sourceParam)->defaultUI;
 
 	addCompareOption("=", equalsId);
 	addCompareOption("!=", differentId);
@@ -29,58 +26,62 @@ NumberComparator::NumberComparator(Parameter * sourceParam, Multiplex* multiplex
 	addCompareOption("<", lessId);
 	addCompareOption(">=", greaterOrEqualId);
 	addCompareOption("<=", lessOrEqualId);
-	//addCompareOption("~", inRangeId);
+	addCompareOption("Diff >", diffGreaterId);
+	addCompareOption("Diff <", diffLessId);
+	addCompareOption("Range", inRangeId);
 }
 
 NumberComparator::~NumberComparator()
 {
 }
 
-bool NumberComparator::compare(Parameter* sourceParam, int multiplexIndex)
+void NumberComparator::compareFunctionChanged()
 {
-	float value = isMultiplexed() ? (float)refLink->getLinkedValue(multiplexIndex) : reference->floatValue();
+	setupReferenceParam();
+}
 
-	if (currentFunctionId == equalsId)				return sourceParam->floatValue() == value;
-	else if (currentFunctionId == differentId)		return sourceParam->floatValue() != value;
-	else if (currentFunctionId == greaterId)		return sourceParam->floatValue() > value;
-	else if (currentFunctionId == lessId)			return sourceParam->floatValue() < value;
-	else if (currentFunctionId == greaterOrEqualId)	return sourceParam->floatValue() >= value;
-	else if (currentFunctionId == lessOrEqualId)	return sourceParam->floatValue() <= value;
-	else if (currentFunctionId == inRangeId)		return false; //not implemented, need RangeParameter
+void NumberComparator::setupReferenceParam()
+{
+	if (currentFunctionId == inRangeId)
+	{
+		Point2DParameter* p2d = new Point2DParameter("Reference", "Comparison Reference to check against source value");
+		p2d->setBounds(sourceRange[0], sourceRange[0], sourceRange[1], sourceRange[1]);
+		setReferenceParam(p2d);
+	}
+	else
+	{
+		if (isFloat)
+		{
+			if (reference == nullptr || reference->type != Parameter::FLOAT)
+			{
+				setReferenceParam(new FloatParameter("Reference", "Comparison Reference to check against source value", 0, sourceRange[0], sourceRange[1]));
+			}
+		}
+		else if(reference == nullptr || reference->type != Parameter::INT)
+		{
+			setReferenceParam(new IntParameter("Reference", "Comparison Reference to check against source value", 0, sourceRange[0], sourceRange[1]));
+		}
+	}
+}
+
+bool NumberComparator::compareInternal(Parameter* sourceParam, int multiplexIndex)
+{
+	var value = isMultiplexed() ? refLink->getLinkedValue(multiplexIndex) : reference->getValue();
+
+	if (currentFunctionId == equalsId)				return sourceParam->floatValue() == (float)value;
+	else if (currentFunctionId == differentId)		return sourceParam->floatValue() != (float)value;
+	else if (currentFunctionId == greaterId)		return sourceParam->floatValue() > (float)value;
+	else if (currentFunctionId == lessId)			return sourceParam->floatValue() < (float)value;
+	else if (currentFunctionId == greaterOrEqualId)	return sourceParam->floatValue() >= (float)value;
+	else if (currentFunctionId == lessOrEqualId)	return sourceParam->floatValue() <= (float)value;
+	else if (currentFunctionId == inRangeId)		return sourceParam->floatValue() >= (float)value[0] && sourceParam->floatValue() <= (float)value[1]; //not implemented, need RangeParameter
+	else if (currentFunctionId == diffGreaterId || currentFunctionId == diffLessId)
+	{
+		prevValues.ensureStorageAllocated(multiplexIndex + 1);
+		float diff = fabsf(sourceParam->floatValue() - prevValues[multiplexIndex]);
+		bool result = currentFunctionId == diffGreaterId ? diff > (float)value : diff < (float)value;
+		prevValues.set(multiplexIndex, sourceParam->floatValue());
+		return result;
+	}
 	return false;
 }
-
-/*
-IntComparator::IntComparator(Array<WeakReference<Controllable>> sources) :
-	ParameterComparator(sources)
-{
-	intParams.addArray(sources);
-
-	intRef = addIntParameter("Reference", "Comparison Reference to check against source value", intParams[0]->defaultValue, intParams[0]->minimumValue, intParams[0]->maximumValue);
-	reference = intRef;
-	intRef->setValue(intRef->floatValue(), false, true, true);
-
-	addCompareOption("=", equalsId);
-	addCompareOption("!=", differentId);
-	addCompareOption(">", greaterId);
-	addCompareOption("<", lessId);
-	addCompareOption(">=", greaterOrEqualId);
-	addCompareOption("<=", lessOrEqualId);
-	addCompareOption("~", inRangeId);
-}
-
-IntComparator::~IntComparator()
-{
-}
-
-void IntComparator::compare(int multiplexIndex)
-{
-	if (currentFunctionId == equalsId)				setValid(multiplexIndex, intParams[multiplexIndex]->floatValue() == intRef->floatValue());
-	if (currentFunctionId == differentId)			setValid(multiplexIndex, intParams[multiplexIndex]->floatValue() != intRef->floatValue());
-	else if (currentFunctionId == greaterId)		setValid(multiplexIndex, intParams[multiplexIndex]->floatValue() > intRef->floatValue());
-	else if (currentFunctionId == lessId)			setValid(multiplexIndex, intParams[multiplexIndex]->floatValue() < intRef->floatValue());
-	else if (currentFunctionId == greaterOrEqualId)	setValid(multiplexIndex, intParams[multiplexIndex]->floatValue() >= intRef->floatValue());
-	else if (currentFunctionId == lessOrEqualId)	setValid(multiplexIndex, intParams[multiplexIndex]->floatValue() <= intRef->floatValue());
-	else if (currentFunctionId == inRangeId)		setValid(multiplexIndex, false); //not implemented, need RangeParameter
-}
-*/

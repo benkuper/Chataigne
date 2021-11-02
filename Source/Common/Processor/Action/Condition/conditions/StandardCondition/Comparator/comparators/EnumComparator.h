@@ -22,5 +22,5 @@ public:
 
 	EnumParameter * enumRef;
 
-	virtual bool compare(Parameter* sourceParam, int multiplexIndex = 0) override;
+	virtual bool compareInternal(Parameter* sourceParam, int multiplexIndex = 0) override;
 };

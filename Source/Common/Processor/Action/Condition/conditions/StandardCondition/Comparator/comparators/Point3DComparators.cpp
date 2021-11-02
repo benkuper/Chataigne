@@ -80,7 +80,7 @@ void Point3DComparator::updateReferenceParam()
 	}
 }
 
-bool Point3DComparator::compare(Parameter* sourceParam, int multiplexIndex)
+bool Point3DComparator::compareInternal(Parameter* sourceParam, int multiplexIndex)
 {
 
 	Vector3D<float> p = ((Point3DParameter*)sourceParam)->getVector();

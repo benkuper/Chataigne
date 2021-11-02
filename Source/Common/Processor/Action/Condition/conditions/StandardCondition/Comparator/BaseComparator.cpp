@@ -9,6 +9,7 @@
 */
 
 #include "Common/ParameterLink/ParameterLink.h"
+#include "BaseComparator.h"
 
 BaseComparator::BaseComparator(Multiplex * multiplex) :
 	ControllableContainer("Comparator"),
@@ -69,12 +70,21 @@ void BaseComparator::loadJSONDataInternal(var data)
 	if (refLink != nullptr) refLink->loadJSONData(data.getProperty("refLink", var()));
 }
 
+bool BaseComparator::compare(Parameter* sourceParam, int multiplexIndex)
+{
+	GenericScopedLock lock(compareLock);
+	return compareInternal(sourceParam, multiplexIndex);
+}
+
 
 void BaseComparator::onContainerParameterChanged(Parameter * p)
 {
 	if (p == compareFunction)
 	{
+		GenericScopedLock lock(compareLock);
 		currentFunctionId = compareFunction->getValueData().toString();
+		compareFunctionChanged();
+
 	}
 	ControllableContainer::onContainerParameterChanged(p);
 }

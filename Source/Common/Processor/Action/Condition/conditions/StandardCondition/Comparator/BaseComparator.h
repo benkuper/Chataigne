@@ -26,6 +26,7 @@ public:
 
 	EnumParameter* compareFunction;
 	Identifier currentFunctionId;
+	SpinLock compareLock;
 	
 	void setReferenceParam(Parameter*); //go through this to have automatic link for multiplex
 
@@ -35,9 +36,12 @@ public:
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
-	virtual bool compare(Parameter* sourceParam, int multiplexIndex = 0) = 0; // to override
+	bool compare(Parameter* sourceParam, int multiplexIndex = 0);
+	virtual bool compareInternal(Parameter* sourceParam, int multiplexIndex = 0) = 0; // to override
 
-	void onContainerParameterChanged(Parameter*) override;
+	virtual void onContainerParameterChanged(Parameter*) override;
+	virtual void compareFunctionChanged() {}
+
 	virtual BaseComparatorUI * createUI();
 
 	DECLARE_ASYNC_EVENT(BaseComparator, Comparator, comparator, { REFERENCE_CHANGED })

@@ -23,5 +23,5 @@ public:
 	const Identifier startsWith = "startsWith";
 	const Identifier endsWidth = "endsWidth";
 
-	virtual bool compare(Parameter* sourceParam, int multiplexIndex) override;
+	virtual bool compareInternal(Parameter* sourceParam, int multiplexIndex) override;
 };

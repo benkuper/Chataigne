@@ -22,7 +22,7 @@ BoolComparator::~BoolComparator()
 {
 }
 
-bool BoolComparator::compare(Parameter * sourceParam, int multiplexIndex)
+bool BoolComparator::compareInternal(Parameter * sourceParam, int multiplexIndex)
 {
 	bool value = isMultiplexed() ? (bool)refLink->getLinkedValue(multiplexIndex) : reference->boolValue();
 	if (currentFunctionId == equalsId) return sourceParam->boolValue() == value;

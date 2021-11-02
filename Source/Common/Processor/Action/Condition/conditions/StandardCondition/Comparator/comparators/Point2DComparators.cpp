@@ -76,7 +76,7 @@ void Point2DComparator::updateReferenceParam()
 	}
 }
 
-bool Point2DComparator::compare(Parameter* sourceParam, int multiplexIndex)
+bool Point2DComparator::compareInternal(Parameter* sourceParam, int multiplexIndex)
 {
 	Point<float> p = ((Point2DParameter*)sourceParam)->getPoint();
 	var value = isMultiplexed() ? refLink->getLinkedValue(multiplexIndex) : reference->getValue();

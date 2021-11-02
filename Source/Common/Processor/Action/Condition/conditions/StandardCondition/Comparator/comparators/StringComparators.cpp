@@ -25,7 +25,7 @@ StringComparator::~StringComparator()
 {
 }
 
-bool StringComparator::compare(Parameter* sourceParam, int multiplexIndex)
+bool StringComparator::compareInternal(Parameter* sourceParam, int multiplexIndex)
 {
 	String value = isMultiplexed() ? refLink->getLinkedValue(multiplexIndex).toString() : reference->stringValue();
 

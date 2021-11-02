@@ -23,9 +23,17 @@ public:
 	const Identifier lessId = "<";
 	const Identifier greaterOrEqualId = ">=";
 	const Identifier lessOrEqualId = "<=";
-	const Identifier inRangeId = "range";
+	const Identifier diffGreaterId = "d>";
+	const Identifier diffLessId = "d<";
+	const Identifier inRangeId = "r";
 
+	bool isFloat;
 	Parameter * refParam;
+	var sourceRange;
+	Array<float> prevValues;
 
-	virtual bool compare(Parameter* sourceParam, int multiplexIndex = 0) override;
+	virtual void compareFunctionChanged() override;
+	virtual void setupReferenceParam();
+	
+	virtual bool compareInternal(Parameter* sourceParam, int multiplexIndex = 0) override;
 };

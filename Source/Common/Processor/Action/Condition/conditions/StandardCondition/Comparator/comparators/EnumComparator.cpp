@@ -28,7 +28,7 @@ EnumComparator::~EnumComparator()
 {
 }
 
-bool EnumComparator::compare(Parameter* sourceParam, int multiplexIndex)
+bool EnumComparator::compareInternal(Parameter* sourceParam, int multiplexIndex)
 {
 	var value = isMultiplexed() ? refLink->getLinkedValue(multiplexIndex) : enumRef->getValueData();
 	if (currentFunctionId == equalsId) return ((EnumParameter*)sourceParam)->getValueData() == value;
