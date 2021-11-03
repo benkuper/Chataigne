@@ -20,13 +20,19 @@ public:
 	var lastValue;
 
 	CustomOSCModule* customOSCModule;
+	std::unique_ptr<CustomValuesCommandArgumentManager> wildcardsContainer;
 
-	CustomValuesCommandArgumentManager wildcardsContainer;
-	Array<Parameter *> wildCardParams;
+	bool addressHasWildcards;
+	Array<String> wildcardsMap;
 
 	void triggerInternal(int multiplexIndex) override;
 
+	void updateWildcardsMap(const String& address);
+
 	virtual void onContainerParameterChanged(Parameter * p) override;
+
+	void updateMappingInputValue(var value, int multiplexIndex);
+	void setInputNamesFromParams(Array<WeakReference<Parameter>> outParams);
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

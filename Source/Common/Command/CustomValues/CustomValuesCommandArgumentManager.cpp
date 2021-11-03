@@ -11,8 +11,8 @@
 #include "CustomValuesCommandArgumentManager.h"
 #include "ui/CustomValuesCommandArgumentManagerEditor.h"
 
-CustomValuesCommandArgumentManager::CustomValuesCommandArgumentManager(bool _mappingEnabled, bool templateMode, Multiplex* multiplex) :
-	BaseManager("arguments"),
+CustomValuesCommandArgumentManager::CustomValuesCommandArgumentManager(const String &name, bool _mappingEnabled, bool templateMode, Multiplex* multiplex) :
+	BaseManager(name),
 	MultiplexTarget(multiplex),
 	isBeingDestroyed(false),
 	mappingEnabled(_mappingEnabled),

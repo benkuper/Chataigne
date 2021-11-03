@@ -1,24 +1,26 @@
+#include "CustomOSCCommand.h"
 /*
   ==============================================================================
 
-    CustomOSCCommand.cpp
-    Created: 3 Nov 2016 12:41:23pm
-    Author:  bkupe
+	CustomOSCCommand.cpp
+	Created: 3 Nov 2016 12:41:23pm
+	Author:  bkupe
 
   ==============================================================================
 */
 
-CustomOSCCommand::CustomOSCCommand(CustomOSCModule * module, CommandContext context, var params, Multiplex * multiplex) :
+CustomOSCCommand::CustomOSCCommand(CustomOSCModule* module, CommandContext context, var params, Multiplex* multiplex) :
 	OSCCommand(module, context, params, multiplex),
 	customOSCModule(module),
-	wildcardsContainer("Address Parameters")
+	addressHasWildcards(false)
 {
 	address->setControllableFeedbackOnly(false);
 	address->isSavable = true;
 
 	removeChildControllableContainer(&argumentsContainer);
-	
 	setUseCustomValues(true);
+
+	
 }
 
 CustomOSCCommand::~CustomOSCCommand()
@@ -30,18 +32,28 @@ CustomOSCCommand::~CustomOSCCommand()
 void CustomOSCCommand::triggerInternal(int multiplexIndex)
 {
 	if (oscModule == nullptr) return;
-	
-	BaseCommand::triggerInternal(multiplexIndex);
 
+	BaseCommand::triggerInternal(multiplexIndex);
 	String addrString = getLinkedValue(address, multiplexIndex);
-	
+
+	if (addressHasWildcards)
+	{
+		for (auto& w : wildcardsMap)
+		{
+			if (CustomValuesCommandArgument* a = wildcardsContainer->getItemWithName(w, true, true))
+			{
+				addrString = addrString.replace("{" + w + "}", a->getLinkedValue(multiplexIndex).toString());
+			}
+		}
+	}
+
 	try
 	{
 		OSCMessage m(addrString);
 
-		for (auto &a : customValuesManager->items)
+		for (auto& a : customValuesManager->items)
 		{
-			Parameter * p = a->param;
+			Parameter* p = a->param;
 			var pVal = a->getLinkedValue(multiplexIndex);
 
 			if (p == nullptr) continue;
@@ -69,29 +81,79 @@ void CustomOSCCommand::triggerInternal(int multiplexIndex)
 
 			}
 		}
-        oscModule->sendOSC(m);
-	}catch (const OSCFormatError &)
+		oscModule->sendOSC(m);
+	}
+	catch (const OSCFormatError&)
 	{
 		NLOG("OSC", "Address is invalid :\n" << addrString);
 		return;
 	}
 }
 
-void CustomOSCCommand::onContainerParameterChanged(Parameter * p)
+void CustomOSCCommand::updateWildcardsMap(const String& address)
+{
+	wildcardsMap.clear();
+
+	std::string s = address.toStdString();
+	std::regex source_regex("\\{(\\w+)\\}");
+
+	auto source_begin = std::sregex_iterator(s.begin(), s.end(), source_regex);
+	auto source_end = std::sregex_iterator();
+
+	if (std::distance(source_begin, source_end) == 0)
+	{
+		addressHasWildcards = false;
+		return;
+	}
+
+	for (std::sregex_iterator i = source_begin; i != source_end; ++i)
+	{
+		std::smatch m = *i;
+		wildcardsMap.add(m [1].str());
+	}
+
+	addressHasWildcards = wildcardsMap.size() > 0;
+}
+
+void CustomOSCCommand::onContainerParameterChanged(Parameter* p)
 {
 	OSCCommand::onContainerParameterChanged(p);
 	if (p == address)
 	{
+		updateWildcardsMap(address->stringValue());
 
-
-		if (wildcardsContainer.items.size() == 0)
+		if (addressHasWildcards)
 		{
-			if (wildcardsContainer.parentContainer == this) removeChildControllableContainer(&wildcardsContainer);
-		} else
+			if (wildcardsContainer == nullptr)
+			{
+				wildcardsContainer.reset(new CustomValuesCommandArgumentManager("Address Wildcards", context == MAPPING, linkedTemplate != nullptr, multiplex));
+				addChildControllableContainer(wildcardsContainer.get());
+			}
+		}
+		else
 		{
-			if (wildcardsContainer.parentContainer != this) addChildControllableContainer(&wildcardsContainer);
+			if (wildcardsContainer != nullptr)
+			{
+				removeChildControllableContainer(wildcardsContainer.get());
+				wildcardsContainer.reset();
+			}
 		}
 	}
+}
+
+void CustomOSCCommand::updateMappingInputValue(var value, int multiplexIndex)
+{
+	OSCCommand::updateMappingInputValue(value, multiplexIndex);
+	if (wildcardsContainer != nullptr)
+	{
+		for (auto& a : wildcardsContainer->items) a->paramLink->updateMappingInputValue(value, multiplexIndex);
+	}
+}
+
+void CustomOSCCommand::setInputNamesFromParams(Array<WeakReference<Parameter>> outParams)
+{
+	OSCCommand::setInputNamesFromParams(outParams);
+	if(wildcardsContainer != nullptr) wildcardsContainer->setInputNames(inputNames);
 }
 
 
@@ -99,7 +161,8 @@ var CustomOSCCommand::getJSONData()
 {
 	var data = BaseCommand::getJSONData(); //do not inherit OSC:Command to avoid saving "arguments"
 	var customValuesData = customValuesManager->getJSONData();
-	if(!customValuesData.isVoid()) data.getDynamicObject()->setProperty("argManager", customValuesData);
+	if (!customValuesData.isVoid()) data.getDynamicObject()->setProperty("argManager", customValuesData);
+	if(wildcardsContainer != nullptr) data.getDynamicObject()->setProperty(wildcardsContainer->shortName, wildcardsContainer->getJSONData());
 	return data;
 }
 
@@ -107,4 +170,5 @@ void CustomOSCCommand::loadJSONDataInternal(var data)
 {
 	OSCCommand::loadJSONDataInternal(data);
 	customValuesManager->loadJSONData(data.getProperty("argManager", var()), true);
+	if(wildcardsContainer != nullptr) wildcardsContainer->loadJSONData(data.getProperty(wildcardsContainer->shortName, var()), true);
 }

@@ -263,8 +263,8 @@ String ParameterLink::getReplacementString(int multiplexIndex)
 
 		result += parameter->stringValue().substring(lastPos, (int)m.position());
 
-		if (matchStr == "{index}")  result += String(multiplexIndex + 1);
-		else if (matchStr == "{index0}")  result += String(multiplexIndex);
+		if (matchStr == "{index}" && isMultiplexed())  result += String(multiplexIndex + 1);
+		else if (matchStr == "{index0}" && isMultiplexed())  result += String(multiplexIndex);
 		else
 		{
 			StringArray dotSplit;

@@ -91,7 +91,6 @@ public:
 	void dataReceived(const MemoryBlock& data) override;
 	void messageReceived(const String& message) override;
 
-
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 	void afterLoadJSONDataInternal() override;

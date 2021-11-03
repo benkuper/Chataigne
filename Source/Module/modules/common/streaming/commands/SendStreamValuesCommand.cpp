@@ -11,8 +11,6 @@
 SendStreamValuesCommand::SendStreamValuesCommand(StreamingModule * module, CommandContext context, var params, Multiplex* multiplex) :
 	StreamingCommand(module, context, params, multiplex)
 {
-	customValuesManager.reset(new CustomValuesCommandArgumentManager(context == MAPPING));
-	addChildControllableContainer(customValuesManager.get());
 	setUseCustomValues(true);
 }
 
