@@ -58,6 +58,10 @@ void MappingFilterEditor::updateFilteredUI()
 	if (targetParam != nullptr)
 	{
 		filteredUI.reset((ParameterUI*)(targetParam->createDefaultUI()));
+        if (targetParam->type == Parameter::POINT2D)
+        {
+            if (DoubleSliderUI* dui = dynamic_cast<DoubleSliderUI*>(filteredUI.get())) dui->canShowExtendedEditor = false;
+        }
 		filteredUI->showLabel = false;
 		addAndMakeVisible(filteredUI.get());
 	}
