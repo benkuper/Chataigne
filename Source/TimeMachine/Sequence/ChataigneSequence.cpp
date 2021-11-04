@@ -1,4 +1,3 @@
-#include "ChataigneSequence.h"
 /*
   ==============================================================================
 
@@ -12,16 +11,26 @@
 ChataigneSequence::ChataigneSequence() :
 	Sequence(),
 	masterAudioModule(nullptr),
-	masterAudioLayer(nullptr)
+	masterAudioLayer(nullptr),
+	ltcAudioModule(nullptr)
 {
 	midiSyncDevice = new MIDIDeviceParameter("Sync Devices");
 	midiSyncDevice->canBeDisabledByUser = true;
+	midiSyncDevice->enabled = false;
 	addParameter(midiSyncDevice);
 
 	mtcSyncOffset = addFloatParameter("Sync Offset", "The time to offset when sending and receiving", 0, 0);
 	mtcSyncOffset->defaultUI = FloatParameter::TIME;
 	reverseOffset = addBoolParameter("Reverse Offset", "This allows negative offset", false);
 	resetTimeOnMTCStopped = addBoolParameter("Reset on MTC Stop", "If checked, sequence will stop and reset time when MTC doesn't send data anymore. If not checked, sequence will just keep its current time", false);
+
+	ltcModuleTarget = addTargetParameter("LTC Sync Module", "Choose an Audio Module to use as LTC Sync for this sequence", ModuleManager::getInstance(), false);
+	ltcModuleTarget->canBeDisabledByUser = true;
+	ltcModuleTarget->targetType = TargetParameter::CONTAINER;
+	ltcModuleTarget->maxDefaultSearchLevel = 0;
+
+	std::function<bool(ControllableContainer*)> typeCheckFunc = [](ControllableContainer* cc) { return dynamic_cast<AudioModule*>(cc) != nullptr; };
+	ltcModuleTarget->defaultContainerTypeCheckFunc = typeCheckFunc;
 
 	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Trigger", &ChataigneTriggerLayer::create, this));
 	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", Mapping1DLayer::getTypeStringStatic(), &Mapping1DLayer::create, this));
@@ -49,6 +58,7 @@ void ChataigneSequence::clearItem()
 	BaseItem::clearItem();
 
 	setMasterAudioLayer(nullptr);
+	setLTCAudioModule(nullptr);
 	Sequence::clearItem();
 }
 
@@ -217,6 +227,24 @@ void ChataigneSequence::setupMidiSyncDevices()
 	//	}
 }
 
+void ChataigneSequence::setLTCAudioModule(AudioModule* am)
+{
+	if (ltcAudioModule == am) return;
+	if (ltcAudioModule != nullptr)
+	{
+		ltcAudioModule->ltcTime->removeParameterListener(this);
+		ltcAudioModule->ltcPlaying->removeParameterListener(this);
+	}
+
+	ltcAudioModule = am;
+
+	if (ltcAudioModule != nullptr)
+	{
+		ltcAudioModule->ltcTime->addParameterListener(this);
+		ltcAudioModule->ltcPlaying->addParameterListener(this);
+	}
+}
+
 void ChataigneSequence::onContainerParameterChangedInternal(Parameter* p)
 {
 	Sequence::onContainerParameterChangedInternal(p);
@@ -249,6 +277,12 @@ void ChataigneSequence::onContainerParameterChangedInternal(Parameter* p)
 	{
 		setupMidiSyncDevices();
 	}
+
+	if (p == ltcModuleTarget)
+	{
+		if (ltcModuleTarget->enabled) setLTCAudioModule((AudioModule*)ltcModuleTarget->targetContainer.get());
+		else setLTCAudioModule(nullptr);
+	}
 }
 
 void ChataigneSequence::onControllableStateChanged(Controllable* c)
@@ -262,6 +296,11 @@ void ChataigneSequence::onControllableStateChanged(Controllable* c)
 			float time = jmax<float>(0, currentTime->floatValue() - (mtcSyncOffset->floatValue() * (reverseOffset->boolValue() ? -1 : 1)));
 			mtcSender->start(time);
 		}
+	}
+	else if (c == ltcModuleTarget)
+	{
+		if (ltcModuleTarget->enabled) setLTCAudioModule((AudioModule*)ltcModuleTarget->targetContainer.get());
+		else setLTCAudioModule(nullptr);
 	}
 }
 
@@ -283,6 +322,30 @@ void ChataigneSequence::onExternalParameterValueChanged(Parameter* p)
 	else if (p == ChataigneSequenceManager::getInstance()->snapKeysToFrames)
 	{
 		updateLayersSnapKeys();
+	}
+	else if (ltcAudioModule != nullptr)
+	{
+		if (p == ltcAudioModule->ltcPlaying)
+		{
+			if (ltcAudioModule->ltcPlaying->boolValue())
+			{
+				double time = ltcAudioModule->ltcTime->floatValue();
+				if (time >= 0 && time < totalTime->floatValue()) playTrigger->trigger();
+			}
+			else
+			{
+				pauseTrigger->trigger();
+			}
+		}
+		else if (p == ltcAudioModule->ltcTime)
+		{
+			double time = ltcAudioModule->ltcTime->floatValue();
+			double diff = fabs(currentTime->floatValue() - time);
+			bool isJump = diff > 0.1;
+			bool seekMode = isJump || !ltcAudioModule->ltcPlaying->boolValue();
+			if (!isPlaying->boolValue() && time >= 0 && time < totalTime->floatValue()) playTrigger->trigger();
+			setCurrentTime(time, isJump, seekMode);
+		}
 	}
 }
 

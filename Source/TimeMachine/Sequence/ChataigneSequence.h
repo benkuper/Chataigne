@@ -36,6 +36,9 @@ public:
 	BoolParameter* reverseOffset;
 	BoolParameter* resetTimeOnMTCStopped;
 
+	AudioModule* ltcAudioModule;
+	TargetParameter* ltcModuleTarget;
+
 	Factory<SequenceLayer> layerFactory;
 
 	virtual void clearItem() override;
@@ -58,8 +61,11 @@ public:
 
 	void setupMidiSyncDevices();
 
+	void setLTCAudioModule(AudioModule* am);
+
 	virtual void onContainerParameterChangedInternal(Parameter *) override;
 	virtual void onControllableStateChanged(Controllable* c) override;
+
 
 	virtual void onContainerTriggerTriggered(Trigger *) override;
 	virtual void onExternalParameterValueChanged(Parameter *) override;

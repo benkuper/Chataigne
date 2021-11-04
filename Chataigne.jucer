@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.1b7"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.1b8"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="VST_LOGGING=0&#10;JUCE_MODAL_LOOPS_PERMITTED=1"
@@ -135,6 +135,16 @@
               file="Source/Analytics/MatomoAnalytics.h"/>
       </GROUP>
       <GROUP id="{6C7DFFF7-D47E-97B5-FE74-27F24C7A349F}" name="Common">
+        <GROUP id="{25490D35-196D-13BC-97A7-C9D25C5EFE69}" name="LTC">
+          <FILE id="fGYvA9" name="config.h" compile="0" resource="0" file="Source/Common/LTC/config.h"/>
+          <FILE id="K9qNOo" name="decoder.c" compile="0" resource="0" file="Source/Common/LTC/decoder.c"/>
+          <FILE id="OXgdGl" name="decoder.h" compile="0" resource="0" file="Source/Common/LTC/decoder.h"/>
+          <FILE id="xT27mC" name="encoder.c" compile="0" resource="0" file="Source/Common/LTC/encoder.c"/>
+          <FILE id="Oc1NWg" name="encoder.h" compile="0" resource="0" file="Source/Common/LTC/encoder.h"/>
+          <FILE id="VMh4jB" name="ltc.c" compile="0" resource="0" file="Source/Common/LTC/ltc.c"/>
+          <FILE id="WRbvg6" name="ltc.h" compile="0" resource="0" file="Source/Common/LTC/ltc.h"/>
+          <FILE id="La94OJ" name="timecode.c" compile="0" resource="0" file="Source/Common/LTC/timecode.c"/>
+        </GROUP>
         <FILE id="eScte3" name="CommonIncludes.cpp" compile="1" resource="0"
               file="Source/Common/CommonIncludes.cpp"/>
         <FILE id="Vk4Wrq" name="CommonIncludes.h" compile="0" resource="0"

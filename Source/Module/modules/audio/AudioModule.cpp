@@ -1,4 +1,3 @@
-#include "AudioModule.h"
 /*
   ==============================================================================
 
@@ -9,16 +8,19 @@
   ==============================================================================
 */
 
-AudioModule::AudioModule(const String & name) :
+AudioModule::AudioModule(const String& name) :
 	Module(name),
 	hs(&am),
 	uidIncrement(100),
 	curBufferIndex(0),
 	channelParams("Channels"),
-    monitorParams("Monitor"),
-    numActiveMonitorOutputs(0),
+	monitorParams("Monitor"),
+	numActiveMonitorOutputs(0),
 	noteCC("Pitch Detection"),
 	fftCC("FFT Enveloppes"),
+	ltcParamsCC("LTC"),
+	ltcCC("LTC"),
+	ltcFrameDropCount(0),
 	pitchDetector(nullptr)
 {
 	setupIOConfiguration(true, true);
@@ -26,20 +28,33 @@ AudioModule::AudioModule(const String & name) :
 	inputGain = moduleParams.addFloatParameter("Input Gain", "Gain for the input volume", 1, 0, 10);
 	activityThreshold = moduleParams.addFloatParameter("Activity Threshold", "Threshold to consider activity from the source.\nAnalysis will compute only if volume is greater than this parameter", .1f, 0, 1);
 	keepLastDetectedValues = moduleParams.addBoolParameter("Keep Values", "Keep last detected values when no activity detected.", false);
-    
-    outVolume = moduleParams.addFloatParameter("Out Volume","Global volume multiplier for all sound that is played through this module",1,0,10);
+
+	outVolume = moduleParams.addFloatParameter("Out Volume", "Global volume multiplier for all sound that is played through this module", 1, 0, 10);
 	pitchDetectionMethod = moduleParams.addEnumParameter("Pitch Detection Method", "Choose how to detect the pitch.\nNone will disable the detection (for performance),\nMPM is better suited for monophonic sounds,\nYIN is better suited for high-pitched voices and music");
 	pitchDetectionMethod->addOption("None", NONE)->addOption("MPM", MPM)->addOption("YIN", YIN);
 
+	
 
 	moduleParams.addChildControllableContainer(&channelParams);
-	
+
 
 	moduleParams.addChildControllableContainer(&monitorParams);
 	monitorVolume = monitorParams.addFloatParameter("Monitor Volume", "Volume multiplier for the monitor output. This will affect all the input channels and all the selected output channels", 1, 0, 10);
 
 	moduleParams.addChildControllableContainer(&analyzerManager);
 	analyzerManager.addBaseManagerListener(this);
+
+
+	//LTC
+	ltcParamsCC.enabled->setValue(false);
+	moduleParams.addChildControllableContainer(&ltcParamsCC);
+	ltcFPS = ltcParamsCC.addEnumParameter("FPS", "The framerate to use to decode LTC");
+	ltcFPS->addOption("24", 24)->addOption("25", 25)->addOption("30", 30);
+	ltcFPS->defaultValue = 30;
+	ltcFPS->resetValue();
+	curLTCFPS = ltcFPS->getValueData();
+
+	ltcChannel = ltcParamsCC.addIntParameter("LTC Channel", "Enable and select the channel you want to use to decode LTC", 1, 1, 16, false);
 
 	//Values
 	detectedVolume = valuesCC.addFloatParameter("Volume", "Volume of the audio input", 0, 0, 1);
@@ -51,7 +66,7 @@ AudioModule::AudioModule(const String & name) :
 	note = noteCC.addEnumParameter("Note", "Detected note");
 	note->addOption("-", -1);
 	for (int i = 0; i < 12; ++i) note->addOption(MIDIManager::getNoteName(i, false), i);
-	
+
 	octave = noteCC.addIntParameter("Octave", "Detected octave", 0, 0, 10);
 	valuesCC.addChildControllableContainer(&noteCC);
 
@@ -59,8 +74,14 @@ AudioModule::AudioModule(const String & name) :
 	valuesCC.addChildControllableContainer(&fftCC);
 
 
-	//AUDIO
+	//LTC
+	valuesCC.addChildControllableContainer(&ltcCC);
+	ltcPlaying = ltcCC.addBoolParameter("Is LTC Playing", "Is LTC currently detected in audio input ?", false);
+	ltcTime = ltcCC.addFloatParameter("LTC Time", "Decoded LTC Time from the selected channel in parameters", 0, 0);
+	ltcTime->defaultUI = FloatParameter::TIME;
 
+
+	//AUDIO
 	am.addAudioCallback(this);
 	am.addChangeListener(this);
 	am.initialiseWithDefaultDevices(0, 2);
@@ -83,17 +104,17 @@ AudioModule::AudioModule(const String & name) :
 	std::unique_ptr<AudioProcessorGraph::AudioGraphIOProcessor> procOut(new AudioProcessorGraph::AudioGraphIOProcessor(AudioProcessorGraph::AudioGraphIOProcessor::audioOutputNode));
 	graph.addNode(std::move(procIn), AudioProcessorGraph::NodeID(1));
 	graph.addNode(std::move(procOut), AudioProcessorGraph::NodeID(2));
-	
+
 	player.setProcessor(&graph);
 
 	addChildControllableContainer(&hs);
 	controllableContainers.move(controllableContainers.indexOf(&hs), controllableContainers.indexOf(&valuesCC));
 
-	for (auto &c : valuesCC.controllables) c->setControllableFeedbackOnly(true);
+	for (auto& c : valuesCC.controllables) c->setControllableFeedbackOnly(true);
 
-	defManager->add(CommandDefinition::createDef(this,"","Play audio file", &PlayAudioFileCommand::create));
+	defManager->add(CommandDefinition::createDef(this, "", "Play audio file", &PlayAudioFileCommand::create));
 
-	
+	ltcDecoder.reset(ltc_decoder_create(1920, 32));
 }
 
 AudioModule::~AudioModule()
@@ -168,26 +189,26 @@ void AudioModule::updateSelectedMonitorChannels()
 			selectedMonitorOutChannels.add(i);
 		}
 	}
-	
+
 	numActiveMonitorOutputs = selectedMonitorOutChannels.size();
 }
 
-void AudioModule::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
+void AudioModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
 {
 	Module::onControllableFeedbackUpdateInternal(cc, c);
 
-	if (c->type == Controllable::BOOL && monitorOutChannels.indexOf((BoolParameter *)c) > -1)
+	if (c->type == Controllable::BOOL && monitorOutChannels.indexOf((BoolParameter*)c) > -1)
 	{
 		updateSelectedMonitorChannels();
 	}
 	else if (c == pitchDetectionMethod)
 	{
 		PitchDetectionMethod pdm = pitchDetectionMethod->getValueDataAsEnum<PitchDetectionMethod>();
-		
+
 		AudioDeviceManager::AudioDeviceSetup s;
 		am.getAudioDeviceSetup(s);
-		
-		
+
+
 		switch (pdm)
 		{
 		case NONE: pitchDetector.reset(nullptr); break;
@@ -196,9 +217,17 @@ void AudioModule::onControllableFeedbackUpdateInternal(ControllableContainer * c
 		}
 
 	}
+	else if (c == ltcFPS)
+	{
+		curLTCFPS = (int)ltcFPS->getValueData();
+	}
+	else if (c == ltcParamsCC.enabled)
+	{
+		if (!ltcParamsCC.enabled->boolValue()) ltcPlaying->setValue(false);
+	}
 }
 
-void AudioModule::onContainerParameterChangedInternal(Parameter * p)
+void AudioModule::onContainerParameterChangedInternal(Parameter* p)
 {
 	if (p == enabled)
 	{
@@ -211,7 +240,7 @@ var AudioModule::getJSONData()
 {
 	var data = Module::getJSONData();
 
-    std::unique_ptr<XmlElement> xmlData(am.createStateXml());
+	std::unique_ptr<XmlElement> xmlData(am.createStateXml());
 	if (xmlData != nullptr)
 	{
 		data.getDynamicObject()->setProperty("audioSettings", xmlData->toString());
@@ -235,7 +264,7 @@ void AudioModule::loadJSONDataInternal(var data)
 
 	updateAudioSetup();
 
-	
+
 
 	Module::loadJSONDataInternal(data);
 
@@ -244,19 +273,19 @@ void AudioModule::loadJSONDataInternal(var data)
 	//monitorParams.loadJSONData(data.getProperty("monitorParams", var()));
 	//channelParams.loadJSONData(data.getProperty("channelParams", var()));
 
-	
+
 	AudioDeviceManager::AudioDeviceSetup setup;
-	am.getAudioDeviceSetup(setup); 
+	am.getAudioDeviceSetup(setup);
 	if (setup.outputDeviceName.isEmpty()) setWarningMessage("Module is not connected to an audio output");
 	else clearWarning();
 }
 
-void AudioModule::audioDeviceIOCallback(const float ** inputChannelData, int numInputChannels, float ** outputChannelData, int numOutputChannels, int numSamples)
+void AudioModule::audioDeviceIOCallback(const float** inputChannelData, int numInputChannels, float** outputChannelData, int numOutputChannels, int numSamples)
 {
 	//DBG("audio callback");
 
 	for (int i = 0; i < numOutputChannels; ++i) FloatVectorOperations::clear(outputChannelData[i], numSamples);
-	
+
 	if (!enabled->boolValue()) return;
 
 	for (int i = 0; i < numInputChannels; ++i)
@@ -272,7 +301,7 @@ void AudioModule::audioDeviceIOCallback(const float ** inputChannelData, int num
 			if (detectedVolume->floatValue() > activityThreshold->floatValue())
 			{
 				inActivityTrigger->trigger();
-				
+
 				if (pitchDetector != nullptr)
 				{
 					if ((int)pitchDetector->getBufferSize() != numSamples) pitchDetector->setBufferSize(numSamples);
@@ -288,7 +317,8 @@ void AudioModule::audioDeviceIOCallback(const float ** inputChannelData, int num
 						octave->setValue(floor(pitchNote / 12.0));
 					}
 				}
-			} else
+			}
+			else
 			{
 				if (!keepLastDetectedValues->boolValue())
 				{
@@ -298,21 +328,52 @@ void AudioModule::audioDeviceIOCallback(const float ** inputChannelData, int num
 				}
 			}
 		}
-		
+
 		//Analysis
 		analyzerManager.process(inputChannelData[0], numSamples);
 
-		//Monitor
-		for (int j = 0; j < numActiveMonitorOutputs; j++)
+		if (ltcParamsCC.enabled->boolValue())
 		{
-			int outputIndex = selectedMonitorOutChannels[j];
-			if (outputIndex >= numOutputChannels) continue;
-			FloatVectorOperations::addWithMultiply(outputChannelData[outputIndex], inputChannelData[i], monitorVolume->floatValue() * channelVolume, numSamples);
+			ltc_decoder_write_float(ltcDecoder.get(), (float*)inputChannelData[0], numSamples, 0);
+
+			bool hasLTC = false;
+			LTCFrameExt frame;
+			while (ltc_decoder_read(ltcDecoder.get(), &frame))
+			{
+				SMPTETimecode stime;
+				ltc_frame_to_time(&stime, &frame.ltc, 1);
+
+				float time = stime.days * 3600 * 24 + stime.hours * 3600 + stime.mins * 60 + stime.secs + stime.frame *1.0f / curLTCFPS;
+				ltcTime->setValue(time);
+				hasLTC = true;
+			}
+
+			if (!hasLTC)
+			{
+				if (ltcPlaying->boolValue())
+				{
+					ltcFrameDropCount++;
+					if (ltcFrameDropCount >= 10) ltcPlaying->setValue(hasLTC);
+				}
+			}
+			else
+			{
+				ltcFrameDropCount = 0;
+				ltcPlaying->setValue(true);
+			}
+
+			//Monitor
+			for (int j = 0; j < numActiveMonitorOutputs; j++)
+			{
+				int outputIndex = selectedMonitorOutChannels[j];
+				if (outputIndex >= numOutputChannels) continue;
+				FloatVectorOperations::addWithMultiply(outputChannelData[outputIndex], inputChannelData[i], monitorVolume->floatValue() * channelVolume, numSamples);
+			}
 		}
 	}
 }
 
-void AudioModule::audioDeviceAboutToStart(AudioIODevice *)
+void AudioModule::audioDeviceAboutToStart(AudioIODevice*)
 {
 
 }
@@ -321,7 +382,7 @@ void AudioModule::audioDeviceStopped()
 {
 }
 
-void AudioModule::changeListenerCallback(ChangeBroadcaster *)
+void AudioModule::changeListenerCallback(ChangeBroadcaster*)
 {
 	updateAudioSetup();
 }
@@ -342,13 +403,13 @@ int AudioModule::getNoteForFrequency(float freq)
 	return (int)(69 + 12 * log2(freq / 440)); //A = 440
 }
 
-AudioModuleHardwareSettings::AudioModuleHardwareSettings(AudioDeviceManager * am) :
+AudioModuleHardwareSettings::AudioModuleHardwareSettings(AudioDeviceManager* am) :
 	ControllableContainer("Hardware Settings"),
 	am(am)
 {
 }
 
-InspectableEditor * AudioModuleHardwareSettings::getEditorInternal(bool isRoot)
+InspectableEditor* AudioModuleHardwareSettings::getEditorInternal(bool isRoot)
 {
 	return new AudioModuleHardwareEditor(this, isRoot);
 }

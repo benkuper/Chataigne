@@ -33,4 +33,9 @@
 #include "MIDI/ui/MIDIDeviceChooser.h"
 #include "MIDI/ui/MIDIDeviceParameterUI.h"
 
+//#include "LTC/config.h"
+#include "LTC/ltc.h"
+#include "LTC/encoder.h"
+#include "LTC/decoder.h"
+
 #include "Zeroconf/ZeroconfManager.h"

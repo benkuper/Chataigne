@@ -13,7 +13,6 @@
 #define AUDIO_INPUT_GRAPH_ID 1
 #define AUDIO_OUTPUT_GRAPH_ID 2
 
-
 class AudioModuleHardwareSettings :
 	public ControllableContainer
 {
@@ -79,9 +78,20 @@ public:
 
 	ControllableContainer fftCC;
 
+	EnablingControllableContainer ltcParamsCC;
+	EnumParameter* ltcFPS;
+	int curLTCFPS; //avoid accessing enum in audio thread
+	IntParameter* ltcChannel;
+
+	ControllableContainer ltcCC;
+	BoolParameter* ltcPlaying;
+	FloatParameter* ltcTime;
+	int ltcFrameDropCount;
+
 	FFTAnalyzerManager analyzerManager;
 
 	std::unique_ptr<PitchDetector> pitchDetector;
+	std::unique_ptr<LTCDecoder> ltcDecoder;
 
 	virtual void updateAudioSetup();
 	void updateSelectedMonitorChannels();
@@ -107,8 +117,9 @@ public:
 
 
 	static AudioModule* create() { return new AudioModule(); }
-	virtual String getDefaultTypeString() const override { return "Sound Card"; }
-
+	virtual String getDefaultTypeString() const override { return AudioModule::getTypeStringStatic(); }
+	static String getTypeStringStatic() { return "Sound Card"; }
+	
 	class AudioModuleListener
 	{
 	public:

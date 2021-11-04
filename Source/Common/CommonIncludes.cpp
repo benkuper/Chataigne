@@ -31,3 +31,8 @@
 #include "Serial/SerialManager.cpp"
 #include "Serial/lib/cobs/cobs.cpp"
 #include "Zeroconf/ZeroconfManager.cpp" 
+
+#include "LTC/ltc.c"
+#include "LTC/timecode.c"
+#include "LTC/encoder.c"
+#include "LTC/decoder.c"

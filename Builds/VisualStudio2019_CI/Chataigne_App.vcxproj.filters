@@ -23,6 +23,9 @@
     <Filter Include="Chataigne\Source\Analytics">
       <UniqueIdentifier>{BFFB54F9-F042-7395-56B9-D0358B5F6ED9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Common\LTC">
+      <UniqueIdentifier>{67CD336B-D640-6479-56B1-A064D3DCFB41}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Common\ParameterLink\ui">
       <UniqueIdentifier>{B4968552-51CA-9537-7B55-FA767839D08E}</UniqueIdentifier>
     </Filter>
@@ -1485,6 +1488,18 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Analytics\MatomoAnalytics.cpp">
       <Filter>Chataigne\Source\Analytics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\LTC\decoder.c">
+      <Filter>Chataigne\Source\Common\LTC</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\LTC\encoder.c">
+      <Filter>Chataigne\Source\Common\LTC</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\LTC\ltc.c">
+      <Filter>Chataigne\Source\Common\LTC</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\LTC\timecode.c">
+      <Filter>Chataigne\Source\Common\LTC</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\CommonIncludes.cpp">
       <Filter>Chataigne\Source\Common</Filter>
@@ -5588,6 +5603,18 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Analytics\MatomoAnalytics.h">
       <Filter>Chataigne\Source\Analytics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\LTC\config.h">
+      <Filter>Chataigne\Source\Common\LTC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\LTC\decoder.h">
+      <Filter>Chataigne\Source\Common\LTC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\LTC\encoder.h">
+      <Filter>Chataigne\Source\Common\LTC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\LTC\ltc.h">
+      <Filter>Chataigne\Source\Common\LTC</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\CommonIncludes.h">
       <Filter>Chataigne\Source\Common</Filter>

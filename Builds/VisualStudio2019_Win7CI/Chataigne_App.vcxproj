@@ -69,7 +69,7 @@
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\JUCE\Modules;..\..\Modules;../../External/wiiuse;../../External/serial/include;../../External/asio;../../External/joycon/include;../../External/servus/include;../../External/dnssd/include;../../External/sdl/include;../../External/hidapi/include;../../Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;VST_LOGGING=0;JUCE_MODAL_LOOPS_PERMITTED=1;USE_KINECT=0;JUCER_VS2019_4E886FDA=1;JUCE_APP_VERSION=1.9.1b7;JUCE_APP_VERSION_HEX=0x10901;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;VST_LOGGING=0;JUCE_MODAL_LOOPS_PERMITTED=1;USE_KINECT=0;JUCER_VS2019_4E886FDA=1;JUCE_APP_VERSION=1.9.1b8;JUCE_APP_VERSION_HEX=0x10901;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
@@ -117,7 +117,7 @@
     <ClCompile>
       <Optimization>Full</Optimization>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\JUCE\Modules;..\..\Modules;../../External/wiiuse;../../External/serial/include;../../External/asio;../../External/joycon/include;../../External/servus/include;../../External/dnssd/include;../../External/sdl/include;../../External/hidapi/include;../../Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;VST_LOGGING=0;JUCE_MODAL_LOOPS_PERMITTED=1;USE_KINECT=0;JUCER_VS2019_4E886FDA=1;JUCE_APP_VERSION=1.9.1b7;JUCE_APP_VERSION_HEX=0x10901;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;VST_LOGGING=0;JUCE_MODAL_LOOPS_PERMITTED=1;USE_KINECT=0;JUCER_VS2019_4E886FDA=1;JUCE_APP_VERSION=1.9.1b8;JUCE_APP_VERSION_HEX=0x10901;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
@@ -172,6 +172,18 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Guider\GuiderIncludes.cpp"/>
     <ClCompile Include="..\..\Source\Analytics\MatomoAnalytics.cpp"/>
+    <ClCompile Include="..\..\Source\Common\LTC\decoder.c">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\LTC\encoder.c">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\LTC\ltc.c">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\LTC\timecode.c">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\CommonIncludes.cpp"/>
     <ClCompile Include="..\..\Source\Common\ParameterLink\ui\LinkableParameterEditor.cpp"/>
     <ClCompile Include="..\..\Source\Common\ParameterLink\ParameterLink.cpp"/>
@@ -3917,6 +3929,10 @@
     <ClInclude Include="..\..\Source\Guider\Guider.h"/>
     <ClInclude Include="..\..\Source\Guider\GuiderIncludes.h"/>
     <ClInclude Include="..\..\Source\Analytics\MatomoAnalytics.h"/>
+    <ClInclude Include="..\..\Source\Common\LTC\config.h"/>
+    <ClInclude Include="..\..\Source\Common\LTC\decoder.h"/>
+    <ClInclude Include="..\..\Source\Common\LTC\encoder.h"/>
+    <ClInclude Include="..\..\Source\Common\LTC\ltc.h"/>
     <ClInclude Include="..\..\Source\Common\CommonIncludes.h"/>
     <ClInclude Include="..\..\Source\Common\ParameterLink\ui\LinkableParameterEditor.h"/>
     <ClInclude Include="..\..\Source\Common\ParameterLink\ParameterLink.h"/>
