@@ -51,14 +51,18 @@ bool ProcessorManager::canAddItemOfType(const String& typeToCheck)
 	return typeToCheck == itemDataType || typeToCheck == "Action" || typeToCheck == "Mapping";
 }
 
-Array<Action*> ProcessorManager::getAllActions(bool includeMultiplexes)
+Array<Action*> ProcessorManager::getAllActions(bool includeMultiplexes, bool includeConductors)
 {
 	Array<Action*> result;
 	for (auto& i : items)
 	{
 		if (i == nullptr) continue;
-		if (i->type == Processor::ACTION) result.add(dynamic_cast<Action*>(i));
-		else if (includeMultiplexes && i->type == Processor::MULTIPLEX) result.addArray(((Multiplex*)i)->processorManager.getAllActions());
+		switch (i->type)
+		{
+		case Processor::ACTION: result.add(dynamic_cast<Action*>(i)); break;
+		case Processor::MULTIPLEX: if (includeMultiplexes) result.addArray(((Multiplex*)i)->processorManager.getAllActions()); break;
+		case Processor::CONDUCTOR: if (includeConductors) result.addArray(((Conductor*)i)->processorManager.getAllActions()); break;
+		}
 	}
 	return result;
 }
