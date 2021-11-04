@@ -339,7 +339,7 @@ void Mapping::inputParameterValueChanged(MappingInput*, int multiplexIndex)
 
 void Mapping::inputParameterRangeChanged(MappingInput*)
 {
-	updateMappingChain();
+	updateMappingChain(nullptr);
 }
 
 void Mapping::onContainerParameterChangedInternal(Parameter* p)

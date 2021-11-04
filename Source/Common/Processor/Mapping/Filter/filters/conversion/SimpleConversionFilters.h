@@ -17,23 +17,31 @@ public:
 	SimpleConversionFilter(const String &name, var params, StringRef outTypeString, Multiplex* multiplex);
 	virtual ~SimpleConversionFilter();
 
-	EnumParameter * retargetComponent;
 	var retargetValues; //ghosting
 	String outTypeString;
 
 	var ghostOptions;
-
 	bool autoLoadDataOnSetup;
+
+	EnumParameter* retargetComponent;
+	bool useBaseValue;
+	Parameter * baseValue;
 
 	var getJSONData() override;
 	void loadJSONDataItemInternal(var data) override;
 	
-	enum TransferType { DIRECT, EXTRACT, TARGET};
+	enum TransferType { DIRECT, EXTRACT, MERGE, TARGET};
 	TransferType transferType;
+
+	enum ExtractOption { MIN = 100, MAX = 101, AVERAGE = 102, LENGTH = 103 };
 
 	virtual void setupParametersInternal(int mutiplexIndex, bool rangeOnly = false);
 	virtual Parameter* setupSingleParameterInternal(Parameter* source, int multiplexIndex, bool rangeOnly) override;
 	virtual void addExtraRetargetOptions() {}
+
+	void filterParamChanged(Parameter * p) override;
+
+	void updateOutRange(Parameter * source, Parameter * out);
 
 	virtual ProcessResult processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;
 	virtual var convertValue(Parameter * source, var sourceValue, int multiplexIndex) { return var(sourceValue) ; }
@@ -59,8 +67,7 @@ class ToFloatFilter :
 public:
 	ToFloatFilter(var params, Multiplex* multiplex);
 	~ToFloatFilter() {}
-
-	virtual Parameter * setupSingleParameterInternal(Parameter* source, int multiplexIndex, bool rangeOnly) override;
+	
 	var convertValue(Parameter * source, var sourceValue, int multiplexIndex) override;
 
 	String getTypeString() const override { return "Convert To Float"; }
@@ -116,6 +123,8 @@ public:
 	ToPoint2DFilter(var params, Multiplex* multiplex);
 	~ToPoint2DFilter() {}
 
+	Point2DParameter* baseValue;
+
 	var convertValue(Parameter * source, var sourceValue, int multiplexIndex) override;
 
 	String getTypeString() const override { return "Convert To Point2D"; }
@@ -129,6 +138,7 @@ class ToPoint3DFilter :
 public:
 	ToPoint3DFilter(var params, Multiplex* multiplex);
 	~ToPoint3DFilter() {}
+
 
 	var convertValue(Parameter * source, var sourceValue, int multiplexIndex) override;
 

@@ -35,6 +35,8 @@ public:
 
 	Array<var> previousValues; //for checking, multiplexed
 
+	bool isSettingUpSources;
+
 	bool processOnSameValue; //disabling this allows for fast checking and stopping if source and dest values are the same
 	bool autoSetRange; //if true, will check at process if ranges are differents between source and filtered, and if so, will reassign
 
@@ -58,7 +60,6 @@ public:
 	bool isChannelEligible(int index);
 
 	void multiplexPreviewIndexChanged() override;
-
 
 	virtual void clearItem() override;
 

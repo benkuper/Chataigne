@@ -10,11 +10,13 @@
 
 SimpleConversionFilter::SimpleConversionFilter(const String& name, var params, StringRef outTypeString, Multiplex* multiplex) :
 	MappingFilter(name, params, multiplex),
-	retargetComponent(nullptr),
 	outTypeString(outTypeString),
-	autoLoadDataOnSetup(true)
+	autoLoadDataOnSetup(true),
+	baseValue(nullptr),
+	useBaseValue(true)
 {
 	autoSetRange = false;
+
 	retargetComponent = filterParams.addEnumParameter("Extract Component", "This is the component of the source parameter to extract");
 	retargetComponent->setCustomShortName("retargetComponent");
 	//retargetComponent->forceSaveValue = true;
@@ -40,19 +42,20 @@ Parameter* SimpleConversionFilter::setupSingleParameterInternal(Parameter* sourc
 		jassert(index >= 0);
 
 		Parameter* fp = filteredParameters[multiplexIndex]->getUnchecked(index);
-		if (fp->isComplex() == source->isComplex())
-		{
-			if (source->hasRange() && fp->canHaveRange) fp->setRange(source->minimumValue, source->maximumValue);
-		}
-			
+		updateOutRange(source, fp);
 		return fp;
 	}
 
 	Parameter* p = (Parameter*)ControllableFactory::getInstance()->createControllable(outTypeString);
 	p->setNiceName(source->niceName);
 
+
+
 	if (multiplexIndex != 0) return p; //only setup for 1st if multiplex multiplex
 
+
+
+	int ghostData = !retargetComponent->getValueData().isVoid() ? retargetComponent->getValueData() : ghostOptions.getProperty("retarget", 0);
 	retargetComponent->clearOptions();
 
 	if (p->isComplex() == source->isComplex())
@@ -68,22 +71,145 @@ Parameter* SimpleConversionFilter::setupSingleParameterInternal(Parameter* sourc
 		retargetComponent->hideInEditor = false;
 		transferType = p->isComplex() ? TARGET : EXTRACT;
 		retargetComponent->setNiceName(transferType == TARGET ? "Target Component" : "Extract Component");
+
 		Parameter* retargetP = transferType == TARGET ? p : source;
 		StringArray valueNames = retargetP->getValuesNames();
 		for (int i = 0; i < valueNames.size(); ++i)
 		{
-			retargetComponent->addOption(valueNames[i], i, true);
+			retargetComponent->addOption(valueNames[i], i, false);
 		}
 
 		addExtraRetargetOptions();
 
+		if (transferType == EXTRACT) retargetComponent->addOption("Min", MIN)->addOption("Max", MAX)->addOption("Average", AVERAGE)->addOption("Length", LENGTH);
 
-		retargetComponent->setValueWithData(ghostOptions.getProperty("retarget", valueNames[0]));
+
+		if (useBaseValue)
+		{
+			if (transferType == TARGET)
+			{
+				if (baseValue != nullptr && baseValue->type != p->type)
+				{
+					filterParams.removeControllable(baseValue);
+					baseValue = nullptr;
+				}
+
+				baseValue = ControllableFactory::createParameterFrom(p, false, false);
+				baseValue->setNiceName("Base Value");
+				baseValue->description = "Base value for components that are not set by the conversion";
+				filterParams.addParameter(baseValue);
+			}
+			else
+			{
+				if (baseValue != nullptr)
+				{
+					filterParams.removeControllable(baseValue);
+					baseValue = nullptr;
+				}
+			}
+		}
+
+		retargetComponent->setValueWithData(ghostData);
 	}
+
+	updateOutRange(source, p);
 
 	return p;
 }
 
+
+void SimpleConversionFilter::filterParamChanged(Parameter* p)
+{
+	if (p == retargetComponent && !isSettingUpSources)
+	{
+		for (int i = 0; i < getMultiplexCount(); i++)
+		{
+			for (int j = 0; j < sourceParams[i].size(); j++)
+			{
+				updateOutRange(sourceParams[i][j], filteredParameters[i]->getUnchecked(j));
+			}
+		}
+
+		mappingFilterListeners.call(&FilterListener::filteredParamRangeChanged, this);
+	}
+}
+
+void SimpleConversionFilter::updateOutRange(Parameter* source, Parameter* out)
+{
+	if (source->hasRange())
+	{
+		if (out->isComplex() == source->isComplex())
+		{
+			if (source->hasRange() && out->canHaveRange) out->setRange(source->minimumValue, source->maximumValue);
+		}
+		else if (source->isComplex())
+		{
+			int targetData = (int)retargetComponent->getValueData();
+			var newMin;
+			var newMax;
+
+			switch (targetData)
+			{
+			case MIN:
+				newMin = INT32_MAX;
+				newMax = INT32_MAX;
+				for (int i = 0; i < source->value.size(); i++)
+				{
+					newMin = jmin((float)newMin, (float)source->minimumValue[i]);
+					newMax = jmin((float)newMax, (float)source->maximumValue[i]);
+				}
+				break;
+
+			case MAX:
+				newMin = INT32_MIN;
+				newMax = INT32_MIN;
+				for (int i = 0; i < source->value.size(); i++)
+				{
+					newMin = jmax((float)newMin, (float)source->minimumValue[i]);
+					newMax = jmax((float)newMax, (float)source->maximumValue[i]);
+				}
+				break;
+
+			case AVERAGE:
+				newMin = INT32_MAX;
+				newMax = INT32_MIN;
+				for (int i = 0; i < source->value.size(); i++)
+				{
+					newMin = jmin((float)newMin, (float)source->minimumValue[i]);
+					newMax = jmax((float)newMax, (float)source->maximumValue[i]);
+				}
+				break;
+
+			case LENGTH:
+				newMin = 0;
+				newMax = 0;
+				for (int i = 0; i < source->value.size(); i++)
+				{
+					float diff = (float)source->maximumValue[i] - (float)source->minimumValue[i];
+					newMax = (float)newMax + diff * diff;
+				}
+				newMax = sqrtf((float)newMax);
+				break;
+
+			default:
+				if (targetData < source->value.size())
+				{
+					newMin = source->minimumValue[targetData];
+					newMax = source->maximumValue[targetData];
+				}
+				break;
+			}
+
+			out->setRange(newMin, newMax);
+
+		}
+		else
+		{
+			out->setRange(source->minimumValue, source->maximumValue);
+		}
+	}
+
+}
 
 MappingFilter::ProcessResult SimpleConversionFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
 {
@@ -105,21 +231,54 @@ MappingFilter::ProcessResult SimpleConversionFilter::processSingleParameterInter
 
 	case EXTRACT:
 	{
-		int index = (int)retargetComponent->getValueData();
-		if (index < source->value.size()) out->setValue(convertValue(source, source->value[index], multiplexIndex));
+		int targetData = (int)retargetComponent->getValueData();
+		var val;
+		switch (targetData)
+		{
+		case MIN:
+			val = INT32_MAX;
+			for (int i = 0; i < source->value.size(); i++) val = jmin((float)val, (float)source->value[i]);
+			break;
+
+		case MAX:
+			val = INT32_MIN;
+			for (int i = 0; i < source->value.size(); i++) val = jmax((float)val, (float)source->value[i]);
+			break;
+
+		case AVERAGE:
+			val = 0;
+			for (int i = 0; i < source->value.size(); i++) val = (float)val + (float)source->value[i];
+			val = (float)val / source->value.size();
+			break;
+
+		case LENGTH:
+			val = 0;
+			for (int i = 0; i < source->value.size(); i++) val = (float)val + (float)source->value[i] * (float)source->value[i];
+			val = sqrtf((float)val);
+			break;
+
+		default:
+			if (targetData < source->value.size()) val = source->value[targetData];
+			break;
+		}
+
+		if (val.isVoid()) return UNCHANGED;
+		out->setValue(convertValue(source, val, multiplexIndex));
 	}
 	break;
 
 	case TARGET:
 	{
-		var val = var();
-		for (int i = 0; i < out->value.size(); ++i) val.append(0.f);
 		int index = (int)retargetComponent->getValueData();
+
+		var val = baseValue != nullptr ? baseValue->getValue().clone() : var();
+		if (val.isVoid()) for (int i = 0; i < out->value.size(); ++i) val.append(0.0f);
+
 		if (index < val.size())
 		{
 			val[index] = convertValue(source, source->getValue(), multiplexIndex);
-			out->setValue(val);
 		}
+		out->setValue(val);
 	}
 	break;
 
@@ -134,17 +293,16 @@ var SimpleConversionFilter::getJSONData()
 {
 	var data = MappingFilter::getJSONData();
 
-	ghostOptions = var(new DynamicObject());
-	ghostOptions.getDynamicObject()->setProperty("retarget", retargetComponent->getValueData());
-
-	data.getDynamicObject()->setProperty("ghostOptions", ghostOptions);
+	var goData = var(new DynamicObject());
+	goData.getDynamicObject()->setProperty("retarget", retargetComponent->getValueData());
+	data.getDynamicObject()->setProperty("ghostOptions", goData);
 	return data;
 }
 
 void SimpleConversionFilter::loadJSONDataItemInternal(var data)
 {
-	MappingFilter::loadJSONDataItemInternal(data);
 	ghostOptions = data.getProperty("ghostOptions", var());
+	MappingFilter::loadJSONDataItemInternal(data);
 }
 
 ToFloatFilter::ToFloatFilter(var params, Multiplex* multiplex) :
@@ -152,25 +310,6 @@ ToFloatFilter::ToFloatFilter(var params, Multiplex* multiplex) :
 {
 }
 
-Parameter* ToFloatFilter::setupSingleParameterInternal(Parameter* source, int multiplexIndex, bool rangeOnly)
-{
-	Parameter* p = SimpleConversionFilter::setupSingleParameterInternal(source, multiplexIndex, rangeOnly);
-
-	if (source->hasRange())
-	{
-		if (source->minimumValue.isArray())
-		{
-			int index = (int)retargetComponent->getValueData();
-			p->setRange(source->minimumValue[index], source->maximumValue[index]);
-		}
-		else
-		{
-			p->setRange(source->minimumValue, source->maximumValue);
-		}
-	}
-
-	return p;
-}
 
 var ToFloatFilter::convertValue(Parameter* source, var sourceValue, int multiplexIndex)
 {
@@ -237,7 +376,7 @@ void ToStringFilter::setupParametersInternal(int multiplexIndex, bool rangeOnly)
 
 	Parameter* p = sourceParams[multiplexIndex].size() > 0 ? sourceParams[multiplexIndex][0] : nullptr;
 	if (p == nullptr) return;
-	
+
 	if (p->type == Parameter::FLOAT || p->type == Parameter::INT)
 	{
 		if (enumConvertMode != nullptr)
@@ -342,6 +481,7 @@ ToColorFilter::ToColorFilter(var params, Multiplex* multiplex) :
 	SimpleConversionFilter(getTypeString(), params, ColorParameter::getTypeStringStatic(), multiplex),
 	baseColor(nullptr)
 {
+	useBaseValue = false;
 }
 
 ToColorFilter::~ToColorFilter()
@@ -379,8 +519,6 @@ void ToColorFilter::setupParametersInternal(int multiplexIndex, bool rangeOnly)
 	{
 		baseColor = filterParams.addColorParameter("Base Color", "Color to use to convert", Colours::red);
 	}
-
-	
 
 	if (ghostOptions.isObject() && baseColor != nullptr)
 	{

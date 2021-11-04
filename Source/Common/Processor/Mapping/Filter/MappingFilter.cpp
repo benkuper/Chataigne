@@ -13,6 +13,7 @@ MappingFilter::MappingFilter(const String& name, var params, Multiplex* multiple
 	MultiplexTarget(multiplex),
 	canFilterChannels(hasChannelFilter),
 	filterParams("filterParams", multiplex),
+	isSettingUpSources(false),
 	processOnSameValue(false),
 	autoSetRange(true),
 	filterParamsAreDirty(false),
@@ -36,10 +37,19 @@ bool MappingFilter::setupSources(Array<Parameter*> sources, int multiplexIndex, 
 {
 	if (isClearing) return false;
 
+	isSettingUpSources = true;
+
 	if (!rangeOnly)
 	{
 
-		for (auto& source : sources) if (source == nullptr) return false; //check that all sources are valid
+		for (auto& source : sources)
+		{
+			if (source == nullptr)
+			{
+				isSettingUpSources = false;
+				return false; //check that all sources are valid
+			}
+		}
 
 		sourceParams.ensureStorageAllocated(multiplexIndex + 1);
 
@@ -89,6 +99,7 @@ bool MappingFilter::setupSources(Array<Parameter*> sources, int multiplexIndex, 
 		filterAsyncNotifier.addMessage(new FilterEvent(FilterEvent::FILTER_REBUILT, this));
 	}
 
+	isSettingUpSources = false;
 	return true;
 }
 
