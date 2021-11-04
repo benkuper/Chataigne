@@ -8,21 +8,25 @@
   ==============================================================================
 */
 
-#include "StateMachine/StateMachineIncludes.h"
-
 StateCommand::StateCommand(StateModule* _module, CommandContext context, var params, Multiplex* multiplex) :
 	BaseCommand(_module, context, params, multiplex),
 	stateModule(_module),
+	target(nullptr),
 	val(nullptr)
 {
-	target = addTargetParameter("Target", "Target for the command");
-	target->targetType = TargetParameter::CONTAINER;
 	actionType = (ActionType)(int)params.getProperty("type", SET_STATE_ACTIVATION);
+	
+	if (actionType != CANCEL_ALL_DELAYED_CONSEQUENCES)
+	{
+		target = addTargetParameter("Target", "Target for the command");
+		target->targetType = TargetParameter::CONTAINER;
+	}
 
 	switch (actionType)
 	{
 	case SET_STATE_ACTIVATION:
 	case TOGGLE_STATE:
+	case CANCEL_STATE_DELAYED_CONSEQUENCES:
 		target->customGetTargetContainerFunc = &StateManager::showMenuAndGetState;
 		target->defaultParentLabelLevel = 0;
 		break;
@@ -31,6 +35,7 @@ StateCommand::StateCommand(StateModule* _module, CommandContext context, var par
 	case SET_ACTION_ENABLED:
 	case TOGGLE_ACTION:
 	case SET_SEQUENTIAL_CONDITION_INDEX:
+	case CANCEL_DELAYED_CONSEQUENCE:
 		target->customGetTargetContainerFunc = &StateManager::showMenuAndGetAction;
 		target->defaultParentLabelLevel = 1;
 		break;
@@ -67,8 +72,10 @@ void StateCommand::triggerInternal(int multiplexIndex)
 {
 	BaseCommand::triggerInternal(multiplexIndex);
 
-	if (getLinkedTargetContainerAs<ControllableContainer>(target, multiplexIndex) == nullptr) return;
-	//if (target->targetContainer.wasObjectDeleted()) return;
+	if (actionType != CANCEL_ALL_DELAYED_CONSEQUENCES)
+	{
+		if (getLinkedTargetContainerAs<ControllableContainer>(target, multiplexIndex) == nullptr) return;
+	}
 
 	switch (actionType)
 	{
@@ -93,7 +100,7 @@ void StateCommand::triggerInternal(int multiplexIndex)
 		break;
 
 	case SET_SEQUENTIAL_CONDITION_INDEX:
-		if (Action* a = getLinkedTargetContainerAs<Action>(target, multiplexIndex)) if(a->cdm != nullptr) a->cdm->setSequentialConditionIndices(val->intValue());
+		if (Action* a = getLinkedTargetContainerAs<Action>(target, multiplexIndex)) if (a->cdm != nullptr) a->cdm->setSequentialConditionIndices(val->intValue());
 		break;
 
 	case SET_TOGGLE_STATE:
@@ -106,6 +113,38 @@ void StateCommand::triggerInternal(int multiplexIndex)
 
 	case TOGGLE_MAPPING:
 		if (Mapping* m = getLinkedTargetContainerAs<Mapping>(target, multiplexIndex)) m->enabled->setValue(!m->enabled->boolValue());
+		break;
+
+	case CANCEL_DELAYED_CONSEQUENCE:
+		if (Action* a = getLinkedTargetContainerAs<Action>(target, multiplexIndex))
+		{
+			if (a->csmOn != nullptr) a->csmOn->cancelDelayedConsequences();
+			if (a->csmOff != nullptr) a->csmOff->cancelDelayedConsequences();
+		}
+		break;
+
+	case CANCEL_STATE_DELAYED_CONSEQUENCES:
+		if (State* s = getLinkedTargetContainerAs<State>(target, multiplexIndex))
+		{
+			Array<Action*> actions = s->pm->getAllActions();
+			for (auto& a : actions)
+			{
+				if (a->csmOn != nullptr) a->csmOn->cancelDelayedConsequences();
+				if (a->csmOff != nullptr) a->csmOff->cancelDelayedConsequences();
+			}
+		}
+		break;
+
+	case CANCEL_ALL_DELAYED_CONSEQUENCES:
+		for (auto& s : StateManager::getInstance()->items)
+		{
+			Array<Action*> actions = s->pm->getAllActions();
+			for (auto& a : actions)
+			{
+				if (a->csmOn != nullptr) a->csmOn->cancelDelayedConsequences();
+				if (a->csmOff != nullptr) a->csmOff->cancelDelayedConsequences();
+			}
+		}
 		break;
 	}
 }
@@ -122,7 +161,7 @@ void StateCommand::loadJSONDataInternal(var data)
 
 void StateCommand::endLoadFile()
 {
-	target->setValue("", true);
+	if(target != nullptr) target->setValue("", true);
 
 	loadJSONData(dataToLoad);
 	dataToLoad = var();

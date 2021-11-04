@@ -21,16 +21,20 @@ public:
 
 	FloatParameter* delay;
 	FloatParameter* stagger;
+	BoolParameter* killDelaysOnTrigger;
 
 	Factory<BaseItem> factory;
 
 	bool forceDisabled;
 
 	void triggerAll(int multiplexIndex = 0);
+	void cancelDelayedConsequences();
 
 	void setForceDisabled(bool value, bool force = false);
 
 	void onContainerTriggerTriggered(Trigger*) override;
+	void onContainerParameterChanged(Parameter* p) override;
+
 	void addItemInternal(BaseItem*, var data) override;
 	void removeItemInternal(BaseItem*) override;
 

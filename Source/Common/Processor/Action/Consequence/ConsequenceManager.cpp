@@ -13,7 +13,8 @@
 ConsequenceManager::ConsequenceManager(const String& name, Multiplex* multiplex) :
 	BaseManager<BaseItem>(name),
 	MultiplexTarget(multiplex),
-	forceDisabled(false)
+	forceDisabled(false),
+	killDelaysOnTrigger(nullptr)
 {
 	canBeDisabled = false;
 	canBeCopiedAndPasted = true;
@@ -41,6 +42,8 @@ ConsequenceManager::~ConsequenceManager()
 
 void ConsequenceManager::triggerAll(int multiplexIndex)
 {
+	if (killDelaysOnTrigger != nullptr && killDelaysOnTrigger->boolValue()) cancelDelayedConsequences();
+
 	if (items.size() > 0)
 	{
 		if (delay->floatValue() == 0 && stagger->floatValue() == 0)
@@ -56,6 +59,11 @@ void ConsequenceManager::triggerAll(int multiplexIndex)
 			staggerLaunchers.add(new StaggerLauncher(this, multiplexIndex));
 		}
 	}
+}
+
+void ConsequenceManager::cancelDelayedConsequences()
+{
+	staggerLaunchers.clear();
 }
 
 void ConsequenceManager::setForceDisabled(bool value, bool force)
@@ -74,6 +82,27 @@ void ConsequenceManager::onContainerTriggerTriggered(Trigger* t)
 	if (forceDisabled) return;
 	//for manual trigger eventually
 	BaseManager::onContainerTriggerTriggered(t);
+}
+
+void ConsequenceManager::onContainerParameterChanged(Parameter* p)
+{
+	BaseManager::onContainerParameterChanged(p);
+	if (p == delay || p == stagger)
+	{
+		bool showKill = delay->floatValue() > 0 || stagger->floatValue() > 0;
+		if (showKill)
+		{
+			if (killDelaysOnTrigger == nullptr) killDelaysOnTrigger = addBoolParameter("Cancel delays on Trigger", "If checked, this will ensure that when triggering, all previous delayed consequences are cancelled", false);
+		}
+		else
+		{
+			if (killDelaysOnTrigger)
+			{
+				removeControllable(killDelaysOnTrigger);
+				killDelaysOnTrigger = nullptr;
+			}
+		}
+	}
 }
 
 void ConsequenceManager::addItemInternal(BaseItem* bi, var data)
