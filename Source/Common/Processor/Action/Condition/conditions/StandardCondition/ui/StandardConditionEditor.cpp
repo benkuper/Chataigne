@@ -92,7 +92,10 @@ void StandardConditionEditor::updateUI()
 	if (Controllable * c = standardCondition->getSourceControllableAt(standardCondition->getPreviewIndex()))
 	{
 		sourceFeedbackUI.reset(c->createDefaultUI());
-		//sourceFeedbackUI->setForceFeedbackOnly(true);
+		if (c->type == Parameter::POINT2D)
+		{
+			if (DoubleSliderUI* dui = dynamic_cast<DoubleSliderUI*>(sourceFeedbackUI.get())) dui->canShowExtendedEditor = false;
+		}
 		addAndMakeVisible(sourceFeedbackUI.get());
 	}
 

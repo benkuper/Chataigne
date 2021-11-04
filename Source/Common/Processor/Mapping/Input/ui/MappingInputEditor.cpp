@@ -28,6 +28,11 @@ void MappingInputEditor::updateSourceUI()
 	if (Parameter * p = input->getInputAt(input->getPreviewIndex()))
 	{
 		sourceFeedbackUI.reset(p->createDefaultUI());
+		if (p->type == Parameter::POINT2D)
+		{
+			if (DoubleSliderUI* dui = dynamic_cast<DoubleSliderUI*>(sourceFeedbackUI.get())) dui->canShowExtendedEditor = false;
+		}
+
 		sourceFeedbackUI->showLabel = false;
 		//sourceFeedbackUI->setForceFeedbackOnly(true);
 		addAndMakeVisible(sourceFeedbackUI.get());

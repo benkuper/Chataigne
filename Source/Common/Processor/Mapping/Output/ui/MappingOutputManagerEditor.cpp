@@ -36,6 +36,10 @@ void MappingOutputManagerEditor::updateOutputUI()
 	if (outParams.size() > 0 && outParams[0] != nullptr)
 	{
 		outUI.reset((ParameterUI *)outParams[0]->createDefaultUI());
+		if (outParams[0]->type == Parameter::POINT2D)
+		{
+			if (DoubleSliderUI* dui = dynamic_cast<DoubleSliderUI*>(outUI.get())) dui->canShowExtendedEditor = false;
+		}
 		outUI->showLabel = false;
 		addAndMakeVisible(outUI.get());
 	}
