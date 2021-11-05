@@ -85,7 +85,7 @@ void CustomOSCCommand::triggerInternal(int multiplexIndex)
 	}
 	catch (const OSCFormatError&)
 	{
-		NLOG("OSC", "Address is invalid :\n" << addrString);
+		NLOGERROR("OSC", "Address is invalid :\n" << addrString << " addresses should always start with a forward slash");
 		return;
 	}
 }

@@ -567,7 +567,7 @@ void OSCModule::handleRoutedModuleValue(Controllable * c, RouteParams * p)
 		}
 		catch (const OSCFormatError&)
 		{
-			NLOG(niceName, "Address is invalid : " << op->address->stringValue());
+			NLOGERROR(niceName, "Address is invalid : " << op->address->stringValue() << "\nAddresses should always start with a forward slash");
 		}
 	}
 

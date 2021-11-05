@@ -97,48 +97,50 @@ void CustomOSCModule::processMessageInternal(const OSCMessage& msg)
 	{
 		for (int i = 0; i < msg.size(); ++i)
 		{
-			//c = cParentContainer->getControllableByName(cShortName + "_" + String(i));
+			c = cParentContainer->getControllableByName(cShortName + "_" + String(i));
 
-			OSCAddressPattern address(msg.getAddressPattern().toString() + "_" + String(i));
-			Array<Controllable*> matchCont = getMatchingControllables(address);
-			if (matchCont.size() == 1) c = matchCont[0];
+			//OSCAddressPattern address(msg.getAddressPattern().toString() + "_" + String(i));
+			//Array<Controllable*> matchCont = getMatchingControllables(address);
+			//if (matchCont.size() == 1) c = matchCont[0];
 
-			for (auto& c : matchCont)
+			//if (matchCont.size() > 0)
+			//{
+			//	for (auto& c : matchCont)
+			//	{
+
+			if (c != nullptr) //Args already exists
 			{
 				Parameter* p = (Parameter*)c;
-				if (c != nullptr) //Args already exists
+				switch (c->type)
 				{
-					switch (c->type)
-					{
-					case Controllable::BOOL: p->setValue(getFloatArg(msg[i]) >= 1); break;
-					case Controllable::FLOAT: p->setValue(getFloatArg(msg[i])); break;
-					case Controllable::INT: p->setValue(getIntArg(msg[i])); break;
-					case Controllable::STRING: p->setValue(getStringArg(msg[i])); break;
-					default:
-						break;
-					}
+				case Controllable::BOOL: p->setValue(getFloatArg(msg[i]) >= 1); break;
+				case Controllable::FLOAT: p->setValue(getFloatArg(msg[i])); break;
+				case Controllable::INT: p->setValue(getIntArg(msg[i])); break;
+				case Controllable::STRING: p->setValue(getStringArg(msg[i])); break;
+				default:
+					break;
 				}
-				else if (autoAdd->boolValue())//Args don't exist yet
+			}
+			else if (autoAdd->boolValue()) //Args don't exist yet
+			{
+				String argIAddress = cNiceName + " " + String(i);
+				if (msg[i].isInt32())
 				{
-					String argIAddress = cNiceName + " " + String(i);
-					if (msg[i].isInt32())
-					{
-						c = cParentContainer->addIntParameter(argIAddress, "", msg[i].getInt32());
-					}
-					else if (msg[i].isFloat32())
-					{
-						c = cParentContainer->addFloatParameter(argIAddress, "", msg[i].getFloat32());
-					}
-					else if (msg[i].isString()) c = cParentContainer->addStringParameter(argIAddress, "", msg[i].getString());
+					c = cParentContainer->addIntParameter(argIAddress, "", msg[i].getInt32());
+				}
+				else if (msg[i].isFloat32())
+				{
+					c = cParentContainer->addFloatParameter(argIAddress, "", msg[i].getFloat32());
+				}
+				else if (msg[i].isString()) c = cParentContainer->addStringParameter(argIAddress, "", msg[i].getString());
 
 
-					if (c != nullptr) //Args have been sucessfully created 
-					{
-						c->setCustomShortName(cShortName + "_" + String(i)); //force safeName for search
-						c->isCustomizableByUser = true;
-						c->isRemovableByUser = true;
-						c->saveValueOnly = false;
-					}
+				if (c != nullptr) //Args have been sucessfully created 
+				{
+					c->setCustomShortName(cShortName + "_" + String(i)); //force safeName for search
+					c->isCustomizableByUser = true;
+					c->isRemovableByUser = true;
+					c->saveValueOnly = false;
 				}
 			}
 		}
@@ -293,7 +295,20 @@ Array<Controllable*> CustomOSCModule::getMatchingControllables(const OSCAddressP
 {
 	Array<Controllable*> matchCont;
 	HashMap<String, WeakReference<Controllable>, DefaultHashFunctions, CriticalSection>::Iterator it(controllableAddressMap);
-	while (it.next()) if (address.matches(it.getKey())) matchCont.add(it.getValue());
+	while (it.next())
+	{
+		if (it.getValue().wasObjectDeleted()) continue;
+		try
+		{
+			OSCAddress a(it.getKey());
+			if (address.matches(a)) matchCont.add(it.getValue());
+		}
+		catch (...)
+		{
+			DBG("Error trying to match, name " << it.getKey() << " may not be a valid OSC Address");
+		}
+	}
+
 	return matchCont;
 }
 
@@ -305,6 +320,7 @@ void CustomOSCModule::updateControllableAddressMap()
 	{
 		if (c.wasObjectDeleted()) continue;
 		String address = useHierarchy->boolValue() ? c->getControlAddress(&valuesCC) : c->niceName;
+		if (!address.startsWith("/") || !address.containsChar(' ')) continue; //don't add values that are not addresses
 		controllableAddressMap.set(address, c);
 	}
 }
