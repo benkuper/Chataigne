@@ -36,6 +36,7 @@ void CustomOSCModule::processMessageInternal(const OSCMessage& msg)
 
 	String cNiceName = msg.getAddressPattern().toString();
 	String cShortName = cNiceName.replaceCharacter('/', ' ');
+
 	Controllable* c = nullptr;
 	ControllableContainer* cParentContainer = &valuesCC;
 
@@ -148,7 +149,7 @@ void CustomOSCModule::processMessageInternal(const OSCMessage& msg)
 	else //Standard handling of incoming messages
 	{
 		Array<Controllable*> matchCont = getMatchingControllables(msg.getAddressPattern());
-		if (matchCont.size() == 1) c = matchCont[0];
+		if (matchCont.size() > 0) c = matchCont[0];
 
 		for (auto& c : matchCont)
 		{
@@ -320,7 +321,7 @@ void CustomOSCModule::updateControllableAddressMap()
 	{
 		if (c.wasObjectDeleted()) continue;
 		String address = useHierarchy->boolValue() ? c->getControlAddress(&valuesCC) : c->niceName;
-		if (!address.startsWith("/") || !address.containsChar(' ')) continue; //don't add values that are not addresses
+		if (!address.startsWith("/") || address.containsChar(' ')) continue; //don't add values that are not addresses
 		controllableAddressMap.set(address, c);
 	}
 }
