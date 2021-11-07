@@ -51,6 +51,7 @@ SequenceCommand::SequenceCommand(SequenceModule* _module, CommandContext context
 		playFromStart = addBoolParameter("Play From Start", "If enabled, when the command is triggered, will position the time at 0 before playing", false);
 	case STOP_SEQUENCE:
 	case PAUSE_SEQUENCE:
+	case SET_EDITING_SEQUENCE:
 		target->showParentNameInEditor = false;
 		target->customGetTargetContainerFunc = &ChataigneSequenceManager::showMenuAndGetSequenceStatic;
 		break;
@@ -211,6 +212,15 @@ void SequenceCommand::triggerInternal(int multiplexIndex)
 			tt->enabled->setValue(getLinkedValue(value, multiplexIndex));
 		}
 		break;
+
+	case SET_EDITING_SEQUENCE:
+		if (Sequence* s = getLinkedTargetContainerAs<Sequence>(target, multiplexIndex))
+		{
+			if (TimeMachineView* se = ShapeShifterManager::getInstance()->getContentForType<TimeMachineView>())
+			{
+				se->setSequence(s);
+			}
+		}
 	}
 }
 
