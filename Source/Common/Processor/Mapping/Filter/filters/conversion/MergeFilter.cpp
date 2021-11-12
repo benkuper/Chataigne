@@ -11,7 +11,7 @@
 MergeFilter::MergeFilter(var params, Multiplex* multiplex)
 {
 	op = filterParams.addEnumParameter("Operator", "Operator to merge the input values to");
-	op->addOption("Min", MIN)->addOption("Max", MAX)->addOption("Average", AVERAGE)->addOption("Sum", SUM);
+	op->addOption("Min", MIN)->addOption("Max", MAX)->addOption("Average", AVERAGE)->addOption("Sum", SUM)->addOption("Multiply",MULTIPLY);
 
 	filterTypeFilters.add(Controllable::FLOAT, Controllable::INT, Controllable::BOOL, Controllable::COLOR, Controllable::POINT2D, Controllable::POINT3D);
 }
@@ -55,11 +55,12 @@ MappingFilter::ProcessResult MergeFilter::processInternal(Array<Parameter*> inpu
 	if(!fp->isComplex())
 	{
 
-		float val = o == MIN ? (float)INT32_MAX : 0;
+		float val = o == MIN ? (float)INT32_MAX : (o == MULTIPLY ? 1 : 0);
 
 		for (auto& i : inputs)
 		{
 			if (o == AVERAGE || o == SUM) val += i->floatValue();
+			else if (o == MULTIPLY) val *= i->floatValue();
 			else val = o == MIN ? jmin(val, i->floatValue()) : jmax(val, i->floatValue());
 		}
 		if (o == AVERAGE) val /= inputs.size();
@@ -71,14 +72,15 @@ MappingFilter::ProcessResult MergeFilter::processInternal(Array<Parameter*> inpu
 	{
 		
 		var vals;
-		for (int i = 0; i < fp->value.size(); i++) vals.append(o == MIN ? (float)INT32_MAX : 0);
+		for (int i = 0; i < fp->value.size(); i++) vals.append(o == MIN ? (float)INT32_MAX : (o == MULTIPLY? 1 : 0));
 
 		for (auto& i : inputs)
 		{
 			for (int j = 0; j < i->value.size() && j < vals.size(); j++)
 			{
 				float iVal = i->value[j];
-				if (o == AVERAGE || o == SUM) vals[j] =(float)vals[j] + iVal;
+				if (o == AVERAGE || o == SUM) vals[j] = (float)vals[j] + iVal;
+				else if( o == MULTIPLY) vals[j] = (float)vals[j] * iVal;
 				else vals[j] = o == MIN ? jmin((float)vals[j], iVal) : jmax((float)vals[j], iVal);
 			}
 		}
