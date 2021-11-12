@@ -33,7 +33,7 @@ public:
 	enum TransferType { DIRECT, EXTRACT, MERGE, TARGET};
 	TransferType transferType;
 
-	enum ExtractOption { MIN = 100, MAX = 101, AVERAGE = 102, LENGTH = 103 };
+	enum ExtractOption { MIN = 100, MAX = 101, AVERAGE = 102, LENGTH = 103, AREA = 104 };
 
 	virtual void setupParametersInternal(int mutiplexIndex, bool rangeOnly = false);
 	virtual Parameter* setupSingleParameterInternal(Parameter* source, int multiplexIndex, bool rangeOnly) override;

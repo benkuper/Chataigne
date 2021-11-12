@@ -81,7 +81,7 @@ Parameter* SimpleConversionFilter::setupSingleParameterInternal(Parameter* sourc
 
 		addExtraRetargetOptions();
 
-		if (transferType == EXTRACT) retargetComponent->addOption("Min", MIN)->addOption("Max", MAX)->addOption("Average", AVERAGE)->addOption("Length", LENGTH);
+		if (transferType == EXTRACT) retargetComponent->addOption("Min", MIN)->addOption("Max", MAX)->addOption("Average", AVERAGE)->addOption("Length", LENGTH)->addOption("Area", AREA);
 
 
 		if (useBaseValue)
@@ -191,6 +191,16 @@ void SimpleConversionFilter::updateOutRange(Parameter* source, Parameter* out)
 				newMax = sqrtf((float)newMax);
 				break;
 
+			case AREA:
+				newMin = 0;
+				newMax = 1;
+				for (int i = 0; i < source->value.size(); i++)
+				{
+					float diff = (float)source->maximumValue[i] - (float)source->minimumValue[i];
+					newMax = (float)newMax * fabsf(diff);
+				}
+				break;
+
 			default:
 				if (targetData < source->value.size())
 				{
@@ -255,6 +265,11 @@ MappingFilter::ProcessResult SimpleConversionFilter::processSingleParameterInter
 			val = 0;
 			for (int i = 0; i < source->value.size(); i++) val = (float)val + (float)source->value[i] * (float)source->value[i];
 			val = sqrtf((float)val);
+			break;
+
+		case AREA:
+			val = 1;
+			for (int i = 0; i < source->value.size(); i++) val = (float)val * (float)source->value[i];
 			break;
 
 		default:
