@@ -8,8 +8,10 @@
   ==============================================================================
 */
 
-MergeFilter::MergeFilter(var params, Multiplex* multiplex)
+MergeFilter::MergeFilter(var params, Multiplex* multiplex) :
+	MappingFilter(getTypeString(), params, multiplex)
 {
+	autoSetRange = false;
 	op = filterParams.addEnumParameter("Operator", "Operator to merge the input values to");
 	op->addOption("Min", MIN)->addOption("Max", MAX)->addOption("Average", AVERAGE)->addOption("Sum", SUM)->addOption("Multiply",MULTIPLY);
 
