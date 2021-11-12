@@ -31,6 +31,8 @@ public:
 	int numRows;
 	int numColumns;
 
+	SpinLock rebuildingLock;
+
 	Trigger* reset;
 	BoolParameter* colorizeImages;
 	BoolParameter* highlightPressedButtons;

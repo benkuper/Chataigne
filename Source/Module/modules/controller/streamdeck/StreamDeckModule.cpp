@@ -78,6 +78,8 @@ void StreamDeckModule::rebuildValues()
 {
 	//if (isCurrentlyLoadingData) return;
 
+	GenericScopedLock lock(rebuildingLock);
+
 	DeviceType t = deviceType->getValueDataAsEnum<DeviceType>();
 
 	switch (t)
@@ -220,6 +222,7 @@ void StreamDeckModule::setDevice(StreamDeck* newDevice)
 void StreamDeckModule::updateButton(int row, int column)
 {
 	if (device == nullptr) return;
+	GenericScopedLock lock(rebuildingLock);
 
 	if (row < 0 || row >= numRows || column < 0 || column >= numColumns) return;
 
@@ -246,6 +249,7 @@ void StreamDeckModule::updateButton(int row, int column)
 
 void StreamDeckModule::setColor(int row, int column, const Colour& c)
 {
+	GenericScopedLock lock(rebuildingLock);
 	if (row < 0 || row >= numRows) return;
 	if (column < 0 || column >= numColumns) return;
 	(*colors[row])[column]->setColor(c);
@@ -261,6 +265,7 @@ void StreamDeckModule::setAllColor(const Colour& color)
 
 void StreamDeckModule::setImage(int row, int column, const String& path)
 {
+	GenericScopedLock lock(rebuildingLock);
 	if (row < 0 || row >= numRows) return;
 	if (column < 0 || column >= numColumns) return;
 	(*images[row])[column]->setValue(path);
@@ -268,6 +273,7 @@ void StreamDeckModule::setImage(int row, int column, const String& path)
 
 void StreamDeckModule::setText(int row, int column, const String& text)
 {
+	GenericScopedLock lock(rebuildingLock);
 	if (row < 0 || row >= numRows) return;
 	if (column < 0 || column >= numColumns) return;
 	(*texts[row])[column]->setValue(text);
@@ -283,7 +289,6 @@ void StreamDeckModule::clearTexts()
 
 void StreamDeckModule::streamDeckButtonPressed(int row, int column)
 {
-
 	if (logIncomingData->boolValue())
 	{
 		NLOG(niceName, "Button " + String(column + 1) << ":" << String(row + 1) + " pressed");
