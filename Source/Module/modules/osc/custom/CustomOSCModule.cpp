@@ -149,6 +149,11 @@ void CustomOSCModule::processMessageInternal(const OSCMessage& msg)
 	else //Standard handling of incoming messages
 	{
 		Array<Controllable*> matchCont = getMatchingControllables(msg.getAddressPattern());
+		if (matchCont.size() == 0 && msg.getAddressPattern().toString().containsChar(' '))
+		{
+			Controllable* c = valuesCC.getControllableByName(msg.getAddressPattern().toString(), true);
+			if (c != nullptr) matchCont.add(c);
+		}
 		if (matchCont.size() > 0) c = matchCont[0];
 
 		for (auto& c : matchCont)
