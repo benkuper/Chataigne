@@ -137,7 +137,7 @@ MilluminModule::MilluminModule() :
 
 
 	var timeArgs = var();
-	var timeArg =  ControllableUtil::createDataForParam(FloatParameter::getTypeStringStatic(), "Time", "Target Time", 0, 0, 1);
+	var timeArg =  ControllableUtil::createDataForParam(FloatParameter::getTypeStringStatic(), "Time", "Target Time", 0, 0);
 	timeArg.getDynamicObject()->setProperty("mappingIndex", 0);
 	timeArg.getDynamicObject()->setProperty("defaultUI", FloatParameter::TIME);
 	timeArgs.append(timeArg);
