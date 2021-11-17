@@ -148,7 +148,7 @@ This list contains all the references to projects and libraries that Chataigne u
 - Joystick Library SDL : https://www.libsdl.org/
 - HIDAPI : https://github.com/signal11/hidapi
 - Microsoft Kinect SDK 2.0 : https://developer.microsoft.com/en-us/windows/kinect
-
+- Pitch Detection (YIN/MPM) : https://github.com/adamski/pitch_detector
 Thanks to Manuel Mitasch, Norbert Rostaing, David Chanel, Tom Magnier, Emerick Herve and many more for their contributions and very helpful presence in the community !
 
 ## Perhaps the most important
