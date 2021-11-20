@@ -35,7 +35,7 @@ void CustomOSCModule::processMessageInternal(const OSCMessage& msg)
 	if (autoAdd == nullptr || useHierarchy == nullptr || autoFeedback == nullptr) return;
 
 	String cNiceName = msg.getAddressPattern().toString();
-	String cShortName = cNiceName.replaceCharacter('/', ' ');
+	String cShortName = cNiceName.replaceCharacter('/', '_');
 
 	Controllable* c = nullptr;
 	ControllableContainer* cParentContainer = &valuesCC;
