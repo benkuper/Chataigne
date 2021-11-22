@@ -102,7 +102,7 @@ void PlayAudioFileCommand::setAudioFile(File f)
 	if (reader != nullptr)
 	{
 		std::unique_ptr<AudioFormatReaderSource> newSource(new AudioFormatReaderSource(reader, true));
-		transportSource.setSource(newSource.get(), 0, nullptr, reader->sampleRate); 
+		transportSource.setSource(newSource.get(), 0, nullptr, reader->sampleRate, reader->numChannels);
 		readerSource.reset(newSource.release());
 		fileSampleRate = reader->sampleRate;
 		numFileChannels = reader->numChannels;
