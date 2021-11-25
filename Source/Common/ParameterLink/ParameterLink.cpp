@@ -469,7 +469,7 @@ ParameterLink* ParamLinkContainer::getLinkedParam(Parameter* p)
 {
 	if (!paramsCanBeLinked) return nullptr;
 
-	jassert(paramLinkMap.contains(p));
+	//jassert(paramLinkMap.contains(p));
 	return paramLinkMap[p];
 }
 

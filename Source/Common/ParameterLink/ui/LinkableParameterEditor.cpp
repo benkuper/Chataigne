@@ -231,7 +231,10 @@ String LinkableParameterEditor::getLinkLabel() const
         if (link->list != nullptr && !link->listRef.wasObjectDeleted())
         {
             s = "List " + (link->list != nullptr ? link->list->niceName : "");
-            if (Parameter* c = dynamic_cast<Parameter*>(link->list->getTargetControllableAt(link->getPreviewIndex()))) s += " : " + c->stringValue();
+            if (Parameter* c = dynamic_cast<Parameter*>(link->list->getTargetControllableAt(link->getPreviewIndex())))
+            {
+                s += " : " + (link->parameter->type != Parameter::TARGET ? c->stringValue() : c->niceName);
+            }
         }
         break;
 
