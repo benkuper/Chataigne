@@ -34,7 +34,11 @@ void MIDIDeviceParameter::setInputDevice(MIDIInputDevice * i)
 	val.append(i != nullptr ? i->id : "");
 	val.append(value[1]);
 
-	if(i != nullptr) ghostDeviceIn = value[0];
+	if (i != nullptr)
+	{
+		ghostDeviceIn = value[0];
+		ghostDeviceNameIn = i->name;
+	}
 
 	inputDevice = i;
 
@@ -47,7 +51,11 @@ void MIDIDeviceParameter::setOutputDevice(MIDIOutputDevice * o)
 	val.append(value[0]);
 	val.append(o != nullptr ? o->id : "");
 	
-	if(o != nullptr) ghostDeviceOut = val[1];
+	if (o != nullptr)
+	{
+		ghostDeviceOut = val[1];
+		ghostDeviceNameOut = o->name;
+	}
 
 	outputDevice = o;
 
@@ -79,6 +87,7 @@ void MIDIDeviceParameter::midiDeviceInRemoved(MIDIInputDevice * i)
 		if (i != nullptr)
 		{
 			ghostDeviceIn = i->id;
+			ghostDeviceNameIn = i->name;
 		}
 		setInputDevice(nullptr);
 	}
@@ -88,7 +97,12 @@ void MIDIDeviceParameter::midiDeviceOutRemoved(MIDIOutputDevice * o)
 {
 	if (o == outputDevice)
 	{
-		if(o != nullptr) ghostDeviceOut = o->id;
+		if (o != nullptr)
+		{
+			ghostDeviceOut = o->id;
+			ghostDeviceNameOut = o->name;
+		}
+
 		setOutputDevice(nullptr);
 	}
 }

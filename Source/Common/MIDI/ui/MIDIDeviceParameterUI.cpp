@@ -35,7 +35,7 @@ void MIDIDeviceParameterUI::valueChanged(const var & /*value*/)
 
 	chooser.setSelectedInputDevice(midiParam->inputDevice);
 	chooser.setSelectedOutputDevice(midiParam->outputDevice);
-	chooser.setGhostValues(midiParam->ghostDeviceIn, midiParam->ghostDeviceOut);
+	chooser.setGhostValues(midiParam->ghostDeviceNameIn, midiParam->ghostDeviceNameOut);
 }
 
 void MIDIDeviceParameterUI::midiDeviceInSelected(MIDIInputDevice * d)

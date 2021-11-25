@@ -25,6 +25,8 @@ public:
 	
 	String ghostDeviceIn;
 	String ghostDeviceOut;
+	String ghostDeviceNameIn;
+	String ghostDeviceNameOut;
 
 	void setInputDevice(MIDIInputDevice * i);
 	void setOutputDevice(MIDIOutputDevice * o);
