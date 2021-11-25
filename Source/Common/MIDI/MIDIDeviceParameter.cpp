@@ -31,7 +31,7 @@ MIDIDeviceParameter::~MIDIDeviceParameter()
 void MIDIDeviceParameter::setInputDevice(MIDIInputDevice * i)
 {
 	var val;
-	val.append(i != nullptr ? i->name : "");
+	val.append(i != nullptr ? i->id : "");
 	val.append(value[1]);
 
 	if(i != nullptr) ghostDeviceIn = value[0];
@@ -45,7 +45,7 @@ void MIDIDeviceParameter::setOutputDevice(MIDIOutputDevice * o)
 {
 	var val;
 	val.append(value[0]);
-	val.append(o != nullptr ? o->name : "");
+	val.append(o != nullptr ? o->id : "");
 	
 	if(o != nullptr) ghostDeviceOut = val[1];
 
@@ -57,8 +57,8 @@ void MIDIDeviceParameter::setOutputDevice(MIDIOutputDevice * o)
 
 void MIDIDeviceParameter::midiDeviceInAdded(MIDIInputDevice * i)
 {	
-	DBG("Device In added " << i->name << " / " << ghostDeviceIn);
-	if (inputDevice == nullptr && i->name == ghostDeviceIn)
+	//DBG("Device In added " << i->name << " / " << ghostDeviceIn);
+	if (inputDevice == nullptr && i->id == ghostDeviceIn)
 	{
 		setInputDevice(i);
 	}
@@ -66,7 +66,7 @@ void MIDIDeviceParameter::midiDeviceInAdded(MIDIInputDevice * i)
 
 void MIDIDeviceParameter::midiDeviceOutAdded(MIDIOutputDevice * o)
 {
-	if (outputDevice == nullptr&& o->name == ghostDeviceOut)
+	if (outputDevice == nullptr&& o->id == ghostDeviceOut)
 	{
 		setOutputDevice(o);
 	}
@@ -78,7 +78,7 @@ void MIDIDeviceParameter::midiDeviceInRemoved(MIDIInputDevice * i)
 	{
 		if (i != nullptr)
 		{
-			ghostDeviceIn = i->name;
+			ghostDeviceIn = i->id;
 		}
 		setInputDevice(nullptr);
 	}
@@ -88,7 +88,7 @@ void MIDIDeviceParameter::midiDeviceOutRemoved(MIDIOutputDevice * o)
 {
 	if (o == outputDevice)
 	{
-		if(o != nullptr) ghostDeviceOut = o->name;
+		if(o != nullptr) ghostDeviceOut = o->id;
 		setOutputDevice(nullptr);
 	}
 }
@@ -107,12 +107,7 @@ ControllableUI * MIDIDeviceParameter::createDefaultUI()
 void MIDIDeviceParameter::loadJSONDataInternal(var data)
 {
 	Parameter::loadJSONDataInternal(data);
-
-	if(value.size() > 0) setInputDevice(MIDIManager::getInstance()->getInputDeviceWithName(value[0]));
-
-	var deviceVal = data.getProperty("value", var());
-
-	if (deviceVal.isVoid() || deviceVal.size() == 0) return;
+	setInputDevice(MIDIManager::getInstance()->getInputDeviceWithName(value[0]));
 
 	if (inputDevice == nullptr) ghostDeviceIn = data.getProperty("value", var())[0];	
 

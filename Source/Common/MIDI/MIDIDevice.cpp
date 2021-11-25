@@ -8,15 +8,16 @@
   ==============================================================================
 */
 
-MIDIDevice::MIDIDevice(const String & deviceName, Type t) :
-	name(deviceName),
+MIDIDevice::MIDIDevice(const MidiDeviceInfo& info, Type t) :
+	id(info.identifier),
+	name(info.name),
 	type(t)
 {}
 
 
 
-MIDIInputDevice::MIDIInputDevice(const String & deviceName) :
-	MIDIDevice(deviceName, MIDI_IN)
+MIDIInputDevice::MIDIInputDevice(const MidiDeviceInfo & info) :
+	MIDIDevice(info, MIDI_IN)
 {
 }
 
@@ -29,9 +30,9 @@ void MIDIInputDevice::addMIDIInputListener(MIDIInputListener * newListener)
 	inputListeners.add(newListener);
 	if (inputListeners.size() == 1)
 	{
-		int deviceIndex = MidiInput::getDevices().indexOf(name);
+		//int deviceIndex = MidiInput::getDevices().indexOf(name);
 		device.reset();
-		device = MidiInput::openDevice(deviceIndex, this);
+		device = MidiInput::openDevice(name, this);
 
 		if (device != nullptr)
 		{
@@ -91,8 +92,8 @@ void MIDIInputDevice::handleIncomingMidiMessage(MidiInput * source, const MidiMe
 //*****************   MIDI OUTPUT
 
 
-MIDIOutputDevice::MIDIOutputDevice(const String & deviceName) :
-	MIDIDevice(deviceName, MIDI_OUT),
+MIDIOutputDevice::MIDIOutputDevice(const MidiDeviceInfo & info) :
+	MIDIDevice(info, MIDI_OUT),
 	usageCount(0)
 {}
 
@@ -105,9 +106,9 @@ void MIDIOutputDevice::open()
 	usageCount++;
 	if (usageCount == 1)
 	{
-		int deviceIndex = MidiOutput::getDevices().indexOf(name);
+		//int deviceIndex = MidiOutput::getAvailableDevices().indexOf(name);
 		device.reset();
-		device = MidiOutput::openDevice(deviceIndex);
+		device = MidiOutput::openDevice(name);// deviceIndex);
 		if (device != nullptr)
 		{
 			LOG("MIDI Out " << device->getName() << " opened");

@@ -22,10 +22,14 @@ public:
 	OwnedArray<MIDIOutputDevice> outputs;
 
 	void checkDevices();
-	void addInputDeviceIfNotThere(const String &name);
-	void addOutputDeviceIfNotThere(const String &name);
+	void addInputDeviceIfNotThere(const MidiDeviceInfo &info);
+	void addOutputDeviceIfNotThere(const MidiDeviceInfo& info);
 	void removeInputDevice(MIDIInputDevice * d);
 	void removeOutputDevice(MIDIOutputDevice * d);
+
+
+	MIDIInputDevice* getInputDeviceWithID(const String& id);
+	MIDIOutputDevice* getOutputDeviceWithID(const String& id);
 
 	MIDIInputDevice * getInputDeviceWithName(const String &name);
 	MIDIOutputDevice * getOutputDeviceWithName(const String &name);
