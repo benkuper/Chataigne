@@ -32,7 +32,7 @@ void MIDIInputDevice::addMIDIInputListener(MIDIInputListener * newListener)
 	{
 		//int deviceIndex = MidiInput::getDevices().indexOf(name);
 		device.reset();
-		device = MidiInput::openDevice(name, this);
+		device = MidiInput::openDevice(id, this);
 
 		if (device != nullptr)
 		{
@@ -108,13 +108,13 @@ void MIDIOutputDevice::open()
 	{
 		//int deviceIndex = MidiOutput::getAvailableDevices().indexOf(name);
 		device.reset();
-		device = MidiOutput::openDevice(name);// deviceIndex);
+		device = MidiOutput::openDevice(id);// deviceIndex);
 		if (device != nullptr)
 		{
 			LOG("MIDI Out " << device->getName() << " opened");
 		} else
 		{
-			LOG("MIDI Out " << name << " open error");
+			LOGERROR("MIDI Out " << name << " open error");
 		}
 	}
 }
