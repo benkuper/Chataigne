@@ -1,4 +1,3 @@
-#include "LoupedeckModule.h"
 /*
   ==============================================================================
 
@@ -428,8 +427,6 @@ void LoupedeckModule::setScreenContent(int screenIndex, const Rectangle<int>& r,
 		g.setColour(color.getPerceivedBrightness() > .5f ? Colours::black : Colours::white);
 		g.drawFittedText(text, g.getClipBounds().reduced(5), Justification::centred, 5);
 	}
-
-	//Image::BitmapData bitmapData(iconImage, Image::BitmapData::ReadWriteMode::readOnly);
 
 	LDScreen screen = screens[screenIndex];
 
