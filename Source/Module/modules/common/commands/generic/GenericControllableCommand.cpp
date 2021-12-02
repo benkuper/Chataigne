@@ -21,11 +21,13 @@ GenericControllableCommand::GenericControllableCommand(Module* _module, CommandC
 	int64 rootPtr = (int64)params.getProperty("root", 0);
 	ControllableContainer* rootCC = rootPtr == 0 ? nullptr : (ControllableContainer*)rootPtr;
 	target = addTargetParameter("Target ", "The target to set the value to or trigger", rootCC);
-	if(ParameterLink * pLink = getLinkedParam(target)) pLink->canLinkToMapping = false;
+	if (ParameterLink* pLink = getLinkedParam(target)) pLink->canLinkToMapping = false;
 
 	if (action == TRIGGER) target->typesFilter.add(Trigger::getTypeStringStatic());
 	else if (action == SET_VALUE) target->excludeTypesFilter.add(Trigger::getTypeStringStatic());
 	else if (action == SET_ENABLED) target->customTargetFilterFunc = &GenericControllableCommand::checkEnableTargetFilter;
+
+	target->defaultParentLabelLevel = params.getProperty("labelLevel", 3);
 
 	if (action == SET_VALUE)
 	{
@@ -48,21 +50,25 @@ void GenericControllableCommand::updateComponentFromTarget()
 	componentOperator->addOption("All", -1);
 
 	Controllable* cTarget = getControllableFromTarget();
-
+	
 	bool hasSubComponents = false;
-	if (cTarget->type != TRIGGER)
-	{
-		Parameter* p = (Parameter*)cTarget;
-		if (p->isComplex())
-		{
-			hasSubComponents = true;
 
-			StringArray names = p->getValuesNames();
-			for (int i = 0; i < names.size(); i++) componentOperator->addOption(names[i], i);
+	if (cTarget != nullptr)
+	{
+		if (cTarget->type != TRIGGER)
+		{
+			Parameter* p = (Parameter*)cTarget;
+			if (p->isComplex())
+			{
+				hasSubComponents = true;
+
+				StringArray names = p->getValuesNames();
+				for (int i = 0; i < names.size(); i++) componentOperator->addOption(names[i], i);
+			}
 		}
 	}
-
 	componentOperator->setEnabled(hasSubComponents);
+
 
 	if (!val.isVoid()) componentOperator->setValueWithData(val);
 	else if (!ghostComponent.isVoid()) componentOperator->setValueWithData(ghostComponent);
@@ -85,7 +91,7 @@ void GenericControllableCommand::updateValueFromTargetAndComponent()
 	if (cTarget != nullptr)
 	{
 		int compData = componentOperator->getValueData();
-		if(compData == -1)	value = ControllableFactory::createParameterFrom(cTarget);
+		if (compData == -1)	value = ControllableFactory::createParameterFrom(cTarget);
 		else
 		{
 			float minV = cTarget->minimumValue[compData];
@@ -234,7 +240,10 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 					}
 					else
 					{
-						if(compOp == -1) p->setValue(val);
+						if (compOp == -1)
+						{
+							if (p->value.size() == val.size()) p->setValue(val);
+						}
 						else
 						{
 							var pVal = p->value.clone();
