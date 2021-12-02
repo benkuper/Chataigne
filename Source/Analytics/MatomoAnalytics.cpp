@@ -93,9 +93,14 @@ void MatomoAnalytics::run()
 	//DBG("Send to analytics " << url.toString(false) << ", params :\n > " << url.getParameterValues().joinIntoString("\n > "));
 	StringPairArray responseHeaders;
 	int statusCode = 0;
-	std::unique_ptr<InputStream> stream(url.createInputStream(true, nullptr, nullptr, String(),
-		2000, // timeout in millisecs
-		&responseHeaders, &statusCode));
+	
+	std::unique_ptr<InputStream> stream(url.createInputStream(
+			URL::InputStreamOptions(URL::ParameterHandling::inPostData)
+			.withConnectionTimeoutMs(2000)
+			.withResponseHeaders(&responseHeaders)
+			.withStatusCode(&statusCode)
+	));
+
 #if JUCE_WINDOWS
 	if (statusCode != 200)
 	{

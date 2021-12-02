@@ -33,7 +33,7 @@ HTTPModule::HTTPModule(const String& name) :
 	valuesCC.saveAndLoadRecursiveData = true;
 
 	defManager->add(CommandDefinition::createDef(this, "", "Request", &HTTPCommand::create, CommandContext::BOTH));
-	defManager->add(CommandDefinition::createDef(this, "", "Request with payload", &HTTPCommand::create, CommandContext::BOTH)->addParam("contentType",HTTPCommand::PLAIN));
+	defManager->add(CommandDefinition::createDef(this, "", "Request with payload", &HTTPCommand::create, CommandContext::BOTH)->addParam("contentType", HTTPCommand::PLAIN));
 
 	scriptObject.setMethod(sendGETId, HTTPModule::sendGETFromScript);
 	scriptObject.setMethod(sendPOSTId, HTTPModule::sendPOSTFromScript);
@@ -69,12 +69,19 @@ void HTTPModule::sendRequest(StringRef address, RequestMethod method, ResultData
 void HTTPModule::processRequest(Request* request)
 {
 	GenericScopedLock rLock(requests.getLock());
-	
+
 	StringPairArray responseHeaders;
 	int statusCode = 0;
-	std::unique_ptr<InputStream> stream(request->url.createInputStream(request->method == METHOD_POST, nullptr, nullptr, request->extraHeaders,
-		2000, // timeout in millisecs
-		&responseHeaders, &statusCode, 5, requestMethodNames[(int)request->method]));
+
+	std::unique_ptr<InputStream> stream(request->url.createInputStream(
+		URL::InputStreamOptions(request->method == METHOD_POST ? URL::ParameterHandling::inPostData : URL::ParameterHandling::inAddress)
+		.withConnectionTimeoutMs(2000)
+		.withExtraHeaders(request->extraHeaders)
+		.withResponseHeaders(&responseHeaders)
+		.withStatusCode(&statusCode)
+		.withNumRedirectsToFollow(5)
+		.withHttpRequestCmd(requestMethodNames[(int)request->method])
+	));
 
 #if JUCE_WINDOWS
 	if (statusCode != 200 && !request->url.isLocalFile())
@@ -134,9 +141,9 @@ void HTTPModule::processRequest(Request* request)
 		}
 
 		break;
-                
-            default:
-                break;
+
+		default:
+			break;
 		}
 
 		args.add(request->url.toString(true));
@@ -245,7 +252,7 @@ void HTTPModule::createControllablesFromXMLResult(XmlElement* data, Controllable
 		XmlElement* e = data->getChildElement(i);
 		String eName = e->getTagName();
 
-		if(e->getNumChildElements() == 1 && e->getFirstChildElement()->isTextElement())
+		if (e->getNumChildElements() == 1 && e->getFirstChildElement()->isTextElement())
 		{
 			String t = e->getFirstChildElement()->getText();
 
@@ -290,13 +297,13 @@ void HTTPModule::createControllablesFromXMLResult(XmlElement* data, Controllable
 		}
 		else
 		{
-			ControllableContainer* cc = container->getControllableContainerByName(eName, true); 
+			ControllableContainer* cc = container->getControllableContainerByName(eName, true);
 			if (cc == nullptr && autoAdd->boolValue())
 			{
 				cc = new ControllableContainer(eName);
 				container->addChildControllableContainer(cc, true);
 			}
-			if(cc != nullptr) createControllablesFromXMLResult(e, cc);
+			if (cc != nullptr) createControllablesFromXMLResult(e, cc);
 		}
 	}
 }
@@ -346,7 +353,7 @@ void HTTPModule::sendRequestFromScript(const var::NativeFunctionArgs& args, Requ
 			String dataTypeString = o.getProperty("dataType", "").toString().toLowerCase();
 			if (dataTypeString == jsonDataTypeId.toString()) dataType = ResultDataType::JSON;
 			else if (dataTypeString == rawDataTypeId.toString()) dataType = ResultDataType::RAW;
-			
+
 			var argArray = o.getProperty("arguments", var());
 			for (int i = 0; i < argArray.size(); i += 2)
 			{
@@ -382,7 +389,7 @@ void HTTPModule::sendRequestFromScript(const var::NativeFunctionArgs& args, Requ
 			}
 		}
 	}
-	
+
 
 	sendRequest(args.arguments[0].toString(), method, dataType, requestParams, extraHeaders, payload);
 	return;

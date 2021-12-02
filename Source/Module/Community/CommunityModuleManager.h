@@ -26,5 +26,5 @@ public:
 
 	CommunityModuleInfo* getModuleInfoForFolder(const File & folder);
 
-	static bool openStreamProgressCallback(void* context, int /*bytesSent*/, int /*totalBytes*/);
+	bool openStreamProgressCallback(int /*bytesSent*/, int /*totalBytes*/);
 };
