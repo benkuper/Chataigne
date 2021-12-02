@@ -63,12 +63,12 @@ void ResolumeBaseCommand::rebuildParameters()
 
 	levelParam->hideInEditor = levelParam->enumValues.size() <= 1;
 
-	layerParam = addIntParameter("Layer", "The Target layer", 1, 1, 100);
+	layerParam = addIntParameter("Layer", "The Target layer", 1, 1);
 	String targetClipName = "Clip";
 	if (targetLevel == COLUMN) targetClipName = "Column";
 	else if (targetLevel == DECK) targetClipName = "Deck";
 
-	clipParam = addIntParameter(targetClipName, "The Target " + targetClipName, 1, 1, 100);
+	clipParam = addIntParameter(targetClipName, "The Target " + targetClipName, 1, 1);
 
 	resolumeControllables.add(levelParam);
 	resolumeControllables.add(layerParam);
