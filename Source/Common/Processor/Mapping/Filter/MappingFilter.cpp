@@ -99,6 +99,8 @@ bool MappingFilter::setupSources(Array<Parameter*> sources, int multiplexIndex, 
 		filterAsyncNotifier.addMessage(new FilterEvent(FilterEvent::FILTER_REBUILT, this));
 	}
 
+	process(sources, multiplexIndex);
+
 	isSettingUpSources = false;
 	return true;
 }

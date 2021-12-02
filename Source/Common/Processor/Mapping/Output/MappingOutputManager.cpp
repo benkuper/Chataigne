@@ -51,6 +51,8 @@ void MappingOutputManager::setOutParams(Array<Parameter *> params, int multiplex
 	outParams.set(multiplexIndex, Array<WeakReference<Parameter>>(params.getRawDataPointer(), params.size()));
 	if(outParams.size() > 0) for (auto &o : items) o->setOutParams(outParams[multiplexIndex], multiplexIndex); //better than this ? should handle all ?
 
+	prevMergedValue = getMergedOutValue(multiplexIndex);
+
 	omAsyncNotifier.addMessage(new OutputManagerEvent(OutputManagerEvent::OUTPUT_CHANGED));
 }
 

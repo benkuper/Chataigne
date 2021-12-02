@@ -33,6 +33,8 @@ public:
 
 	std::unique_ptr<ProcessorManager> pm;
 
+	void handleLoadActivation();
+
 	void onContainerParameterChangedInternal(Parameter *) override;
 
 	var getJSONData() override;

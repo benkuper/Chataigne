@@ -1,3 +1,4 @@
+#include "State.h"
 /*
   ==============================================================================
 
@@ -43,6 +44,12 @@ State::~State()
 }
 
 
+void State::handleLoadActivation()
+{
+	if (!active->boolValue() || !enabled->boolValue()) return;
+	active->setValue(true, false, true); // force active:true to handle startActivation, mapping process after load, etc.
+}
+
 void State::onContainerParameterChangedInternal(Parameter *p)
 {
 	if (p == active || p == enabled)
@@ -55,7 +62,7 @@ void State::onContainerParameterChangedInternal(Parameter *p)
 				pm->setForceDisabled(!active->boolValue() || !enabled->boolValue());
 
 				if (enabled->boolValue() && active->boolValue())
-					pm->processAllMappings();
+					pm->processAllMappings(false);
 			}
 			else if (enabled->boolValue())
 			{
@@ -66,8 +73,7 @@ void State::onContainerParameterChangedInternal(Parameter *p)
 					stateListeners.call(&StateListener::stateActivationChanged, this);
 
 					pm->checkAllActivateActions();
-					pm->processAllMappings();
-
+					pm->processAllMappings(true);
 
 					for (auto& t : outTransitions)
 					{

@@ -130,11 +130,14 @@ void ProcessorManager::checkAllDeactivateActions()
 	}
 }
 
-void ProcessorManager::processAllMappings()
+void ProcessorManager::processAllMappings(bool fromLoad)
 {
 	Array<Mapping*> mappings = getAllMappings();
 	for (auto& m : mappings)
+	{
+		if (fromLoad && !m->sendAfterLoad->boolValue()) continue;
 		m->process();
+	}
 }
 
 void ProcessorManager::loadJSONDataInternal(var data)

@@ -186,7 +186,9 @@ void MappingFilterManager::reorderItems()
 void MappingFilterManager::filterStateChanged(MappingFilter* mf)
 {
 	if (isRebuilding) return;
-	notifyNeedsRebuild(); //do not specify the filter so the complete chain is rebuild
+	int prevFilterIndex = items.indexOf(mf) - 1;
+	MappingFilter* prevFilter = prevFilterIndex >= 0 ? items[prevFilterIndex] : nullptr;
+	notifyNeedsRebuild(prevFilter); //do not specify the filter so the complete chain is rebuild
 }
 
 void MappingFilterManager::filterNeedsProcess(MappingFilter* mf)

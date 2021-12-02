@@ -367,5 +367,5 @@ void StateManager::loadJSONDataManagerInternal(var data)
 
 void StateManager::endLoadFile()
 {
-	for (auto& s : items) if (s->active->boolValue()) s->active->setValue(true, false, true);
+	for (auto& s : items) s->handleLoadActivation();
 }
