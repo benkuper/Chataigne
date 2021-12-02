@@ -212,6 +212,10 @@ void CVGroup::computeValues()
 
 	Array<float> weights = getNormalizedPresetWeights();
 
+	bool zeroWeight = true;
+	for (auto& w : weights) if (w != 0) zeroWeight = false;
+	if (zeroWeight) return;
+
 	switch (cm)
 	{
 	case VORONOI:
