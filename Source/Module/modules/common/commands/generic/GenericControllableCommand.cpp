@@ -45,12 +45,14 @@ GenericControllableCommand::~GenericControllableCommand()
 
 void GenericControllableCommand::updateComponentFromTarget()
 {
+	if (componentOperator == nullptr) return;
+
 	var val = componentOperator->getValueData();
 	componentOperator->clearOptions();
 	componentOperator->addOption("All", -1);
 
 	Controllable* cTarget = getControllableFromTarget();
-	
+
 	bool hasSubComponents = false;
 
 	if (cTarget != nullptr)
@@ -94,9 +96,13 @@ void GenericControllableCommand::updateValueFromTargetAndComponent()
 		if (compData == -1)	value = ControllableFactory::createParameterFrom(cTarget);
 		else
 		{
-			float minV = cTarget->minimumValue[compData];
-			float maxV = cTarget->maximumValue[compData];
-			value = new FloatParameter("Value", "", 0, minV, maxV);
+			if (compData < cTarget->minimumValue.size())
+			{
+				float minV = cTarget->minimumValue[compData];
+				float maxV = cTarget->maximumValue[compData];
+				value = new FloatParameter("Value", "", 0, minV, maxV);
+			}
+
 		}
 	}
 	else value = nullptr;
@@ -342,7 +348,7 @@ Controllable* GenericControllableCommand::getTargetControllableAtIndex(int multi
 
 void GenericControllableCommand::linkUpdated(ParameterLink* pLink)
 {
-	if (pLink->parameter == target) updateValueFromTargetAndComponent();
+	if (pLink->parameter == target) updateComponentFromTarget();
 }
 
 void GenericControllableCommand::loadJSONDataInternal(var data)
@@ -384,7 +390,7 @@ void GenericControllableCommand::loadGhostData(var data)
 		}
 	}
 
-	updateComponentFromTarget(); //force generate if not yet
+	if(action == SET_VALUE) updateComponentFromTarget(); //force generate if not yet
 //}
 }
 
