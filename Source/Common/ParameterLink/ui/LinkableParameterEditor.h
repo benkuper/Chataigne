@@ -17,7 +17,7 @@ class LinkableParameterEditor :
     public ParameterLink::AsyncListener
 {
 public:
-    LinkableParameterEditor(ParameterLink* pLink, bool showMappingOptions);
+    LinkableParameterEditor(Array<ParameterLink*> pLinks, bool showMappingOptions);
     ~LinkableParameterEditor();
 
     static Image linkImage;
@@ -25,6 +25,7 @@ public:
     bool showMappingOptions;
 
 
+    Array<ParameterLink*> links;
     ParameterLink* link;
     std::unique_ptr<ParameterEditor> paramEditor;
     std::unique_ptr<ImageButton> linkBT;
@@ -37,6 +38,14 @@ public:
     void childBoundsChanged(Component* c) override;
 
     String getLinkLabel() const;
+
+    template<class T>
+    static Array<T*> getLinksAs(Array<ParameterLink*> links)
+    {
+        Array<T*> result;
+        for (auto& l : links) result.add(l->parameter);
+        return result;
+    }
 
     void newMessage(const ParameterLink::ParameterLinkEvent& e) override;
 

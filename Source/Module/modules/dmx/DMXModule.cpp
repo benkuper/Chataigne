@@ -387,7 +387,7 @@ void DMXModule::DMXModuleRouterController::triggerTriggered(Trigger* t)
 	}
 }
 
-ControllableUI * DMXValueParameter::createDefaultUI()
+ControllableUI * DMXValueParameter::createDefaultUI(Array<Controllable*> controllables)
 {
-	return new DMXValueParameterUI(this);
+	return new DMXValueParameterUI(Inspectable::getArrayAs<Controllable, DMXValueParameter>(controllables));
 }

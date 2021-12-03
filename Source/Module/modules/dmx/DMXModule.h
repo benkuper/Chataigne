@@ -63,7 +63,7 @@ public:
 	DMXByteOrder type;
 	int channel;
 
-	ControllableUI * createDefaultUI() override;
+	ControllableUI * createDefaultUI(Array<Controllable*> controllables = {}) override;
 
 	static DMXValueParameter* create() { return new DMXValueParameter("DMX Value Parameter", "", 0 , 1, BIT8); }
 	virtual String getTypeString() const override { return getTypeStringStatic(); }
