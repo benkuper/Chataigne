@@ -354,7 +354,7 @@ void GenericControllableCommand::linkUpdated(ParameterLink* pLink)
 void GenericControllableCommand::loadJSONDataInternal(var data)
 {
 	BaseCommand::loadJSONDataInternal(data);
-	//loadGhostData(data);
+
 	if (target->target == nullptr && Engine::mainEngine->isLoadingFile)
 	{
 		ghostData = data;
