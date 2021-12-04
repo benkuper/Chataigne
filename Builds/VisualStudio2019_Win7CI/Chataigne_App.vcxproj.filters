@@ -1996,6 +1996,9 @@
     <ClCompile Include="..\..\Source\Module\modules\controller\loupedeck\LoupedeckShapeManager.cpp">
       <Filter>Chataigne\Source\Module\modules\controller\loupedeck</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\controller\loupedeck\WSSerial.cpp">
+      <Filter>Chataigne\Source\Module\modules\controller\loupedeck</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\controller\mouse\commands\MouseModuleCommands.cpp">
       <Filter>Chataigne\Source\Module\modules\controller\mouse\commands</Filter>
     </ClCompile>
@@ -6115,6 +6118,9 @@
       <Filter>Chataigne\Source\Module\modules\controller\loupedeck</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\controller\loupedeck\LoupedeckShapeManager.h">
+      <Filter>Chataigne\Source\Module\modules\controller\loupedeck</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\controller\loupedeck\WSSerial.h">
       <Filter>Chataigne\Source\Module\modules\controller\loupedeck</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\controller\mouse\commands\MouseModuleCommands.h">
