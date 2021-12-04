@@ -89,10 +89,6 @@
 #include "modules/controller/streamdeck/models/StreamDeckV2.h"
 #include "modules/controller/streamdeck/models/StreamDeckXL.h"
 
-#include "modules/controller/loupedeck/LoupedeckShape.h"
-#include "modules/controller/loupedeck/LoupedeckShapeManager.h"
-#include "modules/controller/loupedeck/LoupedeckModule.h"
-#include "modules/controller/loupedeck/commands/LoupedeckCommands.h"
 
 #include "modules/controller/wiimote/WiimotePairUtil.h"
 #include "modules/controller/wiimote/WiimoteManager.h"
@@ -168,6 +164,11 @@
 #include "modules/sequence/SequenceModule.h"
 
 #include "modules/serial/SerialModule.h"
+
+#include "modules/controller/loupedeck/LoupedeckShape.h"
+#include "modules/controller/loupedeck/LoupedeckShapeManager.h"
+#include "modules/controller/loupedeck/LoupedeckModule.h"
+#include "modules/controller/loupedeck/commands/LoupedeckCommands.h"
 
 #include "modules/state/commands/StateCommand.h"
 #include "modules/state/StateModule.h"

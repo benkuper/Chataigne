@@ -10,27 +10,31 @@
 
 #pragma once
 
-class SerialModule : 
+class SerialModule :
 	public StreamingModule,
 	public SerialDevice::SerialDeviceListener,
 	public SerialManager::SerialManagerListener
 {
 public:
-	SerialModule(const String &name = "Serial");
+	SerialModule(const String& name = "Serial");
 	virtual ~SerialModule();
 
-	bool setPortStatus(bool status);
 
 	//Device info
 	String deviceID;
 	String lastOpenedPortID; //for ghosting
 
-	SerialDeviceParameter * portParam;
-	IntParameter * baudRate;
-	SerialDevice * port; 
-	BoolParameter * isConnected;
+	SerialDeviceParameter* portParam;
+	IntParameter* baudRate;
+	SerialDevice* port;
+	BoolParameter* isConnected;
 
-	virtual void setCurrentPort(SerialDevice *port);
+	virtual void setCurrentPort(SerialDevice* port);
+	virtual bool setPortStatus(bool status);
+	virtual void setupPortInternal() {}
+
+	virtual void portOpenedInternal() {}
+	virtual void portClosedInternal() {}
 
 	virtual void onContainerParameterChangedInternal(Parameter* p) override;
 	virtual void onControllableFeedbackUpdateInternal(ControllableContainer *, Controllable * c) override;
@@ -44,7 +48,7 @@ public:
 	virtual void portOpened(SerialDevice *) override;
 	virtual void portClosed(SerialDevice *) override;
 	virtual void portRemoved(SerialDevice *) override;
-	virtual void serialDataReceived(const var &data) override;
+	virtual void serialDataReceived(const var& data) override;
 
 	virtual var getJSONData() override;
 	virtual void loadJSONDataInternal(var data) override;
