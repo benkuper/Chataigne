@@ -22,7 +22,7 @@ LoupedeckModule::LoupedeckModule() :
 	slidersCC("Sliders"),
 	padsCC("Pads")
 {
-	baudRate->setValue(9600);
+	//baudRate->setValue(9600);
 
 	autoAdd->hideInEditor = true;
 	autoAdd->setValue(false);
@@ -186,8 +186,8 @@ LoupedeckModule::~LoupedeckModule()
 
 void LoupedeckModule::setupPortInternal()
 {
-	port->setDataBits(8);
-	port->setStopBits(2);
+	//port->setDataBits(8);
+	//port->setStopBits(2);
 }
 
 void LoupedeckModule::portOpenedInternal()
