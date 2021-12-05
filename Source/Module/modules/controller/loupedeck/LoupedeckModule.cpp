@@ -23,7 +23,7 @@ LoupedeckModule::LoupedeckModule() :
 	padsCC("Pads")
 {
 	//baudRate->setValue(9600);
-	
+
 	portParam->vidFilter = 0x2ec2;
 
 	autoAdd->hideInEditor = true;
@@ -32,7 +32,7 @@ LoupedeckModule::LoupedeckModule() :
 
 	messageStructure->hideInEditor = true;
 	firstValueIsTheName->hideInEditor = true;
-	
+
 
 	baudRate->hideInEditor = true;
 
@@ -195,20 +195,20 @@ void LoupedeckModule::setupPortInternal()
 
 void LoupedeckModule::portOpenedInternal()
 {
-    Timer::callAfterDelay(50, [this](){
-        wsMode = WSMode::HANDSHAKE;
+	//Timer::callAfterDelay(100, [this]() {
+		wsMode = WSMode::HANDSHAKE;
 
-        //in case loupedeck was already in websocket mode
-        Array<uint8_t> closeBytes{ 0x88, 0x80, 0x00, 0x00, 0x00, 0x00 };
-        sendBytes(closeBytes);
-        
-	String req = "GET /index.html HTTP/1.1\n\
+		//in case loupedeck was already in websocket mode
+		Array<uint8_t> closeBytes{ 0x88, 0x80, 0x00, 0x00, 0x00, 0x00 };
+		sendBytes(closeBytes);
+
+		String req = "GET /index.html HTTP/1.1\n\
 Connection: Upgrade\n\
 Upgrade: websocket\n\
 Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==\n\n";
 
-    this->sendMessage(req);
-    });
+		this->sendMessage(req);
+	//});
 }
 
 void LoupedeckModule::processDataBytesInternal(Array<uint8> bytes)
@@ -221,11 +221,11 @@ void LoupedeckModule::processDataBytesInternal(Array<uint8> bytes)
 			NLOG(niceName, "Handshake received, Loupedeck in da platz.");
 			buffer.clear();
 			wsMode = WSMode::DATA;
-            
-            //init screen and buttons
-            //for (int i = 0; i < pads.size(); i++) updatePadContent(i, false);
-            //for (int i = 0; i < buttons.size(); i++) updateButton(i);
-            refreshScreen(2);
+
+			//init screen and buttons
+			//for (int i = 0; i < pads.size(); i++) updatePadContent(i, false);
+			//for (int i = 0; i < buttons.size(); i++) updateButton(i);
+			refreshScreen(2);
 		}
 
 		return;
@@ -241,7 +241,7 @@ void LoupedeckModule::processDataBytesInternal(Array<uint8> bytes)
 		buffer.clear();
 	}
 
-	buffer.addArray(bytes.getRawDataPointer(), jmin<int>(bytes.size(), expectedLength-buffer.size()));
+	buffer.addArray(bytes.getRawDataPointer(), jmin<int>(bytes.size(), expectedLength - buffer.size()));
 
 	if (buffer.size() < expectedLength) return;
 
@@ -353,7 +353,7 @@ void LoupedeckModule::onControllableFeedbackUpdateInternal(ControllableContainer
 	{
 		if (isConnected->boolValue())
 		{
-			
+
 		}
 	}
 	else if (cc == &moduleParams)

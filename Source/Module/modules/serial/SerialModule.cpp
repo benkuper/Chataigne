@@ -81,6 +81,7 @@ void SerialModule::setCurrentPort(SerialDevice* _port)
 
 	if (port != nullptr)
 	{
+		portClosedInternal();
 		port->removeSerialDeviceListener(this);
 	}
 
@@ -91,6 +92,7 @@ void SerialModule::setCurrentPort(SerialDevice* _port)
 		port->addSerialDeviceListener(this);
 		setPortStatus(true);
 		lastOpenedPortID = port->info->deviceID;
+		portOpenedInternal();
 	}
 	
 	serialModuleListeners.call(&SerialModuleListener::currentPortChanged);
@@ -165,7 +167,6 @@ void SerialModule::sendBytesInternal(Array<uint8> data, var)
 
 void SerialModule::portOpened(SerialDevice*)
 {
-	portOpenedInternal();
 	serialModuleListeners.call(&SerialModuleListener::portOpened);
 }
 
