@@ -23,6 +23,8 @@ LoupedeckModule::LoupedeckModule() :
 	padsCC("Pads")
 {
 	//baudRate->setValue(9600);
+	
+	portParam->vidFilter = 0x2ec2;
 
 	autoAdd->hideInEditor = true;
 	autoAdd->setValue(false);
@@ -30,6 +32,7 @@ LoupedeckModule::LoupedeckModule() :
 
 	messageStructure->hideInEditor = true;
 	firstValueIsTheName->hideInEditor = true;
+	
 
 	baudRate->hideInEditor = true;
 
@@ -176,7 +179,7 @@ LoupedeckModule::LoupedeckModule() :
 	valuesCC.addChildControllableContainer(&padsCC);
 
 
-
+	wsMode = WSMode::HANDSHAKE;
 }
 
 LoupedeckModule::~LoupedeckModule()
@@ -217,9 +220,11 @@ void LoupedeckModule::processDataBytesInternal(Array<uint8> bytes)
 			buffer.clear();
 			wsMode = WSMode::DATA;
 		}
+
 		return;
 	}
 
+	if (!enabled->boolValue()) return;
 	if (bytes.size() < 2) return;
 
 	if (bytes[0] == 130)
@@ -339,10 +344,12 @@ void LoupedeckModule::onControllableFeedbackUpdateInternal(ControllableContainer
 
 	if (c == isConnected)
 	{
-		for (int i = 0; i < pads.size(); i++) updatePadContent(i, false);
-		for (int i = 0; i < buttons.size(); i++) updateButton(i);
-		refreshScreen(2);
-
+		if (isConnected->boolValue())
+		{
+			for (int i = 0; i < pads.size(); i++) updatePadContent(i, false);
+			for (int i = 0; i < buttons.size(); i++) updateButton(i);
+			refreshScreen(2);
+		}
 	}
 	else if (cc == &moduleParams)
 	{
@@ -427,6 +434,8 @@ void LoupedeckModule::onControllableFeedbackUpdateInternal(ControllableContainer
 
 void LoupedeckModule::sendLoupedeckCommand(LDCommand command, Array<uint8> data)
 {
+	if (!enabled->boolValue()) return;
+
 	//insert command at begin of payload
 	data.insert(0, (command >> 8) & 0xFF);
 	data.insert(1, command & 0xFF);
