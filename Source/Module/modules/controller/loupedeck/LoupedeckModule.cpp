@@ -195,18 +195,20 @@ void LoupedeckModule::setupPortInternal()
 
 void LoupedeckModule::portOpenedInternal()
 {
-	wsMode = WSMode::HANDSHAKE;
+    Timer::callAfterDelay(50, [this](){
+        wsMode = WSMode::HANDSHAKE;
 
-	//in case loupedeck was already in websocket mode
-	Array<uint8_t> closeBytes{ 0x88, 0x80, 0x00, 0x00, 0x00, 0x00 };
-	sendBytes(closeBytes);
+        //in case loupedeck was already in websocket mode
+        Array<uint8_t> closeBytes{ 0x88, 0x80, 0x00, 0x00, 0x00, 0x00 };
+        sendBytes(closeBytes);
+        
+	String req = "GET /index.html HTTP/1.1\n\
+Connection: Upgrade\n\
+Upgrade: websocket\n\
+Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==\n\n";
 
-	String req = "GET /index.html HTTP/1.1\r\n \
-     Connection: Upgrade\r\n \
-     Upgrade: websocket\r\n \
-     Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==\r\n\r\n";
-
-	sendMessage(req);
+    this->sendMessage(req);
+    });
 }
 
 void LoupedeckModule::processDataBytesInternal(Array<uint8> bytes)
@@ -219,6 +221,11 @@ void LoupedeckModule::processDataBytesInternal(Array<uint8> bytes)
 			NLOG(niceName, "Handshake received, Loupedeck in da platz.");
 			buffer.clear();
 			wsMode = WSMode::DATA;
+            
+            //init screen and buttons
+            //for (int i = 0; i < pads.size(); i++) updatePadContent(i, false);
+            //for (int i = 0; i < buttons.size(); i++) updateButton(i);
+            refreshScreen(2);
 		}
 
 		return;
@@ -346,9 +353,7 @@ void LoupedeckModule::onControllableFeedbackUpdateInternal(ControllableContainer
 	{
 		if (isConnected->boolValue())
 		{
-			for (int i = 0; i < pads.size(); i++) updatePadContent(i, false);
-			for (int i = 0; i < buttons.size(); i++) updateButton(i);
-			refreshScreen(2);
+			
 		}
 	}
 	else if (cc == &moduleParams)
