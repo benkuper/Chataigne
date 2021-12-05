@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.3b2"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.3b3"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="VST_LOGGING=0&#10;JUCE_MODAL_LOOPS_PERMITTED=1"
@@ -1603,6 +1603,18 @@
               file="Source/TimeMachine/TimeMachineIncludes.h"/>
       </GROUP>
       <GROUP id="{FA0E78EC-9F83-99D0-4BB9-C686CC8B957D}" name="UI">
+        <GROUP id="{604146F6-F38A-11C7-7182-6E7BCD1CE401}" name="Dashboard">
+          <GROUP id="{B51C351C-FD1A-E32A-7891-4D0377E10E36}" name="ui">
+            <FILE id="zLkImE" name="SharedTextureDashboardItemUI.cpp" compile="1"
+                  resource="0" file="Source/UI/Dashboard/ui/SharedTextureDashboardItemUI.cpp"/>
+            <FILE id="vuCViG" name="SharedTextureDashboardItemUI.h" compile="0"
+                  resource="0" file="Source/UI/Dashboard/ui/SharedTextureDashboardItemUI.h"/>
+          </GROUP>
+          <FILE id="fIJ8pJ" name="SharedTextureDashboardItem.cpp" compile="1"
+                resource="0" file="Source/UI/Dashboard/SharedTextureDashboardItem.cpp"/>
+          <FILE id="wvt6Uz" name="SharedTextureDashboardItem.h" compile="0" resource="0"
+                file="Source/UI/Dashboard/SharedTextureDashboardItem.h"/>
+        </GROUP>
         <FILE id="HYpDUa" name="AboutWindow.cpp" compile="1" resource="0" file="Source/UI/AboutWindow.cpp"/>
         <FILE id="sZKU3W" name="AboutWindow.h" compile="0" resource="0" file="Source/UI/AboutWindow.h"/>
         <FILE id="uP3b5I" name="ChataigneAssetManager.cpp" compile="1" resource="0"
@@ -1658,6 +1670,7 @@
         <MODULEPATH id="juce_timeline" path="Modules"/>
         <MODULEPATH id="juce_audio_formats" path="D:\Softwares\JUCE\modules"/>
         <MODULEPATH id="juce_simpleweb" path="Modules"/>
+        <MODULEPATH id="juce_sharedtexture" path="Modules"/>
       </MODULEPATHS>
     </VS2019>
     <XCODE_MAC targetFolder="Builds/MacOSX" smallIcon="nVz6Li" bigIcon="nVz6Li"
@@ -1694,6 +1707,7 @@
         <MODULEPATH id="juce_timeline" path="Modules"/>
         <MODULEPATH id="juce_audio_formats" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_simpleweb" path="Modules"/>
+        <MODULEPATH id="juce_sharedtexture" path="Modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile" externalLibraries="bluetooth&#10;Servus&#10;curl&#10;SDL2&#10;usb-1.0&#10;hidapi-hidraw&#10;JoyShockLibrary"
@@ -1725,6 +1739,7 @@
         <MODULEPATH id="juce_timeline" path="Modules"/>
         <MODULEPATH id="juce_audio_formats" path="JUCE/modules"/>
         <MODULEPATH id="juce_simpleweb" path="Modules"/>
+        <MODULEPATH id="juce_sharedtexture" path="Modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
     <VS2019 targetFolder="Builds/VisualStudio2019_CI" extraDefs="USE_KINECT=1"
@@ -1758,6 +1773,7 @@
         <MODULEPATH id="juce_audio_devices" path="JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="JUCE/modules"/>
         <MODULEPATH id="juce_simpleweb" path="Modules"/>
+        <MODULEPATH id="juce_sharedtexture" path="Modules"/>
       </MODULEPATHS>
     </VS2019>
     <VS2019 targetFolder="Builds/VisualStudio2019_Win7CI" smallIcon="nVz6Li"
@@ -1790,6 +1806,7 @@
         <MODULEPATH id="juce_audio_devices" path="JUCE/Modules"/>
         <MODULEPATH id="juce_audio_basics" path="JUCE/Modules"/>
         <MODULEPATH id="juce_simpleweb" path="Modules"/>
+        <MODULEPATH id="juce_sharedtexture" path="Modules"/>
       </MODULEPATHS>
     </VS2019>
     <XCODE_MAC targetFolder="Builds/MacOSX_CI" externalLibraries="Servus&#10;hidapi&#10;SDL2&#10;iconv&#10;JoyShockLibrary"
@@ -1825,6 +1842,7 @@
         <MODULEPATH id="juce_audio_devices" path="JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="JUCE/modules"/>
         <MODULEPATH id="juce_simpleweb" path="Modules"/>
+        <MODULEPATH id="juce_sharedtexture" path="Modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
     <LINUX_MAKE targetFolder="Builds/Raspberry" smallIcon="nVz6Li" bigIcon="nVz6Li"
@@ -1857,6 +1875,7 @@
         <MODULEPATH id="juce_timeline" path="Modules"/>
         <MODULEPATH id="juce_audio_formats" path="JUCE/modules"/>
         <MODULEPATH id="juce_simpleweb" path="Modules"/>
+        <MODULEPATH id="juce_sharedtexture" path="Modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
   </EXPORTFORMATS>
@@ -1877,6 +1896,7 @@
     <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_organicui" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_osc" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_sharedtexture" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_simpleweb" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_timeline" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
   </MODULES>

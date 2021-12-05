@@ -48,7 +48,9 @@ public:
 };
 
 
-class MainContentComponent   : public OrganicMainContentComponent
+class MainContentComponent   : 
+    public OrganicMainContentComponent,
+    public OpenGLRenderer
 {
 public:
     //==============================================================================
@@ -57,7 +59,15 @@ public:
     
 
 	void init() override;
+    void setupOpenGLInternal() override;
 
+    virtual void newOpenGLContextCreated() override;
+    virtual void renderOpenGL() override;
+    virtual void openGLContextClosing() override;
+
+
+    void addItemsToDashboardMenu(PopupMenu* p, int startIndex);
+    void handleDashboardMenuResult(int result, int startIndex, DashboardItemManagerUI * mui, Point<float> p);
 
 	static SequenceManagerUI* createSequenceManagerUI(const String& name);
 

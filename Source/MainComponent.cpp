@@ -16,6 +16,9 @@
 
 #include "Common/Command/Template/ui/CommandTemplateManagerUI.h"
 #include "UI/WelcomeScreen.h"
+#include "UI/Dashboard/SharedTextureDashboardItem.h"
+
+using namespace std::placeholders;
 
 String getAppVersion();
 
@@ -23,12 +26,17 @@ String getAppVersion();
 MainContentComponent::MainContentComponent()
 {
 	getCommandManager().registerAllCommandsForTarget(this);
+	SharedTextureManager::getInstance(); //create the main instance
+
+	DashboardItemFactory::getInstance()->defs.add(Factory<DashboardItem>::Definition::createDef<SharedTextureDashboardItem>("","Shared Texture"));
+	DashboardItemManagerUI::customAddItemsToMenuFunc = std::bind(&MainContentComponent::addItemsToDashboardMenu, this, _1, _2);
+	DashboardItemManagerUI::customHandleMenuResultFunc = std::bind(&MainContentComponent::handleDashboardMenuResult, this, _1, _2, _3, _4);
 }
 
 
 MainContentComponent::~MainContentComponent()
 {
-	
+	SharedTextureManager::deleteInstance();
 }
 
 void MainContentComponent::init()
@@ -47,7 +55,6 @@ void MainContentComponent::init()
 
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Command Templates", &CommandTemplateManagerPanel::create));
 
-
 	OrganicMainContentComponent::init();
 
 	String lastVersion = getAppProperties().getUserSettings()->getValue("lastVersion", "");
@@ -59,7 +66,41 @@ void MainContentComponent::init()
 	}
 
 }
-SequenceManagerUI* MainContentComponent::createSequenceManagerUI(const String& name) 
+
+void MainContentComponent::setupOpenGLInternal()
+{
+	openGLContext->setRenderer(this);
+}
+
+void MainContentComponent::newOpenGLContextCreated()
+{
+	if (SharedTextureManager::getInstanceWithoutCreating() != nullptr) SharedTextureManager::getInstance()->initGL();
+}
+
+void MainContentComponent::renderOpenGL()
+{
+	if (SharedTextureManager::getInstanceWithoutCreating() != nullptr) SharedTextureManager::getInstance()->renderGL();
+}
+
+void MainContentComponent::openGLContextClosing()
+{
+	if (SharedTextureManager::getInstanceWithoutCreating() != nullptr) SharedTextureManager::getInstance()->clearGL();
+}
+
+void MainContentComponent::addItemsToDashboardMenu(PopupMenu* p, int startIndex)
+{
+	p->addItem(startIndex, "Shared Texture");
+}
+
+void MainContentComponent::handleDashboardMenuResult(int result, int startIndex, DashboardItemManagerUI* mui, Point<float> p)
+{
+	if (result == startIndex)
+	{
+		mui->manager->addItem(new SharedTextureDashboardItem(), p);
+	}
+}
+
+SequenceManagerUI* MainContentComponent::createSequenceManagerUI(const String& name)
 {
 	return SequenceManagerUI::create(name, ChataigneSequenceManager::getInstance());
 }

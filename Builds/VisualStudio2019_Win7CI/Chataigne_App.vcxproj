@@ -50,12 +50,12 @@
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\App\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Chataigne</TargetName>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(LibraryPath);../../External/joycon/lib/win;../../External/servus/lib/win/x64/debug;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/hidapi/lib/win/x64;..\..\Modules\juce_simpleweb\libs\VisualStudio2019\$(Platform)\MDd</LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(LibraryPath);../../External/joycon/lib/win;../../External/servus/lib/win/x64/debug;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/hidapi/lib/win/x64;..\..\Modules\juce_sharedtexture\libs\VisualStudio2019\$(Platform)\MDd;..\..\Modules\juce_simpleweb\libs\VisualStudio2019\$(Platform)\MDd</LibraryPath>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\..\..\Binaries\CI\App\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\App\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Chataigne</TargetName>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(LibraryPath);../../External/joycon/lib/win;../../External/servus/lib/win/x64/release;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/hidapi/lib/win/x64;..\..\Modules\juce_simpleweb\libs\VisualStudio2019\$(Platform)\MD</LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(LibraryPath);../../External/joycon/lib/win;../../External/servus/lib/win/x64/release;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/hidapi/lib/win/x64;..\..\Modules\juce_sharedtexture\libs\VisualStudio2019\$(Platform)\MD;..\..\Modules\juce_simpleweb\libs\VisualStudio2019\$(Platform)\MD</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Midl>
@@ -69,7 +69,7 @@
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\JUCE\Modules;..\..\Modules;../../External/wiiuse;../../External/serial/include;../../External/asio;../../External/joycon/include;../../External/servus/include;../../External/dnssd/include;../../External/sdl/include;../../External/hidapi/include;../../Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;VST_LOGGING=0;JUCE_MODAL_LOOPS_PERMITTED=1;USE_KINECT=0;JUCER_VS2019_4E886FDA=1;JUCE_APP_VERSION=1.9.3b2;JUCE_APP_VERSION_HEX=0x10903;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;VST_LOGGING=0;JUCE_MODAL_LOOPS_PERMITTED=1;USE_KINECT=0;JUCER_VS2019_4E886FDA=1;JUCE_APP_VERSION=1.9.3b3;JUCE_APP_VERSION_HEX=0x10903;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
@@ -92,9 +92,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(IntDir)\Chataigne.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>../../External/joycon/lib/win;../../External/servus/lib/win/x64/debug;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/hidapi/lib/win/x64;..\..\Modules\juce_simpleweb\libs\VisualStudio2019\$(Platform)\MDd;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../External/joycon/lib/win;../../External/servus/lib/win/x64/debug;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/hidapi/lib/win/x64;..\..\Modules\juce_sharedtexture\libs\VisualStudio2019\$(Platform)\MDd;..\..\Modules\juce_simpleweb\libs\VisualStudio2019\$(Platform)\MDd;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <LargeAddressAware>true</LargeAddressAware>
-      <AdditionalDependencies>Setupapi.lib;hid.lib;JoyShockLibrary.lib;Servus.lib;dnssd.lib;SDL2.lib;iphlpapi.lib;hid.lib;hidapi_static.lib;libssl.lib;libcrypto.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Setupapi.lib;hid.lib;JoyShockLibrary.lib;Servus.lib;dnssd.lib;SDL2.lib;iphlpapi.lib;hid.lib;hidapi_static.lib;SpoutLibrary.lib;libssl.lib;libcrypto.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/HEAP:0x400000,0x10000 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <Bscmake>
@@ -102,8 +102,8 @@
       <OutputFile>$(IntDir)\Chataigne.bsc</OutputFile>
     </Bscmake>
     <Lib>
-      <AdditionalDependencies>Setupapi.lib;hid.lib;JoyShockLibrary.lib;Servus.lib;dnssd.lib;SDL2.lib;iphlpapi.lib;hid.lib;hidapi_static.lib;libssl.lib;libcrypto.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../../External/joycon/lib/win;../../External/servus/lib/win/x64/debug;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/hidapi/lib/win/x64;..\..\Modules\juce_simpleweb\libs\VisualStudio2019\$(Platform)\MDd;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Setupapi.lib;hid.lib;JoyShockLibrary.lib;Servus.lib;dnssd.lib;SDL2.lib;iphlpapi.lib;hid.lib;hidapi_static.lib;SpoutLibrary.lib;libssl.lib;libcrypto.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../../External/joycon/lib/win;../../External/servus/lib/win/x64/debug;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/hidapi/lib/win/x64;..\..\Modules\juce_sharedtexture\libs\VisualStudio2019\$(Platform)\MDd;..\..\Modules\juce_simpleweb\libs\VisualStudio2019\$(Platform)\MDd;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -117,7 +117,7 @@
     <ClCompile>
       <Optimization>Full</Optimization>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\JUCE\Modules;..\..\Modules;../../External/wiiuse;../../External/serial/include;../../External/asio;../../External/joycon/include;../../External/servus/include;../../External/dnssd/include;../../External/sdl/include;../../External/hidapi/include;../../Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;VST_LOGGING=0;JUCE_MODAL_LOOPS_PERMITTED=1;USE_KINECT=0;JUCER_VS2019_4E886FDA=1;JUCE_APP_VERSION=1.9.3b2;JUCE_APP_VERSION_HEX=0x10903;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;VST_LOGGING=0;JUCE_MODAL_LOOPS_PERMITTED=1;USE_KINECT=0;JUCER_VS2019_4E886FDA=1;JUCE_APP_VERSION=1.9.3b3;JUCE_APP_VERSION_HEX=0x10903;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
@@ -142,10 +142,10 @@
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <AdditionalLibraryDirectories>../../External/joycon/lib/win;../../External/servus/lib/win/x64/release;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/hidapi/lib/win/x64;..\..\Modules\juce_simpleweb\libs\VisualStudio2019\$(Platform)\MD;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../External/joycon/lib/win;../../External/servus/lib/win/x64/release;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/hidapi/lib/win/x64;..\..\Modules\juce_sharedtexture\libs\VisualStudio2019\$(Platform)\MD;..\..\Modules\juce_simpleweb\libs\VisualStudio2019\$(Platform)\MD;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <LargeAddressAware>true</LargeAddressAware>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
-      <AdditionalDependencies>Setupapi.lib;hid.lib;JoyShockLibrary.lib;Servus.lib;dnssd.lib;SDL2.lib;iphlpapi.lib;hid.lib;hidapi_static.lib;libssl.lib;libcrypto.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Setupapi.lib;hid.lib;JoyShockLibrary.lib;Servus.lib;dnssd.lib;SDL2.lib;iphlpapi.lib;hid.lib;hidapi_static.lib;SpoutLibrary.lib;libssl.lib;libcrypto.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/HEAP:0x400000,0x10000 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <Bscmake>
@@ -153,8 +153,8 @@
       <OutputFile>$(IntDir)\Chataigne.bsc</OutputFile>
     </Bscmake>
     <Lib>
-      <AdditionalDependencies>Setupapi.lib;hid.lib;JoyShockLibrary.lib;Servus.lib;dnssd.lib;SDL2.lib;iphlpapi.lib;hid.lib;hidapi_static.lib;libssl.lib;libcrypto.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../../External/joycon/lib/win;../../External/servus/lib/win/x64/release;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/hidapi/lib/win/x64;..\..\Modules\juce_simpleweb\libs\VisualStudio2019\$(Platform)\MD;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Setupapi.lib;hid.lib;JoyShockLibrary.lib;Servus.lib;dnssd.lib;SDL2.lib;iphlpapi.lib;hid.lib;hidapi_static.lib;SpoutLibrary.lib;libssl.lib;libcrypto.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../../External/joycon/lib/win;../../External/servus/lib/win/x64/release;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/hidapi/lib/win/x64;..\..\Modules\juce_sharedtexture\libs\VisualStudio2019\$(Platform)\MD;..\..\Modules\juce_simpleweb\libs\VisualStudio2019\$(Platform)\MD;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -1026,6 +1026,8 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Source\TimeMachine\TimeMachineIncludes.cpp"/>
+    <ClCompile Include="..\..\Source\UI\Dashboard\ui\SharedTextureDashboardItemUI.cpp"/>
+    <ClCompile Include="..\..\Source\UI\Dashboard\SharedTextureDashboardItem.cpp"/>
     <ClCompile Include="..\..\Source\UI\AboutWindow.cpp"/>
     <ClCompile Include="..\..\Source\UI\ChataigneAssetManager.cpp"/>
     <ClCompile Include="..\..\Source\UI\WelcomeScreen.cpp"/>
@@ -3724,6 +3726,12 @@
     <ClCompile Include="..\..\JUCE\Modules\juce_osc\juce_osc.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_sharedtexture\juce_sharedtexture.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_sharedtexture\SharedTexture.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\impl\src.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -3921,6 +3929,7 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_organicui3.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_organicui4.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_osc.cpp"/>
+    <ClCompile Include="..\..\JuceLibraryCode\include_juce_sharedtexture.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_simpleweb.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_simpleweb2.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_timeline.cpp"/>
@@ -4242,6 +4251,8 @@
     <ClInclude Include="..\..\Source\TimeMachine\Sequence\ChataigneSequence.h"/>
     <ClInclude Include="..\..\Source\TimeMachine\ChataigneSequenceManager.h"/>
     <ClInclude Include="..\..\Source\TimeMachine\TimeMachineIncludes.h"/>
+    <ClInclude Include="..\..\Source\UI\Dashboard\ui\SharedTextureDashboardItemUI.h"/>
+    <ClInclude Include="..\..\Source\UI\Dashboard\SharedTextureDashboardItem.h"/>
     <ClInclude Include="..\..\Source\UI\AboutWindow.h"/>
     <ClInclude Include="..\..\Source\UI\ChataigneAssetManager.h"/>
     <ClInclude Include="..\..\Source\UI\WelcomeScreen.h"/>
@@ -5323,6 +5334,9 @@
     <ClInclude Include="..\..\JUCE\Modules\juce_osc\osc\juce_OSCTimeTag.h"/>
     <ClInclude Include="..\..\JUCE\Modules\juce_osc\osc\juce_OSCTypes.h"/>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_osc\juce_osc.h"/>
+    <ClInclude Include="..\..\Modules\juce_sharedtexture\SharedTexture.h"/>
+    <ClInclude Include="..\..\Modules\juce_sharedtexture\SpoutLibrary.h"/>
+    <ClInclude Include="..\..\Modules\juce_sharedtexture\juce_sharedtexture.h"/>
     <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\impl\dev_poll_reactor.hpp"/>
     <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\impl\epoll_reactor.hpp"/>
     <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\impl\kqueue_reactor.hpp"/>
@@ -6418,6 +6432,7 @@
     <None Include="..\..\JUCE\Modules\juce_graphics\image_formats\pnglib\libpng_readme.txt"/>
     <None Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\ReadMe.txt"/>
     <None Include="..\..\Modules\juce_organicui\README.md"/>
+    <None Include="..\..\Modules\juce_sharedtexture\README.md"/>
     <None Include="..\..\Modules\juce_simpleweb\asio\README.md"/>
     <None Include="..\..\Modules\juce_simpleweb\README.md"/>
     <None Include="..\..\Modules\juce_timeline\README.md"/>

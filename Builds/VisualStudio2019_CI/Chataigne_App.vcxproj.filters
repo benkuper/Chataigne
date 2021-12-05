@@ -590,6 +590,12 @@
     <Filter Include="Chataigne\Source\TimeMachine">
       <UniqueIdentifier>{E81F0790-93FE-B6FB-2400-3E2BBDEBF60E}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\UI\Dashboard\ui">
+      <UniqueIdentifier>{FD00F57E-3491-B926-41B4-C54C51CDF966}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\UI\Dashboard">
+      <UniqueIdentifier>{862666AC-A041-F2B9-0C4F-0616A60DC3F1}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\UI">
       <UniqueIdentifier>{751CC497-E6D2-4ECF-38C2-AAECA238AEFA}</UniqueIdentifier>
     </Filter>
@@ -1282,6 +1288,9 @@
     </Filter>
     <Filter Include="JUCE Modules\juce_osc">
       <UniqueIdentifier>{B1DE8DB1-C00A-12C0-D690-8B3C9504A60A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_sharedtexture">
+      <UniqueIdentifier>{F95E7C0F-5663-3942-16BD-5DA277CCDFAA}</UniqueIdentifier>
     </Filter>
     <Filter Include="JUCE Modules\juce_simpleweb\asio\asio\include\asio\detail\impl">
       <UniqueIdentifier>{10927F53-5739-34D4-A47E-45BFDF18190B}</UniqueIdentifier>
@@ -2457,6 +2466,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\TimeMachine\TimeMachineIncludes.cpp">
       <Filter>Chataigne\Source\TimeMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\UI\Dashboard\ui\SharedTextureDashboardItemUI.cpp">
+      <Filter>Chataigne\Source\UI\Dashboard\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\UI\Dashboard\SharedTextureDashboardItem.cpp">
+      <Filter>Chataigne\Source\UI\Dashboard</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\UI\AboutWindow.cpp">
       <Filter>Chataigne\Source\UI</Filter>
@@ -5341,6 +5356,12 @@
     <ClCompile Include="..\..\JUCE\modules\juce_osc\juce_osc.cpp">
       <Filter>JUCE Modules\juce_osc</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_sharedtexture\juce_sharedtexture.cpp">
+      <Filter>JUCE Modules\juce_sharedtexture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_sharedtexture\SharedTexture.cpp">
+      <Filter>JUCE Modules\juce_sharedtexture</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\impl\src.cpp">
       <Filter>JUCE Modules\juce_simpleweb\asio\asio\include\asio\impl</Filter>
     </ClCompile>
@@ -5576,6 +5597,9 @@
       <Filter>JUCE Library Code</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_osc.cpp">
+      <Filter>JUCE Library Code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\include_juce_sharedtexture.cpp">
       <Filter>JUCE Library Code</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_simpleweb.cpp">
@@ -6536,6 +6560,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\TimeMachine\TimeMachineIncludes.h">
       <Filter>Chataigne\Source\TimeMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\UI\Dashboard\ui\SharedTextureDashboardItemUI.h">
+      <Filter>Chataigne\Source\UI\Dashboard\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\UI\Dashboard\SharedTextureDashboardItem.h">
+      <Filter>Chataigne\Source\UI\Dashboard</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\UI\AboutWindow.h">
       <Filter>Chataigne\Source\UI</Filter>
@@ -9779,6 +9809,15 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_osc\juce_osc.h">
       <Filter>JUCE Modules\juce_osc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_sharedtexture\SharedTexture.h">
+      <Filter>JUCE Modules\juce_sharedtexture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_sharedtexture\SpoutLibrary.h">
+      <Filter>JUCE Modules\juce_sharedtexture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_sharedtexture\juce_sharedtexture.h">
+      <Filter>JUCE Modules\juce_sharedtexture</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\impl\dev_poll_reactor.hpp">
       <Filter>JUCE Modules\juce_simpleweb\asio\asio\include\asio\detail\impl</Filter>
@@ -13060,6 +13099,9 @@
     </None>
     <None Include="..\..\Modules\juce_organicui\README.md">
       <Filter>JUCE Modules\juce_organicui</Filter>
+    </None>
+    <None Include="..\..\Modules\juce_sharedtexture\README.md">
+      <Filter>JUCE Modules\juce_sharedtexture</Filter>
     </None>
     <None Include="..\..\Modules\juce_simpleweb\asio\README.md">
       <Filter>JUCE Modules\juce_simpleweb\asio</Filter>
