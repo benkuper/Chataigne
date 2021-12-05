@@ -177,7 +177,6 @@
 		10E36BD392E35F89F77DC7BA /* ConditionManager.cpp */ /* ConditionManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ConditionManager.cpp; path = ../../Source/Common/Processor/Action/Condition/ConditionManager.cpp; sourceTree = SOURCE_ROOT; };
 		10FDEE6F099540F5DC2B246B /* wsServerScriptTemplate.js */ /* wsServerScriptTemplate.js */ = {isa = PBXFileReference; lastKnownFileType = file.js; name = wsServerScriptTemplate.js; path = ../../Resources/Templates/Scripts/wsServerScriptTemplate.js; sourceTree = SOURCE_ROOT; };
 		119888D65DE05EACD18D1B11 /* HTTP.png */ /* HTTP.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = HTTP.png; path = ../../Resources/Modules/HTTP.png; sourceTree = SOURCE_ROOT; };
-		121D1B59931620E22A500085 /* WSSerial.h */ /* WSSerial.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WSSerial.h; path = ../../Source/Module/modules/controller/loupedeck/WSSerial.h; sourceTree = SOURCE_ROOT; };
 		126E6696F8B855707269C2AF /* DMXArtNetDevice.h */ /* DMXArtNetDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DMXArtNetDevice.h; path = ../../Source/Common/DMX/device/DMXArtNetDevice.h; sourceTree = SOURCE_ROOT; };
 		12DDF7A00AC1057D87937493 /* State.cpp */ /* State.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = State.cpp; path = ../../Source/StateMachine/State/State.cpp; sourceTree = SOURCE_ROOT; };
 		1324A112A1CE733670690A95 /* QLabWorkspaceCommand.h */ /* QLabWorkspaceCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = QLabWorkspaceCommand.h; path = ../../Source/Module/modules/osc/qlab/commands/QLabWorkspaceCommand.h; sourceTree = SOURCE_ROOT; };
@@ -247,7 +246,6 @@
 		2BE3C41C55C2BFCAD0385D14 /* Main.h */ /* Main.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Main.h; path = ../../Source/Main.h; sourceTree = SOURCE_ROOT; };
 		2C044AD874B79A1418B10F82 /* Mapping1DLayerPanel.h */ /* Mapping1DLayerPanel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Mapping1DLayerPanel.h; path = ../../Source/TimeMachine/Sequence/layers/mapping/automation/1d/ui/Mapping1DLayerPanel.h; sourceTree = SOURCE_ROOT; };
 		2C8F111514373C5BA8A33B7B /* TCPServerConnectionManager.cpp */ /* TCPServerConnectionManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TCPServerConnectionManager.cpp; path = ../../Source/Module/modules/tcp/tcpserver/TCPServerConnectionManager.cpp; sourceTree = SOURCE_ROOT; };
-		2D0B5E8539654C93523ABE33 /* WSSerial.cpp */ /* WSSerial.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = WSSerial.cpp; path = ../../Source/Module/modules/controller/loupedeck/WSSerial.cpp; sourceTree = SOURCE_ROOT; };
 		2D274CC0C6F2AAB6FECC9319 /* MappingFilterManager.h */ /* MappingFilterManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MappingFilterManager.h; path = ../../Source/Common/Processor/Mapping/Filter/MappingFilterManager.h; sourceTree = SOURCE_ROOT; };
 		2D5CCA1C4264DD472237CA04 /* UDPModule.cpp */ /* UDPModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = UDPModule.cpp; path = ../../Source/Module/modules/udp/UDPModule.cpp; sourceTree = SOURCE_ROOT; };
 		2DB904F30B9817E2F6723B8D /* ConditionGroup.cpp */ /* ConditionGroup.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ConditionGroup.cpp; path = ../../Source/Common/Processor/Action/Condition/conditions/ConditionGroup/ConditionGroup.cpp; sourceTree = SOURCE_ROOT; };
@@ -2739,8 +2737,6 @@
 				B64022B64377679A44212506,
 				5FAFCDEFF94F762D189E98EF,
 				A62E1C36DBE67FDD245C95E8,
-				2D0B5E8539654C93523ABE33,
-				121D1B59931620E22A500085,
 			);
 			name = loupedeck;
 			sourceTree = "<group>";
@@ -3684,7 +3680,7 @@
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCE_COREGRAPHICS_DRAW_ASYNC=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.9.3b1",
+					"JUCE_APP_VERSION=1.9.3b2",
 					"JUCE_APP_VERSION_HEX=0x10903",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -3754,7 +3750,7 @@
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCE_COREGRAPHICS_DRAW_ASYNC=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.9.3b1",
+					"JUCE_APP_VERSION=1.9.3b2",
 					"JUCE_APP_VERSION_HEX=0x10903",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",

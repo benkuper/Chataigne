@@ -46,7 +46,7 @@ PlayAudioFileCommand::PlayAudioFileCommand(AudioModule * _module, CommandContext
 
 PlayAudioFileCommand::~PlayAudioFileCommand()
 {
-	if (audioModule != nullptr)
+	if (audioModule != nullptr && !audioModule->isClearing)
 	{
 		audioModule->removeAudioModuleListener(this);
 		audioModule->graph.removeNode(graphID);

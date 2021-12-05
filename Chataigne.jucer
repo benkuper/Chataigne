@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.3b1"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.3b2"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="VST_LOGGING=0&#10;JUCE_MODAL_LOOPS_PERMITTED=1"
@@ -899,8 +899,6 @@
                     file="Source/Module/modules/controller/loupedeck/LoupedeckShapeManager.cpp"/>
               <FILE id="JD2mSN" name="LoupedeckShapeManager.h" compile="0" resource="0"
                     file="Source/Module/modules/controller/loupedeck/LoupedeckShapeManager.h"/>
-              <FILE id="i69FFa" name="WSSerial.cpp" compile="0" resource="0" file="Source/Module/modules/controller/loupedeck/WSSerial.cpp"/>
-              <FILE id="wSAYm7" name="WSSerial.h" compile="0" resource="0" file="Source/Module/modules/controller/loupedeck/WSSerial.h"/>
             </GROUP>
             <GROUP id="{188E8CA2-04CC-D878-F91F-A3EDE5E6A665}" name="mouse">
               <GROUP id="{76214040-3E5D-6DDE-134B-66DC1FAC3DDD}" name="commands">

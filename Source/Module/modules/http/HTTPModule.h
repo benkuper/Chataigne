@@ -64,6 +64,7 @@ public:
 
 	OwnedArray<Request, CriticalSection> requests;
 	void processRequest(Request * request);
+	bool requestProgressCallback(int byteDownloaded, int bytesTotal);
 
 	void createControllablesFromJSONResult(var data, ControllableContainer* container);
 	void createControllablesFromXMLResult(XmlElement * data, ControllableContainer* container);

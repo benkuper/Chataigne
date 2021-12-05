@@ -214,7 +214,7 @@ void CVCommand::triggerInternal(int multiplexIndex)
 					}
 					else
 					{
-						NLOGWARNING(niceName, "Preset file does not exist");
+						NLOGWARNING(niceName, "Preset file does not exist or is not a valid JSON preset file");
 					}
 				}
 				else if (type == SAVE_PRESET)
@@ -229,18 +229,16 @@ void CVCommand::triggerInternal(int multiplexIndex)
 			}
 		}
 	}
+	break;
 
 	case RANDOMIZE:
 	{
-
 		if (!target->targetContainer.wasObjectDeleted() && target->targetContainer != nullptr)
 		{
 			CVGroup* g = dynamic_cast<CVGroup*>(target->targetContainer.get());
 			g->randomizeValues();
 		}
 	}
-	break;
-
 	break;
 	}
 

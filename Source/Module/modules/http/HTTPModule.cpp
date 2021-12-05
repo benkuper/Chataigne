@@ -80,6 +80,7 @@ void HTTPModule::processRequest(Request* request)
 		.withResponseHeaders(&responseHeaders)
 		.withStatusCode(&statusCode)
 		.withNumRedirectsToFollow(5)
+		.withProgressCallback(std::bind(&HTTPModule::requestProgressCallback, this, std::placeholders::_1, std::placeholders::_2))
 		.withHttpRequestCmd(requestMethodNames[(int)request->method])
 	));
 
@@ -153,6 +154,11 @@ void HTTPModule::processRequest(Request* request)
 	{
 		if (logIncomingData->boolValue()) NLOGWARNING(niceName, "Error with request, status code : " << statusCode << ", url : " << request->url.toString(true));
 	}
+}
+
+bool HTTPModule::requestProgressCallback(int byteDownloaded, int bytesTotal)
+{
+	return !threadShouldExit();
 }
 
 
