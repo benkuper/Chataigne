@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    This file was auto-generated!
+	This file was auto-generated!
 
   ==============================================================================
 */
@@ -17,57 +17,46 @@ class MainContentComponent;
 class ChataigneEngine;
 
 class ChataigneMenuBarComponent :
-    public Component,
-    public Thread,
-    public Timer
+	public Component,
+	public Thread,
+	public Timer
 {
 public:
-    ChataigneMenuBarComponent(MainContentComponent * mainComp, ChataigneEngine * engine);
-    ~ChataigneMenuBarComponent();
+	ChataigneMenuBarComponent(MainContentComponent* mainComp, ChataigneEngine* engine);
+	~ChataigneMenuBarComponent();
 
 #if !JUCE_MAC
-    MenuBarComponent menuBarComp;
+	MenuBarComponent menuBarComp;
 #endif
 
-    struct DonationData
-    {
-        String name;
-        bool isSponsor;
-    };
+	struct DonationData
+	{
+		String name;
+		bool isSponsor;
+	};
 
-    OwnedArray<DonationData> sponsors;
-    bool sponsorsLoaded;
-    DonationData * curSponsor;
+	OwnedArray<DonationData> sponsors;
+	bool sponsorsLoaded;
+	DonationData* curSponsor;
 
-    void paint(Graphics& g) override;
-    void resized() override;
-    
-    void timerCallback() override;
-    void run() override;
+	void paint(Graphics& g) override;
+	void resized() override;
+
+	void timerCallback() override;
+	void run() override;
 
 };
 
 
-class MainContentComponent   : 
-    public OrganicMainContentComponent,
-    public OpenGLRenderer
+class MainContentComponent :
+	public OrganicMainContentComponent
 {
 public:
-    //==============================================================================
-    MainContentComponent();
-    ~MainContentComponent();
-    
+	//==============================================================================
+	MainContentComponent();
+	~MainContentComponent();
 
 	void init() override;
-    void setupOpenGLInternal() override;
-
-    virtual void newOpenGLContextCreated() override;
-    virtual void renderOpenGL() override;
-    virtual void openGLContextClosing() override;
-
-
-    void addItemsToDashboardMenu(PopupMenu* p, int startIndex);
-    void handleDashboardMenuResult(int result, int startIndex, DashboardItemManagerUI * mui, Point<float> p);
 
 	static SequenceManagerUI* createSequenceManagerUI(const String& name);
 
@@ -76,5 +65,5 @@ public:
 	virtual bool perform(const InvocationInfo& info) override;
 	StringArray getMenuBarNames() override;
 	virtual PopupMenu getMenuForIndex(int topLevelMenuIndex, const String& menuName) override;
-	void fillFileMenuInternal(PopupMenu &menu) override;
+	void fillFileMenuInternal(PopupMenu& menu) override;
 };

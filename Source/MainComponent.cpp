@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    This file was auto-generated!
+	This file was auto-generated!
 
   ==============================================================================
 */
@@ -16,7 +16,6 @@
 
 #include "Common/Command/Template/ui/CommandTemplateManagerUI.h"
 #include "UI/WelcomeScreen.h"
-#include "UI/Dashboard/SharedTextureDashboardItem.h"
 
 using namespace std::placeholders;
 
@@ -26,11 +25,6 @@ String getAppVersion();
 MainContentComponent::MainContentComponent()
 {
 	getCommandManager().registerAllCommandsForTarget(this);
-	SharedTextureManager::getInstance(); //create the main instance
-
-	DashboardItemFactory::getInstance()->defs.add(Factory<DashboardItem>::Definition::createDef<SharedTextureDashboardItem>("","Shared Texture"));
-	DashboardItemManagerUI::customAddItemsToMenuFunc = std::bind(&MainContentComponent::addItemsToDashboardMenu, this, _1, _2);
-	DashboardItemManagerUI::customHandleMenuResultFunc = std::bind(&MainContentComponent::handleDashboardMenuResult, this, _1, _2, _3, _4);
 }
 
 
@@ -67,39 +61,6 @@ void MainContentComponent::init()
 
 }
 
-void MainContentComponent::setupOpenGLInternal()
-{
-	openGLContext->setRenderer(this);
-}
-
-void MainContentComponent::newOpenGLContextCreated()
-{
-	if (SharedTextureManager::getInstanceWithoutCreating() != nullptr) SharedTextureManager::getInstance()->initGL();
-}
-
-void MainContentComponent::renderOpenGL()
-{
-	if (SharedTextureManager::getInstanceWithoutCreating() != nullptr) SharedTextureManager::getInstance()->renderGL();
-}
-
-void MainContentComponent::openGLContextClosing()
-{
-	if (SharedTextureManager::getInstanceWithoutCreating() != nullptr) SharedTextureManager::getInstance()->clearGL();
-}
-
-void MainContentComponent::addItemsToDashboardMenu(PopupMenu* p, int startIndex)
-{
-	p->addItem(startIndex, "Shared Texture");
-}
-
-void MainContentComponent::handleDashboardMenuResult(int result, int startIndex, DashboardItemManagerUI* mui, Point<float> p)
-{
-	if (result == startIndex)
-	{
-		mui->manager->addItem(new SharedTextureDashboardItem(), p);
-	}
-}
-
 SequenceManagerUI* MainContentComponent::createSequenceManagerUI(const String& name)
 {
 	return SequenceManagerUI::create(name, ChataigneSequenceManager::getInstance());
@@ -130,7 +91,7 @@ ChataigneMenuBarComponent::~ChataigneMenuBarComponent()
 void ChataigneMenuBarComponent::paint(Graphics& g)
 {
 	g.fillAll(BG_COLOR);
-	
+
 	if (curSponsor != nullptr)
 	{
 		g.setColour(TEXTNAME_COLOR);
@@ -162,7 +123,7 @@ void ChataigneMenuBarComponent::run()
 {
 
 	URL url = URL("http://benjamin.kuperberg.fr/chataigne/releases/donation.json");
-	
+
 	String result = url.readEntireTextStream(false);
 
 	if (result.isEmpty()) return;
@@ -191,5 +152,5 @@ void ChataigneMenuBarComponent::run()
 		timerCallback();
 
 	}
-	
+
 }
