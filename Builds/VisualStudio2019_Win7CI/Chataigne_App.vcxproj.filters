@@ -590,12 +590,6 @@
     <Filter Include="Chataigne\Source\TimeMachine">
       <UniqueIdentifier>{E81F0790-93FE-B6FB-2400-3E2BBDEBF60E}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Chataigne\Source\UI\Dashboard\ui">
-      <UniqueIdentifier>{FD00F57E-3491-B926-41B4-C54C51CDF966}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\UI\Dashboard">
-      <UniqueIdentifier>{862666AC-A041-F2B9-0C4F-0616A60DC3F1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Chataigne\Source\UI">
       <UniqueIdentifier>{751CC497-E6D2-4ECF-38C2-AAECA238AEFA}</UniqueIdentifier>
     </Filter>
@@ -2466,12 +2460,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\TimeMachine\TimeMachineIncludes.cpp">
       <Filter>Chataigne\Source\TimeMachine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\UI\Dashboard\ui\SharedTextureDashboardItemUI.cpp">
-      <Filter>Chataigne\Source\UI\Dashboard\ui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\UI\Dashboard\SharedTextureDashboardItem.cpp">
-      <Filter>Chataigne\Source\UI\Dashboard</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\UI\AboutWindow.cpp">
       <Filter>Chataigne\Source\UI</Filter>
@@ -5017,6 +5005,9 @@
     <ClCompile Include="..\..\Modules\juce_organicui\dashboard\ui\DashboardUI.cpp">
       <Filter>JUCE Modules\juce_organicui\dashboard\ui</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\dashboard\ui\SharedTextureDashboardItemUI.cpp">
+      <Filter>JUCE Modules\juce_organicui\dashboard\ui</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\dashboard\Dashboard.cpp">
       <Filter>JUCE Modules\juce_organicui\dashboard</Filter>
     </ClCompile>
@@ -5036,6 +5027,9 @@
       <Filter>JUCE Modules\juce_organicui\dashboard</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\dashboard\DashboardManager.cpp">
+      <Filter>JUCE Modules\juce_organicui\dashboard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\dashboard\SharedTextureDashboardItem.cpp">
       <Filter>JUCE Modules\juce_organicui\dashboard</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\engine\Engine.cpp">
@@ -6560,12 +6554,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\TimeMachine\TimeMachineIncludes.h">
       <Filter>Chataigne\Source\TimeMachine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\UI\Dashboard\ui\SharedTextureDashboardItemUI.h">
-      <Filter>Chataigne\Source\UI\Dashboard\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\UI\Dashboard\SharedTextureDashboardItem.h">
-      <Filter>Chataigne\Source\UI\Dashboard</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\UI\AboutWindow.h">
       <Filter>Chataigne\Source\UI</Filter>
@@ -9495,6 +9483,9 @@
     <ClInclude Include="..\..\Modules\juce_organicui\dashboard\ui\DashboardUI.h">
       <Filter>JUCE Modules\juce_organicui\dashboard\ui</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\dashboard\ui\SharedTextureDashboardItemUI.h">
+      <Filter>JUCE Modules\juce_organicui\dashboard\ui</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\dashboard\Dashboard.h">
       <Filter>JUCE Modules\juce_organicui\dashboard</Filter>
     </ClInclude>
@@ -9517,6 +9508,9 @@
       <Filter>JUCE Modules\juce_organicui\dashboard</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\dashboard\DashboardManager.h">
+      <Filter>JUCE Modules\juce_organicui\dashboard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\dashboard\SharedTextureDashboardItem.h">
       <Filter>JUCE Modules\juce_organicui\dashboard</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\engine\Engine.h">
