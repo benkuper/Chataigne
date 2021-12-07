@@ -8,9 +8,10 @@
   ==============================================================================
 */
 
-MIDIDeviceParameterUI::MIDIDeviceParameterUI(MIDIDeviceParameter * _midiParam) :
-	ParameterUI(_midiParam),
-	midiParam(_midiParam)
+MIDIDeviceParameterUI::MIDIDeviceParameterUI(Array<MIDIDeviceParameter *> _midiParams) :
+	ParameterUI(Inspectable::getArrayAs<MIDIDeviceParameter, Parameter>(_midiParams)),
+	midiParams(_midiParams),
+	midiParam(_midiParams[0])
 {
 	addAndMakeVisible(&chooser);
 	chooser.addMIDIChooserListener(this);

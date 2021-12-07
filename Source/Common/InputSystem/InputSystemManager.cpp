@@ -374,7 +374,9 @@ void GamepadParameter::loadJSONDataInternal(var data)
 	}
 }
 
-ControllableUI* GamepadParameter::createDefaultUI()
+ControllableUI* GamepadParameter::createDefaultUI(Array<Controllable *> controllables)
 {
-	return new GamepadParameterUI(this);
+	Array<GamepadParameter*> parameters = Inspectable::getArrayAs<Controllable, GamepadParameter>(controllables);
+	if (parameters.size() == 0) parameters.add(this);
+	return new GamepadParameterUI(parameters);
 }

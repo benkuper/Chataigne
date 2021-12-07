@@ -14,10 +14,10 @@ class DMXValueParameterUI :
     public IntStepperUI
 {
 public:
-    DMXValueParameterUI(DMXValueParameter * dmxP);
+    DMXValueParameterUI(Array<DMXValueParameter *> dmxP);
     ~DMXValueParameterUI();
 
-    DMXValueParameter* dmxP;
+    Array<DMXValueParameter*> dmxParameters;
     void updateUIParamsInternal() override;
 
     void addPopupMenuItemsInternal(PopupMenu* p) override;

@@ -12,7 +12,7 @@
 #pragma warning(disable:4838)
 
 LoupedeckModule::LoupedeckModule() :
-	WebSocketClientModule(getDefaultTypeString(), "100.127.1.1:80"),
+	SerialModule(getDefaultTypeString()),
 	buttonParamsCC("Buttons"),
 	sliderParamsCC("Sliders"),
 	padParamsCC("Pads"),
@@ -22,6 +22,20 @@ LoupedeckModule::LoupedeckModule() :
 	slidersCC("Sliders"),
 	padsCC("Pads")
 {
+	//baudRate->setValue(9600);
+
+	portParam->vidFilter = 0x2ec2;
+
+	autoAdd->hideInEditor = true;
+	autoAdd->setValue(false);
+	streamingType->setValueWithData(RAW);
+
+	messageStructure->hideInEditor = true;
+	firstValueIsTheName->hideInEditor = true;
+
+
+	baudRate->hideInEditor = true;
+
 	model = moduleParams.addEnumParameter("Model", "Model of the Loupedeck"); //not used right now
 	model->addOption("Loupedeck Live", 0)->addOption("Loupedeck CT", 1);
 
@@ -127,8 +141,8 @@ LoupedeckModule::LoupedeckModule() :
 	messageStructure->hideInEditor = true;
 	firstValueIsTheName->hideInEditor = true;
 
-	serverPath->hideInEditor = true;
-	serverPath->setValue(getLoupedeckServerPath());
+	//serverPath->hideInEditor = true;
+	//serverPath->setValue(getLoupedeckServerPath());
 
 	defManager->clear();
 	defManager->add(CommandDefinition::createDef(this, "Pad", "Set Color", &LoupedeckCommand::create)->addParam("action", LoupedeckCommand::SET_COLOR)->addParam("screenTarget", LoupedeckCommand::PADS));
@@ -165,42 +179,99 @@ LoupedeckModule::LoupedeckModule() :
 	valuesCC.addChildControllableContainer(&padsCC);
 
 
+	wsMode = WSMode::HANDSHAKE;
 }
 
 LoupedeckModule::~LoupedeckModule()
 {
 }
 
-void LoupedeckModule::dataReceived(const MemoryBlock& data)
+
+void LoupedeckModule::setupPortInternal()
 {
-	Array<uint8> bytes((const uint8*)data.getData(), data.getSize());
-	uint8 id = bytes[0];
-	
+	//port->setDataBits(8);
+	//port->setStopBits(2);
+}
+
+void LoupedeckModule::portOpenedInternal()
+{
+	//Timer::callAfterDelay(100, [this]() {
+		wsMode = WSMode::HANDSHAKE;
+
+		//in case loupedeck was already in websocket mode
+		Array<uint8_t> closeBytes{ 0x88, 0x80, 0x00, 0x00, 0x00, 0x00 };
+		sendBytes(closeBytes);
+
+		String req = "GET /index.html HTTP/1.1\n\
+Connection: Upgrade\n\
+Upgrade: websocket\n\
+Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==\n\n";
+
+		this->sendMessage(req);
+	//});
+}
+
+void LoupedeckModule::processDataBytesInternal(Array<uint8> bytes)
+{
+	if (wsMode == HANDSHAKE)
+	{
+		String msg = String::createStringFromData((const char*)bytes.getRawDataPointer(), bytes.size());
+		if (msg.contains("\r\n\r\n"))
+		{
+			NLOG(niceName, "Handshake received, Loupedeck in da platz.");
+			buffer.clear();
+			wsMode = WSMode::DATA;
+
+			//init screen and buttons
+			//for (int i = 0; i < pads.size(); i++) updatePadContent(i, false);
+			//for (int i = 0; i < buttons.size(); i++) updateButton(i);
+			refreshScreen(2);
+		}
+
+		return;
+	}
+
+	if (!enabled->boolValue()) return;
+	if (bytes.size() < 2) return;
+
+	if (bytes[0] == 130)
+	{
+		bytes.remove(0);
+		expectedLength = bytes.removeAndReturn(0);
+		buffer.clear();
+	}
+
+	buffer.addArray(bytes.getRawDataPointer(), jmin<int>(bytes.size(), expectedLength - buffer.size()));
+
+	if (buffer.size() < expectedLength) return;
+
+	uint8 id = buffer[0];
+
 	switch (id)
 	{
 	case 4:
 		return;
 		break;
 
-	case 5:
+	case 5: // buttons and knobs
 	{
-		int pot = bytes[3] - 1;
+		int pot = buffer[3] - 1;
 
 		if (pot >= 6)
 		{
-			buttons[pot - 6]->setValue(bytes[4] == 0);
+			buttons[pot - 6]->setValue(buffer[4] == 0);
 		}
-		else if(pot >= 0)
+		else if (pot >= 0)
 		{
-			if (bytes[1])
+			if (buffer[1])
 			{
-				float val = bytes[4] == 255 ? -1 : 1;
+				float val = buffer[4] == 255 ? -1 : 1;
 				knobRelatives[pot]->setValue(val);
 				knobAbsolutes[pot]->setValue(knobAbsolutes[pot]->floatValue() + val * knobSensitivity->floatValue());
 			}
 			else
 			{
-				knobButtons[pot]->setValue(bytes[4] == 0);
+				knobButtons[pot]->setValue(buffer[4] == 0);
 			}
 		}
 		else
@@ -210,13 +281,12 @@ void LoupedeckModule::dataReceived(const MemoryBlock& data)
 	}
 	break;
 
-	case 9:
-		processTouchData(bytes);
+	case 9: //touch
+		processTouchData(buffer);
 		break;
 	}
-
-	WebSocketClientModule::dataReceived(data);
 }
+
 
 void LoupedeckModule::processTouchData(Array<uint8_t> data)
 {
@@ -277,12 +347,14 @@ void LoupedeckModule::processTouchData(Array<uint8_t> data)
 
 void LoupedeckModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
 {
+	SerialModule::onControllableFeedbackUpdateInternal(cc, c);
+
 	if (c == isConnected)
 	{
-		for (int i = 0; i < pads.size(); i++) updatePadContent(i, false);
-		for (int i = 0; i < buttons.size(); i++) updateButton(i);
-		refreshScreen(2);
+		if (isConnected->boolValue())
+		{
 
+		}
 	}
 	else if (cc == &moduleParams)
 	{
@@ -333,7 +405,7 @@ void LoupedeckModule::onControllableFeedbackUpdateInternal(ControllableContainer
 					if (getPadCoords(i).toFloat().intersects(sBounds)) updatePadContent(i, false);
 				}
 
-				if(autoRefresh->boolValue()) refreshScreen(2);
+				if (autoRefresh->boolValue()) refreshScreen(2);
 			}
 		}
 	}
@@ -367,10 +439,50 @@ void LoupedeckModule::onControllableFeedbackUpdateInternal(ControllableContainer
 
 void LoupedeckModule::sendLoupedeckCommand(LDCommand command, Array<uint8> data)
 {
+	if (!enabled->boolValue()) return;
+
+	//insert command at begin of payload
+	data.insert(0, (command >> 8) & 0xFF);
+	data.insert(1, command & 0xFF);
+	data.insert(2, command & 0xFF); //callback
+
+	int payloadSize = data.size();
+
+	uint8_t lenAndMask = 1 << 7;//first bit is mask, always 1 when sending from client
+	int numExpandedLenBytes = 0;
+	if (payloadSize <= 125) lenAndMask += payloadSize;
+	else if (payloadSize < 65535)
+	{
+		lenAndMask += 126;
+		numExpandedLenBytes = 2;
+	}
+	else
+	{
+		lenAndMask += 127;
+		numExpandedLenBytes = 8;
+	}
+
 	Array<uint8> dataToSend;
-	dataToSend.add((command >> 8) & 0xFF);
-	dataToSend.add(command & 0xFF);
-	dataToSend.add(command & 0xFF); //callback
+	dataToSend.add(130); //ws data opcode
+	dataToSend.add(lenAndMask);
+	for (int i = 0; i < numExpandedLenBytes; i++)
+	{
+		uint8_t t = (payloadSize >> ((numExpandedLenBytes - i - 1) * 8)) & 0xFF;
+		dataToSend.add(t);
+	}
+
+	//masking
+	const uint8_t mask[4]{ 0,0,0,0 };
+	dataToSend.addArray(mask, 4);
+
+
+	// mask here
+	//for (int i = 0; i < data.size(); i++)
+	//{
+	//	uint8_t mByte = mask[i % 4];
+	//	dataToSend.add(data[i] ^ mByte); //websocket masking = (original byte) xor (mask byte i%4)
+	//}
+
 	dataToSend.addArray(data);
 
 	sendBytes(dataToSend);
@@ -510,27 +622,10 @@ String LoupedeckModule::getLoupedeckServerPath() const
 	return String();
 }
 
-void LoupedeckModule::timerCallback()
-{
-	if (!isConnected->boolValue())
-	{
-		String path = getLoupedeckServerPath();
-		if (path.isEmpty()) return;
-
-
-		if (path != serverPath->stringValue())
-		{
-			serverPath->setValue(path);
-			return;
-		}
-	}
-
-	WebSocketClientModule::timerCallback();
-}
 
 var LoupedeckModule::getJSONData()
 {
-	var data = Module::getJSONData();
+	var data = SerialModule::getJSONData();
 	data.getDynamicObject()->setProperty("shapeManager", shapeManager.getJSONData());
 	return data;
 }
@@ -538,7 +633,7 @@ var LoupedeckModule::getJSONData()
 void LoupedeckModule::loadJSONDataItemInternal(var data)
 {
 	shapeManager.loadJSONData(data.getProperty("shapeManager", var()));
-	Module::loadJSONDataItemInternal(data);
+	SerialModule::loadJSONDataItemInternal(data);
 }
 
 #pragma warning(pop)

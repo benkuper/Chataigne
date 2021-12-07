@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<<<<<<< HEAD
 <JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.2"
+=======
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.3b6"
+>>>>>>> MultiEditing
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="VST_LOGGING=0&#10;JUCE_MODAL_LOOPS_PERMITTED=1"
@@ -1658,6 +1662,7 @@
         <MODULEPATH id="juce_timeline" path="Modules"/>
         <MODULEPATH id="juce_audio_formats" path="D:\Softwares\JUCE\modules"/>
         <MODULEPATH id="juce_simpleweb" path="Modules"/>
+        <MODULEPATH id="juce_sharedtexture" path="Modules"/>
       </MODULEPATHS>
     </VS2019>
     <XCODE_MAC targetFolder="Builds/MacOSX" smallIcon="nVz6Li" bigIcon="nVz6Li"
@@ -1694,6 +1699,7 @@
         <MODULEPATH id="juce_timeline" path="Modules"/>
         <MODULEPATH id="juce_audio_formats" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_simpleweb" path="Modules"/>
+        <MODULEPATH id="juce_sharedtexture" path="Modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile" externalLibraries="bluetooth&#10;Servus&#10;curl&#10;SDL2&#10;usb-1.0&#10;hidapi-hidraw&#10;JoyShockLibrary"
@@ -1725,6 +1731,7 @@
         <MODULEPATH id="juce_timeline" path="Modules"/>
         <MODULEPATH id="juce_audio_formats" path="JUCE/modules"/>
         <MODULEPATH id="juce_simpleweb" path="Modules"/>
+        <MODULEPATH id="juce_sharedtexture" path="Modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
     <VS2019 targetFolder="Builds/VisualStudio2019_CI" extraDefs="USE_KINECT=1"
@@ -1758,6 +1765,7 @@
         <MODULEPATH id="juce_audio_devices" path="JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="JUCE/modules"/>
         <MODULEPATH id="juce_simpleweb" path="Modules"/>
+        <MODULEPATH id="juce_sharedtexture" path="Modules"/>
       </MODULEPATHS>
     </VS2019>
     <VS2019 targetFolder="Builds/VisualStudio2019_Win7CI" smallIcon="nVz6Li"
@@ -1790,6 +1798,7 @@
         <MODULEPATH id="juce_audio_devices" path="JUCE/Modules"/>
         <MODULEPATH id="juce_audio_basics" path="JUCE/Modules"/>
         <MODULEPATH id="juce_simpleweb" path="Modules"/>
+        <MODULEPATH id="juce_sharedtexture" path="Modules"/>
       </MODULEPATHS>
     </VS2019>
     <XCODE_MAC targetFolder="Builds/MacOSX_CI" externalLibraries="Servus&#10;hidapi&#10;SDL2&#10;iconv&#10;JoyShockLibrary"
@@ -1825,6 +1834,7 @@
         <MODULEPATH id="juce_audio_devices" path="JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="JUCE/modules"/>
         <MODULEPATH id="juce_simpleweb" path="Modules"/>
+        <MODULEPATH id="juce_sharedtexture" path="Modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
     <LINUX_MAKE targetFolder="Builds/Raspberry" smallIcon="nVz6Li" bigIcon="nVz6Li"
@@ -1857,6 +1867,7 @@
         <MODULEPATH id="juce_timeline" path="Modules"/>
         <MODULEPATH id="juce_audio_formats" path="JUCE/modules"/>
         <MODULEPATH id="juce_simpleweb" path="Modules"/>
+        <MODULEPATH id="juce_sharedtexture" path="Modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
   </EXPORTFORMATS>
@@ -1877,6 +1888,7 @@
     <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_organicui" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_osc" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_sharedtexture" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_simpleweb" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_timeline" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
   </MODULES>
@@ -1884,7 +1896,8 @@
                JUCE_ALLOW_SPECIAL_CHARS_IN_ADDRESS="1" TIMELINE_USE_SEQUENCEMANAGER_SINGLETON="0"
                JUCE_USE_MP3AUDIOFORMAT="1" JUCE_USE_LAME_AUDIO_FORMAT="1" JUCE_USE_WINDOWS_MEDIA_FORMAT="1"
                JUCE_ENABLE_BROADCAST_BY_DEFAULT="1" JUCE_EXCLUSIVE_BINDING_BY_DEFAULT="1"
-               ORGANICUI_USE_WEBSERVER="1" JUCE_USE_WINRT_MIDI="1" JUCE_IP_AND_PORT_DETECTION="1"/>
+               ORGANICUI_USE_WEBSERVER="1" JUCE_USE_WINRT_MIDI="1" JUCE_IP_AND_PORT_DETECTION="1"
+               ORGANICUI_USE_SHAREDTEXTURE="1"/>
   <LIVE_SETTINGS>
     <WINDOWS/>
     <OSX/>

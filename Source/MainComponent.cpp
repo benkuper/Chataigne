@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    This file was auto-generated!
+	This file was auto-generated!
 
   ==============================================================================
 */
@@ -17,6 +17,8 @@
 #include "Common/Command/Template/ui/CommandTemplateManagerUI.h"
 #include "UI/WelcomeScreen.h"
 
+using namespace std::placeholders;
+
 String getAppVersion();
 
 //==============================================================================
@@ -28,7 +30,7 @@ MainContentComponent::MainContentComponent()
 
 MainContentComponent::~MainContentComponent()
 {
-	
+	SharedTextureManager::deleteInstance();
 }
 
 void MainContentComponent::init()
@@ -47,7 +49,6 @@ void MainContentComponent::init()
 
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Command Templates", &CommandTemplateManagerPanel::create));
 
-
 	OrganicMainContentComponent::init();
 
 	String lastVersion = getAppProperties().getUserSettings()->getValue("lastVersion", "");
@@ -59,7 +60,8 @@ void MainContentComponent::init()
 	}
 
 }
-SequenceManagerUI* MainContentComponent::createSequenceManagerUI(const String& name) 
+
+SequenceManagerUI* MainContentComponent::createSequenceManagerUI(const String& name)
 {
 	return SequenceManagerUI::create(name, ChataigneSequenceManager::getInstance());
 }
@@ -89,7 +91,7 @@ ChataigneMenuBarComponent::~ChataigneMenuBarComponent()
 void ChataigneMenuBarComponent::paint(Graphics& g)
 {
 	g.fillAll(BG_COLOR);
-	
+
 	if (curSponsor != nullptr)
 	{
 		g.setColour(TEXTNAME_COLOR);
@@ -121,7 +123,7 @@ void ChataigneMenuBarComponent::run()
 {
 
 	URL url = URL("http://benjamin.kuperberg.fr/chataigne/releases/donation.json");
-	
+
 	String result = url.readEntireTextStream(false);
 
 	if (result.isEmpty()) return;
@@ -150,5 +152,5 @@ void ChataigneMenuBarComponent::run()
 		timerCallback();
 
 	}
-	
+
 }

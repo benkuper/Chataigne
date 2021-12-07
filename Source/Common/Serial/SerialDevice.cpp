@@ -61,6 +61,40 @@ void SerialDevice::setBaudRate(int baudRate)
 	}
 }
 
+void SerialDevice::setParity(int parity)
+{
+	if (port != nullptr)
+	{
+		DBG("Port is null here, not setting baudrate");
+		if ((parity_t)parity == port->getParity()) return;
+
+		port->setParity((parity_t)parity);
+	}
+	
+}
+
+void SerialDevice::setStopBits(int stopBits)
+{
+	if (port != nullptr)
+	{
+		DBG("Port is null here, not setting baudrate");
+		if ((stopbits_t)stopBits == port->getStopbits()) return;
+
+		port->setStopbits((stopbits_t)stopBits);
+	}
+}
+
+void SerialDevice::setDataBits(int dataBits)
+{
+	if (port != nullptr)
+	{
+		DBG("Port is null here, not setting baudrate");
+		if ((stopbits_t)dataBits == port->getBytesize()) return;
+
+		port->setBytesize((bytesize_t)dataBits);
+	}
+}
+
 void SerialDevice::open(int baud)
 {
 #if SERIALSUPPORT
@@ -74,13 +108,13 @@ void SerialDevice::open(int baud)
 		if (!port->isOpen())  port->open();
 		port->setDTR();
 		port->setRTS();
-
+		
 
 		if (!thread.isThreadRunning())
 		{
+			thread.addSerialListener(this);
 			thread.startThread();
 #ifdef SYNCHRONOUS_SERIAL_LISTENERS
-			thread.addSerialListener(this);
 #else
 			thread.addAsyncSerialListener(this);
 #endif
@@ -206,11 +240,8 @@ void SerialReadThread::run()
 
 	std::vector<uint8_t> byteBuffer; //for cobs and data255
 
-	DBG("START SERIAL THREAD");
-
 	while (!threadShouldExit())
 	{
-		sleep(2); //500fps
 
 		if (port == nullptr) return;
 		if (!port->isOpen()) return;
@@ -284,7 +315,7 @@ void SerialReadThread::run()
 			DBG("### Serial Problem ");
 		}
 
-
+		sleep(2); //500fps
 	}
 
 	DBG("END SERIAL THREAD");

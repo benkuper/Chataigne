@@ -13,20 +13,23 @@
 #include "CustomVariables/CustomVariablesIncludes.h"
 #include "Common/Processor/ProcessorIncludes.h"
 
-LinkableParameterEditor::LinkableParameterEditor(ParameterLink* pLink, bool showMappingOptions) :
-    InspectableEditor(pLink->parameter.get(), false),
-    showMappingOptions(showMappingOptions && pLink->canLinkToMapping),
-    link(pLink)
-
+LinkableParameterEditor::LinkableParameterEditor(Array<ParameterLink*> pLinks, bool showMappingOptions) :
+    InspectableEditor(getLinksAs<Inspectable>(pLinks), false),
+    links(pLinks),
+    link(pLinks[0]),
+    showMappingOptions(showMappingOptions && pLinks[0]->canLinkToMapping)
 {
-    link->addAsyncParameterLinkListener(this);
+    for (auto& l : links)
+    {
+        l->addAsyncParameterLinkListener(this);
+    }
 
     linkBT.reset(AssetManager::getInstance()->getToggleBTImage(ChataigneAssetManager::getInstance()->linkOnImage));
     linkBT->addListener(this);
     //linkBT->setToggleState(link->linkType != link->NONE, dontSendNotification);
     addAndMakeVisible(linkBT.get());
 
-    paramEditor.reset((ParameterEditor*)pLink->parameter->getEditor(false));
+    paramEditor.reset((ParameterEditor*)link->parameter->getEditor(false));
 
     bool visible = link->linkType == link->NONE || !link->isMultiplexed();
     if (visible)
@@ -38,7 +41,10 @@ LinkableParameterEditor::LinkableParameterEditor(ParameterLink* pLink, bool show
 
 LinkableParameterEditor::~LinkableParameterEditor()
 {
-    if (!inspectable.wasObjectDeleted()) link->removeAsyncParameterLinkListener(this);
+    for(auto & l : links)
+    {
+        l->removeAsyncParameterLinkListener(this);
+    }
 }
 
 void LinkableParameterEditor::paint(Graphics& g)

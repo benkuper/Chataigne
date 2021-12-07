@@ -50,7 +50,9 @@ bool SerialModule::setPortStatus(bool status)
 	{
 		port->setMode(streamingType->getValueDataAsEnum<SerialDevice::PortMode>()); //always set mode, port might be already open with default mode
 		port->setBaudRate(baudRate->intValue());
-		if (!port->isOpen()) port->open(baudRate->intValue());
+		setupPortInternal();
+		if (port->isOpen()) port->close();
+		port->open(baudRate->intValue());
 		if (!port->isOpen())
 		{
 			NLOGERROR(niceName, "Could not open port : " << port->info->port);
@@ -79,20 +81,20 @@ void SerialModule::setCurrentPort(SerialDevice* _port)
 
 	if (port != nullptr)
 	{
+		portClosedInternal();
 		port->removeSerialDeviceListener(this);
 	}
 
 	port = _port;
-	setPortStatus(true);
 
 	if (port != nullptr)
 	{
-		DBG(" > " << port->info->port);
-
 		port->addSerialDeviceListener(this);
-
+		setPortStatus(true);
 		lastOpenedPortID = port->info->deviceID;
+		portOpenedInternal();
 	}
+	
 	serialModuleListeners.call(&SerialModuleListener::currentPortChanged);
 }
 
@@ -170,6 +172,7 @@ void SerialModule::portOpened(SerialDevice*)
 
 void SerialModule::portClosed(SerialDevice*)
 {
+	portClosedInternal();
 	serialModuleListeners.call(&SerialModuleListener::portClosed);
 }
 

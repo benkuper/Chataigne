@@ -108,14 +108,17 @@ void MIDIDeviceParameter::midiDeviceOutRemoved(MIDIOutputDevice * o)
 }
 
 
-MIDIDeviceParameterUI * MIDIDeviceParameter::createMIDIParameterUI()
+MIDIDeviceParameterUI * MIDIDeviceParameter::createMIDIParameterUI(Array<MIDIDeviceParameter *> parameters)
 {
-	return new MIDIDeviceParameterUI(this);
+	if (parameters.size() == 0) parameters = { this };
+	return new MIDIDeviceParameterUI(parameters);
 }
 
-ControllableUI * MIDIDeviceParameter::createDefaultUI()
+ControllableUI * MIDIDeviceParameter::createDefaultUI(Array<Controllable *> controllables)
 {
-	return createMIDIParameterUI();
+	Array<MIDIDeviceParameter*> parameters = Inspectable::getArrayAs<Controllable, MIDIDeviceParameter>(controllables);
+	if (parameters.size() == 0) parameters.add(this);
+	return createMIDIParameterUI(parameters);
 }
 
 void MIDIDeviceParameter::loadJSONDataInternal(var data)

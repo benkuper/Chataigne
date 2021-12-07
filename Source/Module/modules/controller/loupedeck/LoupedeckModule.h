@@ -11,7 +11,7 @@
 #pragma once
 
 class LoupedeckModule :
-    public WebSocketClientModule
+    public SerialModule
 {
 public:
     LoupedeckModule();
@@ -25,6 +25,11 @@ public:
         ScreenImage = 0xFF10,
         RefreshScreen = 0x050F
     };
+
+    Array<uint8> buffer;
+    int expectedLength;
+    enum WSMode { HANDSHAKE, DATA };
+    WSMode wsMode;
 
     EnumParameter* model; //not used right now
 
@@ -73,13 +78,6 @@ public:
     Array<BoolParameter*> pads;
     Array<Point2DParameter*> padsTouchPositions;
 
-    /*
-    const padCoords = [
-        [[0, 0], [60, 255]],
-        [[420, 0], [460, 255]],
-        [[70, 0], [140, 70]]
-    ];
-    */
 
     struct LDScreen
     {
@@ -93,13 +91,16 @@ public:
 
     LoupedeckShapeManager shapeManager;
 
-    void dataReceived(const MemoryBlock& data) override;
+    void setupPortInternal() override;
+    void portOpenedInternal() override;
+
+    void processDataBytesInternal(Array<uint8> data) override;
+
     void processTouchData(Array<uint8_t> data);
 
     void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
 
     void sendLoupedeckCommand(LDCommand command, Array<uint8> data);
-
 
     void updateButton(int buttonId);
     void updatePadContent(int padID, bool refresh = true);
@@ -114,7 +115,6 @@ public:
     void vibrate(int vibrationIndex = 1);
 
     String getLoupedeckServerPath() const;
-    virtual void timerCallback() override;
 
     var getJSONData() override;
     void loadJSONDataItemInternal(var data) override;
