@@ -56,12 +56,7 @@ namespace ProjectInfo
 {
     const char* const  projectName    = "Chataigne";
     const char* const  companyName    = "Ben Kuper";
-<<<<<<< HEAD
-    const char* const  versionString  = "1.9.2";
-    const int          versionNumber  = 0x10902;
-=======
     const char* const  versionString  = "1.9.3b6";
     const int          versionNumber  = 0x10903;
->>>>>>> MultiEditing
 }
 #endif

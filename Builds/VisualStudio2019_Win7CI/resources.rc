@@ -9,11 +9,7 @@
 #include <windows.h>
 
 VS_VERSION_INFO VERSIONINFO
-<<<<<<< HEAD
-FILEVERSION  1,9,2,0
-=======
 FILEVERSION  1,9,3b6,0
->>>>>>> MultiEditing
 BEGIN
   BLOCK "StringFileInfo"
   BEGIN
@@ -22,15 +18,9 @@ BEGIN
       VALUE "CompanyName",  "Ben Kuper\0"
       VALUE "LegalCopyright",  "Ben Kuper\0"
       VALUE "FileDescription",  "Chataigne\0"
-<<<<<<< HEAD
-      VALUE "FileVersion",  "1.9.2\0"
-      VALUE "ProductName",  "Chataigne\0"
-      VALUE "ProductVersion",  "1.9.2\0"
-=======
       VALUE "FileVersion",  "1.9.3b6\0"
       VALUE "ProductName",  "Chataigne\0"
       VALUE "ProductVersion",  "1.9.3b6\0"
->>>>>>> MultiEditing
     END
   END
 
