@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    DMXModule.cpp
-    Created: 6 Apr 2017 10:22:10pm
-    Author:  Ben
+	DMXModule.cpp
+	Created: 6 Apr 2017 10:22:10pm
+	Author:  Ben
 
   ==============================================================================
 */
@@ -22,8 +22,8 @@ DMXModule::DMXModule() :
 	defManager->add(CommandDefinition::createDef(this, "", "Set range", &DMXCommand::create)->addParam("action", DMXCommand::SET_RANGE));
 	defManager->add(CommandDefinition::createDef(this, "", "Set all", &DMXCommand::create)->addParam("action", DMXCommand::SET_ALL));
 	defManager->add(CommandDefinition::createDef(this, "", "Set custom values", &DMXCommand::create)->addParam("action", DMXCommand::SET_CUSTOM));
-	defManager->add(CommandDefinition::createDef(this, "", "Set Color", &DMXCommand::create)->addParam("action",DMXCommand::COLOR));
-	
+	defManager->add(CommandDefinition::createDef(this, "", "Set Color", &DMXCommand::create)->addParam("action", DMXCommand::COLOR));
+
 	dmxType = moduleParams.addEnumParameter("DMX Type", "Choose the type of dmx interface you want to connect");
 
 	dmxType->addOption("Open DMX", DMXDevice::OPENDMX)->addOption("Enttec DMX Pro", DMXDevice::ENTTEC_DMXPRO)->addOption("Enttec DMX MkII", DMXDevice::ENTTEC_MK2)->addOption("Art-Net", DMXDevice::ARTNET)->addOption("sACN/E1.31", DMXDevice::SACN);
@@ -56,7 +56,7 @@ DMXModule::~DMXModule()
 {
 }
 
-void DMXModule::setCurrentDMXDevice(DMXDevice * d)
+void DMXModule::setCurrentDMXDevice(DMXDevice* d)
 {
 	if (dmxDevice.get() == d) return;
 
@@ -68,7 +68,7 @@ void DMXModule::setCurrentDMXDevice(DMXDevice * d)
 	}
 
 	dmxDevice.reset(d);
-	
+
 	dmxConnected->hideInEditor = dmxDevice == nullptr || dmxDevice->type == DMXDevice::ARTNET;
 	dmxConnected->setValue(false);
 
@@ -100,9 +100,9 @@ void DMXModule::sendDMXValues(int startChannel, Array<int> values)
 	{
 		String s = "Send DMX : " + String(startChannel) + ", " + String(values.size()) + " values";
 		int ch = startChannel;
-		for (auto &v : values)
+		for (auto& v : values)
 		{
-			s += "\nChannel " + String(ch)+" : " + String(v);
+			s += "\nChannel " + String(ch) + " : " + String(v);
 			ch++;
 		}
 		NLOG(niceName, s);
@@ -117,9 +117,9 @@ void DMXModule::send16BitDMXValue(int startChannel, int value, DMXByteOrder byte
 {
 	if (dmxDevice == nullptr) return;
 	if (logOutgoingData->boolValue()) NLOG(niceName, "Send 16-bit DMX : " + String(startChannel) + " > " + String(value));
-	outActivityTrigger->trigger(); 
+	outActivityTrigger->trigger();
 	dmxDevice->sendDMXValue(startChannel, byteOrder == MSB ? (value >> 8) & 0xFF : value & 0xFF);
-	dmxDevice->sendDMXValue(startChannel+1, byteOrder == MSB ? 0xFF : (value >> 8) & 0xFF);
+	dmxDevice->sendDMXValue(startChannel + 1, byteOrder == MSB ? 0xFF : (value >> 8) & 0xFF);
 }
 
 void DMXModule::send16BitDMXValues(int startChannel, Array<int> values, DMXByteOrder byteOrder)
@@ -143,7 +143,7 @@ void DMXModule::send16BitDMXValues(int startChannel, Array<int> values, DMXByteO
 
 var DMXModule::sendDMXFromScript(const var::NativeFunctionArgs& args)
 {
-	DMXModule * m = getObjectFromJS<DMXModule>(args);
+	DMXModule* m = getObjectFromJS<DMXModule>(args);
 	if (!m->enabled->boolValue()) return var();
 
 	if (args.numArguments < 2) return var();
@@ -154,7 +154,7 @@ var DMXModule::sendDMXFromScript(const var::NativeFunctionArgs& args)
 	{
 		if (args.arguments[i].isArray())
 		{
-			for (int j = 0; j < args.arguments[i].size();j++) values.add(args.arguments[i][j]);
+			for (int j = 0; j < args.arguments[i].size(); j++) values.add(args.arguments[i][j]);
 		}
 		else
 		{
@@ -177,7 +177,7 @@ var DMXModule::getJSONData()
 {
 	var data = Module::getJSONData();
 	if (dmxDevice != nullptr) data.getDynamicObject()->setProperty("device", dmxDevice->getJSONData());
-	
+
 	var channelTypes;
 	for (auto& v : channelValues)
 	{
@@ -185,11 +185,11 @@ var DMXModule::getJSONData()
 		{
 			var vData(new DynamicObject());
 			vData.getDynamicObject()->setProperty("channel", v->channel);
-			vData.getDynamicObject()->setProperty("type",(int)v->type);
+			vData.getDynamicObject()->setProperty("type", (int)v->type);
 			channelTypes.append(vData);
 		}
 	}
-	if(channelTypes.size() > 0) data.getDynamicObject()->setProperty("dmxChannelTypes", channelTypes);
+	if (channelTypes.size() > 0) data.getDynamicObject()->setProperty("dmxChannelTypes", channelTypes);
 
 	return data;
 }
@@ -220,7 +220,7 @@ void DMXModule::onContainerParameterChanged(Parameter* p)
 	}
 }
 
-void DMXModule::controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c)
+void DMXModule::controllableFeedbackUpdate(ControllableContainer* cc, Controllable* c)
 {
 	Module::controllableFeedbackUpdate(cc, c);
 	if (c == dmxType) setCurrentDMXDevice(DMXDevice::create((DMXDevice::Type)(int)dmxType->getValueData()));
@@ -270,25 +270,25 @@ void DMXModule::dmxDataInChanged(int numChannels, uint8* values, const String& s
 
 			data.append(vp->getValue());
 		}
-		
+
 	}
 
 	scriptManager->callFunctionOnAllItems(dmxEventId, Array<var>{data});
 }
 
 
-DMXModule::DMXRouteParams::DMXRouteParams(Module * sourceModule, Controllable * c) :
+DMXModule::DMXRouteParams::DMXRouteParams(Module* sourceModule, Controllable* c) :
 	mode16bit(nullptr),
 	fullRange(nullptr),
-    channel(nullptr)
+	channel(nullptr)
 {
 	channel = addIntParameter("Channel", "The Channel", 1, 1, 512);
-	
+
 	if (c->type == Controllable::FLOAT || c->type == Controllable::BOOL || c->type == Controllable::INT || c->type == Controllable::POINT2D || c->type == Controllable::POINT3D)
 	{
-		fullRange = addBoolParameter("Full Range", "If checked, value will be remapped from 0-1 will to 0-255 (or 0-65535 in 16-bit mode)", ((Parameter *)c)->hasRange());
+		fullRange = addBoolParameter("Full Range", "If checked, value will be remapped from 0-1 will to 0-255 (or 0-65535 in 16-bit mode)", ((Parameter*)c)->hasRange());
 	}
-	
+
 	if (c->type == Controllable::FLOAT || c->type == Controllable::INT || c->type == Controllable::BOOL || c->type == Controllable::POINT2D || c->type == Controllable::POINT3D || c->type == Controllable::COLOR)
 	{
 		mode16bit = addEnumParameter("Mode", "Choosing the resolution and Byte order for this routing");
@@ -296,9 +296,9 @@ DMXModule::DMXRouteParams::DMXRouteParams(Module * sourceModule, Controllable * 
 	}
 }
 
-void DMXModule::handleRoutedModuleValue(Controllable * c, RouteParams * p)
+void DMXModule::handleRoutedModuleValue(Controllable* c, RouteParams* p)
 {
-	
+
 	if (p == nullptr || c == nullptr) return;
 
 	if (DMXRouteParams* rp = dynamic_cast<DMXRouteParams*>(p))
@@ -387,7 +387,8 @@ void DMXModule::DMXModuleRouterController::triggerTriggered(Trigger* t)
 	}
 }
 
-ControllableUI * DMXValueParameter::createDefaultUI(Array<Controllable*> controllables)
+ControllableUI* DMXValueParameter::createDefaultUI(Array<Controllable*> controllables)
 {
+	if (controllables.size() == 0) controllables = { this };
 	return new DMXValueParameterUI(Inspectable::getArrayAs<Controllable, DMXValueParameter>(controllables));
 }
