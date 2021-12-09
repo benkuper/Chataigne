@@ -15,6 +15,8 @@
 //include here to avoid loop-include
 #include "ModuleCommandTester.h" 
 #include "ui/ModuleEditor.h"
+
+#include "Common/Command/ui/BaseCommandHandlerEditor.h"
 #include "ui/ModuleCommandTesterEditor.h"
 
 

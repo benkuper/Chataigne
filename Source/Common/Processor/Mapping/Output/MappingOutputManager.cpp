@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "Common/Command/ui/BaseCommandHandlerManagerEditor.h"
-#include "MappingOutputManager.h"
-
 MappingOutputManager::MappingOutputManager(Multiplex * multiplex) :
 	BaseManager<MappingOutput>("Outputs"),
 	MultiplexTarget(multiplex),

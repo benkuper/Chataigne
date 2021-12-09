@@ -8,7 +8,6 @@
   ==============================================================================
 */
 
-#include "Common/Command/ui/BaseCommandHandlerManagerEditor.h"
 
 ConsequenceManager::ConsequenceManager(const String& name, Multiplex* multiplex) :
 	BaseManager<BaseItem>(name),

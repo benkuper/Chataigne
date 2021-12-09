@@ -9,7 +9,6 @@
 */
 
 #pragma once
-#include "Common/Command/ui/BaseCommandHandlerManagerEditor.h"
 
 class ConsequenceManagerEditor :
 	public BaseCommandHandlerManagerEditor<BaseItem>

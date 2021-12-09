@@ -20,6 +20,8 @@
 #include "Multiplex/List/MultiplexListManager.h"
 #include "Multiplex/Multiplex.h"
 
+#include "Common/Command/ui/BaseCommandHandlerManagerEditor.h"
+
 #include "Action/Condition/Condition.h"
 #include "Action/Condition/ConditionManager.h"
 
