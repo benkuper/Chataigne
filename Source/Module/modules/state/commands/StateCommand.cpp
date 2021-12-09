@@ -15,7 +15,7 @@ StateCommand::StateCommand(StateModule* _module, CommandContext context, var par
 	val(nullptr)
 {
 	actionType = (ActionType)(int)params.getProperty("type", SET_STATE_ACTIVATION);
-	
+
 	if (actionType != CANCEL_ALL_DELAYED_CONSEQUENCES)
 	{
 		target = addTargetParameter("Target", "Target for the command");
@@ -50,9 +50,15 @@ StateCommand::StateCommand(StateModule* _module, CommandContext context, var par
 		target->customGetTargetContainerFunc = &StateManager::showMenuAndGetMapping;
 		target->defaultParentLabelLevel = 1;
 		break;
-            
-        default:
-            break;
+
+	case CONDUCTOR_NEXT_TRIGGER:
+	case CONDUCTOR_SET_CUE_INDEX:
+		target->customGetTargetContainerFunc = &StateManager::showMenuAndGetConductor;
+		target->defaultParentLabelLevel = 1;
+		break;
+
+	default:
+		break;
 	}
 
 	if (actionType == SET_STATE_ACTIVATION || actionType == SET_ACTION_ENABLED || actionType == SET_TOGGLE_STATE || actionType == SET_MAPPING_ENABLED)
@@ -63,6 +69,11 @@ StateCommand::StateCommand(StateModule* _module, CommandContext context, var par
 	else if (actionType == SET_SEQUENTIAL_CONDITION_INDEX)
 	{
 		val = addIntParameter("Value", "The activation / enable state to set this element to.", 0, 0);
+		linkParamToMappingIndex(val, 0);
+	}
+	else if (actionType == CONDUCTOR_SET_CUE_INDEX)
+	{
+		val = addIntParameter("Value", "The index of the next cue that will be triggered by the conductor.", 1, 1);
 		linkParamToMappingIndex(val, 0);
 	}
 }
@@ -149,6 +160,14 @@ void StateCommand::triggerInternal(int multiplexIndex)
 			}
 		}
 		break;
+
+	case CONDUCTOR_NEXT_TRIGGER:
+		if (Conductor* c = getLinkedTargetContainerAs<Conductor>(target, multiplexIndex)) c->triggerOn->trigger();
+		break;
+
+	case CONDUCTOR_SET_CUE_INDEX:
+		if (Conductor* c = getLinkedTargetContainerAs<Conductor>(target, multiplexIndex)) c->nextCueIndex->setValue(val->intValue());
+		break;
 	}
 }
 
@@ -164,7 +183,7 @@ void StateCommand::loadJSONDataInternal(var data)
 
 void StateCommand::endLoadFile()
 {
-	if(target != nullptr) target->setValue("", true);
+	if (target != nullptr) target->setValue("", true);
 
 	loadJSONData(dataToLoad);
 	dataToLoad = var();

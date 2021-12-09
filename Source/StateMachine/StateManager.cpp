@@ -220,6 +220,24 @@ Mapping* StateManager::showMenuAndGetMapping()
 	return (Mapping*)(mappings[result - 1]);
 }
 
+Mapping* StateManager::showMenuAndGetConductor()
+{
+	PopupMenu menu;
+	StateManager* sm = StateManager::getInstance();
+
+	Array<Processor*> conductors;
+
+	for (auto& s : sm->items)
+	{
+		PopupMenu sMenu = getProcessorMenuForManager(s->pm.get(), Processor::CONDUCTOR, &conductors);
+		menu.addSubMenu(s->niceName, sMenu);
+	}
+
+	int result = menu.show();
+	if (result <= 0) return nullptr;
+	return (Mapping*)(conductors[result - 1]);
+}
+
 PopupMenu StateManager::getProcessorMenuForManager(ProcessorManager* manager, Processor::ProcessorType type, Array<Processor*> * arrayToFill)
 {
 	PopupMenu result;
