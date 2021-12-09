@@ -14,9 +14,9 @@ CustomValuesCommandArgumentManager::CustomValuesCommandArgumentManager(const Str
 	isBeingDestroyed(false),
 	mappingEnabled(_mappingEnabled),
 	templateMode(templateMode),
+    enablePrecison(true),
 	linkedTemplateManager(nullptr),
-	createParamCallbackFunc(nullptr),
-	enablePrecison(true)
+	createParamCallbackFunc(nullptr)
 {
 	selectItemWhenCreated = false;
 	editorCanBeCollapsed = false;

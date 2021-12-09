@@ -125,7 +125,7 @@ void WebSocketClientModule::setupClient()
 	{
 		inActivityTrigger->trigger();
 
-		Array<uint8_t> bytes((const uint8_t*)data.getData(), data.getSize());
+		Array<uint8_t> bytes((const uint8_t*)data.getData(), (int)data.getSize());
 
 		if (logIncomingData->boolValue())
 		{

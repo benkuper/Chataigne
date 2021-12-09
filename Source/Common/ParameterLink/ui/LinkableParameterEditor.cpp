@@ -15,9 +15,10 @@
 
 LinkableParameterEditor::LinkableParameterEditor(Array<ParameterLink*> pLinks, bool showMappingOptions) :
     InspectableEditor(getLinksAs<Inspectable>(pLinks), false),
+    showMappingOptions(showMappingOptions && pLinks[0]->canLinkToMapping),
     links(pLinks),
-    link(pLinks[0]),
-    showMappingOptions(showMappingOptions && pLinks[0]->canLinkToMapping)
+    link(pLinks[0])
+    
 {
     for (auto& l : links)
     {

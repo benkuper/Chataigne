@@ -144,8 +144,8 @@ void CVPresetMultiplexListEditor::resizedInternalHeaderItemInternal(Rectangle<in
 
 InputValueListEditor::InputValueListEditor(InputValueMultiplexList* eList, bool isRoot) :
 	BaseItemEditor(eList, isRoot),
-	list(eList),
-	fillFromExpBT("Fill...")
+    fillFromExpBT("Fill..."),
+    list(eList)
 {
 	fillFromExpBT.addListener(this);
 	addAndMakeVisible(&fillFromExpBT);
@@ -179,8 +179,8 @@ void InputValueListEditor::buttonClicked(Button* b)
 }
 
 InputValueListEditor::ExpressionComponentWindow::ExpressionComponentWindow(InputValueMultiplexList* list) :
-	assignBT("Assign"),
-	list(list)
+    list(list),
+    assignBT("Assign")
 {
 	instructions.setText("This expression will be used to fill each item in this list. You can use wildcards {index} and {index0} to replace with index of the item that is processed.", dontSendNotification);
 

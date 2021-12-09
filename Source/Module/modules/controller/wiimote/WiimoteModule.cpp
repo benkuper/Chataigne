@@ -11,8 +11,8 @@
 
 WiimoteModule::WiimoteModule(const String & name) :
 	Module(name),
-	device(nullptr),
-	irCC("IR")
+    irCC("IR"),
+    device(nullptr)
 {
 	setupIOConfiguration(true, false);
 

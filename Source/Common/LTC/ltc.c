@@ -80,7 +80,7 @@ void ltc_decoder_write_ ## FN (LTCDecoder *d, FORMAT *buf, size_t size, ltc_off_
 	size_t copyStart = 0; \
 	while (copyStart < size) { \
 		int i; \
-		int c = size - copyStart; \
+		int c = (int)size - copyStart; \
 		c = (c > LTC_CONVERSION_BUF_SIZE) ? LTC_CONVERSION_BUF_SIZE : c; \
 		for (i=0; i < c; i++) { \
 			tmp[i] = CONV; \
@@ -333,13 +333,13 @@ void ltc_encoder_buffer_flush(LTCEncoder *e) {
 }
 
 ltcsnd_sample_t *ltc_encoder_get_bufptr(LTCEncoder *e, int *size, int flush) {
-	if (size) *size = e->offset;
+	if (size) *size = (int)e->offset;
 	if (flush) e->offset = 0;
 	return e->buf;
 }
 
 int ltc_encoder_get_buffer(LTCEncoder *e, ltcsnd_sample_t *buf) {
-	const int len = e->offset;
+	const int len = (int)e->offset;
 	memcpy(buf, e->buf, len * sizeof(ltcsnd_sample_t) );
 	e->offset = 0;
 	return(len);

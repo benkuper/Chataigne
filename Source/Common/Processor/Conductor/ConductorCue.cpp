@@ -10,9 +10,10 @@
 
 ConductorCue::ConductorCue(var params, Multiplex * multiplex) :
     Action("Cue", params, multiplex, false, false),
-    conductorCueNotifier(5),
     isCurrent(false),
-    index(-1)
+    index(-1),
+    conductorCueNotifier(5)
+    
 {
 }
 

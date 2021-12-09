@@ -16,8 +16,8 @@ MIDIModule::MIDIModule(const String& name, bool _useGenericControls) :
 	inputDevice(nullptr),
 	outputDevice(nullptr),
 	tempoCC("Tempo"),
-	lastClockReceiveTimeIndex(0),
-	lastClockReceiveTime(0),
+    lastClockReceiveTime(0),
+    lastClockReceiveTimeIndex(0),
 	mtcCC("MTC"),
     useGenericControls(_useGenericControls)
 {

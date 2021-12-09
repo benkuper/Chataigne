@@ -13,11 +13,11 @@ CustomValuesCommandArgument::CustomValuesCommandArgument(const String& name, Par
 	MultiplexTarget(multiplex),
 	param(_p),
 	editable(nullptr),
-	sendPrecision(nullptr),
+    sendPrecision(nullptr),
     mappingEnabled(_mappingEnabled),
 	templateMode(templateMode),
-	linkedTemplate(nullptr),
-	enablePrecison(enablePrecison)
+    enablePrecison(enablePrecison),
+    linkedTemplate(nullptr)
 {
 	editorCanBeCollapsed = false;
 

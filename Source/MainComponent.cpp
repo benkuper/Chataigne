@@ -137,9 +137,7 @@ void ChataigneMenuBarComponent::run()
 
 		startTimer(120000); // every 2 minutes
 
-		MessageManagerLock mmLock;
-		timerCallback();
-
+        MessageManager::callAsync([this](){this->timerCallback();});
 	}
 
 }

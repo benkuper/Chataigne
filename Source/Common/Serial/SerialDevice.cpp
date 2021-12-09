@@ -89,7 +89,7 @@ void SerialDevice::setDataBits(int dataBits)
 	if (port != nullptr)
 	{
 		DBG("Port is null here, not setting baudrate");
-		if ((stopbits_t)dataBits == port->getBytesize()) return;
+		if ((bytesize_t)dataBits == port->getBytesize()) return;
 
 		port->setBytesize((bytesize_t)dataBits);
 	}

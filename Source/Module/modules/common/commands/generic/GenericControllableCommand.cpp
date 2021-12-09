@@ -57,7 +57,7 @@ void GenericControllableCommand::updateComponentFromTarget()
 
 	if (cTarget != nullptr)
 	{
-		if (cTarget->type != TRIGGER)
+		if (cTarget->type != Controllable::TRIGGER)
 		{
 			Parameter* p = (Parameter*)cTarget;
 			if (p->isComplex())

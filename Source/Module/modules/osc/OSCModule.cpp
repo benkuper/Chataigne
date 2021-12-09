@@ -12,9 +12,9 @@ OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemot
 	Module(name),
 	Thread("OSCZeroconf"),
 	localPort(nullptr),
+    defaultRemotePort(defaultRemotePort),
     servus("_osc._udp"),
-	receiveCC(nullptr),
-	defaultRemotePort(defaultRemotePort)
+	receiveCC(nullptr)
 {
 	
 	setupIOConfiguration(canHaveInput, canHaveOutput);

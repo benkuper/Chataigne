@@ -12,8 +12,9 @@ SimpleConversionFilter::SimpleConversionFilter(const String& name, var params, S
 	MappingFilter(name, params, multiplex),
 	outTypeString(outTypeString),
 	autoLoadDataOnSetup(true),
-	baseValue(nullptr),
-	useBaseValue(true)
+    useBaseValue(true),
+    baseValue(nullptr)
+	
 {
 	autoSetRange = false;
 

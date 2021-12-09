@@ -42,7 +42,8 @@ StreamDeckCommand::StreamDeckCommand(StreamDeckModule* _module, CommandContext c
 	case SET_BRIGHTNESS:
 		valueParam = addFloatParameter("Brightness", "The brightness to set to", .5f, 0, 1);
 		break;
-
+        default:
+            break;
 	}
 
 	linkParamToMappingIndex(valueParam, 0);

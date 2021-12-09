@@ -50,6 +50,9 @@ StateCommand::StateCommand(StateModule* _module, CommandContext context, var par
 		target->customGetTargetContainerFunc = &StateManager::showMenuAndGetMapping;
 		target->defaultParentLabelLevel = 1;
 		break;
+            
+        default:
+            break;
 	}
 
 	if (actionType == SET_STATE_ACTIVATION || actionType == SET_ACTION_ENABLED || actionType == SET_TOGGLE_STATE || actionType == SET_MAPPING_ENABLED)

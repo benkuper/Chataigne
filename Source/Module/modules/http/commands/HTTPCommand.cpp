@@ -10,9 +10,9 @@
 
 HTTPCommand::HTTPCommand(HTTPModule * _module, CommandContext context, var params, Multiplex* multiplex) :
 	BaseCommand(_module, context, params, multiplex),
-	httpModule(_module),
 	contentType((ContentType)(int)params.getProperty("contentType", URLENCODED)),
-	payload(nullptr)
+    httpModule(_module),
+    payload(nullptr)
 {
 	method = addEnumParameter("Method", "Request Method");
 	for (int i = 0; i < HTTPModule::TYPE_MAX; ++i) method->addOption(HTTPModule::requestMethodNames[i], (HTTPModule::RequestMethod)i);

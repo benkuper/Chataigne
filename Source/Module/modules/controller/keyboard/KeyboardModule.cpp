@@ -31,12 +31,13 @@ OrganicApplication::MainWindow* getMainWindow();
 KeyboardModule::KeyboardModule() :
 	Module(getDefaultTypeString()),
 	window(nullptr),
-	keysCC("Keys"),
+    lastKey(nullptr),
+    ctrl(nullptr),
+    shift(nullptr),
+    command(nullptr),
 	combination(nullptr),
-	lastKey(nullptr),
-	ctrl(nullptr),
-	shift(nullptr),
-	command(nullptr)
+    keysCC("Keys")
+	
 {
 	setupIOConfiguration(true, true);
 
