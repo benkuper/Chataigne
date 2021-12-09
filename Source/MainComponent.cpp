@@ -75,6 +75,7 @@ ChataigneMenuBarComponent::ChataigneMenuBarComponent(MainContentComponent* mainC
 
 ChataigneMenuBarComponent::~ChataigneMenuBarComponent()
 {
+	stopThread(200);
 }
 
 void ChataigneMenuBarComponent::paint(Graphics& g)

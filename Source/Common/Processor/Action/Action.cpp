@@ -126,6 +126,8 @@ void Action::triggerConsequences(bool triggerTrue, int multiplexIndex)
 	{
 		if (triggerTrue) csmOn->triggerAll(multiplexIndex);
 		else csmOff->triggerAll(multiplexIndex);
+
+		actionListeners.call(&ActionListener::actionTriggered, this, triggerTrue, multiplexIndex);
 	}
 }
 

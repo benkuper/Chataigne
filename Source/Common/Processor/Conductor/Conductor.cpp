@@ -1,3 +1,4 @@
+#include "Conductor.h"
 /*
   ==============================================================================
 
@@ -10,17 +11,22 @@
 
 Conductor::Conductor(var params, Multiplex* multiplex) :
 	Action(params, multiplex),
+	currentCue(nullptr),
 	processorManager("Processors", multiplex)
 {
 	saveAndLoadRecursiveData = true;
 	type = CONDUCTOR;
 
 	setNiceName("Conductor");
-	cueIndex = addIntParameter("Cue Index", "The Index of the action that will be triggered when", 1, 1);
-	lastCueName = addStringParameter("Last Cue", "The name of the last triggered Cue.", "");
-	lastCueName->setControllableFeedbackOnly(true);
-	nextCueName = addStringParameter("Next Cue", "The name of the cue that will be trigger if triggering the conductor", "");
+	nextCueIndex = addIntParameter("Next Cue", "The Index of the action that will be triggered when", 1, 1);
+
+	currentCueName = addStringParameter("Current Cue Name", "The name of the last triggered Cue.", "");
+	currentCueName->setControllableFeedbackOnly(true);
+	nextCueName = addStringParameter("Next Cue Name", "The name of the cue that will be trigger if triggering the conductor", "");
 	nextCueName->setControllableFeedbackOnly(true);
+
+	cueTriggerSetCurrent = addBoolParameter("Cue Trigger Set Current", "If checked, triggering a cue manually sets it current and sets cueIndex to next cue", false);
+
 	loop = addBoolParameter("Loop", "If checked, when finishing the cue list, this will set the cue index to 0 again", false);
 
 	processorManager.factory.defs.clear();
@@ -37,7 +43,7 @@ Conductor::~Conductor()
 void Conductor::onContainerParameterChangedInternal(Parameter* p)
 {
 	Action::onContainerParameterChangedInternal(p);
-	if (p == cueIndex) updateCurrentCue();
+	if (p == nextCueIndex) updateNextCue();
 }
 
 void Conductor::updateDisables(bool force)
@@ -48,31 +54,71 @@ void Conductor::updateDisables(bool force)
 
 void Conductor::itemAdded(Processor* p)
 {
-	if (!isCurrentlyLoadingData && !isClearing) cueIndex->setRange(1, jmax(processorManager.items.size() + 1, 2));
+	if (ConductorCue* c = dynamic_cast<ConductorCue*>(p)) c->addActionListener(this);
+	if (!isCurrentlyLoadingData && !isClearing) nextCueIndex->setRange(1, jmax(processorManager.items.size() + 1, 2));
 	updateIndices();
 }
 
 void Conductor::itemsAdded(Array<Processor*> pList)
 {
-	if (!isCurrentlyLoadingData && !isClearing) cueIndex->setRange(1, jmax(processorManager.items.size() + 1, 2));
+	for (auto& p : pList)
+	{
+		if (ConductorCue* c = dynamic_cast<ConductorCue*>(p)) c->addActionListener(this);
+	}
+
+	if (!isCurrentlyLoadingData && !isClearing) nextCueIndex->setRange(1, jmax(processorManager.items.size() + 1, 2));
 	updateIndices();
 }
 
 void Conductor::itemRemoved(Processor* p)
 {
-	if (!isCurrentlyLoadingData && !isClearing) cueIndex->setRange(1, jmax(processorManager.items.size() + 1, 2));
+	if (ConductorCue* c = dynamic_cast<ConductorCue*>(p))
+	{
+		if (c == currentCue) currentCue = nullptr;
+		c->removeActionListener(this);
+	}
+
+	if (!isCurrentlyLoadingData && !isClearing) nextCueIndex->setRange(1, jmax(processorManager.items.size() + 1, 2));
 	updateIndices();
 }
 
-void Conductor::itemsRemoved(Array<Processor*> p)
+void Conductor::itemsRemoved(Array<Processor*> items)
 {
-	if (!isCurrentlyLoadingData && !isClearing) cueIndex->setRange(1, jmax(processorManager.items.size() + 1, 2));
+	for (auto& i : items)
+	{
+		if (ConductorCue* c = dynamic_cast<ConductorCue*>(i))
+		{
+			if (c == currentCue) currentCue = nullptr;
+			c->removeActionListener(this);
+		}
+	}
+
+	if (!isCurrentlyLoadingData && !isClearing) nextCueIndex->setRange(1, jmax(processorManager.items.size() + 1, 2));
 	updateIndices();
 }
 
 void Conductor::itemsReordered()
 {
 	updateIndices();
+}
+
+void Conductor::actionTriggered(Action* a, bool triggerTrue, int multiplexIndex)
+{
+	if (ConductorCue* c = dynamic_cast<ConductorCue*>(a))
+	{
+		if (cueTriggerSetCurrent->boolValue())
+		{
+			if (currentCue != nullptr)
+			{
+				if (currentCue != nullptr) currentCue->setIsCurrent(false);
+			}
+
+			currentCue = c;
+			currentCue->setIsCurrent(true);
+			nextCueIndex->setValue(getValidIndexAfter(processorManager.items.indexOf(currentCue) + 1));
+			updateNextCue();
+		}
+	}
 }
 
 void Conductor::updateIndices()
@@ -84,7 +130,7 @@ void Conductor::updateIndices()
 		((ConductorCue*)processorManager.items[i])->setIndex(i + 1);
 	}
 
-	updateCurrentCue();
+	updateNextCue();
 }
 
 void Conductor::triggerConsequences(bool triggerTrue, int multiplexIndex)
@@ -94,54 +140,52 @@ void Conductor::triggerConsequences(bool triggerTrue, int multiplexIndex)
 
 	if (triggerTrue)
 	{
-		int index = cueIndex->intValue() - 1;
-		if (index < processorManager.items.size())
+		int itemIndex = nextCueIndex->intValue() - 1;
+		if (itemIndex < processorManager.items.size())
 		{
-			if (Action* a = dynamic_cast<Action*>(processorManager.items[index]))
+			if (Action* a = dynamic_cast<Action*>(processorManager.items[itemIndex]))
 			{
+				if (currentCue != nullptr) currentCue->setIsCurrent(false);
+
+				ConductorCue* cue = (ConductorCue*)a;
+
+				cue->setIsCurrent(true);
+				currentCue = cue;
+
 				if (a->enabled->boolValue())
 				{
 					a->triggerOn->trigger(); //loose multiplex to get preview but not using it for now
-					lastCueName->setValue(a->niceName);
+					currentCueName->setValue(a->niceName);
 				}
 			}
 
-			cueIndex->setValue(getNextValidIndex() + 1);
+			nextCueIndex->setValue(getValidIndexAfter(itemIndex+1));
 		}
 	}
 }
 
-int Conductor::getNextValidIndex()
+int Conductor::getValidIndexAfter(int index)
 {
-	for (int i = cueIndex->intValue(); i < processorManager.items.size(); i++)
+	for (int i = index + 1; i <= processorManager.items.size(); i++)
 	{
-		if (processorManager.items[i]->enabled->boolValue()) return i;
+		if (processorManager.items[i - 1]->enabled->boolValue()) return i;
 	}
 
-	if (loop->boolValue()) return getFirstValidIndex();
+	if (loop->boolValue() && index > 0) return getValidIndexAfter(0);
 	return processorManager.items.size();
 }
 
-int Conductor::getFirstValidIndex()
+void Conductor::updateNextCue()
 {
-	for (int i = 0; i < processorManager.items.size(); i++)
-	{
-		if (processorManager.items[i]->enabled->boolValue()) return i;
-	}
+	int nextIndex = nextCueIndex->intValue();
 
-	return processorManager.items.size();
-}
-
-void Conductor::updateCurrentCue()
-{
-	int index = cueIndex->intValue() - 1;
 	String nextName = "";
 	for (int i = 0; i < processorManager.items.size(); i++)
 	{
 		ConductorCue* cc = (ConductorCue*)processorManager.items[i];
-		bool isCurrent = i == index;
-		cc->setIsCurrent(isCurrent);
-		if (isCurrent) nextName = cc->niceName;
+		bool isNext = (i+1) == nextIndex;
+		cc->setIsNext(isNext);
+		if (isNext) nextName = cc->niceName;
 	}
 
 	nextCueName->setValue(nextName);
@@ -150,7 +194,7 @@ void Conductor::updateCurrentCue()
 void Conductor::afterLoadJSONDataInternal()
 {
 	Action::afterLoadJSONDataInternal();
-	cueIndex->setRange(1, jmax(processorManager.items.size() + 1, 2));
+	nextCueIndex->setRange(1, jmax(processorManager.items.size() + 1, 2));
 	updateIndices();
 }
 

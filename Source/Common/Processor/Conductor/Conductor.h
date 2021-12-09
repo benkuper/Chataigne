@@ -10,22 +10,29 @@
 
 #pragma once
 
+class ConductorCue;
+
 class Conductor :
     public Action,
-    public ProcessorManager::ManagerListener
+    public ProcessorManager::ManagerListener,
+    public Action::ActionListener
 {
 public:
     Conductor(var params = var(), Multiplex * multiplex = nullptr);
     ~Conductor();
 
-    IntParameter* cueIndex;
+    IntParameter* nextCueIndex;
     BoolParameter* loop;
-    StringParameter* lastCueName;
+    StringParameter* currentCueName;
     StringParameter* nextCueName;
+
+    ConductorCue* currentCue;
+    BoolParameter* cueTriggerSetCurrent;
 
     ProcessorManager processorManager;
 
     void onContainerParameterChangedInternal(Parameter* p) override;
+
     void updateDisables(bool force) override;
 
     void itemAdded(Processor* p) override;
@@ -34,14 +41,15 @@ public:
     void itemsRemoved(Array<Processor *> p) override;
     void itemsReordered() override;
 
+    void actionTriggered(Action* a, bool triggerTrue, int multiplexIndex = 0) override;
+
     void updateIndices();
 
     void triggerConsequences(bool triggerTrue, int multiplexIndex = 0) override;
 
-    int getNextValidIndex();
-    int getFirstValidIndex();
+    int getValidIndexAfter(int index = 0);
 
-    void updateCurrentCue();
+    void updateNextCue();
 
     void afterLoadJSONDataInternal() override;
 
