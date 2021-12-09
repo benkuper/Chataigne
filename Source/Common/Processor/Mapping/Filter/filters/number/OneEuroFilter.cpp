@@ -32,7 +32,7 @@ OneEuroFilter::~OneEuroFilter()
 float OneEuroFilter::alpha(float cutoff)
 {
     float te = 1.0f / freq;
-    float tau = 1.0f / (2 * float_Pi * cutoff);
+    float tau = 1.0f / (2 * MathConstants<float>::pi * cutoff);
     return 1.0f / (1.0f + tau / te);
 }
 

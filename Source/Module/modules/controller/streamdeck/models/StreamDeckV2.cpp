@@ -53,7 +53,7 @@ void StreamDeckV2::writeImageData(MemoryOutputStream& stream, Image& img)
 {	
 	Image gImg(Image::RGB, img.getWidth(), img.getHeight(), false);
 	Graphics g(gImg);
-	g.drawImageTransformed(img, AffineTransform::rotation(float_Pi, g.getClipBounds().getCentreX(), g.getClipBounds().getCentreY()));
+	g.drawImageTransformed(img, AffineTransform::rotation(MathConstants<float>::pi, g.getClipBounds().getCentreX(), g.getClipBounds().getCentreY()));
 
 	JPEGImageFormat format;
 	format.setQuality(1.f);

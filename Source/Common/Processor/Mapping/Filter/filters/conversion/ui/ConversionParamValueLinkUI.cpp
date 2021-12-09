@@ -97,17 +97,17 @@ void ConversionParamValueLinkUI::buildHitPath()
 			float angle1 = points[i].getAngleToPoint(points[i - 1]);
 			float angle2 = points[i].getAngleToPoint(points[i + 1]);
 
-			if (angle1 < 0) angle1 += float_Pi * 2;
+			if (angle1 < 0) angle1 += MathConstants<float>::pi * 2;
 
-			if (angle2 < 0) angle2 += float_Pi * 2;
+			if (angle2 < 0) angle2 += MathConstants<float>::pi * 2;
 
 			float angle = (angle1 + angle2) / 2.f;
 
-			if (angle1 < angle2) angle += float_Pi;
+			if (angle1 < angle2) angle += MathConstants<float>::pi;
 
 			//            DBG("Point " << i << ", angle : " << angle << " >>  " << String(angle1>angle2));
 
-			tp = points[i].getPointOnCircumference(margin, angle + float_Pi);
+			tp = points[i].getPointOnCircumference(margin, angle + MathConstants<float>::pi);
 			sp = points[i].getPointOnCircumference(margin, angle);
 		}
 
