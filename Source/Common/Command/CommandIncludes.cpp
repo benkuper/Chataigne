@@ -20,6 +20,8 @@
 //#include "BaseCommandHandler.h"
 //#include "ui/BaseCommandHandlerEditor.h"
 
+#include "ui/BaseCommandHandlerManagerEditor.h"
+
 #include "CommandDefinition.cpp"
 #include "CommandDefinitionManager.cpp"
 #include "CommandFactory.cpp"

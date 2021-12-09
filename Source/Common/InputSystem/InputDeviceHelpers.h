@@ -9,8 +9,6 @@
 */
 
 #pragma once
-#include "JuceHeader.h"
-#include "InputSystemManager.h"
 
 class GamepadParameterUI :
 	public ParameterUI,

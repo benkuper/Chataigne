@@ -168,12 +168,12 @@
         </GROUP>
         <GROUP id="{5C0648F7-9990-938A-3B45-609D366B138F}" name="InputSystem">
           <GROUP id="{FDAA1738-EB88-1AB8-C6B5-1EFC3FA35B4F}" name="ui">
-            <FILE id="PjYTro" name="InputDeviceHelpers.cpp" compile="1" resource="0"
+            <FILE id="PjYTro" name="InputDeviceHelpers.cpp" compile="0" resource="0"
                   file="Source/Common/InputSystem/InputDeviceHelpers.cpp"/>
             <FILE id="FoGQT8" name="InputDeviceHelpers.h" compile="0" resource="0"
                   file="Source/Common/InputSystem/InputDeviceHelpers.h"/>
           </GROUP>
-          <FILE id="lgkfXQ" name="InputSystemManager.cpp" compile="1" resource="0"
+          <FILE id="lgkfXQ" name="InputSystemManager.cpp" compile="0" resource="0"
                 file="Source/Common/InputSystem/InputSystemManager.cpp"/>
           <FILE id="f3nikH" name="InputSystemManager.h" compile="0" resource="0"
                 file="Source/Common/InputSystem/InputSystemManager.h"/>

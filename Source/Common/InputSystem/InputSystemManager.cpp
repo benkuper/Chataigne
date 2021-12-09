@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "InputSystemManager.h"
-#include "InputDeviceHelpers.h"
-
 juce_ImplementSingleton(InputSystemManager)
 
 InputSystemManager::InputSystemManager() :

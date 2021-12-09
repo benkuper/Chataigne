@@ -11,10 +11,8 @@
 #pragma once
 
 #include "CommandIncludes.h"
-#include "Template/CommandTemplateManager.h"
 #include "Module/ModuleIncludes.h"
 #include "Common/Processor/Multiplex/MultiplexTarget.h"
-#include "BaseCommandHandlerListener.h"
 
 class BaseCommandHandler :
 	public BaseItem,

@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "InputDeviceHelpers.h"
-
 GamepadParameterUI::GamepadParameterUI(Array<GamepadParameter *> parameters) :
 	ParameterUI(Inspectable::getArrayAs<GamepadParameter, Parameter>(parameters)),
 	gamepadParams(parameters),

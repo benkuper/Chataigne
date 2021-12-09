@@ -16,9 +16,11 @@
 #include "Common/Processor/Multiplex/MultiplexTarget.h"
 #include "Common/ParameterLink/ui/LinkableParameterEditor.h"
 
+
 #include "CommandContext.h"
 #include "CommandDefinition.h"
 #include "CommandDefinitionManager.h"
+#include "BaseCommandHandlerListener.h"
 
 #include "CommandFactory.h"
 
@@ -29,8 +31,6 @@
 
 #include "BaseCommand.h"
 #include "ui/BaseCommandEditor.h"
-
-#include "ui/BaseCommandHandlerManagerEditor.h"
 
 #include "CustomValues/ui/CustomValuesCommandArgumentEditor.h"
 #include "CustomValues/ui/CustomValuesCommandArgumentManagerEditor.h"

@@ -191,8 +191,12 @@
     <ClCompile Include="..\..\Source\Common\Zeroconf\ZeroconfManager.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Common\InputSystem\InputDeviceHelpers.cpp"/>
-    <ClCompile Include="..\..\Source\Common\InputSystem\InputSystemManager.cpp"/>
+    <ClCompile Include="..\..\Source\Common\InputSystem\InputDeviceHelpers.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\InputSystem\InputSystemManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\Command\CommandIncludes.cpp"/>
     <ClCompile Include="..\..\Source\Common\Command\CustomValues\ui\CustomValuesCommandArgumentEditor.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
