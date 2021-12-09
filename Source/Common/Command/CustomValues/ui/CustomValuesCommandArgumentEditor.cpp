@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "CustomValuesCommandArgumentEditor.h"
-
 CustomValuesCommandArgumentEditor::CustomValuesCommandArgumentEditor(CustomValuesCommandArgument * a, bool isRoot) :
 	BaseItemEditor(a, isRoot),
 	arg(a)

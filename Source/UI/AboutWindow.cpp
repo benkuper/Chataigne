@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "AboutWindow.h"
-#include "ChataigneAssetManager.h"
-
 AboutWindow::AboutWindow() :
 	Component("About")
 {

@@ -10,15 +10,12 @@
 
 #pragma once
 
-#include "JuceHeader.h"
-#include "../CommandContext.h"
-#include "CommandTemplateParameter.h"
-
 class Multiplex;
 class BaseCommand;
 class Module;
 class CommandDefinition;
 class CustomValuesCommandArgumentManager;
+class CommandTemplateParameter;
 
 class CommandTemplate :
 	public BaseItem

@@ -5,6 +5,8 @@
 #include <sys/stat.h>
 #endif
 
+#include "Module/ModuleIncludes.h"
+
 //==============================================================================
 
 ChataigneApplication::ChataigneApplication() :

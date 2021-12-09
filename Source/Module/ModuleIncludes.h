@@ -18,7 +18,8 @@
 #include "ModuleManager.h"
 
 #include "Common/CommonIncludes.h"
-#include "Common/Command/BaseCommand.h" //to change to CommonInclude or CommandIncludes
+#include "Common/Command/ui/BaseCommandHandlerEditor.h"
+#include "Common/Command/CommandIncludes.h"
 
 #include "Community/CommunityModuleInfo.h"
 #include "Community/CommunityModuleManager.h"

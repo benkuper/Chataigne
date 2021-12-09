@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "Common/Command/ui/BaseCommandHandlerEditor.h"
-
 class ModuleEditor :
 	public BaseItemEditor,
 	public Module::ModuleListener

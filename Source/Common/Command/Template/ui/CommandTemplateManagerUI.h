@@ -10,8 +10,7 @@
 
 #pragma once
 
-#include "../CommandTemplateManager.h"
-#include "Module/Module.h"
+class Module;
 
 class CommandTemplateManagerUI :
 	public BaseManagerUI<CommandTemplateManager, CommandTemplate, BaseItemUI<CommandTemplate>>

@@ -10,8 +10,7 @@
 
 #pragma once
 
-#include "../BaseCommandHandler.h"
-#include "../CommandFactory.h"
+class BaseCommandHandler;
 
 template <class T>
 class BaseCommandHandlerManagerEditor :

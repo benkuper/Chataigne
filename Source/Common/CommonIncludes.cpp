@@ -9,6 +9,7 @@
 */
 
 #include "CommonIncludes.h"
+#include "MainIncludes.h"
 
 #include "DMX/DMXManager.cpp"
 #include "DMX/device/DMXDevice.cpp"

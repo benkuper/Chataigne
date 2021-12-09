@@ -8,7 +8,7 @@
   ==============================================================================
 */
 
-#include "ChataigneEngine.h"
+#include "MainIncludes.h"
 
 juce_ImplementSingleton(MIDIManager)
 

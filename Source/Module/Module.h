@@ -11,8 +11,8 @@
 #pragma once
 
 #include "Common/Command/CommandContext.h"
-#include "Common/Command/CommandDefinitionManager.h"
 
+class CommandDefinitionManager;
 class ModuleCommandTester;
 class BaseCommandHandler;
 class CommandDefinition;

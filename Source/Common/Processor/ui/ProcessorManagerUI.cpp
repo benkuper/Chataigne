@@ -8,7 +8,7 @@
   ==============================================================================
 */
 
-#include "Common/Command/CommandDefinition.h"
+#include "Common/Command/CommandIncludes.h"
 
 #include "Module/ModuleIncludes.h"
 #include "StateMachine/StateMachineIncludes.h"

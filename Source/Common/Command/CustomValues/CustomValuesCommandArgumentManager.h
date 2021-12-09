@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "CustomValuesCommandArgument.h"
-
 class CustomValuesCommandArgumentManager :
 	public BaseManager<CustomValuesCommandArgument>,
 	public MultiplexTarget,

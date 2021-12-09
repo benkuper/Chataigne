@@ -8,13 +8,10 @@
 
 #pragma once
 
-#include "JuceHeader.h"
-
 ApplicationProperties& getAppProperties();
 ApplicationCommandManager& getCommandManager();
 
 class MainContentComponent;
-class ChataigneEngine;
 
 class ChataigneMenuBarComponent :
 	public Component,

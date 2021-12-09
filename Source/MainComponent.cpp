@@ -6,17 +6,6 @@
   ==============================================================================
 */
 
-#include "MainComponent.h"
-
-#include "Module/ModuleIncludes.h"
-#include "StateMachine/StateMachineIncludes.h"
-#include "TimeMachine/TimeMachineIncludes.h"
-#include "CustomVariables/CustomVariablesIncludes.h"
-#include "ChataigneEngine.h"
-
-#include "Common/Command/Template/ui/CommandTemplateManagerUI.h"
-#include "UI/WelcomeScreen.h"
-
 using namespace std::placeholders;
 
 String getAppVersion();

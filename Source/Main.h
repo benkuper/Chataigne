@@ -11,9 +11,7 @@
 #pragma once
 #pragma warning(disable:4244 4100 4305 26451 26495)
 
-#include "MainComponent.h"
-#include "ChataigneEngine.h"
-#include "Analytics/MatomoAnalytics.h"
+#include "MainIncludes.h"
 
 //==============================================================================
 class ChataigneApplication : public OrganicApplication

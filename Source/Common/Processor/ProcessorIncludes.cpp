@@ -10,8 +10,7 @@
 
 #include "ProcessorIncludes.h"
 
-#include "UI/ChataigneAssetManager.h"
-
+#include "MainIncludes.h"
 
 #include "Multiplex/List/MultiplexList.cpp"
 #include "Multiplex/List/MultiplexListManager.cpp"

@@ -7,17 +7,6 @@
 
  ==============================================================================
  */
-#include "ChataigneEngine.h"
-
-#include "Common/InputSystem/InputSystemManager.h"
-
-#include "UI/ChataigneAssetManager.h"
-
-#include "CustomVariables/CustomVariablesIncludes.h"
-#include "Guider/GuiderIncludes.h"
-#include "TimeMachine/TimeMachineIncludes.h"
-#include "StateMachine/StateMachineIncludes.h"
-#include "Common/CommonIncludes.h"
 
 ControllableContainer* getAppSettings();
 
@@ -26,6 +15,10 @@ ChataigneEngine::ChataigneEngine() :
 	defaultBehaviors("Default Behaviors")
 	//ossiaDevice(nullptr)
 {
+
+	module.reset(new ChataigneGenericModule());
+	multiplexModule.reset(new MultiplexModule());
+
 	convertURL = "http://benjamin.kuperberg.fr/chataigne/releases/convert.php";
 	breakingChangesVersions.add("1.6.12b5");
 	breakingChangesVersions.add("1.7.0b1");

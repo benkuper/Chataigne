@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "CommandTemplateEditor.h"
-
 CommandTemplateEditor::CommandTemplateEditor(CommandTemplate * t, bool isRoot) :
 	BaseItemEditor(t, isRoot)
 {

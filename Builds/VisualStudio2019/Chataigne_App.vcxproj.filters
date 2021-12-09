@@ -1522,6 +1522,9 @@
     <ClCompile Include="..\..\Source\Common\InputSystem\InputSystemManager.cpp">
       <Filter>Chataigne\Source\Common\InputSystem</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Command\CommandIncludes.cpp">
+      <Filter>Chataigne\Source\Common\Command</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\Command\CustomValues\ui\CustomValuesCommandArgumentEditor.cpp">
       <Filter>Chataigne\Source\Common\Command\CustomValues\ui</Filter>
     </ClCompile>
@@ -2469,6 +2472,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\UI\WelcomeScreen.cpp">
       <Filter>Chataigne\Source\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\MainIncludes.cpp">
+      <Filter>Chataigne\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\ChataigneEngine.cpp">
       <Filter>Chataigne\Source</Filter>
@@ -5655,6 +5661,12 @@
     <ClInclude Include="..\..\Source\Common\InputSystem\InputSystemManager.h">
       <Filter>Chataigne\Source\Common\InputSystem</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Command\BaseCommandHandlerListener.h">
+      <Filter>Chataigne\Source\Common\Command</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Command\CommandIncludes.h">
+      <Filter>Chataigne\Source\Common\Command</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Common\Command\CustomValues\ui\CustomValuesCommandArgumentEditor.h">
       <Filter>Chataigne\Source\Common\Command\CustomValues\ui</Filter>
     </ClInclude>
@@ -6563,6 +6575,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\UI\WelcomeScreen.h">
       <Filter>Chataigne\Source\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\MainIncludes.h">
+      <Filter>Chataigne\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\ChataigneEngine.h">
       <Filter>Chataigne\Source</Filter>

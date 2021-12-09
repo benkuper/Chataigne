@@ -10,8 +10,8 @@
 
 
 #pragma once
-
-#include "Module/ModuleIncludes.h"
+class ChataigneGenericModule;
+class MultiplexModule;
 
 class ChataigneEngine :
 	public Engine
@@ -20,8 +20,8 @@ public:
 	ChataigneEngine();
 	~ChataigneEngine();
 
-	ChataigneGenericModule module;
-	MultiplexModule multiplexModule;
+	std::unique_ptr<ChataigneGenericModule> module;
+	std::unique_ptr<MultiplexModule> multiplexModule;
 
 	//Global Settings
 	ControllableContainer defaultBehaviors;

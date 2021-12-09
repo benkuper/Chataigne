@@ -9,8 +9,6 @@
 */
 
 #pragma once
-#include "../BaseCommand.h"
-#include "../../ParameterLink/ui/LinkableParameterEditor.h"
 
 class BaseCommandContainerEditor :
 	public ParamLinkContainerEditor,

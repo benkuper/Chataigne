@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "CustomValuesCommandArgumentManager.h"
-#include "ui/CustomValuesCommandArgumentManagerEditor.h"
-
 CustomValuesCommandArgumentManager::CustomValuesCommandArgumentManager(const String &name, bool _mappingEnabled, bool templateMode, Multiplex* multiplex) :
 	BaseManager(name),
 	MultiplexTarget(multiplex),

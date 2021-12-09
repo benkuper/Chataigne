@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "BaseCommandEditor.h"
-#include "Common/ParameterLink/ui/LinkableParameterEditor.h"
-
 BaseCommandContainerEditor::BaseCommandContainerEditor(BaseCommand* command, ControllableContainer * container, bool isRoot) :
     ParamLinkContainerEditor(command, isRoot, false),
     baseCommand(command)

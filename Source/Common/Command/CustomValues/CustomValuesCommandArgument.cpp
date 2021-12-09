@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "CustomValuesCommandArgument.h"
-#include "ui/CustomValuesCommandArgumentEditor.h"
-
 CustomValuesCommandArgument::CustomValuesCommandArgument(const String& name, Parameter* _p, bool _mappingEnabled, bool templateMode, Multiplex* multiplex, bool enablePrecison) :
 	BaseItem(name, false),
 	MultiplexTarget(multiplex),

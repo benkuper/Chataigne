@@ -8,7 +8,7 @@
   ==============================================================================
 */
 
-#include "UI/ChataigneAssetManager.h"
+#include "MainIncludes.h"
 #include "LinkableParameterEditor.h"
 #include "CustomVariables/CustomVariablesIncludes.h"
 #include "Common/Processor/ProcessorIncludes.h"

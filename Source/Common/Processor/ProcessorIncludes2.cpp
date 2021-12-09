@@ -9,7 +9,7 @@
 */
 
 #include "ProcessorIncludes.h"
-#include "UI/ChataigneAssetManager.h"
+#include "MainIncludes.h"
 
 #include "Mapping/Filter/MappingFilter.cpp"
 #include "Mapping/Filter/MappingFilterManager.cpp"

@@ -9,7 +9,8 @@
 */
 
 #include "TimeMachineIncludes.h"
-#include "UI/ChataigneAssetManager.h"
+#include "MainIncludes.h"
+
 #include "Module/ModuleIncludes.h"
 #include "Common/Processor/ProcessorIncludes.h"
 

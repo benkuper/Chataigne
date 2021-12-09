@@ -10,12 +10,11 @@
 
 #pragma once
 
-#include "CommandDefinition.h"
-#include "BaseCommand.h"
-
+#include "CommandIncludes.h"
 #include "Template/CommandTemplateManager.h"
 #include "Module/ModuleIncludes.h"
 #include "Common/Processor/Multiplex/MultiplexTarget.h"
+#include "BaseCommandHandlerListener.h"
 
 class BaseCommandHandler :
 	public BaseItem,
@@ -65,32 +64,18 @@ public:
 
 	static var setCommandFromScript(const var::NativeFunctionArgs& a);
 
-	class CommandHandlerListener
-	{
-	public:
-		virtual ~CommandHandlerListener() {}
-		virtual void commandChanged(BaseCommandHandler*) {}
-		virtual void commandUpdated(BaseCommandHandler*) {}
-	};
 
 	ListenerList<CommandHandlerListener> commandHandlerListeners;
 	void addCommandHandlerListener(CommandHandlerListener* newListener) { commandHandlerListeners.add(newListener); }
 	void removeCommandHandlerListener(CommandHandlerListener* listener) { commandHandlerListeners.remove(listener); }
 
-	class CommandHandlerEvent {
-	public:
-		enum Type { COMMAND_CHANGED, COMMAND_UPDATED };
-		CommandHandlerEvent(Type type, BaseCommandHandler* h) : type(type), handler(h) {}
-		Type type;
-		BaseCommandHandler* handler;
-	};
 
 	QueuedNotifier<CommandHandlerEvent> handlerNotifier;
-	typedef QueuedNotifier<CommandHandlerEvent>::Listener AsyncListener;
 
-	void addAsyncCommandHandlerListener(AsyncListener* newListener) { handlerNotifier.addListener(newListener); }
-	void addAsyncCoalescedCommandHandlerListener(AsyncListener* newListener) { handlerNotifier.addAsyncCoalescedListener(newListener); }
-	void removeAsyncCommandHandlerListener(AsyncListener* listener) { handlerNotifier.removeListener(listener); }
+	void addAsyncCommandHandlerListener(BaseCommandHandlerAsyncListener* newListener) { handlerNotifier.addListener(newListener); }
+	void addAsyncCoalescedCommandHandlerListener(BaseCommandHandlerAsyncListener* newListener) { handlerNotifier.addAsyncCoalescedListener(newListener); }
+	void removeAsyncCommandHandlerListener(BaseCommandHandlerAsyncListener* listener) { handlerNotifier.removeListener(listener); }
+
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(BaseCommandHandler)
 };

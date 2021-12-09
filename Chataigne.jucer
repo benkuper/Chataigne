@@ -129,7 +129,7 @@
               file="Source/Guider/GuiderIncludes.h"/>
       </GROUP>
       <GROUP id="{C6C9402E-3E5F-DA24-8E22-DE4CD0AB4FD4}" name="Analytics">
-        <FILE id="in1fwI" name="MatomoAnalytics.cpp" compile="1" resource="0"
+        <FILE id="in1fwI" name="MatomoAnalytics.cpp" compile="0" resource="0"
               file="Source/Analytics/MatomoAnalytics.cpp"/>
         <FILE id="GNrv6Z" name="MatomoAnalytics.h" compile="0" resource="0"
               file="Source/Analytics/MatomoAnalytics.h"/>
@@ -179,30 +179,36 @@
                 file="Source/Common/InputSystem/InputSystemManager.h"/>
         </GROUP>
         <GROUP id="{E7C8AAFC-E2FA-90D0-859B-423BC528A52F}" name="Command">
+          <FILE id="t16haL" name="BaseCommandHandlerListener.h" compile="0" resource="0"
+                file="Source/Common/Command/BaseCommandHandlerListener.h"/>
+          <FILE id="rf5MpO" name="CommandIncludes.cpp" compile="1" resource="0"
+                file="Source/Common/Command/CommandIncludes.cpp"/>
+          <FILE id="qd3zXB" name="CommandIncludes.h" compile="0" resource="0"
+                file="Source/Common/Command/CommandIncludes.h"/>
           <GROUP id="{47696C8D-14D3-710C-A88D-F786B79035DC}" name="CustomValues">
             <GROUP id="{F51CB230-4406-9766-8E80-5A71D7A5CA68}" name="ui">
-              <FILE id="Pb2gPb" name="CustomValuesCommandArgumentEditor.cpp" compile="1"
+              <FILE id="Pb2gPb" name="CustomValuesCommandArgumentEditor.cpp" compile="0"
                     resource="0" file="Source/Common/Command/CustomValues/ui/CustomValuesCommandArgumentEditor.cpp"/>
               <FILE id="c0lqaI" name="CustomValuesCommandArgumentEditor.h" compile="0"
                     resource="0" file="Source/Common/Command/CustomValues/ui/CustomValuesCommandArgumentEditor.h"/>
               <FILE id="L4GtPy" name="CustomValuesCommandArgumentManagerEditor.cpp"
-                    compile="1" resource="0" file="Source/Common/Command/CustomValues/ui/CustomValuesCommandArgumentManagerEditor.cpp"/>
+                    compile="0" resource="0" file="Source/Common/Command/CustomValues/ui/CustomValuesCommandArgumentManagerEditor.cpp"/>
               <FILE id="iGnRKP" name="CustomValuesCommandArgumentManagerEditor.h"
                     compile="0" resource="0" file="Source/Common/Command/CustomValues/ui/CustomValuesCommandArgumentManagerEditor.h"/>
             </GROUP>
-            <FILE id="BeSdkj" name="CustomValuesCommandArgument.cpp" compile="1"
+            <FILE id="BeSdkj" name="CustomValuesCommandArgument.cpp" compile="0"
                   resource="0" file="Source/Common/Command/CustomValues/CustomValuesCommandArgument.cpp"
                   xcodeResource="0"/>
             <FILE id="N8nNxA" name="CustomValuesCommandArgument.h" compile="0"
                   resource="0" file="Source/Common/Command/CustomValues/CustomValuesCommandArgument.h"/>
-            <FILE id="R5TQdV" name="CustomValuesCommandArgumentManager.cpp" compile="1"
+            <FILE id="R5TQdV" name="CustomValuesCommandArgumentManager.cpp" compile="0"
                   resource="0" file="Source/Common/Command/CustomValues/CustomValuesCommandArgumentManager.cpp"
                   xcodeResource="0"/>
             <FILE id="HzlPDS" name="CustomValuesCommandArgumentManager.h" compile="0"
                   resource="0" file="Source/Common/Command/CustomValues/CustomValuesCommandArgumentManager.h"/>
           </GROUP>
           <GROUP id="{D2DBE4AC-35AB-8D3A-FE4E-BF5B8540D68E}" name="ui">
-            <FILE id="Zp6xMX" name="BaseCommandEditor.cpp" compile="1" resource="0"
+            <FILE id="Zp6xMX" name="BaseCommandEditor.cpp" compile="0" resource="0"
                   file="Source/Common/Command/ui/BaseCommandEditor.cpp"/>
             <FILE id="A0ZnVl" name="BaseCommandEditor.h" compile="0" resource="0"
                   file="Source/Common/Command/ui/BaseCommandEditor.h"/>
@@ -212,56 +218,56 @@
                   file="Source/Common/Command/ui/BaseCommandHandlerEditor.h"/>
             <FILE id="RpsBmd" name="BaseCommandHandlerManagerEditor.h" compile="0"
                   resource="0" file="Source/Common/Command/ui/BaseCommandHandlerManagerEditor.h"/>
-            <FILE id="ckzvDO" name="CommandChooserUI.cpp" compile="1" resource="0"
+            <FILE id="ckzvDO" name="CommandChooserUI.cpp" compile="0" resource="0"
                   file="Source/Common/Command/ui/CommandChooserUI.cpp"/>
             <FILE id="bYSMNS" name="CommandChooserUI.h" compile="0" resource="0"
                   file="Source/Common/Command/ui/CommandChooserUI.h"/>
           </GROUP>
           <GROUP id="{AE92A138-8B95-9F91-4BDE-879E255DDF34}" name="Template">
             <GROUP id="{900A49A5-4A27-E57C-BCA9-E4F6C4DA5B93}" name="ui">
-              <FILE id="WfqHIA" name="CommandTemplateEditor.cpp" compile="1" resource="0"
+              <FILE id="WfqHIA" name="CommandTemplateEditor.cpp" compile="0" resource="0"
                     file="Source/Common/Command/Template/ui/CommandTemplateEditor.cpp"/>
               <FILE id="cm5zq6" name="CommandTemplateEditor.h" compile="0" resource="0"
                     file="Source/Common/Command/Template/ui/CommandTemplateEditor.h"/>
-              <FILE id="lUJmSG" name="CommandTemplateManagerUI.cpp" compile="1" resource="0"
+              <FILE id="lUJmSG" name="CommandTemplateManagerUI.cpp" compile="0" resource="0"
                     file="Source/Common/Command/Template/ui/CommandTemplateManagerUI.cpp"/>
               <FILE id="oLgTIq" name="CommandTemplateManagerUI.h" compile="0" resource="0"
                     file="Source/Common/Command/Template/ui/CommandTemplateManagerUI.h"/>
-              <FILE id="Yix0T4" name="CommandTemplateParameterEditor.cpp" compile="1"
+              <FILE id="Yix0T4" name="CommandTemplateParameterEditor.cpp" compile="0"
                     resource="0" file="Source/Common/Command/Template/ui/CommandTemplateParameterEditor.cpp"/>
               <FILE id="yhWq5Z" name="CommandTemplateParameterEditor.h" compile="0"
                     resource="0" file="Source/Common/Command/Template/ui/CommandTemplateParameterEditor.h"/>
             </GROUP>
-            <FILE id="Eshzp1" name="CommandTemplate.cpp" compile="1" resource="0"
+            <FILE id="Eshzp1" name="CommandTemplate.cpp" compile="0" resource="0"
                   file="Source/Common/Command/Template/CommandTemplate.cpp"/>
             <FILE id="p1OFbG" name="CommandTemplate.h" compile="0" resource="0"
                   file="Source/Common/Command/Template/CommandTemplate.h"/>
-            <FILE id="fKhJTJ" name="CommandTemplateManager.cpp" compile="1" resource="0"
+            <FILE id="fKhJTJ" name="CommandTemplateManager.cpp" compile="0" resource="0"
                   file="Source/Common/Command/Template/CommandTemplateManager.cpp"/>
             <FILE id="Im6koP" name="CommandTemplateManager.h" compile="0" resource="0"
                   file="Source/Common/Command/Template/CommandTemplateManager.h"/>
-            <FILE id="aSADXK" name="CommandTemplateParameter.cpp" compile="1" resource="0"
+            <FILE id="aSADXK" name="CommandTemplateParameter.cpp" compile="0" resource="0"
                   file="Source/Common/Command/Template/CommandTemplateParameter.cpp"/>
             <FILE id="sSNOyi" name="CommandTemplateParameter.h" compile="0" resource="0"
                   file="Source/Common/Command/Template/CommandTemplateParameter.h"/>
           </GROUP>
           <FILE id="KxsRZB" name="CommandContext.h" compile="0" resource="0"
                 file="Source/Common/Command/CommandContext.h"/>
-          <FILE id="NlN3XS" name="BaseCommand.cpp" compile="1" resource="0" file="Source/Common/Command/BaseCommand.cpp"/>
+          <FILE id="NlN3XS" name="BaseCommand.cpp" compile="0" resource="0" file="Source/Common/Command/BaseCommand.cpp"/>
           <FILE id="f5gUen" name="BaseCommand.h" compile="0" resource="0" file="Source/Common/Command/BaseCommand.h"/>
           <FILE id="ZuWANL" name="BaseCommandHandler.cpp" compile="1" resource="0"
                 file="Source/Common/Command/BaseCommandHandler.cpp"/>
           <FILE id="pXhpNj" name="BaseCommandHandler.h" compile="0" resource="0"
                 file="Source/Common/Command/BaseCommandHandler.h"/>
-          <FILE id="rVSBd7" name="CommandDefinition.cpp" compile="1" resource="0"
+          <FILE id="rVSBd7" name="CommandDefinition.cpp" compile="0" resource="0"
                 file="Source/Common/Command/CommandDefinition.cpp"/>
           <FILE id="we3BdL" name="CommandDefinition.h" compile="0" resource="0"
                 file="Source/Common/Command/CommandDefinition.h"/>
-          <FILE id="rYOpbf" name="CommandDefinitionManager.cpp" compile="1" resource="0"
+          <FILE id="rYOpbf" name="CommandDefinitionManager.cpp" compile="0" resource="0"
                 file="Source/Common/Command/CommandDefinitionManager.cpp"/>
           <FILE id="RjURvI" name="CommandDefinitionManager.h" compile="0" resource="0"
                 file="Source/Common/Command/CommandDefinitionManager.h"/>
-          <FILE id="NsJ1wy" name="CommandFactory.cpp" compile="1" resource="0"
+          <FILE id="NsJ1wy" name="CommandFactory.cpp" compile="0" resource="0"
                 file="Source/Common/Command/CommandFactory.cpp"/>
           <FILE id="BhG3To" name="CommandFactory.h" compile="0" resource="0"
                 file="Source/Common/Command/CommandFactory.h"/>
@@ -1603,26 +1609,29 @@
               file="Source/TimeMachine/TimeMachineIncludes.h"/>
       </GROUP>
       <GROUP id="{FA0E78EC-9F83-99D0-4BB9-C686CC8B957D}" name="UI">
-        <FILE id="HYpDUa" name="AboutWindow.cpp" compile="1" resource="0" file="Source/UI/AboutWindow.cpp"/>
+        <FILE id="HYpDUa" name="AboutWindow.cpp" compile="0" resource="0" file="Source/UI/AboutWindow.cpp"/>
         <FILE id="sZKU3W" name="AboutWindow.h" compile="0" resource="0" file="Source/UI/AboutWindow.h"/>
-        <FILE id="uP3b5I" name="ChataigneAssetManager.cpp" compile="1" resource="0"
+        <FILE id="uP3b5I" name="ChataigneAssetManager.cpp" compile="0" resource="0"
               file="Source/UI/ChataigneAssetManager.cpp"/>
         <FILE id="nDo7Cu" name="ChataigneAssetManager.h" compile="0" resource="0"
               file="Source/UI/ChataigneAssetManager.h"/>
-        <FILE id="Oq9vEL" name="WelcomeScreen.cpp" compile="1" resource="0"
+        <FILE id="Oq9vEL" name="WelcomeScreen.cpp" compile="0" resource="0"
               file="Source/UI/WelcomeScreen.cpp"/>
         <FILE id="H2TuzF" name="WelcomeScreen.h" compile="0" resource="0" file="Source/UI/WelcomeScreen.h"/>
       </GROUP>
-      <FILE id="miMqpn" name="ChataigneEngine.cpp" compile="1" resource="0"
+      <FILE id="Fptn3I" name="MainIncludes.cpp" compile="1" resource="0"
+            file="Source/MainIncludes.cpp"/>
+      <FILE id="Um0bEs" name="MainIncludes.h" compile="0" resource="0" file="Source/MainIncludes.h"/>
+      <FILE id="miMqpn" name="ChataigneEngine.cpp" compile="0" resource="0"
             file="Source/ChataigneEngine.cpp"/>
       <FILE id="ourmSB" name="ChataigneEngine.h" compile="0" resource="0"
             file="Source/ChataigneEngine.h"/>
       <FILE id="VRmrCF" name="Main.h" compile="0" resource="0" file="Source/Main.h"/>
       <FILE id="xKaahd" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
       <FILE id="xXHsse" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
-      <FILE id="INUeEw" name="MainComponent.cpp" compile="1" resource="0"
+      <FILE id="INUeEw" name="MainComponent.cpp" compile="0" resource="0"
             file="Source/MainComponent.cpp"/>
-      <FILE id="ue12z5" name="MainComponentCommands.cpp" compile="1" resource="0"
+      <FILE id="ue12z5" name="MainComponentCommands.cpp" compile="0" resource="0"
             file="Source/MainComponentCommands.cpp"/>
     </GROUP>
   </MAINGROUP>

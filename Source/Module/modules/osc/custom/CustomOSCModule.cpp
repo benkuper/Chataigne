@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "Common/Command/CommandFactory.h"
-
 CustomOSCModule::CustomOSCModule() :
 	OSCModule("OSC"),
 	autoAdd(nullptr),

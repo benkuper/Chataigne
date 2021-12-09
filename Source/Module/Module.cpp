@@ -8,10 +8,7 @@
   ==============================================================================
 */
 
-#include "Common/Command/CommandFactory.h"
-#include "Common/Command/Template/CommandTemplateManager.h"
-#include "Common/Command/BaseCommandHandler.h"
-
+#include "Common/Command/CommandIncludes.h"
 
 Module::Module(const String& name) :
 	BaseItem(name, true, true),

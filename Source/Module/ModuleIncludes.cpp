@@ -10,12 +10,14 @@
 
 #include "ModuleIncludes.h"
 
-#include "UI/ChataigneAssetManager.h"
+#include "MainIncludes.h"
 
 //include here to avoid loop-include
 #include "ModuleCommandTester.h" 
 #include "ui/ModuleEditor.h"
 #include "ui/ModuleCommandTesterEditor.h"
+
+
 
 #include "Module.cpp"
 

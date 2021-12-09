@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "Common/Command/ui/BaseCommandEditor.h"
-
 class ResolumeBaseCommandEditor :
 	public BaseCommandContainerEditor
 {
