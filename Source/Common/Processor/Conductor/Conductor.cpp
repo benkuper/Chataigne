@@ -127,7 +127,10 @@ void Conductor::updateIndices()
 
 	for (int i = 0; i < processorManager.items.size(); i++)
 	{
-		((ConductorCue*)processorManager.items[i])->setIndex(i + 1);
+		if (ConductorCue* c = dynamic_cast<ConductorCue*>(processorManager.items[i]))
+		{
+			c->setIndex(i + 1);
+		}
 	}
 
 	updateNextCue();
@@ -147,19 +150,20 @@ void Conductor::triggerConsequences(bool triggerTrue, int multiplexIndex)
 			{
 				if (currentCue != nullptr) currentCue->setIsCurrent(false);
 
-				ConductorCue* cue = (ConductorCue*)a;
-
-				cue->setIsCurrent(true);
-				currentCue = cue;
-
-				if (a->enabled->boolValue())
+				if (ConductorCue* cue = dynamic_cast<ConductorCue*>(a))
 				{
-					a->triggerOn->trigger(); //loose multiplex to get preview but not using it for now
-					currentCueName->setValue(a->niceName);
+					cue->setIsCurrent(true);
+					currentCue = cue;
+
+					if (a->enabled->boolValue())
+					{
+						a->triggerOn->trigger(); //loose multiplex to get preview but not using it for now
+						currentCueName->setValue(a->niceName);
+					}
 				}
 			}
 
-			nextCueIndex->setValue(getValidIndexAfter(itemIndex+1));
+			nextCueIndex->setValue(getValidIndexAfter(itemIndex + 1));
 		}
 	}
 }
@@ -182,10 +186,12 @@ void Conductor::updateNextCue()
 	String nextName = "";
 	for (int i = 0; i < processorManager.items.size(); i++)
 	{
-		ConductorCue* cc = (ConductorCue*)processorManager.items[i];
-		bool isNext = (i+1) == nextIndex;
-		cc->setIsNext(isNext);
-		if (isNext) nextName = cc->niceName;
+		if (ConductorCue* cue = dynamic_cast<ConductorCue*>(processorManager.items[i]))
+		{
+			bool isNext = (i + 1) == nextIndex;
+			cue->setIsNext(isNext);
+			if (isNext) nextName = cue->niceName;
+		}
 	}
 
 	nextCueName->setValue(nextName);

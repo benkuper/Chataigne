@@ -20,6 +20,8 @@ CustomValuesCommandArgumentManager::CustomValuesCommandArgumentManager(const Str
 {
 	selectItemWhenCreated = false;
 	editorCanBeCollapsed = false;
+
+	scriptObject.setMethod("addItem", &CustomValuesCommandArgumentManager::addItemWithTypeFromScript);
 }
 
 CustomValuesCommandArgumentManager::~CustomValuesCommandArgumentManager()
@@ -183,6 +185,20 @@ CustomValuesCommandArgument* CustomValuesCommandArgumentManager::addItemFromData
 
  	return addItemWithParam(p, data, fromUndoableAction);
 	*/
+}
+
+var CustomValuesCommandArgumentManager::addItemWithTypeFromScript(const var::NativeFunctionArgs& a)
+{
+	
+	CustomValuesCommandArgumentManager* m = getObjectFromJS<CustomValuesCommandArgumentManager>(a);
+
+	if (m == nullptr) return var();
+	if (!checkNumArgs("Arguments", a, 1)) return var();
+
+	CustomValuesCommandArgument* arg = m->addItemFromType((Parameter::Type)Parameter::typeNames.indexOf(a.arguments[0].toString()));
+	if(arg != nullptr) return arg->getScriptObject();
+
+	return var();
 }
 
 void CustomValuesCommandArgumentManager::autoRenameItems()
