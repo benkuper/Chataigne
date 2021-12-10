@@ -124,11 +124,11 @@ ControllableUI * MIDIDeviceParameter::createDefaultUI(Array<Controllable *> cont
 void MIDIDeviceParameter::loadJSONDataInternal(var data)
 {
 	Parameter::loadJSONDataInternal(data);
-	setInputDevice(MIDIManager::getInstance()->getInputDeviceWithName(value[0]));
+	setInputDevice(MIDIManager::getInstance()->getInputDeviceWithID(value[0]));
 
 	if (inputDevice == nullptr) ghostDeviceIn = data.getProperty("value", var())[0];	
 
-	setOutputDevice(MIDIManager::getInstance()->getOutputDeviceWithName(value[1]));
+	setOutputDevice(MIDIManager::getInstance()->getOutputDeviceWithID(value[1]));
 
 	if (outputDevice == nullptr) ghostDeviceOut = data.getProperty("value", var())[1];
 
