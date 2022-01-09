@@ -8,9 +8,13 @@
   ==============================================================================
 */
 
-#if JUCE_LINUX
+#if JUCE_LINUX || JUCE_MAC
 	#include <sys/ioctl.h>
+#if JUCE_LINUX
 	#include <asm/termbits.h>
+#elif JUCE_MAC
+    #include <IOKit/serial/ioss.h>
+#endif
 #endif
 
 DMXOpenUSBDevice::DMXOpenUSBDevice() :
@@ -26,7 +30,6 @@ void DMXOpenUSBDevice::setPortConfig()
 {
 	try
 	{
-
 		dmxPort->port->setBaudrate(250000);
 		dmxPort->port->setBytesize(serial::eightbits);
 		dmxPort->port->setStopbits(serial::stopbits_two);
@@ -37,7 +40,8 @@ void DMXOpenUSBDevice::setPortConfig()
 		dmxPort->port->flush();
 
 #if JUCE_LINUX
-#if defined(TCGETS2)
+#ifdef TCGETS2
+        
 		int fd = dmxPort->port->getHandle();
 		static const int rate = 250000;
 
@@ -59,6 +63,14 @@ void DMXOpenUSBDevice::setPortConfig()
 			return;
 		}
 #endif
+#elif JUCE_MAC
+    int fd = dmxPort->port->getHandle();
+    static const int rate = 250000;
+    speed_t new_baud = static_cast<speed_t> (rate);
+    if (-1 == ioctl (fd, IOSSIOSPEED, &new_baud, 1)) {
+        DBG("OpenDMX Error in setting baud rate");
+        return;
+    }
 #endif
 	}
 	catch (serial::IOException e)
