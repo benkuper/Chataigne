@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.3b10"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.3b11"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="VST_LOGGING=0&#10;JUCE_MODAL_LOOPS_PERMITTED=1"
@@ -1636,40 +1636,38 @@
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>
-    <VS2019 targetFolder="Builds/VisualStudio2019" extraDefs="USE_KINECT=1"
-            externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib&#10;JoyShockLibrary.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib&#10;iphlpapi.lib&#10;hid.lib&#10;hidapi_static.lib"
-            smallIcon="nVz6Li" bigIcon="nVz6Li" extraLinkerFlags="/HEAP:0x200000,0x10000">
+    <VS2022 targetFolder="Builds/VisualStudio2022" extraDefs="USE_KINECT=1"
+            extraLinkerFlags="/HEAP:0x200000,0x10000" externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib&#10;JoyShockLibrary.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib&#10;iphlpapi.lib&#10;hid.lib&#10;hidapi_static.lib">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/asio&#10;../../External/kinect/include&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/ois/include&#10;../../External/sdl/include&#10;../../External/hidapi/include"
                        libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib/win&#10;../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/hidapi/lib/win/x64"
-                       binaryPath="Binaries/Debug" winArchitecture="x64"/>
-        <CONFIGURATION isDebug="0" name="Release" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/asio&#10;../../External/kinect/include&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/sdl/include&#10;../../External/hidapi/include"
+                       binaryPath="Binaries/Debug"/>
+        <CONFIGURATION isDebug="0" name="Release" binaryPath="Binaries" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/asio&#10;../../External/kinect/include&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/sdl/include&#10;../../External/hidapi/include"
                        libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib/win&#10;../../External/servus/lib/win/x64/release&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/hidapi/lib/win/x64"
-                       binaryPath="Binaries" alwaysGenerateDebugSymbols="1" debugInformationFormat="ProgramDatabase"
-                       winArchitecture="x64"/>
+                       alwaysGenerateDebugSymbols="1" debugInformationFormat="ProgramDatabase"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_osc" path="D:\Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_organicui" path="Modules"/>
-        <MODULEPATH id="juce_opengl" path="D:\Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_gui_extra" path="D:\Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_gui_basics" path="D:\Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_graphics" path="D:\Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_events" path="D:\Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_data_structures" path="D:\Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_cryptography" path="D:\Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_core" path="D:\Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_audio_utils" path="D:\Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_audio_processors" path="D:\Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_basics" path="D:\Softwares\JUCE\modules"/>
         <MODULEPATH id="juce_audio_devices" path="D:\Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_audio_basics"/>
-        <MODULEPATH id="juce_dsp" path="D:\Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_timeline" path="Modules"/>
         <MODULEPATH id="juce_audio_formats" path="D:\Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_simpleweb" path="Modules"/>
+        <MODULEPATH id="juce_audio_processors" path="D:\Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_utils" path="D:\Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_core" path="D:\Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_cryptography" path="D:\Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_data_structures" path="D:\Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_dsp" path="D:\Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_events" path="D:\Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_graphics" path="D:\Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_gui_basics" path="D:\Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_gui_extra" path="D:\Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_opengl" path="D:\Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_organicui" path="Modules"/>
+        <MODULEPATH id="juce_osc" path="D:\Softwares\JUCE\modules"/>
         <MODULEPATH id="juce_sharedtexture" path="Modules"/>
+        <MODULEPATH id="juce_simpleweb" path="Modules"/>
+        <MODULEPATH id="juce_timeline" path="Modules"/>
       </MODULEPATHS>
-    </VS2019>
+    </VS2022>
     <XCODE_MAC targetFolder="Builds/MacOSX" smallIcon="nVz6Li" bigIcon="nVz6Li"
                extraFrameworks="IOBluetooth, ForceFeedback, IOKit" documentExtensions="noisette"
                customPList="&lt;plist&gt;&#10;&lt;dict&gt;&#10;&lt;key&gt;NSAppTransportSecurity&lt;/key&gt;&#10;&#9;&lt;dict&gt;&#10;&#9;&#9;&lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;&#10;&#9;&#9;&lt;true/&gt;&#10;&#9;&lt;/dict&gt;&#10;&lt;/dict&gt;&#10;&lt;/plist&gt;"
