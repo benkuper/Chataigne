@@ -39,7 +39,8 @@ Action::Action(const String &name, var params, Multiplex * multiplex, bool hasCo
 	if (hasConditions)
 	{
 		cdm.reset(new ConditionManager(multiplex));
-		cdm->setHasActivationDefinitions(params.getProperty("hasActivationDefinitions", true));
+		bool hasActivationDefs = params.getProperty("hasActivationDefinitions", true);
+		cdm->setHasActivationDefinitions(hasActivationDefs, hasActivationDefs);
 		cdm->addConditionManagerListener(this);
 		cdm->addBaseManagerListener(this);
 		addChildControllableContainer(cdm.get());
