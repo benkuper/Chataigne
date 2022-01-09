@@ -9,7 +9,7 @@
 */
 
 PJLinkModule::PJLinkModule() :
-	TCPClientModule(getDefaultTypeString(), 4352, false),
+	TCPClientModule(getDefaultTypeString(), 4352),
 	passBytes(0)
 {
 	autoReconnect = false;
@@ -67,18 +67,18 @@ CommandDefinition * PJLinkModule::getBasePJCommand(const String & menu, const St
 void PJLinkModule::initThread()
 {
 	TCPClientModule::initThread();
-	if (sender.isConnected()) timeAtConnect = Time::getMillisecondCounter() / 1000.0f;
-	else signalThreadShouldExit();
+//	if (sender.isConnected()) timeAtConnect = Time::getMillisecondCounter() / 1000.0f;
+//	else signalThreadShouldExit();
 }
 
 void PJLinkModule::runInternal()
 {
 	TCPClientModule::runInternal();
-	if (Time::getMillisecondCounter() / 1000.0f > timeAtConnect + 1)
-	{
-		sender.close();
-		signalThreadShouldExit();
-	}
+//	if (Time::getMillisecondCounter() / 1000.0f > timeAtConnect + 1)
+//	{
+//		sender.close();
+//		signalThreadShouldExit();
+//	}
 }
 
 void PJLinkModule::processDataLineInternal(const String & message)
