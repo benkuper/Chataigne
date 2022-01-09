@@ -1,4 +1,3 @@
-#include "State.h"
 /*
   ==============================================================================
 
@@ -79,6 +78,17 @@ void State::onContainerParameterChangedInternal(Parameter *p)
 					{
 						t->forceCheck(false); //force setting the valid state even if listeners will trigger it after (avoir listener-order bugs)
 
+						//check for onActivate in transitions
+						for (auto& c : t->cdm->items)
+						{
+							ActivationCondition* ac = dynamic_cast<ActivationCondition*>(c);
+							if (ac != nullptr)
+							{
+								bool valid = ac->type == ActivationCondition::Type::ON_ACTIVATE && !ac->forceDisabled;
+								for (int i = 0; i < ac->getMultiplexCount(); i++) ac->setValid(i, valid, false);
+							}
+						}
+
 						if (checkTransitionsOnActivate->boolValue())
 						{
 							if (t->cdm != nullptr && t->cdm->getIsValid())
@@ -87,11 +97,22 @@ void State::onContainerParameterChangedInternal(Parameter *p)
 								break;
 							}
 						}
-
 					}
 				}
 				else
 				{
+					for (auto& t : outTransitions)
+					{
+						for (auto& c : t->cdm->items)
+						{
+							ActivationCondition* ac = dynamic_cast<ActivationCondition*>(c);
+							if (ac != nullptr)
+							{
+								for (int i = 0; i < ac->getMultiplexCount(); i++) ac->setValid(i, false, false);
+							}
+						}
+					}
+
 					pm->checkAllDeactivateActions();
 					stateListeners.call(&StateListener::stateActivationChanged, this);
 					pm->setForceDisabled(!active->boolValue() || !enabled->boolValue());
