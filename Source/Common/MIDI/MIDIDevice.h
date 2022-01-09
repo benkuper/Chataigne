@@ -44,6 +44,7 @@ public:
 		virtual void noteOnReceived(const int &/*channel*/, const int &/*pitch*/, const int &/*velocity*/) {}
 		virtual void noteOffReceived(const int &/*channel*/, const int &/*pitch*/, const int &/*velocity*/) {}
 		virtual void controlChangeReceived(const int &/*channel*/, const int &/*number*/, const int &/*value*/) {}
+    virtual void programChangeReceived(const int &/*channel*/, const int &/*value*/) {}
 		virtual void sysExReceived(const MidiMessage &/*msg*/) {}
 		virtual void fullFrameTimecodeReceived(const MidiMessage&/*msg*/) {}
 		virtual void quarterFrameTimecodeReceived(const MidiMessage&/*msg*/) {}
