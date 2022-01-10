@@ -31,6 +31,7 @@ void ChataigneApplication::initialiseInternal(const String &)
 
 	ShapeShifterManager::getInstance()->setDefaultFileData(BinaryData::default_chalayout);
 	ShapeShifterManager::getInstance()->setLayoutInformations("chalayout", "Chataigne/layouts");
+
 }
 
 

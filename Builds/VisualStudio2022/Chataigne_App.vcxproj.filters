@@ -206,6 +206,12 @@
     <Filter Include="Chataigne\Source\Common">
       <UniqueIdentifier>{89F7165B-D034-6848-834E-0E1C945C6DFD}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\CustomVariables\dashboard\ui">
+      <UniqueIdentifier>{472B1F91-32C1-D15F-AB89-EA0944B2BC57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\CustomVariables\dashboard">
+      <UniqueIdentifier>{EE1DEA3D-0E40-CD3F-DFC2-7091A294BBCE}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\CustomVariables\Preset\Morpher\ui">
       <UniqueIdentifier>{C4C8A509-38B6-B57A-BC01-BC622EEF412A}</UniqueIdentifier>
     </Filter>
@@ -1884,6 +1890,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Serial\SerialManager.cpp">
       <Filter>Chataigne\Source\Common\Serial</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\CustomVariables\dashboard\ui\CVDashboardItemUI.cpp">
+      <Filter>Chataigne\Source\CustomVariables\dashboard\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\CustomVariables\dashboard\CVDashboardItem.cpp">
+      <Filter>Chataigne\Source\CustomVariables\dashboard</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\CustomVariables\Preset\Morpher\ui\CVPresetMorphUI.cpp">
       <Filter>Chataigne\Source\CustomVariables\Preset\Morpher\ui</Filter>
@@ -6017,6 +6029,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Serial\SerialManager.h">
       <Filter>Chataigne\Source\Common\Serial</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\CustomVariables\dashboard\ui\CVDashboardItemUI.h">
+      <Filter>Chataigne\Source\CustomVariables\dashboard\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\CustomVariables\dashboard\CVDashboardItem.h">
+      <Filter>Chataigne\Source\CustomVariables\dashboard</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\CustomVariables\Preset\Morpher\ui\CVPresetMorphUI.h">
       <Filter>Chataigne\Source\CustomVariables\Preset\Morpher\ui</Filter>
@@ -13120,6 +13138,9 @@
     </None>
     <None Include="..\..\Modules\juce_timeline\README.md">
       <Filter>JUCE Modules\juce_timeline</Filter>
+    </None>
+    <None Include=".\icon.ico">
+      <Filter>JUCE Library Code</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

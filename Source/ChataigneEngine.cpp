@@ -47,6 +47,9 @@ ChataigneEngine::ChataigneEngine() :
 	ZeroconfManager::getInstance()->addSearcher("OSCQuery", "_oscjson._tcp.");
 	ZeroconfManager::getInstance()->addSearcher("Workstation", "_workstation._tcp.");
 
+	//DashboardItemFactory::getInstance()->defs.add(DashboardItemFactory::Definition::createDef("", &CVVariablesDashboardItem::getTypeStringStatic(), &CVVariablesDashboardItem::create));
+
+
 	getAppSettings()->addChildControllableContainer(&defaultBehaviors);
 }
 

@@ -536,6 +536,12 @@
     <ClCompile Include="..\..\Source\Common\Serial\SerialManager.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Source\CustomVariables\dashboard\ui\CVDashboardItemUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\CustomVariables\dashboard\CVDashboardItem.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Source\CustomVariables\Preset\Morpher\ui\CVPresetMorphUI.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -4125,6 +4131,8 @@
     <ClInclude Include="..\..\Source\Common\Serial\SerialDevice.h"/>
     <ClInclude Include="..\..\Source\Common\Serial\SerialDeviceParameter.h"/>
     <ClInclude Include="..\..\Source\Common\Serial\SerialManager.h"/>
+    <ClInclude Include="..\..\Source\CustomVariables\dashboard\ui\CVDashboardItemUI.h"/>
+    <ClInclude Include="..\..\Source\CustomVariables\dashboard\CVDashboardItem.h"/>
     <ClInclude Include="..\..\Source\CustomVariables\Preset\Morpher\ui\CVPresetMorphUI.h"/>
     <ClInclude Include="..\..\Source\CustomVariables\Preset\Morpher\ui\MorpherViewUI.h"/>
     <ClInclude Include="..\..\Source\CustomVariables\Preset\Morpher\ui\MorphTargetUI.h"/>
@@ -6494,6 +6502,7 @@
     <None Include="..\..\Modules\juce_simpleweb\asio\README.md"/>
     <None Include="..\..\Modules\juce_simpleweb\README.md"/>
     <None Include="..\..\Modules\juce_timeline\README.md"/>
+    <None Include=".\icon.ico"/>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include=".\resources.rc"/>

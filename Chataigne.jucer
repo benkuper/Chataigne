@@ -705,6 +705,18 @@
         </GROUP>
       </GROUP>
       <GROUP id="{B7AE4CF6-C109-933F-DE7E-494B9C9E3C1A}" name="CustomVariables">
+        <GROUP id="{6CFEA09A-6A96-EB28-6A78-AC8AA681A87C}" name="dashboard">
+          <GROUP id="{615BEE1F-084F-5F2F-E4D9-C5BBA3F4D762}" name="ui">
+            <FILE id="KTR6pg" name="CVDashboardItemUI.cpp" compile="0" resource="0"
+                  file="Source/CustomVariables/dashboard/ui/CVDashboardItemUI.cpp"/>
+            <FILE id="e0pRIC" name="CVDashboardItemUI.h" compile="0" resource="0"
+                  file="Source/CustomVariables/dashboard/ui/CVDashboardItemUI.h"/>
+          </GROUP>
+          <FILE id="mmG1QQ" name="CVDashboardItem.cpp" compile="0" resource="0"
+                file="Source/CustomVariables/dashboard/CVDashboardItem.cpp"/>
+          <FILE id="FJ1Zeo" name="CVDashboardItem.h" compile="0" resource="0"
+                file="Source/CustomVariables/dashboard/CVDashboardItem.h"/>
+        </GROUP>
         <GROUP id="{5F538722-534C-6E5F-A390-C27908706068}" name="Preset">
           <GROUP id="{7C4600DA-EA87-31A9-C169-F36E4160C336}" name="Morpher">
             <GROUP id="{32C80DA9-7285-3DA9-4A81-1CFC8EC1FF47}" name="ui">
@@ -1637,7 +1649,8 @@
   </MAINGROUP>
   <EXPORTFORMATS>
     <VS2022 targetFolder="Builds/VisualStudio2022" extraDefs="USE_KINECT=1"
-            extraLinkerFlags="/HEAP:0x200000,0x10000" externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib&#10;JoyShockLibrary.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib&#10;iphlpapi.lib&#10;hid.lib&#10;hidapi_static.lib">
+            extraLinkerFlags="/HEAP:0x200000,0x10000" externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib&#10;JoyShockLibrary.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib&#10;iphlpapi.lib&#10;hid.lib&#10;hidapi_static.lib"
+            smallIcon="nVz6Li" bigIcon="nVz6Li">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/asio&#10;../../External/kinect/include&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/ois/include&#10;../../External/sdl/include&#10;../../External/hidapi/include"
                        libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib/win&#10;../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/hidapi/lib/win/x64"

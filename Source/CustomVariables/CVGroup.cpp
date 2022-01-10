@@ -12,7 +12,6 @@ CVGroup::CVGroup(const String & name) :
 	BaseItem(name),
 	Thread("CV Interpolation"),
 	params("Parameters"),
-	values("Variables",false, false, true, true),
 	defaultInterpolation("Default Preset Interpolation"),
     targetPreset(nullptr),
     interpolationAutomation(nullptr),
@@ -399,4 +398,18 @@ void CVGroup::run()
 		interpolationAutomation = nullptr;
 		automationRef = nullptr;
 	}
+}
+
+CVGroup::ValuesManager::ValuesManager() :
+	GenericControllableManager("Variables", false, false, true, true)
+{
+}
+
+CVGroup::ValuesManager::~ValuesManager()
+{
+}
+
+DashboardItem* CVGroup::ValuesManager::createDashboardItem()
+{
+	return new CVVariablesDashboardItem(this);
 }
