@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "Common/Command/CommandFactory.h"
-
 CustomOSCModule::CustomOSCModule() :
 	OSCModule("OSC"),
 	autoAdd(nullptr),
@@ -200,6 +198,7 @@ void CustomOSCModule::processMessageInternal(const OSCMessage& msg)
 
 			case Controllable::COLOR:
 				if (msg.size() >= 3) ((ColorParameter*)c)->setColor(Colour((uint8)(getFloatArg(msg[0]) * 255), (uint8)(getFloatArg(msg[1]) * 255), (uint8)(getFloatArg(msg[2]) * 255), msg.size() >= 4 ? getFloatArg(msg[3]) : 1));
+				else if (msg.size() > 0 && msg[0].isColour()) ((ColorParameter*)c)->setColor(OSCHelpers::getColourFromOSC(msg[0].getColour()));
 				break;
 
 			default:
@@ -232,7 +231,7 @@ void CustomOSCModule::processMessageInternal(const OSCMessage& msg)
 				c = new FloatParameter(cNiceName, "", msg[0].getFloat32());
 			}
 			else if (msg[0].isString()) c = new StringParameter(cNiceName, "", msg[0].getString());
-
+			else if (msg[0].isColour()) c = new ColorParameter(cNiceName, "", OSCHelpers::getColourFromOSC(msg[0].getColour()));
 			break;
 
 		case 2:
@@ -362,17 +361,17 @@ void CustomOSCModule::onControllableFeedbackUpdateInternal(ControllableContainer
 					Parameter* p = static_cast<Parameter*>(c);
 					if (p != nullptr)
 					{
-						if (c->type == Controllable::COLOR) m.addArgument(varToColorArgument(p->value));
+						if (c->type == Controllable::COLOR) m.addArgument(OSCHelpers::varToColorArgument(p->value));
 						else if (p->value.isArray())
 						{
 							if (Array<var>* arr = p->value.getArray())
 							{
-								for (auto& aa : *arr) m.addArgument(varToArgument(aa));
+								for (auto& aa : *arr) m.addArgument(OSCHelpers::varToArgument(aa));
 							}
 						}
 						else
 						{
-							m.addArgument(varToArgument(p->value));
+							m.addArgument(OSCHelpers::varToArgument(p->value));
 						}
 					}
 				}

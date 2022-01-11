@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "Common/Command/ui/BaseCommandHandlerManagerEditor.h"
-#include "MappingOutputManager.h"
-
 MappingOutputManager::MappingOutputManager(Multiplex * multiplex) :
 	BaseManager<MappingOutput>("Outputs"),
 	MultiplexTarget(multiplex),
@@ -50,6 +47,8 @@ void MappingOutputManager::setOutParams(Array<Parameter *> params, int multiplex
 	outParams.ensureStorageAllocated(multiplexIndex + 1);
 	outParams.set(multiplexIndex, Array<WeakReference<Parameter>>(params.getRawDataPointer(), params.size()));
 	if(outParams.size() > 0) for (auto &o : items) o->setOutParams(outParams[multiplexIndex], multiplexIndex); //better than this ? should handle all ?
+
+	prevMergedValue = getMergedOutValue(multiplexIndex);
 
 	omAsyncNotifier.addMessage(new OutputManagerEvent(OutputManagerEvent::OUTPUT_CHANGED));
 }

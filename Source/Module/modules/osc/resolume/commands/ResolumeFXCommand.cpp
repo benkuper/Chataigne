@@ -83,8 +83,8 @@ void ResolumeFXCommand::rebuildParametersInternal()
 	{
 		if (resolumeVersion < 6)
 		{
-			if (fxType != "source") fxIndexParam = addIntParameter("Effect ID", "Id of the effect, depending on its position in the effect chain", 1, 1, 100);
-			indexParam = addIntParameter("Parameter ID", "Id of the parameter, depending on its position inside in the panel", 1, 1, 100);
+			if (fxType != "source") fxIndexParam = addIntParameter("Effect ID", "Id of the effect, depending on its position in the effect chain", 1, 1);
+			indexParam = addIntParameter("Parameter ID", "Id of the parameter, depending on its position inside in the panel", 1, 1);
 		} else //Resolume 6+
 		{
 

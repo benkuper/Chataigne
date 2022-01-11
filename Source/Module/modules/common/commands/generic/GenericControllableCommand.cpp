@@ -12,6 +12,7 @@ GenericControllableCommand::GenericControllableCommand(Module* _module, CommandC
 	BaseCommand(_module, context, params, multiplex),
 	target(nullptr),
 	valueOperator(nullptr),
+	componentOperator(nullptr),
 	value(nullptr)
 {
 	saveAndLoadRecursiveData = true;
@@ -20,13 +21,20 @@ GenericControllableCommand::GenericControllableCommand(Module* _module, CommandC
 	int64 rootPtr = (int64)params.getProperty("root", 0);
 	ControllableContainer* rootCC = rootPtr == 0 ? nullptr : (ControllableContainer*)rootPtr;
 	target = addTargetParameter("Target ", "The target to set the value to or trigger", rootCC);
-	if(ParameterLink * pLink = getLinkedParam(target)) pLink->canLinkToMapping = false;
+	if (ParameterLink* pLink = getLinkedParam(target)) pLink->canLinkToMapping = false;
 
 	if (action == TRIGGER) target->typesFilter.add(Trigger::getTypeStringStatic());
 	else if (action == SET_VALUE) target->excludeTypesFilter.add(Trigger::getTypeStringStatic());
 	else if (action == SET_ENABLED) target->customTargetFilterFunc = &GenericControllableCommand::checkEnableTargetFilter;
 
-	if (action == SET_VALUE) valueOperator = addEnumParameter("Operator", "The operator to apply. If you simply want to set the value, leave at the = option.", false);
+	target->defaultParentLabelLevel = params.getProperty("labelLevel", 3);
+
+	if (action == SET_VALUE)
+	{
+		valueOperator = addEnumParameter("Operator", "The operator to apply. If you simply want to set the value, leave at the = option.", false);
+		componentOperator = addEnumParameter("Component", "Component to target. Keep all to target everything. Gamgie made me do this.");
+	}
+
 	else if (action == SET_ENABLED) value = addBoolParameter("Value", "If checked, this will enable this parameter, otherwise it will disable it. Simple. Efficient.", false);
 }
 
@@ -35,7 +43,42 @@ GenericControllableCommand::~GenericControllableCommand()
 
 }
 
-void GenericControllableCommand::updateValueFromTarget()
+void GenericControllableCommand::updateComponentFromTarget()
+{
+	if (componentOperator == nullptr) return;
+
+	var val = componentOperator->getValueData();
+	componentOperator->clearOptions();
+	componentOperator->addOption("All", -1);
+
+	Controllable* cTarget = getControllableFromTarget();
+
+	bool hasSubComponents = false;
+
+	if (cTarget != nullptr)
+	{
+		if (cTarget->type != Controllable::TRIGGER)
+		{
+			Parameter* p = (Parameter*)cTarget;
+			if (p->isComplex())
+			{
+				hasSubComponents = true;
+
+				StringArray names = p->getValuesNames();
+				for (int i = 0; i < names.size(); i++) componentOperator->addOption(names[i], i);
+			}
+		}
+	}
+	componentOperator->setEnabled(hasSubComponents);
+
+
+	if (!val.isVoid()) componentOperator->setValueWithData(val);
+	else if (!ghostComponent.isVoid()) componentOperator->setValueWithData(ghostComponent);
+
+	updateValueFromTargetAndComponent();
+}
+
+void GenericControllableCommand::updateValueFromTargetAndComponent()
 {
 	if (value != nullptr && !value.wasObjectDeleted())
 	{
@@ -45,9 +88,23 @@ void GenericControllableCommand::updateValueFromTarget()
 
 	if (target == nullptr) return;
 
-	Controllable* cTarget = getControllableFromTarget();
+	Parameter* cTarget = dynamic_cast<Parameter*>(getControllableFromTarget());
 
-	if (cTarget != nullptr) value = ControllableFactory::createParameterFrom(cTarget);
+	if (cTarget != nullptr)
+	{
+		int compData = componentOperator->getValueData();
+		if (compData == -1)	value = ControllableFactory::createParameterFrom(cTarget);
+		else
+		{
+			if (compData < cTarget->minimumValue.size())
+			{
+				float minV = cTarget->minimumValue[compData];
+				float maxV = cTarget->maximumValue[compData];
+				value = new FloatParameter("Value", "", 0, minV, maxV);
+			}
+
+		}
+	}
 	else value = nullptr;
 
 	if (value != nullptr)
@@ -64,6 +121,8 @@ void GenericControllableCommand::updateValueFromTarget()
 		ghostValueData = var();
 	}
 }
+
+
 
 Controllable* GenericControllableCommand::getControllableFromTarget()
 {
@@ -115,14 +174,17 @@ void GenericControllableCommand::updateOperatorOptions()
 		bool shouldHideValue = o == INVERSE || o == NEXT_ENUM || o == PREV_ENUM || o == RANDOM;
 		value->hideInEditor = shouldHideValue;
 	}
-
 }
 
 void GenericControllableCommand::onContainerParameterChanged(Parameter* p)
 {
 	if (p == target && action == SET_VALUE)
 	{
-		updateValueFromTarget();
+		updateComponentFromTarget();
+	}
+	else if (p == componentOperator)
+	{
+		updateValueFromTargetAndComponent();
 	}
 	else if (p == valueOperator)
 	{
@@ -156,6 +218,7 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 		if (Parameter* p = static_cast<Parameter*>(c))
 		{
 			Operator o = valueOperator->getValueDataAsEnum<Operator>();
+			int compOp = componentOperator->getValueData();
 
 			if (value != nullptr || o == INVERSE || o == NEXT_ENUM || o == PREV_ENUM)
 			{
@@ -183,7 +246,19 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 					}
 					else
 					{
-						p->setValue(val);
+						if (compOp == -1)
+						{
+							if (p->value.size() == val.size()) p->setValue(val);
+						}
+						else
+						{
+							var pVal = p->value.clone();
+							if (pVal.isArray())
+							{
+								pVal[compOp] = (float)val;
+								p->setValue(pVal);
+							}
+						}
 					}
 				}
 				break;
@@ -247,7 +322,9 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 						var v;
 						for (int i = 0; i < p->value.size(); i++)
 						{
-							v.append(jmap<float>(r.nextFloat(), p->minimumValue[i], p->maximumValue[i]));
+							float vv = p->value[i];
+							if (compOp == i || compOp == -1) vv = jmap<float>(r.nextFloat(), p->minimumValue[i], p->maximumValue[i]);
+							v.append(vv);
 						}
 						p->setValue(v);
 					}
@@ -271,13 +348,13 @@ Controllable* GenericControllableCommand::getTargetControllableAtIndex(int multi
 
 void GenericControllableCommand::linkUpdated(ParameterLink* pLink)
 {
-	if (pLink->parameter == target) updateValueFromTarget();
+	if (pLink->parameter == target) updateComponentFromTarget();
 }
 
 void GenericControllableCommand::loadJSONDataInternal(var data)
 {
 	BaseCommand::loadJSONDataInternal(data);
-	//loadGhostData(data);
+
 	if (target->target == nullptr && Engine::mainEngine->isLoadingFile)
 	{
 		ghostData = data;
@@ -307,9 +384,13 @@ void GenericControllableCommand::loadGhostData(var data)
 		{
 			ghostOperator = paramsData[i].getProperty("value", var());
 		}
+		else if (paramsData[i].getProperty("controlAddress", "") == "/component")
+		{
+			ghostComponent = paramsData[i].getProperty("value", var());
+		}
 	}
 
-	updateValueFromTarget(); //force generate if not yet
+	if(action == SET_VALUE) updateComponentFromTarget(); //force generate if not yet
 //}
 }
 

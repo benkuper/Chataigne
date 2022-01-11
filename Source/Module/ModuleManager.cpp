@@ -11,8 +11,7 @@
 #include "StateMachine/StateMachineIncludes.h"
 #include "TimeMachine/TimeMachineIncludes.h"
 #include "CustomVariables/CustomVariablesIncludes.h"
-
-#include "ChataigneEngine.h"
+#include "MainIncludes.h"
 
 juce_ImplementSingleton(ModuleManager)
 
@@ -40,8 +39,8 @@ Module * ModuleManager::getModuleWithName(const String & moduleName)
 	if (moduleName == StateManager::getInstance()->module->shortName) return StateManager::getInstance()->module.get();
 	if (moduleName == ChataigneSequenceManager::getInstance()->module->shortName) return ChataigneSequenceManager::getInstance()->module.get();
 	if (moduleName == CVGroupManager::getInstance()->module->shortName) return CVGroupManager::getInstance()->module.get();
-	if (moduleName == static_cast<ChataigneEngine*>(Engine::mainEngine)->module.shortName) return &static_cast<ChataigneEngine*>(Engine::mainEngine)->module;
-	if (moduleName == static_cast<ChataigneEngine *>(Engine::mainEngine)->multiplexModule.shortName) return &static_cast<ChataigneEngine *>(Engine::mainEngine)->multiplexModule;
+	if (moduleName == static_cast<ChataigneEngine*>(Engine::mainEngine)->module->shortName) return static_cast<ChataigneEngine*>(Engine::mainEngine)->module.get();
+	if (moduleName == static_cast<ChataigneEngine *>(Engine::mainEngine)->multiplexModule->shortName) return static_cast<ChataigneEngine *>(Engine::mainEngine)->multiplexModule.get();
 	else return getItemWithName(moduleName, true);
 }
 
@@ -119,11 +118,11 @@ PopupMenu ModuleManager::getAllModulesCommandMenu(CommandContext context, bool m
 	menu.addSubMenu(StateManager::getInstance()->module->niceName, StateManager::getInstance()->module->getCommandMenu(-1000, context));
 	menu.addSubMenu(ChataigneSequenceManager::getInstance()->module->niceName, ChataigneSequenceManager::getInstance()->module->getCommandMenu(-2000, context));
 	menu.addSubMenu(CVGroupManager::getInstance()->module->niceName, CVGroupManager::getInstance()->module->getCommandMenu(-3000, context));
-	menu.addSubMenu(static_cast<ChataigneEngine*>(Engine::mainEngine)->module.niceName, static_cast<ChataigneEngine*>(Engine::mainEngine)->module.getCommandMenu(-10000, context));
+	menu.addSubMenu(static_cast<ChataigneEngine*>(Engine::mainEngine)->module->niceName, static_cast<ChataigneEngine*>(Engine::mainEngine)->module->getCommandMenu(-10000, context));
 	if (multiplexMode)
 	{
 		menu.addSeparator();
-		menu.addSubMenu(static_cast<ChataigneEngine*>(Engine::mainEngine)->multiplexModule.niceName, static_cast<ChataigneEngine*>(Engine::mainEngine)->multiplexModule.getCommandMenu(-20000, context));
+		menu.addSubMenu(static_cast<ChataigneEngine*>(Engine::mainEngine)->multiplexModule->niceName, static_cast<ChataigneEngine*>(Engine::mainEngine)->multiplexModule->getCommandMenu(-20000, context));
 	}
 	return menu;
 }
@@ -137,11 +136,11 @@ CommandDefinition * ModuleManager::getCommandDefinitionForItemID(int itemID, Mod
 
 	if (itemID < -19000)
 	{
-		m = &static_cast<ChataigneEngine*>(Engine::mainEngine)->multiplexModule;
+		m = static_cast<ChataigneEngine*>(Engine::mainEngine)->multiplexModule.get();
 		itemID += 20000;
 	} else if (itemID < -9000)
 	{
-		m = &static_cast<ChataigneEngine *>(Engine::mainEngine)->module;
+		m = static_cast<ChataigneEngine*>(Engine::mainEngine)->module.get();
 		itemID += 10000;
 	} else if (itemID < -2000)
 	{

@@ -71,7 +71,7 @@ public:
 	void loadJSONDataInternal(var data) override;
 
 	// Inherited via Parameter
-	virtual ControllableUI* createDefaultUI() override;
+	virtual ControllableUI* createDefaultUI(Array<Controllable*> controllables = {}) override;
 
 	String getTypeString() const override { return "GamepadParam"; }
 };

@@ -94,7 +94,7 @@ void StateTransitionUI::paint(Graphics & g)
 	Rectangle<int> sourceRect = getLocalArea(sourceSUI, sourceSUI->getLocalBounds()).expanded(2,2);
 	Rectangle<int> destRect = getLocalArea(destSUI, destSUI->getLocalBounds()).expanded(2,2);
 	Point<int> midPoint = (sourceRect.getCentre() + destRect.getCentre()) / 2;
-	midPoint = midPoint.getPointOnCircumference(10, sourceRect.getCentre().getAngleToPoint(destRect.getCentre()) + float_Pi / 2).toInt();
+	midPoint = midPoint.getPointOnCircumference(10, sourceRect.getCentre().getAngleToPoint(destRect.getCentre()) + MathConstants<float>::pi / 2).toInt();
 
 	Point<int> sourceP = sourceRect.getConstrainedPoint(midPoint);
 	Point<int> destP = destRect.getConstrainedPoint(midPoint);
@@ -111,8 +111,8 @@ void StateTransitionUI::paint(Graphics & g)
 
 	Path arrow;
 	arrow.startNewSubPath(destP.toFloat());
-	arrow.lineTo(ap.getPointOnCircumference(5, angle + float_Pi / 2));
-	arrow.lineTo(ap.getPointOnCircumference(5, angle - float_Pi / 2));
+	arrow.lineTo(ap.getPointOnCircumference(5, angle + MathConstants<float>::pi / 2));
+	arrow.lineTo(ap.getPointOnCircumference(5, angle - MathConstants<float>::pi / 2));
 	arrow.closeSubPath();
 
 	Path rectP;

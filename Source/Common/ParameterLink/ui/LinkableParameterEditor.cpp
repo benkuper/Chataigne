@@ -8,25 +8,29 @@
   ==============================================================================
 */
 
-#include "UI/ChataigneAssetManager.h"
+#include "MainIncludes.h"
 #include "LinkableParameterEditor.h"
 #include "CustomVariables/CustomVariablesIncludes.h"
 #include "Common/Processor/ProcessorIncludes.h"
 
-LinkableParameterEditor::LinkableParameterEditor(ParameterLink* pLink, bool showMappingOptions) :
-    InspectableEditor(pLink->parameter.get(), false),
-    showMappingOptions(showMappingOptions && pLink->canLinkToMapping),
-    link(pLink)
-
+LinkableParameterEditor::LinkableParameterEditor(Array<ParameterLink*> pLinks, bool showMappingOptions) :
+    InspectableEditor(getLinksAs<Inspectable>(pLinks), false),
+    showMappingOptions(showMappingOptions && pLinks[0]->canLinkToMapping),
+    links(pLinks),
+    link(pLinks[0])
+    
 {
-    link->addAsyncParameterLinkListener(this);
+    for (auto& l : links)
+    {
+        l->addAsyncParameterLinkListener(this);
+    }
 
     linkBT.reset(AssetManager::getInstance()->getToggleBTImage(ChataigneAssetManager::getInstance()->linkOnImage));
     linkBT->addListener(this);
     //linkBT->setToggleState(link->linkType != link->NONE, dontSendNotification);
     addAndMakeVisible(linkBT.get());
 
-    paramEditor.reset((ParameterEditor*)pLink->parameter->getEditor(false));
+    paramEditor.reset((ParameterEditor*)link->parameter->getEditor(false));
 
     bool visible = link->linkType == link->NONE || !link->isMultiplexed();
     if (visible)
@@ -38,7 +42,10 @@ LinkableParameterEditor::LinkableParameterEditor(ParameterLink* pLink, bool show
 
 LinkableParameterEditor::~LinkableParameterEditor()
 {
-    if (!inspectable.wasObjectDeleted()) link->removeAsyncParameterLinkListener(this);
+    for(auto & l : links)
+    {
+        l->removeAsyncParameterLinkListener(this);
+    }
 }
 
 void LinkableParameterEditor::paint(Graphics& g)
@@ -231,7 +238,10 @@ String LinkableParameterEditor::getLinkLabel() const
         if (link->list != nullptr && !link->listRef.wasObjectDeleted())
         {
             s = "List " + (link->list != nullptr ? link->list->niceName : "");
-            if (Parameter* c = dynamic_cast<Parameter*>(link->list->getTargetControllableAt(link->getPreviewIndex()))) s += " : " + c->stringValue();
+            if (Parameter* c = dynamic_cast<Parameter*>(link->list->getTargetControllableAt(link->getPreviewIndex())))
+            {
+                s += " : " + (link->parameter->type != Parameter::TARGET ? c->stringValue() : c->niceName);
+            }
         }
         break;
 

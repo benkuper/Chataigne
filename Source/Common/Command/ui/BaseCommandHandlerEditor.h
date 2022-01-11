@@ -9,13 +9,17 @@
 */
 #pragma once
 
+#include "JuceHeader.h"
+#include "../CommandContext.h"
 #include "CommandChooserUI.h"
-#include "../BaseCommandHandler.h"
+#include "../BaseCommandHandlerListener.h"
+
+class BaseCommandHandler;
 
 class BaseCommandHandlerEditor :
 	public BaseItemEditor,
 	public CommandChooserUI::Listener,
-	public BaseCommandHandler::AsyncListener
+	public BaseCommandHandlerAsyncListener
 {
 public:
 	BaseCommandHandlerEditor(BaseCommandHandler *, bool isRoot);
@@ -31,7 +35,7 @@ public:
 	void updateChooserLabel();
 
 	void definitionChosen(CommandDefinition * d) override;
-	void newMessage(const BaseCommandHandler::CommandHandlerEvent &e) override;
+	void newMessage(const CommandHandlerEvent &e) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(BaseCommandHandlerEditor)
 };

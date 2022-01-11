@@ -43,7 +43,7 @@
 
 #define JUCE_USE_DARK_SPLASH_SCREEN 1
 
-#define JUCE_PROJUCER_VERSION 0x60102
+#define JUCE_PROJUCER_VERSION 0x60104
 
 //==============================================================================
 #define JUCE_MODULE_AVAILABLE_juce_audio_basics          1
@@ -62,6 +62,7 @@
 #define JUCE_MODULE_AVAILABLE_juce_opengl                1
 #define JUCE_MODULE_AVAILABLE_juce_organicui             1
 #define JUCE_MODULE_AVAILABLE_juce_osc                   1
+#define JUCE_MODULE_AVAILABLE_juce_sharedtexture         1
 #define JUCE_MODULE_AVAILABLE_juce_simpleweb             1
 #define JUCE_MODULE_AVAILABLE_juce_timeline              1
 
@@ -316,8 +317,8 @@
  #define   ORGANICUI_USE_SERVUS 1
 #endif
 
-#ifndef    ORGANICUI_DEFAULT_REMOTECONTROL_PORT
- //#define ORGANICUI_DEFAULT_REMOTECONTROL_PORT 0
+#ifndef    ORGANICUI_USE_SHAREDTEXTURE
+ #define   ORGANICUI_USE_SHAREDTEXTURE 1
 #endif
 
 #ifndef    ORGANICUI_USE_WEBSERVER

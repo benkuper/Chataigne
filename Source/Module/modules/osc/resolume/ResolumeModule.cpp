@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "Common/Command/CommandFactory.h"
-
 ResolumeModule::ResolumeModule() :
 	OSCModule(getDefaultTypeString(),7001,7000,false,true)
 {	

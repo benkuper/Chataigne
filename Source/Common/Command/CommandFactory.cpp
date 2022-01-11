@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "CommandFactory.h"
-#include "Module/ModuleIncludes.h"
-
 CommandDefinition* CommandFactory::showMenuAndGetCommand(CommandContext context, Module* lockedModule, bool multiplexMode)
 {
 	PopupMenu m = getCommandMenu(context, lockedModule, multiplexMode);

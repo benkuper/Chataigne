@@ -9,6 +9,7 @@
 */
 
 #include "CommonIncludes.h"
+#include "MainIncludes.h"
 
 #include "DMX/DMXManager.cpp"
 #include "DMX/device/DMXDevice.cpp"
@@ -36,3 +37,6 @@
 #include "LTC/timecode.c"
 #include "LTC/encoder.c"
 #include "LTC/decoder.c"
+
+#include "InputSystem/InputSystemManager.cpp"
+#include "InputSystem/InputDeviceHelpers.cpp"

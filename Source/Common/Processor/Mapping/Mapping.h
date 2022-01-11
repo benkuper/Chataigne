@@ -30,7 +30,8 @@ public:
 
 	IntParameter* updateRate;
 	BoolParameter* sendOnOutputChangeOnly;
-	BoolParameter* processAfterLoad;
+	BoolParameter* sendAfterLoad;
+	BoolParameter* sendOnActivate;
 
 	enum ProcessMode { VALUE_CHANGE, MANUAL, TIMER };
 	ProcessMode processMode;

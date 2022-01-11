@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "CommandTemplateManagerUI.h"
-
 CommandTemplateManagerPanel::CommandTemplateManagerPanel(const String &_name) :
 	ShapeShifterContentComponent(_name),
 	module(nullptr)

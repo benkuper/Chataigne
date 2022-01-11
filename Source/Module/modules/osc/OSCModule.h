@@ -109,11 +109,6 @@ public:
 	static void createThruControllable(ControllableContainer* cc);
 
 
-	static OSCArgument varToArgument(const var &v);
-	static OSCArgument varToColorArgument(const var &v);
-	static var argumentToVar(const OSCArgument &a);
-
-
 	//save / load
 	virtual void setupFromManualCreation() override;
 

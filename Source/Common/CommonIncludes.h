@@ -39,3 +39,6 @@
 #include "LTC/decoder.h"
 
 #include "Zeroconf/ZeroconfManager.h"
+
+#include "InputSystem/InputSystemManager.h"
+#include "InputSystem/InputDeviceHelpers.h"

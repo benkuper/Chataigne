@@ -66,26 +66,36 @@ void ConditionManager::multiplexPreviewIndexChanged()
 	conditionManagerAsyncNotifier.addMessage(new ConditionManagerEvent(ConditionManagerEvent::MULTIPLEX_PREVIEW_CHANGED, this));
 }
 
-void ConditionManager::setHasActivationDefinitions(bool value)
+void ConditionManager::setHasActivationDefinitions(bool hasActivation, bool hasDeactivation)
 {
-	if (value)
+	if (hasActivation)
 	{
-		if (activateDef == nullptr && deactivateDef == nullptr)
+		if (activateDef == nullptr)
 		{
 			activateDef = MultiplexTargetDefinition<Condition>::createDef<ActivationCondition>("", ActivationCondition::getTypeStringStatic(ActivationCondition::ON_ACTIVATE), multiplex)->addParam("type", ActivationCondition::ON_ACTIVATE);
-			deactivateDef = MultiplexTargetDefinition<Condition>::createDef<ActivationCondition>("", ActivationCondition::getTypeStringStatic(ActivationCondition::ON_DEACTIVATE), multiplex)->addParam("type", ActivationCondition::ON_DEACTIVATE);
 			factory.defs.add(activateDef);
-			factory.defs.add(deactivateDef);
-			factory.buildPopupMenu();
 		}
 	} else
 	{
 		factory.defs.removeObject(activateDef);
-		factory.defs.removeObject(deactivateDef);
 		activateDef = nullptr;
-		deactivateDef = nullptr;
-		factory.buildPopupMenu();
 	}
+
+	if (hasDeactivation)
+	{
+		if (deactivateDef == nullptr)
+		{
+			deactivateDef = MultiplexTargetDefinition<Condition>::createDef<ActivationCondition>("", ActivationCondition::getTypeStringStatic(ActivationCondition::ON_DEACTIVATE), multiplex)->addParam("type", ActivationCondition::ON_DEACTIVATE);
+			factory.defs.add(deactivateDef);
+		}
+	}
+	else
+	{
+		factory.defs.removeObject(deactivateDef);
+		deactivateDef = nullptr;
+	}
+
+	factory.buildPopupMenu();
 }
 
 void ConditionManager::addItemInternal(Condition * c, var data)

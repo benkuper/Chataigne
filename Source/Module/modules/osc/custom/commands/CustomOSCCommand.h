@@ -31,8 +31,8 @@ public:
 
 	virtual void onContainerParameterChanged(Parameter * p) override;
 
-	void updateMappingInputValue(var value, int multiplexIndex);
-	void setInputNamesFromParams(Array<WeakReference<Parameter>> outParams);
+	void updateMappingInputValue(var value, int multiplexIndex) override;
+	void setInputNamesFromParams(Array<WeakReference<Parameter>> outParams) override;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

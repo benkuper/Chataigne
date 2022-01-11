@@ -607,9 +607,14 @@ void GenericOSCQueryModule::requestHostInfo()
 	URL url("http://" + (useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue()) + ":" + String(remotePort->intValue()) + "?HOST_INFO");
 	StringPairArray responseHeaders;
 	int statusCode = 0;
-	std::unique_ptr<InputStream> stream(url.createInputStream(false, nullptr, nullptr, String(),
-		2000, // timeout in millisecs
-		&responseHeaders, &statusCode));
+
+	std::unique_ptr<InputStream> stream(url.createInputStream(
+		URL::InputStreamOptions(URL::ParameterHandling::inAddress)
+		.withConnectionTimeoutMs(2000)
+		.withResponseHeaders(&responseHeaders)
+		.withStatusCode(&statusCode)
+	));
+
 #if JUCE_WINDOWS
 	if (statusCode != 200)
 	{
@@ -678,9 +683,14 @@ void GenericOSCQueryModule::requestStructure()
 	URL url("http://" + (useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue()) + ":" + String(remotePort->intValue()));
 	StringPairArray responseHeaders;
 	int statusCode = 0;
-	std::unique_ptr<InputStream> stream(url.createInputStream(false, nullptr, nullptr, String(),
-		2000, // timeout in millisecs
-		&responseHeaders, &statusCode));
+
+	std::unique_ptr<InputStream> stream(url.createInputStream(
+		URL::InputStreamOptions(URL::ParameterHandling::inAddress)
+		.withConnectionTimeoutMs(2000)
+		.withResponseHeaders(&responseHeaders)
+		.withStatusCode(&statusCode)
+	));
+
 #if JUCE_WINDOWS
 	if (statusCode != 200)
 	{

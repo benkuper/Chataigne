@@ -8,9 +8,9 @@
   ==============================================================================
 */
 
-DMXValueParameterUI::DMXValueParameterUI(DMXValueParameter* dmxP) :
-	IntStepperUI(dmxP),
-	dmxP(dmxP)
+DMXValueParameterUI::DMXValueParameterUI(Array<DMXValueParameter*> dmxP) :
+	IntStepperUI(Inspectable::getArrayAs<DMXValueParameter, Parameter>(dmxP)),
+	dmxParameters(dmxP)
 {
 	updateUIParams();
 }
@@ -23,9 +23,9 @@ void DMXValueParameterUI::updateUIParamsInternal()
 {
 	IntStepperUI::updateUIParamsInternal();
 
-	if (dmxP->type != DMXByteOrder::BIT8)
+	if (dmxParameters[0]->type != DMXByteOrder::BIT8)
 	{
-		Colour c = dmxP->type == DMXByteOrder::MSB?GREEN_COLOR:YELLOW_COLOR;
+		Colour c = dmxParameters[0]->type == DMXByteOrder::MSB?GREEN_COLOR:YELLOW_COLOR;
 		slider->setColour(slider->textBoxTextColourId, useCustomTextColor ? customTextColor : (isInteractable() ? c : BLUE_COLOR.brighter(.2f)));
 	}
 }
@@ -33,11 +33,11 @@ void DMXValueParameterUI::updateUIParamsInternal()
 void DMXValueParameterUI::addPopupMenuItemsInternal(PopupMenu* p)
 {
 	PopupMenu mp;
-	if (dmxP->channel < 512)
+	if (dmxParameters[0]->channel < 512)
 	{
-		mp.addItem(500, "8-bit", true, dmxP->type == DMXByteOrder::BIT8);
-		mp.addItem(501, "16-bit MSB", true, dmxP->type == DMXByteOrder::MSB);
-		mp.addItem(502, "16-bit LSB", true, dmxP->type == DMXByteOrder::LSB);
+		mp.addItem(500, "8-bit", true, dmxParameters[0]->type == DMXByteOrder::BIT8);
+		mp.addItem(501, "16-bit MSB", true, dmxParameters[0]->type == DMXByteOrder::MSB);
+		mp.addItem(502, "16-bit LSB", true, dmxParameters[0]->type == DMXByteOrder::LSB);
 	}
 	p->addSubMenu("DMX Mode", mp);
 }
@@ -45,5 +45,5 @@ void DMXValueParameterUI::addPopupMenuItemsInternal(PopupMenu* p)
 void DMXValueParameterUI::handleMenuSelectedID(int result)
 {
 	IntStepperUI::handleMenuSelectedID(result);
-	if (result >= 500 && result <= 502)  dmxP->setType((DMXByteOrder)(result - 500));
+	if (result >= 500 && result <= 502)  dmxParameters[0]->setType((DMXByteOrder)(result - 500));
 }

@@ -52,7 +52,7 @@ Do you want to install it ? Also, you need to have Powerpoint installed.", "Yes"
 			LOG("Downloading...");
 
 			downloadedFile = File::getSpecialLocation(File::tempDirectory).getChildFile("PowerpointOSC.zip");
-			downloadTask = ppURL.downloadToFile(downloadedFile, "", this);
+			downloadTask = ppURL.downloadToFile(downloadedFile, URL::DownloadTaskOptions().withListener(this));
 			if (downloadTask == nullptr)
 			{
 				LOGERROR("Error downloading Powerpoint plugin, are you connected to internet ?");

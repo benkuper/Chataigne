@@ -43,6 +43,12 @@ State::~State()
 }
 
 
+void State::handleLoadActivation()
+{
+	if (!active->boolValue() || !enabled->boolValue()) return;
+	active->setValue(true, false, true); // force active:true to handle startActivation, mapping process after load, etc.
+}
+
 void State::onContainerParameterChangedInternal(Parameter *p)
 {
 	if (p == active || p == enabled)
@@ -55,7 +61,7 @@ void State::onContainerParameterChangedInternal(Parameter *p)
 				pm->setForceDisabled(!active->boolValue() || !enabled->boolValue());
 
 				if (enabled->boolValue() && active->boolValue())
-					pm->processAllMappings();
+					pm->processAllMappings(false);
 			}
 			else if (enabled->boolValue())
 			{
@@ -66,12 +72,22 @@ void State::onContainerParameterChangedInternal(Parameter *p)
 					stateListeners.call(&StateListener::stateActivationChanged, this);
 
 					pm->checkAllActivateActions();
-					pm->processAllMappings();
-
+					pm->processAllMappings(true);
 
 					for (auto& t : outTransitions)
 					{
 						t->forceCheck(false); //force setting the valid state even if listeners will trigger it after (avoir listener-order bugs)
+
+						//check for onActivate in transitions
+						for (auto& c : t->cdm->items)
+						{
+							ActivationCondition* ac = dynamic_cast<ActivationCondition*>(c);
+							if (ac != nullptr)
+							{
+								bool valid = ac->type == ActivationCondition::Type::ON_ACTIVATE && !ac->forceDisabled;
+								for (int i = 0; i < ac->getMultiplexCount(); i++) ac->setValid(i, valid, false);
+							}
+						}
 
 						if (checkTransitionsOnActivate->boolValue())
 						{
@@ -81,11 +97,22 @@ void State::onContainerParameterChangedInternal(Parameter *p)
 								break;
 							}
 						}
-
 					}
 				}
 				else
 				{
+					for (auto& t : outTransitions)
+					{
+						for (auto& c : t->cdm->items)
+						{
+							ActivationCondition* ac = dynamic_cast<ActivationCondition*>(c);
+							if (ac != nullptr)
+							{
+								for (int i = 0; i < ac->getMultiplexCount(); i++) ac->setValid(i, false, false);
+							}
+						}
+					}
+
 					pm->checkAllDeactivateActions();
 					stateListeners.call(&StateListener::stateActivationChanged, this);
 					pm->setForceDisabled(!active->boolValue() || !enabled->boolValue());

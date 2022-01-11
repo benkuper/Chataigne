@@ -8,11 +8,10 @@
   ==============================================================================
 */
 
-#include "InputDeviceHelpers.h"
-
-GamepadParameterUI::GamepadParameterUI(GamepadParameter * p) :
-	ParameterUI(p),
-	gamepadParam(p)
+GamepadParameterUI::GamepadParameterUI(Array<GamepadParameter *> parameters) :
+	ParameterUI(Inspectable::getArrayAs<GamepadParameter, Parameter>(parameters)),
+	gamepadParams(parameters),
+	gamepadParam(parameters[0])
 {
 	chooser.setTextWhenNoChoicesAvailable("No gamepad connected");
 	chooser.setTextWhenNothingSelected("Select a gamepad");

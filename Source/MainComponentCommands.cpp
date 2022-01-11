@@ -9,13 +9,6 @@
  */
 
 
-#include "MainComponent.h"
-#include "UI/AboutWindow.h"
-#include "UI/WelcomeScreen.h"
-#include "Guider/GuiderIncludes.h"
-#include "Module/ModuleIncludes.h"
-#include "ChataigneEngine.h"
-
 namespace ChataigneCommandIDs
 {
 	static const int showAbout = 0x60000;

@@ -99,6 +99,8 @@ bool MappingFilter::setupSources(Array<Parameter*> sources, int multiplexIndex, 
 		filterAsyncNotifier.addMessage(new FilterEvent(FilterEvent::FILTER_REBUILT, this));
 	}
 
+	process(sources, multiplexIndex);
+
 	isSettingUpSources = false;
 	return true;
 }
@@ -106,7 +108,7 @@ bool MappingFilter::setupSources(Array<Parameter*> sources, int multiplexIndex, 
 void MappingFilter::setupParametersInternal(int multiplexIndex, bool rangeOnly)
 {
 
-	if (multiplexIndex >= 0 && filteredParameters.size() <= multiplexIndex || sourceParams.size() <= multiplexIndex) return;
+	if ((multiplexIndex >= 0 && filteredParameters.size() <= multiplexIndex) || sourceParams.size() <= multiplexIndex) return;
 
 	if (multiplexIndex == -1)
 	{

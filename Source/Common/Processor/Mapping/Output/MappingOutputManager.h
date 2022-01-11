@@ -13,7 +13,7 @@
 class MappingOutputManager :
 	public BaseManager<MappingOutput>,
 	public MultiplexTarget,
-	public BaseCommandHandler::CommandHandlerListener
+	public CommandHandlerListener
 {
 public:
 	MappingOutputManager(Multiplex* multiplex = nullptr);

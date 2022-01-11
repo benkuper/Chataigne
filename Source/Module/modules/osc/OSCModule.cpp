@@ -12,9 +12,9 @@ OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemot
 	Module(name),
 	Thread("OSCZeroconf"),
 	localPort(nullptr),
+    defaultRemotePort(defaultRemotePort),
     servus("_osc._udp"),
-	receiveCC(nullptr),
-	defaultRemotePort(defaultRemotePort)
+	receiveCC(nullptr)
 {
 	
 	setupIOConfiguration(canHaveInput, canHaveOutput);
@@ -199,7 +199,7 @@ void OSCModule::processMessage(const OSCMessage & msg)
 		Array<var> params;
 		params.add(msg.getAddressPattern().toString());
 		var args = var(Array<var>()); //initialize force array
-		for (auto &a : msg) args.append(OSCModule::argumentToVar(a));
+		for (auto &a : msg) args.append(OSCHelpers::argumentToVar(a));
 		params.add(args);
 		params.add(msg.getSenderIPAddress());
 		scriptManager->callFunctionOnAllItems(oscEventId, params);
@@ -317,11 +317,24 @@ var OSCModule::sendOSCFromScript(const var::NativeFunctionArgs & a)
 			if (a.arguments[i].isArray())
 			{
 				Array<var> * arr = a.arguments[i].getArray();
-				for (auto &aa : *arr) msg.addArgument(varToArgument(aa));
+				for (auto &aa : *arr) msg.addArgument(OSCHelpers::varToArgument(aa));
+			}
+			else if (a.arguments[i].isObject())
+			{
+				String type = a.arguments[i].getProperty("type", "").toString().toLowerCase();
+				if (type.isNotEmpty())
+				{
+					var val = a.arguments[i].getProperty("value", 0);
+					if (type == "bool") msg.addInt32(val);
+					else if (type == "float") msg.addFloat32(val);
+					else if (type == "int") msg.addInt32(val);
+					else if (type == "color") msg.addArgument(OSCHelpers::varToColorArgument(val));
+					else if (type == "string") msg.addString(val.toString());
+				}
 			}
 			else
 			{
-				msg.addArgument(varToArgument(a.arguments[i]));
+				msg.addArgument(OSCHelpers::varToArgument(a.arguments[i]));
 			}
 		}
 
@@ -351,11 +364,11 @@ var OSCModule::sendOSCToFromScript(const var::NativeFunctionArgs& a)
 			if (a.arguments[i].isArray())
 			{
 				Array<var>* arr = a.arguments[i].getArray();
-				for (auto& aa : *arr) msg.addArgument(varToArgument(aa));
+				for (auto& aa : *arr) msg.addArgument(OSCHelpers::varToArgument(aa));
 			}
 			else
 			{
-				msg.addArgument(varToArgument(a.arguments[i]));
+				msg.addArgument(OSCHelpers::varToArgument(a.arguments[i]));
 			}
 		}
 
@@ -433,66 +446,6 @@ void OSCModule::createThruControllable(ControllableContainer* cc)
 }
 
 
-OSCArgument OSCModule::varToArgument(const var & v)
-{
-	if (v.isBool()) return OSCArgument(((bool)v) ? 1 : 0);
-	else if (v.isInt()) return OSCArgument((int)v);
-	else if (v.isInt64()) return OSCArgument((int)v);
-	else if (v.isDouble()) return OSCArgument((float)v);
-	else if (v.isString()) return OSCArgument(v.toString());
-	jassert(false);
-	return OSCArgument("error");
-}
-
-OSCArgument OSCModule::varToColorArgument(const var & v)
-{
-	if (v.isBool()) return OSCArgument(OSCHelpers::getOSCColour((bool)v ? Colours::white : Colours::black));
-	else if (v.isInt() || v.isInt64() || v.isDouble())
-	{
-		int iv = (int)v;
-		OSCColour c = OSCColour::fromInt32(iv);// >> 24 & 0xFF | iv >> 16 & 0xFF | iv >> 8 & 0xFF | iv & 0xFF);
-		return OSCArgument(c);
-	}else if (v.isString())
-	{
-		Colour c = Colour::fromString(v.toString());
-		return OSCArgument(OSCHelpers::getOSCColour(c));
-	}
-	else if (v.isArray() && v.size() >= 3)
-	{
-		Colour c = Colour::fromFloatRGBA(v[0], v[1], v[2], v.size() >= 4 ? (float)v[3] : 1.0f);
-		return OSCArgument(OSCHelpers::getOSCColour(c));
-	}
-
-	jassert(false);
-	return OSCArgument("error");
-}
-
-var OSCModule::argumentToVar(const OSCArgument & a)
-{
-	if (a.isFloat32()) return var(a.getFloat32());
-	else if (a.isInt32()) return var(a.getInt32());
-	else if (a.isString()) return var(a.getString());
-	else if (a.isColour())
-	{
-		OSCColour c = a.getColour();
-		return var((int)c.toInt32());
-	}
-	else if (a.isBlob())
-	{
-		MemoryBlock blob = a.getBlob();
-		var result;
-		for (int i = 0; i < blob.getSize(); i++)
-		{
-			result.append((uint8)blob[i]);
-		}
-
-		return result;
-	}
-
-	return var("error");
-}
-
-
 void OSCModule::setupFromManualCreation()
 {
 	if (outputManager != nullptr)
@@ -554,10 +507,10 @@ void OSCModule::handleRoutedModuleValue(Controllable * c, RouteParams * p)
 				}
 				else
 				{
-					if (!v.isArray())  m.addArgument(varToArgument(v));
+					if (!v.isArray())  m.addArgument(OSCHelpers::varToArgument(v));
 					else
 					{
-						for (int i = 0; i < v.size(); ++i) m.addArgument(varToArgument(v[i]));
+						for (int i = 0; i < v.size(); ++i) m.addArgument(OSCHelpers::varToArgument(v[i]));
 					}
 				}
 

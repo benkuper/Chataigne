@@ -29,7 +29,8 @@ Mapping::Mapping(var params, Multiplex* multiplex, bool canBeDisabled) :
 
 	updateRate = mappingParams.addIntParameter("Update rate", "This is the update rate at which the mapping is processing. This is used only when continuous filters like Smooth and Damping are presents", 50, 1, 500, false);
 	sendOnOutputChangeOnly = mappingParams.addBoolParameter("Send On Output Change Only", "This decides whether the Mapping Outputs are always triggered on source change, or only when a value's filtered output has changed.", false);
-	processAfterLoad = mappingParams.addBoolParameter("Process After Load", "This will force processing this mapping once after loading", false);
+	sendAfterLoad = mappingParams.addBoolParameter("Send After Load", "This will force sending values once after loading", false);
+	sendOnActivate = mappingParams.addBoolParameter("Send on Activate", "This will force sending values once each time the mapping is activated", false);
 
 	//updateRate->canBeDisabledByUser = true;
 
@@ -93,6 +94,8 @@ void Mapping::checkFiltersNeedContinuousProcess()
 	{
 		for (auto& f : fm.items)
 		{
+			if (!f->enabled->boolValue()) continue;
+
 			if (f->processOnSameValue)
 			{
 				need = true;
@@ -275,6 +278,12 @@ void Mapping::updateContinuousProcess()
 void Mapping::setForceDisabled(bool value, bool force)
 {
 	Processor::setForceDisabled(value, force);
+	
+	if ((value != forceDisabled) || force)
+	{
+		if (value && sendOnActivate->boolValue()) for (int i = 0; i < getMultiplexCount(); i++) om.updateOutputValues(i);
+	}
+
 	updateContinuousProcess();
 }
 
@@ -301,7 +310,14 @@ void Mapping::loadJSONDataInternal(var data)
 
 void Mapping::afterLoadJSONDataInternal()
 {
-	updateMappingChain(nullptr, processAfterLoad->boolValue());
+	updateMappingChain(nullptr, false);
+	if (sendAfterLoad->boolValue())
+	{
+		if (enabled->boolValue() && !forceDisabled)
+		{
+			for (int i = 0; i < getMultiplexCount(); i++) om.updateOutputValues(i);
+		}
+	}
 	updateContinuousProcess();
 }
 
@@ -348,6 +364,10 @@ void Mapping::onContainerParameterChangedInternal(Parameter* p)
 
 	if (p == enabled)
 	{
+		if (enabled->boolValue() && !forceDisabled)
+		{
+			for (int i = 0; i < getMultiplexCount(); i++) om.updateOutputValues(i);
+		}
 		updateContinuousProcess();
 	}
 }

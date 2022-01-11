@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "JuceHeader.h"
-#include "../CommandContext.h"
-
 class Module;
 class CommandDefinition;
 

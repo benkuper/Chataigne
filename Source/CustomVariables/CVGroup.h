@@ -30,7 +30,16 @@ public:
 	EnumParameter * controlMode;
 	Trigger* randomize;
 
-	GenericControllableManager values;
+	class ValuesManager :
+		public GenericControllableManager
+	{
+	public:
+		ValuesManager();
+		~ValuesManager();
+
+		DashboardItem* createDashboardItem() override;
+	};
+	ValuesManager values;
 
 	std::unique_ptr<CVPresetManager> pm;
 	std::unique_ptr<Morpher> morpher;

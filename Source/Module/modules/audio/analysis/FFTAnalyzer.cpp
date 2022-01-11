@@ -44,7 +44,7 @@ void FFTAnalyzer::process(float* fftSamples, int numSamples)
 		if (dist >= 1) continue;
 
 		numGoodSamples++;
-		float factor = cosf(dist * float_Pi / 2); //smooth
+		float factor = cosf(dist * MathConstants<float>::pi / 2); //smooth
 
 		result += fftSamples[i] * factor;
 		totalCoef += factor;

@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "CommandTemplateParameter.h"
-#include "ui/CommandTemplateParameterEditor.h"
-
 CommandTemplateParameter::CommandTemplateParameter(Parameter * sourceParam) :
 	ControllableContainer(sourceParam->niceName)
 {

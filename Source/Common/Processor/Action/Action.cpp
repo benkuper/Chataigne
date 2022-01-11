@@ -39,7 +39,8 @@ Action::Action(const String &name, var params, Multiplex * multiplex, bool hasCo
 	if (hasConditions)
 	{
 		cdm.reset(new ConditionManager(multiplex));
-		cdm->setHasActivationDefinitions(params.getProperty("hasActivationDefinitions", true));
+		bool hasActivationDefs = params.getProperty("hasActivationDefinitions", true);
+		cdm->setHasActivationDefinitions(hasActivationDefs, hasActivationDefs);
 		cdm->addConditionManagerListener(this);
 		cdm->addBaseManagerListener(this);
 		addChildControllableContainer(cdm.get());
@@ -126,6 +127,8 @@ void Action::triggerConsequences(bool triggerTrue, int multiplexIndex)
 	{
 		if (triggerTrue) csmOn->triggerAll(multiplexIndex);
 		else csmOff->triggerAll(multiplexIndex);
+
+		actionListeners.call(&ActionListener::actionTriggered, this, triggerTrue, multiplexIndex);
 	}
 }
 

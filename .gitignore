@@ -43,6 +43,7 @@ profile
 **/VisualStudio2015/x64
 **/VisualStudio2017/x64
 **/VisualStudio2019/x64
+**/VisualStudio2022/x64
 **/Android/bin
 **/Android/libs
 **/Android/gen
@@ -64,6 +65,7 @@ Builds/CodeBlocksLinux/*\.cbp
 
 Builds/VisualStudio2017/\.vs/
 Builds/VisualStudio2019/\.vs/
+Builds/VisualStudio2022/\.vs/
 Builds/VisualStudio2019/packages/
 Builds/VisualStudio2017_Win7/
 

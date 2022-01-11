@@ -8,9 +8,10 @@
   ==============================================================================
 */
 
-MIDIDeviceParameterUI::MIDIDeviceParameterUI(MIDIDeviceParameter * _midiParam) :
-	ParameterUI(_midiParam),
-	midiParam(_midiParam)
+MIDIDeviceParameterUI::MIDIDeviceParameterUI(Array<MIDIDeviceParameter *> _midiParams) :
+	ParameterUI(Inspectable::getArrayAs<MIDIDeviceParameter, Parameter>(_midiParams)),
+	midiParams(_midiParams),
+	midiParam(_midiParams[0])
 {
 	addAndMakeVisible(&chooser);
 	chooser.addMIDIChooserListener(this);
@@ -35,7 +36,7 @@ void MIDIDeviceParameterUI::valueChanged(const var & /*value*/)
 
 	chooser.setSelectedInputDevice(midiParam->inputDevice);
 	chooser.setSelectedOutputDevice(midiParam->outputDevice);
-	chooser.setGhostValues(midiParam->ghostDeviceIn, midiParam->ghostDeviceOut);
+	chooser.setGhostValues(midiParam->ghostDeviceNameIn, midiParam->ghostDeviceNameOut);
 }
 
 void MIDIDeviceParameterUI::midiDeviceInSelected(MIDIInputDevice * d)

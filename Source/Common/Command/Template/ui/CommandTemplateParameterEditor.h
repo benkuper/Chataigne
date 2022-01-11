@@ -10,9 +10,6 @@
 
 #pragma once
 
-
-#include "../CommandTemplateParameter.h"
-
 class CommandTemplateParameterEditor :
 	public InspectableEditor
 {

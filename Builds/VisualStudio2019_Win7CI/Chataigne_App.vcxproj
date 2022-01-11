@@ -50,12 +50,12 @@
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\App\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Chataigne</TargetName>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(LibraryPath);../../External/joycon/lib/win;../../External/servus/lib/win/x64/debug;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/hidapi/lib/win/x64;..\..\Modules\juce_simpleweb\libs\VisualStudio2019\$(Platform)\MDd</LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(LibraryPath);../../External/joycon/lib/win;../../External/servus/lib/win/x64/debug;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/hidapi/lib/win/x64;..\..\Modules\juce_sharedtexture\libs\VisualStudio2019\$(Platform)\MDd;..\..\Modules\juce_simpleweb\libs\VisualStudio2019\$(Platform)\MDd</LibraryPath>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\..\..\Binaries\CI\App\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\App\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Chataigne</TargetName>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(LibraryPath);../../External/joycon/lib/win;../../External/servus/lib/win/x64/release;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/hidapi/lib/win/x64;..\..\Modules\juce_simpleweb\libs\VisualStudio2019\$(Platform)\MD</LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(LibraryPath);../../External/joycon/lib/win;../../External/servus/lib/win/x64/release;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/hidapi/lib/win/x64;..\..\Modules\juce_sharedtexture\libs\VisualStudio2019\$(Platform)\MD;..\..\Modules\juce_simpleweb\libs\VisualStudio2019\$(Platform)\MD</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Midl>
@@ -69,7 +69,7 @@
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\JUCE\Modules;..\..\Modules;../../External/wiiuse;../../External/serial/include;../../External/asio;../../External/joycon/include;../../External/servus/include;../../External/dnssd/include;../../External/sdl/include;../../External/hidapi/include;../../Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;VST_LOGGING=0;JUCE_MODAL_LOOPS_PERMITTED=1;USE_KINECT=0;JUCER_VS2019_4E886FDA=1;JUCE_APP_VERSION=1.9.1b17;JUCE_APP_VERSION_HEX=0x10901;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;VST_LOGGING=0;JUCE_MODAL_LOOPS_PERMITTED=1;USE_KINECT=0;JUCER_VS2019_4E886FDA=1;JUCE_APP_VERSION=1.9.3b11;JUCE_APP_VERSION_HEX=0x10903;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
@@ -92,9 +92,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(IntDir)\Chataigne.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>../../External/joycon/lib/win;../../External/servus/lib/win/x64/debug;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/hidapi/lib/win/x64;..\..\Modules\juce_simpleweb\libs\VisualStudio2019\$(Platform)\MDd;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../External/joycon/lib/win;../../External/servus/lib/win/x64/debug;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/hidapi/lib/win/x64;..\..\Modules\juce_sharedtexture\libs\VisualStudio2019\$(Platform)\MDd;..\..\Modules\juce_simpleweb\libs\VisualStudio2019\$(Platform)\MDd;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <LargeAddressAware>true</LargeAddressAware>
-      <AdditionalDependencies>Setupapi.lib;hid.lib;JoyShockLibrary.lib;Servus.lib;dnssd.lib;SDL2.lib;iphlpapi.lib;hid.lib;hidapi_static.lib;libssl.lib;libcrypto.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Setupapi.lib;hid.lib;JoyShockLibrary.lib;Servus.lib;dnssd.lib;SDL2.lib;iphlpapi.lib;hid.lib;hidapi_static.lib;SpoutLibrary.lib;libssl.lib;libcrypto.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/HEAP:0x400000,0x10000 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <Bscmake>
@@ -102,8 +102,8 @@
       <OutputFile>$(IntDir)\Chataigne.bsc</OutputFile>
     </Bscmake>
     <Lib>
-      <AdditionalDependencies>Setupapi.lib;hid.lib;JoyShockLibrary.lib;Servus.lib;dnssd.lib;SDL2.lib;iphlpapi.lib;hid.lib;hidapi_static.lib;libssl.lib;libcrypto.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../../External/joycon/lib/win;../../External/servus/lib/win/x64/debug;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/hidapi/lib/win/x64;..\..\Modules\juce_simpleweb\libs\VisualStudio2019\$(Platform)\MDd;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Setupapi.lib;hid.lib;JoyShockLibrary.lib;Servus.lib;dnssd.lib;SDL2.lib;iphlpapi.lib;hid.lib;hidapi_static.lib;SpoutLibrary.lib;libssl.lib;libcrypto.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../../External/joycon/lib/win;../../External/servus/lib/win/x64/debug;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/hidapi/lib/win/x64;..\..\Modules\juce_sharedtexture\libs\VisualStudio2019\$(Platform)\MDd;..\..\Modules\juce_simpleweb\libs\VisualStudio2019\$(Platform)\MDd;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -117,7 +117,7 @@
     <ClCompile>
       <Optimization>Full</Optimization>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\JUCE\Modules;..\..\Modules;../../External/wiiuse;../../External/serial/include;../../External/asio;../../External/joycon/include;../../External/servus/include;../../External/dnssd/include;../../External/sdl/include;../../External/hidapi/include;../../Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;VST_LOGGING=0;JUCE_MODAL_LOOPS_PERMITTED=1;USE_KINECT=0;JUCER_VS2019_4E886FDA=1;JUCE_APP_VERSION=1.9.1b17;JUCE_APP_VERSION_HEX=0x10901;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;VST_LOGGING=0;JUCE_MODAL_LOOPS_PERMITTED=1;USE_KINECT=0;JUCER_VS2019_4E886FDA=1;JUCE_APP_VERSION=1.9.3b11;JUCE_APP_VERSION_HEX=0x10903;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
@@ -142,10 +142,10 @@
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <AdditionalLibraryDirectories>../../External/joycon/lib/win;../../External/servus/lib/win/x64/release;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/hidapi/lib/win/x64;..\..\Modules\juce_simpleweb\libs\VisualStudio2019\$(Platform)\MD;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../External/joycon/lib/win;../../External/servus/lib/win/x64/release;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/hidapi/lib/win/x64;..\..\Modules\juce_sharedtexture\libs\VisualStudio2019\$(Platform)\MD;..\..\Modules\juce_simpleweb\libs\VisualStudio2019\$(Platform)\MD;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <LargeAddressAware>true</LargeAddressAware>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
-      <AdditionalDependencies>Setupapi.lib;hid.lib;JoyShockLibrary.lib;Servus.lib;dnssd.lib;SDL2.lib;iphlpapi.lib;hid.lib;hidapi_static.lib;libssl.lib;libcrypto.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Setupapi.lib;hid.lib;JoyShockLibrary.lib;Servus.lib;dnssd.lib;SDL2.lib;iphlpapi.lib;hid.lib;hidapi_static.lib;SpoutLibrary.lib;libssl.lib;libcrypto.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/HEAP:0x400000,0x10000 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <Bscmake>
@@ -153,8 +153,8 @@
       <OutputFile>$(IntDir)\Chataigne.bsc</OutputFile>
     </Bscmake>
     <Lib>
-      <AdditionalDependencies>Setupapi.lib;hid.lib;JoyShockLibrary.lib;Servus.lib;dnssd.lib;SDL2.lib;iphlpapi.lib;hid.lib;hidapi_static.lib;libssl.lib;libcrypto.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../../External/joycon/lib/win;../../External/servus/lib/win/x64/release;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/hidapi/lib/win/x64;..\..\Modules\juce_simpleweb\libs\VisualStudio2019\$(Platform)\MD;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Setupapi.lib;hid.lib;JoyShockLibrary.lib;Servus.lib;dnssd.lib;SDL2.lib;iphlpapi.lib;hid.lib;hidapi_static.lib;SpoutLibrary.lib;libssl.lib;libcrypto.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../../External/joycon/lib/win;../../External/servus/lib/win/x64/release;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/hidapi/lib/win/x64;..\..\Modules\juce_sharedtexture\libs\VisualStudio2019\$(Platform)\MD;..\..\Modules\juce_simpleweb\libs\VisualStudio2019\$(Platform)\MD;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -171,7 +171,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Source\Guider\GuiderIncludes.cpp"/>
-    <ClCompile Include="..\..\Source\Analytics\MatomoAnalytics.cpp"/>
+    <ClCompile Include="..\..\Source\Analytics\MatomoAnalytics.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\LTC\decoder.c">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -190,26 +192,63 @@
     <ClCompile Include="..\..\Source\Common\Zeroconf\ZeroconfManager.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Common\InputSystem\InputDeviceHelpers.cpp"/>
-    <ClCompile Include="..\..\Source\Common\InputSystem\InputSystemManager.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Command\CustomValues\ui\CustomValuesCommandArgumentEditor.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Command\CustomValues\ui\CustomValuesCommandArgumentManagerEditor.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Command\CustomValues\CustomValuesCommandArgument.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Command\CustomValues\CustomValuesCommandArgumentManager.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Command\ui\BaseCommandEditor.cpp"/>
+    <ClCompile Include="..\..\Source\Common\InputSystem\InputDeviceHelpers.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\InputSystem\InputSystemManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Command\CommandIncludes.cpp"/>
+    <ClCompile Include="..\..\Source\Common\Command\CustomValues\ui\CustomValuesCommandArgumentEditor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Command\CustomValues\ui\CustomValuesCommandArgumentManagerEditor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Command\CustomValues\CustomValuesCommandArgument.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Command\CustomValues\CustomValuesCommandArgumentManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Command\ui\BaseCommandEditor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\Command\ui\BaseCommandHandlerEditor.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Command\ui\CommandChooserUI.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Command\Template\ui\CommandTemplateEditor.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Command\Template\ui\CommandTemplateManagerUI.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Command\Template\ui\CommandTemplateParameterEditor.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Command\Template\CommandTemplate.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Command\Template\CommandTemplateManager.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Command\Template\CommandTemplateParameter.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Command\BaseCommand.cpp"/>
+    <ClCompile Include="..\..\Source\Common\Command\ui\CommandChooserUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Command\Template\ui\CommandTemplateEditor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Command\Template\ui\CommandTemplateManagerUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Command\Template\ui\CommandTemplateParameterEditor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Command\Template\CommandTemplate.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Command\Template\CommandTemplateManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Command\Template\CommandTemplateParameter.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Command\BaseCommand.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\Command\BaseCommandHandler.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Command\CommandDefinition.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Command\CommandDefinitionManager.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Command\CommandFactory.cpp"/>
+    <ClCompile Include="..\..\Source\Common\Command\CommandDefinition.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Command\CommandDefinitionManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Command\CommandFactory.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\DMX\device\sacn\e131.c"/>
     <ClCompile Include="..\..\Source\Common\DMX\device\DMXArtNetDevice.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
@@ -496,6 +535,12 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Serial\SerialManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\CustomVariables\dashboard\ui\CVDashboardItemUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\CustomVariables\dashboard\CVDashboardItem.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Source\CustomVariables\Preset\Morpher\ui\CVPresetMorphUI.cpp">
@@ -1026,13 +1071,26 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Source\TimeMachine\TimeMachineIncludes.cpp"/>
-    <ClCompile Include="..\..\Source\UI\AboutWindow.cpp"/>
-    <ClCompile Include="..\..\Source\UI\ChataigneAssetManager.cpp"/>
-    <ClCompile Include="..\..\Source\UI\WelcomeScreen.cpp"/>
-    <ClCompile Include="..\..\Source\ChataigneEngine.cpp"/>
+    <ClCompile Include="..\..\Source\UI\AboutWindow.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\UI\ChataigneAssetManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\UI\WelcomeScreen.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\MainIncludes.cpp"/>
+    <ClCompile Include="..\..\Source\ChataigneEngine.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Main.cpp"/>
-    <ClCompile Include="..\..\Source\MainComponent.cpp"/>
-    <ClCompile Include="..\..\Source\MainComponentCommands.cpp"/>
+    <ClCompile Include="..\..\Source\MainComponent.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\MainComponentCommands.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\JUCE\Modules\juce_audio_basics\buffers\juce_AudioChannelSet.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2104,10 +2162,10 @@
     <ClCompile Include="..\..\JUCE\Modules\juce_data_structures\values\juce_ValueTree.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\Modules\juce_data_structures\values\juce_ValueTreeSynchroniser.cpp">
+    <ClCompile Include="..\..\JUCE\Modules\juce_data_structures\values\juce_ValueTreePropertyWithDefault_test.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\Modules\juce_data_structures\values\juce_ValueWithDefault.cpp">
+    <ClCompile Include="..\..\JUCE\Modules\juce_data_structures\values\juce_ValueTreeSynchroniser.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\JUCE\Modules\juce_data_structures\juce_data_structures.cpp">
@@ -2336,6 +2394,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\JUCE\Modules\juce_graphics\geometry\juce_PathStrokeType.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\JUCE\Modules\juce_graphics\geometry\juce_Rectangle_test.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\JUCE\Modules\juce_graphics\image_formats\jpglib\jcapimin.c">
@@ -3421,6 +3482,9 @@
     <ClCompile Include="..\..\Modules\juce_organicui\dashboard\ui\DashboardUI.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\dashboard\ui\SharedTextureDashboardItemUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\dashboard\Dashboard.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -3440,6 +3504,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\dashboard\DashboardManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\dashboard\SharedTextureDashboardItem.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\engine\Engine.cpp">
@@ -3721,6 +3788,12 @@
     <ClCompile Include="..\..\JUCE\Modules\juce_osc\juce_osc.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_sharedtexture\juce_sharedtexture.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_sharedtexture\SharedTexture.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\impl\src.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -3918,6 +3991,7 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_organicui3.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_organicui4.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_osc.cpp"/>
+    <ClCompile Include="..\..\JuceLibraryCode\include_juce_sharedtexture.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_simpleweb.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_simpleweb2.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_timeline.cpp"/>
@@ -3939,6 +4013,8 @@
     <ClInclude Include="..\..\Source\Common\Zeroconf\ZeroconfManager.h"/>
     <ClInclude Include="..\..\Source\Common\InputSystem\InputDeviceHelpers.h"/>
     <ClInclude Include="..\..\Source\Common\InputSystem\InputSystemManager.h"/>
+    <ClInclude Include="..\..\Source\Common\Command\BaseCommandHandlerListener.h"/>
+    <ClInclude Include="..\..\Source\Common\Command\CommandIncludes.h"/>
     <ClInclude Include="..\..\Source\Common\Command\CustomValues\ui\CustomValuesCommandArgumentEditor.h"/>
     <ClInclude Include="..\..\Source\Common\Command\CustomValues\ui\CustomValuesCommandArgumentManagerEditor.h"/>
     <ClInclude Include="..\..\Source\Common\Command\CustomValues\CustomValuesCommandArgument.h"/>
@@ -4056,6 +4132,8 @@
     <ClInclude Include="..\..\Source\Common\Serial\SerialDevice.h"/>
     <ClInclude Include="..\..\Source\Common\Serial\SerialDeviceParameter.h"/>
     <ClInclude Include="..\..\Source\Common\Serial\SerialManager.h"/>
+    <ClInclude Include="..\..\Source\CustomVariables\dashboard\ui\CVDashboardItemUI.h"/>
+    <ClInclude Include="..\..\Source\CustomVariables\dashboard\CVDashboardItem.h"/>
     <ClInclude Include="..\..\Source\CustomVariables\Preset\Morpher\ui\CVPresetMorphUI.h"/>
     <ClInclude Include="..\..\Source\CustomVariables\Preset\Morpher\ui\MorpherViewUI.h"/>
     <ClInclude Include="..\..\Source\CustomVariables\Preset\Morpher\ui\MorphTargetUI.h"/>
@@ -4242,6 +4320,7 @@
     <ClInclude Include="..\..\Source\UI\AboutWindow.h"/>
     <ClInclude Include="..\..\Source\UI\ChataigneAssetManager.h"/>
     <ClInclude Include="..\..\Source\UI\WelcomeScreen.h"/>
+    <ClInclude Include="..\..\Source\MainIncludes.h"/>
     <ClInclude Include="..\..\Source\ChataigneEngine.h"/>
     <ClInclude Include="..\..\Source\Main.h"/>
     <ClInclude Include="..\..\Source\MainComponent.h"/>
@@ -4566,6 +4645,7 @@
     <ClInclude Include="..\..\JUCE\Modules\juce_audio_processors\processors\juce_AudioProcessorParameter.h"/>
     <ClInclude Include="..\..\JUCE\Modules\juce_audio_processors\processors\juce_AudioProcessorParameterGroup.h"/>
     <ClInclude Include="..\..\JUCE\Modules\juce_audio_processors\processors\juce_GenericAudioProcessorEditor.h"/>
+    <ClInclude Include="..\..\JUCE\Modules\juce_audio_processors\processors\juce_HostedAudioProcessorParameter.h"/>
     <ClInclude Include="..\..\JUCE\Modules\juce_audio_processors\processors\juce_PluginDescription.h"/>
     <ClInclude Include="..\..\JUCE\Modules\juce_audio_processors\scanning\juce_KnownPluginList.h"/>
     <ClInclude Include="..\..\JUCE\Modules\juce_audio_processors\scanning\juce_PluginDirectoryScanner.h"/>
@@ -4610,6 +4690,7 @@
     <ClInclude Include="..\..\JUCE\Modules\juce_core\containers\juce_PropertySet.h"/>
     <ClInclude Include="..\..\JUCE\Modules\juce_core\containers\juce_ReferenceCountedArray.h"/>
     <ClInclude Include="..\..\JUCE\Modules\juce_core\containers\juce_ScopedValueSetter.h"/>
+    <ClInclude Include="..\..\JUCE\Modules\juce_core\containers\juce_SingleThreadedAbstractFifo.h"/>
     <ClInclude Include="..\..\JUCE\Modules\juce_core\containers\juce_SortedSet.h"/>
     <ClInclude Include="..\..\JUCE\Modules\juce_core\containers\juce_SparseSet.h"/>
     <ClInclude Include="..\..\JUCE\Modules\juce_core\containers\juce_Variant.h"/>
@@ -4645,6 +4726,7 @@
     <ClInclude Include="..\..\JUCE\Modules\juce_core\memory\juce_MemoryBlock.h"/>
     <ClInclude Include="..\..\JUCE\Modules\juce_core\memory\juce_OptionalScopedPointer.h"/>
     <ClInclude Include="..\..\JUCE\Modules\juce_core\memory\juce_ReferenceCountedObject.h"/>
+    <ClInclude Include="..\..\JUCE\Modules\juce_core\memory\juce_Reservoir.h"/>
     <ClInclude Include="..\..\JUCE\Modules\juce_core\memory\juce_ScopedPointer.h"/>
     <ClInclude Include="..\..\JUCE\Modules\juce_core\memory\juce_SharedResourcePointer.h"/>
     <ClInclude Include="..\..\JUCE\Modules\juce_core\memory\juce_Singleton.h"/>
@@ -4751,8 +4833,8 @@
     <ClInclude Include="..\..\JUCE\Modules\juce_data_structures\values\juce_CachedValue.h"/>
     <ClInclude Include="..\..\JUCE\Modules\juce_data_structures\values\juce_Value.h"/>
     <ClInclude Include="..\..\JUCE\Modules\juce_data_structures\values\juce_ValueTree.h"/>
+    <ClInclude Include="..\..\JUCE\Modules\juce_data_structures\values\juce_ValueTreePropertyWithDefault.h"/>
     <ClInclude Include="..\..\JUCE\Modules\juce_data_structures\values\juce_ValueTreeSynchroniser.h"/>
-    <ClInclude Include="..\..\JUCE\Modules\juce_data_structures\values\juce_ValueWithDefault.h"/>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_data_structures\juce_data_structures.h"/>
     <ClInclude Include="..\..\JUCE\Modules\juce_dsp\containers\juce_AudioBlock.h"/>
     <ClInclude Include="..\..\JUCE\Modules\juce_dsp\containers\juce_FixedSizeFunction.h"/>
@@ -4879,6 +4961,7 @@
     <ClInclude Include="..\..\JUCE\Modules\juce_graphics\images\juce_ImageCache.h"/>
     <ClInclude Include="..\..\JUCE\Modules\juce_graphics\images\juce_ImageConvolutionKernel.h"/>
     <ClInclude Include="..\..\JUCE\Modules\juce_graphics\images\juce_ImageFileFormat.h"/>
+    <ClInclude Include="..\..\JUCE\Modules\juce_graphics\images\juce_ScaledImage.h"/>
     <ClInclude Include="..\..\JUCE\Modules\juce_graphics\native\juce_mac_CoreGraphicsContext.h"/>
     <ClInclude Include="..\..\JUCE\Modules\juce_graphics\native\juce_mac_CoreGraphicsHelpers.h"/>
     <ClInclude Include="..\..\JUCE\Modules\juce_graphics\native\juce_RenderingHelpers.h"/>
@@ -5015,6 +5098,7 @@
     <ClInclude Include="..\..\JUCE\Modules\juce_gui_basics\native\x11\juce_linux_X11_Symbols.h"/>
     <ClInclude Include="..\..\JUCE\Modules\juce_gui_basics\native\x11\juce_linux_XWindowSystem.h"/>
     <ClInclude Include="..\..\JUCE\Modules\juce_gui_basics\native\juce_MultiTouchMapper.h"/>
+    <ClInclude Include="..\..\JUCE\Modules\juce_gui_basics\native\juce_ScopedDPIAwarenessDisabler.h"/>
     <ClInclude Include="..\..\JUCE\Modules\juce_gui_basics\native\juce_win32_ScopedThreadDPIAwarenessSetter.h"/>
     <ClInclude Include="..\..\JUCE\Modules\juce_gui_basics\positioning\juce_MarkerList.h"/>
     <ClInclude Include="..\..\JUCE\Modules\juce_gui_basics\positioning\juce_RelativeCoordinate.h"/>
@@ -5069,7 +5153,6 @@
     <ClInclude Include="..\..\JUCE\Modules\juce_gui_extra\embedding\juce_AndroidViewComponent.h"/>
     <ClInclude Include="..\..\JUCE\Modules\juce_gui_extra\embedding\juce_HWNDComponent.h"/>
     <ClInclude Include="..\..\JUCE\Modules\juce_gui_extra\embedding\juce_NSViewComponent.h"/>
-    <ClInclude Include="..\..\JUCE\Modules\juce_gui_extra\embedding\juce_ScopedDPIAwarenessDisabler.h"/>
     <ClInclude Include="..\..\JUCE\Modules\juce_gui_extra\embedding\juce_UIViewComponent.h"/>
     <ClInclude Include="..\..\JUCE\Modules\juce_gui_extra\embedding\juce_XEmbedComponent.h"/>
     <ClInclude Include="..\..\JUCE\Modules\juce_gui_extra\misc\juce_AnimatedAppComponent.h"/>
@@ -5211,6 +5294,7 @@
     <ClInclude Include="..\..\Modules\juce_organicui\dashboard\ui\DashboardManagerUI.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\dashboard\ui\DashboardManagerView.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\dashboard\ui\DashboardUI.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\dashboard\ui\SharedTextureDashboardItemUI.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\dashboard\Dashboard.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\dashboard\DashboardCommentItem.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\dashboard\DashboardGroupItem.h"/>
@@ -5219,6 +5303,7 @@
     <ClInclude Include="..\..\Modules\juce_organicui\dashboard\DashboardItemManager.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\dashboard\DashboardItemProvider.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\dashboard\DashboardManager.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\dashboard\SharedTextureDashboardItem.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\engine\Engine.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\engine\EngineListener.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\help\HelpBox.h"/>
@@ -5316,6 +5401,9 @@
     <ClInclude Include="..\..\JUCE\Modules\juce_osc\osc\juce_OSCTimeTag.h"/>
     <ClInclude Include="..\..\JUCE\Modules\juce_osc\osc\juce_OSCTypes.h"/>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_osc\juce_osc.h"/>
+    <ClInclude Include="..\..\Modules\juce_sharedtexture\SharedTexture.h"/>
+    <ClInclude Include="..\..\Modules\juce_sharedtexture\SpoutLibrary.h"/>
+    <ClInclude Include="..\..\Modules\juce_sharedtexture\juce_sharedtexture.h"/>
     <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\impl\dev_poll_reactor.hpp"/>
     <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\impl\epoll_reactor.hpp"/>
     <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\impl\kqueue_reactor.hpp"/>
@@ -6411,6 +6499,7 @@
     <None Include="..\..\JUCE\Modules\juce_graphics\image_formats\pnglib\libpng_readme.txt"/>
     <None Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\ReadMe.txt"/>
     <None Include="..\..\Modules\juce_organicui\README.md"/>
+    <None Include="..\..\Modules\juce_sharedtexture\README.md"/>
     <None Include="..\..\Modules\juce_simpleweb\asio\README.md"/>
     <None Include="..\..\Modules\juce_simpleweb\README.md"/>
     <None Include="..\..\Modules\juce_timeline\README.md"/>

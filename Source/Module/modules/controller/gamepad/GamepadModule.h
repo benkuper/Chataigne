@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "Common/InputSystem/InputSystemManager.h"
-
 class GamepadModule :
 	public Module,
 	public InputSystemManager::InputManagerListener,

@@ -8,13 +8,12 @@
   ==============================================================================
 */
 
-#include "Common/Command/ui/BaseCommandHandlerManagerEditor.h"
 
 ConsequenceManager::ConsequenceManager(const String& name, Multiplex* multiplex) :
 	BaseManager<BaseItem>(name),
 	MultiplexTarget(multiplex),
-	forceDisabled(false),
-	killDelaysOnTrigger(nullptr)
+    killDelaysOnTrigger(nullptr),
+	forceDisabled(false)
 {
 	canBeDisabled = false;
 	canBeCopiedAndPasted = true;

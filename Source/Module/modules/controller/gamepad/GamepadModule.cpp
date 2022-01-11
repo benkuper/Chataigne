@@ -11,9 +11,9 @@
 GamepadModule::GamepadModule(const String & name) :
 	Module(name),
 	gamepad(nullptr),
-	calibCC("Calibration"),
 	axesCC("Axes"),
-	buttonsCC("Buttons")
+	buttonsCC("Buttons"),
+    calibCC("Calibration")
 {
 	setupIOConfiguration(true, false);
 	includeValuesInSave = true;

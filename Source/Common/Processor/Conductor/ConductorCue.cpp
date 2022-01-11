@@ -10,9 +10,11 @@
 
 ConductorCue::ConductorCue(var params, Multiplex * multiplex) :
     Action("Cue", params, multiplex, false, false),
-    conductorCueNotifier(5),
     isCurrent(false),
-    index(-1)
+    isNext(false),
+    index(-1),
+    conductorCueNotifier(5)
+    
 {
 }
 
@@ -25,6 +27,13 @@ void ConductorCue::setIsCurrent(bool value)
     if (isCurrent == value) return;
     isCurrent = value;
     conductorCueNotifier.addMessage(new ConductorCueEvent(ConductorCueEvent::CURRENT_CHANGED, this));
+}
+
+void ConductorCue::setIsNext(bool value)
+{
+    if (isNext == value) return;
+    isNext = value;
+    conductorCueNotifier.addMessage(new ConductorCueEvent(ConductorCueEvent::NEXT_CHANGED, this));
 }
 
 void ConductorCue::setIndex(int value)

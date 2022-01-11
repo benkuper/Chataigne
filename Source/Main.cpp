@@ -5,6 +5,8 @@
 #include <sys/stat.h>
 #endif
 
+#include "Module/ModuleIncludes.h"
+
 //==============================================================================
 
 ChataigneApplication::ChataigneApplication() :
@@ -29,6 +31,7 @@ void ChataigneApplication::initialiseInternal(const String &)
 
 	ShapeShifterManager::getInstance()->setDefaultFileData(BinaryData::default_chalayout);
 	ShapeShifterManager::getInstance()->setLayoutInformations("chalayout", "Chataigne/layouts");
+
 }
 
 

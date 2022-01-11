@@ -10,10 +10,8 @@
 
 #pragma once
 
-#include "BaseCommand.h"
-#include "CommandContext.h"
-
 class Multiplex;
+class BaseCommand;
 
 typedef std::function<BaseCommand*(ControllableContainer *, CommandContext, var params, Multiplex * multiplex)> CreateCommandFunc;
 

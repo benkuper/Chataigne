@@ -16,8 +16,8 @@ MIDIModule::MIDIModule(const String& name, bool _useGenericControls) :
 	inputDevice(nullptr),
 	outputDevice(nullptr),
 	tempoCC("Tempo"),
-	lastClockReceiveTimeIndex(0),
-	lastClockReceiveTime(0),
+    lastClockReceiveTime(0),
+    lastClockReceiveTimeIndex(0),
 	mtcCC("MTC"),
     useGenericControls(_useGenericControls)
 {
@@ -305,6 +305,17 @@ void MIDIModule::controlChangeReceived(const int & channel, const int & number, 
 
 	if (scriptManager->items.size() > 0) scriptManager->callFunctionOnAllItems(ccEventId, Array<var>(channel, number, value));
 
+}
+
+void MIDIModule::programChangeReceived(const int &channel, const int &value)
+{
+  if (!enabled->boolValue() && !manualAddMode) return;
+  inActivityTrigger->trigger();
+  if (logIncomingData->boolValue()) NLOG(niceName, "Program Change : " << channel << ", " << value);
+  
+  if (useGenericControls) updateValue(channel, "ProgramChange", value, MIDIValueParameter::PROGRAM_CHANGE, 0);
+
+  if (scriptManager->items.size() > 0) scriptManager->callFunctionOnAllItems(programChangeId, Array<var>(channel, value));
 }
 
 void MIDIModule::sysExReceived(const MidiMessage & msg)
@@ -671,7 +682,11 @@ void MIDIModule::updateValue(const int & channel, const String & n, const int & 
 		case MIDIValueParameter::CONTROL_CHANGE:
 			typeName = "Control Change";
 			break;
-
+        
+    case MIDIValueParameter::PROGRAM_CHANGE:
+      typeName = "Program Change";
+      break;
+        
 		default:
 			typeName = "Other";
 		}
@@ -727,16 +742,17 @@ void MIDIModule::showMenuAndCreateValue(ControllableContainer * container)
 	m.addItem(3, "Add Pitch Wheel");
 	m.addItem(4, "Add Channel Pressure");
 	m.addItem(5, "Add After Touch");
+  m.addItem(6, "Add Program Change");
 
 	int mResult = m.show();
 	if (mResult == 0) return;
 	
-	String mType = mResult == 1 ? "Note" : mResult == 3 ? "Pitch Wheel" : "Control Change";
+	String mType = mResult == 1 ? "Note" : mResult == 3 ? "Pitch Wheel" : mResult == 6 ? "Program Change" : "Control Change";
 
 	AlertWindow window("Add a "+mType, "Configure the parameters for this "+mType, AlertWindow::AlertIconType::NoIcon);
 	window.addTextEditor("channel", "1", "Channel (1-16)");
 
-	if (mResult != 3 && mResult != 4)
+	if (mResult != 3 && mResult != 4 && mResult != 6)
 	{
 		String mName = mResult == 1 ? "Pitch" : "Number";
 		window.addTextEditor("pitch", "1", mName + "(0-127)");
@@ -763,6 +779,10 @@ void MIDIModule::showMenuAndCreateValue(ControllableContainer * container)
 		{
 			module->afterTouchReceived(channel, window.getTextEditorContents("pitch").getIntValue(), 0);
 		}
+    else if (mResult == 6)
+    {
+      module->programChangeReceived(channel, 0);
+    }
 		else
 		{
 			int pitch = jlimit<int>(0, 127, window.getTextEditorContents("pitch").getIntValue());

@@ -75,6 +75,7 @@ public:
 		virtual void actionEnableChanged(Action*) {}
 		virtual void actionRoleChanged(Action*) {}
 		virtual void actionValidationChanged(Action*) {}
+		virtual void actionTriggered(Action*, bool /*triggerTrue*/, int /*multiplexIndex*/ = 0) {}
 	};
 
 	ListenerList<ActionListener> actionListeners;

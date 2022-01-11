@@ -8,19 +8,16 @@
   ==============================================================================
 */
 
-#include "CustomValuesCommandArgument.h"
-#include "ui/CustomValuesCommandArgumentEditor.h"
-
 CustomValuesCommandArgument::CustomValuesCommandArgument(const String& name, Parameter* _p, bool _mappingEnabled, bool templateMode, Multiplex* multiplex, bool enablePrecison) :
 	BaseItem(name, false),
 	MultiplexTarget(multiplex),
 	param(_p),
 	editable(nullptr),
-	sendPrecision(nullptr),
+    sendPrecision(nullptr),
     mappingEnabled(_mappingEnabled),
 	templateMode(templateMode),
-	linkedTemplate(nullptr),
-	enablePrecison(enablePrecison)
+    enablePrecison(enablePrecison),
+    linkedTemplate(nullptr)
 {
 	editorCanBeCollapsed = false;
 

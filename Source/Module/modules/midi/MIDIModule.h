@@ -22,7 +22,7 @@ class MIDIValueParameter :
 	public IntParameter
 {
 public:
-	enum Type { NOTE_ON, NOTE_OFF, CONTROL_CHANGE, SYSEX, PITCH_WHEEL, CHANNEL_PRESSURE, AFTER_TOUCH, TYPE_MAX };
+	enum Type { NOTE_ON, NOTE_OFF, CONTROL_CHANGE, PROGRAM_CHANGE, SYSEX, PITCH_WHEEL, CHANNEL_PRESSURE, AFTER_TOUCH, TYPE_MAX };
 
 	MIDIValueParameter(const String &name, const String &description, int value, int channel, int pitchOrNumber, Type t) :
 		IntParameter(name, description, value, 0, t == PITCH_WHEEL? 16383:127),
@@ -105,6 +105,7 @@ public:
 	const Identifier sysexEventId = "sysExEvent";
 	const Identifier pitchWheelEventId = "pitchWheelEvent";
 	const Identifier channelPressureId = "channelPressureEvent";
+  const Identifier programChangeId = "programChangeEvent";
 	const Identifier afterTouchId = "afterTouchEvent";
 	const Identifier machineControlCommandId = "machineControlCommandEvent";
 	const Identifier machineControlGotoId = "machineControlGotoEvent";
@@ -141,6 +142,7 @@ public:
 	virtual void noteOnReceived(const int &channel, const int &pitch, const int &velocity) override;
 	virtual void noteOffReceived(const int& channel, const int& pitch, const int& velocity) override;
 	virtual void controlChangeReceived(const int &channel, const int &number, const int &value) override;
+  virtual void programChangeReceived(const int &channel, const int &value) override;
 	virtual void sysExReceived(const MidiMessage & msg) override;
 	virtual void fullFrameTimecodeReceived(const MidiMessage& msg) override;
 	virtual void pitchWheelReceived(const int& channel, const int& value) override;

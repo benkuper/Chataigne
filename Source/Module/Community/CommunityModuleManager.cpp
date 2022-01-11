@@ -89,13 +89,17 @@ void CommunityModuleManager::run()
 
 var CommunityModuleManager::getJSONDataForURL(URL url)
 {
-	
-
 	StringPairArray responseHeaders;
 	int statusCode = 0;
-	std::unique_ptr<InputStream> stream(url.createInputStream(false, openStreamProgressCallback, this, "Cache-Control: no-cache",
-		2000, // timeout in millisecs
-		&responseHeaders, &statusCode));
+
+	std::unique_ptr<InputStream> stream(url.createInputStream(
+		URL::InputStreamOptions(URL::ParameterHandling::inAddress)
+		.withExtraHeaders("Cache-Control: no-cache")
+		.withConnectionTimeoutMs(2000)
+		.withProgressCallback(std::bind(&CommunityModuleManager::openStreamProgressCallback, this, std::placeholders::_1, std::placeholders::_2))
+		.withResponseHeaders(&responseHeaders)
+		.withStatusCode(&statusCode)
+	));
 
 	if (threadShouldExit()) return var();
 
@@ -126,8 +130,7 @@ CommunityModuleInfo* CommunityModuleManager::getModuleInfoForFolder(const File &
 	return nullptr;
 }
 
-bool CommunityModuleManager::openStreamProgressCallback(void* context, int, int)
+bool CommunityModuleManager::openStreamProgressCallback(int, int)
 {
-	auto thread = (CommunityModuleManager *)context;
-	return !thread->threadShouldExit();
+	return !threadShouldExit();
 }

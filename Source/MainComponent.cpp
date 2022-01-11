@@ -1,21 +1,12 @@
 /*
   ==============================================================================
 
-    This file was auto-generated!
+	This file was auto-generated!
 
   ==============================================================================
 */
 
-#include "MainComponent.h"
-
-#include "Module/ModuleIncludes.h"
-#include "StateMachine/StateMachineIncludes.h"
-#include "TimeMachine/TimeMachineIncludes.h"
-#include "CustomVariables/CustomVariablesIncludes.h"
-#include "ChataigneEngine.h"
-
-#include "Common/Command/Template/ui/CommandTemplateManagerUI.h"
-#include "UI/WelcomeScreen.h"
+using namespace std::placeholders;
 
 String getAppVersion();
 
@@ -28,7 +19,7 @@ MainContentComponent::MainContentComponent()
 
 MainContentComponent::~MainContentComponent()
 {
-	
+	SharedTextureManager::deleteInstance();
 }
 
 void MainContentComponent::init()
@@ -47,7 +38,6 @@ void MainContentComponent::init()
 
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Command Templates", &CommandTemplateManagerPanel::create));
 
-
 	OrganicMainContentComponent::init();
 
 	String lastVersion = getAppProperties().getUserSettings()->getValue("lastVersion", "");
@@ -59,7 +49,8 @@ void MainContentComponent::init()
 	}
 
 }
-SequenceManagerUI* MainContentComponent::createSequenceManagerUI(const String& name) 
+
+SequenceManagerUI* MainContentComponent::createSequenceManagerUI(const String& name)
 {
 	return SequenceManagerUI::create(name, ChataigneSequenceManager::getInstance());
 }
@@ -84,12 +75,13 @@ ChataigneMenuBarComponent::ChataigneMenuBarComponent(MainContentComponent* mainC
 
 ChataigneMenuBarComponent::~ChataigneMenuBarComponent()
 {
+	stopThread(200);
 }
 
 void ChataigneMenuBarComponent::paint(Graphics& g)
 {
 	g.fillAll(BG_COLOR);
-	
+
 	if (curSponsor != nullptr)
 	{
 		g.setColour(TEXTNAME_COLOR);
@@ -121,7 +113,7 @@ void ChataigneMenuBarComponent::run()
 {
 
 	URL url = URL("http://benjamin.kuperberg.fr/chataigne/releases/donation.json");
-	
+
 	String result = url.readEntireTextStream(false);
 
 	if (result.isEmpty()) return;
@@ -146,9 +138,7 @@ void ChataigneMenuBarComponent::run()
 
 		startTimer(120000); // every 2 minutes
 
-		MessageManagerLock mmLock;
-		timerCallback();
-
+        MessageManager::callAsync([this](){this->timerCallback();});
 	}
-	
+
 }

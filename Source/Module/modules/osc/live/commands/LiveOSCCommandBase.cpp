@@ -8,8 +8,8 @@
   ==============================================================================
 */
 
-LiveOSCCommandBase::LiveOSCCommandBase(LiveOSCModule* _module, CommandContext context, var params, Multiplex * multiplex) :
-	OSCCommand(_module, context, params),
+LiveOSCCommandBase::LiveOSCCommandBase(LiveOSCModule* _module, CommandContext context, var params, Multiplex* multiplex) :
+	OSCCommand(_module, context, params, multiplex),
 	liveModule(_module),
 	trackID(nullptr),
 	clipID(nullptr),

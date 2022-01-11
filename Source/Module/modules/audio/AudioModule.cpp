@@ -135,12 +135,16 @@ void AudioModule::updateAudioSetup()
 	currentSampleRate = setup.sampleRate;
 	currentBufferSize = setup.bufferSize;
 
+	am.removeAudioCallback(&player);
+	am.removeAudioCallback(this);
+
 	int numSelectedInputChannelsInSetup = setup.inputChannels.countNumberOfSetBits();
 	int numSelectedOutputChannelsInSetup = setup.outputChannels.countNumberOfSetBits();
 
 	graph.setPlayConfigDetails(numSelectedInputChannelsInSetup, numSelectedOutputChannelsInSetup, currentSampleRate, currentBufferSize);
 	graph.prepareToPlay(currentSampleRate, currentBufferSize);
 
+	graph.suspendProcessing(true);
 
 	var mData = monitorParams.getJSONData();
 	for (auto& c : monitorOutChannels) monitorParams.removeControllable(c);
@@ -177,6 +181,11 @@ void AudioModule::updateAudioSetup()
 
 	if (setup.outputDeviceName.isEmpty()) setWarningMessage("Module is not connected to an audio output");
 	else clearWarning();
+
+	am.addAudioCallback(&player);
+	am.addAudioCallback(this);
+
+	graph.suspendProcessing(false);
 }
 
 void AudioModule::updateSelectedMonitorChannels()
@@ -290,7 +299,7 @@ void AudioModule::audioDeviceIOCallback(const float** inputChannelData, int numI
 
 	for (int i = 0; i < numInputChannels; ++i)
 	{
-		float channelVolume = i < channelVolumes.size() ? channelVolumes[i]->floatValue() : 1;
+		float channelVolume = i < channelVolumes.size()  && channelVolumes[i] != nullptr ? channelVolumes[i]->floatValue() : 1;
 
 		if (i == 0) //take only the first channel for analysis (later, should be able to select which channel is used for analysis)
 		{

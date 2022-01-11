@@ -9,7 +9,9 @@
 */
 
 #include "BaseCommandHandlerEditor.h"
-#include "../CommandFactory.h"
+#include "../CommandIncludes.h"
+#include "CommandChooserUI.cpp"
+#include "../BaseCommandHandler.h"
 
 BaseCommandHandlerEditor::BaseCommandHandlerEditor(BaseCommandHandler * _handler, bool isRoot) :
 	BaseItemEditor(_handler, isRoot),
@@ -73,9 +75,9 @@ void BaseCommandHandlerEditor::definitionChosen(CommandDefinition * d)
 	handler->setCommand(d);
 }
 
-void BaseCommandHandlerEditor::newMessage(const BaseCommandHandler::CommandHandlerEvent & e)
+void BaseCommandHandlerEditor::newMessage(const CommandHandlerEvent & e)
 {
-	if (e.type == BaseCommandHandler::CommandHandlerEvent::COMMAND_CHANGED)
+	if (e.type == CommandHandlerEvent::COMMAND_CHANGED)
 	{
 		updateChooserLabel();
 		resized();

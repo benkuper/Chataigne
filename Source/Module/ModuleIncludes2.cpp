@@ -10,7 +10,8 @@
 
 #include "ModuleIncludes.h"
 
-#include "UI/ChataigneAssetManager.h"
+#include "MainIncludes.h"
+#include "StateMachine/StateMachineIncludes.h" //for state module
 
 #include "modules/dmx/DMXModule.cpp"
 #include "modules/dmx/commands/DMXCommand.cpp"

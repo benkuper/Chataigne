@@ -25,9 +25,9 @@
     <key>CFBundleSignature</key>
     <string>????</string>
     <key>CFBundleShortVersionString</key>
-    <string>1.9.1b17</string>
+    <string>1.9.3b11</string>
     <key>CFBundleVersion</key>
-    <string>1.9.1b17</string>
+    <string>1.9.3b11</string>
     <key>NSHumanReadableCopyright</key>
     <string>Ben Kuper</string>
     <key>NSHighResolutionCapable</key>
@@ -47,6 +47,8 @@
         <string>Icon</string>
         <key>NSPersistentStoreTypeKey</key>
         <string>XML</string>
+        <key>LSHandlerRank</key>
+        <string>Default</string>
       </dict>
     </array>
   </dict>

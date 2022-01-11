@@ -11,7 +11,6 @@
 #pragma once
 
 #include "../BaseCommandHandler.h"
-#include "../CommandFactory.h"
 
 template <class T>
 class BaseCommandHandlerManagerEditor :

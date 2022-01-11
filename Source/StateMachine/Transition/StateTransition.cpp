@@ -16,6 +16,8 @@ StateTransition::StateTransition(State * source, State * dest) :
 	if(sourceState != nullptr)	sourceState->outTransitions.add(this);
 	if(destState != nullptr) destState->inTransitions.add(this);
 
+	cdm->setHasActivationDefinitions(true, false);
+
 	helpID = "StateTransition";
  }
 

@@ -62,6 +62,9 @@ Array<Action*> ProcessorManager::getAllActions(bool includeMultiplexes, bool inc
 		case Processor::ACTION: result.add(dynamic_cast<Action*>(i)); break;
 		case Processor::MULTIPLEX: if (includeMultiplexes) result.addArray(((Multiplex*)i)->processorManager.getAllActions()); break;
 		case Processor::CONDUCTOR: if (includeConductors) result.addArray(((Conductor*)i)->processorManager.getAllActions()); break;
+
+            default:
+                break;
 		}
 	}
 	return result;
@@ -130,11 +133,14 @@ void ProcessorManager::checkAllDeactivateActions()
 	}
 }
 
-void ProcessorManager::processAllMappings()
+void ProcessorManager::processAllMappings(bool fromLoad)
 {
 	Array<Mapping*> mappings = getAllMappings();
 	for (auto& m : mappings)
+	{
+		if (fromLoad && !m->sendAfterLoad->boolValue()) continue;
 		m->process();
+	}
 }
 
 void ProcessorManager::loadJSONDataInternal(var data)

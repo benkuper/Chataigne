@@ -1,5 +1,3 @@
-#include "ChataigneAssetManager.h"
-
 juce_ImplementSingleton(ChataigneAssetManager);
 
 ChataigneAssetManager::ChataigneAssetManager()

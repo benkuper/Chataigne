@@ -10,13 +10,9 @@
 
 #pragma once
 
-#include "Template/CommandTemplate.h"
-#include "CommandContext.h"
-#include "Common/ParameterLink/ParameterLink.h"
-#include "CustomValues/CustomValuesCommandArgumentManager.h"
-
 class Multiplex;
 class Module;
+class CommandTemplateParameter;
 
 class BaseCommand :
 	public ParamLinkContainer,

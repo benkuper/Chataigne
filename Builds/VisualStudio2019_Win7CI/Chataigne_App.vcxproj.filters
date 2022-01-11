@@ -206,6 +206,12 @@
     <Filter Include="Chataigne\Source\Common">
       <UniqueIdentifier>{89F7165B-D034-6848-834E-0E1C945C6DFD}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\CustomVariables\dashboard\ui">
+      <UniqueIdentifier>{472B1F91-32C1-D15F-AB89-EA0944B2BC57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\CustomVariables\dashboard">
+      <UniqueIdentifier>{EE1DEA3D-0E40-CD3F-DFC2-7091A294BBCE}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\CustomVariables\Preset\Morpher\ui">
       <UniqueIdentifier>{C4C8A509-38B6-B57A-BC01-BC622EEF412A}</UniqueIdentifier>
     </Filter>
@@ -1283,6 +1289,9 @@
     <Filter Include="JUCE Modules\juce_osc">
       <UniqueIdentifier>{B1DE8DB1-C00A-12C0-D690-8B3C9504A60A}</UniqueIdentifier>
     </Filter>
+    <Filter Include="JUCE Modules\juce_sharedtexture">
+      <UniqueIdentifier>{F95E7C0F-5663-3942-16BD-5DA277CCDFAA}</UniqueIdentifier>
+    </Filter>
     <Filter Include="JUCE Modules\juce_simpleweb\asio\asio\include\asio\detail\impl">
       <UniqueIdentifier>{10927F53-5739-34D4-A47E-45BFDF18190B}</UniqueIdentifier>
     </Filter>
@@ -1518,6 +1527,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\InputSystem\InputSystemManager.cpp">
       <Filter>Chataigne\Source\Common\InputSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Command\CommandIncludes.cpp">
+      <Filter>Chataigne\Source\Common\Command</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Command\CustomValues\ui\CustomValuesCommandArgumentEditor.cpp">
       <Filter>Chataigne\Source\Common\Command\CustomValues\ui</Filter>
@@ -1878,6 +1890,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Serial\SerialManager.cpp">
       <Filter>Chataigne\Source\Common\Serial</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\CustomVariables\dashboard\ui\CVDashboardItemUI.cpp">
+      <Filter>Chataigne\Source\CustomVariables\dashboard\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\CustomVariables\dashboard\CVDashboardItem.cpp">
+      <Filter>Chataigne\Source\CustomVariables\dashboard</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\CustomVariables\Preset\Morpher\ui\CVPresetMorphUI.cpp">
       <Filter>Chataigne\Source\CustomVariables\Preset\Morpher\ui</Filter>
@@ -2466,6 +2484,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\UI\WelcomeScreen.cpp">
       <Filter>Chataigne\Source\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\MainIncludes.cpp">
+      <Filter>Chataigne\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\ChataigneEngine.cpp">
       <Filter>Chataigne\Source</Filter>
@@ -3604,10 +3625,10 @@
     <ClCompile Include="..\..\JUCE\Modules\juce_data_structures\values\juce_ValueTree.cpp">
       <Filter>JUCE Modules\juce_data_structures\values</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\Modules\juce_data_structures\values\juce_ValueTreeSynchroniser.cpp">
+    <ClCompile Include="..\..\JUCE\Modules\juce_data_structures\values\juce_ValueTreePropertyWithDefault_test.cpp">
       <Filter>JUCE Modules\juce_data_structures\values</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\Modules\juce_data_structures\values\juce_ValueWithDefault.cpp">
+    <ClCompile Include="..\..\JUCE\Modules\juce_data_structures\values\juce_ValueTreeSynchroniser.cpp">
       <Filter>JUCE Modules\juce_data_structures\values</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JUCE\Modules\juce_data_structures\juce_data_structures.cpp">
@@ -3851,6 +3872,9 @@
       <Filter>JUCE Modules\juce_graphics\geometry</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JUCE\Modules\juce_graphics\geometry\juce_PathStrokeType.cpp">
+      <Filter>JUCE Modules\juce_graphics\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JUCE\Modules\juce_graphics\geometry\juce_Rectangle_test.cpp">
       <Filter>JUCE Modules\juce_graphics\geometry</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JUCE\Modules\juce_graphics\image_formats\jpglib\jcapimin.c">
@@ -4999,6 +5023,9 @@
     <ClCompile Include="..\..\Modules\juce_organicui\dashboard\ui\DashboardUI.cpp">
       <Filter>JUCE Modules\juce_organicui\dashboard\ui</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\dashboard\ui\SharedTextureDashboardItemUI.cpp">
+      <Filter>JUCE Modules\juce_organicui\dashboard\ui</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\dashboard\Dashboard.cpp">
       <Filter>JUCE Modules\juce_organicui\dashboard</Filter>
     </ClCompile>
@@ -5018,6 +5045,9 @@
       <Filter>JUCE Modules\juce_organicui\dashboard</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\dashboard\DashboardManager.cpp">
+      <Filter>JUCE Modules\juce_organicui\dashboard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\dashboard\SharedTextureDashboardItem.cpp">
       <Filter>JUCE Modules\juce_organicui\dashboard</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\engine\Engine.cpp">
@@ -5338,6 +5368,12 @@
     <ClCompile Include="..\..\JUCE\Modules\juce_osc\juce_osc.cpp">
       <Filter>JUCE Modules\juce_osc</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_sharedtexture\juce_sharedtexture.cpp">
+      <Filter>JUCE Modules\juce_sharedtexture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_sharedtexture\SharedTexture.cpp">
+      <Filter>JUCE Modules\juce_sharedtexture</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\impl\src.cpp">
       <Filter>JUCE Modules\juce_simpleweb\asio\asio\include\asio\impl</Filter>
     </ClCompile>
@@ -5575,6 +5611,9 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_osc.cpp">
       <Filter>JUCE Library Code</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\include_juce_sharedtexture.cpp">
+      <Filter>JUCE Library Code</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_simpleweb.cpp">
       <Filter>JUCE Library Code</Filter>
     </ClCompile>
@@ -5633,6 +5672,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\InputSystem\InputSystemManager.h">
       <Filter>Chataigne\Source\Common\InputSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Command\BaseCommandHandlerListener.h">
+      <Filter>Chataigne\Source\Common\Command</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Command\CommandIncludes.h">
+      <Filter>Chataigne\Source\Common\Command</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Command\CustomValues\ui\CustomValuesCommandArgumentEditor.h">
       <Filter>Chataigne\Source\Common\Command\CustomValues\ui</Filter>
@@ -5984,6 +6029,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Serial\SerialManager.h">
       <Filter>Chataigne\Source\Common\Serial</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\CustomVariables\dashboard\ui\CVDashboardItemUI.h">
+      <Filter>Chataigne\Source\CustomVariables\dashboard\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\CustomVariables\dashboard\CVDashboardItem.h">
+      <Filter>Chataigne\Source\CustomVariables\dashboard</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\CustomVariables\Preset\Morpher\ui\CVPresetMorphUI.h">
       <Filter>Chataigne\Source\CustomVariables\Preset\Morpher\ui</Filter>
@@ -6542,6 +6593,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\UI\WelcomeScreen.h">
       <Filter>Chataigne\Source\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\MainIncludes.h">
+      <Filter>Chataigne\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\ChataigneEngine.h">
       <Filter>Chataigne\Source</Filter>
@@ -7515,6 +7569,9 @@
     <ClInclude Include="..\..\JUCE\Modules\juce_audio_processors\processors\juce_GenericAudioProcessorEditor.h">
       <Filter>JUCE Modules\juce_audio_processors\processors</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\JUCE\Modules\juce_audio_processors\processors\juce_HostedAudioProcessorParameter.h">
+      <Filter>JUCE Modules\juce_audio_processors\processors</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\JUCE\Modules\juce_audio_processors\processors\juce_PluginDescription.h">
       <Filter>JUCE Modules\juce_audio_processors\processors</Filter>
     </ClInclude>
@@ -7647,6 +7704,9 @@
     <ClInclude Include="..\..\JUCE\Modules\juce_core\containers\juce_ScopedValueSetter.h">
       <Filter>JUCE Modules\juce_core\containers</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\JUCE\Modules\juce_core\containers\juce_SingleThreadedAbstractFifo.h">
+      <Filter>JUCE Modules\juce_core\containers</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\JUCE\Modules\juce_core\containers\juce_SortedSet.h">
       <Filter>JUCE Modules\juce_core\containers</Filter>
     </ClInclude>
@@ -7750,6 +7810,9 @@
       <Filter>JUCE Modules\juce_core\memory</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JUCE\Modules\juce_core\memory\juce_ReferenceCountedObject.h">
+      <Filter>JUCE Modules\juce_core\memory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JUCE\Modules\juce_core\memory\juce_Reservoir.h">
       <Filter>JUCE Modules\juce_core\memory</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JUCE\Modules\juce_core\memory\juce_ScopedPointer.h">
@@ -8070,10 +8133,10 @@
     <ClInclude Include="..\..\JUCE\Modules\juce_data_structures\values\juce_ValueTree.h">
       <Filter>JUCE Modules\juce_data_structures\values</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\Modules\juce_data_structures\values\juce_ValueTreeSynchroniser.h">
+    <ClInclude Include="..\..\JUCE\Modules\juce_data_structures\values\juce_ValueTreePropertyWithDefault.h">
       <Filter>JUCE Modules\juce_data_structures\values</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\Modules\juce_data_structures\values\juce_ValueWithDefault.h">
+    <ClInclude Include="..\..\JUCE\Modules\juce_data_structures\values\juce_ValueTreeSynchroniser.h">
       <Filter>JUCE Modules\juce_data_structures\values</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_data_structures\juce_data_structures.h">
@@ -8452,6 +8515,9 @@
       <Filter>JUCE Modules\juce_graphics\images</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JUCE\Modules\juce_graphics\images\juce_ImageFileFormat.h">
+      <Filter>JUCE Modules\juce_graphics\images</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JUCE\Modules\juce_graphics\images\juce_ScaledImage.h">
       <Filter>JUCE Modules\juce_graphics\images</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JUCE\Modules\juce_graphics\native\juce_mac_CoreGraphicsContext.h">
@@ -8862,6 +8928,9 @@
     <ClInclude Include="..\..\JUCE\Modules\juce_gui_basics\native\juce_MultiTouchMapper.h">
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\JUCE\Modules\juce_gui_basics\native\juce_ScopedDPIAwarenessDisabler.h">
+      <Filter>JUCE Modules\juce_gui_basics\native</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\JUCE\Modules\juce_gui_basics\native\juce_win32_ScopedThreadDPIAwarenessSetter.h">
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClInclude>
@@ -9022,9 +9091,6 @@
       <Filter>JUCE Modules\juce_gui_extra\embedding</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JUCE\Modules\juce_gui_extra\embedding\juce_NSViewComponent.h">
-      <Filter>JUCE Modules\juce_gui_extra\embedding</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\JUCE\Modules\juce_gui_extra\embedding\juce_ScopedDPIAwarenessDisabler.h">
       <Filter>JUCE Modules\juce_gui_extra\embedding</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JUCE\Modules\juce_gui_extra\embedding\juce_UIViewComponent.h">
@@ -9450,6 +9516,9 @@
     <ClInclude Include="..\..\Modules\juce_organicui\dashboard\ui\DashboardUI.h">
       <Filter>JUCE Modules\juce_organicui\dashboard\ui</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\dashboard\ui\SharedTextureDashboardItemUI.h">
+      <Filter>JUCE Modules\juce_organicui\dashboard\ui</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\dashboard\Dashboard.h">
       <Filter>JUCE Modules\juce_organicui\dashboard</Filter>
     </ClInclude>
@@ -9472,6 +9541,9 @@
       <Filter>JUCE Modules\juce_organicui\dashboard</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\dashboard\DashboardManager.h">
+      <Filter>JUCE Modules\juce_organicui\dashboard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\dashboard\SharedTextureDashboardItem.h">
       <Filter>JUCE Modules\juce_organicui\dashboard</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\engine\Engine.h">
@@ -9764,6 +9836,15 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_osc\juce_osc.h">
       <Filter>JUCE Modules\juce_osc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_sharedtexture\SharedTexture.h">
+      <Filter>JUCE Modules\juce_sharedtexture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_sharedtexture\SpoutLibrary.h">
+      <Filter>JUCE Modules\juce_sharedtexture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_sharedtexture\juce_sharedtexture.h">
+      <Filter>JUCE Modules\juce_sharedtexture</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\impl\dev_poll_reactor.hpp">
       <Filter>JUCE Modules\juce_simpleweb\asio\asio\include\asio\detail\impl</Filter>
@@ -13045,6 +13126,9 @@
     </None>
     <None Include="..\..\Modules\juce_organicui\README.md">
       <Filter>JUCE Modules\juce_organicui</Filter>
+    </None>
+    <None Include="..\..\Modules\juce_sharedtexture\README.md">
+      <Filter>JUCE Modules\juce_sharedtexture</Filter>
     </None>
     <None Include="..\..\Modules\juce_simpleweb\asio\README.md">
       <Filter>JUCE Modules\juce_simpleweb\asio</Filter>

@@ -14,8 +14,10 @@ class MIDIDevice
 {
 public:
 	enum Type { MIDI_IN, MIDI_OUT };
-	MIDIDevice(const String &deviceName, Type t);
+	MIDIDevice(const MidiDeviceInfo &deviceName, Type t);
 	virtual ~MIDIDevice() {}
+
+	String id;
 	String name;
 	Type type;
 
@@ -27,7 +29,7 @@ class MIDIInputDevice :
 	public MidiInputCallback
 {
 public:
-	MIDIInputDevice(const String &deviceName);
+	MIDIInputDevice(const MidiDeviceInfo &info);
 	~MIDIInputDevice();
 	std::unique_ptr<MidiInput> device;
 
@@ -42,6 +44,7 @@ public:
 		virtual void noteOnReceived(const int &/*channel*/, const int &/*pitch*/, const int &/*velocity*/) {}
 		virtual void noteOffReceived(const int &/*channel*/, const int &/*pitch*/, const int &/*velocity*/) {}
 		virtual void controlChangeReceived(const int &/*channel*/, const int &/*number*/, const int &/*value*/) {}
+    virtual void programChangeReceived(const int &/*channel*/, const int &/*value*/) {}
 		virtual void sysExReceived(const MidiMessage &/*msg*/) {}
 		virtual void fullFrameTimecodeReceived(const MidiMessage&/*msg*/) {}
 		virtual void quarterFrameTimecodeReceived(const MidiMessage&/*msg*/) {}
@@ -70,7 +73,7 @@ class MIDIOutputDevice :
 	public MIDIDevice
 {
 public:
-	MIDIOutputDevice(const String &deviceName);
+	MIDIOutputDevice(const MidiDeviceInfo &info);
 	~MIDIOutputDevice();
 
 	std::unique_ptr<MidiOutput> device;

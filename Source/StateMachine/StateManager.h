@@ -58,7 +58,8 @@ public:
 
 	static State * showMenuAndGetState();
 	static Action * showMenuAndGetAction();
-	static Mapping * showMenuAndGetMapping();
+	static Mapping* showMenuAndGetMapping();
+	static Mapping * showMenuAndGetConductor();
 	static PopupMenu getProcessorMenuForManager(ProcessorManager* manager, Processor::ProcessorType type, Array<Processor*> *arrayToFill);
 
 	static StandardCondition* showMenuAndGetToggleCondition();

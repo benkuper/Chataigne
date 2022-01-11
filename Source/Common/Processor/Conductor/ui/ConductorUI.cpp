@@ -16,7 +16,7 @@ ConductorUI::ConductorUI(Conductor* conductor) :
     contentComponents.add(&processorManagerUI);
     processorManagerUI.noItemText = "";
 
-    cueUI.reset(conductor->cueIndex->createStepper());
+    cueUI.reset(conductor->nextCueIndex->createStepper());
     cueUI->showLabel = false;
     addAndMakeVisible(cueUI.get());
 

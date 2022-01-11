@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "CommandTemplateParameterEditor.h"
-
-
 CommandTemplateParameterEditor::CommandTemplateParameterEditor(CommandTemplateParameter * p, bool isRoot) :
 	InspectableEditor(p, isRoot),
 	parameter(p)

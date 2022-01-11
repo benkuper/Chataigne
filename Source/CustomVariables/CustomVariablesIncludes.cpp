@@ -23,3 +23,6 @@
 #include "Preset/Morpher/ui/MorpherViewUI.cpp"
 #include "Preset/ui/CVPresetEditor.cpp"
 #include "ui/CVGroupManagerUI.cpp"
+
+#include "dashboard/CVDashboardItem.cpp"
+#include "dashboard/ui/CVDashboardItemUI.cpp"

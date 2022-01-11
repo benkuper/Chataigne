@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "CommandTemplate.h"
-
 class Module;
 class CommandDefinitionManager;
 

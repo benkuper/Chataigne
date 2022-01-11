@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "CommandDefinition.h"
+class CommandDefinition;
 
 class CommandDefinitionManager
 {

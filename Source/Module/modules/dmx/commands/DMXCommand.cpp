@@ -16,8 +16,8 @@ DMXCommand::DMXCommand(DMXModule* _module, CommandContext context, var params, M
 	channel2(nullptr),
 	value(nullptr),
 	colorParam(nullptr),
-	remap01To255(nullptr),
-	remapTarget(0)
+    remapTarget(0),
+	remap01To255(nullptr)
 {
 
 	dmxAction = (DMXAction)(int)params.getProperty("action", 0);

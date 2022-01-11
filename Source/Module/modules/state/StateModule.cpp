@@ -9,8 +9,6 @@
 */
 
 
-#include "StateMachine/StateMachineIncludes.h"
-#include "Common/Command/CommandDefinition.h"
 
 StateModule::StateModule(StateManager * _manager) :
 	Module("State Machine"),
@@ -29,6 +27,10 @@ StateModule::StateModule(StateManager * _manager) :
 
 	defManager->add(getBaseStateCommand("Mapping", "Set Mapping Enabled", CommandContext::BOTH, StateCommand::SET_MAPPING_ENABLED));
 	defManager->add(getBaseStateCommand("Mapping", "Toggle Mapping", CommandContext::BOTH, StateCommand::TOGGLE_MAPPING));
+
+	defManager->add(getBaseStateCommand("Conductor", "Trigger Next Cue", CommandContext::BOTH, StateCommand::CONDUCTOR_NEXT_TRIGGER));
+	defManager->add(getBaseStateCommand("Conductor", "Set Next Cue Index", CommandContext::BOTH, StateCommand::CONDUCTOR_SET_CUE_INDEX));
+
 
 	defManager->add(getBaseStateCommand("", "Cancel All Delayed Consequences", CommandContext::BOTH, StateCommand::CANCEL_ALL_DELAYED_CONSEQUENCES));
 

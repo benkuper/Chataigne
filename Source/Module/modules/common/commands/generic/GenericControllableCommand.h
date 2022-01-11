@@ -22,16 +22,21 @@ public:
 	virtual ~GenericControllableCommand();
 
 	enum Operator { EQUAL, INVERSE, ADD, SUBTRACT, MULTIPLY, DIVIDE, MAX, MIN, NEXT_ENUM, PREV_ENUM, RANDOM };
-
+	
 	Action action;
 	TargetParameter* target;
+	
 	EnumParameter* valueOperator;
+	EnumParameter* componentOperator;
+
 	WeakReference<Parameter> value;
 	var dataToLoad;
 	var ghostValueData; // to keep when target is lost
 	var ghostOperator;
+	var ghostComponent;
 
-	virtual void updateValueFromTarget();
+	virtual void updateComponentFromTarget();
+	virtual void updateValueFromTargetAndComponent();
 
 	virtual Controllable* getControllableFromTarget();
 

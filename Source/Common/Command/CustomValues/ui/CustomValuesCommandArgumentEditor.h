@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "../CustomValuesCommandArgument.h"
-#include "Common/ParameterLink/ui/LinkableParameterEditor.h"
-
 class CustomValuesCommandArgumentEditor :
 	public BaseItemEditor
 {

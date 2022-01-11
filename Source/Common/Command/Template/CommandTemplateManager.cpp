@@ -8,11 +8,6 @@
   ==============================================================================
 */
 
-#include "CommandTemplateManager.h"
-
-#include "../CommandDefinitionManager.h"
-#include "Module/ModuleIncludes.h"
-
 CommandTemplateManager::CommandTemplateManager(Module * module) :
 	BaseManager("Templates"),
 	module(module)

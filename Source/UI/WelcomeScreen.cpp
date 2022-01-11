@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "WelcomeScreen.h"
-
 String getAppVersion();
 ApplicationProperties& getAppProperties();
 

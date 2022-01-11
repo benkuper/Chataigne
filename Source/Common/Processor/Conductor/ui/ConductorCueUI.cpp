@@ -38,13 +38,15 @@ void ConductorCueUI::resizedHeader(Rectangle<int>& r)
 
 void ConductorCueUI::updateBGColor()
 {
-    baseBGColor = Colours::mediumpurple.withMultipliedSaturation(cue->isCurrent ? .8f : .3f);
+    Colour c = Colours::mediumpurple.withMultipliedSaturation(cue->isCurrent ? .9f : .3f);
+    if (cue->isNext) c = Colours::orange.darker(.2f);
+    baseBGColor = c;
     ProcessorUI::updateBGColor();
 }
 
 void ConductorCueUI::newMessage(const ConductorCue::ConductorCueEvent& e)
 {
-    if (e.type == e.CURRENT_CHANGED)
+    if (e.type == e.CURRENT_CHANGED || e.type == e.NEXT_CHANGED)
     {
         updateBGColor();
     }

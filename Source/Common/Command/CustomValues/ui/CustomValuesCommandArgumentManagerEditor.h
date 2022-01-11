@@ -9,8 +9,6 @@
 */
 #pragma once
 
-#include "../CustomValuesCommandArgumentManager.h"
-
 class CustomValuesCommandArgumentManagerEditor :
 	public GenericManagerEditor<CustomValuesCommandArgument>
 {

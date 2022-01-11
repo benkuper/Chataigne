@@ -32,7 +32,7 @@ public:
 	Array<Mapping *> getAllMappings(bool includeMultiplexes = true);
 	void checkAllActivateActions();
 	void checkAllDeactivateActions();
-	void processAllMappings();
+	void processAllMappings(bool fromLoad = false);
 
 	Factory<Processor> factory;
 

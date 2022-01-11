@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "CustomValuesCommandArgument.h"
-
 class CustomValuesCommandArgumentManager :
 	public BaseManager<CustomValuesCommandArgument>,
 	public MultiplexTarget,
@@ -45,6 +43,9 @@ public:
 	CustomValuesCommandArgument* addItemFromType(Parameter::Type type, var data = var(), bool fromUndoableAction = false);
 	Parameter* createParameterFromType(Parameter::Type type, var data = var(), int index = 0);
 	CustomValuesCommandArgument* addItemFromData(var data, bool fromUndoableAction = false) override;
+
+
+	static var addItemWithTypeFromScript(const var::NativeFunctionArgs& a); // will override the "addItem" method from BaseManager
 
 	void autoRenameItems();
 

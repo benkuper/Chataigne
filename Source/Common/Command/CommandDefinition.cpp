@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "CommandDefinition.h"
-
 CommandDefinition::CommandDefinition()
 {
 }

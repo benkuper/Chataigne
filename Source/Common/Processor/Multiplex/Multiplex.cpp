@@ -10,9 +10,10 @@
 
 Multiplex::Multiplex(var params) :
     Processor(getTypeString()),
+    isChangingCount(false),
     listManager(this),
-    processorManager("Processors", this),
-    isChangingCount(false)
+    processorManager("Processors", this)
+    
 {
     type = MULTIPLEX;
 

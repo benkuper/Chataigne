@@ -8,11 +8,6 @@
   ==============================================================================
 */
 
-#include "CommandTemplate.h"
-#include "Common/Command/CommandDefinition.h"
-#include "Module/ModuleIncludes.h"
-#include "ui/CommandTemplateEditor.h"
-
 CommandTemplate::CommandTemplate(Module * m, var params) :
 	BaseItem(params.getProperty("commandType", "New Template"), false),
 	module(m),
