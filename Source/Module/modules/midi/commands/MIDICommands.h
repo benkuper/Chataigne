@@ -92,6 +92,6 @@ public:
 
 	void triggerInternal(int multiplexIndex) override;
 
-	static MIDISysExCommand * create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex) { return new MIDISysExCommand((MIDIModule *)module, context, params, multiplex); }
+	static MIDIMidiMachineControlCommandAndGoto * create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex) { return new MIDIMidiMachineControlCommandAndGoto((MIDIModule *)module, context, params, multiplex); }
 
 };
