@@ -77,9 +77,15 @@ void MIDIInputDevice::handleIncomingMidiMessage(MidiInput * source, const MidiMe
 	else if (message.isMidiStart()) inputListeners.call(&MIDIInputListener::midiStartReceived);
 	else if (message.isMidiStop()) inputListeners.call(&MIDIInputListener::midiStopReceived);
 	else if (message.isMidiContinue()) inputListeners.call(&MIDIInputListener::midiContinueReceived);
+	else if (message.isMidiMachineControlMessage()) inputListeners.call(&MIDIInputListener::midiMachineControlCommandReceived, message.getMidiMachineControlCommand());
 	else
 	{
-		DBG("Not handled : " << message.getDescription());
+		int hours, minutes, seconds, frames;
+		if (message.isMidiMachineControlGoto(hours, minutes, seconds, frames)) inputListeners.call(&MIDIInputListener::midiMachineControlGotoReceived, hours, minutes, seconds, frames);
+		else
+		{
+			DBG("Not handled : " << message.getDescription());
+		}
 	}
 }
 
@@ -174,6 +180,12 @@ void MIDIOutputDevice::sendMidiMachineControlCommand(MidiMessage::MidiMachineCon
 {
 	if (device == nullptr) return;
 	device->sendMessageNow(MidiMessage::midiMachineControlCommand(command));
+}
+
+void MIDIOutputDevice::sendMidiMachineControlGoto(int hours, int minutes, int seconds, int frames)
+{
+	if (device == nullptr) return;
+	device->sendMessageNow(MidiMessage::midiMachineControlGoto(hours, minutes, seconds, frames));
 }
 
 void MIDIOutputDevice::sendPitchWheel(int channel, int value)

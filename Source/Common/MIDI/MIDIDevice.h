@@ -53,6 +53,8 @@ public:
 		virtual void midiStartReceived() {}
 		virtual void midiStopReceived() {}
 		virtual void midiContinueReceived() {}
+		virtual void midiMachineControlCommandReceived(const MidiMessage::MidiMachineControlCommand &/*type*/) {}
+		virtual void midiMachineControlGotoReceived(const int&/*hours*/, const int&/*minutes*/, const int&/*seconds*/, const int&/*frames*/) {}
 	};
 
 	ListenerList<MIDIInputListener> inputListeners;
@@ -86,6 +88,7 @@ public:
 	void sendFullframeTimecode(int hours, int minutes, int seconds, int frames, MidiMessage::SmpteTimecodeType timecodeType);
 	void sendQuarterframe(int piece, int value);
 	void sendMidiMachineControlCommand(MidiMessage::MidiMachineControlCommand command);
+	void sendMidiMachineControlGoto(int hours, int minutes, int seconds, int frames);
 	void sendPitchWheel(int channel, int value);
 	void sendChannelPressure(int channel, int value);
 	void sendAfterTouch(int channel, int note, int value);

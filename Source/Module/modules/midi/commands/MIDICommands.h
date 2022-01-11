@@ -75,3 +75,23 @@ public:
 	static MIDISysExCommand * create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex) { return new MIDISysExCommand((MIDIModule *)module, context, params, multiplex); }
 
 };
+
+class MIDIMidiMachineControlCommandAndGoto :
+	public MIDICommand
+{
+public:
+	MIDIMidiMachineControlCommandAndGoto(MIDIModule * module, CommandContext context, var params, Multiplex * multiplex = nullptr);
+	~MIDIMidiMachineControlCommandAndGoto();
+
+	bool isGoto;
+	
+	FloatParameter * time;
+	EnumParameter * command;
+
+	const int fps = 30;
+
+	void triggerInternal(int multiplexIndex) override;
+
+	static MIDISysExCommand * create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex) { return new MIDISysExCommand((MIDIModule *)module, context, params, multiplex); }
+
+};
