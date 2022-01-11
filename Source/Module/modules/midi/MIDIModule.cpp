@@ -62,6 +62,7 @@ MIDIModule::MIDIModule(const String& name, bool _useGenericControls) :
 	scriptObject.setMethod(sendProgramChangeId, &MIDIModule::sendProgramChangeFromScript);
 	scriptObject.setMethod(sendPitchWheelId, &MIDIModule::sendPitchWheelFromScript);
 	scriptObject.setMethod(sendChannelPressureId, &MIDIModule::sendChannelPressureFromScript);
+	scriptObject.setMethod(sendAfterTouchId, &MIDIModule::sendAfterTouchFromScript);
 	scriptObject.setMethod(sendMachineControlCommandId, &MIDIModule::sendMidiMachineControlCommandFromScript);
 	scriptObject.setMethod(sendMachineControlGotoId, &MIDIModule::sendMidiMachineControlGotoFromScript);
 
