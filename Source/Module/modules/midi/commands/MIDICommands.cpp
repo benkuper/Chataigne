@@ -198,3 +198,46 @@ void MIDISysExCommand::triggerInternal(int multiplexIndex)
 	midiModule->sendSysex(data);
 }
 
+MIDIMidiMachineControlCommandAndGoto::MIDIMidiMachineControlCommandAndGoto(MIDIModule * module, CommandContext context, var params, Multiplex * multiplex) :
+	MIDICommand(module, context, params, multiplex)
+{
+	isGoto = (bool)params.getProperty("goto", 0);
+
+	if (isGoto)
+	{
+		time = addFloatParameter("Time", "Time to jump to", 0, 0);
+		time->defaultUI = FloatParameter::TIME;
+	}
+	else
+	{
+		command = addEnumParameter("Command", "Command to send");
+		command->addOption("Stop", MidiMessage::mmc_stop)->addOption("Play", MidiMessage::mmc_play)->addOption("Deferred play", MidiMessage::mmc_deferredplay)->addOption("Fast forward", MidiMessage::mmc_fastforward)->addOption("Rewind", MidiMessage::mmc_rewind)->addOption("Record start", MidiMessage::mmc_recordStart)->addOption("Record stop", MidiMessage::mmc_recordStop)->addOption("Pause", MidiMessage::mmc_pause);
+	}
+}
+MIDIMidiMachineControlCommandAndGoto::~MIDIMidiMachineControlCommandAndGoto()
+{
+}
+
+
+void MIDIMidiMachineControlCommandAndGoto::triggerInternal(int multiplexIndex)
+{
+	MIDICommand::triggerInternal(multiplexIndex);
+
+	if(isGoto)
+	{
+		double unused;
+		float position = getLinkedValue(time, multiplexIndex);
+		int m_frame = static_cast<int>(modf(position, &unused) * fps);
+		int m_second = static_cast<int>(position) % 60;
+		int m_minute = (static_cast<int>(position) / 60) % 60;
+		int m_hour = (static_cast<int>(position) / 60 / 60) % 60;
+
+		midiModule->sendMidiMachineControlGoto(m_hour, m_minute, m_second, m_frame);
+	}
+	else
+	{
+		MidiMessage::MidiMachineControlCommand commandVal = (MidiMessage::MidiMachineControlCommand)(int)getLinkedValue(command, multiplexIndex);
+
+		midiModule->sendMidiMachineControlCommand(commandVal);
+	}
+}

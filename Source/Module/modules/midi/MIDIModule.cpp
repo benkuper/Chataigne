@@ -38,6 +38,8 @@ MIDIModule::MIDIModule(const String& name, bool _useGenericControls) :
 		defManager->add(CommandDefinition::createDef(this, "", "Pitch Wheel", &MIDINoteAndCCCommand::create)->addParam("type", (int)MIDINoteAndCCCommand::PITCH_WHEEL));
 		defManager->add(CommandDefinition::createDef(this, "", "Channel Pressure", &MIDINoteAndCCCommand::create)->addParam("type", (int)MIDINoteAndCCCommand::CHANNEL_PRESSURE));
 		defManager->add(CommandDefinition::createDef(this, "", "After Touch", &MIDINoteAndCCCommand::create)->addParam("type", (int)MIDINoteAndCCCommand::AFTER_TOUCH));
+		defManager->add(CommandDefinition::createDef(this, "", "MMC Command", &MIDIMidiMachineControlCommandAndGoto::create)->addParam("goto", false));
+		defManager->add(CommandDefinition::createDef(this, "", "MMC Goto", &MIDIMidiMachineControlCommandAndGoto::create)->addParam("goto", true));
 	}
 	
 	useHierarchy = moduleParams.addBoolParameter("Use Hierarchy", "If checked, incoming messages will be sorted in nested containers instead of 1-level", false);
@@ -61,6 +63,8 @@ MIDIModule::MIDIModule(const String& name, bool _useGenericControls) :
 	scriptObject.setMethod(sendPitchWheelId, &MIDIModule::sendPitchWheelFromScript);
 	scriptObject.setMethod(sendChannelPressureId, &MIDIModule::sendChannelPressureFromScript);
 	scriptObject.setMethod(sendAfterTouchId, &MIDIModule::sendAfterTouchFromScript);
+	scriptObject.setMethod(sendMachineControlCommandId, &MIDIModule::sendMidiMachineControlCommandFromScript);
+	scriptObject.setMethod(sendMachineControlGotoId, &MIDIModule::sendMidiMachineControlGotoFromScript);
 
 	scriptManager->scriptTemplate += ChataigneAssetManager::getInstance()->getScriptTemplate("midi");
 
@@ -189,6 +193,17 @@ void MIDIModule::sendMidiMachineControlCommand(MidiMessage::MidiMachineControlCo
 		NLOG(niceName, "Send midi machine control command : " << command);
 	}
 	outputDevice->sendMidiMachineControlCommand(command);
+}
+
+void MIDIModule::sendMidiMachineControlGoto(int hours, int minutes, int seconds, int frames)
+{
+	if (!enabled->boolValue()) return;
+	if (outputDevice == nullptr) return;
+	if (logOutgoingData->boolValue())
+	{
+		NLOG(niceName, "Send midi machine control goto : " << hours << ":" << minutes << ":" << seconds << "." << frames);
+	}
+	outputDevice->sendMidiMachineControlGoto(hours, minutes, seconds, frames);
 }
 
 
@@ -465,6 +480,24 @@ void MIDIModule::midiContinueReceived()
 	midiContinueTrigger->trigger();
 }
 
+void MIDIModule::midiMachineControlCommandReceived(const MidiMessage::MidiMachineControlCommand& type)
+{
+	if (!enabled->boolValue() && !manualAddMode) return;
+	inActivityTrigger->trigger();
+	if (logIncomingData->boolValue()) NLOG(niceName, "MMC Command : " << (int)type);
+
+	if (scriptManager->items.size() > 0) scriptManager->callFunctionOnAllItems(machineControlCommandId, Array<var>((int)type));
+}
+
+void MIDIModule::midiMachineControlGotoReceived(const int& hours, const int& minutes, const int& seconds, const int& frames)
+{
+	if (!enabled->boolValue() && !manualAddMode) return;
+	inActivityTrigger->trigger();
+	if (logIncomingData->boolValue()) NLOG(niceName, "MMC Goto : " << hours << ":" << minutes << ":" << seconds << "." << frames);
+
+	if (scriptManager->items.size() > 0) scriptManager->callFunctionOnAllItems(machineControlGotoId, Array<var>(hours, minutes, seconds, frames));
+}
+
 void MIDIModule::mtcStarted()
 {
 	mtcIsPlaying->setValue(true);
@@ -595,6 +628,28 @@ var MIDIModule::sendAfterTouchFromScript(const var::NativeFunctionArgs& args)
 	if (!checkNumArgs(m->niceName, args, 3)) return var();
 
 	m->sendAfterTouch(args.arguments[0], args.arguments[1], args.arguments[2]);
+	return var();
+}
+
+var MIDIModule::sendMidiMachineControlCommandFromScript(const var::NativeFunctionArgs &args)
+{
+	MIDIModule* m = getObjectFromJS<MIDIModule>(args);
+	if (!m->enabled->boolValue()) return var();
+	if (!checkNumArgs(m->niceName, args, 1)) return var();
+
+	MidiMessage::MidiMachineControlCommand type = (MidiMessage::MidiMachineControlCommand)(int)args.arguments[0];
+
+	m->sendMidiMachineControlCommand(type);
+	return var();
+}
+
+var MIDIModule::sendMidiMachineControlGotoFromScript(const var::NativeFunctionArgs &args)
+{
+	MIDIModule* m = getObjectFromJS<MIDIModule>(args);
+	if (!m->enabled->boolValue()) return var();
+	if (!checkNumArgs(m->niceName, args, 4)) return var();
+
+	m->sendMidiMachineControlGoto(args.arguments[0], args.arguments[1], args.arguments[2], args.arguments[3]);
 	return var();
 }
 

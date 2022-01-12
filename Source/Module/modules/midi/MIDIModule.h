@@ -107,6 +107,8 @@ public:
 	const Identifier channelPressureId = "channelPressureEvent";
   const Identifier programChangeId = "programChangeEvent";
 	const Identifier afterTouchId = "afterTouchEvent";
+	const Identifier machineControlCommandId = "machineControlCommandEvent";
+	const Identifier machineControlGotoId = "machineControlGotoEvent";
 
 	const Identifier sendNoteOnId = "sendNoteOn";
 	const Identifier sendNoteOffId = "sendNoteOff";
@@ -116,6 +118,8 @@ public:
 	const Identifier sendPitchWheelId = "sendPitchWheel";
 	const Identifier sendChannelPressureId = "sendChannelPressure";
 	const Identifier sendAfterTouchId = "sendAfterTouch";
+	const Identifier sendMachineControlCommandId = "sendMachineControlCommand";
+	const Identifier sendMachineControlGotoId = "sendMachineControlGoto";
 	
 	bool useGenericControls;
 
@@ -130,6 +134,7 @@ public:
 	virtual void sendFullFrameTimecode(int hours, int minutes, int seconds, int frames, MidiMessage::SmpteTimecodeType timecodeType);
 
 	void sendMidiMachineControlCommand(MidiMessage::MidiMachineControlCommand command);
+	void sendMidiMachineControlGoto(int hours, int minutes, int seconds, int frames);
 
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 	void updateMIDIDevices();
@@ -151,6 +156,9 @@ public:
 	virtual void midiStopReceived() override;
 	virtual void midiContinueReceived() override;
 
+	virtual void midiMachineControlCommandReceived(const MidiMessage::MidiMachineControlCommand& type) override;
+	virtual void midiMachineControlGotoReceived(const int& hours, const int& minutes, const int& seconds, const int& frames) override;
+
 	virtual void mtcStarted() override;
 	virtual void mtcStopped() override;
 	virtual void mtcTimeUpdated(bool isFullFrame) override;
@@ -165,6 +173,8 @@ public:
 	static var sendPitchWheelFromScript(const var::NativeFunctionArgs& args);
 	static var sendChannelPressureFromScript(const var::NativeFunctionArgs& args);
 	static var sendAfterTouchFromScript(const var::NativeFunctionArgs &args);
+	static var sendMidiMachineControlCommandFromScript(const var::NativeFunctionArgs &args);
+	static var sendMidiMachineControlGotoFromScript(const var::NativeFunctionArgs &args);
 
 	void updateValue(const int &channel, const String &n, const int &val, const MIDIValueParameter::Type &type, const int &pitchOrNumber);
 
