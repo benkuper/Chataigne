@@ -242,6 +242,7 @@ void SerialReadThread::run()
 
 	while (!threadShouldExit())
 	{
+		sleep(2); //500fps
 
 		if (port == nullptr) return;
 		if (!port->isOpen()) return;
@@ -314,8 +315,6 @@ void SerialReadThread::run()
 		{
 			DBG("### Serial Problem ");
 		}
-
-		sleep(2); //500fps
 	}
 
 	DBG("END SERIAL THREAD");
