@@ -18,12 +18,15 @@ public:
 	CommunityModuleInfo(StringRef name = "", var moduleData = var());
 	~CommunityModuleInfo();
 
+	enum CommunityModuleStatus {INSTALLED, NEW_VERSION_AVAILABLE, UP_TO_DATE, NOT_INSTALLED};
+
 	String url;
 	String description;
 	String downloadURL;
 	String onlineVersion;
 	String localVersion;
 	File localModuleFolder;
+	CommunityModuleStatus status;
 
 	std::unique_ptr<URL::DownloadTask> downloadTask;
 
