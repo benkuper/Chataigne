@@ -126,10 +126,7 @@ void ModuleFactory::addCustomModulesInFolder(File folder, bool isLocal, bool log
 				{
 					if (CommunityModuleInfo* info = CommunityModuleManager::getInstance()->getModuleInfoForFolder(m))
 					{
-						if (info->onlineVersion > info->localVersion)
-						{
-							def->newVersionAvailable = true;
-						}
+						info->updateLocalData();
 					}
 				}
 
@@ -157,6 +154,14 @@ var ModuleFactory::getCustomModuleInfo(StringRef moduleName)
 {
 	if (!customModulesDefMap.contains(moduleName)) return var();
 	return customModulesDefMap[moduleName]->customModuleData;
+}
+
+void ModuleFactory::setModuleNewVersionAvailable(StringRef moduleName, bool newVersionAvailable)
+{
+	if (customModulesDefMap.contains(moduleName))
+	{
+		customModulesDefMap[moduleName]->newVersionAvailable = newVersionAvailable;
+	}
 }
 
 File ModuleFactory::getFolderForCustomModule(StringRef moduleName) const

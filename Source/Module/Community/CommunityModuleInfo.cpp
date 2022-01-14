@@ -9,7 +9,8 @@
 */
 
 CommunityModuleInfo::CommunityModuleInfo(StringRef name, var onlineData) :
-	BaseItem(name, false)
+	BaseItem(name, false),
+	status(NOT_INSTALLED)
 {
 	nameCanBeChangedByUser = false;
 	userCanRemove = false;
@@ -67,9 +68,30 @@ void CommunityModuleInfo::updateLocalData()
 	localVersion = localData.getProperty("version", "Unknown");
 	localModuleFolder = ModuleManager::getInstance()->factory->getFolderForCustomModule(niceName);
 
-	installTriger->setEnabled(onlineVersion != localVersion);
+	if (localData.isVoid())
+	{
+		status = NOT_INSTALLED;
+	}
+	else
+	{
+		if (onlineVersion > localVersion)
+		{
+			status = NEW_VERSION_AVAILABLE;
+		}
+		else if (onlineVersion == localVersion)
+		{
+			status = UP_TO_DATE;
+		}
+		else
+		{
+			status = INSTALLED;
+		}
 
-	isLocal->setValue(!localData.isVoid());
+		ModuleManager::getInstance()->factory->setModuleNewVersionAvailable(niceName, status == NEW_VERSION_AVAILABLE);
+	}
+
+	installTriger->setEnabled(status != UP_TO_DATE);
+	isLocal->setValue(status != NOT_INSTALLED);
 }
 
 void CommunityModuleInfo::onContainerTriggerTriggered(Trigger * t)

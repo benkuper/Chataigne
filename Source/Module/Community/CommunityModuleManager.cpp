@@ -28,6 +28,9 @@ CommunityModuleManager::~CommunityModuleManager()
 void CommunityModuleManager::run()
 {
 	wait(500);
+
+	DBG("Started loading community modules");
+
 	var data = getJSONDataForURL(URL("https://benjamin.kuperberg.fr/chataigne/releases/modules.json"));
 	
 	if (threadShouldExit()) return;
@@ -69,12 +72,11 @@ void CommunityModuleManager::run()
 	}
 	
 	LOG("Finished fetching Community modules.");
-	ModuleManager::getInstance()->factory->updateCustomModules(false);
 
 	bool showUpdate = false;
 	for (auto& i : items)
 	{
-		if (i->onlineVersion > i->localVersion)
+		if (i->status == CommunityModuleInfo::NEW_VERSION_AVAILABLE)
 		{
 			showUpdate = true;
 			break;
