@@ -138,6 +138,7 @@
 		0B881AF2739B8F5059F7B142 /* WakeOnLanCommandEditor.h */ /* WakeOnLanCommandEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WakeOnLanCommandEditor.h; path = ../../Source/Module/modules/system/os/commands/ui/WakeOnLanCommandEditor.h; sourceTree = SOURCE_ROOT; };
 		0B970F4F6ED09F8B505B3D31 /* CustomVariablesModuleCommands.h */ /* CustomVariablesModuleCommands.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CustomVariablesModuleCommands.h; path = ../../Source/Module/modules/customvariables/commands/CustomVariablesModuleCommands.h; sourceTree = SOURCE_ROOT; };
 		0BAD0628AAC8156B90AF64F7 /* ModuleRouterValue.cpp */ /* ModuleRouterValue.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ModuleRouterValue.cpp; path = ../../Source/Module/Routing/ModuleRouterValue.cpp; sourceTree = SOURCE_ROOT; };
+		0BE94AE80289ACC54E4C2915 /* juce_audio_basics */ /* juce_audio_basics */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_audio_basics; path = "~/JUCE/modules/juce_audio_basics"; sourceTree = "<absolute>"; };
 		0C38530C36FD7305A35DE178 /* MouseModule.h */ /* MouseModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MouseModule.h; path = ../../Source/Module/modules/controller/mouse/MouseModule.h; sourceTree = SOURCE_ROOT; };
 		0C5AF857C59082628C2BDB1A /* streamingScriptTemplate.js */ /* streamingScriptTemplate.js */ = {isa = PBXFileReference; lastKnownFileType = file.js; name = streamingScriptTemplate.js; path = ../../Resources/Templates/Scripts/streamingScriptTemplate.js; sourceTree = SOURCE_ROOT; };
 		0C5BDC490B538FDD806BB14A /* CommonIncludes.cpp */ /* CommonIncludes.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CommonIncludes.cpp; path = ../../Source/Common/CommonIncludes.cpp; sourceTree = SOURCE_ROOT; };
@@ -181,7 +182,6 @@
 		1991D78FED2DCE9A56B1220B /* CommunityModuleManager.cpp */ /* CommunityModuleManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CommunityModuleManager.cpp; path = ../../Source/Module/Community/CommunityModuleManager.cpp; sourceTree = SOURCE_ROOT; };
 		19E9399CD34EDAE0468721D9 /* LoupedeckCommands.h */ /* LoupedeckCommands.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LoupedeckCommands.h; path = ../../Source/Module/modules/controller/loupedeck/commands/LoupedeckCommands.h; sourceTree = SOURCE_ROOT; };
 		1B9A73C8CB3C33D68C682295 /* SendStreamRawDataCommand.h */ /* SendStreamRawDataCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SendStreamRawDataCommand.h; path = ../../Source/Module/modules/common/streaming/commands/SendStreamRawDataCommand.h; sourceTree = SOURCE_ROOT; };
-		1B9D3556999FD66EE3CDD5B4 /* juce_audio_basics */ /* juce_audio_basics */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_audio_basics; path = /Users/benkuper/Documents/Dev/JUCE/modules/juce_audio_basics; sourceTree = "<absolute>"; };
 		1BD724662F7C81A7DBEDBA66 /* WakeOnLanCommand.h */ /* WakeOnLanCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WakeOnLanCommand.h; path = ../../Source/Module/modules/system/os/commands/WakeOnLanCommand.h; sourceTree = SOURCE_ROOT; };
 		1BFA6EEFCE2A4D8498AB36DA /* SendStreamValuesCommand.cpp */ /* SendStreamValuesCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SendStreamValuesCommand.cpp; path = ../../Source/Module/modules/common/streaming/commands/SendStreamValuesCommand.cpp; sourceTree = SOURCE_ROOT; };
 		1C70373EF477EE7507E94DA2 /* ConductorCueUI.h */ /* ConductorCueUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ConductorCueUI.h; path = ../../Source/Common/Processor/Conductor/ui/ConductorCueUI.h; sourceTree = SOURCE_ROOT; };
@@ -2690,7 +2690,7 @@
 		BB9E045D62346673C5E1636E /* JUCE Modules */ = {
 			isa = PBXGroup;
 			children = (
-				1B9D3556999FD66EE3CDD5B4,
+				0BE94AE80289ACC54E4C2915,
 				ABFB516A504EA44816966560,
 				AEE94AD7E1C97D1DE72EF414,
 				968FE1C22003372DE09C8146,
@@ -3675,7 +3675,7 @@
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCE_COREGRAPHICS_DRAW_ASYNC=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.9.3b12",
+					"JUCE_APP_VERSION=1.9.3b13",
 					"JUCE_APP_VERSION_HEX=0x10903",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -3689,7 +3689,6 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../../JuceLibraryCode",
-					"/Users/benkuper/Documents/Dev/JUCE/modules",
 					"$(HOME)/JUCE/modules",
 					"$(SRCROOT)/../../Modules",
 					"$(SRCROOT)/../../External/wiiuse",
@@ -3716,7 +3715,7 @@
 					"\"../../Modules/juce_simpleweb/libs/MacOSX/${CURRENT_ARCH}\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode /Users/benkuper/Documents/Dev/JUCE/modules $(HOME)/JUCE/modules $(SRCROOT)/../../Modules $(SRCROOT)/../../External/wiiuse $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../External/dnssd/include $(SRCROOT)/../../External/libartnet/include $(SRCROOT)/../../External/joycon/include $(SRCROOT)/../../External/sdl/include $(SRCROOT)/../../External/hidapi/include $(SRCROOT)/../../Source";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(HOME)/JUCE/modules $(SRCROOT)/../../Modules $(SRCROOT)/../../External/wiiuse $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../External/dnssd/include $(SRCROOT)/../../External/libartnet/include $(SRCROOT)/../../External/joycon/include $(SRCROOT)/../../External/sdl/include $(SRCROOT)/../../External/hidapi/include $(SRCROOT)/../../Source";
 				OTHER_LDFLAGS = "-lServus -lhidapi -lSDL2 -liconv -lJoyShockLibrary -lssl -lcrypto";
 				PRODUCT_BUNDLE_IDENTIFIER = benkuper.Chataigne;
 				PRODUCT_NAME = "Chataigne";
@@ -3747,7 +3746,7 @@
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCE_COREGRAPHICS_DRAW_ASYNC=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.9.3b12",
+					"JUCE_APP_VERSION=1.9.3b13",
 					"JUCE_APP_VERSION_HEX=0x10903",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -3761,7 +3760,6 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../../JuceLibraryCode",
-					"/Users/benkuper/Documents/Dev/JUCE/modules",
 					"$(HOME)/JUCE/modules",
 					"$(SRCROOT)/../../Modules",
 					"$(SRCROOT)/../../External/wiiuse",
@@ -3789,7 +3787,7 @@
 				);
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode /Users/benkuper/Documents/Dev/JUCE/modules $(HOME)/JUCE/modules $(SRCROOT)/../../Modules $(SRCROOT)/../../External/wiiuse $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../External/dnssd/include $(SRCROOT)/../../External/libartnet/include $(SRCROOT)/../../External/joycon/include $(SRCROOT)/../../External/sdl/include $(SRCROOT)/../../External/hidapi/include $(SRCROOT)/../../Source";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(HOME)/JUCE/modules $(SRCROOT)/../../Modules $(SRCROOT)/../../External/wiiuse $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../External/dnssd/include $(SRCROOT)/../../External/libartnet/include $(SRCROOT)/../../External/joycon/include $(SRCROOT)/../../External/sdl/include $(SRCROOT)/../../External/hidapi/include $(SRCROOT)/../../Source";
 				OTHER_LDFLAGS = "-lServus -lhidapi -lSDL2 -liconv -lJoyShockLibrary -lssl -lcrypto";
 				PRODUCT_BUNDLE_IDENTIFIER = benkuper.Chataigne;
 				PRODUCT_NAME = "Chataigne";
