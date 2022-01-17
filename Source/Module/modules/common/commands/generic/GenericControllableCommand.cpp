@@ -13,6 +13,7 @@ GenericControllableCommand::GenericControllableCommand(Module* _module, CommandC
 	target(nullptr),
 	valueOperator(nullptr),
 	componentOperator(nullptr),
+	loop(nullptr),
 	value(nullptr)
 {
 	saveAndLoadRecursiveData = true;
@@ -33,6 +34,8 @@ GenericControllableCommand::GenericControllableCommand(Module* _module, CommandC
 	{
 		valueOperator = addEnumParameter("Operator", "The operator to apply. If you simply want to set the value, leave at the = option.", false);
 		componentOperator = addEnumParameter("Component", "Component to target. Keep all to target everything. Gamgie made me do this.");
+		loop = addBoolParameter("Loop", "If applicable, this will allow going from max val to min val and vice-versa.", false);
+		loop->hideInEditor = true;
 	}
 
 	else if (action == SET_ENABLED) value = addBoolParameter("Value", "If checked, this will enable this parameter, otherwise it will disable it. Simple. Efficient.", false);
@@ -173,6 +176,9 @@ void GenericControllableCommand::updateOperatorOptions()
 		Operator o = valueOperator->getValueDataAsEnum<Operator>();
 		bool shouldHideValue = o == INVERSE || o == NEXT_ENUM || o == PREV_ENUM || o == RANDOM;
 		value->hideInEditor = shouldHideValue;
+
+		bool loopEnabled = o == ADD || o == SUBTRACT || o == NEXT_ENUM || o == PREV_ENUM;
+		loop->hideInEditor = !loopEnabled;
 	}
 }
 
@@ -194,7 +200,11 @@ void GenericControllableCommand::onContainerParameterChanged(Parameter* p)
 			if (o != EQUAL) value->clearRange(); //to clean more
 			bool curHide = value->hideInEditor;
 			value->hideInEditor = o == INVERSE || o == NEXT_ENUM || o == PREV_ENUM || o == RANDOM;
-			if (curHide != value->hideInEditor) queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
+
+			bool curHideLoop = loop->hideInEditor;
+			loop->hideInEditor = !(o == ADD || o == SUBTRACT || o == NEXT_ENUM || o == PREV_ENUM);
+
+			if (curHide != value->hideInEditor || curHideLoop != loop->hideInEditor) queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 		}
 	}
 }
@@ -269,12 +279,17 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 					break;
 
 				case ADD:
-					p->setValue(p->floatValue() + (float)val);
-					break;
-
 				case SUBTRACT:
-					p->setValue(p->floatValue() - (float)val);
-					break;
+				{
+					float targetVal = o == ADD ? p->floatValue() + (float)val : p->floatValue() - (float)val;
+					if (p->hasRange() && loop != nullptr && loop->boolValue())
+					{
+						if (targetVal > (float)p->maximumValue) targetVal = p->minimumValue;
+						else if (targetVal < (float)p->minimumValue) targetVal = p->maximumValue;
+					}
+					p->setValue(targetVal);
+				}
+				break;
 
 				case MULTIPLY:
 					p->setValue(p->floatValue() * (float)val);
@@ -293,11 +308,11 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 					break;
 
 				case NEXT_ENUM:
-					if (EnumParameter* ep = dynamic_cast<EnumParameter*>(p)) ep->setNext();
+					if (EnumParameter* ep = dynamic_cast<EnumParameter*>(p)) ep->setNext(loop != nullptr?loop->boolValue():false);
 					break;
 
 				case PREV_ENUM:
-					if (EnumParameter* ep = dynamic_cast<EnumParameter*>(p)) ep->setPrev();
+					if (EnumParameter* ep = dynamic_cast<EnumParameter*>(p)) ep->setPrev(loop != nullptr ? loop->boolValue() : false);
 					break;
 
 				case RANDOM:

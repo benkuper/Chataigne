@@ -28,6 +28,7 @@ public:
 	
 	EnumParameter* valueOperator;
 	EnumParameter* componentOperator;
+	BoolParameter* loop;
 
 	WeakReference<Parameter> value;
 	var dataToLoad;
