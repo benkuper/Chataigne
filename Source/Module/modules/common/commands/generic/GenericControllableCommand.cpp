@@ -32,8 +32,8 @@ GenericControllableCommand::GenericControllableCommand(Module* _module, CommandC
 
 	if (action == SET_VALUE)
 	{
-		valueOperator = addEnumParameter("Operator", "The operator to apply. If you simply want to set the value, leave at the = option.", false);
 		componentOperator = addEnumParameter("Component", "Component to target. Keep all to target everything. Gamgie made me do this.");
+		valueOperator = addEnumParameter("Operator", "The operator to apply. If you simply want to set the value, leave at the = option.", false);
 		loop = addBoolParameter("Loop", "If applicable, this will allow going from max val to min val and vice-versa.", false);
 		loop->hideInEditor = true;
 	}
@@ -76,7 +76,7 @@ void GenericControllableCommand::updateComponentFromTarget()
 
 
 	if (!val.isVoid()) componentOperator->setValueWithData(val);
-	else if (!ghostComponent.isVoid()) componentOperator->setValueWithData(ghostComponent);
+	else if (!ghostComponent.isVoid()) componentOperator->setValueWithKey(ghostComponent);
 
 	updateValueFromTargetAndComponent();
 }
@@ -281,13 +281,43 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 				case ADD:
 				case SUBTRACT:
 				{
-					float targetVal = o == ADD ? p->floatValue() + (float)val : p->floatValue() - (float)val;
-					if (p->hasRange() && loop != nullptr && loop->boolValue())
+					var targetVal = p->value.clone();
+
+					if (compOp == -1)
 					{
-						if (targetVal > (float)p->maximumValue) targetVal = p->minimumValue;
-						else if (targetVal < (float)p->minimumValue) targetVal = p->maximumValue;
+						if (!p->isComplex())
+						{
+							float targetVal = o == ADD ? p->floatValue() + (float)val : p->floatValue() - (float)val;
+							if (p->hasRange() && loop != nullptr && loop->boolValue())
+							{
+								if (targetVal > (float)p->maximumValue) targetVal = p->minimumValue;
+								else if (targetVal < (float)p->minimumValue) targetVal = p->maximumValue;
+							}
+							p->setValue(targetVal);
+						}
+						else
+						{
+							for (int i = 0; i < p->value.size() && val.size(); i++)
+							{
+								targetVal[i] = o == ADD ? (float)p->value[i] + (float)val[i] : (float)p->value[i] - (float)val[i];
+							}
+						}
 					}
-					p->setValue(targetVal);
+					else
+					{
+						if (targetVal.isArray())
+						{
+							float targetCompVal = o == ADD ? (float)p->value[compOp] + (float)val : (float)p->value[compOp] - (float)val;
+							if (p->hasRange() && loop != nullptr && loop->boolValue())
+							{
+								if (targetCompVal > (float)p->maximumValue[compOp]) targetVal = p->minimumValue[compOp];
+								else if (targetCompVal < (float)p->minimumValue[compOp]) targetVal = p->maximumValue[compOp];
+							}
+							
+							targetVal[compOp] = targetCompVal;
+							p->setValue(targetVal);
+						}
+					}
 				}
 				break;
 
@@ -363,17 +393,21 @@ Controllable* GenericControllableCommand::getTargetControllableAtIndex(int multi
 
 void GenericControllableCommand::linkUpdated(ParameterLink* pLink)
 {
-	if (pLink->parameter == target) updateComponentFromTarget();
+	if (pLink->parameter == target)
+	{
+		if (!isCurrentlyLoadingData) updateComponentFromTarget();
+	}
 }
 
 void GenericControllableCommand::loadJSONDataInternal(var data)
 {
 	BaseCommand::loadJSONDataInternal(data);
 
-	if (target->target == nullptr && Engine::mainEngine->isLoadingFile)
+	if (target->target == nullptr)
 	{
 		ghostData = data;
-		Engine::mainEngine->addEngineListener(this);
+		if (Engine::mainEngine->isLoadingFile) Engine::mainEngine->addEngineListener(this);
+		else loadGhostData(data);
 	}
 }
 
