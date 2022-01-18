@@ -31,9 +31,12 @@ public:
 	FloatParameter * amplitude;
 	FloatParameter * offset;
 
+	IntParameter * offsetsNumber;
+	FloatParameter * offsetCycles;
+	std::vector<FloatParameter *> offsetValues;
+
 	FloatParameter * value;
 	
-
 	//Perlin
 	IntParameter * octaves;
 	PerlinNoise perlin;
@@ -44,6 +47,11 @@ public:
 	String getTypeString() const override { return "Signal"; }
 	static SignalModule * create() { return new SignalModule(); }
 
+	// offsets
+	void createOffsetValues();
+
 	// Inherited via Timer
 	virtual void run() override;
+
+	float getValueFromProgression(SignalType t, float prog);
 };
