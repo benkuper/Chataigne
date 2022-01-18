@@ -46,6 +46,7 @@ CVCommand::CVCommand(CustomVariablesModule* _module, CommandContext context, var
 		targetPreset->targetType = TargetParameter::CONTAINER;
 		targetPreset->customGetTargetContainerFunc = &CVGroupManager::showMenuAndGetPreset;
 		targetPreset->defaultParentLabelLevel = 2;
+		getLinkedParam(targetPreset)->fullPresetSelectMode = true;
 
 		switch (type)
 		{
@@ -75,6 +76,7 @@ CVCommand::CVCommand(CustomVariablesModule* _module, CommandContext context, var
 			targetPreset2->targetType = TargetParameter::CONTAINER;
 			targetPreset2->customGetTargetContainerFunc = &CVGroupManager::showMenuAndGetPreset;
 			targetPreset2->defaultParentLabelLevel = 2;
+			getLinkedParam(targetPreset2)->fullPresetSelectMode = true;
 			value = addFloatParameter("Value", "The interpolation value to weight between the 2 presets", 0, 0, 1);
 			linkParamToMappingIndex(value, 0);
 		}
@@ -127,9 +129,8 @@ void CVCommand::triggerInternal(int multiplexIndex)
 	{
 	case SET_PRESET:
 	{
-		if (targetPreset->targetContainer != nullptr)
+		if (CVPreset* p = getLinkedTargetContainerAs<CVPreset>(targetPreset, multiplexIndex))
 		{
-			CVPreset* p = static_cast<CVPreset*>(targetPreset->targetContainer.get());
 			if (p != nullptr) p->group->setValuesToPreset(p);
 		}
 	}
@@ -137,10 +138,9 @@ void CVCommand::triggerInternal(int multiplexIndex)
 
 	case GO_TO_PRESET:
 	{
-		if (targetPreset->targetContainer != nullptr)
+		if (CVPreset* p = getLinkedTargetContainerAs<CVPreset>(targetPreset, multiplexIndex))
 		{
-			CVPreset* p1 = static_cast<CVPreset*>(targetPreset->targetContainer.get());
-			p1->group->goToPreset(p1, time->enabled ? time->floatValue() : p1->defaultLoadTime->floatValue(), automation->enabled->boolValue() ? automation : &p1->group->defaultInterpolation);
+			p->group->goToPreset(p, time->enabled ? time->floatValue() : p->defaultLoadTime->floatValue(), automation->enabled->boolValue() ? automation : &p->group->defaultInterpolation);
 		}
 	}
 	break;
@@ -157,10 +157,11 @@ void CVCommand::triggerInternal(int multiplexIndex)
 
 	case LERP_PRESETS:
 	{
-		if (targetPreset->targetContainer != nullptr && targetPreset2->targetContainer != nullptr)
+		CVPreset* p1 = getLinkedTargetContainerAs<CVPreset>(targetPreset, multiplexIndex);
+		CVPreset* p2 = getLinkedTargetContainerAs<CVPreset>(targetPreset2, multiplexIndex);
+
+		if (p1 != nullptr && p2 != nullptr)
 		{
-			CVPreset* p1 = static_cast<CVPreset*>(targetPreset->targetContainer.get());
-			CVPreset* p2 = static_cast<CVPreset*>(targetPreset2->targetContainer.get());
 			if (p1->group != p2->group)
 			{
 				LOGWARNING("The 2 presets are not from the same group !\nThis command won't have any effect until you choose presets from the same group.");
@@ -175,9 +176,8 @@ void CVCommand::triggerInternal(int multiplexIndex)
 
 	case SET_PRESET_WEIGHT:
 	{
-		if (targetPreset->targetContainer != nullptr)
+		if (CVPreset* p = getLinkedTargetContainerAs<CVPreset>(targetPreset, multiplexIndex))
 		{
-			CVPreset* p = static_cast<CVPreset*>(targetPreset->targetContainer.get());
 			if (p != nullptr) p->weight->setValue(getLinkedValue(value, multiplexIndex));
 		}
 	}
@@ -198,34 +198,30 @@ void CVCommand::triggerInternal(int multiplexIndex)
 	case LOAD_PRESET:
 	case SAVE_PRESET:
 	{
-		if (targetPreset->targetContainer != nullptr)
+		if (CVPreset* p = getLinkedTargetContainerAs<CVPreset>(targetPreset, multiplexIndex))
 		{
-			CVPreset* p = static_cast<CVPreset*>(targetPreset->targetContainer.get());
-			if (p != nullptr)
+			File f = presetFile->getFile();
+			if (type == LOAD_PRESET)
 			{
-				File f = presetFile->getFile();
-				if (type == LOAD_PRESET)
+				if (f.exists())
 				{
-					if (f.exists())
-					{
-						std::unique_ptr<InputStream> is(f.createInputStream());
-						var data = JSON::fromString(is->readEntireStreamAsString());
-						p->loadValuesFromJSON(data);
-					}
-					else
-					{
-						NLOGWARNING(niceName, "Preset file does not exist or is not a valid JSON preset file");
-					}
+					std::unique_ptr<InputStream> is(f.createInputStream());
+					var data = JSON::fromString(is->readEntireStreamAsString());
+					p->loadValuesFromJSON(data);
 				}
-				else if (type == SAVE_PRESET)
+				else
 				{
-					if (f.exists()) f.deleteFile();
+					NLOGWARNING(niceName, "Preset file does not exist or is not a valid JSON preset file");
+				}
+			}
+			else if (type == SAVE_PRESET)
+			{
+				if (f.exists()) f.deleteFile();
 
-					var data = p->getValuesAsJSON();
-					std::unique_ptr<OutputStream> os(f.createOutputStream());
-					JSON::writeToStream(*os, data);
-					os->flush();
-				}
+				var data = p->getValuesAsJSON();
+				std::unique_ptr<OutputStream> os(f.createOutputStream());
+				JSON::writeToStream(*os, data);
+				os->flush();
 			}
 		}
 	}

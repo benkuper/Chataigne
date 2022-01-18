@@ -44,7 +44,8 @@ GenericOSCQueryModule::GenericOSCQueryModule(const String& name, int defaultRemo
 	//Script
 	scriptObject.setMethod("send", GenericOSCQueryModule::sendOSCFromScript);
 
-	defManager->add(CommandDefinition::createDef(this, "", "Set Value", &GenericControllableCommand::create, CommandContext::BOTH)->addParam("action", GenericControllableCommand::SET_VALUE)->addParam("root",(int64)&valuesCC));
+	defManager->add(CommandDefinition::createDef(this, "", "Set Value", &GenericControllableCommand::create, CommandContext::BOTH)->addParam("action", GenericControllableCommand::SET_VALUE)->addParam("root", (int64)&valuesCC));
+	defManager->add(CommandDefinition::createDef(this, "", "Go to Value", &GenericControllableCommand::create, CommandContext::BOTH)->addParam("action", GenericControllableCommand::GO_TO_VALUE)->addParam("root",(int64)&valuesCC));
 	defManager->add(CommandDefinition::createDef(this, "", "Trigger", &GenericControllableCommand::create, CommandContext::BOTH)->addParam("action", GenericControllableCommand::TRIGGER)->addParam("root", (int64)&valuesCC));
 
 	sender.connect("0.0.0.0", 0);

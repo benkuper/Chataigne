@@ -12,11 +12,12 @@
 
 class GenericControllableCommand :
 	public BaseCommand,
-	public EngineListener
+	public EngineListener,
+	public ChangeListener
 {
 public:
 
-	enum Action { SET_VALUE, TRIGGER, SET_ENABLED };
+	enum Action { SET_VALUE, GO_TO_VALUE, TRIGGER, SET_ENABLED };
 
 	GenericControllableCommand(Module* _module, CommandContext context, var params, Multiplex* multiplex = nullptr);
 	virtual ~GenericControllableCommand();
@@ -36,6 +37,27 @@ public:
 	var ghostOperator;
 	var ghostComponent;
 
+	class ValueInterpolator :
+		public Thread,
+		public ChangeBroadcaster
+	{
+	public:
+		ValueInterpolator(WeakReference<Parameter> p, var targetValue, float time, Automation* a);
+		~ValueInterpolator();
+
+		WeakReference<Parameter> parameter;
+		var valueAtStart;
+		var targetValue;
+		float time;
+		Automation* automation;
+		void run() override;
+	};
+
+	FloatParameter* time;
+	std::unique_ptr<Automation> automation;
+	OwnedArray<ValueInterpolator> interpolators;
+	HashMap<Parameter *, ValueInterpolator*> interpolatorMap;
+
 	virtual void updateComponentFromTarget();
 	virtual void updateValueFromTargetAndComponent();
 
@@ -54,6 +76,8 @@ public:
 	virtual void loadGhostData(var data);
 
 	static bool checkEnableTargetFilter(Controllable* c);
+
+	void changeListenerCallback(ChangeBroadcaster * source) override;
 
 	static BaseCommand* create(ControllableContainer* module, CommandContext context, var params, Multiplex* multiplex = nullptr);
 };

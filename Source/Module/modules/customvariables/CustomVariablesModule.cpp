@@ -20,6 +20,12 @@ CustomVariablesModule::CustomVariablesModule(CVGroupManager * manager) :
 		->addParam("root", (int64)(void*)&valuesCC)
 		->addParam("labelLevel", 0)
 	);
+
+	defManager->add(CommandDefinition::createDef(this, "", "Go to Value", &GenericControllableCommand::create, CommandContext::BOTH)
+		->addParam("action", GenericControllableCommand::GO_TO_VALUE)
+		->addParam("root", (int64)(void*)&valuesCC)
+		->addParam("labelLevel", 0)
+	);
 	
 	defManager->add(CommandDefinition::createDef(this, "", "Set Preset", &CVCommand::create)->addParam("type", CVCommand::SET_PRESET));
 	defManager->add(CommandDefinition::createDef(this, "", "Go to preset", &CVCommand::create)->addParam("type", CVCommand::GO_TO_PRESET));

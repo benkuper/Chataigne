@@ -20,6 +20,7 @@ ParameterLink::ParameterLink(WeakReference<Parameter> p, Multiplex* multiplex) :
 	parameter(p),
 	mappingValueIndex(0),
 	list(nullptr),
+	fullPresetSelectMode(false),
 	replacementHasMappingInputToken(false),
 	paramLinkNotifier(5)
 {
@@ -158,9 +159,23 @@ WeakReference<ControllableContainer> ParameterLink::getLinkedTargetContainer(int
 		return nullptr;
 	};
 
-	if (linkType == MULTIPLEX_LIST && list != nullptr && !listRef.wasObjectDeleted())
+	if (list != nullptr && !listRef.wasObjectDeleted())
 	{
-		if (TargetParameter* p = dynamic_cast<TargetParameter*>(list->list[multiplexIndex])) return p->targetContainer;
+
+		if (linkType == MULTIPLEX_LIST)
+		{
+			if (fullPresetSelectMode)
+			{
+				if (CVPresetMultiplexList* pList = dynamic_cast<CVPresetMultiplexList*>(list))
+				{
+					return pList->getPresetAt(multiplexIndex);
+				}
+			}
+			else
+			{
+				if (TargetParameter* p = dynamic_cast<TargetParameter*>(list->list[multiplexIndex])) return p->targetContainer;
+			}
+		}
 	}
 
 	if (parameter->type == Parameter::TARGET) return ((TargetParameter*)parameter.get())->targetContainer;

@@ -25,19 +25,27 @@ GenericControllableCommand::GenericControllableCommand(Module* _module, CommandC
 	if (ParameterLink* pLink = getLinkedParam(target)) pLink->canLinkToMapping = false;
 
 	if (action == TRIGGER) target->typesFilter.add(Trigger::getTypeStringStatic());
-	else if (action == SET_VALUE) target->excludeTypesFilter.add(Trigger::getTypeStringStatic());
+	else if (action == SET_VALUE || action == GO_TO_VALUE) target->excludeTypesFilter.add(Trigger::getTypeStringStatic());
 	else if (action == SET_ENABLED) target->customTargetFilterFunc = &GenericControllableCommand::checkEnableTargetFilter;
 
 	target->defaultParentLabelLevel = params.getProperty("labelLevel", 3);
 
-	if (action == SET_VALUE)
+	if (action == SET_VALUE || action == GO_TO_VALUE)
 	{
 		componentOperator = addEnumParameter("Component", "Component to target. Keep all to target everything. Gamgie made me do this.");
 		valueOperator = addEnumParameter("Operator", "The operator to apply. If you simply want to set the value, leave at the = option.", false);
 		loop = addBoolParameter("Loop", "If applicable, this will allow going from max val to min val and vice-versa.", false);
 		loop->hideInEditor = true;
-	}
 
+		if (action == GO_TO_VALUE)
+		{
+			time = addFloatParameter("Time", "Time to go to the value", 1, 0);
+			time->defaultUI = FloatParameter::TIME;
+			automation.reset(new Automation("Curve"));
+			automation->addKey(0, 0);
+			automation->addKey(1, 1);
+		}
+	}
 	else if (action == SET_ENABLED) value = addBoolParameter("Value", "If checked, this will enable this parameter, otherwise it will disable it. Simple. Efficient.", false);
 }
 
@@ -184,7 +192,7 @@ void GenericControllableCommand::updateOperatorOptions()
 
 void GenericControllableCommand::onContainerParameterChanged(Parameter* p)
 {
-	if (p == target && action == SET_VALUE)
+	if (p == target && (action == SET_VALUE || action == GO_TO_VALUE))
 	{
 		updateComponentFromTarget();
 	}
@@ -224,9 +232,13 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 		break;
 
 	case SET_VALUE:
+	case GO_TO_VALUE:
 	{
+
 		if (Parameter* p = static_cast<Parameter*>(c))
 		{
+			var targetValue;
+			
 			Operator o = valueOperator->getValueDataAsEnum<Operator>();
 			int compOp = componentOperator->getValueData();
 
@@ -258,7 +270,7 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 					{
 						if (compOp == -1)
 						{
-							if (p->value.size() == val.size()) p->setValue(val);
+							if (p->value.size() == val.size()) targetValue = val;
 						}
 						else
 						{
@@ -266,7 +278,7 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 							if (pVal.isArray())
 							{
 								pVal[compOp] = (float)val;
-								p->setValue(pVal);
+								targetValue = pVal;
 							}
 						}
 					}
@@ -275,70 +287,69 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 
 				case INVERSE:
 					if (p->type == Parameter::BOOL)  p->setValue(!p->boolValue());
-					else p->setNormalizedValue(1 - p->floatValue() / ((float)p->maximumValue - (float)p->minimumValue));
+					else targetValue = 1 - p->floatValue() / ((float)p->maximumValue - (float)p->minimumValue);
 					break;
 
 				case ADD:
 				case SUBTRACT:
 				{
-					var targetVal = p->value.clone();
+					targetValue = p->value.clone();
 
 					if (compOp == -1)
 					{
 						if (!p->isComplex())
 						{
-							float targetVal = o == ADD ? p->floatValue() + (float)val : p->floatValue() - (float)val;
+							targetValue = o == ADD ? p->floatValue() + (float)val : p->floatValue() - (float)val;
 							if (p->hasRange() && loop != nullptr && loop->boolValue())
 							{
-								if (targetVal > (float)p->maximumValue) targetVal = p->minimumValue;
-								else if (targetVal < (float)p->minimumValue) targetVal = p->maximumValue;
+								if ((float)targetValue > (float)p->maximumValue) targetValue = p->minimumValue;
+								else if ((float)targetValue < (float)p->minimumValue) targetValue = p->maximumValue;
 							}
-							p->setValue(targetVal);
+
 						}
 						else
 						{
 							for (int i = 0; i < p->value.size() && val.size(); i++)
 							{
-								targetVal[i] = o == ADD ? (float)p->value[i] + (float)val[i] : (float)p->value[i] - (float)val[i];
+								targetValue[i] = o == ADD ? (float)p->value[i] + (float)val[i] : (float)p->value[i] - (float)val[i];
 							}
 						}
 					}
 					else
 					{
-						if (targetVal.isArray())
+						if (targetValue.isArray())
 						{
 							float targetCompVal = o == ADD ? (float)p->value[compOp] + (float)val : (float)p->value[compOp] - (float)val;
 							if (p->hasRange() && loop != nullptr && loop->boolValue())
 							{
-								if (targetCompVal > (float)p->maximumValue[compOp]) targetVal = p->minimumValue[compOp];
-								else if (targetCompVal < (float)p->minimumValue[compOp]) targetVal = p->maximumValue[compOp];
+								if (targetCompVal > (float)p->maximumValue[compOp]) targetValue = p->minimumValue[compOp];
+								else if (targetCompVal < (float)p->minimumValue[compOp]) targetValue = p->maximumValue[compOp];
 							}
-							
-							targetVal[compOp] = targetCompVal;
-							p->setValue(targetVal);
+
+							targetValue[compOp] = targetCompVal;
 						}
 					}
 				}
 				break;
 
 				case MULTIPLY:
-					p->setValue(p->floatValue() * (float)val);
+					targetValue = p->floatValue() * (float)val;
 					break;
 
 				case DIVIDE:
-					p->setValue(p->floatValue() / (float)val);
+					targetValue = p->floatValue() / (float)val;
 					break;
 
 				case MAX:
-					p->setValue(std::max(p->floatValue(), (float)val));
+					targetValue = std::max(p->floatValue(), (float)val);
 					break;
 
 				case MIN:
-					p->setValue(std::min(p->floatValue(), (float)val));
+					targetValue = std::min(p->floatValue(), (float)val);
 					break;
 
 				case NEXT_ENUM:
-					if (EnumParameter* ep = dynamic_cast<EnumParameter*>(p)) ep->setNext(loop != nullptr?loop->boolValue():false);
+					if (EnumParameter* ep = dynamic_cast<EnumParameter*>(p)) ep->setNext(loop != nullptr ? loop->boolValue() : false);
 					break;
 
 				case PREV_ENUM:
@@ -351,10 +362,13 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 					if (p->type == Parameter::BOOL) p->setValue(r.nextBool());
 					else if (p->type == Parameter::FLOAT || p->type == Parameter::INT)
 					{
-						if (p->hasRange()) p->setNormalizedValue(r.nextFloat());
-						else p->setValue(p->type == Parameter::INT ? r.nextInt() : r.nextFloat());
+						if (p->hasRange()) targetValue = jmap<float>(r.nextFloat(), p->minimumValue, p->maximumValue);
+						else targetValue = p->type == Parameter::INT ? r.nextInt() : r.nextFloat();
 					}
-					else if (p->type == Parameter::COLOR) ((ColorParameter*)p)->setColor(r.nextInt());
+					else if (p->type == Parameter::COLOR)
+					{
+						for (int i = 0; i < 4; i++) targetValue.append(r.nextFloat());
+					}
 					else if (p->type == Parameter::ENUM)
 					{
 						EnumParameter* ep = (EnumParameter*)p;
@@ -371,9 +385,28 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 							if (compOp == i || compOp == -1) vv = jmap<float>(r.nextFloat(), p->minimumValue[i], p->maximumValue[i]);
 							v.append(vv);
 						}
-						p->setValue(v);
+						targetValue = v;
 					}
 				}
+				}
+			}
+
+			if (!targetValue.isVoid())
+			{
+				if (action == SET_VALUE) p->setValue(targetValue);
+				else if (action == GO_TO_VALUE)
+				{
+					if (interpolatorMap.contains(p))
+					{
+						ValueInterpolator* interp = interpolatorMap[p];
+						interpolatorMap.remove(p);
+						interpolators.removeObject(interp);
+					}
+
+					ValueInterpolator * interp = new ValueInterpolator(p, targetValue, time->floatValue(), automation.get());
+					interpolators.add(interp);
+					interpolatorMap.set(p, interp);
+					interp->addChangeListener(this);
 				}
 			}
 		}
@@ -439,7 +472,7 @@ void GenericControllableCommand::loadGhostData(var data)
 		}
 	}
 
-	if(action == SET_VALUE) updateComponentFromTarget(); //force generate if not yet
+	if (action == SET_VALUE) updateComponentFromTarget(); //force generate if not yet
 //}
 }
 
@@ -448,7 +481,72 @@ bool GenericControllableCommand::checkEnableTargetFilter(Controllable* c)
 	return c->canBeDisabledByUser;
 }
 
+void GenericControllableCommand::changeListenerCallback(ChangeBroadcaster* source)
+{
+	ValueInterpolator* interp = (ValueInterpolator*)source;
+	interpolatorMap.removeValue(interp);
+	interpolators.removeObject(interp);
+}
+
 BaseCommand* GenericControllableCommand::create(ControllableContainer* module, CommandContext context, var params, Multiplex* multiplex)
 {
 	return new GenericControllableCommand((CustomVariablesModule*)module, context, params, multiplex);
+}
+
+GenericControllableCommand::ValueInterpolator::ValueInterpolator(WeakReference<Parameter> p, var targetValue, float time, Automation* a) :
+	Thread("Value Interpolator"),
+	parameter(p),
+	targetValue(targetValue),
+	time(time),
+	automation(a)
+{
+	startThread();
+}
+
+GenericControllableCommand::ValueInterpolator::~ValueInterpolator()
+{
+	stopThread(10);
+}
+
+void GenericControllableCommand::ValueInterpolator::run()
+{
+	double timeAtStart = Time::getMillisecondCounterHiRes() / 1000.0;
+	valueAtStart = parameter->getValue();
+
+	jassert(valueAtStart.size() == targetValue.size());
+
+	while (!threadShouldExit() && !parameter.wasObjectDeleted())
+	{
+		sleep(2);
+
+		double t = Time::getMillisecondCounterHiRes() / 1000.0;
+		double relT = (t - timeAtStart) / time;
+
+		if (relT >= 1)
+		{
+			parameter->setValue(targetValue);
+			sendChangeMessage();
+			return;
+		}
+		else
+		{
+			var tVal;
+
+			float pos = automation->getValueAtPosition(relT);
+			
+			if (targetValue.isArray())
+			{
+				for (int i = 0; i < targetValue.size(); i++)
+				{
+					tVal.append(jmap<float>(pos, (float)valueAtStart[i], (float)targetValue[i]));
+				}
+			}
+			else
+			{
+				tVal = jmap<float>(pos, (float)valueAtStart, (float)targetValue);
+			}
+
+			parameter->setValue(tVal);
+		}
+	}
 }

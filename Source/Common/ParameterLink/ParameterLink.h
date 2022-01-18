@@ -39,6 +39,7 @@ public:
     BaseMultiplexList* list;
     WeakReference<Inspectable> listRef;
     String presetParamName;
+    bool fullPresetSelectMode;
 
     Array<var> mappingValues;
     StringArray inputValueNames; //this is also reference to how many mapping inputs are available
