@@ -67,7 +67,7 @@ JoyConModule::JoyConModule() :
 
 JoyConModule::~JoyConModule()
 {
-	stopThread(1000);
+	stopThread(500);
 }
 
 void JoyConModule::connectControllers()
@@ -152,7 +152,7 @@ void JoyConModule::onControllableFeedbackUpdateInternal(ControllableContainer * 
 	}
 	else if (c == reconnectControllers)
 	{
-		stopThread(20000);
+		stopThread(500);
 		startThread();
 	}
 }
