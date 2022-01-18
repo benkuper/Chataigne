@@ -25,6 +25,8 @@ Conductor::Conductor(var params, Multiplex* multiplex) :
 	nextCueName = addStringParameter("Next Cue Name", "The name of the cue that will be trigger if triggering the conductor", "");
 	nextCueName->setControllableFeedbackOnly(true);
 
+	currentCueIndex = addIntParameter("Current Cue", "The Index of the last action triggered", 1, 1);
+	currentCueIndex->setControllableFeedbackOnly(true);
 	cueTriggerSetCurrent = addBoolParameter("Cue Trigger Set Current", "If checked, triggering a cue manually sets it current and sets cueIndex to next cue", false);
 
 	loop = addBoolParameter("Loop", "If checked, when finishing the cue list, this will set the cue index to 0 again", false);
@@ -159,6 +161,7 @@ void Conductor::triggerConsequences(bool triggerTrue, int multiplexIndex)
 					{
 						a->triggerOn->trigger(); //loose multiplex to get preview but not using it for now
 						currentCueName->setValue(a->niceName);
+						currentCueIndex->setValue(nextCueIndex->intValue());
 					}
 				}
 			}
