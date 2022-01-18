@@ -25,6 +25,8 @@ public:
 	FloatParameter * freqTimeBpm;
 	FloatParameter * onTime;
 	FloatParameter * random;
+	Trigger * tapTempo;
+	double TSTapTempoLastPressed = 0;
 	Random rnd;
 
 	void updateFreqParam();
@@ -36,5 +38,7 @@ public:
 
 	String getTypeString() const override { return "Metronome"; }
 	static MetronomeModule * create() { return new MetronomeModule(); }
+
+	void tapTempoPressed();
 
 };
