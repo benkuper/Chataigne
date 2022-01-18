@@ -22,6 +22,8 @@ MetronomeModule::MetronomeModule() :
 	onTime = moduleParams.addFloatParameter("ON Time", "Relative amount of time the metronome stays valid (depending on the frequency) when triggered", .5f, 0, 1);
 	random = moduleParams.addFloatParameter("Randomness", "Amount of randomness in each call", 0, 0, 1);
 
+	tapTempo = moduleParams.addTrigger("Tap Tempo", "press me at least twice to set tempo");
+
 	tick = valuesCC.addBoolParameter("Tick", "When the metronome is ticking", false);
 
 	for (auto &c : valuesCC.controllables) c->isControllableFeedbackOnly = true;
@@ -84,6 +86,10 @@ void MetronomeModule::onControllableFeedbackUpdateInternal(ControllableContainer
 	{
 		if (c == mode) updateFreqParam();
 		notify(); //forces the thread to update
+	} 
+	else if (c == tapTempo)
+	{
+		tapTempoPressed();
 	}
 }
 
@@ -147,4 +153,28 @@ void MetronomeModule::run()
 		if (realMSToOn > 0) wait(realMSToOn);
 	}
 	
+}
+
+void MetronomeModule::tapTempoPressed()
+{
+	double now = Time::getMillisecondCounterHiRes();
+	double delta = now - TSTapTempoLastPressed;
+	if (delta < 5000 && delta > 0) { // arbitrary value to avoid very low BPM value on first press
+		MetroMode m = mode->getValueDataAsEnum<MetroMode>();
+		switch (m)
+		{
+		case FREQUENCY:
+			freqTimeBpm->setValue(1000./delta);
+			break;
+
+		case TIME:
+			freqTimeBpm->setValue(delta/1000.);
+			break;
+
+		case BPM:
+			freqTimeBpm->setValue(60000. / delta);
+			break;
+		}
+	}
+	TSTapTempoLastPressed = now;
 }
