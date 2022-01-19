@@ -22,6 +22,7 @@ public:
     ~Conductor();
 
     IntParameter* nextCueIndex;
+    IntParameter* currentCueIndex;
     BoolParameter* loop;
     StringParameter* currentCueName;
     StringParameter* nextCueName;
