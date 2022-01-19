@@ -38,6 +38,8 @@ public:
 		~ValuesManager();
 
 		DashboardItem* createDashboardItem() override;
+
+		InspectableEditor* getEditorInternal(bool isRoot) override;
 	};
 	ValuesManager values;
 

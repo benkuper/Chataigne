@@ -29,6 +29,7 @@
 
 #include "Preset/ui/CVPresetEditor.h"
 #include "ui/CVGroupManagerUI.h"
+#include "ui/CVGroupUI.h"
 
 #include "dashboard/CVDashboardItem.h"
 #include "dashboard/ui/CVDashboardItemUI.h"

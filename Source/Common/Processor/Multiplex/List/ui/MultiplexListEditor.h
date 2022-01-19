@@ -79,7 +79,7 @@ public:
 	InputValueListEditor(InputValueMultiplexList* eList, bool isRoot);
 	~InputValueListEditor();
 
-	TextButton fillFromExpBT;
+	TextButton fillBT;
 	InputValueMultiplexList* list;
 
 	void resizedInternalHeaderItemInternal(Rectangle<int>& r) override;

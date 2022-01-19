@@ -2,9 +2,9 @@
 /*
   ==============================================================================
 
-    MultiplexListEditor.cpp
-    Created: 22 Feb 2021 11:23:30am
-    Author:  bkupe
+	MultiplexListEditor.cpp
+	Created: 22 Feb 2021 11:23:30am
+	Author:  bkupe
 
   ==============================================================================
 */
@@ -41,7 +41,7 @@ void EnumMultiplexListEditor::buttonClicked(Button* b)
 }
 
 
-EnumMultiplexListEditor::EnumListOptionManager::EnumListOptionManager(EnumMultiplexList * eList) :
+EnumMultiplexListEditor::EnumListOptionManager::EnumListOptionManager(EnumMultiplexList* eList) :
 	eList(eList)
 {
 	int numRowsToDisplay = eList->referenceOptions.size() + 5;
@@ -89,7 +89,7 @@ void EnumMultiplexListEditor::EnumListOptionManager::labelTextChanged(Label* l)
 	eList->updateOption(optionsUI.indexOf(ui), ui->keyLabel.getText(), ui->valueLabel.getText());
 }
 
-EnumMultiplexListEditor::EnumListOptionManager::EnumOptionUI::EnumOptionUI(EnumMultiplexList * eList, int index) :
+EnumMultiplexListEditor::EnumListOptionManager::EnumOptionUI::EnumOptionUI(EnumMultiplexList* eList, int index) :
 	eList(eList),
 	index(index)
 {
@@ -144,12 +144,11 @@ void CVPresetMultiplexListEditor::resizedInternalHeaderItemInternal(Rectangle<in
 
 InputValueListEditor::InputValueListEditor(InputValueMultiplexList* eList, bool isRoot) :
 	BaseItemEditor(eList, isRoot),
-    fillFromExpBT("Fill..."),
-    list(eList)
+	fillBT("Fill..."),
+	list(eList)
 {
-	fillFromExpBT.addListener(this);
-	addAndMakeVisible(&fillFromExpBT);
-
+	fillBT.addListener(this);
+	addAndMakeVisible(&fillBT);
 }
 
 InputValueListEditor::~InputValueListEditor()
@@ -159,28 +158,86 @@ InputValueListEditor::~InputValueListEditor()
 
 void InputValueListEditor::resizedInternalHeaderItemInternal(Rectangle<int>& r)
 {
-	fillFromExpBT.setBounds(r.removeFromRight(100).reduced(1));
+	fillBT.setBounds(r.removeFromRight(100).reduced(1));
 }
 
 void InputValueListEditor::buttonClicked(Button* b)
 {
-	if (b == &fillFromExpBT)
+	if (b == &fillBT)
 	{
-		expressionWindow.reset(new ExpressionComponentWindow(list));
-		DialogWindow::LaunchOptions dw;
-		dw.content.set(expressionWindow.get(), false);
-		dw.dialogTitle = "Fill from expression";
-		dw.escapeKeyTriggersCloseButton = true;
-		dw.dialogBackgroundColour = BG_COLOR;
-		dw.launchAsync();
+		PopupMenu p;
+		p.addItem(1, "From Expression");
+		p.addItem(2, "From Input Values");
+		p.addItem(3, "From Container");
+
+		if (int result = p.show())
+		{
+			switch (result)
+			{
+			case 1:
+			{
+				expressionWindow.reset(new ExpressionComponentWindow(list));
+				DialogWindow::LaunchOptions dw;
+				dw.content.set(expressionWindow.get(), false);
+				dw.dialogTitle = "Fill from expression";
+				dw.escapeKeyTriggersCloseButton = true;
+				dw.dialogBackgroundColour = BG_COLOR;
+				dw.launchAsync();
+			}
+			break;
+
+			case 2:
+			case 3:
+			{
+				ControllableContainer* cc = nullptr;
+				if (result == 2)
+				{
+					PopupMenu cp;
+					int offset = 0;
+					Array<Module*> modules = ModuleManager::getInstance()->getModuleList();
+					OwnedArray<ContainerChooserPopupMenu> choosers;
+					for (auto& m : modules)
+					{
+						ContainerChooserPopupMenu* chooser = new ContainerChooserPopupMenu(&m->valuesCC, offset, -1, nullptr, true);
+						choosers.add(chooser);
+						cp.addSubMenu(m->niceName, *chooser);
+						offset += 100000;
+					}
+
+					if (int ccResult = cp.show())
+					{
+						int chooserIndex = (int)floor(ccResult / 100000.0f);
+						int relIndex = ccResult - chooserIndex * 100000;
+						cc = choosers[chooserIndex]->getContainerForResult(ccResult);
+					}
+				}
+				else
+				{
+					ContainerChooserPopupMenu chooser(Engine::mainEngine, 0, -1, nullptr, true);
+					cc = chooser.showAndGetContainer();
+				}
+
+				if (cc != nullptr)
+				{
+					Array<WeakReference<Controllable>> cList = cc->getAllControllables();
+					for (int i = 0; i < list->listSize && i < cList.size(); i++)
+					{
+						((TargetParameter*)list->list[i])->setValueFromTarget(cList[i]);
+					}
+				}
+			}
+			break;
+			}
+		}
 	}
 
 	BaseItemEditor::buttonClicked(b);
+
 }
 
 InputValueListEditor::ExpressionComponentWindow::ExpressionComponentWindow(InputValueMultiplexList* list) :
-    list(list),
-    assignBT("Assign")
+	list(list),
+	assignBT("Assign")
 {
 	instructions.setText("This expression will be used to fill each item in this list. You can use wildcards {index} and {index0} to replace with index of the item that is processed.", dontSendNotification);
 
