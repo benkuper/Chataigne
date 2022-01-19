@@ -47,6 +47,7 @@ Action::Action(const String &name, var params, Multiplex * multiplex, bool hasCo
 	}
 
 	csmOn.reset(new ConsequenceManager("Consequences : TRUE", multiplex));
+	triggerOn->dashboardDefaultLabelParentLevel = 1;
 
 	addChildControllableContainer(csmOn.get());
 
