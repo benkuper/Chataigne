@@ -46,7 +46,7 @@ CVCommand::CVCommand(CustomVariablesModule* _module, CommandContext context, var
 		targetPreset->targetType = TargetParameter::CONTAINER;
 		targetPreset->customGetTargetContainerFunc = &CVGroupManager::showMenuAndGetPreset;
 		targetPreset->defaultParentLabelLevel = 2;
-		getLinkedParam(targetPreset)->fullPresetSelectMode = true;
+		if(ParameterLink * pl = getLinkedParam(targetPreset)) pl->fullPresetSelectMode = true;
 
 		switch (type)
 		{
@@ -76,7 +76,7 @@ CVCommand::CVCommand(CustomVariablesModule* _module, CommandContext context, var
 			targetPreset2->targetType = TargetParameter::CONTAINER;
 			targetPreset2->customGetTargetContainerFunc = &CVGroupManager::showMenuAndGetPreset;
 			targetPreset2->defaultParentLabelLevel = 2;
-			getLinkedParam(targetPreset2)->fullPresetSelectMode = true;
+			if (ParameterLink* pl = getLinkedParam(targetPreset2)) pl->fullPresetSelectMode = true;
 			value = addFloatParameter("Value", "The interpolation value to weight between the 2 presets", 0, 0, 1);
 			linkParamToMappingIndex(value, 0);
 		}
