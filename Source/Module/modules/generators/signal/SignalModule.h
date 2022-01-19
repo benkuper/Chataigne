@@ -20,7 +20,7 @@ public:
 	SignalModule();
 	~SignalModule();
 
-	enum SignalType { SINE, SAW, TRIANGLE, PERLIN };
+	enum SignalType { SINE, SAW, TRIANGLE, PERLIN, CUSTOM };
 
 	float progression;
 
@@ -40,6 +40,9 @@ public:
 	//Perlin
 	IntParameter * octaves;
 	PerlinNoise perlin;
+
+	// custom 
+	Automation * customCurve;
 
 	void onContainerParameterChangedInternal(Parameter* p) override;
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
