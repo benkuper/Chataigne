@@ -362,7 +362,7 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 					if (p->type == Parameter::BOOL) p->setValue(r.nextBool());
 					else if (p->type == Parameter::FLOAT || p->type == Parameter::INT)
 					{
-						if (p->hasRange()) targetValue = jmap<float>(r.nextFloat(), p->minimumValue, p->type == Parameter::INT ? (float)p->maximumValue + 1 : p->maximumValue);
+						if (p->hasRange()) targetValue = jmap<float>(r.nextFloat(), p->minimumValue, p->type == Parameter::INT ? (float)p->maximumValue + 1 : (float)p->maximumValue);
 						else targetValue = p->type == Parameter::INT ? r.nextInt() : r.nextFloat();
 					}
 					else if (p->type == Parameter::COLOR)
