@@ -252,6 +252,7 @@
 		331643DFCB261592E0B722B9 /* icon.png */ /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = ../../Resources/icon.png; sourceTree = SOURCE_ROOT; };
 		334608D7C30F294FB4AFA0DD /* PlayAudioFileCommand.cpp */ /* PlayAudioFileCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PlayAudioFileCommand.cpp; path = ../../Source/Module/modules/audio/commands/PlayAudioFileCommand.cpp; sourceTree = SOURCE_ROOT; };
 		33698FA29E16C5EF3535B38B /* ModuleManagerUI.cpp */ /* ModuleManagerUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ModuleManagerUI.cpp; path = ../../Source/Module/ui/ModuleManagerUI.cpp; sourceTree = SOURCE_ROOT; };
+		336B67729956AB7D6053CD64 /* CVGroupUI.h */ /* CVGroupUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CVGroupUI.h; path = ../../Source/CustomVariables/ui/CVGroupUI.h; sourceTree = SOURCE_ROOT; };
 		33D9600902F5AF063F3C00C3 /* Point3DComparators.h */ /* Point3DComparators.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Point3DComparators.h; path = ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/comparators/Point3DComparators.h; sourceTree = SOURCE_ROOT; };
 		34349D7B20D357A0B5E78362 /* EnumComparator.cpp */ /* EnumComparator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = EnumComparator.cpp; path = ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/comparators/EnumComparator.cpp; sourceTree = SOURCE_ROOT; };
 		3449F147311F84BA64933833 /* MilluminModule.cpp */ /* MilluminModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MilluminModule.cpp; path = ../../Source/Module/modules/osc/millumin/MilluminModule.cpp; sourceTree = SOURCE_ROOT; };
@@ -700,6 +701,7 @@
 		C03652534579A2AA472C2268 /* ReaperTimeCommand.h */ /* ReaperTimeCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ReaperTimeCommand.h; path = ../../Source/Module/modules/osc/reaper/commands/ReaperTimeCommand.h; sourceTree = SOURCE_ROOT; };
 		C0BFDCF118F92A603852B8EB /* MIDICommands.cpp */ /* MIDICommands.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MIDICommands.cpp; path = ../../Source/Module/modules/midi/commands/MIDICommands.cpp; sourceTree = SOURCE_ROOT; };
 		C1D2BE99C657D67B5FB22423 /* StreamDeckV2.h */ /* StreamDeckV2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StreamDeckV2.h; path = ../../Source/Module/modules/controller/streamdeck/models/StreamDeckV2.h; sourceTree = SOURCE_ROOT; };
+		C27204324F51AD1704E2383F /* CVGroupUI.cpp */ /* CVGroupUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CVGroupUI.cpp; path = ../../Source/CustomVariables/ui/CVGroupUI.cpp; sourceTree = SOURCE_ROOT; };
 		C3DDE9B9D449A6FB26D1D354 /* NetworkStreamingModule.h */ /* NetworkStreamingModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NetworkStreamingModule.h; path = ../../Source/Module/modules/common/streaming/NetworkStreamingModule.h; sourceTree = SOURCE_ROOT; };
 		C4027CFB515DA11787FE11A9 /* commandScriptTemplate.js */ /* commandScriptTemplate.js */ = {isa = PBXFileReference; lastKnownFileType = file.js; name = commandScriptTemplate.js; path = ../../Resources/Templates/Scripts/commandScriptTemplate.js; sourceTree = SOURCE_ROOT; };
 		C45B37ABCDE0A9FA3B40EA19 /* MIDIDeviceParameter.cpp */ /* MIDIDeviceParameter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MIDIDeviceParameter.cpp; path = ../../Source/Common/MIDI/MIDIDeviceParameter.cpp; sourceTree = SOURCE_ROOT; };
@@ -3323,6 +3325,8 @@
 			children = (
 				B5C6C01816DB10267E81F0A4,
 				70C37DCEDA9A1240C101AFCC,
+				C27204324F51AD1704E2383F,
+				336B67729956AB7D6053CD64,
 			);
 			name = ui;
 			sourceTree = "<group>";
@@ -3675,7 +3679,7 @@
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCE_COREGRAPHICS_DRAW_ASYNC=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.9.3b15",
+					"JUCE_APP_VERSION=1.9.3b16",
 					"JUCE_APP_VERSION_HEX=0x10903",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -3746,7 +3750,7 @@
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCE_COREGRAPHICS_DRAW_ASYNC=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.9.3b15",
+					"JUCE_APP_VERSION=1.9.3b16",
 					"JUCE_APP_VERSION_HEX=0x10903",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",

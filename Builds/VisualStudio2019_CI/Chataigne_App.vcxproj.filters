@@ -1924,6 +1924,9 @@
     <ClCompile Include="..\..\Source\CustomVariables\ui\CVGroupManagerUI.cpp">
       <Filter>Chataigne\Source\CustomVariables\ui</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\CustomVariables\ui\CVGroupUI.cpp">
+      <Filter>Chataigne\Source\CustomVariables\ui</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\CustomVariables\CustomVariablesIncludes.cpp">
       <Filter>Chataigne\Source\CustomVariables</Filter>
     </ClCompile>
@@ -6064,6 +6067,9 @@
       <Filter>Chataigne\Source\CustomVariables\Preset</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\CustomVariables\ui\CVGroupManagerUI.h">
+      <Filter>Chataigne\Source\CustomVariables\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\CustomVariables\ui\CVGroupUI.h">
       <Filter>Chataigne\Source\CustomVariables\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\CustomVariables\CustomVariablesIncludes.h">
