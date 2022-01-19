@@ -238,7 +238,7 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 		if (Parameter* p = static_cast<Parameter*>(c))
 		{
 			var targetValue;
-			
+
 			Operator o = valueOperator->getValueDataAsEnum<Operator>();
 			int compOp = componentOperator->getValueData();
 
@@ -362,7 +362,7 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 					if (p->type == Parameter::BOOL) p->setValue(r.nextBool());
 					else if (p->type == Parameter::FLOAT || p->type == Parameter::INT)
 					{
-						if (p->hasRange()) targetValue = jmap<float>(r.nextFloat(), p->minimumValue, p->maximumValue);
+						if (p->hasRange()) targetValue = jmap<float>(r.nextFloat(), p->minimumValue, p->type == Parameter::INT ? (float)p->maximumValue + 1 : p->maximumValue);
 						else targetValue = p->type == Parameter::INT ? r.nextInt() : r.nextFloat();
 					}
 					else if (p->type == Parameter::COLOR)
@@ -403,7 +403,7 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 						interpolators.removeObject(interp);
 					}
 
-					ValueInterpolator * interp = new ValueInterpolator(p, targetValue, time->floatValue(), automation.get());
+					ValueInterpolator* interp = new ValueInterpolator(p, targetValue, time->floatValue(), automation.get());
 					interpolators.add(interp);
 					interpolatorMap.set(p, interp);
 					interp->addChangeListener(this);
@@ -533,7 +533,7 @@ void GenericControllableCommand::ValueInterpolator::run()
 			var tVal;
 
 			float pos = automation->getValueAtPosition(relT);
-			
+
 			if (targetValue.isArray())
 			{
 				for (int i = 0; i < targetValue.size(); i++)
