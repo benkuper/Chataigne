@@ -29,6 +29,7 @@ public:
 
     ConductorCue* currentCue;
     BoolParameter* cueTriggerSetCurrent;
+    BoolParameter* triggerConductorConsequencesOnDirect;
 
     ProcessorManager processorManager;
 
@@ -43,6 +44,8 @@ public:
     void itemsReordered() override;
 
     void actionTriggered(Action* a, bool triggerTrue, int multiplexIndex = 0) override;
+
+    void triggerCue(ConductorCue* cue, bool triggeredFromConductor);
 
     void updateIndices();
 

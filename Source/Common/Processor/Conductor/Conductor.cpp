@@ -1,4 +1,3 @@
-#include "Conductor.h"
 /*
   ==============================================================================
 
@@ -27,7 +26,8 @@ Conductor::Conductor(var params, Multiplex* multiplex) :
 
 	currentCueIndex = addIntParameter("Current Cue", "The Index of the last action triggered", 1, 1);
 	currentCueIndex->setControllableFeedbackOnly(true);
-	cueTriggerSetCurrent = addBoolParameter("Cue Trigger Set Current", "If checked, triggering a cue manually sets it current and sets cueIndex to next cue", false);
+	cueTriggerSetCurrent = addBoolParameter("Cue Trigger Set Current", "If checked, triggering a cue manually sets it current and sets cueIndex to next cue", true);
+	triggerConductorConsequencesOnDirect = addBoolParameter("Cue Trigger Consequences", "If checked, when directly launching a cue will also trigger this conductor's consequences.", true);
 
 	loop = addBoolParameter("Loop", "If checked, when finishing the cue list, this will set the cue index to 0 again", false);
 
@@ -108,18 +108,31 @@ void Conductor::actionTriggered(Action* a, bool triggerTrue, int multiplexIndex)
 {
 	if (ConductorCue* c = dynamic_cast<ConductorCue*>(a))
 	{
-		if (cueTriggerSetCurrent->boolValue())
-		{
-			if (currentCue != nullptr)
-			{
-				if (currentCue != nullptr) currentCue->setIsCurrent(false);
-			}
+		if (cueTriggerSetCurrent->boolValue()) triggerCue(c, false);
+	}
+}
 
-			currentCue = c;
-			currentCue->setIsCurrent(true);
-			nextCueIndex->setValue(getValidIndexAfter(processorManager.items.indexOf(currentCue) + 1));
-			updateNextCue();
-		}
+void Conductor::triggerCue(ConductorCue* cue, bool triggeredFromConductor)
+{
+	if (currentCue != nullptr)
+	{
+		if (currentCue != nullptr) currentCue->setIsCurrent(false);
+	}
+
+	currentCue = cue;
+	currentCue->setIsCurrent(true);
+	currentCueName->setValue(cue->niceName);
+	nextCueIndex->setValue(getValidIndexAfter(processorManager.items.indexOf(currentCue) + 1));
+	updateNextCue();
+
+	
+	if (!triggeredFromConductor)
+	{
+		if (triggerConductorConsequencesOnDirect->boolValue()) csmOn->triggerAll();
+	}
+	else
+	{
+		currentCue->triggerOn->trigger();
 	}
 }
 
@@ -141,7 +154,6 @@ void Conductor::updateIndices()
 void Conductor::triggerConsequences(bool triggerTrue, int multiplexIndex)
 {
 	if (!enabled->boolValue() || forceDisabled) return;
-	Action::triggerConsequences(triggerTrue, multiplexIndex);
 
 	if (triggerTrue)
 	{
@@ -150,25 +162,15 @@ void Conductor::triggerConsequences(bool triggerTrue, int multiplexIndex)
 		{
 			if (Action* a = dynamic_cast<Action*>(processorManager.items[itemIndex]))
 			{
-				if (currentCue != nullptr) currentCue->setIsCurrent(false);
-
-				if (ConductorCue* cue = dynamic_cast<ConductorCue*>(a))
-				{
-					cue->setIsCurrent(true);
-					currentCue = cue;
-
-					if (a->enabled->boolValue())
-					{
-						a->triggerOn->trigger(); //loose multiplex to get preview but not using it for now
-						currentCueName->setValue(a->niceName);
-						currentCueIndex->setValue(nextCueIndex->intValue());
-					}
-				}
+				if (ConductorCue* cue = dynamic_cast<ConductorCue*>(a)) triggerCue(cue, true);
 			}
 
 			nextCueIndex->setValue(getValidIndexAfter(itemIndex + 1));
 		}
 	}
+
+	if (triggerConductorConsequencesOnDirect->boolValue()) actionListeners.call(&ActionListener::actionTriggered, this, triggerTrue, multiplexIndex); //only notify but do not make Action class trigger consequences here
+	else Action::triggerConsequences(triggerTrue, multiplexIndex);
 }
 
 int Conductor::getValidIndexAfter(int index)

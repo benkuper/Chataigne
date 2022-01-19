@@ -9,7 +9,7 @@
 */
 
 ConductorCue::ConductorCue(var params, Multiplex * multiplex) :
-    Action("Cue", params, multiplex, false, false),
+    Action("Cue", params, multiplex, true, false),
     isCurrent(false),
     isNext(false),
     index(-1),
