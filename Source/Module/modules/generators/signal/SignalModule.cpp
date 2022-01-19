@@ -16,7 +16,7 @@ SignalModule::SignalModule() :
 	setupIOConfiguration(true, false);
 
 	type = moduleParams.addEnumParameter("Type", "Signal type");
-	type->addOption("Sine", SINE)->addOption("Saw",SAW)->addOption("Triangle",TRIANGLE)->addOption("Perlin", PERLIN);
+	type->addOption("Sine", SINE)->addOption("Saw",SAW)->addOption("Triangle",TRIANGLE)->addOption("Perlin", PERLIN)->addOption("Custom", CUSTOM);
 	refreshRate = moduleParams.addFloatParameter("Refresh Rate", "Time interval between value updates, in Hz", 50, 1, 200);
 	amplitude = moduleParams.addFloatParameter("Amplitude", "Amplitude of the signal, act as a multiplier", 1, 0);
 	offset = moduleParams.addFloatParameter("Offset", "Offset the signal value", 0);
@@ -26,6 +26,8 @@ SignalModule::SignalModule() :
 
 	offsetsNumber = moduleParams.addIntParameter("Offset values", "Number of values spreaded", 0, 0);
 	offsetCycles = moduleParams.addFloatParameter("Spread cycles", "number of cycles for spreaded values",1,0);
+
+	customCurve = nullptr;
 
 	value = valuesCC.addFloatParameter("Value", "The signal value", 0, 0, 1);
 
@@ -63,6 +65,28 @@ void SignalModule::onControllableFeedbackUpdateInternal(ControllableContainer * 
 	}else if(c == type)	
 	{
 		octaves->setEnabled(type->getValueDataAsEnum<SignalType>() == PERLIN);
+
+		if (type->getValueDataAsEnum<SignalType>() == CUSTOM) {
+			customCurve = new Automation("Custom Curve");
+			customCurve->isSelectable = false;
+			customCurve->length->setValue(1);
+			customCurve->addKey(0, 0, false);
+			customCurve->items[0]->easingType->setValueWithData(Easing::BEZIER);
+			customCurve->addKey(1, 1, false);
+			customCurve->selectItemWhenCreated = false;
+			customCurve->editorIsCollapsed = true;
+			customCurve->editorCanBeCollapsed = true;
+			customCurve->setCanBeDisabled(true);
+			customCurve->enabled->setValue(false);
+			moduleParams.addChildControllableContainer(customCurve, true);
+		}
+		else if (customCurve != nullptr) {
+			moduleParams.removeChildControllableContainer(customCurve);
+			customCurve = nullptr;
+		}
+
+
+
 	}
 	else if (c == offsetsNumber) 
 	{
@@ -151,6 +175,12 @@ float SignalModule::getValueFromProgression(SignalType t, float prog) {
 
 	case PERLIN:
 		val = perlin.octaveNoise0_1(prog, octaves->intValue());
+		break;
+
+	case CUSTOM:
+		if (customCurve != nullptr) {
+			val = customCurve -> getValueAtPosition(fmodf(prog,1));
+		}
 		break;
 	}
 	return val;
