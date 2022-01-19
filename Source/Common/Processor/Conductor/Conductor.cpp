@@ -169,7 +169,7 @@ void Conductor::triggerConsequences(bool triggerTrue, int multiplexIndex)
 		}
 	}
 
-	if (triggerConductorConsequencesOnDirect->boolValue()) actionListeners.call(&ActionListener::actionTriggered, (Action *)this, triggerTrue, multiplexIndex); //only notify but do not make Action class trigger consequences here
+	if (triggerConductorConsequencesOnDirect->boolValue()) notifyActionTriggered(triggerTrue, multiplexIndex); //only notify but do not make Action class trigger consequences here
 	else Action::triggerConsequences(triggerTrue, multiplexIndex);
 }
 

@@ -1,3 +1,4 @@
+#include "Action.h"
 /*
   ==============================================================================
 
@@ -128,8 +129,8 @@ void Action::triggerConsequences(bool triggerTrue, int multiplexIndex)
 	{
 		if (triggerTrue) csmOn->triggerAll(multiplexIndex);
 		else csmOff->triggerAll(multiplexIndex);
-
-		actionListeners.call(&ActionListener::actionTriggered, this, triggerTrue, multiplexIndex);
+		
+		notifyActionTriggered(triggerTrue, multiplexIndex);
 	}
 }
 
@@ -209,6 +210,11 @@ void Action::controllableFeedbackUpdate(ControllableContainer * cc, Controllable
 	{
 		updateConditionRoles();
 	}
+}
+
+void Action::notifyActionTriggered(bool triggerTrue, int multiplexIndex)
+{
+	actionListeners.call(&ActionListener::actionTriggered, this, triggerTrue, multiplexIndex);
 }
 
 void Action::conditionManagerValidationChanged(ConditionManager *, int multiplexIndex, bool dispatchOnChangeOnly)

@@ -55,6 +55,8 @@ public:
 	void onContainerParameterChangedInternal(Parameter* p) override;
 	void controllableFeedbackUpdate(ControllableContainer* cc, Controllable* c) override;
 
+	void notifyActionTriggered(bool triggerTrue, int multiplexIndex);
+
 	void conditionManagerValidationChanged(ConditionManager*, int multiplexIndex, bool dispatchOnChangeOnly) override;
 
 	void itemAdded(Condition*) override;
