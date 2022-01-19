@@ -404,7 +404,7 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 						interpolators.removeObject(interp);
 					}
 
-					ValueInterpolator* interp = new ValueInterpolator(p, targetValue, time->floatValue(), automation.get());
+					ValueInterpolator* interp = new ValueInterpolator(p, targetValue, getLinkedValue(time, multiplexIndex), automation.get());
 					interpolators.add(interp);
 					interpolatorMap.set(p, interp);
 					interp->addChangeListener(this);
