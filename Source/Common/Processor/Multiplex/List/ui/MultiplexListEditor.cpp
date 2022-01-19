@@ -207,7 +207,6 @@ void InputValueListEditor::buttonClicked(Button* b)
 					if (int ccResult = cp.show())
 					{
 						int chooserIndex = (int)floor(ccResult / 100000.0f);
-						int relIndex = ccResult - chooserIndex * 100000;
 						cc = choosers[chooserIndex]->getContainerForResult(ccResult);
 					}
 				}
