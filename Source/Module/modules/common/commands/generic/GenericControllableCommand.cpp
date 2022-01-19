@@ -44,6 +44,7 @@ GenericControllableCommand::GenericControllableCommand(Module* _module, CommandC
 			automation.reset(new Automation("Curve"));
 			automation->addKey(0, 0);
 			automation->addKey(1, 1);
+			addChildControllableContainer(automation.get());
 		}
 	}
 	else if (action == SET_ENABLED) value = addBoolParameter("Value", "If checked, this will enable this parameter, otherwise it will disable it. Simple. Efficient.", false);
@@ -472,7 +473,7 @@ void GenericControllableCommand::loadGhostData(var data)
 		}
 	}
 
-	if (action == SET_VALUE) updateComponentFromTarget(); //force generate if not yet
+	if (action == SET_VALUE || action == GO_TO_VALUE) updateComponentFromTarget(); //force generate if not yet
 //}
 }
 
