@@ -95,6 +95,7 @@ void GenericControllableCommand::updateValueFromTargetAndComponent()
 	if (value != nullptr && !value.wasObjectDeleted())
 	{
 		if (ghostValueData.isVoid()) ghostValueData = value->getJSONData();
+		getLinkedParam(value);
 		removeControllable(value.get());
 	}
 
@@ -472,6 +473,7 @@ void GenericControllableCommand::loadGhostData(var data)
 			ghostComponent = paramsData[i].getProperty("value", var());
 		}
 	}
+	ParamLinkContainer::loadJSONDataInternal(data); //force refreshing links
 
 	if (action == SET_VALUE || action == GO_TO_VALUE) updateComponentFromTarget(); //force generate if not yet
 //}
