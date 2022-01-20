@@ -173,6 +173,7 @@ void DMXSACNDevice::run()
 			continue;
 		}
 
+		receivedSeq = receivedPacket.frame.seq_number;
 		
 		int universe = ((receivedPacket.frame.universe >> 8) & 0xFF) | ((receivedPacket.frame.universe & 0xFF) << 8);
 		if (universe == inputUniverse->intValue())
