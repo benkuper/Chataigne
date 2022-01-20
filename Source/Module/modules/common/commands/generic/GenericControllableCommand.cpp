@@ -254,19 +254,23 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 				{
 					if (EnumParameter* ep = dynamic_cast<EnumParameter*>(p))
 					{
-						if (val.isInt() || val.isDouble())
+						if (ep->enumValues.size() > 0)
 						{
-							int index = (int)val % ep->enumValues.size();
-							while (index < 0) index += ep->enumValues.size();
-							ep->setValueWithKey((ep->enumValues[index]->key));
-						}
-						else if (val.isString())
-						{
-							StringArray keys = ep->getAllKeys();
-							if (keys.contains(val.toString())) ep->setValueWithKey(val);
+
+							if (val.isInt() || val.isDouble())
+							{
+								int index = (int)val % ep->enumValues.size();
+								while (index < 0) index += ep->enumValues.size();
+								ep->setValueWithKey((ep->enumValues[index]->key));
+							}
+							else if (val.isString())
+							{
+								StringArray keys = ep->getAllKeys();
+								if (keys.contains(val.toString())) ep->setValueWithKey(val);
+								else ep->setValueWithData(val);
+							}
 							else ep->setValueWithData(val);
 						}
-						else ep->setValueWithData(val);
 					}
 					else
 					{

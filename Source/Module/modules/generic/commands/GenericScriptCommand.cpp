@@ -1,3 +1,4 @@
+#include "GenericScriptCommand.h"
 /*
   ==============================================================================
 
@@ -14,7 +15,8 @@ GenericScriptCommand::GenericScriptCommand(ChataigneGenericModule * _module, Com
 	BaseCommand(_module, context, params, multiplex),
 	script(this, false)
 {
-
+	scriptParamContainer = new ParamLinkContainer("Params", multiplex);
+	script.setParamsContainer(scriptParamContainer);
 	addChildControllableContainer(&script);
 
 	if(commandScriptTemplate.isEmpty()) commandScriptTemplate = ChataigneAssetManager::getInstance()->getScriptTemplateBundle(StringArray("generic", "command"));
@@ -27,14 +29,28 @@ GenericScriptCommand::~GenericScriptCommand()
 
 void GenericScriptCommand::setValueInternal(var value, int multiplexIndex)
 {
-	Array<var> values;
-	values.add(value);
+	Array<var> values = getArgs(multiplexIndex);
+	values.insert(0,value);
 	script.callFunction(setValueId, values);
 }
 
 void GenericScriptCommand::triggerInternal(int multiplexIndex)
 {
-	if(context != MAPPING) script.callFunction(triggerId, Array<var>());
+	Array<var> args = getArgs(multiplexIndex);
+	if(context != MAPPING) script.callFunction(triggerId, args);
+}
+
+Array<var> GenericScriptCommand::getArgs(int multiplexIndex)
+{
+	Array<var> args;
+	args.add(multiplexIndex);
+	Array<WeakReference<Parameter>> params = scriptParamContainer->getAllParameters();
+	for (auto& p : params)
+	{
+		args.add(scriptParamContainer->getLinkedValue(p, multiplexIndex));
+	}
+
+	return args;
 }
 
 var GenericScriptCommand::getJSONData()
