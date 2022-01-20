@@ -20,26 +20,33 @@ public:
 	SignalModule();
 	~SignalModule();
 
-	enum SignalType { SINE, SAW, TRIANGLE, PERLIN, CUSTOM };
+	enum SignalType { SINE, SAW, SAW_REVERSE, TRIANGLE, PERLIN, RANDOM, CUSTOM };
 
 	float progression;
 
 	EnumParameter * type;
 	FloatParameter * refreshRate;
 
+	Trigger* resetTrigger;
 	FloatParameter * frequency;
-	FloatParameter * amplitude;
-	FloatParameter * offset;
+	FloatParameter* phaseOffset;
+	Point2DParameter * range;
 
 	IntParameter * offsetsNumber;
 	FloatParameter * offsetCycles;
-	std::vector<FloatParameter *> offsetValues;
+	Array<FloatParameter *> offsetValues;
 
+	
 	FloatParameter * value;
 	
 	//Perlin
 	IntParameter * octaves;
 	PerlinNoise perlin;
+
+	//random
+	Array<float> curRandom;
+	Array<int> prevRandomProg;
+	Random random;
 
 	// custom 
 	Automation * customCurve;
@@ -56,5 +63,5 @@ public:
 	// Inherited via Timer
 	virtual void run() override;
 
-	float getValueFromProgression(SignalType t, float prog);
+	float getValueFromProgression(SignalType t, float prog, int offsetIndex = 0);
 };
