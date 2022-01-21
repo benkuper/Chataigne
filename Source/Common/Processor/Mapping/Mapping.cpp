@@ -28,6 +28,7 @@ Mapping::Mapping(var params, Multiplex* multiplex, bool canBeDisabled) :
 	type = MAPPING;
 
 	updateRate = mappingParams.addIntParameter("Update rate", "This is the update rate at which the mapping is processing. This is used only when continuous filters like Smooth and Damping are presents", 50, 1, 500, false);
+	sendOnInputChangeOnly = mappingParams.addBoolParameter("Send On Input Change Only", "This decides whether the Mapping Outputs are always triggered when a filter changes, or only when an input has changed.", false);
 	sendOnOutputChangeOnly = mappingParams.addBoolParameter("Send On Output Change Only", "This decides whether the Mapping Outputs are always triggered on source change, or only when a value's filtered output has changed.", false);
 	sendAfterLoad = mappingParams.addBoolParameter("Send After Load", "This will force sending values once after loading", false);
 	sendOnActivate = mappingParams.addBoolParameter("Send on Activate", "This will force sending values once each time the mapping is activated", false);
@@ -108,7 +109,7 @@ void Mapping::checkFiltersNeedContinuousProcess()
 	if(updateRate->enabled) sendOnOutputChangeOnly->setValue(true);
 }
 
-void Mapping::updateMappingChain(MappingFilter* afterThisFilter, bool processAfter, bool rangeOnly)
+void Mapping::updateMappingChain(MappingFilter* afterThisFilter, bool processAfter, bool rangeOnly, bool afterProcessSendOutput)
 {
 	if (isCurrentlyLoadingData || isClearing) return;
 	if (isRebuilding)
@@ -189,10 +190,10 @@ void Mapping::updateMappingChain(MappingFilter* afterThisFilter, bool processAft
 
 	if (rebuildPending)
 	{
-		updateMappingChain();
+		updateMappingChain(nullptr, processAfter, rangeOnly, afterProcessSendOutput);
 	}
 
-	if (processAfter) process();
+	if (processAfter) process(afterProcessSendOutput);
 }
 
 
@@ -207,7 +208,7 @@ void Mapping::multiplexPreviewIndexChanged()
 	mappingNotifier.addMessage(new MappingEvent(MappingEvent::OUTPUT_TYPE_CHANGED, this)); //force updating output to update the good index
 }
 
-void Mapping::process(bool forceOutput, int multiplexIndex)
+void Mapping::process(bool sendOutput, int multiplexIndex)
 {
 	if ((canBeDisabled && (enabled != nullptr && !enabled->boolValue())) || forceDisabled) return;
 	if (im.items.size() == 0) return;
@@ -215,7 +216,7 @@ void Mapping::process(bool forceOutput, int multiplexIndex)
 
 	if (multiplexIndex == -1) // -1 makes process all
 	{
-		for (int i = 0; i < getMultiplexCount(); i++) process(forceOutput, i);
+		for (int i = 0; i < getMultiplexCount(); i++) process(sendOutput, i);
 		return;
 	}
 
@@ -246,7 +247,7 @@ void Mapping::process(bool forceOutput, int multiplexIndex)
 				}
 			}
 
-			om.updateOutputValues(multiplexIndex, sendOnOutputChangeOnly->boolValue());
+			if(sendOutput) om.updateOutputValues(multiplexIndex, sendOnOutputChangeOnly->boolValue());
 		}
 
 		isProcessing = false;
@@ -349,7 +350,7 @@ void Mapping::inputParameterValueChanged(MappingInput*, int multiplexIndex)
 {
 	if (processMode == VALUE_CHANGE && !isThreadRunning())
 	{
-		process(false, multiplexIndex);
+		process(true, multiplexIndex);
 	}
 }
 
@@ -386,13 +387,13 @@ void Mapping::filterManagerNeedsRebuild(MappingFilter* afterThisFilter, bool ran
 {
 	if (isClearing) return;
 	if (isMultiplexed() && multiplex->isChangingCount) return; //this is to avoid rebuilding for all filters that trigger a rebuild on multiplex count change
-	updateMappingChain(afterThisFilter, true, rangeOnly);
+	updateMappingChain(afterThisFilter, true, rangeOnly, !sendOnInputChangeOnly->boolValue());
 }
 
 void Mapping::filterManagerNeedsProcess()
 {
 	if (isClearing) return;
-	process();
+	process(!sendOnInputChangeOnly->boolValue());
 }
 
 
@@ -423,7 +424,7 @@ void Mapping::run()
 
 		millis = Time::getMillisecondCounterHiRes();
 
-		process(false, -1);
+		process();
 
 		double newMillis = Time::getMillisecondCounterHiRes();
 

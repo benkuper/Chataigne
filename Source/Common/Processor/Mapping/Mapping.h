@@ -29,6 +29,7 @@ public:
 	ControllableContainer outValuesCC;
 
 	IntParameter* updateRate;
+	BoolParameter* sendOnInputChangeOnly;
 	BoolParameter* sendOnOutputChangeOnly;
 	BoolParameter* sendAfterLoad;
 	BoolParameter* sendOnActivate;
@@ -48,11 +49,11 @@ public:
 	void lockInputTo(Array<Parameter*> lockParam);
 	void checkFiltersNeedContinuousProcess();
 
-	void updateMappingChain(MappingFilter * afterThisFilter = nullptr, bool processAfter = true, bool rangeOnly = false); //will host warnings and type change checks
+	void updateMappingChain(MappingFilter * afterThisFilter = nullptr, bool processAfter = true, bool rangeOnly = false, bool afterProcessSendOutput = true); //will host warnings and type change checks
 	virtual void multiplexCountChanged() override;
 	virtual void multiplexPreviewIndexChanged() override;
 
-	void process(bool forceOutput = false, int multiplexIndex = -1);
+	void process(bool sendOutput = true, int multiplexIndex = -1);
 
 	void updateContinuousProcess();
 
