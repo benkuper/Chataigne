@@ -129,6 +129,8 @@ void ChataigneEngine::loadJSONDataInternalEngine(var data, ProgressTask* loading
 	ProgressTask* sequenceTask = loadingTask->addTask("Sequences");
 	ProgressTask* routerTask = loadingTask->addTask("Router");
 
+	ModuleManager::getInstance()->factory->updateCustomModules();
+
 	moduleTask->start();
 	ModuleManager::getInstance()->loadJSONData(data.getProperty(ModuleManager::getInstance()->shortName, var()));
 	moduleTask->setProgress(1);

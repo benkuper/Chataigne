@@ -57,13 +57,10 @@ ModuleFactory::ModuleFactory() {
 
 	addCustomModules();
 	buildPopupMenu();
-
-	Engine::mainEngine->addEngineListener(this);
 }
 
 ModuleFactory::~ModuleFactory()
 {
-	if (Engine::mainEngine != nullptr) Engine::mainEngine->removeEngineListener(this);
 }
 
 void ModuleFactory::addCustomModules(bool log)
@@ -269,10 +266,6 @@ Module* ModuleFactory::create(BaseFactoryDefinition<Module>* def)
 	return m;
 }
 
-void ModuleFactory::startLoadFile()
-{
-	updateCustomModules();
-}
 
 
 //DEFINITION

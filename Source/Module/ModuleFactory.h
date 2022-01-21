@@ -26,8 +26,7 @@ public:
 };
 
 class ModuleFactory :
-	public Factory<Module>,
-	public EngineListener
+	public Factory<Module>
 {
 public:
 	HashMap<String, ModuleDefinition*> customModulesDefMap;
@@ -49,7 +48,4 @@ public:
 	File getCustomModulesFolder() const;
 
 	Module* create(BaseFactoryDefinition<Module> * def) override;
-
-	void startLoadFile() override;
-
 };
