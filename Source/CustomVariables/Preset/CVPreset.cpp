@@ -84,7 +84,7 @@ void CVPreset::onContainerTriggerTriggered(Trigger* t)
 {
 	MorphTarget::onContainerTriggerTriggered(t);
 	if (t == loadTrigger) group->goToPreset(this, defaultLoadTime->floatValue(), &group->defaultInterpolation);
-	else if (t == updateTrigger) values.syncItems(true);
+	else if (t == updateTrigger) values.syncValues(true);
 }
 
 InspectableEditor * CVPreset::getEditorInternal(bool isRoot)
@@ -151,13 +151,12 @@ void PresetParameterContainer::addValueFromItem(Parameter* source)
 	addChildControllableContainer(pp, true);
 }
 
-void PresetParameterContainer::syncItem(ParameterPreset* preset, bool syncValue)
+void PresetParameterContainer::syncItem(ParameterPreset* preset, bool syncValueAfter)
 {
 	Parameter* p = preset->parameter;
 	Parameter* source = linkMap[preset];
-
+	
 	preset->setNiceName(source->niceName);
-
 	p->setNiceName(source->niceName);
 
 	if (source->hasRange()) p->setRange(source->minimumValue, source->maximumValue);
@@ -175,11 +174,8 @@ void PresetParameterContainer::syncItem(ParameterPreset* preset, bool syncValue)
 		}
 	}
 
-	if (syncValue)
-	{
-		if (p->type != Parameter::ENUM) p->setValue(source->value);
-		else ((EnumParameter*)p)->setValueWithKey(((EnumParameter*)source)->getValueKey());
-	}
+	if (syncValueAfter) syncValue(preset);
+	
 }
 
 void PresetParameterContainer::syncItems(bool syncValues)
@@ -188,6 +184,31 @@ void PresetParameterContainer::syncItems(bool syncValues)
 	{
 		if (ParameterPreset* pp = dynamic_cast<ParameterPreset *>(cc.get())) syncItem(pp, syncValues);
 	}
+}
+
+void PresetParameterContainer::syncValues(bool addToUndo)
+{
+	Array<UndoableAction*> actions;
+	for (auto& cc : controllableContainers)
+	{
+		if (ParameterPreset* pp = dynamic_cast<ParameterPreset*>(cc.get()))
+		{
+			if (addToUndo) actions.add(syncValue(pp, true));
+			else syncValue(pp, false);
+		}
+	}
+	if (addToUndo) UndoMaster::getInstance()->performActions("Update preset " + niceName, actions);
+}
+
+UndoableAction* PresetParameterContainer::syncValue(ParameterPreset* preset, bool onlyReturnUndoAction)
+{
+	Parameter* p = preset->parameter;
+	Parameter* source = linkMap[preset];
+
+	if (onlyReturnUndoAction) return p->setUndoableValue(p->value, source->value, true);
+	
+	p->setValue(source->value);
+	return nullptr;
 }
 
 void PresetParameterContainer::itemAdded(GenericControllableItem* gci)
