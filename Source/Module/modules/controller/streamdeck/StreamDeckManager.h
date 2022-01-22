@@ -21,7 +21,7 @@ public:
 
 	const int vid = 4057;
 	
-	enum StreamDeckPID { PID_MINI = 0x63, PID_V1 = 0x60, PID_V2 = 0x6D, PID_XL = 0x6C};
+	enum StreamDeckPID { PID_MINI = 0x63, PID_V1 = 0x60, PID_V2 = 0x6D, PID_MK2 = 0x80, PID_XL = 0x6C};
 
 	OwnedArray<StreamDeck> devices;
 

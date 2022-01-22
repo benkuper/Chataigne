@@ -122,6 +122,7 @@ StreamDeck* StreamDeckManager::openDevice(hid_device_info* deviceInfo)
 		break;
 
 	case PID_V2:
+	case PID_MK2:
 		cd = new StreamDeckV2(d, String(deviceInfo->serial_number));
 		break;
 
