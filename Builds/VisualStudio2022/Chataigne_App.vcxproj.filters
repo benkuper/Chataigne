@@ -3211,7 +3211,13 @@
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_utils\gui\juce_AudioVisualiserComponent.cpp">
       <Filter>JUCE Modules\juce_audio_utils\gui</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_utils\gui\juce_KeyboardComponentBase.cpp">
+      <Filter>JUCE Modules\juce_audio_utils\gui</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_utils\gui\juce_MidiKeyboardComponent.cpp">
+      <Filter>JUCE Modules\juce_audio_utils\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_utils\gui\juce_MPEKeyboardComponent.cpp">
       <Filter>JUCE Modules\juce_audio_utils\gui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_utils\native\juce_android_BluetoothMidiDevicePairingDialogue.cpp">
@@ -4364,6 +4370,9 @@
       <Filter>JUCE Modules\juce_gui_basics\misc</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\misc\juce_DropShadower.cpp">
+      <Filter>JUCE Modules\juce_gui_basics\misc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\misc\juce_FocusOutline.cpp">
       <Filter>JUCE Modules\juce_gui_basics\misc</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\misc\juce_JUCESplashScreen.cpp">
@@ -7656,7 +7665,13 @@
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_utils\gui\juce_BluetoothMidiDevicePairingDialogue.h">
       <Filter>JUCE Modules\juce_audio_utils\gui</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_utils\gui\juce_KeyboardComponentBase.h">
+      <Filter>JUCE Modules\juce_audio_utils\gui</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_utils\gui\juce_MidiKeyboardComponent.h">
+      <Filter>JUCE Modules\juce_audio_utils\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_utils\gui\juce_MPEKeyboardComponent.h">
       <Filter>JUCE Modules\juce_audio_utils\gui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_utils\players\juce_AudioProcessorPlayer.h">
@@ -8832,6 +8847,9 @@
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\misc\juce_DropShadower.h">
       <Filter>JUCE Modules\juce_gui_basics\misc</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\misc\juce_FocusOutline.h">
+      <Filter>JUCE Modules\juce_gui_basics\misc</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\misc\juce_JUCESplashScreen.h">
       <Filter>JUCE Modules\juce_gui_basics\misc</Filter>
     </ClInclude>
@@ -8878,6 +8896,9 @@
       <Filter>JUCE Modules\juce_gui_basics\native\accessibility</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\native\accessibility\juce_win32_AccessibilityElement.h">
+      <Filter>JUCE Modules\juce_gui_basics\native\accessibility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\native\accessibility\juce_win32_ComInterfaces.h">
       <Filter>JUCE Modules\juce_gui_basics\native\accessibility</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\native\accessibility\juce_win32_UIAExpandCollapseProvider.h">
