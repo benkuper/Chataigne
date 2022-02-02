@@ -91,7 +91,7 @@ void ConductorUI::childBoundsChanged(Component* c)
 
 void ConductorUI::processorAskForFocus(ProcessorUI* pui)
 {
-    processorUIListeners.call(&ProcessorUIListener::processorAskForFocus, pui);
+    processorUIListeners.call(&ActionUI::ProcessorUIListener::processorAskForFocus, pui);
 }
 
 void ConductorUI::newMessage(const Action::ActionEvent& e)
