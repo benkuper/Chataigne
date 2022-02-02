@@ -78,7 +78,8 @@ public:
 
 
 class InputSystemManager :
-	public Thread
+	public Thread,
+	public Timer
 {
 public:
 	juce_DeclareSingleton(InputSystemManager, true);
@@ -87,11 +88,11 @@ public:
 	~InputSystemManager();
 
 	bool isInit;
-	const uint32 checkDeviceTime = 1000; //ms
-	uint32 lastCheckTime;
 
 	//OwnedArray<Joystick, CriticalSection> joysticks;
 	OwnedArray<Gamepad, CriticalSection> gamepads;
+
+	void checkDevices();
 
 	Gamepad* addGamepad(Gamepad * controller);
 	void removeGamepad(Gamepad* g);
@@ -103,8 +104,9 @@ public:
 	Gamepad* getGamepadForID(SDL_JoystickGUID id);
 	Gamepad* getGamepadForName(String name);
 
-	void run() override;
 
+	void run() override;
+	void timerCallback() override;
 
 	class InputManagerListener
 	{

@@ -23,14 +23,63 @@ InputSystemManager::InputSystemManager() :
 		return;
 	}
 
-	lastCheckTime = 0;
+	checkDevices();
+
 	startThread();
+	startTimerHz(1);
 }
 
 InputSystemManager::~InputSystemManager()
 {
+	stopTimer();
 	stopThread(1000);
 	SDL_Quit();
+}
+
+void InputSystemManager::checkDevices()
+{
+	int numDevices = SDL_NumJoysticks();
+
+	for (int i = 0; i < numDevices; ++i)
+	{
+		if (SDL_IsGameController(i))
+		{
+			SDL_GameController* g = SDL_GameControllerOpen(i);
+			if (g == NULL)
+			{
+				LOG("Unable to open gamepad : " << SDL_GetError());
+				continue;
+			}
+			Gamepad* gp = getGamepadForSDL(g);
+			if (gp == nullptr) addGamepad(new Gamepad(g));
+		}
+		else
+		{
+			SDL_Joystick* j = SDL_JoystickOpen(i);
+			if (j == NULL)
+			{
+				LOG("Unable to open joystick : " << SDL_GetError());
+				continue;
+			}
+			Gamepad* jj = getGamepadForSDL(j);
+			if (jj == nullptr) addGamepad(new Gamepad(j));
+		}
+	}
+
+	Array<Gamepad*> gamepadsToRemove;
+	for (auto& g : gamepads)
+	{
+		//check removed devices
+		if (g->joystick != nullptr)
+		{
+			if (!SDL_JoystickGetAttached(g->joystick)) gamepadsToRemove.add(g);
+		}
+		else
+		{
+			if (!SDL_GameControllerGetAttached(g->gamepad)) gamepadsToRemove.add(g);
+		}
+	}
+	for (auto& g : gamepadsToRemove) removeGamepad(g);
 }
 
 Gamepad* InputSystemManager::addGamepad(Gamepad * g)
@@ -91,60 +140,9 @@ void InputSystemManager::run()
 {
 	while (!threadShouldExit())
 	{
-		if (Engine::mainEngine->isClearing || Engine::mainEngine->isLoadingFile)
-		{
-			wait(20);
-			continue;
-		}
+		wait(20); //50fps
 
-		if (Time::getApproximateMillisecondCounter() > lastCheckTime + checkDeviceTime)
-		{
-			int numDevices = SDL_NumJoysticks();
-
-			for (int i = 0; i < numDevices; ++i)
-			{
-				if (SDL_IsGameController(i))
-				{
-					SDL_GameController* g = SDL_GameControllerOpen(i);
-					if (g == NULL)
-					{
-						LOG("Unable to open gamepad : " << SDL_GetError());
-						continue;
-					}
-					Gamepad* gp = getGamepadForSDL(g);
-					if (gp == nullptr) addGamepad(new Gamepad(g));
-				}
-				else
-				{
-					SDL_Joystick* j = SDL_JoystickOpen(i);
-					if (j == NULL)
-					{
-						LOG("Unable to open joystick : " << SDL_GetError());
-						continue;
-					}
-					Gamepad* jj = getGamepadForSDL(j);
-					if (jj == nullptr) addGamepad(new Gamepad(j));
-				}
-			}
-
-			Array<Gamepad*> gamepadsToRemove;
-			for (auto& g : gamepads)
-			{
-				//check removed devices
-				if (g->joystick != nullptr)
-				{
-					if (!SDL_JoystickGetAttached(g->joystick)) gamepadsToRemove.add(g);
-				}
-				else
-				{
-					if (!SDL_GameControllerGetAttached(g->gamepad)) gamepadsToRemove.add(g);
-				}
-			}
-			for (auto& g : gamepadsToRemove) removeGamepad(g);
-
-
-			lastCheckTime = Time::getApproximateMillisecondCounter();
-		}
+		if (Engine::mainEngine->isClearing || Engine::mainEngine->isLoadingFile) continue;
 
 		SDL_JoystickUpdate();
 		SDL_GameControllerUpdate();
@@ -155,11 +153,12 @@ void InputSystemManager::run()
 			if (g != nullptr) g->update();
 		}
 		gamepads.getLock().exit();
-
-
-		wait(20); //50fps
 	}
+}
 
+void InputSystemManager::timerCallback()
+{
+	checkDevices();
 }
 
 //Joystick::Joystick(SDL_Joystick * joystick) :
