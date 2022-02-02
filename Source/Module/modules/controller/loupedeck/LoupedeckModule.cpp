@@ -492,8 +492,7 @@ void LoupedeckModule::updateButton(int buttonId)
 {
 	ColorParameter* colP = buttonColors[buttonId];
 
-	Colour col = colP->getColor();
-	col.withMultipliedBrightness(col.getAlpha());
+	Colour col = colP->getColor().withMultipliedBrightness(col.getAlpha());
 
 	sendLoupedeckCommand(ButtonColor, { (uint8_t)(buttonId + 7), col.getRed(), col.getGreen(), col.getBlue() });
 }
