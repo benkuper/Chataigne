@@ -79,5 +79,5 @@ void MultiplexUI::childBoundsChanged(Component* c)
 
 void MultiplexUI::processorAskForFocus(ProcessorUI* pui)
 {
-    processorUIListeners.call(&ProcessorUIListener::processorAskForFocus, pui);
+    processorUIListeners.call(&ActionUI::ProcessorUIListener::processorAskForFocus, pui);
 }
