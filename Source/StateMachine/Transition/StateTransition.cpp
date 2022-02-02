@@ -55,11 +55,11 @@ void StateTransition::loadJSONDataInternal(var data)
 
 void StateTransition::triggerConsequences(bool triggerTrue, int iterationIndex)
 {
-	Action::triggerConsequences(triggerTrue, iterationIndex);
-
 	if (forceChecking) return;
 	if (triggerTrue && sourceState->active->boolValue())
 	{
+		Action::triggerConsequences(triggerTrue, iterationIndex);
+
 		sourceState->active->setValue(false); //first deactivate this one just in case the dest state instantly reactivates this one...
 		destState->active->setValue(true);
 	}
