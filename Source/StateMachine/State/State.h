@@ -26,6 +26,7 @@ public:
 	EnumParameter * loadActivationBehavior;
 
 	BoolParameter* checkTransitionsOnActivate;
+	BoolParameter* focusOnLastActionTriggered;
 
 	//Transition
 	Array<StateTransition *> inTransitions;

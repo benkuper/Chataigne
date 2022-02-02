@@ -13,7 +13,9 @@
 class ProcessorManagerUI;
 
 class StateViewUI :
-	public BaseItemUI<State>
+	public BaseItemUI<State>,
+	public ProcessorUI::ProcessorUIListener,
+	public ProcessorManagerUI::ManagerUIListener
 {
 public:
 	StateViewUI(State * state);
@@ -41,6 +43,11 @@ public:
 
 	void childBoundsChanged(Component *) override;
 	void controllableFeedbackUpdateInternal(Controllable *) override;
+
+	void itemUIAdded(ProcessorUI* pui) override;
+	void itemUIRemoved(ProcessorUI* pui) override;
+
+	void processorAskForFocus(ProcessorUI* pui) override;
 
 	void inspectableSelectionChanged(Inspectable *) override;
 

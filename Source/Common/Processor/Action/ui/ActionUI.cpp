@@ -184,6 +184,10 @@ void ActionUI::newMessage(const Action::ActionEvent& e)
 
 	case Action::ActionEvent::VALIDATION_CHANGED:
 		if (action->actionRoles.size() == 0) shouldRepaint = true;
+		if (action->cdm->getIsValid(action->getPreviewIndex()) && action->actionRoles.size() == 0)
+		{
+			processorUIListeners.call(&ProcessorUIListener::processorAskForFocus, this);
+		}
 		break;
 
 	case Action::ActionEvent::MULTIPLEX_PREVIEW_CHANGED:

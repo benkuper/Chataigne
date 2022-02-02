@@ -13,7 +13,8 @@
 
 class ConductorUI :
 	public ActionUI,
-	public ProcessorManagerUI::ManagerUIListener
+	public ProcessorManagerUI::ManagerUIListener,
+	public ProcessorUI::ProcessorUIListener
 {
 public:
 	ConductorUI(Conductor* conductor);
@@ -36,5 +37,9 @@ public:
 	void itemUIRemoved(ProcessorUI* pui) override;
 
 	void childBoundsChanged(Component* c) override;
+
+	void processorAskForFocus(ProcessorUI* pui) override;
+
+	void newMessage(const Action::ActionEvent& e) override;
 };
 

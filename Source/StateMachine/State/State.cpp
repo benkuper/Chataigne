@@ -20,6 +20,8 @@ State::State() :
 	checkTransitionsOnActivate = addBoolParameter("Check transitions on activate", "If checked, this will automatically check for already valid conditions on activate.\n \
 		Otherwise, already valid transition will need to be unvalidated and then validated again to be activated.", false);
 
+	focusOnLastActionTriggered = addBoolParameter("Focus on Last Action", "If checked, this will automatically scroll to make the last triggered action visible", false);
+
 	pm.reset(new ProcessorManager("Processors"));
 	addChildControllableContainer(pm.get());
 

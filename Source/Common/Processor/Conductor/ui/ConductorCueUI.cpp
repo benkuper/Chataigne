@@ -48,6 +48,7 @@ void ConductorCueUI::newMessage(const ConductorCue::ConductorCueEvent& e)
 {
     if (e.type == e.CURRENT_CHANGED || e.type == e.NEXT_CHANGED)
     {
+        if (cue->isCurrent) processorUIListeners.call(&ProcessorUIListener::processorAskForFocus, this);
         updateBGColor();
     }
     else if (e.type == e.INDEX_CHANGED)

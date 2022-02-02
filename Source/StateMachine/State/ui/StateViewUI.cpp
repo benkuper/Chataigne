@@ -14,7 +14,9 @@ StateViewUI::StateViewUI(State * state) :
 	transitionReceptionMode(NONE)
 {
 	pmui.reset(new ProcessorManagerUI(state->pm.get()));
-		
+	for (auto& ui : pmui->itemsUI) ui->addProcessorUIListener(this);
+	pmui->addManagerUIListener(this);
+	
 	activeUI.reset(state->active->createToggle());
 
 	addAndMakeVisible(activeUI.get());
@@ -32,6 +34,8 @@ StateViewUI::StateViewUI(State * state) :
 
 StateViewUI::~StateViewUI()
 {
+	for (auto& ui : pmui->itemsUI) ui->addProcessorUIListener(this);
+	pmui->removeManagerUIListener(this);
 }
 
 void StateViewUI::setTransitionReceptionMode(TransitionReceptionMode value)
@@ -156,6 +160,28 @@ void StateViewUI::controllableFeedbackUpdateInternal(Controllable * c)
 	{
 		//bgColor = item->active->boolValue() ? (item->permanent->boolValue() ? GREEN_COLOR : FEEDBACK_COLOR) : BG_COLOR.brighter(.1f);
 		repaint();
+	}
+}
+
+void StateViewUI::itemUIAdded(ProcessorUI* pui)
+{
+	pui->addProcessorUIListener(this);
+}
+
+void StateViewUI::itemUIRemoved(ProcessorUI* pui)
+{
+	pui->removeProcessorUIListener(this);
+}
+
+void StateViewUI::processorAskForFocus(ProcessorUI* pui)
+{
+	if (inspectable.wasObjectDeleted()) return;
+
+	if (item->focusOnLastActionTriggered->boolValue())
+	{
+		Rectangle<int> r = pmui->container.getLocalArea(pui, pui->getLocalBounds());
+		int targetY = r.getCentreY() - pmui->viewport.getHeight() / 2;
+		pmui->viewport.setViewPosition(0, targetY);
 	}
 }
 

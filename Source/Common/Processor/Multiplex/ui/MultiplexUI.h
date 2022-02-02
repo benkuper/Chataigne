@@ -12,7 +12,8 @@
 
 class MultiplexUI :
 	public ProcessorUI,
-	public ProcessorManagerUI::ManagerUIListener
+	public ProcessorManagerUI::ManagerUIListener, 
+	public ProcessorUI::ProcessorUIListener
 {
 public:
 	MultiplexUI(Multiplex * it);
@@ -32,5 +33,7 @@ public:
 	void itemUIRemoved(ProcessorUI* pui) override;
 
 	void childBoundsChanged(Component* c) override;
+
+	void processorAskForFocus(ProcessorUI* pui) override;
 };
 

@@ -13,6 +13,9 @@ MultiplexUI::MultiplexUI(Multiplex* mp) :
     multiplex(mp),
     processorManagerUI(&multiplex->processorManager, false)
 {
+    processorManagerUI.addManagerUIListener(this);
+    for (auto& ui : processorManagerUI.itemsUI) ui->addProcessorUIListener(this);
+   
     addAndMakeVisible(&processorManagerUI);
     contentComponents.add(&processorManagerUI);
     processorManagerUI.noItemText = "";
@@ -60,14 +63,21 @@ void MultiplexUI::updateProcessorManagerBounds()
 void MultiplexUI::itemUIAdded(ProcessorUI* pui)
 {
     //updateProcessorManagerBounds();
+    pui->addProcessorUIListener(this);
 }
 
 void MultiplexUI::itemUIRemoved(ProcessorUI* pui)
 {
     //updateProcessorManagerBounds();
+    pui->removeProcessorUIListener(this);
 }
 
 void MultiplexUI::childBoundsChanged(Component* c)
 {
     updateProcessorManagerBounds();
+}
+
+void MultiplexUI::processorAskForFocus(ProcessorUI* pui)
+{
+    processorUIListeners.call(&ProcessorUIListener::processorAskForFocus, pui);
 }

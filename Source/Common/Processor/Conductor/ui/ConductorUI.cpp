@@ -1,3 +1,4 @@
+#include "ConductorUI.h"
 /*
   ==============================================================================
 
@@ -12,6 +13,9 @@ ConductorUI::ConductorUI(Conductor* conductor) :
     ActionUI(conductor, true),
     processorManagerUI(&conductor->processorManager, false)
 {
+    processorManagerUI.addManagerUIListener(this);
+    for (auto& ui : processorManagerUI.itemsUI) ui->addProcessorUIListener(this);
+   
     addAndMakeVisible(&processorManagerUI);
     contentComponents.add(&processorManagerUI);
     processorManagerUI.noItemText = "";
@@ -71,14 +75,33 @@ void ConductorUI::updateProcessorManagerBounds()
 void ConductorUI::itemUIAdded(ProcessorUI* pui)
 {
     //updateProcessorManagerBounds();
+    pui->addProcessorUIListener(this);
 }
 
 void ConductorUI::itemUIRemoved(ProcessorUI* pui)
 {
     //updateProcessorManagerBounds();
+    pui->removeProcessorUIListener(this);
 }
 
 void ConductorUI::childBoundsChanged(Component* c)
 {
     updateProcessorManagerBounds();
+}
+
+void ConductorUI::processorAskForFocus(ProcessorUI* pui)
+{
+    processorUIListeners.call(&ProcessorUIListener::processorAskForFocus, pui);
+}
+
+void ConductorUI::newMessage(const Action::ActionEvent& e)
+{
+    if (e.type == e.VALIDATION_CHANGED) 
+    {
+        //do not notify askForFocus here
+    }
+    else
+    {
+        ActionUI::newMessage(e);
+    }
 }
