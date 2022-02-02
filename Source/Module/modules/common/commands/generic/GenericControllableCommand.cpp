@@ -94,37 +94,46 @@ void GenericControllableCommand::updateValueFromTargetAndComponent()
 {
 	if (value != nullptr && !value.wasObjectDeleted())
 	{
-		if (ghostValueData.isVoid()) ghostValueData = value->getJSONData();
+		if (ghostValueData.isVoid())
+		{
+			ghostValueData = value->getJSONData();
+		}
 		getLinkedParam(value);
 		removeControllable(value.get());
 	}
-
+	
+	value = nullptr;
 	if (target == nullptr) return;
 
 	Parameter* cTarget = dynamic_cast<Parameter*>(getControllableFromTarget());
-
+	
 	if (cTarget != nullptr)
 	{
-		int compData = componentOperator->getValueData();
-		if (compData == -1)	value = ControllableFactory::createParameterFrom(cTarget);
-		else
+		var compData = componentOperator->getValueData();
+		if (!compData.isVoid())
 		{
-			if (compData < cTarget->minimumValue.size())
+			int compEnum = (int)compData;
+			if (compEnum == -1) value = ControllableFactory::createParameterFrom(cTarget);
+			else
 			{
-				float minV = cTarget->minimumValue[compData];
-				float maxV = cTarget->maximumValue[compData];
-				value = new FloatParameter("Value", "", 0, minV, maxV);
+				if (compEnum < cTarget->minimumValue.size())
+				{
+					float minV = cTarget->minimumValue[compEnum];
+					float maxV = cTarget->maximumValue[compEnum];
+					value = new FloatParameter("Value", "", 0, minV, maxV);
+				}
 			}
-
 		}
 	}
-	else value = nullptr;
 
 	if (value != nullptr)
 	{
 		updateOperatorOptions();
 
-		if (!ghostValueData.isVoid()) value->loadJSONData(ghostValueData);
+		if (!ghostValueData.isVoid())
+		{
+			value->loadJSONData(ghostValueData);
+		}
 		value->setNiceName("Value");
 		if (isMultiplexed()) value->clearRange(); //don't fix a range for multilex, there could be many ranges
 
