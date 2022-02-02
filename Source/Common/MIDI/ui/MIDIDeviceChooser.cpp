@@ -35,6 +35,21 @@ currentInputDevice(nullptr),
 	inputBox.addListener(this);
 	outputBox.addListener(this);
 
+	inputBox.setColour(inputBox.backgroundColourId, BG_COLOR);
+	inputBox.setColour(inputBox.outlineColourId, BG_COLOR.brighter(.2f));
+	inputBox.setColour(inputBox.focusedOutlineColourId, BG_COLOR.brighter(.3f));
+	inputBox.setColour(inputBox.textColourId, TEXT_COLOR);
+	inputBox.setColour(inputBox.buttonColourId, TEXT_COLOR);
+	inputBox.setColour(inputBox.arrowColourId, TEXT_COLOR.darker(.2f));
+
+	outputBox.setColour(outputBox.backgroundColourId, BG_COLOR);
+	outputBox.setColour(outputBox.outlineColourId, BG_COLOR.brighter(.2f));
+	outputBox.setColour(outputBox.focusedOutlineColourId, BG_COLOR.brighter(.3f));
+	outputBox.setColour(outputBox.textColourId, TEXT_COLOR);
+	outputBox.setColour(outputBox.buttonColourId, TEXT_COLOR);
+	outputBox.setColour(outputBox.arrowColourId, TEXT_COLOR.darker(.2f));
+
+
 	MIDIManager::getInstance()->addMIDIManagerListener(this);
 
 	updateInputComboBox();

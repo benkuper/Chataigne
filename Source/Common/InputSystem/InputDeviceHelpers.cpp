@@ -16,6 +16,14 @@ GamepadParameterUI::GamepadParameterUI(Array<GamepadParameter *> parameters) :
 	chooser.setTextWhenNoChoicesAvailable("No gamepad connected");
 	chooser.setTextWhenNothingSelected("Select a gamepad");
 	chooser.addListener(this);
+
+	chooser.setColour(chooser.backgroundColourId, BG_COLOR);
+	chooser.setColour(chooser.outlineColourId, BG_COLOR.brighter(.2f));
+	chooser.setColour(chooser.focusedOutlineColourId, BG_COLOR.brighter(.3f));
+	chooser.setColour(chooser.textColourId, TEXT_COLOR);
+	chooser.setColour(chooser.buttonColourId, TEXT_COLOR);
+	chooser.setColour(chooser.arrowColourId, TEXT_COLOR.darker(.2f));
+
 	addAndMakeVisible(&chooser);
 
 	InputSystemManager::getInstance()->addAsyncInputListener(this);
