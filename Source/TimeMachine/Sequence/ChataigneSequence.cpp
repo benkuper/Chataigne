@@ -19,15 +19,17 @@ ChataigneSequence::ChataigneSequence() :
 	midiSyncDevice->enabled = false;
 	addParameter(midiSyncDevice);
 
-	mtcSyncOffset = addFloatParameter("Sync Offset", "The time to offset when sending and receiving", 0, 0);
-	mtcSyncOffset->defaultUI = FloatParameter::TIME;
-	reverseOffset = addBoolParameter("Reverse Offset", "This allows negative offset", false);
-	resetTimeOnMTCStopped = addBoolParameter("Reset on MTC Stop", "If checked, sequence will stop and reset time when MTC doesn't send data anymore. If not checked, sequence will just keep its current time", false);
-
 	ltcModuleTarget = addTargetParameter("LTC Sync Module", "Choose an Audio Module to use as LTC Sync for this sequence", ModuleManager::getInstance(), false);
 	ltcModuleTarget->canBeDisabledByUser = true;
 	ltcModuleTarget->targetType = TargetParameter::CONTAINER;
 	ltcModuleTarget->maxDefaultSearchLevel = 0;
+
+	syncOffset = addFloatParameter("Sync Offset", "The time to offset when sending and receiving", 0, 0);
+	syncOffset->defaultUI = FloatParameter::TIME;
+	reverseOffset = addBoolParameter("Reverse Offset", "This allows negative offset", false);
+	resetTimeOnMTCStopped = addBoolParameter("Reset on MTC Stop", "If checked, sequence will stop and reset time when MTC doesn't send data anymore. If not checked, sequence will just keep its current time", false);
+
+
 
 	std::function<bool(ControllableContainer*)> typeCheckFunc = [](ControllableContainer* cc) { return dynamic_cast<AudioModule*>(cc) != nullptr; };
 	ltcModuleTarget->defaultContainerTypeCheckFunc = typeCheckFunc;
@@ -255,7 +257,7 @@ void ChataigneSequence::onContainerParameterChangedInternal(Parameter* p)
 	}
 	else if (mtcSender != nullptr && midiSyncDevice->enabled)
 	{
-		float time = jmax<float>(0, currentTime->floatValue() - (mtcSyncOffset->floatValue() * (reverseOffset->boolValue() ? -1 : 1)));
+		float time = jmax<float>(0, currentTime->floatValue() - (syncOffset->floatValue() * (reverseOffset->boolValue() ? -1 : 1)));
 
 		if (p == currentTime)
 		{
@@ -267,7 +269,7 @@ void ChataigneSequence::onContainerParameterChangedInternal(Parameter* p)
 			if (isPlaying->boolValue()) mtcSender->start(time);
 			else mtcSender->pause(false);
 		}
-		else if (p == mtcSyncOffset)
+		else if (p == syncOffset)
 		{
 			mtcSender->setPosition(time, true);
 		}
@@ -293,7 +295,7 @@ void ChataigneSequence::onControllableStateChanged(Controllable* c)
 		setupMidiSyncDevices();
 		if (mtcSender != nullptr && midiSyncDevice->enabled && isPlaying->boolValue())
 		{
-			float time = jmax<float>(0, currentTime->floatValue() - (mtcSyncOffset->floatValue() * (reverseOffset->boolValue() ? -1 : 1)));
+			float time = jmax<float>(0, currentTime->floatValue() - (syncOffset->floatValue() * (reverseOffset->boolValue() ? -1 : 1)));
 			mtcSender->start(time);
 		}
 	}
@@ -329,7 +331,7 @@ void ChataigneSequence::onExternalParameterValueChanged(Parameter* p)
 		{
 			if (ltcAudioModule->ltcPlaying->boolValue())
 			{
-				double time = ltcAudioModule->ltcTime->floatValue();
+				double time = ltcAudioModule->ltcTime->floatValue() + (syncOffset->floatValue() * (reverseOffset->boolValue() ? -1 : 1));
 				if (time >= 0 && time < totalTime->floatValue()) playTrigger->trigger();
 			}
 			else
@@ -339,7 +341,7 @@ void ChataigneSequence::onExternalParameterValueChanged(Parameter* p)
 		}
 		else if (p == ltcAudioModule->ltcTime)
 		{
-			double time = ltcAudioModule->ltcTime->floatValue();
+			double time = ltcAudioModule->ltcTime->floatValue() + (syncOffset->floatValue() * (reverseOffset->boolValue() ? -1 : 1));
 			double diff = fabs(currentTime->floatValue() - time);
 			bool isJump = diff > 0.1;
 			bool seekMode = isJump || !ltcAudioModule->ltcPlaying->boolValue();
@@ -351,7 +353,7 @@ void ChataigneSequence::onExternalParameterValueChanged(Parameter* p)
 
 void ChataigneSequence::mtcStarted()
 {
-	double time = mtcReceiver->getTime() + (mtcSyncOffset->floatValue() * (reverseOffset->boolValue() ? -1 : 1));
+	double time = mtcReceiver->getTime() + (syncOffset->floatValue() * (reverseOffset->boolValue() ? -1 : 1));
 	if(time >= 0 && time < totalTime->floatValue()) playTrigger->trigger();
 }
 
@@ -365,7 +367,7 @@ void ChataigneSequence::mtcTimeUpdated(bool isFullFrame)
 {
 	if (mtcReceiver == nullptr) return;
 
-	double time = mtcReceiver->getTime() + (mtcSyncOffset->floatValue() * (reverseOffset->boolValue() ? -1 : 1));
+	double time = mtcReceiver->getTime() + (syncOffset->floatValue() * (reverseOffset->boolValue() ? -1 : 1));
 	double diff = fabs(currentTime->floatValue() - time);
 	bool isJump = diff > 0.1;
 	bool seekMode = isJump || !mtcReceiver->isPlaying;

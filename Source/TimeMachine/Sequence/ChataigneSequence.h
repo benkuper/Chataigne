@@ -32,12 +32,13 @@ public:
 	MIDIDeviceParameter* midiSyncDevice;
 	std::unique_ptr<MTCSender> mtcSender;
 	std::unique_ptr<MTCReceiver> mtcReceiver;
-	FloatParameter* mtcSyncOffset;
-	BoolParameter* reverseOffset;
 	BoolParameter* resetTimeOnMTCStopped;
 
 	AudioModule* ltcAudioModule;
 	TargetParameter* ltcModuleTarget;
+
+	FloatParameter* syncOffset;
+	BoolParameter* reverseOffset;
 
 	Factory<SequenceLayer> layerFactory;
 
