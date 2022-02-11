@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Chataigne\Resources\Modules">
@@ -235,288 +234,6 @@
     </Filter>
     <Filter Include="Chataigne\Source\Module\Community">
       <UniqueIdentifier>{6CEFF08B-E267-C21D-34E5-C8EAE64F596A}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\customvariables\commands">
-      <UniqueIdentifier>{4C9511D9-D1B4-B5A7-5772-0E1D38BEF264}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\customvariables">
-      <UniqueIdentifier>{DA086397-0387-8A6D-7D77-BA8F650045D5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\audio\analysis\ui">
-      <UniqueIdentifier>{E8FD6EA1-DA9C-2D70-3D29-97EDFFD79CF1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\audio\analysis">
-      <UniqueIdentifier>{89A87DDC-DCF4-2FB6-4BFF-406031498C95}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\audio\commands">
-      <UniqueIdentifier>{10F2856B-5195-9BAA-93DD-E4FC0B5EFCE2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\audio\libs\pitch">
-      <UniqueIdentifier>{3C970071-0DE0-DD05-B44F-CE36FB54F926}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\audio\libs">
-      <UniqueIdentifier>{F8A9D896-0536-56DE-ABD5-BE9133C62650}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\audio\ui">
-      <UniqueIdentifier>{880B32EF-9E67-76E0-2C77-3982FDBE2537}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\audio">
-      <UniqueIdentifier>{2B354B83-B099-8834-CDE4-DFF9707AC0F2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\common\commands\generic">
-      <UniqueIdentifier>{CAE5E708-335F-509C-A61A-584964B421FD}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\common\commands\scriptcallback">
-      <UniqueIdentifier>{2525C801-18A9-BF46-016E-85DAC6F543DA}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\common\commands\scriptcommands">
-      <UniqueIdentifier>{53B20FE0-4E29-FA6A-BC6A-DBB1AD8A5AAD}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\common\commands">
-      <UniqueIdentifier>{1F7ECF34-1297-CD6A-C2ED-9ED3052016CE}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\common\streaming\commands">
-      <UniqueIdentifier>{8B00C162-8103-9169-4244-17934D20DAA5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\common\streaming">
-      <UniqueIdentifier>{BD0BB2B5-80CA-C2A9-DD53-FD0FC2B6F7BF}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\common\ui">
-      <UniqueIdentifier>{E9D0432D-6C3F-7DD8-FD32-F62FD4FAC677}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\common">
-      <UniqueIdentifier>{E89D3705-9633-01AF-C6F5-82B057BCA7D4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\controller\loupedeck\commands">
-      <UniqueIdentifier>{DE84E9F5-4E88-A3AA-C6E5-FF2B63A687D0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\controller\loupedeck">
-      <UniqueIdentifier>{85973C59-52A4-8089-A406-3CF2DE0CCF2A}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\controller\mouse\commands">
-      <UniqueIdentifier>{4D1FEBF2-D35F-9CA0-374C-B54DA62A5B26}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\controller\mouse">
-      <UniqueIdentifier>{53F61727-BBC4-320F-66C4-A29BFB180864}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\controller\streamdeck\models">
-      <UniqueIdentifier>{F00E3B1C-8C88-549F-8FA8-ABAD74D43EDA}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\controller\streamdeck\commands">
-      <UniqueIdentifier>{6543A1B2-0C74-404F-71A8-67E342B684E6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\controller\streamdeck">
-      <UniqueIdentifier>{8B21480E-FB52-AD3C-6BC5-EACF9DDD9542}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\controller\gamepad">
-      <UniqueIdentifier>{BA37F7B1-5569-18A7-B747-EA1F7C820F64}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\controller\joycon">
-      <UniqueIdentifier>{B7484025-BCC7-9445-E7E5-A55499703E5D}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\controller\keyboard\commands">
-      <UniqueIdentifier>{3537B3BB-01F4-B0FF-4438-AF1930EA1211}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\controller\keyboard">
-      <UniqueIdentifier>{8D6BE7B1-739F-EAF8-2F69-FE87443DCF82}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\controller\kinect">
-      <UniqueIdentifier>{EDF23796-E85C-EDC5-54CD-172012129B52}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\controller\wiimote\lib\wiiuse\os_mac">
-      <UniqueIdentifier>{378C310A-DB79-DA96-BE1D-8E8D2E1A8157}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\controller\wiimote\lib\wiiuse">
-      <UniqueIdentifier>{78787A1B-393C-ECBD-DE0D-5026700B4F0B}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\controller\wiimote\lib">
-      <UniqueIdentifier>{772271AE-726A-3087-71D2-3C3277A223C4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\controller\wiimote">
-      <UniqueIdentifier>{723B4D03-D386-DD22-1300-EB1FBF814202}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\controller">
-      <UniqueIdentifier>{517D74AE-E135-43AA-E62E-F57F7BAD53DB}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\dmx\ui">
-      <UniqueIdentifier>{D7F73496-CE7B-2BD4-BEA6-4DB358591E58}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\dmx\commands">
-      <UniqueIdentifier>{870518C9-BABE-8AEF-0FAB-112912AFE4EE}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\dmx">
-      <UniqueIdentifier>{EDB243BA-A935-8833-16A7-4A22094F7631}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\generators\metronome">
-      <UniqueIdentifier>{B8337B72-BE9C-1561-DA41-886383FF546D}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\generators\signal">
-      <UniqueIdentifier>{6EDC65DA-9E18-EDDA-BBE3-A41BDFF83746}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\generators">
-      <UniqueIdentifier>{032EE6C8-1726-870D-A801-AA7C28EFBDEB}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\generic\commands">
-      <UniqueIdentifier>{4C4AE772-22DC-5612-47CF-6217ED3C78A4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\generic">
-      <UniqueIdentifier>{3775C723-8EE4-9E22-A82D-231DDAD24CDF}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\multiplex\commands">
-      <UniqueIdentifier>{06FA83A6-5E7A-CCF5-2315-F25FE635434F}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\multiplex">
-      <UniqueIdentifier>{BC2C6777-0B4C-49A2-62FA-2C5985C6C438}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\midi\commands">
-      <UniqueIdentifier>{FE245321-8A8A-4EB7-F917-4E07C7165BAB}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\midi">
-      <UniqueIdentifier>{D2A91548-5F0F-89AA-05AF-BCC03494605C}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\oscquery\madmapper">
-      <UniqueIdentifier>{5023ED4A-9196-A411-1ECD-BDD8F074E194}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\oscquery\generic\ui">
-      <UniqueIdentifier>{80445B17-1F33-F6A5-2E35-E6F3E782DE69}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\oscquery\generic">
-      <UniqueIdentifier>{48F0F8E0-7438-0208-E550-1AD89128E38E}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\oscquery">
-      <UniqueIdentifier>{5E9A2258-4AEC-F20C-D8B5-0F4E051C8575}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\osc\qlab\commands">
-      <UniqueIdentifier>{8EF05525-D045-3C38-5776-201A1AC56DA9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\osc\qlab">
-      <UniqueIdentifier>{30393079-5F16-52B8-7A2A-86B1B0948721}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\osc\ui">
-      <UniqueIdentifier>{28AC6DBD-3300-5E97-393F-F14972FA36C6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\osc\heavym">
-      <UniqueIdentifier>{23381407-F713-1E94-D708-9B8F6ED05FB7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\osc\commands">
-      <UniqueIdentifier>{4DC78688-F147-66B9-094F-569A37D8C91F}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\osc\custom\commands">
-      <UniqueIdentifier>{DD9CEEFC-36EA-C1D7-7464-B0A9089F766A}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\osc\custom">
-      <UniqueIdentifier>{56BAE0DD-720E-6097-5E1F-A369760F734F}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\osc\dlight">
-      <UniqueIdentifier>{2A214910-85FC-1A98-9AD0-B099D98C74D9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\osc\live\commands">
-      <UniqueIdentifier>{88E65222-2B7C-685F-7214-0525FC09E271}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\osc\live">
-      <UniqueIdentifier>{8C16285F-81A0-921B-6120-F8E7871583C6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\osc\millumin">
-      <UniqueIdentifier>{CC82672A-B4AE-A9EB-BAB9-B1158A2F9F78}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\osc\reaper\commands">
-      <UniqueIdentifier>{87F601FE-E3C6-A23B-7C49-0797AA97A615}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\osc\reaper">
-      <UniqueIdentifier>{74CA00AA-C34B-09E8-0B10-CE6F6370C064}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\osc\resolume\commands\ui">
-      <UniqueIdentifier>{7E53C6B1-0030-E2DC-C1CF-8B91274EF23C}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\osc\resolume\commands">
-      <UniqueIdentifier>{A7F99AB5-3B2F-F328-902C-ADBDEC40A471}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\osc\resolume">
-      <UniqueIdentifier>{F32577BA-A282-1F17-35F0-D2D9E95B0929}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\osc\powerpoint">
-      <UniqueIdentifier>{F80E5994-22FA-D70D-7452-7A69118A971C}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\osc">
-      <UniqueIdentifier>{BDEA7630-997D-38E9-6AAE-6A9E604FCD8E}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\sequence\commands">
-      <UniqueIdentifier>{FFC267CB-9CAE-E9B2-07C4-89548E83FE20}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\sequence">
-      <UniqueIdentifier>{77BFBFA9-7BC7-45E1-8A7E-99BD89350359}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\serial">
-      <UniqueIdentifier>{5E38BC10-4B4B-E563-7C9D-A3F43300453B}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\state\commands">
-      <UniqueIdentifier>{1E198E23-7373-042E-47B5-B35438723155}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\state">
-      <UniqueIdentifier>{F60DB4D5-E27F-61C9-F6B5-9C4E50129B4F}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\system\os\commands\ui">
-      <UniqueIdentifier>{F8541B8F-7D56-000D-0633-03B078721744}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\system\os\commands">
-      <UniqueIdentifier>{C9364ECA-DA0A-7F9C-AE19-64688DEC85FC}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\system\os">
-      <UniqueIdentifier>{BC45410B-85D4-17BC-835B-D170782EC043}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\system\time">
-      <UniqueIdentifier>{275258D3-494A-7F75-762D-D79B1008BE5D}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\system">
-      <UniqueIdentifier>{E30AE2AD-548D-40F7-C658-D1241EF60E66}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\http\commands">
-      <UniqueIdentifier>{C2501901-DC28-59AD-5BC0-838470BF1A0E}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\http">
-      <UniqueIdentifier>{D08B4676-A304-E303-0415-85A97C6159AD}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\tcp\tcpserver\ui">
-      <UniqueIdentifier>{79848392-2320-A507-44A6-DBB8A764369A}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\tcp\tcpserver">
-      <UniqueIdentifier>{13C22839-0474-1746-2AED-DF9E50D83B08}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\tcp\tcpclient\pjlink">
-      <UniqueIdentifier>{B80B7BA6-0750-C92D-1C5D-7FF9A07E0EC3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\tcp\tcpclient\watchout\commands">
-      <UniqueIdentifier>{8E798873-96AF-189B-A4B8-1882EA5CB2DA}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\tcp\tcpclient\watchout">
-      <UniqueIdentifier>{F6C7E05E-DE7C-15BD-3965-685AD8CE620F}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\tcp\tcpclient">
-      <UniqueIdentifier>{F9C6B28A-F792-BE1A-7B4E-53708BE792D9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\tcp">
-      <UniqueIdentifier>{C7BCF4FB-A321-0D94-8CE7-0E6C60E199F7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\udp">
-      <UniqueIdentifier>{6D2BD981-3B8E-BC72-8448-9F8849751B24}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\gpio\commands">
-      <UniqueIdentifier>{8FA46653-8D35-2561-2678-6C2C5C4A06DA}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\gpio\pigpio">
-      <UniqueIdentifier>{94621B05-5239-FC4B-AA05-303A72C20012}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\gpio">
-      <UniqueIdentifier>{95883558-2B5B-67E4-B81C-3AFA9E47F7AF}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\websocket\ui">
-      <UniqueIdentifier>{B293CBA1-C418-03EF-CF1A-854113923B86}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\websocket">
-      <UniqueIdentifier>{EA25999D-66A4-5EDD-BB18-B7CFA3EB36BC}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules">
-      <UniqueIdentifier>{D7F7F39A-4E59-4771-7398-B7FF6ED8DCB9}</UniqueIdentifier>
     </Filter>
     <Filter Include="Chataigne\Source\Module\Routing\ui">
       <UniqueIdentifier>{3FAADEFA-40CD-298D-58A0-DF05DD419FC1}</UniqueIdentifier>
@@ -1478,6 +1195,288 @@
     <Filter Include="JUCE Library Code">
       <UniqueIdentifier>{7ED5A90E-41AF-A1EF-659B-37CEEAB9BA61}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Module\modules">
+      <UniqueIdentifier>{D7F7F39A-4E59-4771-7398-B7FF6ED8DCB9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\customvariables">
+      <UniqueIdentifier>{DA086397-0387-8A6D-7D77-BA8F650045D5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\customvariables\commands">
+      <UniqueIdentifier>{4C9511D9-D1B4-B5A7-5772-0E1D38BEF264}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\audio">
+      <UniqueIdentifier>{2B354B83-B099-8834-CDE4-DFF9707AC0F2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\audio\analysis">
+      <UniqueIdentifier>{89A87DDC-DCF4-2FB6-4BFF-406031498C95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\audio\analysis\ui">
+      <UniqueIdentifier>{E8FD6EA1-DA9C-2D70-3D29-97EDFFD79CF1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\audio\commands">
+      <UniqueIdentifier>{10F2856B-5195-9BAA-93DD-E4FC0B5EFCE2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\audio\libs">
+      <UniqueIdentifier>{F8A9D896-0536-56DE-ABD5-BE9133C62650}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\audio\libs\pitch">
+      <UniqueIdentifier>{3C970071-0DE0-DD05-B44F-CE36FB54F926}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\audio\ui">
+      <UniqueIdentifier>{880B32EF-9E67-76E0-2C77-3982FDBE2537}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\common">
+      <UniqueIdentifier>{E89D3705-9633-01AF-C6F5-82B057BCA7D4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\common\commands">
+      <UniqueIdentifier>{1F7ECF34-1297-CD6A-C2ED-9ED3052016CE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\common\commands\generic">
+      <UniqueIdentifier>{CAE5E708-335F-509C-A61A-584964B421FD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\common\commands\scriptcallback">
+      <UniqueIdentifier>{2525C801-18A9-BF46-016E-85DAC6F543DA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\common\commands\scriptcommands">
+      <UniqueIdentifier>{53B20FE0-4E29-FA6A-BC6A-DBB1AD8A5AAD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\common\streaming">
+      <UniqueIdentifier>{BD0BB2B5-80CA-C2A9-DD53-FD0FC2B6F7BF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\common\streaming\commands">
+      <UniqueIdentifier>{8B00C162-8103-9169-4244-17934D20DAA5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\common\ui">
+      <UniqueIdentifier>{E9D0432D-6C3F-7DD8-FD32-F62FD4FAC677}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\controller">
+      <UniqueIdentifier>{517D74AE-E135-43AA-E62E-F57F7BAD53DB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\controller\loupedeck">
+      <UniqueIdentifier>{85973C59-52A4-8089-A406-3CF2DE0CCF2A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\controller\loupedeck\commands">
+      <UniqueIdentifier>{DE84E9F5-4E88-A3AA-C6E5-FF2B63A687D0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\controller\mouse">
+      <UniqueIdentifier>{53F61727-BBC4-320F-66C4-A29BFB180864}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\controller\mouse\commands">
+      <UniqueIdentifier>{4D1FEBF2-D35F-9CA0-374C-B54DA62A5B26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\controller\streamdeck">
+      <UniqueIdentifier>{8B21480E-FB52-AD3C-6BC5-EACF9DDD9542}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\controller\streamdeck\models">
+      <UniqueIdentifier>{F00E3B1C-8C88-549F-8FA8-ABAD74D43EDA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\controller\streamdeck\commands">
+      <UniqueIdentifier>{6543A1B2-0C74-404F-71A8-67E342B684E6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\controller\gamepad">
+      <UniqueIdentifier>{BA37F7B1-5569-18A7-B747-EA1F7C820F64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\controller\joycon">
+      <UniqueIdentifier>{B7484025-BCC7-9445-E7E5-A55499703E5D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\controller\keyboard">
+      <UniqueIdentifier>{8D6BE7B1-739F-EAF8-2F69-FE87443DCF82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\controller\keyboard\commands">
+      <UniqueIdentifier>{3537B3BB-01F4-B0FF-4438-AF1930EA1211}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\controller\kinect">
+      <UniqueIdentifier>{EDF23796-E85C-EDC5-54CD-172012129B52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\controller\wiimote">
+      <UniqueIdentifier>{723B4D03-D386-DD22-1300-EB1FBF814202}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\controller\wiimote\lib">
+      <UniqueIdentifier>{772271AE-726A-3087-71D2-3C3277A223C4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\controller\wiimote\lib\wiiuse">
+      <UniqueIdentifier>{78787A1B-393C-ECBD-DE0D-5026700B4F0B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\controller\wiimote\lib\wiiuse\os_mac">
+      <UniqueIdentifier>{378C310A-DB79-DA96-BE1D-8E8D2E1A8157}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\dmx">
+      <UniqueIdentifier>{EDB243BA-A935-8833-16A7-4A22094F7631}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\dmx\ui">
+      <UniqueIdentifier>{D7F73496-CE7B-2BD4-BEA6-4DB358591E58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\dmx\commands">
+      <UniqueIdentifier>{870518C9-BABE-8AEF-0FAB-112912AFE4EE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\generators">
+      <UniqueIdentifier>{032EE6C8-1726-870D-A801-AA7C28EFBDEB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\generators\metronome">
+      <UniqueIdentifier>{B8337B72-BE9C-1561-DA41-886383FF546D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\generators\signal">
+      <UniqueIdentifier>{6EDC65DA-9E18-EDDA-BBE3-A41BDFF83746}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\generic">
+      <UniqueIdentifier>{3775C723-8EE4-9E22-A82D-231DDAD24CDF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\generic\commands">
+      <UniqueIdentifier>{4C4AE772-22DC-5612-47CF-6217ED3C78A4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\multiplex">
+      <UniqueIdentifier>{BC2C6777-0B4C-49A2-62FA-2C5985C6C438}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\multiplex\commands">
+      <UniqueIdentifier>{06FA83A6-5E7A-CCF5-2315-F25FE635434F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\midi">
+      <UniqueIdentifier>{D2A91548-5F0F-89AA-05AF-BCC03494605C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\midi\commands">
+      <UniqueIdentifier>{FE245321-8A8A-4EB7-F917-4E07C7165BAB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\oscquery">
+      <UniqueIdentifier>{5E9A2258-4AEC-F20C-D8B5-0F4E051C8575}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\oscquery\madmapper">
+      <UniqueIdentifier>{5023ED4A-9196-A411-1ECD-BDD8F074E194}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\oscquery\generic">
+      <UniqueIdentifier>{48F0F8E0-7438-0208-E550-1AD89128E38E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\oscquery\generic\ui">
+      <UniqueIdentifier>{80445B17-1F33-F6A5-2E35-E6F3E782DE69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\osc">
+      <UniqueIdentifier>{BDEA7630-997D-38E9-6AAE-6A9E604FCD8E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\osc\qlab">
+      <UniqueIdentifier>{30393079-5F16-52B8-7A2A-86B1B0948721}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\osc\qlab\commands">
+      <UniqueIdentifier>{8EF05525-D045-3C38-5776-201A1AC56DA9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\osc\ui">
+      <UniqueIdentifier>{28AC6DBD-3300-5E97-393F-F14972FA36C6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\osc\heavym">
+      <UniqueIdentifier>{23381407-F713-1E94-D708-9B8F6ED05FB7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\osc\commands">
+      <UniqueIdentifier>{4DC78688-F147-66B9-094F-569A37D8C91F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\osc\custom">
+      <UniqueIdentifier>{56BAE0DD-720E-6097-5E1F-A369760F734F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\osc\custom\commands">
+      <UniqueIdentifier>{DD9CEEFC-36EA-C1D7-7464-B0A9089F766A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\osc\dlight">
+      <UniqueIdentifier>{2A214910-85FC-1A98-9AD0-B099D98C74D9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\osc\live">
+      <UniqueIdentifier>{8C16285F-81A0-921B-6120-F8E7871583C6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\osc\live\commands">
+      <UniqueIdentifier>{88E65222-2B7C-685F-7214-0525FC09E271}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\osc\millumin">
+      <UniqueIdentifier>{CC82672A-B4AE-A9EB-BAB9-B1158A2F9F78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\osc\reaper">
+      <UniqueIdentifier>{74CA00AA-C34B-09E8-0B10-CE6F6370C064}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\osc\reaper\commands">
+      <UniqueIdentifier>{87F601FE-E3C6-A23B-7C49-0797AA97A615}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\osc\resolume">
+      <UniqueIdentifier>{F32577BA-A282-1F17-35F0-D2D9E95B0929}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\osc\resolume\commands">
+      <UniqueIdentifier>{A7F99AB5-3B2F-F328-902C-ADBDEC40A471}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\osc\resolume\commands\ui">
+      <UniqueIdentifier>{7E53C6B1-0030-E2DC-C1CF-8B91274EF23C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\osc\powerpoint">
+      <UniqueIdentifier>{F80E5994-22FA-D70D-7452-7A69118A971C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\sequence">
+      <UniqueIdentifier>{77BFBFA9-7BC7-45E1-8A7E-99BD89350359}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\sequence\commands">
+      <UniqueIdentifier>{FFC267CB-9CAE-E9B2-07C4-89548E83FE20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\serial">
+      <UniqueIdentifier>{5E38BC10-4B4B-E563-7C9D-A3F43300453B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\state">
+      <UniqueIdentifier>{F60DB4D5-E27F-61C9-F6B5-9C4E50129B4F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\state\commands">
+      <UniqueIdentifier>{1E198E23-7373-042E-47B5-B35438723155}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\system">
+      <UniqueIdentifier>{E30AE2AD-548D-40F7-C658-D1241EF60E66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\system\os">
+      <UniqueIdentifier>{BC45410B-85D4-17BC-835B-D170782EC043}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\system\os\commands">
+      <UniqueIdentifier>{C9364ECA-DA0A-7F9C-AE19-64688DEC85FC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\system\os\commands\ui">
+      <UniqueIdentifier>{F8541B8F-7D56-000D-0633-03B078721744}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\system\time">
+      <UniqueIdentifier>{275258D3-494A-7F75-762D-D79B1008BE5D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\http">
+      <UniqueIdentifier>{D08B4676-A304-E303-0415-85A97C6159AD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\http\commands">
+      <UniqueIdentifier>{C2501901-DC28-59AD-5BC0-838470BF1A0E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\tcp">
+      <UniqueIdentifier>{C7BCF4FB-A321-0D94-8CE7-0E6C60E199F7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\tcp\tcpserver">
+      <UniqueIdentifier>{13C22839-0474-1746-2AED-DF9E50D83B08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\tcp\tcpserver\ui">
+      <UniqueIdentifier>{79848392-2320-A507-44A6-DBB8A764369A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\tcp\tcpclient">
+      <UniqueIdentifier>{F9C6B28A-F792-BE1A-7B4E-53708BE792D9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\tcp\tcpclient\pjlink">
+      <UniqueIdentifier>{B80B7BA6-0750-C92D-1C5D-7FF9A07E0EC3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\tcp\tcpclient\watchout">
+      <UniqueIdentifier>{F6C7E05E-DE7C-15BD-3965-685AD8CE620F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\tcp\tcpclient\watchout\commands">
+      <UniqueIdentifier>{8E798873-96AF-189B-A4B8-1882EA5CB2DA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\udp">
+      <UniqueIdentifier>{6D2BD981-3B8E-BC72-8448-9F8849751B24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\gpio">
+      <UniqueIdentifier>{95883558-2B5B-67E4-B81C-3AFA9E47F7AF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\gpio\commands">
+      <UniqueIdentifier>{8FA46653-8D35-2561-2678-6C2C5C4A06DA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\gpio\pigpio">
+      <UniqueIdentifier>{94621B05-5239-FC4B-AA05-303A72C20012}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\websocket">
+      <UniqueIdentifier>{EA25999D-66A4-5EDD-BB18-B7CFA3EB36BC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\websocket\ui">
+      <UniqueIdentifier>{B293CBA1-C418-03EF-CF1A-854113923B86}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\Guider\guides\BasicsGuide.cpp">
@@ -2068,15 +2067,6 @@
     <ClCompile Include="..\..\Source\Module\modules\controller\wiimote\lib\wiiuse\os_mac\os_mac.c">
       <Filter>Chataigne\Source\Module\modules\controller\wiimote\lib\wiiuse\os_mac</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\controller\wiimote\lib\wiiuse\os_mac\os_mac.m">
-      <Filter>Chataigne\Source\Module\modules\controller\wiimote\lib\wiiuse\os_mac</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\controller\wiimote\lib\wiiuse\os_mac\os_mac_find.m">
-      <Filter>Chataigne\Source\Module\modules\controller\wiimote\lib\wiiuse\os_mac</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\controller\wiimote\lib\wiiuse\os_mac\os_mac_interface.m">
-      <Filter>Chataigne\Source\Module\modules\controller\wiimote\lib\wiiuse\os_mac</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\controller\wiimote\lib\wiiuse\classic.c">
       <Filter>Chataigne\Source\Module\modules\controller\wiimote\lib\wiiuse</Filter>
     </ClCompile>
@@ -2623,9 +2613,6 @@
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_basics\juce_audio_basics.cpp">
       <Filter>JUCE Modules\juce_audio_basics</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_basics\juce_audio_basics.mm">
-      <Filter>JUCE Modules\juce_audio_basics</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_devices\audio_io\juce_AudioDeviceManager.cpp">
       <Filter>JUCE Modules\juce_audio_devices\audio_io</Filter>
     </ClCompile>
@@ -2839,9 +2826,6 @@
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_devices\native\juce_mac_CoreAudio.cpp">
       <Filter>JUCE Modules\juce_audio_devices\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_devices\native\juce_mac_CoreMidi.mm">
-      <Filter>JUCE Modules\juce_audio_devices\native</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_devices\native\juce_win32_ASIO.cpp">
       <Filter>JUCE Modules\juce_audio_devices\native</Filter>
     </ClCompile>
@@ -2861,9 +2845,6 @@
       <Filter>JUCE Modules\juce_audio_devices\sources</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_devices\juce_audio_devices.cpp">
-      <Filter>JUCE Modules\juce_audio_devices</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_devices\juce_audio_devices.mm">
       <Filter>JUCE Modules\juce_audio_devices</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_formats\codecs\flac\libFLAC\bitmath.c">
@@ -3037,9 +3018,6 @@
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_formats\juce_audio_formats.cpp">
       <Filter>JUCE Modules\juce_audio_formats</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_formats\juce_audio_formats.mm">
-      <Filter>JUCE Modules\juce_audio_formats</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\format\juce_AudioPluginFormat.cpp">
       <Filter>JUCE Modules\juce_audio_processors\format</Filter>
     </ClCompile>
@@ -3115,9 +3093,6 @@
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\vstpresetfile.cpp">
       <Filter>JUCE Modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\format_types\juce_AudioUnitPluginFormat.mm">
-      <Filter>JUCE Modules\juce_audio_processors\format_types</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\format_types\juce_LADSPAPluginFormat.cpp">
       <Filter>JUCE Modules\juce_audio_processors\format_types</Filter>
     </ClCompile>
@@ -3190,9 +3165,6 @@
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\juce_audio_processors.cpp">
       <Filter>JUCE Modules\juce_audio_processors</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\juce_audio_processors.mm">
-      <Filter>JUCE Modules\juce_audio_processors</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_utils\audio_cd\juce_AudioCDReader.cpp">
       <Filter>JUCE Modules\juce_audio_utils\audio_cd</Filter>
     </ClCompile>
@@ -3223,22 +3195,10 @@
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_utils\native\juce_android_BluetoothMidiDevicePairingDialogue.cpp">
       <Filter>JUCE Modules\juce_audio_utils\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_utils\native\juce_ios_BluetoothMidiDevicePairingDialogue.mm">
-      <Filter>JUCE Modules\juce_audio_utils\native</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_utils\native\juce_linux_AudioCDReader.cpp">
       <Filter>JUCE Modules\juce_audio_utils\native</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_utils\native\juce_linux_BluetoothMidiDevicePairingDialogue.cpp">
-      <Filter>JUCE Modules\juce_audio_utils\native</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_utils\native\juce_mac_AudioCDBurner.mm">
-      <Filter>JUCE Modules\juce_audio_utils\native</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_utils\native\juce_mac_AudioCDReader.mm">
-      <Filter>JUCE Modules\juce_audio_utils\native</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_utils\native\juce_mac_BluetoothMidiDevicePairingDialogue.mm">
       <Filter>JUCE Modules\juce_audio_utils\native</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_utils\native\juce_win_BluetoothMidiDevicePairingDialogue.cpp">
@@ -3257,9 +3217,6 @@
       <Filter>JUCE Modules\juce_audio_utils\players</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_utils\juce_audio_utils.cpp">
-      <Filter>JUCE Modules\juce_audio_utils</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_utils\juce_audio_utils.mm">
       <Filter>JUCE Modules\juce_audio_utils</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_core\containers\juce_AbstractFifo.cpp">
@@ -3395,21 +3352,6 @@
       <Filter>JUCE Modules\juce_core\native</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_core\native\juce_linux_Threads.cpp">
-      <Filter>JUCE Modules\juce_core\native</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_core\native\juce_mac_Files.mm">
-      <Filter>JUCE Modules\juce_core\native</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_core\native\juce_mac_Network.mm">
-      <Filter>JUCE Modules\juce_core\native</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_core\native\juce_mac_Strings.mm">
-      <Filter>JUCE Modules\juce_core\native</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_core\native\juce_mac_SystemStats.mm">
-      <Filter>JUCE Modules\juce_core\native</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_core\native\juce_mac_Threads.mm">
       <Filter>JUCE Modules\juce_core\native</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_core\native\juce_posix_NamedPipe.cpp">
@@ -3589,9 +3531,6 @@
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_core\juce_core.cpp">
       <Filter>JUCE Modules\juce_core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_core\juce_core.mm">
-      <Filter>JUCE Modules\juce_core</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_cryptography\encryption\juce_BlowFish.cpp">
       <Filter>JUCE Modules\juce_cryptography\encryption</Filter>
     </ClCompile>
@@ -3611,9 +3550,6 @@
       <Filter>JUCE Modules\juce_cryptography\hashing</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_cryptography\juce_cryptography.cpp">
-      <Filter>JUCE Modules\juce_cryptography</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_cryptography\juce_cryptography.mm">
       <Filter>JUCE Modules\juce_cryptography</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_data_structures\app_properties\juce_ApplicationProperties.cpp">
@@ -3641,9 +3577,6 @@
       <Filter>JUCE Modules\juce_data_structures\values</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_data_structures\juce_data_structures.cpp">
-      <Filter>JUCE Modules\juce_data_structures</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_data_structures\juce_data_structures.mm">
       <Filter>JUCE Modules\juce_data_structures</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_dsp\containers\juce_AudioBlock_test.cpp">
@@ -3754,9 +3687,6 @@
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_dsp\juce_dsp.cpp">
       <Filter>JUCE Modules\juce_dsp</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_dsp\juce_dsp.mm">
-      <Filter>JUCE Modules\juce_dsp</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_events\broadcasters\juce_ActionBroadcaster.cpp">
       <Filter>JUCE Modules\juce_events\broadcasters</Filter>
     </ClCompile>
@@ -3793,13 +3723,7 @@
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_events\native\juce_android_Messaging.cpp">
       <Filter>JUCE Modules\juce_events\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_events\native\juce_ios_MessageManager.mm">
-      <Filter>JUCE Modules\juce_events\native</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_events\native\juce_linux_Messaging.cpp">
-      <Filter>JUCE Modules\juce_events\native</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_events\native\juce_mac_MessageManager.mm">
       <Filter>JUCE Modules\juce_events\native</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_events\native\juce_ScopedLowPowerModeDisabler.cpp">
@@ -3818,9 +3742,6 @@
       <Filter>JUCE Modules\juce_events\timers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_events\juce_events.cpp">
-      <Filter>JUCE Modules\juce_events</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_events\juce_events.mm">
       <Filter>JUCE Modules\juce_events</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_graphics\colour\juce_Colour.cpp">
@@ -4108,12 +4029,6 @@
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_graphics\native\juce_linux_IconHelpers.cpp">
       <Filter>JUCE Modules\juce_graphics\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_graphics\native\juce_mac_CoreGraphicsContext.mm">
-      <Filter>JUCE Modules\juce_graphics\native</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_graphics\native\juce_mac_Fonts.mm">
-      <Filter>JUCE Modules\juce_graphics\native</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_graphics\native\juce_mac_IconHelpers.cpp">
       <Filter>JUCE Modules\juce_graphics\native</Filter>
     </ClCompile>
@@ -4136,9 +4051,6 @@
       <Filter>JUCE Modules\juce_graphics\placement</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_graphics\juce_graphics.cpp">
-      <Filter>JUCE Modules\juce_graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_graphics\juce_graphics.mm">
       <Filter>JUCE Modules\juce_graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\accessibility\juce_AccessibilityHandler.cpp">
@@ -4402,15 +4314,6 @@
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\native\accessibility\juce_android_Accessibility.cpp">
       <Filter>JUCE Modules\juce_gui_basics\native\accessibility</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\native\accessibility\juce_ios_Accessibility.mm">
-      <Filter>JUCE Modules\juce_gui_basics\native\accessibility</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\native\accessibility\juce_mac_Accessibility.mm">
-      <Filter>JUCE Modules\juce_gui_basics\native\accessibility</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\native\accessibility\juce_mac_AccessibilitySharedCode.mm">
-      <Filter>JUCE Modules\juce_gui_basics\native\accessibility</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\native\accessibility\juce_win32_Accessibility.cpp">
       <Filter>JUCE Modules\juce_gui_basics\native\accessibility</Filter>
     </ClCompile>
@@ -4441,34 +4344,10 @@
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\native\juce_ios_ContentSharer.cpp">
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\native\juce_ios_FileChooser.mm">
-      <Filter>JUCE Modules\juce_gui_basics\native</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\native\juce_ios_UIViewComponentPeer.mm">
-      <Filter>JUCE Modules\juce_gui_basics\native</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\native\juce_ios_Windowing.mm">
-      <Filter>JUCE Modules\juce_gui_basics\native</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\native\juce_linux_FileChooser.cpp">
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\native\juce_linux_Windowing.cpp">
-      <Filter>JUCE Modules\juce_gui_basics\native</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\native\juce_mac_FileChooser.mm">
-      <Filter>JUCE Modules\juce_gui_basics\native</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\native\juce_mac_MainMenu.mm">
-      <Filter>JUCE Modules\juce_gui_basics\native</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\native\juce_mac_MouseCursor.mm">
-      <Filter>JUCE Modules\juce_gui_basics\native</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\native\juce_mac_NSViewComponentPeer.mm">
-      <Filter>JUCE Modules\juce_gui_basics\native</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\native\juce_mac_Windowing.mm">
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\native\juce_win32_DragAndDrop.cpp">
@@ -4594,9 +4473,6 @@
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\juce_gui_basics.cpp">
       <Filter>JUCE Modules\juce_gui_basics</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\juce_gui_basics.mm">
-      <Filter>JUCE Modules\juce_gui_basics</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_extra\code_editor\juce_CodeDocument.cpp">
       <Filter>JUCE Modules\juce_gui_extra\code_editor</Filter>
     </ClCompile>
@@ -4657,9 +4533,6 @@
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_extra\native\juce_ios_PushNotifications.cpp">
       <Filter>JUCE Modules\juce_gui_extra\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_extra\native\juce_ios_UIViewComponent.mm">
-      <Filter>JUCE Modules\juce_gui_extra\native</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_extra\native\juce_linux_X11_SystemTrayIcon.cpp">
       <Filter>JUCE Modules\juce_gui_extra\native</Filter>
     </ClCompile>
@@ -4669,19 +4542,10 @@
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_extra\native\juce_linux_XEmbedComponent.cpp">
       <Filter>JUCE Modules\juce_gui_extra\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_extra\native\juce_mac_AppleRemote.mm">
-      <Filter>JUCE Modules\juce_gui_extra\native</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_extra\native\juce_mac_NSViewComponent.mm">
-      <Filter>JUCE Modules\juce_gui_extra\native</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_extra\native\juce_mac_PushNotifications.cpp">
       <Filter>JUCE Modules\juce_gui_extra\native</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_extra\native\juce_mac_SystemTrayIcon.cpp">
-      <Filter>JUCE Modules\juce_gui_extra\native</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_extra\native\juce_mac_WebBrowserComponent.mm">
       <Filter>JUCE Modules\juce_gui_extra\native</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_extra\native\juce_win32_ActiveXComponent.cpp">
@@ -4697,9 +4561,6 @@
       <Filter>JUCE Modules\juce_gui_extra\native</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_extra\juce_gui_extra.cpp">
-      <Filter>JUCE Modules\juce_gui_extra</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_extra\juce_gui_extra.mm">
       <Filter>JUCE Modules\juce_gui_extra</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_opengl\opengl\juce_gl.cpp">
@@ -4736,9 +4597,6 @@
       <Filter>JUCE Modules\juce_opengl\utils</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_opengl\juce_opengl.cpp">
-      <Filter>JUCE Modules\juce_opengl</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_opengl\juce_opengl.mm">
       <Filter>JUCE Modules\juce_opengl</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\app\CrashHandler.cpp">
@@ -5173,79 +5031,40 @@
     <ClCompile Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_audio_basics.cpp">
       <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_audio_basics.mm">
-      <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_audio_devices.cpp">
-      <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_audio_devices.mm">
       <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_audio_formats.cpp">
       <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_audio_formats.mm">
-      <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_audio_processors.cpp">
-      <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_audio_processors.mm">
       <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_core.cpp">
       <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_core.mm">
-      <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_cryptography.cpp">
-      <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_cryptography.mm">
       <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_data_structures.cpp">
       <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_data_structures.mm">
-      <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_events.cpp">
-      <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_events.mm">
       <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_graphics.cpp">
       <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_graphics.mm">
-      <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_gui_basics.cpp">
-      <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_gui_basics.mm">
       <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_gui_extra.cpp">
       <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_gui_extra.mm">
-      <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_opengl.cpp">
       <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_opengl.mm">
-      <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_video.cpp">
-      <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_video.mm">
       <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\resources\BinaryData.cpp">
