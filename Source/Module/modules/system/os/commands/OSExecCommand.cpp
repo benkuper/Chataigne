@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    OSFileCommand.cpp
-    Created: 5 Jan 2018 4:05:49pm
-    Author:  Ben
+	OSFileCommand.cpp
+	Created: 5 Jan 2018 4:05:49pm
+	Author:  Ben
 
   ==============================================================================
 */
@@ -13,7 +13,7 @@
 #include <Tlhelp32.h>
 #endif
 
-OSExecCommand::OSExecCommand(OSModule* _module, CommandContext context, var params, Multiplex * multiplex) :
+OSExecCommand::OSExecCommand(OSModule* _module, CommandContext context, var params, Multiplex* multiplex) :
 	BaseCommand(_module, context, params, multiplex),
 	osModule(_module),
 	launchOptions(nullptr),
@@ -68,21 +68,13 @@ void OSExecCommand::triggerInternal(int multiplexIndex)
 	case LAUNCH_APP:
 	case OPEN_FILE:
 	{
-		File f = ((FileParameter*)target)->getFile();
-		File wDir = File::getCurrentWorkingDirectory();
-
-		f.getParentDirectory().setAsCurrentWorkingDirectory();
-		bool result = f.startAsProcess(launchOptions->stringValue());
-		if (!result) NLOGERROR(module->niceName, "Error trying to launch process : " << f.getFullPathName());
-		wDir.setAsCurrentWorkingDirectory();
-		module->outActivityTrigger->trigger();
+		osModule->launchFile(((FileParameter*)target)->getFile(), launchOptions->stringValue());
 	}
 	break;
 
 	case KILL_APP:
 	{
-		killProcess(target->stringValue());
-		module->outActivityTrigger->trigger();
+		osModule->killProcess(target->stringValue(), killMode->boolValue());
 	}
 	break;
 
@@ -97,33 +89,33 @@ void OSExecCommand::triggerInternal(int multiplexIndex)
 	{
 		File f = ((FileParameter*)target)->getFile();
 		String dir = f.getParentDirectory().getFullPathName();
-		
+
 #if JUCE_WINDOWS
 		String driveLetter = dir.substring(0, 2);
-		String command = driveLetter + " && cd \"" + dir + "\" && \"" + f.getFileName()+"\"";
+		String command = driveLetter + " && cd \"" + dir + "\" && \"" + f.getFileName() + "\"";
 		if (module->logOutgoingData->boolValue()) NLOG(module->niceName, "Launching : " + command);
 		int result = 0;
 		if (silentMode->boolValue()) WinExec(command.getCharPointer(), SW_HIDE);
 		else system(command.getCharPointer());
 #else
-        String launchPrefix = f.getFileName().endsWith("sh")?"sh ":"./";
-        
-    #if JUCE_MAC
-        
-        String command = "osascript -e 'tell application \"Terminal\""
-        +String("\nactivate")
-        +"\ndo script \"cd "+ dir +" && "+launchPrefix + "\\\""+f.getFileName()+"\\\"\""
-        +"\nend tell'";
-        
-            //"osascript -e 'tell application \"Terminal\" to do script \"cd "+ dir +" && "+launchPrefix + f.getFileName()+"\"'";
-    #else //linux
-        String command = "cd \"" + dir + "\" && gnome-terminal -- bash -c '" + launchPrefix + "\""+ f.getFileName()+"\"'";
-    #endif
-        
-        if (module->logOutgoingData->boolValue()) NLOG(module->niceName, "Launching : " + command);
-        int result = system(command.getCharPointer());
+		String launchPrefix = f.getFileName().endsWith("sh") ? "sh " : "./";
+
+#if JUCE_MAC
+
+		String command = "osascript -e 'tell application \"Terminal\""
+			+ String("\nactivate")
+			+ "\ndo script \"cd " + dir + " && " + launchPrefix + "\\\"" + f.getFileName() + "\\\"\""
+			+ "\nend tell'";
+
+		//"osascript -e 'tell application \"Terminal\" to do script \"cd "+ dir +" && "+launchPrefix + f.getFileName()+"\"'";
+#else //linux
+		String command = "cd \"" + dir + "\" && gnome-terminal -- bash -c '" + launchPrefix + "\"" + f.getFileName() + "\"'";
 #endif
-        
+
+		if (module->logOutgoingData->boolValue()) NLOG(module->niceName, "Launching : " + command);
+		int result = system(command.getCharPointer());
+#endif
+
 		if (result != 0) NLOGERROR(module->niceName, "Error trying to launch command : " << f.getFullPathName());
 		module->outActivityTrigger->trigger();
 	}
@@ -133,14 +125,5 @@ void OSExecCommand::triggerInternal(int multiplexIndex)
 	}
 }
 
-void OSExecCommand::killProcess(const String & name)
-{
-#if JUCE_WINDOWS
-	int result = system(String("taskkill " + String(killMode->boolValue() ? "/f " : "") + "/im \"" + target->stringValue() + "\"").getCharPointer());
-	if (result != 0) LOGWARNING("Problem killing app " + target->stringValue());
-#else
-	int result = system(String("killall "+ String(killMode->boolValue()?"-9":"-2") +" \""+target->stringValue()+"\"").getCharPointer());
-	if(result != 0) LOGWARNING("Problem killing app " + target->stringValue());
-#endif
-}
+
 

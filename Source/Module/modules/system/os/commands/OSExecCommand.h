@@ -33,8 +33,6 @@ public:
 
 	void triggerInternal(int multiplexIndex) override;
 
-	void killProcess(const String &name);
-
 	static OSExecCommand * create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex) { return new OSExecCommand((OSModule *)module, context, params, multiplex); }
 
 };
