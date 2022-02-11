@@ -14,7 +14,6 @@ CommunityModuleManager::CommunityModuleManager() :
 	BaseManager("Community Modules"),
 	Thread("communityModules")
 {
-	userCanAddControllables = false;
 	userCanAddItemsManually = false;
     selectItemWhenCreated = false;
 	startThread();
