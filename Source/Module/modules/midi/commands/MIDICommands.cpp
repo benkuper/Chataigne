@@ -175,14 +175,16 @@ void MIDISysExCommand::updateBytesParams()
 	while (dataContainer.controllables.size() < numBytes->intValue())
 	{
 		String index = String(dataContainer.controllables.size());
-		IntParameter * p = dataContainer.addIntParameter("#" + index, "Data for the byte #" + index, 0, 0, 255);
+		IntParameter * p = new IntParameter("#" + index, "Data for the byte #" + index, 0, 0, 255);
 		p->hexMode = true;
+		dataContainer.addParameter(p); // after hexMode
 	}
 
 }
 
-void MIDISysExCommand::onContainerParameterChangedAsync(Parameter * p, const var &)
+void MIDISysExCommand::onContainerParameterChanged(Parameter * p)
 {
+	MIDICommand::onContainerParameterChanged(p);
 	if (p == numBytes)
 	{
 		updateBytesParams();

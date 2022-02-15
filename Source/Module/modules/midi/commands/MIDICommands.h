@@ -69,7 +69,7 @@ public:
 	Array<IntParameter *> bytes;
 
 	void updateBytesParams();
-	void onContainerParameterChangedAsync(Parameter * p, const var &param) override;
+	void onContainerParameterChanged(Parameter * p) override;
 	void triggerInternal(int multiplexIndex) override;
 
 	static MIDISysExCommand * create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex) { return new MIDISysExCommand((MIDIModule *)module, context, params, multiplex); }
