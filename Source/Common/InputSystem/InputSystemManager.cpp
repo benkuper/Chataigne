@@ -38,8 +38,11 @@ InputSystemManager::~InputSystemManager()
 
 void InputSystemManager::checkDevices()
 {
-	int numDevices = SDL_NumJoysticks();
-
+#if JUCE_MAC
+    SDL_JoystickUpdate();
+#endif
+    
+    int numDevices = SDL_NumJoysticks();
 	for (int i = 0; i < numDevices; ++i)
 	{
 		if (SDL_IsGameController(i))
@@ -143,8 +146,16 @@ void InputSystemManager::run()
 		wait(20); //50fps
 
 		if (Engine::mainEngine->isClearing || Engine::mainEngine->isLoadingFile) continue;
-
-		SDL_JoystickUpdate();
+        
+       // MessageManager::getInstance()->callFunctionOnMessageThread([](void *)->void*{SDL_Event e; SDL_PollEvent(&e); return nullptr;}, nullptr);
+        
+        int numDevices = SDL_NumJoysticks();
+        if(numDevices != gamepads.size())
+        {
+            DBG("Gamepad num change !");
+            continue;
+        }
+        SDL_JoystickUpdate();
 		SDL_GameControllerUpdate();
 
 		gamepads.getLock().enter();
@@ -158,96 +169,20 @@ void InputSystemManager::run()
 
 void InputSystemManager::timerCallback()
 {
-	checkDevices();
+    checkDevices();
 }
-
-//Joystick::Joystick(SDL_Joystick * joystick) :
-//	joystick(joystick),
-//	axesCC("Axes"),
-//	buttonsCC("Buttons")
-//{
-//	int numAxes = SDL_JoystickNumAxes(joystick);
-//	for (int i = 0; i <  numAxes; ++i)
-//	{
-//		FloatParameter * f = axesCC.addFloatParameter("Axis " + String(i + 1), "", 0, -1, 1);
-//		axisOffset[i] = 0;
-//		axisDeadZone[i] = 0;
-//		f->isControllableFeedbackOnly = true;
-//	}
-//
-//	int numButtons = SDL_JoystickNumButtons(joystick);
-//	for (int i = 0; i < numButtons; ++i)
-//	{
-//		BoolParameter * b = buttonsCC.addBoolParameter("Button " + String(i + 1), "", false);
-//		b->isControllableFeedbackOnly = true;
-//	}
-//}
-//
-//Joystick::~Joystick()
-//{
-//	masterReference.clear();
-//}
-//
-//void Joystick::update()
-//{
-//	int numAxes = SDL_JoystickNumAxes(joystick);
-//	if (axesCC.controllables.size() == numAxes)
-//	{
-//		GenericScopedLock lock(axesCC.controllables.getLock());
-//		for (int i = 0; i < numAxes; ++i)
-//		{
-//			float axisValue = jmap<float>((float)SDL_JoystickGetAxis(joystick, i), INT16_MIN, INT16_MAX, -1, 1) + axisOffset[i];
-//			if (fabs(axisValue) < axisDeadZone[i]) axisValue = 0;
-//			else
-//			{
-//				if (axisValue > 0) axisValue = jmap<float>(axisValue, axisDeadZone[i], 1 + axisOffset[i], 0, 1);
-//				else axisValue = jmap<float>(axisValue, -1 + axisOffset[i], -axisDeadZone[i], -1, 0);
-//			}
-//			((FloatParameter*)axesCC.controllables[i])->setValue(axisValue);
-//		}
-//	}
-//
-//	int numButtons = SDL_JoystickNumButtons(joystick);
-//	if (buttonsCC.controllables.size() == numButtons)
-//	{
-//		GenericScopedLock lock(buttonsCC.controllables.getLock());
-//		for (int i = 0; i < numButtons; ++i)
-//		{
-//			((BoolParameter*)buttonsCC.controllables[i])->setValue(SDL_JoystickGetButton(joystick, i) > 0);
-//		}
-//	}
-//}
 
 Gamepad::Gamepad(SDL_GameController* gamepad) :
 	gamepad(gamepad),
 	joystick(nullptr)
-	//axesCC("Axes"),
-	//buttonsCC("Buttons")
 {
 
-	//for (int i = 0; i < SDL_CONTROLLER_AXIS_MAX; ++i)
-	//{
-	//	SDL_GameControllerAxis a = (SDL_GameControllerAxis)i;
-
-	//	FloatParameter * f = axesCC.addFloatParameter(SDL_GameControllerGetStringForAxis(a), "", 0, -1, 1);
-	//	f->isControllableFeedbackOnly = true;
-	//	axisOffset[i] = 0;
-	//	axisDeadZone[i] = 0;
-	//}
-
-	//for (int i = 0; i < SDL_CONTROLLER_BUTTON_MAX; ++i)
-	//{
-	//	SDL_GameControllerButton b = (SDL_GameControllerButton)i;
-	//	BoolParameter * bp = buttonsCC.addBoolParameter(SDL_GameControllerGetStringForButton(b), "", false);
-	//	bp->isControllableFeedbackOnly = true;
-	//}
 }
 
 Gamepad::Gamepad(SDL_Joystick* joystick) :
 	gamepad(nullptr),
 	joystick(joystick)
 {
-
 }
 
 Gamepad::~Gamepad()
@@ -257,10 +192,6 @@ Gamepad::~Gamepad()
 
 void Gamepad::update()
 {
-	//if (axesCC.controllables.size() == SDL_CONTROLLER_AXIS_MAX)
-	//{
-	//	ScopedLock(axesCC.controllables.getLock());
-
 	int numAxes = joystick != nullptr ? SDL_JoystickNumAxes(joystick) : SDL_CONTROLLER_AXIS_MAX;
 	int numButtons = joystick != nullptr ? SDL_JoystickNumButtons(joystick) : SDL_CONTROLLER_BUTTON_MAX;
 

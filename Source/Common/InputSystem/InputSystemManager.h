@@ -11,7 +11,12 @@
 #pragma once
 
 #include "JuceHeader.h"
+
+#if JUCE_MAC
+#include <SDL2/SDL.h>
+#else
 #include "SDL.h"
+#endif
 
 class Gamepad
 {

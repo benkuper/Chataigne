@@ -71,6 +71,7 @@
 		B7D1E9B2DB666FD0C4DA9CA2 /* include_juce_events.mm */ = {isa = PBXBuildFile; fileRef = F7B87FFA7807F632CD294BA4; };
 		B84C47FC81D491DE8352F7A7 /* include_juce_gui_basics.mm */ = {isa = PBXBuildFile; fileRef = 767E6C14CD8A82E65606EB02; };
 		C602EDD2320D46D71CF78955 /* RecentFilesMenuTemplate.nib */ = {isa = PBXBuildFile; fileRef = CFF11961CD6D0DFF4EB302A4; };
+		C6EDEE52606D81949D455AF7 /* SDL2.framework */ = {isa = PBXBuildFile; fileRef = A330B89FF4A3660791C566A1; settings = { ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C8E81ADA56D6A25E4AD7C918 /* QuartzCore.framework */ = {isa = PBXBuildFile; fileRef = 64731A5930462AB9DB5DDE0D; };
 		CCD9A22929C0C3B17DBDECFC /* BinaryData.cpp */ = {isa = PBXBuildFile; fileRef = 8E161399DEC1EED4622B6EE6; };
 		CD1179FB5FFCDF7733DE6D99 /* io.c */ = {isa = PBXBuildFile; fileRef = 66FB3CD683B9EE7A37CC2C5D; };
@@ -96,6 +97,20 @@
 		FE9141EF0E13E01FBAF283A5 /* list_ports_osx.cc */ = {isa = PBXBuildFile; fileRef = 51B8DD8FCD4AFD742BBD48DB; };
 		FFBC11E7EE94DC34D717AD69 /* WebKit.framework */ = {isa = PBXBuildFile; fileRef = F36349200785EF7B0D1E7329; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		E1F9BB6FC488288D10A30791 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C6EDEE52606D81949D455AF7,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0074BFF742505143863BD8F9 /* CommonIncludes.h */ /* CommonIncludes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CommonIncludes.h; path = ../../Source/Common/CommonIncludes.h; sourceTree = SOURCE_ROOT; };
@@ -598,6 +613,7 @@
 		A25CA35206B001BEC52F35AE /* FFTAnalyzer.h */ /* FFTAnalyzer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FFTAnalyzer.h; path = ../../Source/Module/modules/audio/analysis/FFTAnalyzer.h; sourceTree = SOURCE_ROOT; };
 		A2FF815E7046151034E93B19 /* ConditionFilter.h */ /* ConditionFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ConditionFilter.h; path = ../../Source/Common/Processor/Mapping/Filter/filters/condition/ConditionFilter.h; sourceTree = SOURCE_ROOT; };
 		A31E5A4F4FE61056FEA565BD /* CustomVariablesModule.h */ /* CustomVariablesModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CustomVariablesModule.h; path = ../../Source/Module/modules/customvariables/CustomVariablesModule.h; sourceTree = SOURCE_ROOT; };
+		A330B89FF4A3660791C566A1 /* SDL2.framework */ /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../External/sdl/lib/osx/SDL2.framework; sourceTree = "<group>"; };
 		A344ECDA05A5372A32341886 /* include_juce_simpleweb.cpp */ /* include_juce_simpleweb.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_juce_simpleweb.cpp; path = ../../JuceLibraryCode/include_juce_simpleweb.cpp; sourceTree = SOURCE_ROOT; };
 		A375FF401D9AB143A47EC093 /* include_juce_audio_formats.mm */ /* include_juce_audio_formats.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_audio_formats.mm; path = ../../JuceLibraryCode/include_juce_audio_formats.mm; sourceTree = SOURCE_ROOT; };
 		A3A75BA91D31B2C71CCA4CBD /* DLightModule.cpp */ /* DLightModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DLightModule.cpp; path = ../../Source/Module/modules/osc/dlight/DLightModule.cpp; sourceTree = SOURCE_ROOT; };
@@ -929,6 +945,7 @@
 				382ACC3B858F0CF59BEA300D,
 				C8E81ADA56D6A25E4AD7C918,
 				FFBC11E7EE94DC34D717AD69,
+				C6EDEE52606D81949D455AF7,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2107,6 +2124,7 @@
 				ACEC0AB4D367F7C1DA170CD9,
 				64731A5930462AB9DB5DDE0D,
 				F36349200785EF7B0D1E7329,
+				A330B89FF4A3660791C566A1,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -3406,6 +3424,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 59654CEDCD4488BCC04B2DBD;
 			buildPhases = (
+				E1F9BB6FC488288D10A30791,
 				3FA05CEBBC2BF1B4AAC173D5,
 				E8519AD77E15F3F7F7402D27,
 				C662D66CEBDD9BD30354F250,
@@ -3669,6 +3688,7 @@
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/build/$(CONFIGURATION)";
 				COPY_PHASE_STRIP = NO;
 				EXCLUDED_ARCHS = "i386 arm64 arm64e";
+				FRAMEWORK_SEARCH_PATHS = ("$(SRCROOT)/../../External/sdl/lib/osx", "$(inherited)");
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -3700,7 +3720,6 @@
 					"$(SRCROOT)/../../External/servus/include",
 					"$(SRCROOT)/../../External/dnssd/include",
 					"$(SRCROOT)/../../External/joycon/include",
-					"$(SRCROOT)/../../External/sdl/include",
 					"$(SRCROOT)/../../External/hidapi/include",
 					"$(SRCROOT)/../../Source",
 					"$(inherited)",
@@ -3708,17 +3727,17 @@
 				INFOPLIST_FILE = Info-App.plist;
 				INFOPLIST_PREPROCESS = NO;
 				INSTALL_PATH = "$(HOME)/Applications";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"../../External/servus/lib/osx/debug\"",
 					"\"../../External/joycon/lib/osx\"",
-					"\"../../External/sdl/lib/osx\"",
 					"\"../../Modules/juce_simpleweb/libs/MacOSX\"",
 					"\"../../Modules/juce_simpleweb/libs/MacOSX/${CURRENT_ARCH}\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../Modules $(SRCROOT)/../../External/wiiuse $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../External/dnssd/include $(SRCROOT)/../../External/joycon/include $(SRCROOT)/../../External/sdl/include $(SRCROOT)/../../External/hidapi/include $(SRCROOT)/../../Source";
-				OTHER_LDFLAGS = "-lServus -lhidapi -lSDL2 -liconv -lJoyShockLibrary -lssl -lcrypto";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../Modules $(SRCROOT)/../../External/wiiuse $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../External/dnssd/include $(SRCROOT)/../../External/joycon/include $(SRCROOT)/../../External/hidapi/include $(SRCROOT)/../../Source";
+				OTHER_LDFLAGS = "-lServus -lhidapi -lJoyShockLibrary -lssl -lcrypto";
 				PRODUCT_BUNDLE_IDENTIFIER = benkuper.Chataigne;
 				PRODUCT_NAME = "Chataigne";
 				USE_HEADERMAP = NO;
@@ -3738,6 +3757,7 @@
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/build/$(CONFIGURATION)";
 				DEAD_CODE_STRIPPING = YES;
 				EXCLUDED_ARCHS = "i386 arm64 arm64e";
+				FRAMEWORK_SEARCH_PATHS = ("$(SRCROOT)/../../External/sdl/lib/osx", "$(inherited)");
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -3769,7 +3789,6 @@
 					"$(SRCROOT)/../../External/servus/include",
 					"$(SRCROOT)/../../External/dnssd/include",
 					"$(SRCROOT)/../../External/joycon/include",
-					"$(SRCROOT)/../../External/sdl/include",
 					"$(SRCROOT)/../../External/hidapi/include",
 					"$(SRCROOT)/../../Source",
 					"$(inherited)",
@@ -3777,18 +3796,18 @@
 				INFOPLIST_FILE = Info-App.plist;
 				INFOPLIST_PREPROCESS = NO;
 				INSTALL_PATH = "$(HOME)/Applications";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"../../External/servus/lib/osx/release\"",
 					"\"../../External/joycon/lib/osx\"",
-					"\"../../External/sdl/lib/osx\"",
 					"\"../../Modules/juce_simpleweb/libs/MacOSX\"",
 					"\"../../Modules/juce_simpleweb/libs/MacOSX/${CURRENT_ARCH}\"",
 				);
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../Modules $(SRCROOT)/../../External/wiiuse $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../External/dnssd/include $(SRCROOT)/../../External/joycon/include $(SRCROOT)/../../External/sdl/include $(SRCROOT)/../../External/hidapi/include $(SRCROOT)/../../Source";
-				OTHER_LDFLAGS = "-lServus -lhidapi -lSDL2 -liconv -lJoyShockLibrary -lssl -lcrypto";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../Modules $(SRCROOT)/../../External/wiiuse $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../External/dnssd/include $(SRCROOT)/../../External/joycon/include $(SRCROOT)/../../External/hidapi/include $(SRCROOT)/../../Source";
+				OTHER_LDFLAGS = "-lServus -lhidapi -lJoyShockLibrary -lssl -lcrypto";
 				PRODUCT_BUNDLE_IDENTIFIER = benkuper.Chataigne;
 				PRODUCT_NAME = "Chataigne";
 				USE_HEADERMAP = NO;

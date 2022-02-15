@@ -1686,36 +1686,37 @@
     <XCODE_MAC targetFolder="Builds/MacOSX" smallIcon="nVz6Li" bigIcon="nVz6Li"
                extraFrameworks="IOBluetooth, ForceFeedback, IOKit" documentExtensions="noisette"
                customPList="&lt;plist&gt;&#10;&lt;dict&gt;&#10;&lt;key&gt;NSAppTransportSecurity&lt;/key&gt;&#10;&#9;&lt;dict&gt;&#10;&#9;&#9;&lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;&#10;&#9;&#9;&lt;true/&gt;&#10;&#9;&lt;/dict&gt;&#10;&lt;/dict&gt;&#10;&lt;/plist&gt;"
-               externalLibraries="Servus&#10;hidapi&#10;SDL2&#10;iconv&#10;JoyShockLibrary"
-               microphonePermissionNeeded="1" hardenedRuntimeOptions="com.apple.security.cs.allow-jit,com.apple.security.device.audio-input"
+               externalLibraries="Servus&#10;hidapi&#10;JoyShockLibrary" microphonePermissionNeeded="1"
+               hardenedRuntimeOptions="com.apple.security.cs.allow-jit,com.apple.security.device.audio-input"
                extraDefs="JUCE_SUPPORT_CARBON=0&#10;JUCE_COREGRAPHICS_DRAW_ASYNC=1"
-               xcodeValidArchs="x86_64">
+               xcodeValidArchs="x86_64" embeddedFrameworks="../../External/sdl/lib/osx/SDL2.framework"
+               frameworkSearchPaths="../../External/sdl/lib/osx">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="Chataigne"
-                       headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/libartnet/include&#10;../../External/joycon/include&#10;../../External/sdl/include&#10;../../External/hidapi/include"
+                       headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/libartnet/include&#10;../../External/joycon/include&#10;../../External/hidapi/include"
                        cppLanguageStandard="c++11" cppLibType="libc++" enablePluginBinaryCopyStep="1"
-                       libraryPath="../../External/servus/lib/osx/debug&#10;../../External/libartnet/lib/osx&#10;../../External/joycon/lib/osx&#10;../../External/sdl/lib/osx"/>
-        <CONFIGURATION name="Release" optimisation="3" targetName="Chataigne" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/libartnet/include&#10;../../External/joycon/include&#10;../../External/sdl/include&#10;../../External/hidapi/include"
-                       enablePluginBinaryCopyStep="1" libraryPath="../../External/servus/lib/osx/release&#10;../../External/libartnet/lib/osx&#10;../../External/joycon/lib/osx&#10;../../External/sdl/lib/osx"/>
+                       libraryPath="../../External/servus/lib/osx/debug&#10;../../External/libartnet/lib/osx&#10;../../External/joycon/lib/osx"/>
+        <CONFIGURATION name="Release" optimisation="3" targetName="Chataigne" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/libartnet/include&#10;../../External/joycon/include&#10;../../External/hidapi/include"
+                       enablePluginBinaryCopyStep="1" libraryPath="../../External/servus/lib/osx/release&#10;../../External/libartnet/lib/osx&#10;../../External/joycon/lib/osx"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_osc" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_opengl" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_gui_basics" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_graphics" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_events" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_data_structures" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_cryptography" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_core" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_processors" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_devices" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_osc"/>
+        <MODULEPATH id="juce_opengl"/>
+        <MODULEPATH id="juce_gui_basics"/>
+        <MODULEPATH id="juce_graphics"/>
+        <MODULEPATH id="juce_events"/>
+        <MODULEPATH id="juce_data_structures"/>
+        <MODULEPATH id="juce_cryptography"/>
+        <MODULEPATH id="juce_core"/>
+        <MODULEPATH id="juce_audio_processors"/>
+        <MODULEPATH id="juce_audio_devices"/>
         <MODULEPATH id="juce_audio_basics"/>
-        <MODULEPATH id="juce_audio_utils" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_gui_extra" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils"/>
+        <MODULEPATH id="juce_gui_extra"/>
         <MODULEPATH id="juce_organicui" path="Modules"/>
-        <MODULEPATH id="juce_dsp" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_dsp"/>
         <MODULEPATH id="juce_timeline" path="Modules"/>
-        <MODULEPATH id="juce_audio_formats" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats"/>
         <MODULEPATH id="juce_simpleweb" path="Modules"/>
         <MODULEPATH id="juce_sharedtexture" path="Modules"/>
       </MODULEPATHS>
@@ -1819,18 +1820,19 @@
         <MODULEPATH id="juce_sharedtexture" path="Modules"/>
       </MODULEPATHS>
     </VS2019>
-    <XCODE_MAC targetFolder="Builds/MacOSX_CI" externalLibraries="Servus&#10;hidapi&#10;SDL2&#10;iconv&#10;JoyShockLibrary"
+    <XCODE_MAC targetFolder="Builds/MacOSX_CI" externalLibraries="Servus&#10;hidapi&#10;JoyShockLibrary"
                smallIcon="nVz6Li" bigIcon="nVz6Li" hardenedRuntimeOptions="com.apple.security.cs.allow-jit"
                customPList="&lt;plist&gt;&#10;&lt;dict&gt;&#10;&lt;key&gt;NSAppTransportSecurity&lt;/key&gt;&#10;&#9;&lt;dict&gt;&#10;&#9;&#9;&lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;&#10;&#9;&#9;&lt;true/&gt;&#10;&#9;&lt;/dict&gt;&#10;&lt;/dict&gt;&#10;&lt;/plist&gt;"
                microphonePermissionNeeded="1" extraFrameworks="IOBluetooth, ForceFeedback, IOKit"
                documentExtensions="noisette" extraDefs="JUCE_SUPPORT_CARBON=0&#10;JUCE_COREGRAPHICS_DRAW_ASYNC=1"
-               xcodeValidArchs="x86_64">
+               xcodeValidArchs="x86_64" frameworkSearchPaths="../../External/sdl/lib/osx"
+               embeddedFrameworks="../../External/sdl/lib/osx/SDL2.framework">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/joycon/include&#10;../../External/sdl/include&#10;../../External/hidapi/include"
-                       libraryPath="../../External/servus/lib/osx/debug&#10;../../External/joycon/lib/osx&#10;../../External/sdl/lib/osx"
+        <CONFIGURATION isDebug="1" name="Debug" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/joycon/include&#10;../../External/hidapi/include"
+                       libraryPath="../../External/servus/lib/osx/debug&#10;../../External/joycon/lib/osx"
                        osxCompatibility="10.8 SDK" macOSDeploymentTarget="10.8"/>
-        <CONFIGURATION isDebug="0" name="Release" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/joycon/include&#10;../../External/sdl/include&#10;../../External/hidapi/include"
-                       libraryPath="../../External/servus/lib/osx/release&#10;../../External/joycon/lib/osx&#10;../../External/sdl/lib/osx"
+        <CONFIGURATION isDebug="0" name="Release" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/joycon/include&#10;../../External/hidapi/include"
+                       libraryPath="../../External/servus/lib/osx/release&#10;../../External/joycon/lib/osx"
                        osxCompatibility="10.8 SDK" macOSDeploymentTarget="10.8"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
