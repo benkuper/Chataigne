@@ -9,6 +9,19 @@
 */
 
 #pragma once
+class CVGroupUI :
+	public BaseItemUI<CVGroup>
+{
+public:
+	CVGroupUI(CVGroup* item);
+	~CVGroupUI();
+
+	std::unique_ptr<FloatSliderUI> presetProgressionUI;
+
+	void resizedInternalHeader(Rectangle<int> &r) override;
+	void controllableFeedbackUpdateInternal(Controllable* c) override;
+};
+
 
 class CVGroupVariablesEditor:
 	public GenericManagerEditor<GenericControllableItem>
@@ -20,3 +33,4 @@ public:
 	void addPopupMenuItems(PopupMenu* p) override;
 	void handleMenuSelectedID(int result) override;
 };
+

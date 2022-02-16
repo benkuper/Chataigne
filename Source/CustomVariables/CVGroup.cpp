@@ -1,31 +1,31 @@
 /*
   ==============================================================================
 
-    CVGroup.cpp
-    Created: 15 Feb 2018 3:49:35pm
-    Author:  Ben
+	CVGroup.cpp
+	Created: 15 Feb 2018 3:49:35pm
+	Author:  Ben
 
   ==============================================================================
 */
 
-CVGroup::CVGroup(const String & name) :
+CVGroup::CVGroup(const String& name) :
 	BaseItem(name),
 	Thread("CV Interpolation"),
 	params("Parameters"),
 	defaultInterpolation("Default Preset Interpolation"),
-    targetPreset(nullptr),
-    interpolationAutomation(nullptr),
-    interpolationTime(0)
+	targetPreset(nullptr),
+	interpolationAutomation(nullptr),
+	interpolationTime(0)
 {
 	itemDataType = "CVGroup";
 
 	pm.reset(new CVPresetManager(this));
-	
+
 
 	addChildControllableContainer(&params);
 	addChildControllableContainer(&values);
 	addChildControllableContainer(pm.get());
-	
+
 	controlMode = params.addEnumParameter("Control Mode", "Defines how the variables are controlled.\n \
 Free mode lets you can change manually the values or tween them to preset values punctually.\n \
 Weights mode locks the values and interpolate them continuously depending on preset weights.\n \
@@ -33,6 +33,10 @@ Voronoi and Gradient Band (not implemented yet) also locks values but interpolat
 	controlMode->addOption("Free", FREE)->addOption("Weights", WEIGHTS)->addOption("2D Voronoi", VORONOI);// ->addOption("Gradient Band", GRADIENT_BAND);
 
 	randomize = params.addTrigger("Randomize", "Randomize all values");
+
+	interpolationProgress = addFloatParameter("Interpolation Progress", "Progression of the preset interpolation", 0, 0, 1);
+	interpolationProgress->hideInEditor = true;
+	interpolationProgress->setControllableFeedbackOnly(true);
 
 	defaultInterpolation.isSelectable = false;
 	defaultInterpolation.length->setValue(1);
@@ -49,7 +53,7 @@ Voronoi and Gradient Band (not implemented yet) also locks values but interpolat
 
 CVGroup::~CVGroup()
 {
-	if(morpher != nullptr) morpher->removeMorpherListener(this);
+	if (morpher != nullptr) morpher->removeMorpherListener(this);
 	stopThread(100);
 }
 
@@ -63,36 +67,36 @@ void CVGroup::itemsAdded(Array<GenericControllableItem*> items)
 	for (auto& i : items) i->controllable->userCanSetReadOnly = true;
 }
 
-void CVGroup::setValuesToPreset(CVPreset * preset)
+void CVGroup::setValuesToPreset(CVPreset* preset)
 {
 	if (!enabled->boolValue()) return;
 
-	for (auto &v : values.items)
+	for (auto& v : values.items)
 	{
-		Parameter * p = dynamic_cast<Parameter *>(v->controllable);
+		Parameter* p = dynamic_cast<Parameter*>(v->controllable);
 		if (p == nullptr) continue;
-		ParameterPreset * pp = preset->values.getParameterPresetForSource(p);
+		ParameterPreset* pp = preset->values.getParameterPresetForSource(p);
 		if (pp != nullptr) p->setValue(pp->parameter->value);
 	}
 }
 
-void CVGroup::lerpPresets(CVPreset * p1, CVPreset * p2, float weight)
+void CVGroup::lerpPresets(CVPreset* p1, CVPreset* p2, float weight)
 {
 	if (!enabled->boolValue()) return;
 
-	for (auto &v : values.items)
+	for (auto& v : values.items)
 	{
-		Parameter * p = dynamic_cast<Parameter *>(v->controllable);
+		Parameter* p = dynamic_cast<Parameter*>(v->controllable);
 		if (p == nullptr) continue;
-		ParameterPreset * pp1 = p1->values.getParameterPresetForSource(p);
-		ParameterPreset * pp2 = p2->values.getParameterPresetForSource(p);
+		ParameterPreset* pp1 = p1->values.getParameterPresetForSource(p);
+		ParameterPreset* pp2 = p2->values.getParameterPresetForSource(p);
 
 		if (pp1 != nullptr && pp2 != nullptr)
 		{
 			ParameterPreset::InterpolationMode mode = pp2->interpolationMode->getValueDataAsEnum<ParameterPreset::InterpolationMode>();
-			
+
 			if (mode == ParameterPreset::NONE) continue;
-			
+
 			var tValue;
 			if (weight == 0) tValue = pp1->parameter->value;
 			else if (weight == 1) tValue = pp2->parameter->value;
@@ -128,11 +132,11 @@ void CVGroup::lerpPresets(Array<var> sourceValues, CVPreset* endPreset, float we
 			if (mode == ParameterPreset::NONE) continue;
 
 			var tValue;
-			if (weight == 0) tValue =  startValue;
+			if (weight == 0) tValue = startValue;
 			else if (weight == 1) tValue = endParam->parameter->value;
 			else
 			{
-				if (mode == ParameterPreset::INTERPOLATE) tValue = endParam->parameter->getLerpValueTo(startValue, 1-weight);
+				if (mode == ParameterPreset::INTERPOLATE) tValue = endParam->parameter->getLerpValueTo(startValue, 1 - weight);
 				else tValue = mode == ParameterPreset::CHANGE_AT_END ? startValue : endParam->parameter->value;
 			}
 
@@ -155,7 +159,7 @@ void CVGroup::goToPreset(CVPreset* p, float time, Automation* curve)
 	if (interpolationAutomation != nullptr) interpolationAutomation->removeInspectableListener(this);
 	interpolationAutomation = curve;
 	automationRef = curve;
-	if(interpolationAutomation != nullptr) interpolationAutomation->addInspectableListener(this);
+	if (interpolationAutomation != nullptr) interpolationAutomation->addInspectableListener(this);
 
 	interpolationTime = time;
 
@@ -219,26 +223,26 @@ void CVGroup::computeValues()
 	{
 	case VORONOI:
 	case GRADIENT_BAND:
-    case WEIGHTS:
+	case WEIGHTS:
 
-		for (auto &v : values.items)
+		for (auto& v : values.items)
 		{
 			Array<var> pValues;
-			Parameter * vp = static_cast<Parameter *>(v->controllable);
-			for (auto &p : pm->items)
+			Parameter* vp = static_cast<Parameter*>(v->controllable);
+			for (auto& p : pm->items)
 			{
-				ParameterPreset * spp = p->values.getParameterPresetForSource(vp);
-				if(spp != nullptr) pValues.add(spp->parameter->value);
+				ParameterPreset* spp = p->values.getParameterPresetForSource(vp);
+				if (spp != nullptr) pValues.add(spp->parameter->value);
 			}
 
-			if(pValues.size() == weights.size()) vp->setWeightedValue(pValues, weights);
+			if (pValues.size() == weights.size()) vp->setWeightedValue(pValues, weights);
 		}
 		break;
-            
-        default:
-            break;
+
+	default:
+		break;
 	}
-	
+
 }
 
 
@@ -247,13 +251,13 @@ Array<float> CVGroup::getNormalizedPresetWeights()
 	Array<float> normalizedWeights;
 	float totalWeight = 0;
 
-	for (auto &p : pm->items)
+	for (auto& p : pm->items)
 	{
 		totalWeight += p->enabled->boolValue() ? p->weight->floatValue() : 0;
 	}
 
-	
-	for (auto &p : pm->items)
+
+	for (auto& p : pm->items)
 	{
 		float w = p->enabled->boolValue() ? p->weight->floatValue() : 0;
 		normalizedWeights.add(totalWeight > 0 ? w / totalWeight : 0);
@@ -268,10 +272,10 @@ void CVGroup::weightsUpdated()
 	if (cm == VORONOI || cm == GRADIENT_BAND) computeValues();
 }
 
-void CVGroup::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
+void CVGroup::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
 {
 	BaseItem::onControllableFeedbackUpdateInternal(cc, c);
-	
+
 	if (c == randomize)
 	{
 		randomizeValues();
@@ -315,7 +319,7 @@ void CVGroup::onControllableFeedbackUpdateInternal(ControllableContainer * cc, C
 
 	if (controlMode->getValueDataAsEnum<ControlMode>() == WEIGHTS && cc == pm.get())
 	{
-		CVPreset* p = ControllableUtil::findParentAs<CVPreset>(c,4);
+		CVPreset* p = ControllableUtil::findParentAs<CVPreset>(c, 4);
 		if (p != nullptr) computeValues();
 	}
 }
@@ -326,7 +330,7 @@ var CVGroup::getJSONData()
 	data.getDynamicObject()->setProperty("params", params.getJSONData()); //keep "params" to avoid conflict with container's parameter
 	data.getDynamicObject()->setProperty(values.shortName, values.getJSONData());
 	data.getDynamicObject()->setProperty(pm->shortName, pm->getJSONData());
-	if(morpher != nullptr) data.getDynamicObject()->setProperty(morpher->shortName, morpher->getJSONData());
+	if (morpher != nullptr) data.getDynamicObject()->setProperty(morpher->shortName, morpher->getJSONData());
 	return data;
 }
 
@@ -334,9 +338,9 @@ void CVGroup::loadJSONDataInternal(var data)
 {
 	BaseItem::loadJSONDataInternal(data);
 	params.loadJSONData(data.getProperty("params", var())); //keep "params" to avoid conflict with container's parameter
-	values.loadJSONData(data.getProperty(values.shortName , var()));
+	values.loadJSONData(data.getProperty(values.shortName, var()));
 	pm->loadJSONData(data.getProperty(pm->shortName, var()));
-	
+
 	if (morpher != nullptr)
 	{
 		morpher->loadJSONData(data.getProperty(morpher->shortName, var()));
@@ -377,12 +381,16 @@ void CVGroup::run()
 	a.hideInEditor = true;
 	a.loadJSONData(interpolationAutomation->getJSONData());
 
+	interpolationProgress->setValue(0);
+
 	double timeAtStart = Time::getMillisecondCounter() / 1000.0;
 
 	while (!threadShouldExit() && !automationRef.wasObjectDeleted())
 	{
 		double curTime = Time::getMillisecondCounter() / 1000.0;
 		double rel = jlimit<double>(0., 1., (curTime - timeAtStart) / interpolationTime);
+
+		interpolationProgress->setValue(rel);
 
 		float weight = interpolationAutomation->getValueAtPosition(rel);
 		lerpPresets(sourceValues, &p2, weight);
@@ -398,6 +406,8 @@ void CVGroup::run()
 		interpolationAutomation = nullptr;
 		automationRef = nullptr;
 	}
+
+	interpolationProgress->setValue(0);
 }
 
 CVGroup::ValuesManager::ValuesManager() :

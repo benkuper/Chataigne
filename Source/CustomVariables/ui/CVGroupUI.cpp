@@ -55,3 +55,31 @@ void CVGroupVariablesEditor::handleMenuSelectedID(int result)
 		}
 	}
 }
+
+CVGroupUI::CVGroupUI(CVGroup* item) :
+	BaseItemUI(item)
+{
+	presetProgressionUI.reset(item->interpolationProgress->createSlider());
+	presetProgressionUI->showLabel = false;
+	presetProgressionUI->showValue = false;
+	addChildComponent(presetProgressionUI.get());
+}
+
+CVGroupUI::~CVGroupUI()
+{
+}
+
+void CVGroupUI::resizedInternalHeader(Rectangle<int>& r)
+{
+	BaseItemUI::resizedInternalHeader(r);
+	presetProgressionUI->setBounds(r.removeFromRight(80).reduced(0, 4));
+}
+
+void CVGroupUI::controllableFeedbackUpdateInternal(Controllable* c)
+{
+	BaseItemUI::controllableFeedbackUpdateInternal(c);
+	if (c == item->interpolationProgress)
+	{
+		presetProgressionUI->setVisible(item->interpolationProgress->floatValue() > 0);
+	}
+}

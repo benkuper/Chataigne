@@ -53,6 +53,7 @@ public:
 	Automation* interpolationAutomation;
 	WeakReference<Inspectable> automationRef;
 	float interpolationTime;
+	FloatParameter* interpolationProgress;
 
 	void itemAdded(GenericControllableItem* item) override;
 	void itemsAdded(Array<GenericControllableItem*> item) override;
