@@ -20,6 +20,7 @@ public:
 
 	BoolParameter * tick;
 
+
 	enum MetroMode { FREQUENCY, TIME, BPM };
 	EnumParameter* mode;
 	FloatParameter * freqTimeBpm;

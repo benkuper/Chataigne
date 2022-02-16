@@ -1,4 +1,3 @@
-#include "MetronomeModule.h"
 /*
   ==============================================================================
 
@@ -40,6 +39,8 @@ MetronomeModule::~MetronomeModule()
 
 void MetronomeModule::updateFreqParam()
 {
+	stopThread(1000);
+
 	if (freqTimeBpm != nullptr)
 	{
 		moduleParams.removeControllable(freqTimeBpm);
@@ -65,6 +66,8 @@ void MetronomeModule::updateFreqParam()
 	}
 	moduleParams.controllables.move(moduleParams.controllables.indexOf(freqTimeBpm), moduleParams.controllables.indexOf(mode)+1);
 	queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
+
+	startThread();
 }
 
 void MetronomeModule::onContainerParameterChangedInternal(Parameter* p)
@@ -100,11 +103,6 @@ void MetronomeModule::run()
 	Random r;
 	while (!threadShouldExit())
 	{	
-		if (freqTimeBpm == nullptr)
-		{
-			wait(10);
-			continue;
-		}
 
 		float freq = 1;
 		
