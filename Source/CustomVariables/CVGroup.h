@@ -17,7 +17,6 @@ class CVGroup :
 	public BaseItem,
 	public Morpher::MorpherListener,
 	public Thread,
-	public Inspectable::InspectableListener,
 	public GenericControllableManager::ManagerListener
 {
 public:
@@ -76,8 +75,6 @@ public:
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
-
-	void inspectableDestroyed(Inspectable* i) override;
 
 	void run() override;
 };

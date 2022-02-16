@@ -156,10 +156,8 @@ void CVGroup::goToPreset(CVPreset* p, float time, Automation* curve)
 	stopThread(1000);
 
 	targetPreset = p;
-	if (interpolationAutomation != nullptr) interpolationAutomation->removeInspectableListener(this);
 	interpolationAutomation = curve;
 	automationRef = curve;
-	if (interpolationAutomation != nullptr) interpolationAutomation->addInspectableListener(this);
 
 	interpolationTime = time;
 
@@ -353,17 +351,9 @@ void CVGroup::loadJSONDataInternal(var data)
 	}
 }
 
-void CVGroup::inspectableDestroyed(Inspectable* i)
-{
-	if (i == interpolationAutomation)
-	{
-		stopThread(1000);
-	}
-}
-
 void CVGroup::run()
 {
-	if (targetPreset == nullptr || interpolationAutomation == nullptr || interpolationTime <= 0) return;
+	if (targetPreset == nullptr || interpolationTime <= 0) return;
 
 
 	Array<var> sourceValues;
@@ -379,20 +369,20 @@ void CVGroup::run()
 	Automation a;
 	a.isSelectable = false;
 	a.hideInEditor = true;
-	a.loadJSONData(interpolationAutomation->getJSONData());
+	if(interpolationAutomation != nullptr && !automationRef.wasObjectDeleted()) a.loadJSONData(interpolationAutomation->getJSONData());
 
 	interpolationProgress->setValue(0);
 
 	double timeAtStart = Time::getMillisecondCounter() / 1000.0;
 
-	while (!threadShouldExit() && !automationRef.wasObjectDeleted())
+	while (!threadShouldExit())
 	{
 		double curTime = Time::getMillisecondCounter() / 1000.0;
 		double rel = jlimit<double>(0., 1., (curTime - timeAtStart) / interpolationTime);
 
 		interpolationProgress->setValue(rel);
 
-		float weight = interpolationAutomation->getValueAtPosition(rel);
+		float weight = a.getValueAtPosition(rel);
 		lerpPresets(sourceValues, &p2, weight);
 
 		if (rel == 1) break;
@@ -400,14 +390,8 @@ void CVGroup::run()
 		wait(20); //50fps
 	}
 
-	if (interpolationAutomation != nullptr)
-	{
-		interpolationAutomation->removeInspectableListener(this);
-		interpolationAutomation = nullptr;
-		automationRef = nullptr;
-	}
-
 	interpolationProgress->setValue(0);
+	interpolationAutomation = nullptr;
 }
 
 CVGroup::ValuesManager::ValuesManager() :
