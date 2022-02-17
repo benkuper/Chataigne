@@ -35,7 +35,7 @@ public:
 
 	void setupDefinitionsFromModule();
 
-	void setItemIndex(CommandTemplate* t, int newIndex) override;
+	void setItemIndex(CommandTemplate* t, int newIndex, bool addToUndo = false) override;
 	void reorderItems() override;
 	void reorderDefinitions();
 

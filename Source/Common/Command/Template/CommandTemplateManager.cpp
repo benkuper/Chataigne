@@ -52,10 +52,10 @@ void CommandTemplateManager::setupDefinitionsFromModule()
 	}
 }
 
-void CommandTemplateManager::setItemIndex(CommandTemplate* t, int newIndex)
+void CommandTemplateManager::setItemIndex(CommandTemplate* t, int newIndex, bool addToUndo)
 {
-	BaseManager::setItemIndex(t, newIndex);
-	reorderDefinitions();
+	BaseManager::setItemIndex(t, newIndex, true);
+	if(!addToUndo) reorderDefinitions();
 }
 
 void CommandTemplateManager::reorderItems()

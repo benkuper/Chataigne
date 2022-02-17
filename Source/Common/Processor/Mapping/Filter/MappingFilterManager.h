@@ -39,7 +39,7 @@ public:
 	void addItemInternal(MappingFilter * m, var data) override;
 	void removeItemInternal(MappingFilter *) override;
 	
-	void setItemIndex(MappingFilter* item, int index) override;
+	void setItemIndex(MappingFilter* item, int index, bool addToUndo = true) override;
 	void reorderItems() override;
 	
 	void filterStateChanged(MappingFilter* mf) override;

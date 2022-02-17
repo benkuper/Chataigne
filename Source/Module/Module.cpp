@@ -252,7 +252,7 @@ void Module::setupScriptsFromJSONData(var data)
 	for (auto& s : *scriptData)
 	{
 		Script* script = index < scriptManager->items.size() ? scriptManager->items[index] : scriptManager->addItem(nullptr, var(), false);
-		scriptManager->setItemIndex(script, index);
+		scriptManager->setItemIndex(script, index, false);
 		script->filePath->customBasePath = data.getProperty("modulePath", "");
 		script->filePath->setControllableFeedbackOnly(true);
 		script->filePath->setValue(s.toString());

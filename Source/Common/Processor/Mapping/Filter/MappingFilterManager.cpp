@@ -171,10 +171,10 @@ void MappingFilterManager::removeItemInternal(MappingFilter* f)
 	notifyNeedsRebuild();
 }
 
-void MappingFilterManager::setItemIndex(MappingFilter* item, int index)
+void MappingFilterManager::setItemIndex(MappingFilter* item, int index, bool addToUndo)
 {
 	BaseManager::setItemIndex(item, index);
-	notifyNeedsRebuild();
+	if(!addToUndo) notifyNeedsRebuild();
 }
 
 void MappingFilterManager::reorderItems()
