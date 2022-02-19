@@ -58,7 +58,7 @@ public:
 	ControllableContainer channelParams;
 	Array<FloatParameter*> channelVolumes;
 
-	ControllableContainer monitorParams;
+	EnablingControllableContainer monitorParams;
 	FloatParameter* monitorVolume;
 	Array<BoolParameter*> monitorOutChannels;
 	Array<int> selectedMonitorOutChannels;

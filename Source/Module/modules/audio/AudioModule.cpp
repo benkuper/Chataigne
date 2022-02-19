@@ -38,6 +38,7 @@ AudioModule::AudioModule(const String& name) :
 	moduleParams.addChildControllableContainer(&channelParams);
 
 
+	monitorParams.enabled->setValue(false);
 	moduleParams.addChildControllableContainer(&monitorParams);
 	monitorVolume = monitorParams.addFloatParameter("Monitor Volume", "Volume multiplier for the monitor output. This will affect all the input channels and all the selected output channels", 1, 0, 10);
 
@@ -352,7 +353,7 @@ void AudioModule::audioDeviceIOCallback(const float** inputChannelData, int numI
 				SMPTETimecode stime;
 				ltc_frame_to_time(&stime, &frame.ltc, 1);
 
-				float time = stime.days * 3600 * 24 + stime.hours * 3600 + stime.mins * 60 + stime.secs + stime.frame *1.0f / curLTCFPS;
+				float time = stime.days * 3600 * 24 + stime.hours * 3600 + stime.mins * 60 + stime.secs + stime.frame * 1.0f / curLTCFPS;
 				ltcTime->setValue(time);
 				hasLTC = true;
 			}
@@ -370,8 +371,11 @@ void AudioModule::audioDeviceIOCallback(const float** inputChannelData, int numI
 				ltcFrameDropCount = 0;
 				ltcPlaying->setValue(true);
 			}
+		}
 
-			//Monitor
+		//Monitor
+		if (monitorParams.enabled->boolValue())
+		{
 			for (int j = 0; j < numActiveMonitorOutputs; j++)
 			{
 				int outputIndex = selectedMonitorOutChannels[j];
