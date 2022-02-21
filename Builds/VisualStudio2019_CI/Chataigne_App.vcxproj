@@ -5092,6 +5092,7 @@
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\mouse\juce_MouseInactivityDetector.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\mouse\juce_MouseInputSource.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\mouse\juce_MouseListener.h"/>
+    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\mouse\juce_PointerState.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\mouse\juce_SelectedItemSet.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\mouse\juce_TextDragAndDropTarget.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\mouse\juce_TooltipClient.h"/>
@@ -5186,6 +5187,7 @@
     <ClInclude Include="..\..\JUCE\modules\juce_gui_extra\misc\juce_SystemTrayIconComponent.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_extra\misc\juce_WebBrowserComponent.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_extra\native\juce_mac_CarbonViewWrapperComponent.h"/>
+    <ClInclude Include="..\..\JUCE\modules\juce_gui_extra\native\juce_mac_NSViewFrameWatcher.h"/>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_extra\juce_gui_extra.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_opengl\geometry\juce_Draggable3DOrientation.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_opengl\geometry\juce_Matrix3D.h"/>
