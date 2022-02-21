@@ -55,8 +55,10 @@ public:
 	FloatParameter* activityThreshold;
 	FloatParameter* outVolume;
 
-	ControllableContainer channelParams;
-	Array<FloatParameter*> channelVolumes;
+	ControllableContainer inputVolumesCC;
+	Array<FloatParameter*> inputVolumes;
+	ControllableContainer outputVolumesCC;
+	Array<FloatParameter*> outputVolumes;
 
 	EnablingControllableContainer monitorParams;
 	FloatParameter* monitorVolume;

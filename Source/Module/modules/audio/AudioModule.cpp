@@ -13,7 +13,8 @@ AudioModule::AudioModule(const String& name) :
 	hs(&am),
 	uidIncrement(100),
 	curBufferIndex(0),
-	channelParams("Channels"),
+	inputVolumesCC("Input Volumes"),
+	outputVolumesCC("Output Volumes"),
 	monitorParams("Monitor"),
 	numActiveMonitorOutputs(0),
 	noteCC("Pitch Detection"),
@@ -33,9 +34,10 @@ AudioModule::AudioModule(const String& name) :
 	pitchDetectionMethod = moduleParams.addEnumParameter("Pitch Detection Method", "Choose how to detect the pitch.\nNone will disable the detection (for performance),\nMPM is better suited for monophonic sounds,\nYIN is better suited for high-pitched voices and music");
 	pitchDetectionMethod->addOption("None", NONE)->addOption("MPM", MPM)->addOption("YIN", YIN);
 
-	
 
-	moduleParams.addChildControllableContainer(&channelParams);
+
+	moduleParams.addChildControllableContainer(&inputVolumesCC);
+	//moduleParams.addChildControllableContainer(&outputVolumesCC);
 
 
 	monitorParams.enabled->setValue(false);
@@ -156,26 +158,41 @@ void AudioModule::updateAudioSetup()
 	for (int i = 0; i < numChannels; ++i)
 	{
 		String channelName = AudioChannelSet::getChannelTypeName(channelSet.getTypeOfChannel(i));
-		BoolParameter* b = monitorParams.addBoolParameter("Monitor Out : " + channelName, "If enabled, sends audio from this layer to this channel", i < selectedMonitorOutChannels.size());
+		BoolParameter* b = monitorParams.addBoolParameter("Monitor Out : " + channelName, "If enabled, sends audio from this input directly to the output", i < selectedMonitorOutChannels.size());
 		monitorOutChannels.add(b);
 	}
 
 	monitorParams.loadJSONData(mData);
 	updateSelectedMonitorChannels();
 
-	var chData = channelParams.getJSONData();
-	for (auto& c : channelVolumes) channelParams.removeControllable(c);
-	channelVolumes.clear();
+	var inData = inputVolumesCC.getJSONData();
+	for (auto& c : inputVolumes) inputVolumesCC.removeControllable(c);
+	inputVolumes.clear();
+
+	var outData = outputVolumesCC.getJSONData();
+	for (auto& c : outputVolumes) outputVolumesCC.removeControllable(c);
+	outputVolumes.clear();
 
 	int numInputChannels = graph.getMainBusNumInputChannels();
+	int numOutputChannels = graph.getMainBusNumOutputChannels();
+
 	AudioChannelSet inputChannelSet = graph.getChannelLayoutOfBus(false, 0);
 	for (int i = 0; i < numInputChannels; ++i)
 	{
 		String channelName = AudioChannelSet::getChannelTypeName(inputChannelSet.getTypeOfChannel(i));
-		FloatParameter* v = channelParams.addFloatParameter(channelName + " Gain", "Gain to apply to this input channel", 1, 0);
-		channelVolumes.add(v);
+		FloatParameter* v = inputVolumesCC.addFloatParameter(channelName + " Gain", "Gain to apply to this input channel", 1, 0, 3);
+		inputVolumes.add(v);
 	}
-	channelParams.loadJSONData(chData);
+	inputVolumesCC.loadJSONData(inData);
+
+	AudioChannelSet outputChannelSet = graph.getChannelLayoutOfBus(false, 1);
+	for (int i = 0; i < numOutputChannels; ++i)
+	{
+		String channelName = AudioChannelSet::getChannelTypeName(outputChannelSet.getTypeOfChannel(i));
+		FloatParameter* v = outputVolumesCC.addFloatParameter(channelName + " Gain", "Gain to apply to this input channel", 1, 0, 3);
+		outputVolumes.add(v);
+	}
+	outputVolumesCC.loadJSONData(outData);
 
 	audioModuleListeners.call(&AudioModuleListener::audioSetupChanged);
 	audioModuleListeners.call(&AudioModuleListener::monitorSetupChanged);
@@ -300,7 +317,7 @@ void AudioModule::audioDeviceIOCallback(const float** inputChannelData, int numI
 
 	for (int i = 0; i < numInputChannels; ++i)
 	{
-		float channelVolume = i < channelVolumes.size()  && channelVolumes[i] != nullptr ? channelVolumes[i]->floatValue() : 1;
+		float channelVolume = i < inputVolumes.size() && inputVolumes[i] != nullptr ? inputVolumes[i]->floatValue() : 1;
 
 		if (i == 0) //take only the first channel for analysis (later, should be able to select which channel is used for analysis)
 		{
