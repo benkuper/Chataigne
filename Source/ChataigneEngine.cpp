@@ -177,10 +177,13 @@ void ChataigneEngine::importSelection(File f)
 {
 	if (!f.existsAsFile())
 	{
-		FileChooser fc("Load a LilNut", File::getCurrentWorkingDirectory(), "*.lilnut");
-		fc.launchAsync(FileBrowserComponent::FileChooserFlags::saveMode, [this](const FileChooser& fc)
+		FileChooser* fc(new FileChooser("Load a LilNut", File::getCurrentWorkingDirectory(), "*.lilnut"));
+		fc->launchAsync(FileBrowserComponent::FileChooserFlags::saveMode, [this](const FileChooser& fc)
 			{
-				if (fc.getResult().existsAsFile()) importSelection(fc.getResult());
+				File f = fc.getResult();
+				delete& fc;
+				if (f == File()) return;
+				importSelection(f);
 			}
 		);
 		return;
@@ -208,10 +211,12 @@ void ChataigneEngine::exportSelection()
 
 	String s = JSON::toString(data);
 
-	FileChooser fc("Save a LilNut", File::getCurrentWorkingDirectory(), "*.lilnut");
-	fc.launchAsync(FileBrowserComponent::FileChooserFlags::saveMode, [s](const FileChooser& fc)
+	FileChooser* fc(new FileChooser("Save a LilNut", File::getCurrentWorkingDirectory(), "*.lilnut"));
+	fc->launchAsync(FileBrowserComponent::FileChooserFlags::saveMode, [s](const FileChooser& fc)
 		{
 			File f = fc.getResult();
+			delete& fc;
+			if (f == File()) return; 
 			f.replaceWithText(s);
 		}
 	);

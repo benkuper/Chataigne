@@ -19,11 +19,11 @@ CommunityModuleInfo::CommunityModuleInfo(StringRef name, var onlineData) :
 	editorIsCollapsed = true;
 
 	installTriger = addTrigger("Install", "Install or Update this module");
-	uninstallTrigger = addTrigger("Uninstall", "Uninstall this module");	
+	uninstallTrigger = addTrigger("Uninstall", "Uninstall this module");
 
 	isOnline = addBoolParameter("Is Online", "Is this module registered online ?", !onlineData.isVoid());
-	isLocal = addBoolParameter("Is Local", "Is this module installed locally ?",  false);
-	
+	isLocal = addBoolParameter("Is Local", "Is this module installed locally ?", false);
+
 	if (!onlineData.isVoid())
 	{
 		url = onlineData.getProperty("url", "");
@@ -34,7 +34,7 @@ CommunityModuleInfo::CommunityModuleInfo(StringRef name, var onlineData) :
 	}
 
 	updateLocalData();
-	
+
 }
 
 CommunityModuleInfo::~CommunityModuleInfo()
@@ -64,7 +64,7 @@ File CommunityModuleInfo::getDownloadFilePath()
 void CommunityModuleInfo::updateLocalData()
 {
 	var localData = ModuleManager::getInstance()->factory->getCustomModuleInfo(niceName);
-	
+
 	localVersion = localData.getProperty("version", "Unknown");
 	localModuleFolder = ModuleManager::getInstance()->factory->getFolderForCustomModule(niceName);
 
@@ -94,27 +94,35 @@ void CommunityModuleInfo::updateLocalData()
 	isLocal->setValue(status != NOT_INSTALLED);
 }
 
-void CommunityModuleInfo::onContainerTriggerTriggered(Trigger * t)
+void CommunityModuleInfo::onContainerTriggerTriggered(Trigger* t)
 {
 	if (t == installTriger)
 	{
 		installModule();
 	}
-	else if(t == uninstallTrigger)
+	else if (t == uninstallTrigger)
 	{
-		int result = AlertWindow::showOkCancelBox(AlertWindow::QuestionIcon, "Remove custom module", "Are you sure you want to remove this custom module ?", "Yes", "No", nullptr, nullptr);
-		if (result)
-		{
-			if (localModuleFolder.exists()) localModuleFolder.deleteRecursively();
-			ModuleManager::getInstance()->factory->updateCustomModules();
+		AlertWindow::showAsync(
+			MessageBoxOptions().withIconType(AlertWindow::QuestionIcon)
+			.withTitle("Remove custom module")
+			.withMessage("Are you sure you want to remove this custom module ?")
+			.withButton("Yes")
+			.withButton("No"),
+			[this](int result)
+			{
+				if (result)
+				{
+					if (localModuleFolder.exists()) localModuleFolder.deleteRecursively();
+					ModuleManager::getInstance()->factory->updateCustomModules();
 
-			updateLocalData();
-		}
-
+					updateLocalData();
+				}
+			}
+		);
 	}
 }
 
-void CommunityModuleInfo::finished(URL::DownloadTask * task, bool success)
+void CommunityModuleInfo::finished(URL::DownloadTask* task, bool success)
 {
 	if (!success)
 	{
@@ -132,16 +140,16 @@ void CommunityModuleInfo::finished(URL::DownloadTask * task, bool success)
 
 	ModuleManager::getInstance()->factory->updateCustomModules();
 	localModuleFolder = ModuleManager::getInstance()->factory->getFolderForCustomModule(niceName);
-	
+
 	updateLocalData();
 }
 
-void CommunityModuleInfo::progress(URL::DownloadTask * /*task*/, int64 /*bytesDownloaded*/, int64 /*totalLength*/)
+void CommunityModuleInfo::progress(URL::DownloadTask* /*task*/, int64 /*bytesDownloaded*/, int64 /*totalLength*/)
 {
 }
 
 
-InspectableEditor * CommunityModuleInfo::getEditorInternal(bool isRoot)
+InspectableEditor* CommunityModuleInfo::getEditorInternal(bool isRoot)
 {
 	return new CommunityModuleInfoEditor(this, isRoot);
 }

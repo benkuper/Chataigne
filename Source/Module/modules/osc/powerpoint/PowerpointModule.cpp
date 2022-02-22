@@ -28,7 +28,7 @@ PowerPointModule::PowerPointModule() :
 #if JUCE_WINDOWS
 	installPowerPointPlugin();
 #else
-    setWarningMessage("This module only works on windows.");
+	setWarningMessage("This module only works on windows.");
 #endif
 }
 
@@ -42,41 +42,49 @@ void PowerPointModule::installPowerPointPlugin()
 	String show = getAppProperties().getUserSettings()->getValue("showPowerpointInstallPlugin", "1");
 	if (show == "1")
 	{
-		int result = AlertWindow::showYesNoCancelBox(AlertWindow::QuestionIcon, "Powerpoint OSC plugin not found", "The Powerpoint plugin is required to be able to actually use this module with Powerpoint.\n \
-Do you want to install it ? Also, you need to have Powerpoint installed.", "Yes", "No", "Don't ask me again", nullptr, nullptr);
-
-		if (result == 1)
-		{
-			URL ppURL("http://benjamin.kuperberg.fr/download/powerpoint-osc.zip");
-
-			LOG("Downloading...");
-
-			downloadedFile = File::getSpecialLocation(File::tempDirectory).getChildFile("PowerpointOSC.zip");
-			downloadTask = ppURL.downloadToFile(downloadedFile, URL::DownloadTaskOptions().withListener(this));
-			if (downloadTask == nullptr)
+		AlertWindow::showAsync(
+			MessageBoxOptions().withIconType(AlertWindow::QuestionIcon)
+			.withTitle("Powerpoint OSC plugin not found")
+			.withMessage("The Powerpoint plugin is required to be able to actually use this module with Powerpoint.\n \
+Do you want to install it ? Also, you need to have Powerpoint installed.")
+.withButton("Yes")
+.withButton("No")
+.withButton("Don't ask me again"),
+[this](int result)
 			{
-				LOGERROR("Error downloading Powerpoint plugin, are you connected to internet ?");
-				return;
-			}
-		}
-		else if (result == 0)
-		{
-			getAppProperties().getUserSettings()->setValue("showPowerpointInstallPlugin", "0");
-			LOG("Ok, I won't ask you again.");
-		}
-	}
+				if (result == 1)
+				{
+					URL ppURL("http://benjamin.kuperberg.fr/download/powerpoint-osc.zip");
 
+					LOG("Downloading...");
+
+					downloadedFile = File::getSpecialLocation(File::tempDirectory).getChildFile("PowerpointOSC.zip");
+					downloadTask = ppURL.downloadToFile(downloadedFile, URL::DownloadTaskOptions().withListener(this));
+					if (downloadTask == nullptr)
+					{
+						LOGERROR("Error downloading Powerpoint plugin, are you connected to internet ?");
+						return;
+					}
+				}
+				else if (result == 0)
+				{
+					getAppProperties().getUserSettings()->setValue("showPowerpointInstallPlugin", "0");
+					LOG("Ok, I won't ask you again.");
+				}
+			}
+		);
+	}
 #endif
 }
 
-void PowerPointModule::progress(URL::DownloadTask *, int64 bytesDownloaded, int64 totalBytes)
+void PowerPointModule::progress(URL::DownloadTask*, int64 bytesDownloaded, int64 totalBytes)
 {
 	if (totalBytes == -1) return;
 	float p = bytesDownloaded * 1.0f / totalBytes;
 	LOG("Downloading... " << (int)(p * 100) << "%");
 }
 
-void PowerPointModule::finished(URL::DownloadTask * task, bool success)
+void PowerPointModule::finished(URL::DownloadTask* task, bool success)
 {
 	if (!success)
 	{

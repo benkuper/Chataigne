@@ -155,17 +155,30 @@ void ChataigneSequence::itemAdded(SequenceLayer* layer)
 
 			if (audioLayer->audioModule == nullptr)
 			{
-				int result = AlertWindow::showYesNoCancelBox(AlertWindow::WarningIcon, "Sound Card Module is required", "This Audio layer needs a Sound Card module to be able to actually output sound. Do you want to create one now ?", "Yes", "No", "Cancel", nullptr, nullptr);
-				if (result == 1)
-				{
-					AudioModule* m = AudioModule::create();
-					ModuleManager::getInstance()->addItem(m);
-					audioLayer->setAudioModule(m);
-				}
+				AlertWindow::showAsync(
+					MessageBoxOptions().withIconType(AlertWindow::WarningIcon)
+					.withTitle("Sound Card Module is required")
+					.withMessage("This Audio layer needs a Sound Card module to be able to actually output sound. Do you want to create one now ?")
+					.withButton("Yes")
+					.withButton("No"),
+					[this, audioLayer](int result)
+					{
+						if (result == 1)
+						{
+							AudioModule* m = AudioModule::create();
+							ModuleManager::getInstance()->addItem(m);
+							audioLayer->setAudioModule(m);
+						}
+
+						if (audioLayer->audioModule != nullptr) updateTargetAudioLayer();
+					}
+				);
+			}
+			else
+			{
+				if (audioLayer->audioModule != nullptr) updateTargetAudioLayer();
 			}
 		}
-
-		if (audioLayer->audioModule != nullptr) updateTargetAudioLayer();
 	}
 }
 
@@ -354,7 +367,7 @@ void ChataigneSequence::onExternalParameterValueChanged(Parameter* p)
 void ChataigneSequence::mtcStarted()
 {
 	double time = mtcReceiver->getTime() + (syncOffset->floatValue() * (reverseOffset->boolValue() ? -1 : 1));
-	if(time >= 0 && time < totalTime->floatValue()) playTrigger->trigger();
+	if (time >= 0 && time < totalTime->floatValue()) playTrigger->trigger();
 }
 
 void ChataigneSequence::mtcStopped()
