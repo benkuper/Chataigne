@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    CVGroupManager.cpp
-    Created: 17 Feb 2018 10:16:11am
-    Author:  Ben
+	CVGroupManager.cpp
+	Created: 17 Feb 2018 10:16:11am
+	Author:  Ben
 
   ==============================================================================
 */
@@ -12,7 +12,7 @@
 
 juce_ImplementSingleton(CVGroupManager)
 
-CVGroupManager::CVGroupManager(const String & name) :
+CVGroupManager::CVGroupManager(const String& name) :
 	BaseManager(name)
 {
 	itemDataType = "CVGroup";
@@ -24,35 +24,37 @@ CVGroupManager::~CVGroupManager()
 {
 }
 
-ControllableContainer * CVGroupManager::showMenuAndGetContainer()
+void CVGroupManager::showMenuAndGetContainer(std::function<void(ControllableContainer*)> returnFunc)
 {
 	PopupMenu menu;
 	int numItems = CVGroupManager::getInstance()->items.size();
-	
+
 	for (int i = 0; i < numItems; ++i)
 	{
-		CVGroup * g = CVGroupManager::getInstance()->items[i];
-		menu.addItem(i + 1,g->niceName);
+		CVGroup* g = CVGroupManager::getInstance()->items[i];
+		menu.addItem(i + 1, g->niceName);
 	}
 
-	int result = menu.show();
-	if (result > 0)
-	{
-		return CVGroupManager::getInstance()->items[result - 1];
-	}
-	return nullptr;
+	menu.showMenuAsync(PopupMenu::Options(), [returnFunc](int result)
+		{
+			if (result > 0)
+			{
+				returnFunc(CVGroupManager::getInstance()->items[result - 1]);
+			}
+		}
+	);
 }
 
-Controllable * CVGroupManager::showMenuAndGetVariable(const StringArray & typeFilters, const StringArray & excludeTypeFilters)
+void CVGroupManager::showMenuAndGetVariable(const StringArray& typeFilters, const StringArray& excludeTypeFilters, std::function<void(Controllable*)> returnFunc)
 {
 	PopupMenu menu;
 	int numItems = CVGroupManager::getInstance()->items.size();
-	Array<Controllable *> controllableRefs;
+	Array<Controllable*> controllableRefs;
 
 	int itemID = 1;
 	for (int i = 0; i < numItems; ++i)
 	{
-		CVGroup * g = CVGroupManager::getInstance()->items[i];
+		CVGroup* g = CVGroupManager::getInstance()->items[i];
 
 		PopupMenu sMenu;
 		int numVariables = g->values.items.size();
@@ -63,29 +65,29 @@ Controllable * CVGroupManager::showMenuAndGetVariable(const StringArray & typeFi
 			itemID++;
 		}
 
-		menu.addSubMenu(g->niceName,sMenu);
+		menu.addSubMenu(g->niceName, sMenu);
 	}
 
-	int result = menu.show();
-
-	if (result > 0)
-	{
-		return controllableRefs[result - 1];
-	}
-
-	return nullptr;
+	menu.showMenuAsync(PopupMenu::Options(), [returnFunc, &controllableRefs](int result)
+		{
+			if (result > 0)
+			{
+				returnFunc(controllableRefs[result - 1]);
+			}
+		}
+	);
 }
 
-ControllableContainer * CVGroupManager::showMenuAndGetPreset()
+void CVGroupManager::showMenuAndGetPreset(std::function<void(ControllableContainer*)> returnFunc)
 {
 	PopupMenu menu;
 	int numItems = CVGroupManager::getInstance()->items.size();
-	Array<ControllableContainer *> presetRefs;
+	Array<ControllableContainer*> presetRefs;
 
 	int itemID = 1;
 	for (int i = 0; i < numItems; ++i)
 	{
-		CVGroup * g = CVGroupManager::getInstance()->items[i];
+		CVGroup* g = CVGroupManager::getInstance()->items[i];
 
 		PopupMenu sMenu;
 		int numVariables = g->pm->items.size();
@@ -99,17 +101,17 @@ ControllableContainer * CVGroupManager::showMenuAndGetPreset()
 		menu.addSubMenu(g->niceName, sMenu);
 	}
 
-	int result = menu.show();
-
-	if (result > 0)
-	{
-		return presetRefs[result - 1];
-	}
-
-	return nullptr;
+	menu.showMenuAsync(PopupMenu::Options(), [returnFunc, &presetRefs](int result)
+		{
+			if (result > 0)
+			{
+				returnFunc(presetRefs[result - 1]);
+			}
+		}
+	);
 }
 
-ControllableContainer* CVGroupManager::showMenuAndGetGroup()
+void CVGroupManager::showMenuAndGetGroup(std::function<void(ControllableContainer*)> returnFunc)
 {
 	PopupMenu menu;
 	int numItems = CVGroupManager::getInstance()->items.size();
@@ -118,12 +120,12 @@ ControllableContainer* CVGroupManager::showMenuAndGetGroup()
 		menu.addItem(i + 1, CVGroupManager::getInstance()->items[i]->niceName);
 	}
 
-	int result = menu.show();
-
-	if (result > 0)
-	{
-		return  CVGroupManager::getInstance()->items[result - 1];
-	}
-
-	return nullptr;
+	menu.showMenuAsync(PopupMenu::Options(), [returnFunc](int result)
+		{
+			if (result > 0)
+			{
+				returnFunc(CVGroupManager::getInstance()->items[result - 1]);
+			}
+		}
+	);
 }

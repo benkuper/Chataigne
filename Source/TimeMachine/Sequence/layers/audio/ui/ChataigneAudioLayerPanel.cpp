@@ -86,21 +86,23 @@ void ChataigneAudioLayerPanel::mouseDown(const MouseEvent& e)
 			p.addItem(2, "Export Enveloppe to clipboard");
 			p.addItem(3, "Export Enveloppe to clipboard (data only)");
 
-			int result = p.show();
-			switch (result)
-			{
-			case 1:
-				chataigneAudioLayer->exportRMS(true, false, false);
-				break;
+			p.showMenuAsync(PopupMenu::Options(), [this](int result)
+				{
+					switch (result)
+					{
+					case 1:
+						chataigneAudioLayer->exportRMS(true, false, false);
+						break;
 
-			case 2:
-				chataigneAudioLayer->exportRMS(false, true, false);
-				break;
+					case 2:
+						chataigneAudioLayer->exportRMS(false, true, false);
+						break;
 
-			case 3:
-				chataigneAudioLayer->exportRMS(false, true, true);
-				break;
-			}
+					case 3:
+						chataigneAudioLayer->exportRMS(false, true, true);
+						break;
+					}
+				}); 
 		}
 	}
 	

@@ -102,7 +102,7 @@ void CommunityModuleInfo::onContainerTriggerTriggered(Trigger * t)
 	}
 	else if(t == uninstallTrigger)
 	{
-		int result = AlertWindow::showOkCancelBox(AlertWindow::QuestionIcon, "Remove custom module", "Are you sure you want to remove this custom module ?", "Yes", "No");
+		int result = AlertWindow::showOkCancelBox(AlertWindow::QuestionIcon, "Remove custom module", "Are you sure you want to remove this custom module ?", "Yes", "No", nullptr, nullptr);
 		if (result)
 		{
 			if (localModuleFolder.exists()) localModuleFolder.deleteRecursively();

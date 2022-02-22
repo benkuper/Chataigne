@@ -138,11 +138,15 @@ void StateMachineView::showMenuAndAddItem(bool fromAddButton, Point<int> positio
 	p.addItem(3, "Create Transition", manager->items.size() >= 2);
 	p.addItem(4, "Snapping",true, enableSnapping);
 
-	int result = p.show();
-	if (result == 1)	BaseManagerViewUI::addItemFromMenu(fromAddButton, position);
-	else if (result == 2) commentManagerUI->addItemFromMenu(fromAddButton, position);
-	else if (result == 3) startCreateTransition(nullptr);
-	else if (result == 4) enableSnapping = !enableSnapping;
+	p.showMenuAsync(PopupMenu::Options(), [this, fromAddButton, position](int result)
+		{
+			if (result == 1)	BaseManagerViewUI::addItemFromMenu(fromAddButton, position);
+			else if (result == 2) commentManagerUI->addItemFromMenu(fromAddButton, position);
+			else if (result == 3) startCreateTransition(nullptr);
+			else if (result == 4) enableSnapping = !enableSnapping;
+		}
+
+	);
 }
 
 

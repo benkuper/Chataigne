@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    MIDIModule.cpp
-    Created: 20 Dec 2016 12:35:26pm
-    Author:  Ben
+	MIDIModule.cpp
+	Created: 20 Dec 2016 12:35:26pm
+	Author:  Ben
 
   ==============================================================================
 */
@@ -16,10 +16,10 @@ MIDIModule::MIDIModule(const String& name, bool _useGenericControls) :
 	inputDevice(nullptr),
 	outputDevice(nullptr),
 	tempoCC("Tempo"),
-    lastClockReceiveTime(0),
-    lastClockReceiveTimeIndex(0),
+	lastClockReceiveTime(0),
+	lastClockReceiveTimeIndex(0),
 	mtcCC("MTC"),
-    useGenericControls(_useGenericControls)
+	useGenericControls(_useGenericControls)
 {
 	valuesCC.customControllableComparator = &MIDIModule::midiValueComparator;
 
@@ -41,7 +41,7 @@ MIDIModule::MIDIModule(const String& name, bool _useGenericControls) :
 		defManager->add(CommandDefinition::createDef(this, "", "MMC Command", &MIDIMidiMachineControlCommandAndGoto::create)->addParam("goto", false));
 		defManager->add(CommandDefinition::createDef(this, "", "MMC Goto", &MIDIMidiMachineControlCommandAndGoto::create)->addParam("goto", true));
 	}
-	
+
 	useHierarchy = moduleParams.addBoolParameter("Use Hierarchy", "If checked, incoming messages will be sorted in nested containers instead of 1-level", false);
 	autoFeedback = moduleParams.addBoolParameter("Auto Feedback", "If checked, all changed values will be resent automatically to the outputs", false);
 
@@ -50,7 +50,7 @@ MIDIModule::MIDIModule(const String& name, bool _useGenericControls) :
 
 	isConnected = moduleParams.addBoolParameter("Is Connected", "This is checked if the module is connected to at least one input or output device", false);
 	isConnected->setControllableFeedbackOnly(true);
-	isConnected->isSavable = false; 
+	isConnected->isSavable = false;
 	connectionFeedbackRef = isConnected;
 
 
@@ -87,14 +87,14 @@ MIDIModule::MIDIModule(const String& name, bool _useGenericControls) :
 	thruManager.reset(new ControllableContainer("Pass-through"));
 	thruManager->userCanAddControllables = true;
 	thruManager->customUserCreateControllableFunc = &MIDIModule::createThruControllable;
-	moduleParams.addChildControllableContainer(thruManager.get());	
-	
+	moduleParams.addChildControllableContainer(thruManager.get());
+
 	setupIOConfiguration(inputDevice != nullptr, outputDevice != nullptr);
 }
 
 MIDIModule::~MIDIModule()
 {
-	if(inputDevice != nullptr) inputDevice->removeMIDIInputListener(this);
+	if (inputDevice != nullptr) inputDevice->removeMIDIInputListener(this);
 	if (outputDevice != nullptr) outputDevice->close();
 }
 
@@ -207,7 +207,7 @@ void MIDIModule::sendMidiMachineControlGoto(int hours, int minutes, int seconds,
 }
 
 
-void MIDIModule::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
+void MIDIModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
 {
 	Module::onControllableFeedbackUpdateInternal(cc, c);
 
@@ -221,7 +221,7 @@ void MIDIModule::onControllableFeedbackUpdateInternal(ControllableContainer * cc
 	{
 		if (isControllableInValuesContainer(c))
 		{
-			MIDIValueParameter * mvp = dynamic_cast<MIDIValueParameter *>(c);
+			MIDIValueParameter* mvp = dynamic_cast<MIDIValueParameter*>(c);
 			if (mvp != nullptr)
 			{
 				switch (mvp->type)
@@ -229,9 +229,9 @@ void MIDIModule::onControllableFeedbackUpdateInternal(ControllableContainer * cc
 				case MIDIValueParameter::NOTE_ON: sendNoteOn(mvp->channel, mvp->pitchOrNumber, mvp->intValue()); break;
 				case MIDIValueParameter::NOTE_OFF: sendNoteOff(mvp->channel, mvp->pitchOrNumber); break;
 				case MIDIValueParameter::CONTROL_CHANGE: sendControlChange(mvp->channel, mvp->pitchOrNumber, mvp->intValue()); break;
-                        
-                default:
-                    break;
+
+				default:
+					break;
 				}
 			}
 		}
@@ -240,31 +240,31 @@ void MIDIModule::onControllableFeedbackUpdateInternal(ControllableContainer * cc
 
 void MIDIModule::updateMIDIDevices()
 {
-	MIDIInputDevice * newInput = midiParam->inputDevice;
+	MIDIInputDevice* newInput = midiParam->inputDevice;
 	//if (inputDevice != newInput)
 	//{
-		if (inputDevice != nullptr)
-		{
-			inputDevice->removeMIDIInputListener(this);
-			mtcReceiver.reset();
-		}
+	if (inputDevice != nullptr)
+	{
+		inputDevice->removeMIDIInputListener(this);
+		mtcReceiver.reset();
+	}
 
-		inputDevice = newInput;
-		
-		if (inputDevice != nullptr)
-		{
-			inputDevice->addMIDIInputListener(this);
-			mtcReceiver.reset(new MTCReceiver(inputDevice));
-			mtcReceiver->addMTCListener(this);
-		}
+	inputDevice = newInput;
+
+	if (inputDevice != nullptr)
+	{
+		inputDevice->addMIDIInputListener(this);
+		mtcReceiver.reset(new MTCReceiver(inputDevice));
+		mtcReceiver->addMTCListener(this);
+	}
 	//}
 
-	MIDIOutputDevice * newOutput = midiParam->outputDevice;
+	MIDIOutputDevice* newOutput = midiParam->outputDevice;
 	//if (outputDevice != newOutput)
 	//{
-		if(outputDevice != nullptr) outputDevice->close();
-		outputDevice = newOutput;
-		if(outputDevice != nullptr) outputDevice->open();
+	if (outputDevice != nullptr) outputDevice->close();
+	outputDevice = newOutput;
+	if (outputDevice != nullptr) outputDevice->open();
 	//} 
 
 	setupIOConfiguration(inputDevice != nullptr || valuesCC.controllables.size() > 0, outputDevice != nullptr);
@@ -272,11 +272,11 @@ void MIDIModule::updateMIDIDevices()
 	isConnected->setValue(inputDevice != nullptr || outputDevice != nullptr);
 }
 
-void MIDIModule::noteOnReceived(const int & channel, const int & pitch, const int & velocity)
+void MIDIModule::noteOnReceived(const int& channel, const int& pitch, const int& velocity)
 {
-	if (!enabled->boolValue() && !manualAddMode) return; 
+	if (!enabled->boolValue() && !manualAddMode) return;
 	inActivityTrigger->trigger();
-	
+
 	if (logIncomingData->boolValue())  NLOG(niceName, "Note On : " << channel << ", " << MIDIManager::getNoteName(pitch) << ", " << velocity);
 
 	if (useGenericControls) updateValue(channel, MIDIManager::getNoteName(pitch), velocity, MIDIValueParameter::NOTE_ON, pitch);
@@ -284,7 +284,7 @@ void MIDIModule::noteOnReceived(const int & channel, const int & pitch, const in
 	if (scriptManager->items.size() > 0) scriptManager->callFunctionOnAllItems(noteOnEventId, Array<var>(channel, pitch, velocity));
 }
 
-void MIDIModule::noteOffReceived(const int & channel, const int & pitch, const int & velocity)
+void MIDIModule::noteOffReceived(const int& channel, const int& pitch, const int& velocity)
 {
 	if (!enabled->boolValue() && !manualAddMode) return;
 	inActivityTrigger->trigger();
@@ -293,33 +293,33 @@ void MIDIModule::noteOffReceived(const int & channel, const int & pitch, const i
 	if (useGenericControls) updateValue(channel, MIDIManager::getNoteName(pitch), velocity, MIDIValueParameter::NOTE_OFF, pitch);
 
 	if (scriptManager->items.size() > 0) scriptManager->callFunctionOnAllItems(noteOffEventId, Array<var>(channel, pitch, velocity));
-	
+
 }
 
-void MIDIModule::controlChangeReceived(const int & channel, const int & number, const int & value)
+void MIDIModule::controlChangeReceived(const int& channel, const int& number, const int& value)
 {
 	if (!enabled->boolValue() && !manualAddMode) return;
 	inActivityTrigger->trigger();
 	if (logIncomingData->boolValue()) NLOG(niceName, "Control Change : " << channel << ", " << number << ", " << value);
 
-	if (useGenericControls) updateValue(channel, "CC"+String(number), value, MIDIValueParameter::CONTROL_CHANGE, number);
+	if (useGenericControls) updateValue(channel, "CC" + String(number), value, MIDIValueParameter::CONTROL_CHANGE, number);
 
 	if (scriptManager->items.size() > 0) scriptManager->callFunctionOnAllItems(ccEventId, Array<var>(channel, number, value));
 
 }
 
-void MIDIModule::programChangeReceived(const int &channel, const int &value)
+void MIDIModule::programChangeReceived(const int& channel, const int& value)
 {
-  if (!enabled->boolValue() && !manualAddMode) return;
-  inActivityTrigger->trigger();
-  if (logIncomingData->boolValue()) NLOG(niceName, "Program Change : " << channel << ", " << value);
-  
-  if (useGenericControls) updateValue(channel, "ProgramChange", value, MIDIValueParameter::PROGRAM_CHANGE, 0);
+	if (!enabled->boolValue() && !manualAddMode) return;
+	inActivityTrigger->trigger();
+	if (logIncomingData->boolValue()) NLOG(niceName, "Program Change : " << channel << ", " << value);
 
-  if (scriptManager->items.size() > 0) scriptManager->callFunctionOnAllItems(programChangeId, Array<var>(channel, value));
+	if (useGenericControls) updateValue(channel, "ProgramChange", value, MIDIValueParameter::PROGRAM_CHANGE, 0);
+
+	if (scriptManager->items.size() > 0) scriptManager->callFunctionOnAllItems(programChangeId, Array<var>(channel, value));
 }
 
-void MIDIModule::sysExReceived(const MidiMessage & msg)
+void MIDIModule::sysExReceived(const MidiMessage& msg)
 {
 	if (!enabled->boolValue() && !manualAddMode) return;
 	inActivityTrigger->trigger();
@@ -343,7 +343,7 @@ void MIDIModule::fullFrameTimecodeReceived(const MidiMessage& msg)
 {
 	int hours = 0, minutes = 0, seconds = 0, frames = 0;
 	MidiMessage::SmpteTimecodeType timecodeType;
-	msg.getFullFrameParameters(hours, minutes, seconds, frames,timecodeType);
+	msg.getFullFrameParameters(hours, minutes, seconds, frames, timecodeType);
 
 	if (logIncomingData->boolValue())
 	{
@@ -351,7 +351,7 @@ void MIDIModule::fullFrameTimecodeReceived(const MidiMessage& msg)
 	}
 }
 
-void MIDIModule::pitchWheelReceived(const int &channel, const int &value)
+void MIDIModule::pitchWheelReceived(const int& channel, const int& value)
 {
 	if (!enabled->boolValue() && !manualAddMode) return;
 	inActivityTrigger->trigger();
@@ -377,9 +377,9 @@ void MIDIModule::afterTouchReceived(const int& channel, const int& note, const i
 {
 	if (!enabled->boolValue() && !manualAddMode) return;
 	inActivityTrigger->trigger();
-	if (logIncomingData->boolValue()) NLOG(niceName, "After Touch, channel : " << channel << ", note : " << note <<", value : " << value);
+	if (logIncomingData->boolValue()) NLOG(niceName, "After Touch, channel : " << channel << ", note : " << note << ", value : " << value);
 
-	if (useGenericControls) updateValue(channel, "AfterTouch "+ MIDIManager::getNoteName(note), value, MIDIValueParameter::AFTER_TOUCH, note);
+	if (useGenericControls) updateValue(channel, "AfterTouch " + MIDIManager::getNoteName(note), value, MIDIValueParameter::AFTER_TOUCH, note);
 
 	if (scriptManager->items.size() > 0) scriptManager->callFunctionOnAllItems(afterTouchId, Array<var>(channel, note, value));
 }
@@ -393,7 +393,7 @@ void MIDIModule::midiMessageReceived(const MidiMessage& msg)
 			if (TargetParameter* mt = (TargetParameter*)c)
 			{
 				if (!mt->enabled) continue;
-				if (MIDIModule * m = (MIDIModule*)(mt->targetContainer.get()))
+				if (MIDIModule* m = (MIDIModule*)(mt->targetContainer.get()))
 				{
 					if (m->midiParam->outputDevice != nullptr && m->midiParam->outputDevice->device != nullptr)
 					{
@@ -415,7 +415,7 @@ void MIDIModule::midiClockReceived()
 	//}
 
 
-	
+
 	//for (int i = 0; i < 24; i++)
 	//{
 	//	int prev = i == 0 ? 23 : i - 1;
@@ -426,7 +426,7 @@ void MIDIModule::midiClockReceived()
 
 	//DBG("Target BPM end of loop : " << targetBPM);
 	//targetBPM /= 24.0;
-	
+
 	double t = Time::getMillisecondCounterHiRes() / 1000.0;
 	double diff = jmax<double>(0, t - lastClockReceiveTime);
 	clockDeltaTimes[lastClockReceiveTimeIndex] = diff;
@@ -515,9 +515,9 @@ void MIDIModule::mtcTimeUpdated(bool isFullFrame)
 }
 
 
-var MIDIModule::sendNoteOnFromScript(const var::NativeFunctionArgs & args)
+var MIDIModule::sendNoteOnFromScript(const var::NativeFunctionArgs& args)
 {
-	MIDIModule * m = getObjectFromJS<MIDIModule>(args);
+	MIDIModule* m = getObjectFromJS<MIDIModule>(args);
 	if (!m->enabled->boolValue()) return var();
 	if (!checkNumArgs(m->niceName, args, 3)) return var();
 
@@ -526,9 +526,9 @@ var MIDIModule::sendNoteOnFromScript(const var::NativeFunctionArgs & args)
 	return var();
 }
 
-var MIDIModule::sendNoteOffFromScript(const var::NativeFunctionArgs & args)
+var MIDIModule::sendNoteOffFromScript(const var::NativeFunctionArgs& args)
 {
-	MIDIModule * m = getObjectFromJS<MIDIModule>(args);
+	MIDIModule* m = getObjectFromJS<MIDIModule>(args);
 	if (!m->enabled->boolValue()) return var();
 	if (!checkNumArgs(m->niceName, args, 2)) return var();
 
@@ -537,9 +537,9 @@ var MIDIModule::sendNoteOffFromScript(const var::NativeFunctionArgs & args)
 	return var();
 }
 
-var MIDIModule::sendCCFromScript(const var::NativeFunctionArgs & args)
+var MIDIModule::sendCCFromScript(const var::NativeFunctionArgs& args)
 {
-	MIDIModule * m = getObjectFromJS<MIDIModule>(args);
+	MIDIModule* m = getObjectFromJS<MIDIModule>(args);
 	if (!m->enabled->boolValue()) return var();
 	if (!checkNumArgs(m->niceName, args, 3)) return var();
 
@@ -547,13 +547,13 @@ var MIDIModule::sendCCFromScript(const var::NativeFunctionArgs & args)
 	return var();
 }
 
-var MIDIModule::sendSysexFromScript(const var::NativeFunctionArgs & args)
+var MIDIModule::sendSysexFromScript(const var::NativeFunctionArgs& args)
 {
-	MIDIModule * m = getObjectFromJS<MIDIModule>(args);
+	MIDIModule* m = getObjectFromJS<MIDIModule>(args);
 	if (!m->enabled->boolValue()) return var();
 	if (!checkNumArgs(m->niceName, args, 1)) return var();
 
-	Array<const var *> allArgs;
+	Array<const var*> allArgs;
 	for (int i = 0; i < args.numArguments; ++i)
 	{
 		if (args.arguments[i].isArray())
@@ -574,7 +574,7 @@ var MIDIModule::sendSysexFromScript(const var::NativeFunctionArgs & args)
 	Array<uint8> data;
 	for (int i = 0; i < numArgs; ++i)
 	{
-		const var * a = allArgs[i];
+		const var* a = allArgs[i];
 		if (a->isInt() || a->isInt64() || a->isDouble() || a->isBool())data.add((uint8)(int)*a);
 		else if (a->isString())
 		{
@@ -631,7 +631,7 @@ var MIDIModule::sendAfterTouchFromScript(const var::NativeFunctionArgs& args)
 	return var();
 }
 
-var MIDIModule::sendMidiMachineControlCommandFromScript(const var::NativeFunctionArgs &args)
+var MIDIModule::sendMidiMachineControlCommandFromScript(const var::NativeFunctionArgs& args)
 {
 	MIDIModule* m = getObjectFromJS<MIDIModule>(args);
 	if (!m->enabled->boolValue()) return var();
@@ -643,7 +643,7 @@ var MIDIModule::sendMidiMachineControlCommandFromScript(const var::NativeFunctio
 	return var();
 }
 
-var MIDIModule::sendMidiMachineControlGotoFromScript(const var::NativeFunctionArgs &args)
+var MIDIModule::sendMidiMachineControlGotoFromScript(const var::NativeFunctionArgs& args)
 {
 	MIDIModule* m = getObjectFromJS<MIDIModule>(args);
 	if (!m->enabled->boolValue()) return var();
@@ -653,7 +653,7 @@ var MIDIModule::sendMidiMachineControlGotoFromScript(const var::NativeFunctionAr
 	return var();
 }
 
-void MIDIModule::updateValue(const int & channel, const String & n, const int & val, const MIDIValueParameter::Type & type, const int & pitchOrNumber)
+void MIDIModule::updateValue(const int& channel, const String& n, const int& val, const MIDIValueParameter::Type& type, const int& pitchOrNumber)
 {
 	ControllableContainer* cParentContainer = &valuesCC;
 
@@ -683,11 +683,11 @@ void MIDIModule::updateValue(const int & channel, const String & n, const int & 
 		case MIDIValueParameter::CONTROL_CHANGE:
 			typeName = "Control Change";
 			break;
-        
-    case MIDIValueParameter::PROGRAM_CHANGE:
-      typeName = "Program Change";
-      break;
-        
+
+		case MIDIValueParameter::PROGRAM_CHANGE:
+			typeName = "Program Change";
+			break;
+
 		default:
 			typeName = "Other";
 		}
@@ -710,14 +710,14 @@ void MIDIModule::updateValue(const int & channel, const String & n, const int & 
 	{
 		pName = "[" + String(channel) + "] " + n;
 	}
-	
-	Parameter * p = dynamic_cast<Parameter *>(cParentContainer->getControllableByName(pName,true));
+
+	Parameter* p = dynamic_cast<Parameter*>(cParentContainer->getControllableByName(pName, true));
 
 	if (p == nullptr)
 	{
 		if (autoAdd->boolValue() || manualAddMode)
 		{
-			p = new MIDIValueParameter(pName, "Channel "+String(channel)+" : "+n, 0, channel, pitchOrNumber, type);
+			p = new MIDIValueParameter(pName, "Channel " + String(channel) + " : " + n, 0, channel, pitchOrNumber, type);
 			p->setValue(val);
 			p->isRemovableByUser = true;
 			p->saveValueOnly = false;
@@ -725,16 +725,16 @@ void MIDIModule::updateValue(const int & channel, const String & n, const int & 
 			cParentContainer->sortControllables();
 		}
 	}
-	else if(!manualAddMode)
+	else if (!manualAddMode)
 	{
 		p->setValue(val);
 	}
 
 }
 
-void MIDIModule::showMenuAndCreateValue(ControllableContainer * container)
+void MIDIModule::showMenuAndCreateValue(ControllableContainer* container)
 {
-	MIDIModule * module = dynamic_cast<MIDIModule *>(container->parentContainer.get());
+	MIDIModule* module = dynamic_cast<MIDIModule*>(container->parentContainer.get());
 	if (module == nullptr) return;
 
 	PopupMenu m;
@@ -743,57 +743,62 @@ void MIDIModule::showMenuAndCreateValue(ControllableContainer * container)
 	m.addItem(3, "Add Pitch Wheel");
 	m.addItem(4, "Add Channel Pressure");
 	m.addItem(5, "Add After Touch");
-  m.addItem(6, "Add Program Change");
+	m.addItem(6, "Add Program Change");
 
-	int mResult = m.show();
-	if (mResult == 0) return;
-	
-	String mType = mResult == 1 ? "Note" : mResult == 3 ? "Pitch Wheel" : mResult == 6 ? "Program Change" : "Control Change";
-
-	AlertWindow window("Add a "+mType, "Configure the parameters for this "+mType, AlertWindow::AlertIconType::NoIcon);
-	window.addTextEditor("channel", "1", "Channel (1-16)");
-
-	if (mResult != 3 && mResult != 4 && mResult != 6)
+	m.showMenuAsync(PopupMenu::Options(), [module](int mResult)
 	{
-		String mName = mResult == 1 ? "Pitch" : "Number";
-		window.addTextEditor("pitch", "1", mName + "(0-127)");
+		if (mResult == 0) return;
+
+		String mType = mResult == 1 ? "Note" : mResult == 3 ? "Pitch Wheel" : mResult == 6 ? "Program Change" : "Control Change";
+
+		AlertWindow window("Add a " + mType, "Configure the parameters for this " + mType, AlertWindow::AlertIconType::NoIcon);
+		window.addTextEditor("channel", "1", "Channel (1-16)");
+
+		if (mResult != 3 && mResult != 4 && mResult != 6)
+		{
+			String mName = mResult == 1 ? "Pitch" : "Number";
+			window.addTextEditor("pitch", "1", mName + "(0-127)");
+		}
+
+		window.addButton("OK", 1, KeyPress(KeyPress::returnKey));
+		window.addButton("Cancel", 0, KeyPress(KeyPress::escapeKey));
+
+		window.showAsync(MessageBoxOptions(), [module, &window, mResult](int result)
+		{
+			if (result)
+			{
+				int channel = jlimit<int>(1, 16, window.getTextEditorContents("channel").getIntValue());
+
+				if (mResult == 3)
+				{
+					module->pitchWheelReceived(channel, 0);
+				}
+				else if (mResult == 4)
+				{
+					module->channelPressureReceived(channel, 0);
+				}
+				else if (mResult == 5)
+				{
+					module->afterTouchReceived(channel, window.getTextEditorContents("pitch").getIntValue(), 0);
+				}
+				else if (mResult == 6)
+				{
+					module->programChangeReceived(channel, 0);
+				}
+				else
+				{
+					int pitch = jlimit<int>(0, 127, window.getTextEditorContents("pitch").getIntValue());
+
+					module->manualAddMode = true;
+					if (mResult == 1) module->noteOnReceived(channel, pitch, 0);
+					else module->controlChangeReceived(channel, pitch, 0);
+					module->manualAddMode = false;
+				}
+			}
+		}
+		);
 	}
-
-	window.addButton("OK", 1, KeyPress(KeyPress::returnKey));
-	window.addButton("Cancel", 0, KeyPress(KeyPress::escapeKey));
-
-	int result = window.runModalLoop();
-
-	if (result)
-	{
-		int channel = jlimit<int>(1, 16, window.getTextEditorContents("channel").getIntValue());
-
-		if (mResult == 3)
-		{
-			module->pitchWheelReceived(channel, 0);
-		}
-		else if (mResult == 4)
-		{
-			module->channelPressureReceived(channel, 0);
-		}
-		else if (mResult == 5)
-		{
-			module->afterTouchReceived(channel, window.getTextEditorContents("pitch").getIntValue(), 0);
-		}
-    else if (mResult == 6)
-    {
-      module->programChangeReceived(channel, 0);
-    }
-		else
-		{
-			int pitch = jlimit<int>(0, 127, window.getTextEditorContents("pitch").getIntValue());
-			
-			module->manualAddMode = true;
-			if (mResult == 1) module->noteOnReceived(channel, pitch, 0);
-			else module->controlChangeReceived(channel, pitch, 0);
-			module->manualAddMode = false;
-		}
-	}
+	);
 }
 
 void MIDIModule::createThruControllable(ControllableContainer* cc)
@@ -830,7 +835,7 @@ void MIDIModule::loadJSONDataInternal(var data)
 }
 
 
-MIDIModule::MIDIRouteParams::MIDIRouteParams(Module * sourceModule, Controllable * c) :
+MIDIModule::MIDIRouteParams::MIDIRouteParams(Module* sourceModule, Controllable* c) :
 	type(nullptr),
 	channel(nullptr),
 	pitchOrNumber(nullptr)
@@ -853,7 +858,7 @@ MIDIModule::MIDIRouteParams::MIDIRouteParams(Module * sourceModule, Controllable
 	}
 }
 
-void MIDIModule::MIDIRouteParams::onContainerParameterChanged(Parameter  * p)
+void MIDIModule::MIDIRouteParams::onContainerParameterChanged(Parameter* p)
 {
 	RouteParams::onContainerParameterChanged(p);
 
@@ -861,7 +866,7 @@ void MIDIModule::MIDIRouteParams::onContainerParameterChanged(Parameter  * p)
 	{
 		if (type->getValueDataAsEnum<MIDIManager::MIDIEventType>() != MIDIManager::PITCH_WHEEL)
 		{
-			if(pitchOrNumber == nullptr) pitchOrNumber = addIntParameter("Pitch / Number", "Pitch if type is a note, number if it is a controlChange", 0, 0, 127);
+			if (pitchOrNumber == nullptr) pitchOrNumber = addIntParameter("Pitch / Number", "Pitch if type is a note, number if it is a controlChange", 0, 0, 127);
 		}
 		else
 		{
@@ -875,7 +880,7 @@ void MIDIModule::MIDIRouteParams::onContainerParameterChanged(Parameter  * p)
 }
 
 
-void MIDIModule::handleRoutedModuleValue(Controllable * c, RouteParams * p)
+void MIDIModule::handleRoutedModuleValue(Controllable* c, RouteParams* p)
 {
 	if (c == nullptr || p == nullptr) return;
 
@@ -958,7 +963,7 @@ int MIDIValueComparator::compareElements(Controllable* c1, Controllable* c2)
 	MIDIValueParameter* m1 = dynamic_cast<MIDIValueParameter*>(c1);
 	MIDIValueParameter* m2 = dynamic_cast<MIDIValueParameter*>(c2);
 	if (m1 == nullptr || m2 == nullptr) return 0;
-	
+
 	int v1 = m1->channel * 10000 + m1->type * 1000 + m1->pitchOrNumber;
 	int v2 = m2->channel * 10000 + m2->type * 1000 + m2->pitchOrNumber;
 

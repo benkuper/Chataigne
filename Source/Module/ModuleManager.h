@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    ModuleManager.h
-    Created: 8 Dec 2016 2:36:11pm
-    Author:  Ben
+	ModuleManager.h
+	Created: 8 Dec 2016 2:36:11pm
+	Author:  Ben
 
   ==============================================================================
 */
@@ -18,7 +18,7 @@ class ModuleManager :
 public:
 	juce_DeclareSingleton(ModuleManager, true)
 
-	ModuleManager();
+		ModuleManager();
 	~ModuleManager();
 
 	std::unique_ptr<ModuleFactory> factory;
@@ -28,11 +28,11 @@ public:
 	void addItemInternal(Module* module, var data) override;
 
 	//Input values menu
-	static Controllable* showAllValuesAndGetControllable(const StringArray & typeFilters, const StringArray & excludeTypeFilters);
+	static void showAllValuesAndGetControllable(const StringArray& typeFilters, const StringArray& excludeTypeFilters, std::function<void(Controllable *)> returnFunc);
 	static bool checkControllableIsAValue(Controllable* c);
 
 	template <class T>
-	static Module* showAndGetModuleOfType()
+	static void showAndGetModuleOfType(std::function<void(ControllableContainer*)> returnFunc)
 	{
 		PopupMenu menu;
 		Array<Module*> validModules;
@@ -44,10 +44,13 @@ public:
 			menu.addItem(validModules.indexOf(m) + 1, m->niceName);
 		}
 
-		int result = menu.show();
-		if (result == 0) return nullptr;
-		
-		return validModules[result - 1];
+		menu.showMenuAsync(PopupMenu::Options(), [validModules, returnFunc](int result)
+			{
+
+				if (result == 0) return;
+				returnFunc(validModules[result - 1]);
+			}
+		);
 	}
 
 	//Command menu

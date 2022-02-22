@@ -192,14 +192,14 @@ bool MainContentComponent::perform(const InvocationInfo& info)
 	case ChataigneCommandIDs::showAbout:
 	{
 		AboutWindow w;
-		DialogWindow::showModalDialog("About", &w, getTopLevelComponent(), Colours::transparentBlack, true);
+		DialogWindow::showDialog("About", &w, getTopLevelComponent(), Colours::transparentBlack, true);
 	}
 	break;
 
 	case ChataigneCommandIDs::showWelcome:
 	{
 		WelcomeScreen w;
-		DialogWindow::showModalDialog("Welcome", &w, getTopLevelComponent(), Colours::black, true);
+		DialogWindow::showDialog("Welcome", &w, getTopLevelComponent(), Colours::black, true);
 	}
 	break;
 

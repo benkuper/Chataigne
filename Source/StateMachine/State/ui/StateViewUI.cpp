@@ -79,17 +79,20 @@ void StateViewUI::mouseDown(const MouseEvent & e)
 				p.addItem(1, "Create Transition from here");
 				p.addItem(2, item->miniMode->boolValue()?"Maximize":"Minimize");
 
-				int result = p.show();
-				switch (result)
-				{
-				case 1:
-					stateEditorListeners.call(&StateViewUI::Listener::askCreateTransitionFromUI, this);
-					break;
-				
-				case 2:
-					item->miniMode->setValue(!item->miniMode->boolValue());
-					break;
-				}
+				p.showMenuAsync(PopupMenu::Options(), [this](int result)
+					{
+						switch (result)
+						{
+						case 1:
+							stateEditorListeners.call(&StateViewUI::Listener::askCreateTransitionFromUI, this);
+							break;
+
+						case 2:
+							item->miniMode->setValue(!item->miniMode->boolValue());
+							break;
+						}
+					}
+				);
 			}
 		}
 

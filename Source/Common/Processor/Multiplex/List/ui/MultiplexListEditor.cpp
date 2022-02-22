@@ -170,7 +170,7 @@ void InputValueListEditor::buttonClicked(Button* b)
 		p.addItem(2, "From Input Values");
 		p.addItem(3, "From Container");
 
-		if (int result = p.show())
+		p.showMenuAsync(PopupMenu::Options(), [this](int result)
 		{
 			switch (result)
 			{
@@ -204,30 +204,41 @@ void InputValueListEditor::buttonClicked(Button* b)
 						offset += 100000;
 					}
 
-					if (int ccResult = cp.show())
+					cp.showMenuAsync(PopupMenu::Options(), [this, &choosers](int ccResult)
+						{
+							int chooserIndex = (int)floor(ccResult / 100000.0f);
+							ControllableContainer* cc = choosers[chooserIndex]->getContainerForResult(ccResult);
+							Array<WeakReference<Controllable>> cList = cc->getAllControllables();
+							for (int i = 0; i < list->listSize && i < cList.size(); i++)
+							{
+								((TargetParameter*)list->list[i])->setValueFromTarget(cList[i]);
+							}
+						}
+					);
+
+					if (cc != nullptr)
 					{
-						int chooserIndex = (int)floor(ccResult / 100000.0f);
-						cc = choosers[chooserIndex]->getContainerForResult(ccResult);
+
 					}
 				}
 				else
 				{
 					ContainerChooserPopupMenu chooser(Engine::mainEngine, 0, -1, nullptr, true);
-					cc = chooser.showAndGetContainer();
-				}
-
-				if (cc != nullptr)
-				{
-					Array<WeakReference<Controllable>> cList = cc->getAllControllables();
-					for (int i = 0; i < list->listSize && i < cList.size(); i++)
-					{
-						((TargetParameter*)list->list[i])->setValueFromTarget(cList[i]);
-					}
+					chooser.showAndGetContainer([this](ControllableContainer* cc)
+						{
+							Array<WeakReference<Controllable>> cList = cc->getAllControllables();
+							for (int i = 0; i < list->listSize && i < cList.size(); i++)
+							{
+								((TargetParameter*)list->list[i])->setValueFromTarget(cList[i]);
+							}
+						}
+					);
 				}
 			}
 			break;
 			}
 		}
+		);
 	}
 
 	BaseItemEditor::buttonClicked(b);

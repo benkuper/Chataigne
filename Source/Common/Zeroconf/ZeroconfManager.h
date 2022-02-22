@@ -95,7 +95,7 @@ public:
 
 	ZeroconfSearcher * getSearcher(StringRef name);
 
-	ServiceInfo* showMenuAndGetService(StringRef service, bool showLocal = true, bool showRemote = true, bool separateLocalAndRemote = true, bool excludeInternal = true, const String &nameFilter = "");
+	void showMenuAndGetService(StringRef service, std::function<void(ServiceInfo *)> returnFunc, bool showLocal = true, bool showRemote = true, bool separateLocalAndRemote = true, bool excludeInternal = true, const String &nameFilter = "");
 	
 	class ZeroconfEvent {
 	public:

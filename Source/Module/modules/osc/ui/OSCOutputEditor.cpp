@@ -27,14 +27,17 @@ void OSCOutputEditor::resizedInternalHeaderItemInternal(Rectangle<int>& r)
 
 void OSCOutputEditor::showMenuAndSetupOutput()
 {
-	ZeroconfManager::ServiceInfo * service = ZeroconfManager::getInstance()->showMenuAndGetService("OSC");
-	if (service != nullptr)
-	{
-		OSCOutput * o = (OSCOutput *)item;
-		o->useLocal->setValue(service->isLocal);
-		o->remoteHost->setValue(service->getIP());
-		o->remotePort->setValue(service->port);
-	}
+	ZeroconfManager::getInstance()->showMenuAndGetService("OSC", [this](ZeroconfManager::ServiceInfo* service)
+		{
+			if (service != nullptr)
+			{
+				OSCOutput* o = (OSCOutput*)item;
+				o->useLocal->setValue(service->isLocal);
+				o->remoteHost->setValue(service->getIP());
+				o->remotePort->setValue(service->port);
+			}
+		}
+	);
 }
 
 void OSCOutputEditor::buttonClicked(Button * b)

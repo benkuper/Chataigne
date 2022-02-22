@@ -102,10 +102,19 @@ void ActionUI::itemDropped(const SourceDetails& details)
 	BaseItemUI::itemDropped(details);
 
 	String dataType = details.description.getProperty("dataType", "");
-	CommandDefinition* def = nullptr;
-	bool isInput = false;
-	bool isConsequenceTrue = true;
+	
 
+	std::function<void(CommandDefinition* def, bool, bool)> createFunc = [this](CommandDefinition* def, bool isInput, bool isConsequenceTrue)
+	{
+		if (!isInput && def != nullptr)
+		{
+			Consequence* c = new Consequence(var(), action->multiplex);
+			if (isConsequenceTrue) action->csmOn->addItem(c);
+			else action->csmOff->addItem(c);
+			c->setCommand(def);
+		}
+	};
+	
 	if (dataType == "Module")
 	{
 		ModuleUI* mui = dynamic_cast<ModuleUI*>(details.sourceComponent.get());
@@ -120,27 +129,30 @@ void ActionUI::itemDropped(const SourceDetails& details)
 		pm.addSubMenu("Consequence TRUE", actionCommandMenuTrue);
 		pm.addSubMenu("Consequence FALSE", actionCommandMenuFalse);
 
-		int result = pm.show();
-
-		if (result > 0)
-		{
-			isInput = result < 20000;
-
-			if (isInput)
+		pm.showMenuAsync(PopupMenu::Options(), [this, mui, createFunc, &actionInputMenu](int result)
 			{
-				if (action->cdm != nullptr)
+				if (result > 0)
 				{
-					StandardCondition* c = dynamic_cast<StandardCondition*>(action->cdm->addItem(action->cdm->factory.create(StandardCondition::getTypeStringStatic(false))));
-					Controllable* target = actionInputMenu.getControllableForResult(result);
-					if (c != nullptr) c->sourceTarget->setValueFromTarget(target);
+					bool isInput = result < 20000;
+
+					if (isInput)
+					{
+						if (action->cdm != nullptr)
+						{
+							StandardCondition* c = dynamic_cast<StandardCondition*>(action->cdm->addItem(action->cdm->factory.create(StandardCondition::getTypeStringStatic(false))));
+							Controllable* target = actionInputMenu.getControllableForResult(result);
+							if (c != nullptr) c->sourceTarget->setValueFromTarget(target);
+						}
+					}
+					else //command
+					{
+						bool isConsequenceTrue = result > 20000 && result < 30000;
+						CommandDefinition* def = mui->item->getCommandDefinitionForItemID(result - 1 - (isConsequenceTrue ? 20000 : 30000));
+						createFunc(def, isInput, isConsequenceTrue);
+					}
 				}
 			}
-			else //command
-			{
-				isConsequenceTrue = result > 20000 && result < 30000;
-				def = mui->item->getCommandDefinitionForItemID(result - 1 - (isConsequenceTrue ? 20000 : 30000));
-			}
-		}
+		);
 	}
 	else if (dataType == "CommandTemplate")
 	{
@@ -148,27 +160,29 @@ void ActionUI::itemDropped(const SourceDetails& details)
 		pm.addItem(1, "Consequence TRUE");
 		pm.addItem(2, "Consequence FALSE");
 
-		int result = pm.show();
-		if (result > 0)
-		{
-			isConsequenceTrue = result == 1;
-
-			BaseItemUI<CommandTemplate>* tui = dynamic_cast<BaseItemUI<CommandTemplate> *>(details.sourceComponent.get());
-			if (tui != nullptr)
+		pm.showMenuAsync(PopupMenu::Options(), [this, details, createFunc](int result)
 			{
-				CommandTemplateManager* ctm = dynamic_cast<CommandTemplateManager*>(tui->item->parentContainer.get());
-				if (ctm != nullptr) def = ctm->defManager->getCommandDefinitionFor(ctm->menuName, tui->item->niceName);
+
+				if (result > 0)
+				{
+					bool isConsequenceTrue = result == 1;
+
+					BaseItemUI<CommandTemplate>* tui = dynamic_cast<BaseItemUI<CommandTemplate> *>(details.sourceComponent.get());
+					if (tui != nullptr)
+					{
+						CommandTemplateManager* ctm = dynamic_cast<CommandTemplateManager*>(tui->item->parentContainer.get());
+						if (ctm != nullptr)
+						{
+							CommandDefinition* def = ctm->defManager->getCommandDefinitionFor(ctm->menuName, tui->item->niceName);
+							createFunc(def, false, isConsequenceTrue);
+						}
+					}
+				}
 			}
-		}
+		);
 	}
 
-	if (!isInput && def != nullptr)
-	{
-		Consequence* c = new Consequence(var(), action->multiplex);
-		if (isConsequenceTrue) action->csmOn->addItem(c);
-		else action->csmOff->addItem(c);
-		c->setCommand(def);
-	}
+	
 }
 
 void ActionUI::newMessage(const Action::ActionEvent& e)

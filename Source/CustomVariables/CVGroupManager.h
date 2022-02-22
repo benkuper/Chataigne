@@ -24,8 +24,8 @@ public:
 	std::unique_ptr<CustomVariablesModule> module;
 
 	//Input values menu
-	static ControllableContainer * showMenuAndGetContainer();
-	static Controllable * showMenuAndGetVariable(const StringArray& typeFilters, const StringArray& excludeTypeFilters);
-	static ControllableContainer* showMenuAndGetPreset();
-	static ControllableContainer * showMenuAndGetGroup();
+	static void showMenuAndGetContainer(std::function<void(ControllableContainer*)> returnFunc);
+	static void showMenuAndGetVariable(const StringArray& typeFilters, const StringArray& excludeTypeFilters, std::function<void(Controllable*)> returnFunc);
+	static void showMenuAndGetPreset(std::function<void(ControllableContainer*)> returnFunc);
+	static void showMenuAndGetGroup(std::function<void(ControllableContainer*)> returnFunc);
 };

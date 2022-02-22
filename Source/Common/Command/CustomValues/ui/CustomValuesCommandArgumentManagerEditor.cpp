@@ -51,7 +51,5 @@ void CustomValuesCommandArgumentManagerEditor::showMenuAndAddItem(bool)
 	PopupMenu p;
 	addPopupMenuItems(&p);
 
-	int result = p.show();
-
-	if(result) handleMenuSelectedID(result);
+	p.showMenuAsync(PopupMenu::Options(), [this](int result) { if (result) handleMenuSelectedID(result); });
 }

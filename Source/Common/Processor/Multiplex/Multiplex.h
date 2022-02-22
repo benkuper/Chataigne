@@ -29,7 +29,7 @@ public:
 
     void updateDisables(bool force) override;
 
-    BaseMultiplexList* showAndGetList();
+    void showAndGetList(std::function<void(ControllableContainer *)> returnFunc);
 
     ListenerList<MultiplexListener> multiplexListeners;
     void addMultiplexListener(MultiplexListener* newListener) { multiplexListeners.add(newListener); }

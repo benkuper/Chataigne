@@ -60,7 +60,7 @@ SequenceCommand::SequenceCommand(SequenceModule* _module, CommandContext context
 	case DISABLE_LAYER:
 	case ENABLE_LAYER:
 	case TOGGLE_LAYER:
-		target->customGetTargetContainerFunc = &ChataigneSequenceManager::showmMenuAndGetLayerStatic;
+		target->customGetTargetContainerFunc = &ChataigneSequenceManager::showMenuAndGetLayerStatic;
 		break;
 
 	case SET_TIME:

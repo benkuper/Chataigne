@@ -61,9 +61,10 @@ void ConversionParamValueLinkUI::mouseDown(const MouseEvent& e)
 	{
 		PopupMenu p;
 		p.addItem(1, "Remove connection");
-		int result = p.show();
-
-		if (result == 1) link->remove();
+		p.showMenuAsync(PopupMenu::Options(), [this](int result)
+		{
+			if (result == 1) link->remove();
+		});
 	}
 }
 

@@ -30,11 +30,11 @@ public:
 
 	std::unique_ptr<SequenceModule> module;
 
-	static Sequence* showMenuAndGetSequenceStatic();
-	static SequenceLayer* showmMenuAndGetLayerStatic();
-	static TimeCue* showMenuAndGetCueStatic();
-	static AudioLayer* showMenuAndGetAudioLayerStatic();
-	static TimeTrigger * showMenuAndGetTriggerStatic();
+	static void showMenuAndGetSequenceStatic(std::function<void(Sequence*)> returnFunc);
+	static void showMenuAndGetLayerStatic(std::function<void(SequenceLayer*)> returnFunc);
+	static void showMenuAndGetCueStatic(std::function<void(TimeCue*)> returnFunc);
+	static void showMenuAndGetAudioLayerStatic(std::function<void(AudioLayer*)> returnFunc);
+	static void showMenuAndGetTriggerStatic(std::function<void(TimeTrigger*)> returnFunc);
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ChataigneSequenceManager)
 };

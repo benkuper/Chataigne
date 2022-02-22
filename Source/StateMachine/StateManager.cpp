@@ -171,7 +171,7 @@ void StateManager::itemsRemoved(Array<StateTransition*> states)
 }
 
 
-State* StateManager::showMenuAndGetState()
+void StateManager::showMenuAndGetState(std::function<void(State*)> returnFunc)
 {
 	PopupMenu menu;
 	StateManager* sm = StateManager::getInstance();
@@ -180,29 +180,36 @@ State* StateManager::showMenuAndGetState()
 		menu.addItem(1 + i, sm->items[i]->niceName);
 	}
 
-	int result = menu.show();
-	if (result <= 0) return nullptr;
-	return sm->items[result - 1];
+	menu.showMenuAsync(PopupMenu::Options(), [sm, returnFunc](int result)
+		{
+			if (result <= 0) return;
+			returnFunc(sm->items[result - 1]);
+		}
+	);
+
 }
 
-Action* StateManager::showMenuAndGetAction()
+void StateManager::showMenuAndGetAction(std::function<void(Action*)> returnFunc)
 {
 	PopupMenu menu;
 	StateManager* sm = StateManager::getInstance();
 
-	Array<Processor *> actions;
+	Array<Processor*> actions;
 	for (auto& s : sm->items)
 	{
 		PopupMenu sMenu = getProcessorMenuForManager(s->pm.get(), Processor::ACTION, &actions);
 		menu.addSubMenu(s->niceName, sMenu);
 	}
 
-	int result = menu.show();
-	if (result <= 0) return nullptr;
-	return (Action*)(actions[result - 1]);
+	menu.showMenuAsync(PopupMenu::Options(), [actions, returnFunc](int result)
+		{
+			if (result <= 0) return;
+			returnFunc((Action *)actions[result - 1]);
+		}
+	);
 }
 
-Mapping* StateManager::showMenuAndGetMapping()
+void StateManager::showMenuAndGetMapping(std::function<void(Mapping*)> returnFunc)
 {
 	PopupMenu menu;
 	StateManager* sm = StateManager::getInstance();
@@ -215,12 +222,15 @@ Mapping* StateManager::showMenuAndGetMapping()
 		menu.addSubMenu(s->niceName, sMenu);
 	}
 
-	int result = menu.show();
-	if (result <= 0) return nullptr;
-	return (Mapping*)(mappings[result - 1]);
+	menu.showMenuAsync(PopupMenu::Options(), [mappings, returnFunc](int result)
+		{
+			if (result <= 0) return;
+			returnFunc((Mapping*)mappings[result - 1]);
+		}
+	);
 }
 
-Mapping* StateManager::showMenuAndGetConductor()
+void StateManager::showMenuAndGetConductor(std::function<void(Mapping*)> returnFunc)
 {
 	PopupMenu menu;
 	StateManager* sm = StateManager::getInstance();
@@ -233,12 +243,15 @@ Mapping* StateManager::showMenuAndGetConductor()
 		menu.addSubMenu(s->niceName, sMenu);
 	}
 
-	int result = menu.show();
-	if (result <= 0) return nullptr;
-	return (Mapping*)(conductors[result - 1]);
+	menu.showMenuAsync(PopupMenu::Options(), [conductors, returnFunc](int result)
+		{
+			if (result <= 0) return;
+			returnFunc((Mapping*)conductors[result - 1]);
+		}
+	);
 }
 
-PopupMenu StateManager::getProcessorMenuForManager(ProcessorManager* manager, Processor::ProcessorType type, Array<Processor*> * arrayToFill)
+PopupMenu StateManager::getProcessorMenuForManager(ProcessorManager* manager, Processor::ProcessorType type, Array<Processor*>* arrayToFill)
 {
 	PopupMenu result;
 	for (auto& p : manager->items)
@@ -258,7 +271,7 @@ PopupMenu StateManager::getProcessorMenuForManager(ProcessorManager* manager, Pr
 	return result;
 }
 
-StandardCondition* StateManager::showMenuAndGetToggleCondition()
+void StateManager::showMenuAndGetToggleCondition(std::function<void(StandardCondition*)> returnFunc)
 {
 	PopupMenu menu;
 	StateManager* sm = StateManager::getInstance();
@@ -296,9 +309,12 @@ StandardCondition* StateManager::showMenuAndGetToggleCondition()
 		menu.addSubMenu(s->niceName, sMenu);
 	}
 
-	int result = menu.show();
-	if (result <= 0) return nullptr;
-	return conditions[result - 1];
+	menu.showMenuAsync(PopupMenu::Options(), [conditions, returnFunc](int result)
+		{
+			if (result <= 0) return;
+			returnFunc(conditions[result - 1]);
+		}
+	);
 }
 
 PopupMenu StateManager::getToggleConditionMenuForConditionManager(ConditionManager* cdm, Array<StandardCondition*>* arrayToFill)

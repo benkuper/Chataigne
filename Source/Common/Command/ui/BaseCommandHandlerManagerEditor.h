@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    BaseCommandHandlerManagerUI.h
-    Created: 2 Jan 2018 6:19:33pm
-    Author:  Ben
+	BaseCommandHandlerManagerUI.h
+	Created: 2 Jan 2018 6:19:33pm
+	Author:  Ben
 
   ==============================================================================
 */
@@ -30,18 +30,25 @@ public:
 
 	~BaseCommandHandlerManagerEditor() {}
 
-	
+
 	virtual void showMenuAndAddItem(bool /*isFromAddButton*/) override
 	{
-		CommandDefinition * def = CommandFactory::showMenuAndGetCommand(context, nullptr, multiplexMode);
-		if (def == nullptr) return;
-		else
-		{
-			T * item = this->manager->createItem();
-			BaseCommandHandler * c = dynamic_cast<BaseCommandHandler *>(item);
-			c->setCommand(def);
-			this->manager->addItem(item);
-			this->setCollapsed(false, true);
-		}
+		CommandFactory::showMenuAndGetCommand(context, [this](CommandDefinition* def)
+			{
+				if (def == nullptr) return;
+				else
+				{
+					T* item = this->manager->createItem();
+					BaseCommandHandler* c = dynamic_cast<BaseCommandHandler*>(item);
+					c->setCommand(def);
+					this->manager->addItem(item);
+					this->setCollapsed(false, true);
+				}
+			},
+
+			nullptr, 
+			multiplexMode
+		);
+
 	}
 };

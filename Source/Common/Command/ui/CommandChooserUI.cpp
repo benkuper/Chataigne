@@ -65,8 +65,11 @@ void CommandChooserUI::setLabel(const String& text, bool ghostMode)
 
 void CommandChooserUI::showPopupAndGetDefinition()
 {
-	CommandDefinition* d = CommandFactory::showMenuAndGetCommand(context, lockedModule, multiplexMode);
-	if (d != nullptr) chooserListeners.call(&Listener::definitionChosen, d);
+	CommandFactory::showMenuAndGetCommand(context, [this](CommandDefinition* def)
+		{
+			if (def != nullptr) chooserListeners.call(&Listener::definitionChosen, def);
+		}
+	);
 }
 
 void CommandChooserUI::mouseDown(const MouseEvent&)

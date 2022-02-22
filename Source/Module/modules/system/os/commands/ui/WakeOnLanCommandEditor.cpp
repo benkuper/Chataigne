@@ -30,12 +30,15 @@ void WakeOnLanCommandEditor::resizedInternalHeader(Rectangle<int>& r)
 
 void WakeOnLanCommandEditor::showMenuAndSetupMacAdddress()
 {
-	ZeroconfManager::ServiceInfo * service = ZeroconfManager::getInstance()->showMenuAndGetService("Workstation");
-	if (service != nullptr)
-	{
-		String s = service->name.substring(service->name.indexOf("[")+1, service->name.indexOf("]"));
-		wolCommand->macAddress->setValue(s);
-	}
+	ZeroconfManager::getInstance()->showMenuAndGetService("Workstation", [this](ZeroconfManager::ServiceInfo* service)
+		{
+			if (service != nullptr)
+			{
+				String s = service->name.substring(service->name.indexOf("[") + 1, service->name.indexOf("]"));
+				wolCommand->macAddress->setValue(s);
+			}
+		}
+	);
 }
 
 void WakeOnLanCommandEditor::buttonClicked(Button * b)

@@ -28,14 +28,17 @@ void OSCQueryModuleOutputEditor::resizedInternalHeader(Rectangle<int>& r)
 
 void OSCQueryModuleOutputEditor::showMenuAndSetupOutput()
 {
-	ZeroconfManager::ServiceInfo * service = ZeroconfManager::getInstance()->showMenuAndGetService("OSCQuery");
-	if (service != nullptr)
-	{
-		GenericOSCQueryModule  * o = ((OSCQueryOutput *)container.get())->module;
-		o->useLocal->setValue(service->isLocal);
-		o->remoteHost->setValue(service->getIP());
-		o->remotePort->setValue(service->port);
-	}
+	ZeroconfManager::getInstance()->showMenuAndGetService("OSCQuery", [this](ZeroconfManager::ServiceInfo* service)
+		{
+			if (service != nullptr)
+			{
+				GenericOSCQueryModule* o = ((OSCQueryOutput*)container.get())->module;
+				o->useLocal->setValue(service->isLocal);
+				o->remoteHost->setValue(service->getIP());
+				o->remotePort->setValue(service->port);
+			}
+		}
+	);
 }
 
 void OSCQueryModuleOutputEditor::buttonClicked(Button * b)

@@ -8,10 +8,15 @@
   ==============================================================================
 */
 
-CommandDefinition* CommandFactory::showMenuAndGetCommand(CommandContext context, Module* lockedModule, bool multiplexMode)
+void CommandFactory::showMenuAndGetCommand(CommandContext context, std::function<void(CommandDefinition*)> returnFunc, Module* lockedModule, bool multiplexMode)
 {
 	PopupMenu m = getCommandMenu(context, lockedModule, multiplexMode);
-	return getCommandFromResult(m.show(), lockedModule);
+	m.showMenuAsync(PopupMenu::Options(), [lockedModule, returnFunc](int result)
+		{
+			CommandDefinition* def = getCommandFromResult(result, lockedModule);
+			if (def != nullptr) returnFunc(def);
+		}
+	);
 }
 
 PopupMenu CommandFactory::getCommandMenu(CommandContext context, Module* lockedModule, bool multiplexMode)

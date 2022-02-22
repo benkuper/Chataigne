@@ -178,18 +178,21 @@ void ChataigneEngine::importSelection(File f)
 	if (!f.existsAsFile())
 	{
 		FileChooser fc("Load a LilNut", File::getCurrentWorkingDirectory(), "*.lilnut");
-		if (!fc.browseForFileToOpen()) return;
-		f = fc.getResult();
+		fc.launchAsync(FileBrowserComponent::FileChooserFlags::saveMode, [this](const FileChooser& fc)
+			{
+				if (fc.getResult().existsAsFile()) importSelection(fc.getResult());
+			}
+		);
+		return;
 	}
 
 	var data = JSON::parse(f);
-
 	if (!data.isObject()) return;
 
-	ModuleManager::getInstance()->addItemsFromData(data.getProperty(ModuleManager::getInstance()->shortName,var()));
-	CVGroupManager::getInstance()->addItemsFromData(data.getProperty(CVGroupManager::getInstance()->shortName,var()));
-	StateManager::getInstance()->addItemsFromData(data.getProperty(StateManager::getInstance()->shortName,var()));
-	ChataigneSequenceManager::getInstance()->addItemsFromData(data.getProperty(ChataigneSequenceManager::getInstance()->shortName,var()));
+	ModuleManager::getInstance()->addItemsFromData(data.getProperty(ModuleManager::getInstance()->shortName, var()));
+	CVGroupManager::getInstance()->addItemsFromData(data.getProperty(CVGroupManager::getInstance()->shortName, var()));
+	StateManager::getInstance()->addItemsFromData(data.getProperty(StateManager::getInstance()->shortName, var()));
+	ChataigneSequenceManager::getInstance()->addItemsFromData(data.getProperty(ChataigneSequenceManager::getInstance()->shortName, var()));
 	ModuleRouterManager::getInstance()->addItemsFromData(data.getProperty(ModuleRouterManager::getInstance()->shortName, var()));
 }
 
@@ -206,11 +209,12 @@ void ChataigneEngine::exportSelection()
 	String s = JSON::toString(data);
 
 	FileChooser fc("Save a LilNut", File::getCurrentWorkingDirectory(), "*.lilnut");
-	if (fc.browseForFileToSave(true))
-	{
-		File f=  fc.getResult();
-		f.replaceWithText(s);
-	}
+	fc.launchAsync(FileBrowserComponent::FileChooserFlags::saveMode, [s](const FileChooser& fc)
+		{
+			File f = fc.getResult();
+			f.replaceWithText(s);
+		}
+	);
 }
 
 String ChataigneEngine::getMinimumRequiredFileVersion()

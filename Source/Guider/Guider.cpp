@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    Guider.cpp
-    Created: 7 Nov 2018 2:56:45pm
-    Author:  Ben
+	Guider.cpp
+	Created: 7 Nov 2018 2:56:45pm
+	Author:  Ben
 
   ==============================================================================
 */
@@ -21,10 +21,10 @@ Guider::Guider() :
 
 Guider::~Guider()
 {
-	if(!Engine::mainEngine->isClearing) setCurrentGuide(nullptr);
+	if (!Engine::mainEngine->isClearing) setCurrentGuide(nullptr);
 }
 
-void Guider::setCurrentGuide(BaseGuide * g)
+void Guider::setCurrentGuide(BaseGuide* g)
 {
 	if (guide != nullptr)
 	{
@@ -38,23 +38,26 @@ void Guider::setCurrentGuide(BaseGuide * g)
 
 	if (guide != nullptr)
 	{
-		FileBasedDocument::SaveResult result = Engine::mainEngine->saveIfNeededAndUserAgrees();
-		if (result == FileBasedDocument::userCancelledSave) return;
-		if (result == FileBasedDocument::SaveResult::failedToWriteToFile)
-		{
-			LOGERROR("Could not save the document (Failed to write to file)");
-			return;
-		}
-		else Engine::mainEngine->createNewGraph();
+		Engine::mainEngine->saveIfNeededAndUserAgreesAsync([this](FileBasedDocument::SaveResult result)
+			{
+				if (result == FileBasedDocument::userCancelledSave) return;
+				if (result == FileBasedDocument::SaveResult::failedToWriteToFile)
+				{
+					LOGERROR("Could not save the document (Failed to write to file)");
+					return;
+				}
+				else Engine::mainEngine->createNewGraph();
 
-		ShapeShifterManager::getInstance()->loadDefaultLayoutFile();
+				ShapeShifterManager::getInstance()->loadDefaultLayoutFile();
 
-		guide->addGuideListener(this);
-		getApp().mainComponent->addAndMakeVisible(guide.get());
-		getApp().mainComponent->addComponentListener(this);
-		guide->setBounds(getApp().mainComponent->getLocalBounds());
-		guide->toFront(true);
-		guide->init();
+				guide->addGuideListener(this);
+				getApp().mainComponent->addAndMakeVisible(guide.get());
+				getApp().mainComponent->addComponentListener(this);
+				guide->setBounds(getApp().mainComponent->getLocalBounds());
+				guide->toFront(true);
+				guide->init();
+			}
+		);
 	}
 }
 
@@ -62,13 +65,13 @@ void Guider::launchGuideAtIndex(int guideIndex)
 {
 	String gName = getGuideName(guideIndex);
 	if (gName.isEmpty()) return;
-	
-	BaseGuide * g = factory.create(gName);
+
+	BaseGuide* g = factory.create(gName);
 	if (g != nullptr) setCurrentGuide(g);
 	else LOGWARNING("Could not find guider : " << gName);
 }
 
-String Guider:: getGuideName(int guideIndex)
+String Guider::getGuideName(int guideIndex)
 {
 	if (guideIndex < 0 || guideIndex >= factory.defs.size()) return "";
 	return factory.defs[guideIndex]->type;

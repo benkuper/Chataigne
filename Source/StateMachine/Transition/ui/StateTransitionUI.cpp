@@ -56,13 +56,16 @@ void StateTransitionUI::mouseDown(const MouseEvent & e)
 	{
 		PopupMenu p;
 		p.addItem(1, "Remove");
-		int result = p.show();
-		switch (result)
-		{
-		case 1:
-			item->remove();
-			break;
-		}
+		p.showMenuAsync(PopupMenu::Options(), [this](int result)
+			{
+				switch (result)
+				{
+				case 1:
+					item->remove();
+					break;
+				}
+			}
+		);
 	}
 }
 

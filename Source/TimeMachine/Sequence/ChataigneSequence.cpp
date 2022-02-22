@@ -155,7 +155,7 @@ void ChataigneSequence::itemAdded(SequenceLayer* layer)
 
 			if (audioLayer->audioModule == nullptr)
 			{
-				int result = AlertWindow::showYesNoCancelBox(AlertWindow::WarningIcon, "Sound Card Module is required", "This Audio layer needs a Sound Card module to be able to actually output sound. Do you want to create one now ?", "Yes", "No", "Cancel");
+				int result = AlertWindow::showYesNoCancelBox(AlertWindow::WarningIcon, "Sound Card Module is required", "This Audio layer needs a Sound Card module to be able to actually output sound. Do you want to create one now ?", "Yes", "No", "Cancel", nullptr, nullptr);
 				if (result == 1)
 				{
 					AudioModule* m = AudioModule::create();

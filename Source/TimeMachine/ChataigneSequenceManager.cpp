@@ -32,27 +32,27 @@ Sequence* ChataigneSequenceManager::createItem()
 	return new ChataigneSequence();
 }
 
-Sequence* ChataigneSequenceManager::showMenuAndGetSequenceStatic()
+void ChataigneSequenceManager::showMenuAndGetSequenceStatic(std::function<void(Sequence*)> returnFunc)
 {
-	return getInstance()->showMenuAndGetSequence();
+	getInstance()->showMenuAndGetSequence(returnFunc);
 }
 
-SequenceLayer* ChataigneSequenceManager::showmMenuAndGetLayerStatic()
+void ChataigneSequenceManager::showMenuAndGetLayerStatic(std::function<void(SequenceLayer*)> returnFunc)
 {
-	return getInstance()->showmMenuAndGetLayer();
+	getInstance()->showMenuAndGetLayer(returnFunc);
 }
 
-TimeCue* ChataigneSequenceManager::showMenuAndGetCueStatic()
+void ChataigneSequenceManager::showMenuAndGetCueStatic(std::function<void(TimeCue*)> returnFunc)
 {
-	return getInstance()->showMenuAndGetCue();
+	getInstance()->showMenuAndGetCue(returnFunc);
 }
 
-AudioLayer* ChataigneSequenceManager::showMenuAndGetAudioLayerStatic()
+void ChataigneSequenceManager::showMenuAndGetAudioLayerStatic(std::function<void(AudioLayer*)> returnFunc)
 {
-	return getInstance()->showMenuAndGetAudioLayer();
+	getInstance()->showMenuAndGetAudioLayer(returnFunc);
 }
 
-TimeTrigger* ChataigneSequenceManager::showMenuAndGetTriggerStatic()
+void ChataigneSequenceManager::showMenuAndGetTriggerStatic(std::function<void(TimeTrigger*)> returnFunc)
 {
-	return getInstance()->showMenuAndGetTrigger();
+	getInstance()->showMenuAndGetTrigger(returnFunc);
 }

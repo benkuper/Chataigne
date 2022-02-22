@@ -43,7 +43,7 @@ void PowerPointModule::installPowerPointPlugin()
 	if (show == "1")
 	{
 		int result = AlertWindow::showYesNoCancelBox(AlertWindow::QuestionIcon, "Powerpoint OSC plugin not found", "The Powerpoint plugin is required to be able to actually use this module with Powerpoint.\n \
-Do you want to install it ? Also, you need to have Powerpoint installed.", "Yes", "No", "Don't ask me again");
+Do you want to install it ? Also, you need to have Powerpoint installed.", "Yes", "No", "Don't ask me again", nullptr, nullptr);
 
 		if (result == 1)
 		{
@@ -96,7 +96,7 @@ void PowerPointModule::finished(URL::DownloadTask * task, bool success)
 
 	installFile.startAsProcess();
 
-	AlertWindow::showMessageBox(AlertWindow::InfoIcon, "Powerpoint plugin installed", "The powerpoint plugin has been installed, you can now use the Powerpoint plugin !");
+	AlertWindow::showMessageBoxAsync(AlertWindow::InfoIcon, "Powerpoint plugin installed", "The powerpoint plugin has been installed, you can now use the Powerpoint plugin !", "OK", nullptr, nullptr);
 	getAppProperties().getUserSettings()->setValue("showPowerpointInstallPlugin", "0");
 }
 

@@ -49,7 +49,7 @@ void ModuleManager::addItemInternal(Module * module, var data)
 	module->templateManager->setupDefinitionsFromModule();
 }
 
-Controllable * ModuleManager::showAllValuesAndGetControllable(const StringArray & typeFilters, const StringArray& excludeTypeFilters)
+void ModuleManager::showAllValuesAndGetControllable(const StringArray & typeFilters, const StringArray& excludeTypeFilters, std::function<void(Controllable*)> returnFunc)
 {
 	PopupMenu menu;
 	
@@ -71,16 +71,20 @@ Controllable * ModuleManager::showAllValuesAndGetControllable(const StringArray 
 	ControllableChooserPopupMenu engineMenu(Engine::mainEngine, -1000000, -1, typeFilters, excludeTypeFilters);
 	menu.addSubMenu("Generic", engineMenu);
 	
-	int result = menu.show();
+	menu.showMenuAsync(PopupMenu::Options(), [&engineMenu, &moduleMenus, maxValuesPerModule, returnFunc](int result)
+		{
 
-	if (result < 0)
-	{
-		return engineMenu.getControllableForResult(result);
-	} else
-	{
-		ControllableChooserPopupMenu * mm = moduleMenus[(int)floorf(result / maxValuesPerModule)];
-		return mm->getControllableForResult(result);
-	}
+			if (result < 0)
+			{
+				returnFunc(engineMenu.getControllableForResult(result));
+			}
+			else
+			{
+				ControllableChooserPopupMenu* mm = moduleMenus[(int)floorf(result / maxValuesPerModule)];
+				returnFunc(mm->getControllableForResult(result));
+			}
+		}
+	);
 
 }
 

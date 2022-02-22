@@ -15,7 +15,7 @@ class Module;
 class CommandFactory
 {
 public:
-    static CommandDefinition* showMenuAndGetCommand(CommandContext context, Module* lockedModule = nullptr, bool multiplexMode = false);
+    static void showMenuAndGetCommand(CommandContext context, std::function<void(CommandDefinition*)> returnFunc, Module* lockedModule = nullptr, bool multiplexMode = false);
     static PopupMenu getCommandMenu(CommandContext context, Module* lockedModule = nullptr, bool multiplexMode = false);
     static CommandDefinition* getCommandFromResult(int result, Module * lockedModule);
 };

@@ -414,30 +414,38 @@ void CustomOSCModule::onControllableFeedbackUpdateInternal(ControllableContainer
 void CustomOSCModule::showMenuAndCreateValue(ControllableContainer* container)
 {
 	StringArray filters = ControllableFactory::getTypesWithout(StringArray(EnumParameter::getTypeStringStatic(), TargetParameter::getTypeStringStatic(), FileParameter::getTypeStringStatic()));
-	Controllable* c = ControllableFactory::showFilteredCreateMenu(filters, true);
-	if (c == nullptr) return;
 
-	AlertWindow window("Add a value", "Configure the parameters for this value", AlertWindow::AlertIconType::NoIcon);
-	window.addTextEditor("address", "/myValue", "OSC Address");
-	window.addButton("OK", 1, KeyPress(KeyPress::returnKey));
-	window.addButton("Cancel", 0, KeyPress(KeyPress::escapeKey));
+	ControllableFactory::showFilteredCreateMenu(filters, [container](Controllable* c)
+		{
+			if (c == nullptr) return;
 
-	int result = window.runModalLoop();
+			AlertWindow window("Add a value", "Configure the parameters for this value", AlertWindow::AlertIconType::NoIcon);
+			window.addTextEditor("address", "/myValue", "OSC Address");
+			window.addButton("OK", 1, KeyPress(KeyPress::returnKey));
+			window.addButton("Cancel", 0, KeyPress(KeyPress::escapeKey));
 
-	if (result)
-	{
-		String addString = window.getTextEditorContents("address").replace(" ", "");
-		if (!addString.startsWith("/")) addString = "/" + addString;
-		c->setNiceName(addString);
-		c->isCustomizableByUser = true;
-		c->isRemovableByUser = true;
-		c->saveValueOnly = false;
-		container->addControllable(c);
-	}
-	else
-	{
-		delete c;
-	}
+			window.showAsync(MessageBoxOptions(), [&window, container, c](int result)
+				{
+
+					if (result)
+					{
+						String addString = window.getTextEditorContents("address").replace(" ", "");
+						if (!addString.startsWith("/")) addString = "/" + addString;
+						c->setNiceName(addString);
+						c->isCustomizableByUser = true;
+						c->isRemovableByUser = true;
+						c->saveValueOnly = false;
+						container->addControllable(c);
+					}
+					else
+					{
+						delete c;
+					}
+				}
+			);
+		}
+	, true);
+
 }
 
 void CustomOSCModule::addColorArgumentToMessage(OSCMessage& m, const Colour& c)
