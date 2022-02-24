@@ -21,6 +21,7 @@ public:
 	SerialDevice * currentDevice;
 	SerialDevice * getDevice();
 
+	String ghostData;
 	int openBaudRate;
 	int vidFilter;
 	int pidFilter;
