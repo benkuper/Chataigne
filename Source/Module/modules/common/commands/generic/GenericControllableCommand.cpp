@@ -421,6 +421,7 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 					ValueInterpolator* interp = new ValueInterpolator(p, targetValue, getLinkedValue(time, multiplexIndex), automation.get());
 					interpolators.add(interp);
 					interpolatorMap.set(p, interp);
+					MessageManagerLock mmLock;
 					interp->addChangeListener(this);
 				}
 			}
