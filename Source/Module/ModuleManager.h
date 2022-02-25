@@ -18,17 +18,20 @@ class ModuleManager :
 public:
 	juce_DeclareSingleton(ModuleManager, true)
 
-		ModuleManager();
+	ModuleManager();
 	~ModuleManager();
 
 	std::unique_ptr<ModuleFactory> factory;
+
+	OwnedArray<ControllableChooserPopupMenu> modulesMenu;
+	std::unique_ptr<ControllableChooserPopupMenu> engineMenu;
 
 	Module* getModuleWithName(const String& moduleName);
 
 	void addItemInternal(Module* module, var data) override;
 
 	//Input values menu
-	static void showAllValuesAndGetControllable(const StringArray& typeFilters, const StringArray& excludeTypeFilters, std::function<void(Controllable *)> returnFunc);
+	static void showAllValuesAndGetControllable(const StringArray& typeFilters, const StringArray& excludeTypeFilters, std::function<void(Controllable*)> returnFunc);
 	static bool checkControllableIsAValue(Controllable* c);
 
 	template <class T>

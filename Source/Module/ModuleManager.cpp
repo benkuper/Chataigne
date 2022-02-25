@@ -57,30 +57,30 @@ void ModuleManager::showAllValuesAndGetControllable(const StringArray & typeFilt
 	int numItems = mList.size();
 
 	const int maxValuesPerModule = 10000;
-	OwnedArray<ControllableChooserPopupMenu> moduleMenus;
 
 	for (int i = 0; i < numItems; ++i)
 	{
 		Module * m = mList[i];
 		ControllableChooserPopupMenu *vCC = new ControllableChooserPopupMenu(&m->valuesCC, i* maxValuesPerModule, -1, typeFilters, excludeTypeFilters);
-		moduleMenus.add(vCC);
+		getInstance()->modulesMenu.add(vCC);
 		if (i == ModuleManager::getInstance()->items.size()) menu.addSeparator(); // Separator between user created module and special modules
 		menu.addSubMenu(m->niceName, *vCC);
 	}
 
-	ControllableChooserPopupMenu engineMenu(Engine::mainEngine, -1000000, -1, typeFilters, excludeTypeFilters);
-	menu.addSubMenu("Generic", engineMenu);
+	getInstance()->engineMenu.reset(new ControllableChooserPopupMenu(Engine::mainEngine, -1000000, -1, typeFilters, excludeTypeFilters));
+	menu.addSubMenu("Generic", *getInstance()->engineMenu);
+
 	
-	menu.showMenuAsync(PopupMenu::Options(), [&engineMenu, &moduleMenus, maxValuesPerModule, returnFunc](int result)
+	menu.showMenuAsync(PopupMenu::Options(), [maxValuesPerModule, returnFunc](int result)
 		{
 
 			if (result < 0)
 			{
-				returnFunc(engineMenu.getControllableForResult(result));
+				returnFunc(ModuleManager::getInstance()->engineMenu->getControllableForResult(result));
 			}
 			else
 			{
-				ControllableChooserPopupMenu* mm = moduleMenus[(int)floorf(result / maxValuesPerModule)];
+				ControllableChooserPopupMenu* mm = ModuleManager::getInstance()->modulesMenu[(int)floorf(result / maxValuesPerModule)];
 				returnFunc(mm->getControllableForResult(result));
 			}
 		}
