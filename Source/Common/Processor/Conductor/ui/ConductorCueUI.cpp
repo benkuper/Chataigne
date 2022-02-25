@@ -38,7 +38,7 @@ void ConductorCueUI::resizedHeader(Rectangle<int>& r)
 
 void ConductorCueUI::updateBGColor()
 {
-    Colour c = Colours::mediumpurple.withMultipliedSaturation(cue->isCurrent ? .9f : .3f);
+    Colour c = Colours::mediumpurple.darker(.2f).withMultipliedSaturation(cue->isCurrent ? .9f : .4f);
     if (cue->isNext) c = Colours::orange.darker(.2f);
     baseBGColor = c;
     ProcessorUI::updateBGColor();
