@@ -24,6 +24,10 @@ MIDINoteAndCCCommand::MIDINoteAndCCCommand(MIDIModule * module, CommandContext c
 	velocity(nullptr),
 	onTime(nullptr),
 	remap01To127(nullptr),
+	noteEnum(nullptr),
+	octave(nullptr),
+	noteMode(nullptr),
+	number(nullptr),
 	maxRemap(127)
 {
 	channel = addIntParameter("Channel", "Channel for the note message", 1, 1, 16);
@@ -35,13 +39,11 @@ MIDINoteAndCCCommand::MIDINoteAndCCCommand(MIDIModule * module, CommandContext c
 	case NOTE_OFF:
 	case FULL_NOTE:
 	case AFTER_TOUCH:
-		noteEnum = addEnumParameter("Note", "Note from C to B");
-		for (int i = 0; i < 12; ++i)
-		{
-			noteEnum->addOption(MidiMessage::getMidiNoteName(i, true, false, 5), i);
-		}
-		octave = addIntParameter("Octave", "Octave for the note", 5, 0, 10);
-		if(type != NOTE_OFF) velocity = addIntParameter("Velocity", "Velocity of the note, between 0 and 127", 127, 0, 127);
+		noteMode = new EnumParameter("Note Mode", "How to assign the note");
+		addParameter(noteMode, controllables.indexOf(channel));
+		noteMode->addOption("Note", MODE_NOTE)->addOption("Pitch", MODE_PITCH);
+		updateNoteParams();
+		if (type != NOTE_OFF) velocity = addIntParameter("Velocity", "Velocity of the note, between 0 and 127", 127, 0, 127);
 		break;
 
 	case CONTROLCHANGE:
@@ -82,6 +84,42 @@ MIDINoteAndCCCommand::~MIDINoteAndCCCommand()
 
 }
 
+void MIDINoteAndCCCommand::updateNoteParams()
+{
+	NoteMode m = noteMode->getValueDataAsEnum<NoteMode>();
+
+	if (m == MODE_NOTE)
+	{
+		noteEnum = new EnumParameter("Note", "Note from C to B");
+		for (int i = 0; i < 12; ++i)
+		{
+			noteEnum->addOption(MidiMessage::getMidiNoteName(i, true, false, 5), i);
+		}
+		octave = new IntParameter("Octave", "Octave for the note", 5, 0, 10);
+		
+		removeControllable(number);
+		number = nullptr;
+
+		addParameter(noteEnum, controllables.indexOf(channel) + 1);
+		addParameter(octave, controllables.indexOf(noteEnum) + 1);
+	}
+	else
+	{
+		int pitch = getPitchFromNote(0);
+		number = new IntParameter("Pitch", "The pitch of the note", 0, 0, 127);
+		number->setValue(pitch);
+
+		removeControllable(noteEnum);
+		removeControllable(octave);
+		noteEnum = nullptr;
+		octave = nullptr;
+
+		addParameter(number, controllables.indexOf(channel)+1);
+	}
+
+
+}
+
 void MIDINoteAndCCCommand::setValue(var value, int multiplexIndex)
 {
 	float mapFactor = (remap01To127 != nullptr && remap01To127->boolValue()) ? maxRemap : 1;
@@ -91,13 +129,24 @@ void MIDINoteAndCCCommand::setValue(var value, int multiplexIndex)
 	MIDICommand::setValue(value, multiplexIndex);
 }
 
+int MIDINoteAndCCCommand::getPitchFromNote(int multiplexIndex)
+{
+	if (octave == nullptr || noteEnum == nullptr) return 0;
+	return (int)noteEnum->getValueData() + ((int)getLinkedValue(octave, multiplexIndex) - (int)octave->minimumValue) * 12;
+}
+
 void MIDINoteAndCCCommand::triggerInternal(int multiplexIndex)
 {
 	MIDICommand::triggerInternal(multiplexIndex);
 
 	int pitch = 0;
 	if (type == CONTROLCHANGE || type == PROGRAMCHANGE) pitch = getLinkedValue(number, multiplexIndex);
-	else if(type == NOTE_ON || type == NOTE_OFF || type == FULL_NOTE || type == AFTER_TOUCH) pitch = (int)noteEnum->getValueData() + ((int)getLinkedValue(octave, multiplexIndex) - (int)octave->minimumValue) * 12;
+	else if (type == NOTE_ON || type == NOTE_OFF || type == FULL_NOTE || type == AFTER_TOUCH)
+	{
+		NoteMode m = noteMode->getValueDataAsEnum<NoteMode>();
+		if (m == MODE_PITCH) pitch = getLinkedValue(number, multiplexIndex);
+		else pitch = getPitchFromNote(multiplexIndex);
+	}
 
 	int chanVal = channel != nullptr ? (int)getLinkedValue(channel, multiplexIndex) : 0;
 	int velVal = velocity != nullptr ? (int)getLinkedValue(velocity, multiplexIndex) : 0;
@@ -140,6 +189,15 @@ void MIDINoteAndCCCommand::triggerInternal(int multiplexIndex)
 	default:
 		DBG("NOT A VALID TYPE !");
 		break;
+	}
+}
+
+void MIDINoteAndCCCommand::onContainerParameterChanged(Parameter* p)
+{
+	MIDICommand::onContainerParameterChanged(p);
+	if (p == noteMode)
+	{
+		updateNoteParams();
 	}
 }
 
