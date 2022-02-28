@@ -21,18 +21,10 @@ public:
 	void resized() override;
 
 	class WebComp :
-#if JUCE_WINDOWS
-		public WindowsWebView2WebBrowserComponent
-#else
-		public WebBrowserComponenet
-#endif
+		public WebBrowserComponent
 	{
 	public:
-		WebComp()
-#if JUCE_WINDOWS
-			: WindowsWebView2WebBrowserComponent(true,WebView2Preferences())
-#endif
-		{}
+		WebComp() {}
 		~WebComp() {}
 		String baseURL;
 		void setBaseURL(StringRef url);
