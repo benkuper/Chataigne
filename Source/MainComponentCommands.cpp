@@ -192,15 +192,15 @@ bool MainContentComponent::perform(const InvocationInfo& info)
 
 	case ChataigneCommandIDs::showAbout:
 	{
-		if (aboutWindow == nullptr) aboutWindow.reset(new AboutWindow());
+		aboutWindow.reset(new AboutWindow());
 		DialogWindow::showDialog("About", aboutWindow.get(), getTopLevelComponent(), Colours::transparentBlack, true);
 	}
 	break;
 
 	case ChataigneCommandIDs::showWelcome:
 	{
-		if (welcomeScreen == nullptr) welcomeScreen.reset(new WelcomeScreen());
-		DialogWindow::showDialog("Welcome", welcomeScreen.get(), getTopLevelComponent(), Colours::transparentBlack, true);
+		welcomeScreen.reset(new WelcomeScreen());
+		DialogWindow::showDialog("Welcome", welcomeScreen.get(), getTopLevelComponent(), Colours::black, true);
 
 	}
 	break;
