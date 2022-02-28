@@ -17,6 +17,7 @@ PlayAudioFileCommand::PlayAudioFileCommand(AudioModule * _module, CommandContext
 	numFileChannels(2),
     numActiveOutputs(2)
 {
+	saveAndLoadRecursiveData = true;
 	audioFile = addFileParameter("Audio file", "The Audio file to play");
 	audioFile->fileTypeFilter = "*.wav;*.mp3;*.aiff";
 
