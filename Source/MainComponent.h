@@ -55,6 +55,9 @@ public:
 
 	void init() override;
 
+	std::unique_ptr<WelcomeScreen> welcomeScreen;
+	std::unique_ptr<AboutWindow> aboutWindow;
+
 	static SequenceManagerUI* createSequenceManagerUI(const String& name);
 
 	void getAllCommands(Array<CommandID>& commands) override;

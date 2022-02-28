@@ -27,23 +27,7 @@ contents.xcworkspacedata
 profile
 **/MacOSX/build
 **/iOS/build
-**/VisualStudio2005/Debug
-**/VisualStudio2005/Release
-**/VisualStudio2008/Debug
-**/VisualStudio2008/Release
-**/VisualStudio2010/Debug
-**/VisualStudio2010/Release
-**/VisualStudio2012/Debug
-**/VisualStudio2012/Release
-**/VisualStudio2013/Debug
-**/VisualStudio2013/Release
-**/VisualStudio2013/x64
-**/VisualStudio2015/Debug
-**/VisualStudio2015/Release
-**/VisualStudio2015/x64
-**/VisualStudio2017/x64
-**/VisualStudio2019/x64
-**/VisualStudio2022/x64
+**/VisualStudio2022
 **/Android/bin
 **/Android/libs
 **/Android/gen
@@ -65,7 +49,6 @@ Builds/CodeBlocksLinux/*\.cbp
 
 Builds/VisualStudio2017/\.vs/
 Builds/VisualStudio2019/\.vs/
-Builds/VisualStudio2022/\.vs/
 Builds/VisualStudio2019/packages/
 Builds/VisualStudio2017_Win7/
 

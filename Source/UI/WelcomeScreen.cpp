@@ -13,7 +13,6 @@ ApplicationProperties& getAppProperties();
 
 WelcomeScreen::WelcomeScreen()
 {
-
 	String lastVersion = getAppProperties().getUserSettings()->getValue("lastVersion", "0");
 	bool firstRun = lastVersion.isEmpty();
 	

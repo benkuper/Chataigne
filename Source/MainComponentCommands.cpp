@@ -22,15 +22,15 @@ namespace ChataigneCommandIDs
 	static const int gotoChangelog = 0x60007;
 
 	static const int guideStart = 0x300; //up to 0x300 +100
-	static const int exitGuide = 0x399; 
+	static const int exitGuide = 0x399;
 	static const int goToCommunityModules = 0x500;
 	static const int reloadCustomModules = 0x501;
 	static const int exportSelection = 0x800;
 	static const int importSelection = 0x801;
-	
+
 }
 
-void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationCommandInfo& result) 
+void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationCommandInfo& result)
 {
 	if (commandID >= ChataigneCommandIDs::guideStart && commandID < ChataigneCommandIDs::guideStart + 99)
 	{
@@ -136,7 +136,7 @@ void MainContentComponent::getAllCommands(Array<CommandID>& commands) {
 }
 
 
-PopupMenu MainContentComponent::getMenuForIndex(int topLevelMenuIndex, const String& menuName) 
+PopupMenu MainContentComponent::getMenuForIndex(int topLevelMenuIndex, const String& menuName)
 {
 	PopupMenu menu = OrganicMainContentComponent::getMenuForIndex(topLevelMenuIndex, menuName);
 
@@ -153,7 +153,8 @@ PopupMenu MainContentComponent::getMenuForIndex(int topLevelMenuIndex, const Str
 		menu.addCommandItem(&getCommandManager(), ChataigneCommandIDs::gotoChangelog);
 		menu.addCommandItem(&getCommandManager(), ChataigneCommandIDs::postGithubIssue);
 
-	}else if (menuName == "Guides")
+	}
+	else if (menuName == "Guides")
 	{
 		for (int i = 0; i < Guider::getInstance()->factory.defs.size(); ++i)
 		{
@@ -167,7 +168,7 @@ PopupMenu MainContentComponent::getMenuForIndex(int topLevelMenuIndex, const Str
 	return menu;
 }
 
-void MainContentComponent::fillFileMenuInternal(PopupMenu & menu)
+void MainContentComponent::fillFileMenuInternal(PopupMenu& menu)
 {
 	menu.addCommandItem(&getCommandManager(), ChataigneCommandIDs::importSelection);
 	menu.addCommandItem(&getCommandManager(), ChataigneCommandIDs::exportSelection);
@@ -191,15 +192,16 @@ bool MainContentComponent::perform(const InvocationInfo& info)
 
 	case ChataigneCommandIDs::showAbout:
 	{
-		AboutWindow w;
-		DialogWindow::showDialog("About", &w, getTopLevelComponent(), Colours::transparentBlack, true);
+		if (aboutWindow == nullptr) aboutWindow.reset(new AboutWindow());
+		DialogWindow::showDialog("About", aboutWindow.get(), getTopLevelComponent(), Colours::transparentBlack, true);
 	}
 	break;
 
 	case ChataigneCommandIDs::showWelcome:
 	{
-		WelcomeScreen w;
-		DialogWindow::showDialog("Welcome", &w, getTopLevelComponent(), Colours::black, true);
+		if (welcomeScreen == nullptr) welcomeScreen.reset(new WelcomeScreen());
+		DialogWindow::showDialog("Welcome", welcomeScreen.get(), getTopLevelComponent(), Colours::transparentBlack, true);
+
 	}
 	break;
 
