@@ -122,6 +122,7 @@ void CommandTemplate::onContainerParameterChangedInternal(Parameter * p)
 
 void CommandTemplate::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
 {
+	BaseItem::onControllableFeedbackUpdateInternal(cc, c);
 	CommandTemplateParameter * ctp = c->getParentAs<CommandTemplateParameter>();
 	if (ctp != nullptr)
 	{
