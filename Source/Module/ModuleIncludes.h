@@ -103,7 +103,6 @@
 
 #include "modules/generators/metronome/MetronomeModule.h"
 
-#include "modules/generators/signal/PerlinNoise.hpp"
 #include "modules/generators/signal/SignalModule.h"
 
 #include "modules/generic/ChataigneGenericModule.h"

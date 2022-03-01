@@ -837,7 +837,6 @@
 		E3D81D58A2F55922C54F1F18 /* MIDI.png */ /* MIDI.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MIDI.png; path = ../../Resources/Modules/MIDI.png; sourceTree = SOURCE_ROOT; };
 		E3DF6C843DEF80BF6E8B26E5 /* AutomationMappingLayerTimeline.h */ /* AutomationMappingLayerTimeline.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AutomationMappingLayerTimeline.h; path = ../../Source/TimeMachine/Sequence/layers/mapping/automation/ui/AutomationMappingLayerTimeline.h; sourceTree = SOURCE_ROOT; };
 		E3F9EFD72705ECB6CEE5F94E /* CommandTemplateParameter.h */ /* CommandTemplateParameter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CommandTemplateParameter.h; path = ../../Source/Common/Command/Template/CommandTemplateParameter.h; sourceTree = SOURCE_ROOT; };
-		E438ED5BB04E38ED75524C33 /* PerlinNoise.hpp */ /* PerlinNoise.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PerlinNoise.hpp; path = ../../Source/Module/modules/generators/signal/PerlinNoise.hpp; sourceTree = SOURCE_ROOT; };
 		E45ADC056D20AB660810AC6D /* LagFilter.h */ /* LagFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LagFilter.h; path = ../../Source/Common/Processor/Mapping/Filter/filters/number/LagFilter.h; sourceTree = SOURCE_ROOT; };
 		E45FA3B841CA50679596AE4C /* GuideComponents.cpp */ /* GuideComponents.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = GuideComponents.cpp; path = ../../Source/Guider/GuideComponents.cpp; sourceTree = SOURCE_ROOT; };
 		E45FB289FAE0B1C007DC9C96 /* LinkableParameterEditor.h */ /* LinkableParameterEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LinkableParameterEditor.h; path = ../../Source/Common/ParameterLink/ui/LinkableParameterEditor.h; sourceTree = SOURCE_ROOT; };
@@ -2289,7 +2288,6 @@
 		88865CA8100C83590AD7A17A /* signal */ = {
 			isa = PBXGroup;
 			children = (
-				E438ED5BB04E38ED75524C33,
 				BF56666BCED854C39FE8D1C1,
 				177DC5C34CD7158022576694,
 			);
@@ -3698,7 +3696,7 @@
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCE_COREGRAPHICS_DRAW_ASYNC=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.9.5b5",
+					"JUCE_APP_VERSION=1.9.5b6",
 					"JUCE_APP_VERSION_HEX=0x10905",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -3768,7 +3766,7 @@
 					"JUCE_SUPPORT_CARBON=0",
 					"JUCE_COREGRAPHICS_DRAW_ASYNC=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.9.5b5",
+					"JUCE_APP_VERSION=1.9.5b6",
 					"JUCE_APP_VERSION_HEX=0x10905",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",

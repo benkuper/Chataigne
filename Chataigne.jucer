@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.5b5"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.5b6"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="VST_LOGGING=0"
@@ -1056,7 +1056,6 @@
                     file="Source/Module/modules/generators/metronome/MetronomeModule.h"/>
             </GROUP>
             <GROUP id="{11BB05B6-3F6D-288D-3AA4-57A7354DAD26}" name="signal">
-              <FILE id="SIH4dN" name="PerlinNoise.hpp" compile="0" resource="0" file="Source/Module/modules/generators/signal/PerlinNoise.hpp"/>
               <FILE id="TxXTrl" name="SignalModule.cpp" compile="0" resource="0"
                     file="Source/Module/modules/generators/signal/SignalModule.cpp"/>
               <FILE id="d1nw10" name="SignalModule.h" compile="0" resource="0" file="Source/Module/modules/generators/signal/SignalModule.h"/>

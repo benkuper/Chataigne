@@ -44,8 +44,8 @@ void MainContentComponent::init()
 
 	if (lastVersion != getAppVersion())
 	{
-		WelcomeScreen w;
-		DialogWindow::showDialog("Welcome", &w, getTopLevelComponent(), Colours::black, true);
+		welcomeScreen.reset(new WelcomeScreen());
+		DialogWindow::showDialog("Welcome", welcomeScreen.get(), getTopLevelComponent(), Colours::black, true);
 	}
 
 }

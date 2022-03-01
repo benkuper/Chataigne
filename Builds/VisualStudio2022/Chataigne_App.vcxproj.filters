@@ -6255,9 +6255,6 @@
     <ClInclude Include="..\..\Source\Module\modules\generators\metronome\MetronomeModule.h">
       <Filter>Chataigne\Source\Module\modules\generators\metronome</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Module\modules\generators\signal\PerlinNoise.hpp">
-      <Filter>Chataigne\Source\Module\modules\generators\signal</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\generators\signal\SignalModule.h">
       <Filter>Chataigne\Source\Module\modules\generators\signal</Filter>
     </ClInclude>
@@ -9607,6 +9604,9 @@
       <Filter>JUCE Modules\juce_organicui\helpers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\helpers\OSCHelpers.h">
+      <Filter>JUCE Modules\juce_organicui\helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\helpers\PerlinNoise.hpp">
       <Filter>JUCE Modules\juce_organicui\helpers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\helpers\QueuedNotifier.h">

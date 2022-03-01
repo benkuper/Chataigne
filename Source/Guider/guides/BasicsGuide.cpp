@@ -139,14 +139,14 @@ void BasicsGuide::handleStep(int step)
 	case EDIT_CONDITION:
 	{
 		Rectangle<int> r = getLocalArea(ce->comparatorUI.get(), ce->comparatorUI->getLocalBounds()).expanded(10);
-		fc.setFocus(r, fc.RECTANGLE, "When should this action trigger ? Choose the \"=\" condition in the menu, then type a key in the field next to it, for example \"p\".");
+		fc.setFocus(r, fc.RECTANGLE, "When should this action trigger ? Choose the \"=\" condition in the menu, then type a key in the field next to it, for example \"P\".");
 	}
 	break;
 
 	case OBSERVE_CONDITION:
 	{
 		Rectangle<int> r = getLocalArea(cme, cme->getLocalBounds());
-		fc.setFocus(r, fc.RECTANGLE, "Pressing the \"p\" key on your keyboard will now validate the condition. You can see that the background turns green whenever you hit the key.", "Yay! Let's do something useful now");
+		fc.setFocus(r, fc.RECTANGLE, "Pressing the \"P\" key on your keyboard will now validate the condition. You can see that the background turns green whenever you hit the key.", "Yay! Let's do something useful now");
 	}
 	break;
 
@@ -229,7 +229,7 @@ void BasicsGuide::newMessage(const Parameter::ParameterEvent &e)
 {
 	if (e.type == Parameter::ParameterEvent::VALUE_CHANGED)
 	{
-		if (currentStep == EDIT_CONDITION && e.parameter == conditionReference && e.value.toString() == "p") nextStep();
+		if (currentStep == EDIT_CONDITION && e.parameter == conditionReference && e.value.toString() == "P") nextStep();
 		if (currentStep == EDIT_CONSEQUENCE && e.parameter == audioFile && !e.value.toString().isEmpty()) nextStep();
 	}
 }

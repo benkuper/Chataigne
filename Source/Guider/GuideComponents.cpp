@@ -40,16 +40,16 @@ void GuideFocusComponent::show(Rectangle<int> _area, FocusLook _look, const Stri
 	resized();
 	repaint(); 
 	
-	animator.fadeIn(this, 1000);
+	animator.fadeIn(this, 500);
 }
 
 void GuideFocusComponent::setFocus(Rectangle<int> _area, FocusLook _look, const String &_text, const String &_nextText)
 {
 	if (text.isNotEmpty())
 	{
-		animator.fadeOut(this, 500);
+		animator.fadeOut(this, 300);
 		auto showFunc = std::bind(&GuideFocusComponent::show, this, _area, _look, _text, _nextText);
-		Timer::callAfterDelay(500, showFunc);
+		Timer::callAfterDelay(300, showFunc);
 	} else
 	{
 		show(_area, _look, _text, _nextText);
