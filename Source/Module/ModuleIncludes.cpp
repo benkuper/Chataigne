@@ -88,7 +88,6 @@
 #include "modules/controller/loupedeck/LoupedeckModule.cpp"
 #include "modules/controller/loupedeck/commands/LoupedeckCommands.cpp"
 
-
 #include "modules/controller/wiimote/WiimoteManager.cpp"
 #include "modules/controller/wiimote/WiimoteModule.cpp"
 #include "modules/controller/wiimote/WiimotePairUtil.cpp"

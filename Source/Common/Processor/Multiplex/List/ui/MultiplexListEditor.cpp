@@ -198,7 +198,7 @@ void InputValueListEditor::buttonClicked(Button* b)
 					OwnedArray<ContainerChooserPopupMenu> choosers;
 					for (auto& m : modules)
 					{
-						ContainerChooserPopupMenu* chooser = new ContainerChooserPopupMenu(&m->valuesCC, offset, -1, nullptr, true);
+						ContainerChooserPopupMenu* chooser = new ContainerChooserPopupMenu(&m->valuesCC, offset, -1, nullptr, StringArray(), StringArray(), true);
 						choosers.add(chooser);
 						cp.addSubMenu(m->niceName, *chooser);
 						offset += 100000;
@@ -223,7 +223,7 @@ void InputValueListEditor::buttonClicked(Button* b)
 				}
 				else
 				{
-					ContainerChooserPopupMenu chooser(Engine::mainEngine, 0, -1, nullptr, true);
+					ContainerChooserPopupMenu chooser(Engine::mainEngine, 0, -1, nullptr, StringArray(), StringArray(), true);
 					chooser.showAndGetContainer([this](ControllableContainer* cc)
 						{
 							Array<WeakReference<Controllable>> cList = cc->getAllControllables();

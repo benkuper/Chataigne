@@ -22,6 +22,7 @@ ModuleFactory::ModuleFactory() {
 	defs.add(new ModuleDefinition("Protocol", "WebSocket Client", &WebSocketClientModule::create));
 	defs.add(new ModuleDefinition("Protocol", "WebSocket Server", &WebSocketServerModule::create));
 	defs.add(new ModuleDefinition("Protocol", "PJLink", &PJLinkModule::create));
+	defs.add(new ModuleDefinition("Protocol", "Ableton Link", &AbletonLinkModule::create));
 	
 
 	defs.add(new ModuleDefinition("Hardware", "Sound Card", &AudioModule::create));

@@ -105,6 +105,9 @@
 
 #include "modules/generators/signal/SignalModule.h"
 
+#include "modules/abletonlink/AbletonLinkModule.h"
+
+
 #include "modules/generic/ChataigneGenericModule.h"
 #include "modules/generic/commands/ChataigneLogCommand.h"
 #include "modules/generic/commands/GenericAppCommand.h"

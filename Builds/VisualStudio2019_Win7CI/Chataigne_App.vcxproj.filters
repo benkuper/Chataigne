@@ -236,6 +236,9 @@
     <Filter Include="Chataigne\Source\Module\Community">
       <UniqueIdentifier>{6CEFF08B-E267-C21D-34E5-C8EAE64F596A}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\abletonlink">
+      <UniqueIdentifier>{FF0E773C-E63C-01FF-8F6C-A27709B05F4B}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Module\modules\customvariables\commands">
       <UniqueIdentifier>{4C9511D9-D1B4-B5A7-5772-0E1D38BEF264}</UniqueIdentifier>
     </Filter>
@@ -1945,6 +1948,9 @@
     <ClCompile Include="..\..\Source\Module\Community\CommunityModuleManager.cpp">
       <Filter>Chataigne\Source\Module\Community</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\abletonlink\AbletonLinkModule.cpp">
+      <Filter>Chataigne\Source\Module\modules\abletonlink</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\customvariables\commands\CustomVariablesModuleCommands.cpp">
       <Filter>Chataigne\Source\Module\modules\customvariables\commands</Filter>
     </ClCompile>
@@ -2375,6 +2381,9 @@
       <Filter>Chataigne\Source\Module</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\ModuleIncludes2.cpp">
+      <Filter>Chataigne\Source\Module</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\ModuleIncludes3.cpp">
       <Filter>Chataigne\Source\Module</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\ModuleManager.cpp">
@@ -6098,6 +6107,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\Community\CommunityModuleManager.h">
       <Filter>Chataigne\Source\Module\Community</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\abletonlink\AbletonLinkModule.h">
+      <Filter>Chataigne\Source\Module\modules\abletonlink</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\customvariables\commands\CustomVariablesModuleCommands.h">
       <Filter>Chataigne\Source\Module\modules\customvariables\commands</Filter>
@@ -12901,6 +12913,9 @@
     </None>
     <None Include="..\..\Resources\prevkey.png">
       <Filter>Chataigne\Resources</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\Ableton Link.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
     </None>
     <None Include="..\..\Resources\Modules\Ableton Live.png">
       <Filter>Chataigne\Resources\Modules</Filter>

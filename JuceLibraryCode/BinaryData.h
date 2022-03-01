@@ -20,6 +20,9 @@ namespace BinaryData
     extern const char*   prevkey_png;
     const int            prevkey_pngSize = 2460;
 
+    extern const char*   Ableton_Link_png;
+    const int            Ableton_Link_pngSize = 7062;
+
     extern const char*   Ableton_Live_png;
     const int            Ableton_Live_pngSize = 3172;
 
@@ -222,7 +225,7 @@ namespace BinaryData
     const int            custom_cextSize = 1111;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 71;
+    const int namedResourceListSize = 72;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

@@ -19,6 +19,7 @@ Point2DComparator::Point2DComparator(Parameter* sourceParam, Multiplex* multiple
 	addCompareOption("X <", xLessId);
 	addCompareOption("Y >", yGreaterId);
 	addCompareOption("Y <", yLessId);;
+	addCompareOption("Change", Identifier());
 
 	updateReferenceParam();
 }
@@ -30,7 +31,7 @@ Point2DComparator::~Point2DComparator()
 void Point2DComparator::onContainerParameterChanged(Parameter* p)
 {
 	BaseComparator::onContainerParameterChanged(p);
-	
+
 	if (p == compareFunction)
 	{
 		updateReferenceParam();
@@ -50,24 +51,27 @@ void Point2DComparator::updateReferenceParam()
 	}
 
 	Parameter* newRef = nullptr;
-	if (currentFunctionId == equalsId)
+	if (!currentFunctionId.isNull())
 	{
-		if (reference == nullptr || reference->type != Parameter::POINT2D)
+		if (currentFunctionId == equalsId)
 		{
+			if (reference == nullptr || reference->type != Parameter::POINT2D)
+			{
 
-			newRef = new Point2DParameter("Reference", "Comparison Reference to check against source value");
-			newRef->setRange(sourceParam->minimumValue, sourceParam->maximumValue);
-			
+				newRef = new Point2DParameter("Reference", "Comparison Reference to check against source value");
+				newRef->setRange(sourceParam->minimumValue, sourceParam->maximumValue);
+
+			}
 		}
-	}
-	else
-	{
-		if (reference == nullptr || reference->type != Parameter::FLOAT)
+		else
 		{
-			newRef = new FloatParameter("Reference", "Comparison Reference to check against source value", 0);
+			if (reference == nullptr || reference->type != Parameter::FLOAT)
+			{
+				newRef = new FloatParameter("Reference", "Comparison Reference to check against source value", 0);
+			}
 		}
 	}
-	
+
 	if (newRef != nullptr)
 	{
 		if (newRef->type == ot) newRef->loadJSONData(od);
@@ -78,6 +82,8 @@ void Point2DComparator::updateReferenceParam()
 
 bool Point2DComparator::compareInternal(Parameter* sourceParam, int multiplexIndex)
 {
+	if (currentFunctionId.isNull()) return true;
+
 	Point<float> p = ((Point2DParameter*)sourceParam)->getPoint();
 	var value = isMultiplexed() ? refLink->getLinkedValue(multiplexIndex) : reference->getValue();
 
@@ -85,8 +91,8 @@ bool Point2DComparator::compareInternal(Parameter* sourceParam, int multiplexInd
 	else if (currentFunctionId == magnGreaterId)	return p.getDistanceFromOrigin() > (float)value;
 	else if (currentFunctionId == magnLessId)		return p.getDistanceFromOrigin() < (float)value;
 	else if (currentFunctionId == xGreaterId)	return p.x > (float)value;
-	else if (currentFunctionId == xLessId)		return p.x < (float)value; 
+	else if (currentFunctionId == xLessId)		return p.x < (float)value;
 	else if (currentFunctionId == yGreaterId)	return p.y > (float)value;
-	else if (currentFunctionId == yLessId)		return p.y < (float)value; 
+	else if (currentFunctionId == yLessId)		return p.y < (float)value;
 	return false;
 }

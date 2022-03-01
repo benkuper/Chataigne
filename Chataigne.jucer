@@ -5,7 +5,8 @@
               companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="VST_LOGGING=0"
               splashScreenColour="Dark" cppLanguageStandard="17" companyCopyright="Ben Kuper"
-              headerPath="../../Source" projectLineFeed="&#10;" jucerFormatVersion="1">
+              headerPath="../../Source&#10;../../External/wiiuse&#10;../../External/serial/include&#10;../../External/asio&#10;../../External/asiodriver&#10;../../External/kinect/include&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/ois/include&#10;../../External/sdl/include&#10;../../External/hidapi/include&#10;../../External/abletonlink/include&#10;../../External/libusb/include/libusb-1.0"
+              projectLineFeed="&#10;" jucerFormatVersion="1">
   <MAINGROUP id="EDDVhd" name="Chataigne">
     <GROUP id="{E61F6705-4C4B-3F04-F742-20CC91F590E4}" name="Resources">
       <FILE id="r0e3yz" name="keyframe_off.png" compile="0" resource="1"
@@ -20,6 +21,8 @@
               xcodeResource="1"/>
       </GROUP>
       <GROUP id="{400148EF-B215-CD72-18E1-183E2FCE16F3}" name="Modules">
+        <FILE id="HShfnF" name="Ableton Link.png" compile="0" resource="1"
+              file="Resources/Modules/Ableton Link.png"/>
         <FILE id="jnGyRW" name="Ableton Live.png" compile="0" resource="1"
               file="Resources/Modules/Ableton Live.png"/>
         <FILE id="MPJkAm" name="DLight.png" compile="0" resource="1" file="Resources/Modules/DLight.png"/>
@@ -787,6 +790,12 @@
                 file="Source/Module/Community/CommunityModuleManager.h"/>
         </GROUP>
         <GROUP id="{6A9D374B-2C22-DB11-15C8-CA446252E36A}" name="modules">
+          <GROUP id="{E43428AB-D5ED-6F88-C728-17F3C3492F1B}" name="abletonlink">
+            <FILE id="lqWEUj" name="AbletonLinkModule.cpp" compile="0" resource="0"
+                  file="Source/Module/modules/abletonlink/AbletonLinkModule.cpp"/>
+            <FILE id="ECO8rh" name="AbletonLinkModule.h" compile="0" resource="0"
+                  file="Source/Module/modules/abletonlink/AbletonLinkModule.h"/>
+          </GROUP>
           <GROUP id="{1845D9E2-AABC-AF10-DF83-FE7DD092D098}" name="customvariables">
             <GROUP id="{E384A9A3-5D10-939D-8450-418396EF3123}" name="commands">
               <FILE id="flaypv" name="CustomVariablesModuleCommands.cpp" compile="0"
@@ -1445,6 +1454,8 @@
               file="Source/Module/ModuleIncludes.cpp"/>
         <FILE id="SBTX6r" name="ModuleIncludes2.cpp" compile="1" resource="0"
               file="Source/Module/ModuleIncludes2.cpp"/>
+        <FILE id="J6HzNH" name="ModuleIncludes3.cpp" compile="1" resource="0"
+              file="Source/Module/ModuleIncludes3.cpp"/>
         <FILE id="D2X31p" name="ModuleIncludes.h" compile="0" resource="0"
               file="Source/Module/ModuleIncludes.h"/>
         <FILE id="earYnW" name="ModuleManager.cpp" compile="0" resource="0"
@@ -1649,15 +1660,13 @@
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>
-    <VS2022 targetFolder="Builds/VisualStudio2022" extraDefs="USE_KINECT=1"
+    <VS2022 targetFolder="Builds/VisualStudio2022" extraDefs="USE_KINECT=1&#10;LINK_PLATFORM_WINDOWS=1"
             extraLinkerFlags="/HEAP:0x200000,0x10000" externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib&#10;JoyShockLibrary.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib&#10;iphlpapi.lib&#10;hid.lib&#10;hidapi_static.lib"
             smallIcon="nVz6Li" bigIcon="nVz6Li">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/asio&#10;../../External/kinect/include&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/ois/include&#10;../../External/sdl/include&#10;../../External/hidapi/include"
-                       libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib/win&#10;../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/hidapi/lib/win/x64"
+        <CONFIGURATION isDebug="1" name="Debug" libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib/win&#10;../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/hidapi/lib/win/x64"
                        binaryPath="Binaries/Debug"/>
-        <CONFIGURATION isDebug="0" name="Release" binaryPath="Binaries" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/asio&#10;../../External/kinect/include&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/sdl/include&#10;../../External/hidapi/include"
-                       libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib/win&#10;../../External/servus/lib/win/x64/release&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/hidapi/lib/win/x64"
+        <CONFIGURATION isDebug="0" name="Release" binaryPath="Binaries" libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib/win&#10;../../External/servus/lib/win/x64/release&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/hidapi/lib/win/x64"
                        alwaysGenerateDebugSymbols="1" debugInformationFormat="ProgramDatabase"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
@@ -1687,16 +1696,15 @@
                customPList="&lt;plist&gt;&#10;&lt;dict&gt;&#10;&lt;key&gt;NSAppTransportSecurity&lt;/key&gt;&#10;&#9;&lt;dict&gt;&#10;&#9;&#9;&lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;&#10;&#9;&#9;&lt;true/&gt;&#10;&#9;&lt;/dict&gt;&#10;&lt;/dict&gt;&#10;&lt;/plist&gt;"
                externalLibraries="Servus&#10;hidapi&#10;JoyShockLibrary" microphonePermissionNeeded="1"
                hardenedRuntimeOptions="com.apple.security.cs.allow-jit,com.apple.security.device.audio-input"
-               extraDefs="JUCE_SUPPORT_CARBON=0&#10;JUCE_COREGRAPHICS_DRAW_ASYNC=1"
+               extraDefs="JUCE_SUPPORT_CARBON=0&#10;JUCE_COREGRAPHICS_DRAW_ASYNC=1&#10;LINK_PLATFORM_MACOSX=1"
                xcodeValidArchs="x86_64" embeddedFrameworks="../../External/sdl/lib/osx/SDL2.framework"
                frameworkSearchPaths="../../External/sdl/lib/osx">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="Chataigne"
-                       headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/libartnet/include&#10;../../External/joycon/include&#10;../../External/hidapi/include"
                        cppLanguageStandard="c++11" cppLibType="libc++" enablePluginBinaryCopyStep="1"
                        libraryPath="../../External/servus/lib/osx/debug&#10;../../External/libartnet/lib/osx&#10;../../External/joycon/lib/osx"/>
-        <CONFIGURATION name="Release" optimisation="3" targetName="Chataigne" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/libartnet/include&#10;../../External/joycon/include&#10;../../External/hidapi/include"
-                       enablePluginBinaryCopyStep="1" libraryPath="../../External/servus/lib/osx/release&#10;../../External/libartnet/lib/osx&#10;../../External/joycon/lib/osx"/>
+        <CONFIGURATION name="Release" optimisation="3" targetName="Chataigne" enablePluginBinaryCopyStep="1"
+                       libraryPath="../../External/servus/lib/osx/release&#10;../../External/libartnet/lib/osx&#10;../../External/joycon/lib/osx"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_osc"/>
@@ -1722,13 +1730,13 @@
     </XCODE_MAC>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile" externalLibraries="bluetooth&#10;Servus&#10;curl&#10;SDL2&#10;usb-1.0&#10;hidapi-hidraw&#10;JoyShockLibrary"
                 extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;&#10;-Wl,--as-needed"
-                smallIcon="nVz6Li" bigIcon="nVz6Li">
+                smallIcon="nVz6Li" bigIcon="nVz6Li" extraDefs="LINK_PLATFORM_LINUX=1">
       <CONFIGURATIONS>
-        <CONFIGURATION name="Debug" optimisation="3" targetName="Chataigne" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/sdl/include&#10;../../External/hidapi/include&#10;../../External/libusb/include/libusb-1.0&#10;../../External/joycon/include&#10;"
-                       linuxArchitecture="-m64" libraryPath="../../External/servus/lib/linux&#10;../../External/sdl/lib/linux&#10;/usr/lib/x86_64-linux-gnu/&#10;../../External/joycon/lib/linux"
+        <CONFIGURATION name="Debug" optimisation="3" targetName="Chataigne" linuxArchitecture="-m64"
+                       libraryPath="../../External/servus/lib/linux&#10;../../External/sdl/lib/linux&#10;/usr/lib/x86_64-linux-gnu/&#10;../../External/joycon/lib/linux"
                        isDebug="1"/>
-        <CONFIGURATION name="Release" optimisation="3" targetName="Chataigne" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/sdl/include&#10;../../External/hidapi/include&#10;../../External/libusb/include/libusb-1.0&#10;../../External/joycon/include"
-                       linuxArchitecture="-m64" libraryPath="../../External/servus/lib/linux&#10;../../External/sdl/lib/linux&#10;/usr/lib/x86_64-linux-gnu/&#10;../../External/joycon/lib/linux"/>
+        <CONFIGURATION name="Release" optimisation="3" targetName="Chataigne" linuxArchitecture="-m64"
+                       libraryPath="../../External/servus/lib/linux&#10;../../External/sdl/lib/linux&#10;/usr/lib/x86_64-linux-gnu/&#10;../../External/joycon/lib/linux"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_osc" path="JUCE/modules"/>
@@ -1752,15 +1760,13 @@
         <MODULEPATH id="juce_sharedtexture" path="Modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
-    <VS2019 targetFolder="Builds/VisualStudio2019_CI" extraDefs="USE_KINECT=1"
+    <VS2019 targetFolder="Builds/VisualStudio2019_CI" extraDefs="USE_KINECT=1&#10;LINK_PLATFORM_WINDOWS=1"
             extraCompilerFlags="/Zm1000" externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib&#10;JoyShockLibrary.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib&#10;iphlpapi.lib&#10;hid.lib&#10;hidapi_static.lib"
             smallIcon="nVz6Li" bigIcon="nVz6Li" extraLinkerFlags="/HEAP:0x400000,0x10000">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/asio&#10;../../External/kinect/include&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/sdl/include&#10;../../External/hidapi/include"
-                       libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib/win&#10;../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/hidapi/lib/win/x64"
+        <CONFIGURATION isDebug="1" name="Debug" libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib/win&#10;../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/hidapi/lib/win/x64"
                        binaryPath="Binaries/CI" winArchitecture="x64"/>
-        <CONFIGURATION isDebug="0" name="Release" binaryPath="Binaries/CI" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/asio&#10;../../External/kinect/include&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/sdl/include&#10;../../External/hidapi/include"
-                       libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib/win&#10;../../External/servus/lib/win/x64/release&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/hidapi/lib/win/x64"
+        <CONFIGURATION isDebug="0" name="Release" binaryPath="Binaries/CI" libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib/win&#10;../../External/servus/lib/win/x64/release&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/hidapi/lib/win/x64"
                        alwaysGenerateDebugSymbols="1" debugInformationFormat="ProgramDatabase"
                        winArchitecture="x64"/>
       </CONFIGURATIONS>
@@ -1788,13 +1794,11 @@
     </VS2019>
     <VS2019 targetFolder="Builds/VisualStudio2019_Win7CI" smallIcon="nVz6Li"
             bigIcon="nVz6Li" extraCompilerFlags="/Zm1000" externalLibraries="Setupapi.lib&#10;hid.lib&#10;JoyShockLibrary.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib&#10;iphlpapi.lib&#10;hid.lib&#10;hidapi_static.lib"
-            extraDefs="USE_KINECT=0" extraLinkerFlags="/HEAP:0x400000,0x10000">
+            extraDefs="USE_KINECT=0&#10;LINK_PLATFORM_WINDOWS=1" extraLinkerFlags="/HEAP:0x400000,0x10000">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/asio&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/sdl/include&#10;../../External/hidapi/include"
-                       libraryPath="../../External/joycon/lib/win&#10;../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/hidapi/lib/win/x64"
+        <CONFIGURATION isDebug="1" name="Debug" libraryPath="../../External/joycon/lib/win&#10;../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/hidapi/lib/win/x64"
                        binaryPath="Binaries/CI" winArchitecture="x64"/>
         <CONFIGURATION isDebug="0" name="Release" libraryPath="../../External/joycon/lib/win&#10;../../External/servus/lib/win/x64/release&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/hidapi/lib/win/x64"
-                       headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/asio&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/sdl/include&#10;../../External/hidapi/include"
                        binaryPath="Binaries/CI" winArchitecture="x64"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
@@ -1823,15 +1827,13 @@
                smallIcon="nVz6Li" bigIcon="nVz6Li" hardenedRuntimeOptions="com.apple.security.cs.allow-jit"
                customPList="&lt;plist&gt;&#10;&lt;dict&gt;&#10;&lt;key&gt;NSAppTransportSecurity&lt;/key&gt;&#10;&#9;&lt;dict&gt;&#10;&#9;&#9;&lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;&#10;&#9;&#9;&lt;true/&gt;&#10;&#9;&lt;/dict&gt;&#10;&lt;/dict&gt;&#10;&lt;/plist&gt;"
                microphonePermissionNeeded="1" extraFrameworks="IOBluetooth, ForceFeedback, IOKit"
-               documentExtensions="noisette" extraDefs="JUCE_SUPPORT_CARBON=0&#10;JUCE_COREGRAPHICS_DRAW_ASYNC=1"
+               documentExtensions="noisette" extraDefs="JUCE_SUPPORT_CARBON=0&#10;JUCE_COREGRAPHICS_DRAW_ASYNC=1&#10;LINK_PLATFORM_MACOSX=1"
                xcodeValidArchs="x86_64" frameworkSearchPaths="../../External/sdl/lib/osx"
                embeddedFrameworks="../../External/sdl/lib/osx/SDL2.framework">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/joycon/include&#10;../../External/hidapi/include"
-                       libraryPath="../../External/servus/lib/osx/debug&#10;../../External/joycon/lib/osx"
+        <CONFIGURATION isDebug="1" name="Debug" libraryPath="../../External/servus/lib/osx/debug&#10;../../External/joycon/lib/osx"
                        osxCompatibility="10.8 SDK" macOSDeploymentTarget="10.8"/>
-        <CONFIGURATION isDebug="0" name="Release" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/joycon/include&#10;../../External/hidapi/include"
-                       libraryPath="../../External/servus/lib/osx/release&#10;../../External/joycon/lib/osx"
+        <CONFIGURATION isDebug="0" name="Release" libraryPath="../../External/servus/lib/osx/release&#10;../../External/joycon/lib/osx"
                        osxCompatibility="10.8 SDK" macOSDeploymentTarget="10.8"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
@@ -1858,13 +1860,12 @@
     </XCODE_MAC>
     <LINUX_MAKE targetFolder="Builds/Raspberry" smallIcon="nVz6Li" bigIcon="nVz6Li"
                 extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;&#10;-Wl,--as-needed"
-                externalLibraries="bluetooth&#10;Servus&#10;curl&#10;SDL2&#10;usb-1.0&#10;hidapi-hidraw&#10;pthread&#10;JoyShockLibrary">
+                externalLibraries="bluetooth&#10;Servus&#10;curl&#10;SDL2&#10;usb-1.0&#10;hidapi-hidraw&#10;pthread&#10;JoyShockLibrary"
+                extraDefs="LINK_PLATFORM_LINUX=1">
       <CONFIGURATIONS>
-        <CONFIGURATION name="Debug" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/sdl/include&#10;/usr/include/freetype2&#10;../../External/hidapi/include&#10;../../External/libusb/include/libusb-1.0&#10;../../External/joycon/include"
-                       libraryPath="../../External/servus/lib/raspberry&#10;../../External/sdl/lib/raspberry&#10;../../External/joycon/lib/raspberry&#10;/usr/lib/arm-linux-gnueabihf"
+        <CONFIGURATION name="Debug" headerPath="/usr/include/freetype2" libraryPath="../../External/servus/lib/raspberry&#10;../../External/sdl/lib/raspberry&#10;../../External/joycon/lib/raspberry&#10;/usr/lib/arm-linux-gnueabihf"
                        linuxArchitecture="-march=armv7" optimisation="3" isDebug="1"/>
-        <CONFIGURATION name="Release" headerPath="../../External/wiiuse&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/sdl/include&#10;/usr/include/freetype2&#10;../../External/hidapi/include&#10;../../External/libusb/include/libusb-1.0&#10;../../External/joycon/include"
-                       libraryPath="../../External/servus/lib/raspberry&#10;../../External/sdl/lib/raspberry&#10;../../External/joycon/lib/raspberry&#10;/usr/lib/arm-linux-gnueabihf&#10;"
+        <CONFIGURATION name="Release" headerPath="/usr/include/freetype2" libraryPath="../../External/servus/lib/raspberry&#10;../../External/sdl/lib/raspberry&#10;../../External/joycon/lib/raspberry&#10;/usr/lib/arm-linux-gnueabihf&#10;"
                        linuxArchitecture="-march=armv7"/>
       </CONFIGURATIONS>
       <MODULEPATHS>

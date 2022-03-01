@@ -19,6 +19,7 @@ StringComparator::StringComparator(Parameter *sourceParam, Multiplex* multiplex)
 	addCompareOption("Contains", containsId);
 	addCompareOption("Starts with", startsWith);
 	addCompareOption("Ends with", endsWidth);
+	addCompareOption("Change", Identifier());
 }
 
 StringComparator::~StringComparator()
@@ -29,6 +30,8 @@ bool StringComparator::compareInternal(Parameter* sourceParam, int multiplexInde
 {
 	String value = isMultiplexed() ? refLink->getLinkedValue(multiplexIndex).toString() : reference->stringValue();
 
+	if (currentFunctionId.isNull()) return true;
+	
 	if (currentFunctionId == equalsId)				return sourceParam->stringValue() == value;
 	else if (currentFunctionId == differentId)		return sourceParam->stringValue() != value;
 	else if (currentFunctionId == containsId)		return sourceParam->stringValue().contains(value);

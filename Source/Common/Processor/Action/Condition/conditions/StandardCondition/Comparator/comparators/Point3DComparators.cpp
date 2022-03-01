@@ -23,6 +23,7 @@ Point3DComparator::Point3DComparator(Parameter* sourceParam, Multiplex* multiple
 	addCompareOption("Y <", yLessId);
 	addCompareOption("Z >", zGreaterId);
 	addCompareOption("Z <", zLessId);
+	addCompareOption("Change", Identifier());
 	updateReferenceParam();
 }
 
@@ -53,24 +54,29 @@ void Point3DComparator::updateReferenceParam()
 	}
 
 	Parameter* newRef = nullptr;
-	if (currentFunctionId == equalsId)
-	{
-		if (reference == nullptr || reference->type != Parameter::POINT2D)
-		{
-			newRef = new Point3DParameter("Reference", "Comparison Reference to check against source value", sourceParam->value);
-			newRef->setRange(sourceParam->minimumValue, sourceParam->maximumValue);
-			newRef->setValue(sourceParam->value, false, true, true);
-		}
 
-	}
-	else
+	if (!currentFunctionId.isNull())
 	{
-		if (reference == nullptr || reference->type != Parameter::FLOAT)
+
+
+		if (currentFunctionId == equalsId)
 		{
-			newRef = new FloatParameter("Reference", "Comparison Reference to check against source value", 0);
+			if (reference == nullptr || reference->type != Parameter::POINT2D)
+			{
+				newRef = new Point3DParameter("Reference", "Comparison Reference to check against source value", sourceParam->value);
+				newRef->setRange(sourceParam->minimumValue, sourceParam->maximumValue);
+				newRef->setValue(sourceParam->value, false, true, true);
+			}
+
+		}
+		else
+		{
+			if (reference == nullptr || reference->type != Parameter::FLOAT)
+			{
+				newRef = new FloatParameter("Reference", "Comparison Reference to check against source value", 0);
+			}
 		}
 	}
-
 
 	if (newRef != nullptr)
 	{
@@ -83,6 +89,8 @@ void Point3DComparator::updateReferenceParam()
 bool Point3DComparator::compareInternal(Parameter* sourceParam, int multiplexIndex)
 {
 
+	if (currentFunctionId.isNull()) return true;
+	
 	Vector3D<float> p = ((Point3DParameter*)sourceParam)->getVector();
 	var value = isMultiplexed() ? refLink->getLinkedValue(multiplexIndex) : reference->getValue();
 
