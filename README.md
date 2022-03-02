@@ -59,13 +59,29 @@ You can check the tutorials to better understand what and how you can use Chatai
     - Ableton Live (through a M4L patch)
     - Powerpoint
     - Watchout
-    
+ 
+  - Community-powered modules :
+    - Leap Motion
+    - EOS-OSC
+    - OBS
+    - X-Touch
+    - Novation Launchkey
+    - D&B DS100
+    - Blackmagic Atem-OSC
+    - Flowtoys Vision and Creators
+    - Lighttoys FT Props
+    - VPT8
+    - LightShark
+    - Midas M32
+    - MPC1005-6
+   
  - State Machine : Create both simple and complex real-time interactions and automations.
  - Time Machine : Create sequence based value and colors animations, trigger events, play audio...
  - Module Router : Easily route multiple values at once from one software to another, independant of the protocol
  - Custom Variables : Store and manipulate values, use presets and interpolate group of values.
  - Dashboard : Create your own UI and controls, customize colors and labels and control it from a web interface
  - Detective : Analyse the evolution of a parameter in time to fully understand what's going on
+ - Parrot : Easily record and playback datasets of any parameter animation across the whole software to simulate input and behaviours
  - Outliner : See in one place the whole hierarchy of your session
  
 
