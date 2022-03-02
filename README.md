@@ -32,6 +32,7 @@ You can check the tutorials to better understand what and how you can use Chatai
     - HTTP
     - WebSockets
     - PJLink
+    - Ableton Link
     
   - Supports communication and synchronization of the following hardware :
     - KinectV2 (Windows only)
@@ -149,7 +150,7 @@ This list contains all the references to projects and libraries that Chataigne u
 - HIDAPI : https://github.com/signal11/hidapi
 - Microsoft Kinect SDK 2.0 : https://developer.microsoft.com/en-us/windows/kinect
 - Pitch Detection (YIN/MPM) : https://github.com/adamski/pitch_detector
-
+- Ableton Link : https://github.com/Ableton/link
 
 Thanks to Manuel Mitasch, Norbert Rostaing, David Chanel, Tom Magnier, Emerick Herve and many more for their contributions and very helpful presence in the community !
 
