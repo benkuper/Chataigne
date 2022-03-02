@@ -51,6 +51,7 @@ AbletonLinkModule::AbletonLinkModule() :
 AbletonLinkModule::~AbletonLinkModule()
 {
 	stopThread(200);
+	link->enable(false);
 }
 
 void AbletonLinkModule::clearItem()
@@ -93,7 +94,9 @@ void AbletonLinkModule::run()
 
 	link->enableStartStopSync(true);
 	link->enable(true);
-	
+
+	jassert(link->isEnabled());
+
 	while (!threadShouldExit())
 	{
 		const auto time = link->clock().micros();
