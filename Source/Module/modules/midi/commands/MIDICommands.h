@@ -26,7 +26,8 @@ public:
 
 
 class MIDINoteAndCCCommand :
-	public MIDICommand
+	public MIDICommand,
+	public HighResolutionTimer
 {
 public:
 	MIDINoteAndCCCommand(MIDIModule * module, CommandContext context, var params, Multiplex * multiplex = nullptr);
@@ -50,6 +51,9 @@ public:
 	BoolParameter * remap01To127;
 	int maxRemap;
 
+	int fullNoteChan;
+	int fullNotePitch;
+
 	void updateNoteParams();
 
 	void setValue(var value, int multiplexIndex) override;
@@ -59,6 +63,8 @@ public:
 
 
 	void onContainerParameterChanged(Parameter* p) override;
+
+	virtual void hiResTimerCallback() override;
 
 
 	static MIDINoteAndCCCommand * create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex) { return new MIDINoteAndCCCommand((MIDIModule *)module, context, params, multiplex); }

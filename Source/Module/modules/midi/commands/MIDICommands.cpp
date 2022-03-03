@@ -28,7 +28,9 @@ MIDINoteAndCCCommand::MIDINoteAndCCCommand(MIDIModule* module, CommandContext co
 	octave(nullptr),
 	noteMode(nullptr),
 	number(nullptr),
-	maxRemap(127)
+	maxRemap(127),
+	fullNoteChan(0),
+	fullNotePitch(0)
 {
 	channel = addIntParameter("Channel", "Channel for the note message", 1, 1, 16);
 	type = (MessageType)(int)params.getProperty("type", 0);
@@ -165,10 +167,9 @@ void MIDINoteAndCCCommand::triggerInternal(int multiplexIndex)
 
 	case FULL_NOTE:
 		midiModule->sendNoteOn(chanVal, pitch, velVal);
-		Timer::callAfterDelay(onTime->floatValue() * 1000, [this, chanVal, pitch] {
-			if (moduleRef.wasObjectDeleted()) return;
-			midiModule->sendNoteOff(chanVal, pitch);
-			});
+		fullNoteChan = chanVal;
+		fullNotePitch = pitch;
+		startTimer(onTime->floatValue() * 1000);
 		break;
 
 	case CONTROLCHANGE:
@@ -205,6 +206,13 @@ void MIDINoteAndCCCommand::onContainerParameterChanged(Parameter* p)
 		updateNoteParams();
 	}
 }
+
+void MIDINoteAndCCCommand::hiResTimerCallback()
+{
+	stopTimer();
+	if (!moduleRef.wasObjectDeleted()) midiModule->sendNoteOff(fullNoteChan, fullNotePitch);
+}
+
 
 MIDISysExCommand::MIDISysExCommand(MIDIModule* module, CommandContext context, var params, Multiplex* multiplex) :
 	MIDICommand(module, context, params, multiplex),
