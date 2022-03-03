@@ -72,6 +72,7 @@ public:
 	BoolParameter * autoAdd;
 	BoolParameter * autoFeedback;
 	BoolParameter* useHierarchy;
+	IntParameter* octaveShift;
 
 	bool manualAddMode; //to allow manual add override
 

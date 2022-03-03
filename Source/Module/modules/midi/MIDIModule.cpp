@@ -45,6 +45,8 @@ MIDIModule::MIDIModule(const String& name, bool _useGenericControls) :
 	useHierarchy = moduleParams.addBoolParameter("Use Hierarchy", "If checked, incoming messages will be sorted in nested containers instead of 1-level", false);
 	autoFeedback = moduleParams.addBoolParameter("Auto Feedback", "If checked, all changed values will be resent automatically to the outputs", false);
 
+	octaveShift = moduleParams.addIntParameter("Octave Shift", "This allows to adjust to other software's conventions when converting Pitch to Note name. Because MIDI sucks.", 0, -5, 5);
+
 	midiParam = new MIDIDeviceParameter("Devices");
 	moduleParams.addParameter(midiParam);
 
@@ -103,7 +105,13 @@ void MIDIModule::sendNoteOn(int channel, int pitch, int velocity)
 {
 	if (!enabled->boolValue()) return;
 	if (outputDevice == nullptr) return;
-	if (logOutgoingData->boolValue()) NLOG(niceName, "Send Note on, channel : " << channel << ", pitch : " << MIDIManager::getNoteName(pitch) << ", velociy " << velocity);
+	if (pitch < 0)
+	{
+		NLOGWARNING(niceName, "Send note on, pitch " << pitch << " is below 0. Please check your octave shift in the module's parameters");
+		return;
+	}
+
+	if (logOutgoingData->boolValue()) NLOG(niceName, "Send Note on, channel : " << channel << ", note : " << MIDIManager::getNoteName(pitch) << " (pitch : " << String(pitch)+"), velocity : " << velocity);
 	outActivityTrigger->trigger();
 	outputDevice->sendNoteOn(channel, pitch, velocity);
 }
@@ -112,7 +120,14 @@ void MIDIModule::sendNoteOff(int channel, int pitch)
 {
 	if (!enabled->boolValue()) return;
 	if (outputDevice == nullptr) return;
-	if (logOutgoingData->boolValue()) NLOG(niceName, "Send Note off, channel : " << channel << ", pitch");
+
+	if (pitch < 0)
+	{
+		NLOGWARNING(niceName, "Send note off, pitch " << pitch << " is below 0. Please check your octave shift in the module's parameters");
+		return;
+	}
+
+	if (logOutgoingData->boolValue()) NLOG(niceName, "Send Note off, channel : " << channel << ", note : " << MIDIManager::getNoteName(pitch) << " (pitch : " << String(pitch) + ")");
 	outActivityTrigger->trigger();
 	outputDevice->sendNoteOff(channel, pitch);
 }
@@ -277,9 +292,11 @@ void MIDIModule::noteOnReceived(const int& channel, const int& pitch, const int&
 	if (!enabled->boolValue() && !manualAddMode) return;
 	inActivityTrigger->trigger();
 
-	if (logIncomingData->boolValue())  NLOG(niceName, "Note On : " << channel << ", " << MIDIManager::getNoteName(pitch) << ", " << velocity);
+	String noteName = MIDIManager::getNoteName(pitch, true, octaveShift->intValue());
 
-	if (useGenericControls) updateValue(channel, MIDIManager::getNoteName(pitch), velocity, MIDIValueParameter::NOTE_ON, pitch);
+	if (logIncomingData->boolValue())  NLOG(niceName, "Note On : " << channel << ", " << noteName << " ( pitch : " + String(pitch) + " ), " << velocity);
+
+	if (useGenericControls) updateValue(channel, noteName, velocity, MIDIValueParameter::NOTE_ON, pitch);
 
 	if (scriptManager->items.size() > 0) scriptManager->callFunctionOnAllItems(noteOnEventId, Array<var>(channel, pitch, velocity));
 }
@@ -288,9 +305,12 @@ void MIDIModule::noteOffReceived(const int& channel, const int& pitch, const int
 {
 	if (!enabled->boolValue() && !manualAddMode) return;
 	inActivityTrigger->trigger();
-	if (logIncomingData->boolValue()) NLOG(niceName, "Note Off : " << channel << ", " << MIDIManager::getNoteName(pitch) << ", " << velocity);
 
-	if (useGenericControls) updateValue(channel, MIDIManager::getNoteName(pitch), velocity, MIDIValueParameter::NOTE_OFF, pitch);
+	String noteName = MIDIManager::getNoteName(pitch, true, octaveShift->intValue());
+
+	if (logIncomingData->boolValue()) NLOG(niceName, "Note Off : " << channel << ", " << noteName << " ( pitch : " + String(pitch) + " ), " << velocity);
+
+	if (useGenericControls) updateValue(channel, noteName, velocity, MIDIValueParameter::NOTE_OFF, pitch);
 
 	if (scriptManager->items.size() > 0) scriptManager->callFunctionOnAllItems(noteOffEventId, Array<var>(channel, pitch, velocity));
 

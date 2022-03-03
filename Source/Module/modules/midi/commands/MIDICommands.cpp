@@ -1,25 +1,25 @@
 /*
   ==============================================================================
 
-    MIDICommands.cpp
-    Created: 20 Dec 2016 3:45:21pm
-    Author:  Ben
+	MIDICommands.cpp
+	Created: 20 Dec 2016 3:45:21pm
+	Author:  Ben
 
   ==============================================================================
 */
 
-MIDICommand::MIDICommand(MIDIModule * module, CommandContext context, var params, Multiplex * multiplex) :
+MIDICommand::MIDICommand(MIDIModule* module, CommandContext context, var params, Multiplex* multiplex) :
 	BaseCommand(module, context, params, multiplex),
 	midiModule(module)
 {
-	
+
 }
 
 MIDICommand::~MIDICommand()
 {
 }
 
-MIDINoteAndCCCommand::MIDINoteAndCCCommand(MIDIModule * module, CommandContext context, var params, Multiplex * multiplex) :
+MIDINoteAndCCCommand::MIDINoteAndCCCommand(MIDIModule* module, CommandContext context, var params, Multiplex* multiplex) :
 	MIDICommand(module, context, params, multiplex),
 	velocity(nullptr),
 	onTime(nullptr),
@@ -73,10 +73,10 @@ MIDINoteAndCCCommand::MIDINoteAndCCCommand(MIDIModule * module, CommandContext c
 
 	if (context == MAPPING)
 	{
-		remap01To127 = addBoolParameter("Remap to 0-"+String(maxRemap), "If checked, this will automatically remap values from 0-1 to 0-"+String(maxRemap), false);
+		remap01To127 = addBoolParameter("Remap to 0-" + String(maxRemap), "If checked, this will automatically remap values from 0-1 to 0-" + String(maxRemap), false);
 	}
 
-	if(velocity != nullptr) linkParamToMappingIndex(velocity, 0);
+	if (velocity != nullptr) linkParamToMappingIndex(velocity, 0);
 }
 
 MIDINoteAndCCCommand::~MIDINoteAndCCCommand()
@@ -95,8 +95,8 @@ void MIDINoteAndCCCommand::updateNoteParams()
 		{
 			noteEnum->addOption(MidiMessage::getMidiNoteName(i, true, false, 5), i);
 		}
-		octave = new IntParameter("Octave", "Octave for the note", 5, 0, 10);
-		
+		octave = new IntParameter("Octave", "Octave for the note", 0, -10, 10);
+
 		removeControllable(number);
 		number = nullptr;
 
@@ -114,7 +114,7 @@ void MIDINoteAndCCCommand::updateNoteParams()
 		noteEnum = nullptr;
 		octave = nullptr;
 
-		addParameter(number, controllables.indexOf(channel)+1);
+		addParameter(number, controllables.indexOf(channel) + 1);
 	}
 
 
@@ -125,14 +125,16 @@ void MIDINoteAndCCCommand::setValue(var value, int multiplexIndex)
 	float mapFactor = (remap01To127 != nullptr && remap01To127->boolValue()) ? maxRemap : 1;
 	if (value.isArray()) value[0] = (float)value[0] * mapFactor;
 	else value = (float)value * mapFactor;
-	
+
 	MIDICommand::setValue(value, multiplexIndex);
 }
 
 int MIDINoteAndCCCommand::getPitchFromNote(int multiplexIndex)
 {
-	if (octave == nullptr || noteEnum == nullptr) return 0;
-	return (int)noteEnum->getValueData() + ((int)getLinkedValue(octave, multiplexIndex) - (int)octave->minimumValue) * 12;
+	if (octave == nullptr || noteEnum == nullptr || moduleRef.wasObjectDeleted()) return 0;
+
+	int octavePitch = ((int)getLinkedValue(octave, multiplexIndex) + midiModule->octaveShift->intValue() + 2) * 12;
+	return (int)noteEnum->getValueData() + octavePitch;
 }
 
 void MIDINoteAndCCCommand::triggerInternal(int multiplexIndex)
@@ -151,7 +153,7 @@ void MIDINoteAndCCCommand::triggerInternal(int multiplexIndex)
 	int chanVal = channel != nullptr ? (int)getLinkedValue(channel, multiplexIndex) : 0;
 	int velVal = velocity != nullptr ? (int)getLinkedValue(velocity, multiplexIndex) : 0;
 
-	switch(type)
+	switch (type)
 	{
 	case NOTE_ON:
 		midiModule->sendNoteOn(chanVal, pitch, velVal);
@@ -163,7 +165,10 @@ void MIDINoteAndCCCommand::triggerInternal(int multiplexIndex)
 
 	case FULL_NOTE:
 		midiModule->sendNoteOn(chanVal, pitch, velVal);
-		startTimer(onTime->floatValue() * 1000);
+		Timer::callAfterDelay(onTime->floatValue() * 1000, [this, chanVal, pitch] {
+			if (moduleRef.wasObjectDeleted()) return;
+			midiModule->sendNoteOff(chanVal, pitch);
+			});
 		break;
 
 	case CONTROLCHANGE:
@@ -201,15 +206,7 @@ void MIDINoteAndCCCommand::onContainerParameterChanged(Parameter* p)
 	}
 }
 
-void MIDINoteAndCCCommand::hiResTimerCallback()
-{
-	stopTimer();
-	int pitch = (int)noteEnum->getValueData() + (octave->intValue() - (int)octave->minimumValue) * 12;
-	if (midiModule != nullptr) midiModule->sendNoteOff(channel->intValue(), pitch);
-}
-
-
-MIDISysExCommand::MIDISysExCommand(MIDIModule * module, CommandContext context, var params, Multiplex * multiplex) :
+MIDISysExCommand::MIDISysExCommand(MIDIModule* module, CommandContext context, var params, Multiplex* multiplex) :
 	MIDICommand(module, context, params, multiplex),
 	dataContainer("Bytes")
 {
@@ -233,14 +230,14 @@ void MIDISysExCommand::updateBytesParams()
 	while (dataContainer.controllables.size() < numBytes->intValue())
 	{
 		String index = String(dataContainer.controllables.size());
-		IntParameter * p = new IntParameter("#" + index, "Data for the byte #" + index, 0, 0, 255);
+		IntParameter* p = new IntParameter("#" + index, "Data for the byte #" + index, 0, 0, 255);
 		p->hexMode = true;
 		dataContainer.addParameter(p); // after hexMode
 	}
 
 }
 
-void MIDISysExCommand::onContainerParameterChanged(Parameter * p)
+void MIDISysExCommand::onContainerParameterChanged(Parameter* p)
 {
 	MIDICommand::onContainerParameterChanged(p);
 	if (p == numBytes)
@@ -254,11 +251,11 @@ void MIDISysExCommand::triggerInternal(int multiplexIndex)
 	MIDICommand::triggerInternal(multiplexIndex);
 
 	Array<uint8> data;
-	for (auto &c : dataContainer.controllables) data.add(((IntParameter *)c)->intValue());
+	for (auto& c : dataContainer.controllables) data.add(((IntParameter*)c)->intValue());
 	midiModule->sendSysex(data);
 }
 
-MIDIMidiMachineControlCommandAndGoto::MIDIMidiMachineControlCommandAndGoto(MIDIModule * module, CommandContext context, var params, Multiplex * multiplex) :
+MIDIMidiMachineControlCommandAndGoto::MIDIMidiMachineControlCommandAndGoto(MIDIModule* module, CommandContext context, var params, Multiplex* multiplex) :
 	MIDICommand(module, context, params, multiplex)
 {
 	isGoto = (bool)params.getProperty("goto", 0);
@@ -283,7 +280,7 @@ void MIDIMidiMachineControlCommandAndGoto::triggerInternal(int multiplexIndex)
 {
 	MIDICommand::triggerInternal(multiplexIndex);
 
-	if(isGoto)
+	if (isGoto)
 	{
 		double unused;
 		float position = getLinkedValue(time, multiplexIndex);
