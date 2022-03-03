@@ -26,8 +26,9 @@ public:
 
 	void clearItem() override;
 
-	BoolParameter* syncStartStop;
 	IntParameter* quantum;
+	Trigger* play;
+	Trigger* stop;
 
 	IntParameter* numPeers;
 	FloatParameter* bpm;
