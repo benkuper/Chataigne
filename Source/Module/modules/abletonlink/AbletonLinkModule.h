@@ -29,6 +29,7 @@ public:
 	IntParameter* quantum;
 	Trigger* play;
 	Trigger* stop;
+	BoolParameter* beatStartsAt1;
 
 	IntParameter* numPeers;
 	FloatParameter* bpm;

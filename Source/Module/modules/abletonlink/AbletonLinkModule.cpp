@@ -16,6 +16,7 @@ AbletonLinkModule::AbletonLinkModule() :
 	quantum = moduleParams.addIntParameter("Quantum", "The number of beats in a bar", 4);
 	play = moduleParams.addTrigger("Play", "Plays the playback");
 	stop = moduleParams.addTrigger("Stop", "Stops the playback");
+	beatStartsAt1 = moduleParams.addBoolParameter("Beats Start at 1", "If checked, this will make the first beat of a bar 1 instead or 0", true);
 
 	numPeers = valuesCC.addIntParameter("Peers", "Number of connected peers", 0, 0);
 	playState = valuesCC.addEnumParameter("Play State", "Is Live playing right now");
@@ -78,7 +79,7 @@ void AbletonLinkModule::onControllableFeedbackUpdateInternal(ControllableContain
 	if (c == curBeat)
 	{
 		newBeat->trigger();
-		if (curBeat->intValue() == 0)
+		if (curBeat->intValue() == (beatStartsAt1->boolValue() ? 1 : 0))
 		{
 			newBar->trigger();
 			if ((int)playState->getValueData() == 1) playState->setValueWithData(2);
@@ -119,7 +120,7 @@ void AbletonLinkModule::run()
 		const auto beat = session.beatAtTime(time, quantum->intValue());
 		const auto phase = session.phaseAtTime(time, quantum->intValue());
 
-		curBeat->setValue(phase);
+		curBeat->setValue(phase + (beatStartsAt1->boolValue() ? 1 : 0));
 		curBar->setValue(floor(beat / quantum->intValue()));
 		totalBeats->setValue(beat);
 		beatProgression->setValue(phase / quantum->intValue());
