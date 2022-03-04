@@ -168,7 +168,7 @@ This list contains all the references to projects and libraries that Chataigne u
 - Pitch Detection (YIN/MPM) : https://github.com/adamski/pitch_detector
 - Ableton Link : https://github.com/Ableton/link
 
-Thanks to Manuel Mitasch, Norbert Rostaing, David Chanel, Tom Magnier, Emerick Herve and many more for their contributions and very helpful presence in the community !
+Thanks to Manuel Mitasch, Norbert Rostaing, David-Alexandre Chanel, Tom Magnier, Emerick Herve and many more for their contributions and very helpful presence in the community !
 
 ## Perhaps the most important
 
