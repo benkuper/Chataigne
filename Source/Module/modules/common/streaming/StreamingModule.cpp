@@ -507,7 +507,7 @@ void StreamingModule::showMenuAndCreateValue(ControllableContainer* container)
 			if (c == nullptr) return;
 
 			AlertWindow* window = new AlertWindow("Add a value", "Configure the parameters for this value", AlertWindow::AlertIconType::NoIcon);
-			window->addTextEditor("address", "MyValue", "OSC Address");
+			window->addTextEditor("address", "MyValue" + String(container->controllables.size() + 1), "OSC Address");
 			window->addButton("OK", 1, KeyPress(KeyPress::returnKey));
 			window->addButton("Cancel", 0, KeyPress(KeyPress::escapeKey));
 
