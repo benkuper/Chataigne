@@ -419,17 +419,18 @@ void CustomOSCModule::showMenuAndCreateValue(ControllableContainer* container)
 		{
 			if (c == nullptr) return;
 
-			AlertWindow window("Add a value", "Configure the parameters for this value", AlertWindow::AlertIconType::NoIcon);
-			window.addTextEditor("address", "/myValue", "OSC Address");
-			window.addButton("OK", 1, KeyPress(KeyPress::returnKey));
-			window.addButton("Cancel", 0, KeyPress(KeyPress::escapeKey));
+			AlertWindow * window = new AlertWindow("Add a value", "Configure the parameters for this value", AlertWindow::AlertIconType::NoIcon);
+			window->addTextEditor("address", "/myValue" + String(container->controllables.size(
+)+1), "OSC Address");
+			window->addButton("OK", 1, KeyPress(KeyPress::returnKey));
+			window->addButton("Cancel", 0, KeyPress(KeyPress::escapeKey));
 
-			window.showAsync(MessageBoxOptions(), [&window, container, c](int result)
+			window->enterModalState(true, ModalCallbackFunction::create([window, container, c](int result)
 				{
 
 					if (result)
 					{
-						String addString = window.getTextEditorContents("address").replace(" ", "");
+						String addString = window->getTextEditorContents("address").replace(" ", "");
 						if (!addString.startsWith("/")) addString = "/" + addString;
 						c->setNiceName(addString);
 						c->isCustomizableByUser = true;
@@ -441,7 +442,8 @@ void CustomOSCModule::showMenuAndCreateValue(ControllableContainer* container)
 					{
 						delete c;
 					}
-				}
+				}),
+				true
 			);
 		}
 	, true);
