@@ -111,7 +111,7 @@ void MIDIModule::sendNoteOn(int channel, int pitch, int velocity)
 		return;
 	}
 
-	if (logOutgoingData->boolValue()) NLOG(niceName, "Send Note on, channel : " << channel << ", note : " << MIDIManager::getNoteName(pitch) << " (pitch : " << String(pitch)+"), velocity : " << velocity);
+	if (logOutgoingData->boolValue()) NLOG(niceName, "Send Note on, channel : " << channel << ", note : " << MIDIManager::getNoteName(pitch) << " (pitch : " << String(pitch) + "), velocity : " << velocity);
 	outActivityTrigger->trigger();
 	outputDevice->sendNoteOn(channel, pitch, velocity);
 }
@@ -771,23 +771,23 @@ void MIDIModule::showMenuAndCreateValue(ControllableContainer* container)
 
 		String mType = mResult == 1 ? "Note" : mResult == 3 ? "Pitch Wheel" : mResult == 6 ? "Program Change" : "Control Change";
 
-		AlertWindow window("Add a " + mType, "Configure the parameters for this " + mType, AlertWindow::AlertIconType::NoIcon);
-		window.addTextEditor("channel", "1", "Channel (1-16)");
+		AlertWindow* window = new AlertWindow("Add a " + mType, "Configure the parameters for this " + mType, AlertWindow::AlertIconType::NoIcon);
+		window->addTextEditor("channel", "1", "Channel (1-16)");
 
 		if (mResult != 3 && mResult != 4 && mResult != 6)
 		{
 			String mName = mResult == 1 ? "Pitch" : "Number";
-			window.addTextEditor("pitch", "1", mName + "(0-127)");
+			window->addTextEditor("pitch", "1", mName + "(0-127)");
 		}
 
-		window.addButton("OK", 1, KeyPress(KeyPress::returnKey));
-		window.addButton("Cancel", 0, KeyPress(KeyPress::escapeKey));
+		window->addButton("OK", 1, KeyPress(KeyPress::returnKey));
+		window->addButton("Cancel", 0, KeyPress(KeyPress::escapeKey));
 
-		window.showAsync(MessageBoxOptions(), [module, &window, mResult](int result)
+		window->enterModalState(true, ModalCallbackFunction::create([module, window, mResult](int result)
 		{
 			if (result)
 			{
-				int channel = jlimit<int>(1, 16, window.getTextEditorContents("channel").getIntValue());
+				int channel = jlimit<int>(1, 16, window->getTextEditorContents("channel").getIntValue());
 
 				if (mResult == 3)
 				{
@@ -799,7 +799,7 @@ void MIDIModule::showMenuAndCreateValue(ControllableContainer* container)
 				}
 				else if (mResult == 5)
 				{
-					module->afterTouchReceived(channel, window.getTextEditorContents("pitch").getIntValue(), 0);
+					module->afterTouchReceived(channel, window->getTextEditorContents("pitch").getIntValue(), 0);
 				}
 				else if (mResult == 6)
 				{
@@ -807,7 +807,7 @@ void MIDIModule::showMenuAndCreateValue(ControllableContainer* container)
 				}
 				else
 				{
-					int pitch = jlimit<int>(0, 127, window.getTextEditorContents("pitch").getIntValue());
+					int pitch = jlimit<int>(0, 127, window->getTextEditorContents("pitch").getIntValue());
 
 					module->manualAddMode = true;
 					if (mResult == 1) module->noteOnReceived(channel, pitch, 0);
@@ -815,8 +815,9 @@ void MIDIModule::showMenuAndCreateValue(ControllableContainer* container)
 					module->manualAddMode = false;
 				}
 			}
-		}
-		);
+		}),
+			true
+			);
 	}
 	);
 }
