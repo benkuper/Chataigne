@@ -77,7 +77,7 @@ You can check the tutorials to better understand what and how you can use Chatai
    
  - State Machine : Create both simple and complex real-time interactions and automations.
  - Time Machine : Create sequence based value and colors animations, trigger events, play audio...
- - Module Router : Easily route multiple values at once from one software to another, independant of the protocol
+ - Module Router : Easily route multiple values at once from one software to another, independent of the protocol
  - Custom Variables : Store and manipulate values, use presets and interpolate group of values.
  - Dashboard : Create your own UI and controls, customize colors and labels and control it from a web interface
  - Detective : Analyse the evolution of a parameter in time to fully understand what's going on
