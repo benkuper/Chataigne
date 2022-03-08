@@ -1,3 +1,4 @@
+
 /* ********** GENERAL SCRIPTING **********************
 
 		This templates shows what you can do in this is module script
@@ -24,6 +25,8 @@ var myEnumParam = script.addEnumParameter("My Enum Param","Description of my enu
 											"Option 2", 5,												    //First argument of an option is the label (string)
 											"Option 3", "banana"											//Second argument is the value, it can be whatever you want
 											); 	
+
+var myFileParam = script.addFileParameter("My File Param", "Description of my file param");					//Adds a file parameter to browse for a file. Can have a third argument "directoryMode" 										
 */
 
 
@@ -49,9 +52,20 @@ function scriptParameterChanged(param)
 {
 	//You can use the script.log() function to show an information inside the logger panel. To be able to actuallt see it in the logger panel, you will have to turn on "Log" on this script.
 	script.log("Parameter changed : "+param.name); //All parameters have "name" property
-	if(param.is(myTrigger)) script.log("Trigger !"); //You can check if two variables are the reference to the same parameter or object with the method .is()
-	else if(param.is(myEnumParam)) script.log("Key = "+param.getKey()+", data = "+param.get()); //The enum parameter has a special function getKey() to get the key associated to the option. .get() will give you the data associated
-	else script.log("Value is "+param.get()); //All parameters have a get() method that will return their value
+	if(param.is(myTrigger)) 
+	{
+		script.log("Trigger !"); //You can check if two variables are the reference to the same parameter or object with the method .is()
+		//Here we can for example show a "Ok cancel" box. The result will be called in the messageBoxCallback function below
+		//util.showOkCancelBox("myBoxId", "Super warning!", "This is a warning for you", "warning", "Got it","Naaah");
+	}
+	else if(param.is(myEnumParam))
+	{
+		script.log("Key = "+param.getKey()+", data = "+param.get()); //The enum parameter has a special function getKey() to get the key associated to the option. .get() will give you the data associated
+	}
+	else
+	{
+		script.log("Value is "+param.get()); //All parameters have a get() method that will return their value
+	} 
 }
 
 /*
@@ -64,3 +78,77 @@ function update(deltaTime)
 }
 */
 
+/*
+ This function, if you declare it, will be called when after a user has made a choice from a okCancel box or YesNoCancel box that you launched from this script 
+*/
+/*
+function messageBoxCallback(id, result)
+{
+	script.log("Message box callback : "+id+" > "+result); //deltaTime is the time between now and last update() call, util.getTime() will give you a timestamp relative to either the launch time of the software, or the start of the computer.
+}
+*/
+
+
+
+/* ********** MODULE SPECIFIC SCRIPTING **********************
+
+	The "local" variable refers to the object containing the scripts. In this case, the local variable refers to the module.
+	It means that you can access any control inside  this module by accessing it through its address.
+	For instance, if the module has a float value named "Density", you can access it via local.values.density
+	Then you can retrieve its value using local.values.density.get() and change its value using local.values.density.set()
+*/
+
+/*
+ This function will be called each time a parameter of this module has changed, meaning a parameter or trigger inside the "Parameters" panel of this module
+ This function only exists because the script is in a module
+*/
+function moduleParameterChanged(param)
+{
+	if(param.isParameter())
+	{
+		script.log("Module parameter changed : "+param.name+" > "+param.get());
+	}else 
+	{
+		script.log("Module parameter triggered : "+param.name);	
+	}
+}
+
+/*
+ This function will be called each time a value of this module has changed, meaning a parameter or trigger inside the "Values" panel of this module
+ This function only exists because the script is in a module
+*/
+function moduleValueChanged(value)
+{
+	if(value.isParameter())
+	{
+		script.log("Module value changed : "+value.name+" > "+value.get());	
+	}else 
+	{
+		script.log("Module value triggered : "+value.name);	
+	}
+}
+
+/* ********** OSC MODULE SPECIFIC SCRIPTING ********************* */
+/*
+
+OSC Modules have specific methods that can be used to send OSC message from Script.
+If you want to send an OSC Message from this script, you can do the following :
+
+local.send("/myAddress",1,.5f,"cool"); //This will send an OSC Message with address "/myAddress" and 3 arguments <int>, <float> and <string>
+
+*/
+/*
+You can intercept OSC message with the function oscEvent(address, args)
+*/
+
+function oscEvent(address, args)
+{
+	//param "address" is the address of the OSC Message
+	//param "args" is an array containing all the arguments of the OSC Message
+
+	script.log("OSC Message received "+address+", "+args.length+" arguments");
+	for(var i=0; i < args.length; i++)
+	{
+		script.log(" > "+args[i]);
+	}
+}
