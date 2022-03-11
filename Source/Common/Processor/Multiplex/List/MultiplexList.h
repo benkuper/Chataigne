@@ -79,9 +79,10 @@ public:
 
     OwnedArray<EnumParameter::EnumValue> referenceOptions;
 
-    void addOption(const String& key, const String& value);
     void updateOption(int index, const String& key, const String& value);
-    void removeOption(const String& key);
+
+    void cleanReferenceOptions();
+    void updateControllablesSetup() override;
 
     void controllableAdded(Controllable* c) override;
 
