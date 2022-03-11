@@ -26,6 +26,8 @@ StateManager::StateManager() :
 
 	addChildControllableContainer(&commentManager);
 	Engine::mainEngine->addEngineListener(this);
+
+	setHasGridOptions(true);
 }
 
 StateManager::~StateManager()
