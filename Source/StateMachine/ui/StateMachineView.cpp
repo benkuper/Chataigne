@@ -41,6 +41,8 @@ StateMachineView::StateMachineView(const String &contentName, StateManager * _ma
 
 	setViewZoom(manager->viewZoom);
 	//frameView();
+
+	setShowTools(true);
 }
 
 StateMachineView::~StateMachineView()
@@ -115,7 +117,6 @@ void StateMachineView::resized()
 		commentManagerUI->setBounds(getLocalBounds());
 		commentManagerUI->resized();
 	}
-	
 }
 
 void StateMachineView::setViewZoom(float value)
