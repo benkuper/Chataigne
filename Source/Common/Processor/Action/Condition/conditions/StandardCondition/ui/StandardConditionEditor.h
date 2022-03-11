@@ -33,4 +33,6 @@ public:
 	void resizedInternalContent(Rectangle<int> &r) override;
 	void updateUI() override;
 
+	void childBoundsChanged(Component* c) override;
+
 };

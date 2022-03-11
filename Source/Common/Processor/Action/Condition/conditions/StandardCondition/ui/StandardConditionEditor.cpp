@@ -66,9 +66,9 @@ void StandardConditionEditor::resizedInternalContent(Rectangle<int> & r)
 {
 	//ConditionEditor::resizedInternalContent(r);
 
-	Rectangle<int> sr = r.withHeight(16).reduced(2, 0);
+	Rectangle<int> sr = r.withHeight(targetUI->getHeight()).reduced(2, 0);
 	targetUI->setBounds(sr);
-	r.translate(0, 18);
+	r.translate(0, targetUI->getHeight()+2);
 
 	int ch = comparatorUI != nullptr ? comparatorUI->getHeight() : 16;
 	Rectangle<int> cr = r.withHeight(ch);
@@ -112,4 +112,10 @@ void StandardConditionEditor::updateUI()
 	}
 
 	resized();
+}
+
+void StandardConditionEditor::childBoundsChanged(Component* c)
+{
+	ConditionEditor::childBoundsChanged(c);
+	if (c == targetUI.get()) resized();
 }
