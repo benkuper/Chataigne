@@ -70,7 +70,7 @@ void StateMachineView::mouseDown(const MouseEvent & e)
 void StateMachineView::mouseDoubleClick(const MouseEvent & e)
 {
 	BaseManagerShapeShifterViewUI::mouseDoubleClick(e);
-	manager->addItem(getViewPos(e.getMouseDownPosition()).toFloat());
+	if(e.mods.isLeftButtonDown()) manager->addItem(getViewPos(e.getMouseDownPosition()).toFloat());
 }
 
 bool StateMachineView::keyPressed(const KeyPress & e)
