@@ -26,6 +26,8 @@ ChataigneDashboardCommand::ChataigneDashboardCommand(ChataigneGenericModule* _mo
 	{
 		target = addIntParameter("Index", "The index of the dashboard to show", 0, 0);
 	}
+
+	setInClients = addBoolParameter("Set in Clients", "If checked, this will notify any connected client to switch to the same dashboard", false);
 }
 
 ChataigneDashboardCommand::~ChataigneDashboardCommand()
@@ -40,10 +42,7 @@ void ChataigneDashboardCommand::triggerInternal(int multiplexIndex)
 	{
 		if (Dashboard* d = getLinkedTargetContainerAs<Dashboard>((TargetParameter*)target, multiplexIndex))
 		{
-			if (DashboardManagerView* v = ShapeShifterManager::getInstance()->getContentForType<DashboardManagerView>())
-			{
-				v->setCurrentDashboard(d);
-			}
+			DashboardManager::getInstance()->setCurrentDashboard(d, setInClients->boolValue());
 		}
 	}
 	break;
@@ -54,10 +53,8 @@ void ChataigneDashboardCommand::triggerInternal(int multiplexIndex)
 		if (index >= 0 && index < DashboardManager::getInstance()->items.size())
 		{
 			Dashboard* d = DashboardManager::getInstance()->items[index];
-			if (DashboardManagerView* v = ShapeShifterManager::getInstance()->getContentForType<DashboardManagerView>())
-			{
-				v->setCurrentDashboard(d);
-			}
+			DashboardManager::getInstance()->setCurrentDashboard(d, setInClients->boolValue());
+
 		}
 	}
 	break;

@@ -21,6 +21,7 @@ public:
 	Type type;
 
 	Parameter* target;
+	BoolParameter* setInClients;
 
 	void triggerInternal(int multiplexIndex) override;
 
