@@ -32,7 +32,7 @@ public:
     virtual void updateControllablesSetup();
 
     virtual Controllable* createListControllable();
-
+    
     virtual var getJSONData() override;
     virtual void loadJSONData(var data, bool createIfNotThere = false) override;
     virtual void loadJSONDataMultiplexInternal(var data) {}
@@ -40,6 +40,7 @@ public:
     virtual Controllable * getTargetControllableAt(int multiplexIndex) { return list[multiplexIndex]; }
 
     void notifyItemUpdated(int multiplexIndex);
+
 
    
     ListenerList<MultiplexListListener> listListeners;

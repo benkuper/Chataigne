@@ -252,7 +252,16 @@ MappingFilter::ProcessResult  MappingFilter::processInternal(Array<Parameter*> i
 
 void MappingFilter::linkUpdated(ParamLinkContainer* c, ParameterLink* pLink)
 {
+	filterParamsAreDirty = true;
 	filterParamChanged(pLink->parameter);
+	mappingFilterListeners.call(&FilterListener::filterNeedsProcess, this);
+}
+
+void MappingFilter::listItemUpdated(ParamLinkContainer* c, ParameterLink* pLink, int multiplexIndex)
+{
+	filterParamsAreDirty = true;
+	filterParamChanged(pLink->parameter);
+	mappingFilterListeners.call(&FilterListener::filterNeedsProcess, this);
 }
 
 void MappingFilter::setExcludedChannels(Array<int> channels)

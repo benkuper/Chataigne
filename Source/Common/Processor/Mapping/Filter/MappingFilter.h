@@ -55,7 +55,7 @@ public:
 	virtual void filterParamChanged(Parameter*) {};
 
 	void linkUpdated(ParamLinkContainer* c, ParameterLink* pLink) override;
-
+	void listItemUpdated(ParamLinkContainer* c, ParameterLink* link, int multiplexIndex) override;
 	void setExcludedChannels(Array<int> channels);
 	bool isChannelEligible(int index);
 

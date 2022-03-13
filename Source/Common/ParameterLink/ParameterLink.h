@@ -80,7 +80,8 @@ public:
     {
     public:
         virtual ~ParameterLinkListener() {}
-        virtual void linkUpdated(ParameterLink * pLink) {}
+        virtual void linkUpdated(ParameterLink* pLink) {}
+        virtual void listItemUpdated(ParameterLink * pLink, int multiplexIndex) {}
     };
 
     ListenerList<ParameterLinkListener> parameterLinkListeners;
@@ -117,6 +118,7 @@ public:
     virtual var getLinkedValue(Parameter* p, int multiplexIndex);
 
     virtual void linkUpdated(ParameterLink* p) override;
+    virtual void listItemUpdated(ParameterLink* p, int multiplexIndex) override;
 
 
     template<class T>
@@ -153,7 +155,8 @@ public:
     {
     public:
         virtual ~ParamLinkContainerListener() {}
-        virtual void linkUpdated(ParamLinkContainer * container, ParameterLink* pLink) {}
+        virtual void linkUpdated(ParamLinkContainer* container, ParameterLink* pLink) {}
+        virtual void listItemUpdated(ParamLinkContainer * container, ParameterLink* pLink, int multiplexIndex) {}
     };
 
 

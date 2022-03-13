@@ -55,6 +55,7 @@ Controllable* BaseMultiplexList::createListControllable()
 	return ControllableFactory::createControllable(getTypeString());
 }
 
+
 var BaseMultiplexList::getJSONData()
 {
 	var data = BaseItem::getJSONData();

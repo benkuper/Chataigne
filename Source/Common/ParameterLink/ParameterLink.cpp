@@ -1,3 +1,4 @@
+#include "ParameterLink.h"
 /*
   ==============================================================================
 
@@ -252,6 +253,7 @@ void ParameterLink::updateMappingInputValue(var value, int multiplexIndex)
 
 void ParameterLink::listItemUpdated(int multiplexIndex)
 {
+	parameterLinkListeners.call(&ParameterLinkListener::listItemUpdated, this, multiplexIndex);
 	paramLinkNotifier.addMessage(new ParameterLinkEvent(ParameterLinkEvent::LIST_ITEM_UPDATED, this)); //only for preview
 }
 
@@ -500,6 +502,11 @@ var ParamLinkContainer::getLinkedValue(Parameter* p, int multiplexIndex)
 void ParamLinkContainer::linkUpdated(ParameterLink* p)
 {
 	paramLinkContainerListeners.call(&ParamLinkContainerListener::linkUpdated, this, p);
+}
+
+void ParamLinkContainer::listItemUpdated(ParameterLink* p, int multiplexIndex)
+{
+	paramLinkContainerListeners.call(&ParamLinkContainerListener::listItemUpdated, this, p, multiplexIndex);
 }
 
 
