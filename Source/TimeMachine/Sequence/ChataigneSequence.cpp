@@ -174,10 +174,10 @@ void ChataigneSequence::itemAdded(SequenceLayer* layer)
 					}
 				);
 			}
-			else
-			{
-				if (audioLayer->audioModule != nullptr) updateTargetAudioLayer();
-			}
+		}
+		else
+		{
+			if (audioLayer->audioModule != nullptr) updateTargetAudioLayer();
 		}
 	}
 }
