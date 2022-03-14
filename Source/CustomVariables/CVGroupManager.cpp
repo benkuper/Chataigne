@@ -68,7 +68,7 @@ void CVGroupManager::showMenuAndGetVariable(const StringArray& typeFilters, cons
 		menu.addSubMenu(g->niceName, sMenu);
 	}
 
-	menu.showMenuAsync(PopupMenu::Options(), [returnFunc, &controllableRefs](int result)
+	menu.showMenuAsync(PopupMenu::Options(), [returnFunc, controllableRefs](int result)
 		{
 			if (result > 0)
 			{
@@ -101,7 +101,7 @@ void CVGroupManager::showMenuAndGetPreset(std::function<void(ControllableContain
 		menu.addSubMenu(g->niceName, sMenu);
 	}
 
-	menu.showMenuAsync(PopupMenu::Options(), [returnFunc, &presetRefs](int result)
+	menu.showMenuAsync(PopupMenu::Options(), [returnFunc, presetRefs](int result)
 		{
 			if (result > 0)
 			{
