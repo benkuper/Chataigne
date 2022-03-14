@@ -170,73 +170,73 @@ void InputValueListEditor::buttonClicked(Button* b)
 		p.addItem(3, "From Container");
 
 		p.showMenuAsync(PopupMenu::Options(), [this](int result)
-		{
-			switch (result)
 			{
-			case 1:
-			{
-				expressionWindow.reset(new ExpressionComponentWindow(list));
-				DialogWindow::LaunchOptions dw;
-				dw.content.set(expressionWindow.get(), false);
-				dw.dialogTitle = "Fill from expression";
-				dw.escapeKeyTriggersCloseButton = true;
-				dw.dialogBackgroundColour = BG_COLOR;
-				dw.launchAsync();
-			}
-			break;
-
-			case 2:
-			case 3:
-			{
-				ControllableContainer* cc = nullptr;
-				if (result == 2)
+				switch (result)
 				{
-					PopupMenu cp;
-					int offset = 0;
-					Array<Module*> modules = ModuleManager::getInstance()->getModuleList();
-					OwnedArray<ContainerChooserPopupMenu> choosers;
-					for (auto& m : modules)
-					{
-						ContainerChooserPopupMenu* chooser = new ContainerChooserPopupMenu(&m->valuesCC, offset, -1, nullptr, StringArray(), StringArray(), true);
-						choosers.add(chooser);
-						cp.addSubMenu(m->niceName, *chooser);
-						offset += 100000;
-					}
+				case 1:
+				{
+					expressionWindow.reset(new ExpressionComponentWindow(list));
+					DialogWindow::LaunchOptions dw;
+					dw.content.set(expressionWindow.get(), false);
+					dw.dialogTitle = "Fill from expression";
+					dw.escapeKeyTriggersCloseButton = true;
+					dw.dialogBackgroundColour = BG_COLOR;
+					dw.launchAsync();
+				}
+				break;
 
-					cp.showMenuAsync(PopupMenu::Options(), [this, &choosers](int ccResult)
+				case 2:
+				case 3:
+				{
+					ControllableContainer* cc = nullptr;
+					if (result == 2)
+					{
+						PopupMenu cp;
+						int offset = 0;
+						Array<Module*> modules = ModuleManager::getInstance()->getModuleList();
+						OwnedArray<ContainerChooserPopupMenu> choosers;
+						for (auto& m : modules)
 						{
-							int chooserIndex = (int)floor(ccResult / 100000.0f);
-							ControllableContainer* cc = choosers[chooserIndex]->getContainerForResult(ccResult);
-							Array<WeakReference<Controllable>> cList = cc->getAllControllables();
-							for (int i = 0; i < list->listSize && i < cList.size(); i++)
-							{
-								((TargetParameter*)list->list[i])->setValueFromTarget(cList[i]);
-							}
+							ContainerChooserPopupMenu* chooser = new ContainerChooserPopupMenu(&m->valuesCC, offset, -1, nullptr, StringArray(), StringArray(), true);
+							choosers.add(chooser);
+							cp.addSubMenu(m->niceName, *chooser);
+							offset += 100000;
 						}
-					);
 
-					if (cc != nullptr)
+						cp.showMenuAsync(PopupMenu::Options(), [this, &choosers](int ccResult)
+							{
+								int chooserIndex = (int)floor(ccResult / 100000.0f);
+								ControllableContainer* cc = choosers[chooserIndex]->getContainerForResult(ccResult);
+								Array<WeakReference<Controllable>> cList = cc->getAllControllables();
+								for (int i = 0; i < list->listSize && i < cList.size(); i++)
+								{
+									((TargetParameter*)list->list[i])->setValueFromTarget(cList[i]);
+								}
+							}
+						);
+
+						if (cc != nullptr)
+						{
+
+						}
+					}
+					else
 					{
-
+						ContainerChooserPopupMenu chooser(Engine::mainEngine, 0, -1, nullptr, StringArray(), StringArray(), true);
+						chooser.showAndGetContainer([this](ControllableContainer* cc)
+							{
+								Array<WeakReference<Controllable>> cList = cc->getAllControllables();
+								for (int i = 0; i < list->listSize && i < cList.size(); i++)
+								{
+									((TargetParameter*)list->list[i])->setValueFromTarget(cList[i]);
+								}
+							}
+						);
 					}
 				}
-				else
-				{
-					ContainerChooserPopupMenu chooser(Engine::mainEngine, 0, -1, nullptr, StringArray(), StringArray(), true);
-					chooser.showAndGetContainer([this](ControllableContainer* cc)
-						{
-							Array<WeakReference<Controllable>> cList = cc->getAllControllables();
-							for (int i = 0; i < list->listSize && i < cList.size(); i++)
-							{
-								((TargetParameter*)list->list[i])->setValueFromTarget(cList[i]);
-							}
-						}
-					);
+				break;
 				}
 			}
-			break;
-			}
-		}
 		);
 	}
 
@@ -278,4 +278,176 @@ void InputValueListEditor::ExpressionComponentWindow::buttonClicked(Button* b)
 	{
 		list->fillFromExpression(editor.getText());
 	}
+}
+
+NumberListEditor::NumberListEditor(MultiplexList<FloatParameter>* list, bool isRoot) :
+	BaseItemEditor(list, isRoot),
+	floatList(list),
+	intList(nullptr)
+{
+
+}
+
+
+NumberListEditor::NumberListEditor(MultiplexList<IntParameter>* list, bool isRoot) :
+	BaseItemEditor(list, isRoot),
+	floatList(nullptr),
+	intList(list)
+{
+
+}
+
+
+NumberListEditor::~NumberListEditor()
+{
+}
+
+void NumberListEditor::addPopupMenuItems(PopupMenu* p)
+{
+	PopupMenu rangeMenu;
+	rangeMenu.addItem(-4, "Custom");
+	rangeMenu.addSeparator();
+
+	if (floatList != nullptr)
+	{
+		rangeMenu.addItem(-50, "0 : 1");
+		rangeMenu.addItem(-51, "-1 : 1");
+		rangeMenu.addItem(-52, "-90 : 90");
+		rangeMenu.addItem(-53, "0 : 180");
+		rangeMenu.addItem(-54, "-180 : 180");
+		rangeMenu.addItem(-55, "0 : 360");
+
+	}
+	else if (intList != nullptr)
+	{
+		rangeMenu.addItem(-60, "0 : 100");
+		rangeMenu.addItem(-61, "0 : 127");
+		rangeMenu.addItem(-62, "0 : 255");
+		rangeMenu.addItem(-63, "0 : 65535");
+		rangeMenu.addItem(-52, "-90 : 90");
+		rangeMenu.addItem(-53, "0 : 180");
+		rangeMenu.addItem(-54, "-180 : 180");
+		rangeMenu.addItem(-55, "0 : 360");
+	}
+
+	int numCustomRanges = ProjectSettings::getInstance()->customRangesCC.controllables.size();
+	if (numCustomRanges > 0)
+	{
+		rangeMenu.addSeparator();
+		for (int i = 0; i < numCustomRanges; i++)
+		{
+			Point2DParameter* rp = dynamic_cast<Point2DParameter*>(ProjectSettings::getInstance()->customRangesCC.controllables[i]);
+			rangeMenu.addItem(-100 - i, String(rp->x) + " : " + String(rp->y));
+		}
+	}
+
+	p->addSubMenu("Set Range...", rangeMenu);
+	p->addItem(-5, "Clear Range");
+}
+
+void NumberListEditor::handleMenuSelectedID(int id)
+{
+	switch (id)
+	{
+	case -4: showEditRangeWindow(); break;
+	case -5: clearAllRange(); break;
+	case -50: setAllRange(0, 1); break;
+	case -51: setAllRange(-1, 1); break;
+	case -52: setAllRange(-90, 90); break;
+	case -53: setAllRange(0, 180); break;
+	case -54: setAllRange(-180, 180); break;
+	case -55: setAllRange(0, 360); break;
+	case -60: setAllRange(0, 100); break;
+	case -61: setAllRange(0, 127); break;
+	case -62: setAllRange(0, 255); break;
+	case -63: setAllRange(0, 65535); break;
+
+	default:
+	{
+		int numCustomRanges = ProjectSettings::getInstance()->customRangesCC.controllables.size();
+		int cid = -(id + 100);
+		if (cid < numCustomRanges)
+		{
+			Point2DParameter* rp = dynamic_cast<Point2DParameter*>(ProjectSettings::getInstance()->customRangesCC.controllables[cid]);
+			setAllRange(rp->x, rp->y);
+		}
+		break;
+	}
+	}
+}
+
+void NumberListEditor::setAllRange(var min, var max)
+{
+	if (floatList != nullptr)
+	{
+		for (int i = 0; i < floatList->list.size(); i++)
+		{
+			if (FloatParameter* fp = dynamic_cast<FloatParameter*>(floatList->list[i]))
+			{
+				fp->setRange(min, max);
+			}
+		}
+	}
+	else if (intList != nullptr)
+	{
+		for (int i = 0; i < intList->list.size(); i++)
+		{
+			if (IntParameter* ip = dynamic_cast<IntParameter*>(floatList->list[i]))
+			{
+				ip->setRange(min, max);
+			}
+		}
+	}
+}
+
+void NumberListEditor::clearAllRange()
+{
+	if (floatList != nullptr)
+	{
+		for (int i = 0; i < floatList->list.size(); i++)
+		{
+			if (FloatParameter* fp = dynamic_cast<FloatParameter*>(floatList->list[i]))
+			{
+				fp->clearRange();
+			}
+		}
+	}
+	else if (intList != nullptr)
+	{
+		for (int i = 0; i < intList->list.size(); i++)
+		{
+			if (IntParameter* ip = dynamic_cast<IntParameter*>(floatList->list[i]))
+			{
+				ip->clearRange();
+			}
+		}
+	}
+}
+
+void NumberListEditor::showEditRangeWindow()
+{
+	AlertWindow* nameWindow = new AlertWindow("Set the range", "Set a new range for all parameters in the list", AlertWindow::AlertIconType::NoIcon, this);
+
+	Parameter* parameter = floatList != nullptr ? (Parameter*)floatList->list[0] : (Parameter*)intList->list[0];
+	if (parameter == nullptr) return;
+
+	nameWindow->addTextEditor("minVal", parameter->hasRange() ? String((float)parameter->minimumValue) : "", "Minimum");
+	nameWindow->addTextEditor("maxVal", parameter->hasRange() ? String((float)parameter->maximumValue) : "", "Maximum");
+
+	nameWindow->addButton("OK", 1, KeyPress(KeyPress::returnKey));
+	nameWindow->addButton("Cancel", 0, KeyPress(KeyPress::escapeKey));
+
+	nameWindow->enterModalState(true, ModalCallbackFunction::create([this, nameWindow](int result)
+		{
+			if (result)
+			{
+				String minRangeString = nameWindow->getTextEditorContents("minVal");
+				String maxRangeString = nameWindow->getTextEditorContents("maxVal");
+				float newMin = minRangeString.isNotEmpty() ? minRangeString.getFloatValue() : INT32_MIN;
+				float newMax = maxRangeString.isNotEmpty() ? maxRangeString.getFloatValue() : INT32_MAX;
+				setAllRange(newMin, jmax(newMin, newMax));
+			}
+		}),
+		true
+			);
 }

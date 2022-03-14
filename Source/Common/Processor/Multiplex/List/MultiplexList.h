@@ -41,8 +41,6 @@ public:
 
     void notifyItemUpdated(int multiplexIndex);
 
-
-   
     ListenerList<MultiplexListListener> listListeners;
     void addListListener(MultiplexListListener* newListener) { listListeners.add(newListener); }
     void removeListListener(MultiplexListListener* listener) { listListeners.remove(listener); }
@@ -69,6 +67,7 @@ public:
 
     String getTypeString() const override { return T::getTypeStringStatic(); }
 
+    InspectableEditor * getEditorInternal(bool isRoot);
 };
 
 class EnumMultiplexList :
@@ -148,3 +147,11 @@ public:
     String getTypeString() const override { return getTypeStringStatic(); }
     static String getTypeStringStatic() { return "Custom Variable Presets"; }
 };
+
+template<class T>
+InspectableEditor* MultiplexList<T>::getEditorInternal(bool isRoot)
+{
+    if (std::is_same<FloatParameter, T>()) return new NumberListEditor((MultiplexList<FloatParameter> *)this, isRoot);
+    if (std::is_same<IntParameter, T>()) return new NumberListEditor((MultiplexList<IntParameter> *)this, isRoot);
+    return BaseMultiplexList::getEditorInternal(isRoot);
+}

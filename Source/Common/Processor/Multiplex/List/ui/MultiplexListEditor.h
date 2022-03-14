@@ -1,17 +1,37 @@
 /*
   ==============================================================================
 
-    MultiplexListEditor.h
-    Created: 22 Feb 2021 11:23:30am
-    Author:  bkupe
+	MultiplexListEditor.h
+	Created: 22 Feb 2021 11:23:30am
+	Author:  bkupe
 
   ==============================================================================
 */
 
 #pragma once
 
+class NumberListEditor :
+	public BaseItemEditor
+{
+public:
+	NumberListEditor(MultiplexList<FloatParameter>* list, bool isRoot);
+	NumberListEditor(MultiplexList<IntParameter>* list, bool isRoot);
+	~NumberListEditor();
+
+	MultiplexList<FloatParameter>* floatList;
+	MultiplexList<IntParameter>* intList;
+
+	virtual void addPopupMenuItems(PopupMenu*) override;
+	virtual void handleMenuSelectedID(int) override;
+
+	void setAllRange(var min, var max);
+	void clearAllRange();
+
+	void showEditRangeWindow();
+};
+
 class EnumMultiplexListEditor :
-    public BaseItemEditor
+	public BaseItemEditor
 {
 public:
 	EnumMultiplexListEditor(EnumMultiplexList* eList, bool isRoot);
@@ -30,7 +50,7 @@ public:
 		public Label::Listener
 	{
 	public:
-		EnumListOptionManager(EnumMultiplexList * eList);
+		EnumListOptionManager(EnumMultiplexList* eList);
 		~EnumListOptionManager();
 
 		EnumMultiplexList* eList;
@@ -91,7 +111,7 @@ public:
 		public Button::Listener
 	{
 	public:
-		ExpressionComponentWindow(InputValueMultiplexList * list);
+		ExpressionComponentWindow(InputValueMultiplexList* list);
 		~ExpressionComponentWindow() {}
 
 		InputValueMultiplexList* list;
@@ -103,7 +123,7 @@ public:
 
 		void resized() override;
 
-		void buttonClicked(Button * b) override;
+		void buttonClicked(Button* b) override;
 	};
 
 	std::unique_ptr<ExpressionComponentWindow> expressionWindow;
