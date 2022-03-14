@@ -34,33 +34,34 @@ void MathFilter::setupParametersInternal(int multiplexIndex, bool rangeOnly)
 {
 	MappingFilter::setupParametersInternal(multiplexIndex, rangeOnly);
 
-	if (multiplexIndex != 0) return; //only setup depending on first value
-
-	if (!rangeOnly)
+	if (multiplexIndex == 0)
 	{
-		Array<WeakReference<Parameter>> mSourceParams = sourceParams[multiplexIndex];
-		if (mSourceParams.size() == 0 || mSourceParams[0] == nullptr) return;
-
-		if (operationValue == nullptr || operationValue->type != mSourceParams[0]->type)
+		if (!rangeOnly)
 		{
-			if (operationValue != nullptr)
-			{
-				opValueData = operationValue->getJSONData();
-				filterParams.removeControllable(operationValue);
-			}
-			bool loadLastData = (operationValue == nullptr && opValueData.isObject()) || (operationValue != nullptr && mSourceParams[0]->type == operationValue->type);
-			operationValue = (Parameter*)ControllableFactory::createControllable(mSourceParams[0]->getTypeString());
-			operationValue->setNiceName("Value");
-			if (loadLastData) operationValue->loadJSONData(opValueData);
-			//operationValue->isSavable = false;
-			filterParams.addParameter(operationValue);
-		}
+			Array<WeakReference<Parameter>> mSourceParams = sourceParams[multiplexIndex];
+			if (mSourceParams.size() == 0 || mSourceParams[0] == nullptr) return;
 
-		Operation o = operation->getValueDataAsEnum<Operation>();
-		operationValue->setEnabled(o != FLOOR && o != CEIL && o != ROUND && o != ABSOLUTE);
+			if (operationValue == nullptr || operationValue->type != mSourceParams[0]->type)
+			{
+				if (operationValue != nullptr)
+				{
+					opValueData = operationValue->getJSONData();
+					filterParams.removeControllable(operationValue);
+				}
+				bool loadLastData = (operationValue == nullptr && opValueData.isObject()) || (operationValue != nullptr && mSourceParams[0]->type == operationValue->type);
+				operationValue = (Parameter*)ControllableFactory::createControllable(mSourceParams[0]->getTypeString());
+				operationValue->setNiceName("Value");
+				if (loadLastData) operationValue->loadJSONData(opValueData);
+				//operationValue->isSavable = false;
+				filterParams.addParameter(operationValue);
+			}
+
+			Operation o = operation->getValueDataAsEnum<Operation>();
+			operationValue->setEnabled(o != FLOOR && o != CEIL && o != ROUND && o != ABSOLUTE);
+		}
 	}
 	
-	updateFilteredParamsRange();
+	updateFilteredParamsRange(multiplexIndex);
 }
 
 MappingFilter::ProcessResult  MathFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
@@ -83,18 +84,26 @@ MappingFilter::ProcessResult  MathFilter::processSingleParameterInternal(Paramet
 	return CHANGED;
 }
 
-bool MathFilter::updateFilteredParamsRange()
+bool MathFilter::updateFilteredParamsRange(int multiplexIndex)
 {
 	bool hasChanged = false;
 
-	for (int i = 0; i < filteredParameters[0]->size(); ++i)
+	if (multiplexIndex == -1)
+	{
+		for (int i = 0; i < getMultiplexCount(); i++) hasChanged |= updateFilteredParamsRange(i);
+		return hasChanged;
+	}
+
+	if (filteredParameters[multiplexIndex] == nullptr) return false;
+
+	for (int i = 0; i < filteredParameters[multiplexIndex]->size(); ++i)
 	{
 		Parameter* sourceParam = sourceParams[0][i];
 		if (sourceParam == nullptr) continue;
 
 		if (!filterTypeFilters.contains(sourceParam->type)) continue;
 
-		Parameter* p = filteredParameters[0]->getUnchecked(i);
+		Parameter* p = filteredParameters[multiplexIndex]->getUnchecked(i);
 		if (p == nullptr) continue;
 
 		RangeRemapMode rm = rangeRemapMode->getValueDataAsEnum<RangeRemapMode>();
@@ -178,7 +187,8 @@ void MathFilter::filterParamChanged(Parameter * p)
 	RangeRemapMode rm = rangeRemapMode->getValueDataAsEnum<RangeRemapMode>();
 	if (p == operation || (p == operationValue && rm == RangeRemapMode::AJDUST)|| p == rangeRemapMode)
 	{
-		bool hasChanged = updateFilteredParamsRange();
+
+		bool hasChanged = updateFilteredParamsRange(-1);
 		if (hasChanged)
 		{
 			mappingFilterListeners.call(&FilterListener::filteredParamRangeChanged, this);
