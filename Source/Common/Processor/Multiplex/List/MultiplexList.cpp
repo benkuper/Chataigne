@@ -55,6 +55,12 @@ Controllable* BaseMultiplexList::createListControllable()
 	return ControllableFactory::createControllable(getTypeString());
 }
 
+InspectableEditor* BaseMultiplexList::getNumberListEditor(bool isFloat, bool isRoot)
+{
+	if (isFloat) return new NumberListEditor((MultiplexList<FloatParameter> *)this, isRoot);
+	else return new NumberListEditor((MultiplexList<IntParameter> *)this, isRoot);
+}
+
 
 var BaseMultiplexList::getJSONData()
 {
@@ -228,6 +234,11 @@ void EnumMultiplexList::controllableAdded(Controllable* c)
 	MultiplexList::controllableAdded(c);
 }
 
+InspectableEditor* EnumMultiplexList::getEditorInternal(bool isRoot)
+{
+	return new EnumMultiplexListEditor(this, isRoot);
+}
+
 var EnumMultiplexList::getJSONData()
 {
 	var data = MultiplexList::getJSONData();
@@ -251,10 +262,6 @@ void EnumMultiplexList::loadJSONDataMultiplexInternal(var data)
 	updateControllablesSetup();
 }
 
-InspectableEditor* EnumMultiplexList::getEditorInternal(bool isRoot)
-{
-	return new EnumMultiplexListEditor(this, isRoot);
-}
 
 CVPresetMultiplexList::CVPresetMultiplexList(var params) :
 	MultiplexList(getTypeStringStatic(), params)

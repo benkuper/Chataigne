@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    MultiplexList.h
-    Created: 19 Dec 2020 12:00:35pm
-    Author:  bkupe
+	MultiplexList.h
+	Created: 19 Dec 2020 12:00:35pm
+	Author:  bkupe
 
   ==============================================================================
 */
@@ -14,144 +14,147 @@ class CVPreset;
 
 struct IterativeContext
 {
-    int indexInList;
+	int indexInList;
 };
 
 class BaseMultiplexList :
-    public BaseItem
+	public BaseItem
 {
 public:
-    BaseMultiplexList(const String &name = "List", var params = var());
-    virtual ~BaseMultiplexList();
+	BaseMultiplexList(const String& name = "List", var params = var());
+	virtual ~BaseMultiplexList();
 
-    int listSize;
-    Array<Controllable *> list;
+	int listSize;
+	Array<Controllable*> list;
 
-    void setSize(int size);
-    
-    virtual void updateControllablesSetup();
+	void setSize(int size);
 
-    virtual Controllable* createListControllable();
-    
-    virtual var getJSONData() override;
-    virtual void loadJSONData(var data, bool createIfNotThere = false) override;
-    virtual void loadJSONDataMultiplexInternal(var data) {}
+	virtual void updateControllablesSetup();
 
-    virtual Controllable * getTargetControllableAt(int multiplexIndex) { return list[multiplexIndex]; }
+	virtual Controllable* createListControllable();
 
-    void notifyItemUpdated(int multiplexIndex);
+	virtual var getJSONData() override;
+	virtual void loadJSONData(var data, bool createIfNotThere = false) override;
+	virtual void loadJSONDataMultiplexInternal(var data) {}
 
-    ListenerList<MultiplexListListener> listListeners;
-    void addListListener(MultiplexListListener* newListener) { listListeners.add(newListener); }
-    void removeListListener(MultiplexListListener* listener) { listListeners.remove(listener); }
+	virtual Controllable* getTargetControllableAt(int multiplexIndex) { return list[multiplexIndex]; }
+
+	void notifyItemUpdated(int multiplexIndex);
+
+	InspectableEditor* getNumberListEditor(bool isFloat, bool isRoot);
+
+
+	ListenerList<MultiplexListListener> listListeners;
+	void addListListener(MultiplexListListener* newListener) { listListeners.add(newListener); }
+	void removeListListener(MultiplexListListener* listener) { listListeners.remove(listener); }
 };
 
 template<class T>
 class MultiplexList :
-    public BaseMultiplexList
+	public BaseMultiplexList
 {
 public:
-    MultiplexList(var params = var()) : BaseMultiplexList(T::getTypeStringStatic()+" List", params) {}
-    MultiplexList(const String &name, var params = var()) : BaseMultiplexList(name, params) {}
-    ~MultiplexList() {}
+	MultiplexList(var params = var()) : BaseMultiplexList(T::getTypeStringStatic() + " List", params) {}
+	MultiplexList(const String& name, var params = var()) : BaseMultiplexList(name, params) {}
+	~MultiplexList() {}
 
-    void onContainerParameterChangedInternal(Parameter* p) override
-    {
-        int index = list.indexOf(p);
-        if (index != -1) listListeners.call(&MultiplexListListener::listItemUpdated, index);
-        BaseMultiplexList::onContainerParameterChangedInternal(p);
-    }
+	void onContainerParameterChangedInternal(Parameter* p) override
+	{
+		int index = list.indexOf(p);
+		if (index != -1) listListeners.call(&MultiplexListListener::listItemUpdated, index);
+		BaseMultiplexList::onContainerParameterChangedInternal(p);
+	}
 
-    void parameterRangeChanged(Parameter* p) override { notifyItemUpdated(list.indexOf(p)); }
-    void onContainerTriggerTriggered(Trigger* t) override { notifyItemUpdated(list.indexOf(t)); }
+	void parameterRangeChanged(Parameter* p) override { notifyItemUpdated(list.indexOf(p)); }
+	void onContainerTriggerTriggered(Trigger* t) override { notifyItemUpdated(list.indexOf(t)); }
 
-    String getTypeString() const override { return T::getTypeStringStatic(); }
+	String getTypeString() const override { return T::getTypeStringStatic(); }
 
-    InspectableEditor * getEditorInternal(bool isRoot);
+	InspectableEditor* getEditorInternal(bool isRoot);
 };
 
 class EnumMultiplexList :
-    public MultiplexList<EnumParameter>
+	public MultiplexList<EnumParameter>
 {
 public:
-    EnumMultiplexList(var params = var());
-    ~EnumMultiplexList();
+	EnumMultiplexList(var params = var());
+	~EnumMultiplexList();
 
-    OwnedArray<EnumParameter::EnumValue> referenceOptions;
+	OwnedArray<EnumParameter::EnumValue> referenceOptions;
 
-    void updateOption(int index, const String& key, const String& value);
+	void updateOption(int index, const String& key, const String& value);
 
-    void cleanReferenceOptions();
-    void updateControllablesSetup() override;
+	void cleanReferenceOptions();
+	void updateControllablesSetup() override;
 
-    void controllableAdded(Controllable* c) override;
+	void controllableAdded(Controllable* c) override;
 
-    var getJSONData() override;
-    void loadJSONDataMultiplexInternal(var data) override;
+	var getJSONData() override;
+	void loadJSONDataMultiplexInternal(var data) override;
 
-    InspectableEditor* getEditorInternal(bool isRoot) override;
+	InspectableEditor* getEditorInternal(bool isRoot) override;
 
-    String getTypeString() const override { return EnumParameter::getTypeStringStatic(); }
+	String getTypeString() const override { return EnumParameter::getTypeStringStatic(); }
 };
 
 class InputValueMultiplexList :
-    public BaseMultiplexList
+	public BaseMultiplexList
 {
 public:
-    InputValueMultiplexList(var params = var());
-    ~InputValueMultiplexList();
+	InputValueMultiplexList(var params = var());
+	~InputValueMultiplexList();
 
-    Array<WeakReference<Controllable>> inputControllables;
+	Array<WeakReference<Controllable>> inputControllables;
 
-    void updateControllablesSetup() override;
+	void updateControllablesSetup() override;
 
-    void onContainerParameterChangedInternal(Parameter* p) override;
+	void onContainerParameterChangedInternal(Parameter* p) override;
 
-    void onExternalParameterRangeChanged(Parameter* p) override;
-    void onExternalParameterValueChanged(Parameter* p) override;
-    void onExternalTriggerTriggered(Trigger * t) override;
+	void onExternalParameterRangeChanged(Parameter* p) override;
+	void onExternalParameterValueChanged(Parameter* p) override;
+	void onExternalTriggerTriggered(Trigger* t) override;
 
-    void fillFromExpression(const String &s);
+	void fillFromExpression(const String& s);
 
-    virtual Controllable* getTargetControllableAt(int multiplexIndex) override { return inputControllables[multiplexIndex]; }
+	virtual Controllable* getTargetControllableAt(int multiplexIndex) override { return inputControllables[multiplexIndex]; }
 
-    InspectableEditor* getEditorInternal(bool isRoot) override;
+	InspectableEditor* getEditorInternal(bool isRoot) override;
 
-    String getTypeString() const override { return getTypeStringStatic(); }
-    static String getTypeStringStatic() { return "Input Values"; }
+	String getTypeString() const override { return getTypeStringStatic(); }
+	static String getTypeStringStatic() { return "Input Values"; }
 };
 
 class CVPresetMultiplexList :
-    public MultiplexList<EnumParameter>
+	public MultiplexList<EnumParameter>
 {
 public:
-    CVPresetMultiplexList(var params = var());
-    ~CVPresetMultiplexList();
+	CVPresetMultiplexList(var params = var());
+	~CVPresetMultiplexList();
 
-    TargetParameter* cvTarget;
+	TargetParameter* cvTarget;
 
-    virtual Controllable* createListControllable() override;
+	virtual Controllable* createListControllable() override;
 
-    void controllableAdded(Controllable* c) override;
-    void onContainerParameterChangedInternal(Parameter* p) override;
+	void controllableAdded(Controllable* c) override;
+	void onContainerParameterChangedInternal(Parameter* p) override;
 
-    void updateItemList(EnumParameter * p);
+	void updateItemList(EnumParameter* p);
 
 
-    CVPreset* getPresetAt(int multiplexIndex);
-    Parameter* getPresetParameter(CVPreset* preset, const String& paramName);
-    Parameter* getPresetParameterAt(int multiplexIndex, const String& paramName);
+	CVPreset* getPresetAt(int multiplexIndex);
+	Parameter* getPresetParameter(CVPreset* preset, const String& paramName);
+	Parameter* getPresetParameterAt(int multiplexIndex, const String& paramName);
 
-    InspectableEditor* getEditorInternal(bool isRoot) override;
+	InspectableEditor* getEditorInternal(bool isRoot) override;
 
-    String getTypeString() const override { return getTypeStringStatic(); }
-    static String getTypeStringStatic() { return "Custom Variable Presets"; }
+	String getTypeString() const override { return getTypeStringStatic(); }
+	static String getTypeStringStatic() { return "Custom Variable Presets"; }
 };
 
 template<class T>
 InspectableEditor* MultiplexList<T>::getEditorInternal(bool isRoot)
 {
-    if (std::is_same<FloatParameter, T>()) return new NumberListEditor((MultiplexList<FloatParameter> *)this, isRoot);
-    if (std::is_same<IntParameter, T>()) return new NumberListEditor((MultiplexList<IntParameter> *)this, isRoot);
-    return BaseMultiplexList::getEditorInternal(isRoot);
+	if (std::is_same<FloatParameter, T>()) return getNumberListEditor(true, isRoot);
+	if (std::is_same<IntParameter, T>()) return getNumberListEditor(false, isRoot);
+	return BaseMultiplexList::getEditorInternal(isRoot);
 }
