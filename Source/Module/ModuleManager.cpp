@@ -58,6 +58,8 @@ void ModuleManager::showAllValuesAndGetControllable(const StringArray & typeFilt
 
 	const int maxValuesPerModule = 10000;
 
+	getInstance()->modulesMenu.clear();
+
 	for (int i = 0; i < numItems; ++i)
 	{
 		Module * m = mList[i];
