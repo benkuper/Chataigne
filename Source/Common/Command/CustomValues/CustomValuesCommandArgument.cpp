@@ -181,7 +181,7 @@ String CustomValuesCommandArgument::getTypeString() const
 }
 
 
-InspectableEditor * CustomValuesCommandArgument::getEditorInternal(bool isRoot)
+InspectableEditor * CustomValuesCommandArgument::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
 {
 	return new CustomValuesCommandArgumentEditor(this, isRoot);
 }

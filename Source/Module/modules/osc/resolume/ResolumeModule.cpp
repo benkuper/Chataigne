@@ -38,7 +38,7 @@ ResolumeModule::ResolumeModule() :
 }
 
 /*
-InspectableEditor * ResolumeModule::getEditorInternal(bool isRoot)
+InspectableEditor * ResolumeModule::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
 {
 	return new ResolumeModuleEditor(this,isRoot);
 }

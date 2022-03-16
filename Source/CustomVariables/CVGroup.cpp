@@ -408,7 +408,7 @@ DashboardItem* CVGroup::ValuesManager::createDashboardItem()
 	return new CVVariablesDashboardItem(this);
 }
 
-InspectableEditor* CVGroup::ValuesManager::getEditorInternal(bool isRoot)
+InspectableEditor* CVGroup::ValuesManager::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
 {
 	return new CVGroupVariablesEditor(this, isRoot);
 }

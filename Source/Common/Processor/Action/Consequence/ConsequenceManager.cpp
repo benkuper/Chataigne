@@ -126,7 +126,7 @@ void ConsequenceManager::launcherFinished(StaggerLauncher* launcher)
 	staggerLaunchers.removeObject(launcher);
 }
 
-InspectableEditor* ConsequenceManager::getEditorInternal(bool isRoot)
+InspectableEditor* ConsequenceManager::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
 {
 	return new ConsequenceManagerEditor(this, CommandContext::ACTION, isRoot, isMultiplexed());
 }

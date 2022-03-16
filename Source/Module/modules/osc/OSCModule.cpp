@@ -686,7 +686,7 @@ void OSCOutput::onContainerParameterChangedInternal(Parameter * p)
 	}
 }
 
-InspectableEditor * OSCOutput::getEditorInternal(bool isRoot)
+InspectableEditor * OSCOutput::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
 {
 	return new OSCOutputEditor(this, isRoot);
 }

@@ -24,7 +24,7 @@ public:
 	enum InterpolationMode { CHANGE_AT_END, CHANGE_AT_START, INTERPOLATE, NONE};
 	EnumParameter* interpolationMode;
 
-	InspectableEditor* getEditorInternal(bool isRoot) override;
+	InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables = Array<Inspectable*>()) override;
 };
 
 class PresetParameterContainer :
@@ -103,5 +103,5 @@ public:
 
 	void onContainerTriggerTriggered(Trigger* t) override;
 
-	InspectableEditor* getEditorInternal(bool isRoot) override;
+	InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables = Array<Inspectable*>()) override;
 };

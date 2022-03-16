@@ -41,7 +41,7 @@ public:
 
 	void notifyItemUpdated(int multiplexIndex);
 
-	InspectableEditor* getNumberListEditor(bool isFloat, bool isRoot);
+	InspectableEditor* getNumberListEditor(bool isFloat, bool isRoot, Array<Inspectable*> inspectables = Array<Inspectable*>());
 
 
 	ListenerList<MultiplexListListener> listListeners;
@@ -70,7 +70,7 @@ public:
 
 	String getTypeString() const override { return T::getTypeStringStatic(); }
 
-	InspectableEditor* getEditorInternal(bool isRoot);
+	InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables = Array<Inspectable*>()) override;
 };
 
 class EnumMultiplexList :
@@ -92,7 +92,7 @@ public:
 	var getJSONData() override;
 	void loadJSONDataMultiplexInternal(var data) override;
 
-	InspectableEditor* getEditorInternal(bool isRoot) override;
+	InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables = Array<Inspectable*>()) override;
 
 	String getTypeString() const override { return EnumParameter::getTypeStringStatic(); }
 };
@@ -118,7 +118,7 @@ public:
 
 	virtual Controllable* getTargetControllableAt(int multiplexIndex) override { return inputControllables[multiplexIndex]; }
 
-	InspectableEditor* getEditorInternal(bool isRoot) override;
+	InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables = Array<Inspectable*>()) override;
 
 	String getTypeString() const override { return getTypeStringStatic(); }
 	static String getTypeStringStatic() { return "Input Values"; }
@@ -145,14 +145,14 @@ public:
 	Parameter* getPresetParameter(CVPreset* preset, const String& paramName);
 	Parameter* getPresetParameterAt(int multiplexIndex, const String& paramName);
 
-	InspectableEditor* getEditorInternal(bool isRoot) override;
+	InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables = Array<Inspectable*>()) override;
 
 	String getTypeString() const override { return getTypeStringStatic(); }
 	static String getTypeStringStatic() { return "Custom Variable Presets"; }
 };
 
 template<class T>
-InspectableEditor* MultiplexList<T>::getEditorInternal(bool isRoot)
+InspectableEditor* MultiplexList<T>::getEditorInternal(bool isRoot, Array<Inspectable*> inspectable)
 {
 	if (std::is_same<FloatParameter, T>()) return getNumberListEditor(true, isRoot);
 	if (std::is_same<IntParameter, T>()) return getNumberListEditor(false, isRoot);

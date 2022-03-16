@@ -87,7 +87,7 @@ void CVPreset::onContainerTriggerTriggered(Trigger* t)
 	else if (t == updateTrigger) values.syncValues(true);
 }
 
-InspectableEditor * CVPreset::getEditorInternal(bool isRoot)
+InspectableEditor * CVPreset::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
 {
 	return new CVPresetEditor(this, isRoot);
 }
@@ -314,7 +314,7 @@ ParameterPreset::~ParameterPreset()
 {
 }
 
-InspectableEditor* ParameterPreset::getEditorInternal(bool isRoot)
+InspectableEditor* ParameterPreset::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
 {
 	return new ParameterPresetEditor(this, isRoot);
 }

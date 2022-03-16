@@ -156,7 +156,7 @@ void MappingInput::clear()
 	setInput(nullptr);
 }
 
-InspectableEditor* MappingInput::getEditorInternal(bool isRoot)
+InspectableEditor* MappingInput::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
 {
 	return new MappingInputEditor(this, isRoot);
 }

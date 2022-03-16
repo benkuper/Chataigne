@@ -151,7 +151,7 @@ void ResolumeBaseCommand::onExternalParameterValueChanged(Parameter * p)
 	}
 }
 
-InspectableEditor * ResolumeBaseCommand::getEditorInternal(bool isRoot)
+InspectableEditor * ResolumeBaseCommand::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
 {
 	return new ResolumeBaseCommandEditor(this, isRoot);
 }

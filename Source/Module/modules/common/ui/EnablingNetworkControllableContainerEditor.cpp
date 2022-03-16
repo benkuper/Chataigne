@@ -8,7 +8,7 @@
   ==============================================================================
 */
 
-EnablingNetworkControllableContainerEditor::EnablingNetworkControllableContainerEditor(EnablingControllableContainer * cc, bool isRoot) :
+EnablingNetworkControllableContainerEditor::EnablingNetworkControllableContainerEditor(Array<EnablingControllableContainer *> cc, bool isRoot) :
 	EnablingControllableContainerEditor(cc, isRoot)
 {
 	StringArray ips = NetworkHelpers::getLocalIPs();

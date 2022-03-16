@@ -66,7 +66,7 @@ public:
 	void loadJSONDataInternal(var data) override;
 	void afterLoadJSONDataInternal() override;
 
-	InspectableEditor* getEditorInternal(bool isRoot) override;
+	InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables = Array<Inspectable*>()) override;
 
 	String getTypeString() const override { return getTypeStringStatic(multiplexListMode); }
 	static String getTypeStringStatic(bool listMode) { return listMode ? "From Multiplex List" : "From Input Value"; }

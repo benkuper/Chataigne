@@ -252,7 +252,7 @@ BaseCommand* BaseCommand::create(ControllableContainer* module, CommandContext c
 	return commandTemplate->createCommand(m, context, params, multiplex);
 }
 
-InspectableEditor* BaseCommand::getEditorInternal(bool isRoot)
+InspectableEditor* BaseCommand::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
 {
 	return new BaseCommandContainerEditor(this, this, isRoot);
 }

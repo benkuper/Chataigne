@@ -49,6 +49,6 @@ public:
 
 	virtual String getTypeString() const override;
 
-	InspectableEditor* getEditorInternal(bool isRoot) override;
+	InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables = Array<Inspectable*>()) override;
 
 };

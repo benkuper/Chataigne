@@ -15,9 +15,10 @@ class ModuleEditor :
 	public Module::ModuleListener
 {
 public:
-	ModuleEditor(Module * module, bool isRoot);
+	ModuleEditor(Array<Module *> modules, bool isRoot);
 	virtual ~ModuleEditor();
 
+	Array<Module*> modules;
 	Module * module;
 	std::unique_ptr<BoolToggleUI> logIncomingUI;
 	std::unique_ptr<BoolToggleUI> logOutgoingUI;

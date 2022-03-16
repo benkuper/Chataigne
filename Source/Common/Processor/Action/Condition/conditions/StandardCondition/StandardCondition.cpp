@@ -288,7 +288,7 @@ void StandardCondition::afterLoadJSONDataInternal()
 
 
 
-InspectableEditor* StandardCondition::getEditorInternal(bool isRoot)
+InspectableEditor* StandardCondition::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
 {
 	return new StandardConditionEditor(this, isRoot);
 }

@@ -246,7 +246,7 @@ void CustomValuesCommandArgumentManager::loadJSONDataInternal(var data)
 	rebuildFromTemplate(false); //cannot do without clearing, already cleared by parent method
 }
 
-InspectableEditor * CustomValuesCommandArgumentManager::getEditorInternal(bool isRoot)
+InspectableEditor * CustomValuesCommandArgumentManager::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
 {
 	return new CustomValuesCommandArgumentManagerEditor(this, isRoot);
 }

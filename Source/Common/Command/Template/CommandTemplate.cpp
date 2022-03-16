@@ -200,7 +200,7 @@ void CommandTemplate::loadJSONDataInternal(var data)
 	
 }
 
-InspectableEditor * CommandTemplate::getEditorInternal(bool isRoot)
+InspectableEditor * CommandTemplate::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
 {
 	return new CommandTemplateEditor(this, isRoot);
 }

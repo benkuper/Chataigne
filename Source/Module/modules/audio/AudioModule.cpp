@@ -439,7 +439,7 @@ AudioModuleHardwareSettings::AudioModuleHardwareSettings(AudioDeviceManager* am)
 {
 }
 
-InspectableEditor* AudioModuleHardwareSettings::getEditorInternal(bool isRoot)
+InspectableEditor* AudioModuleHardwareSettings::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
 {
 	return new AudioModuleHardwareEditor(this, isRoot);
 }

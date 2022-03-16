@@ -39,7 +39,7 @@ public:
 	virtual void onContainerParameterChanged(Parameter*) override;
 	virtual void onExternalParameterValueChanged(Parameter*) override;
 
-	InspectableEditor* getEditorInternal(bool isRoot) override;
+	InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables = Array<Inspectable*>()) override;
 
 	static BaseCommand* create(ControllableContainer* module, CommandContext context, var params, Multiplex* multiplex) { return new ResolumeBaseCommand((ResolumeModule*)module, context, params, multiplex); }
 

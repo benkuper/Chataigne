@@ -27,5 +27,5 @@ public:
 
 	void onContainerNiceNameChanged() override;
 
-	InspectableEditor* getEditorInternal(bool isRoot) override;
+	InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables = Array<Inspectable*>()) override;
 };
