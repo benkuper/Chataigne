@@ -1,4 +1,3 @@
-#include "ParameterLink.h"
 /*
   ==============================================================================
 
@@ -371,7 +370,7 @@ var ParameterLink::getJSONData()
 	if (isLinkable)
 	{
 		data.getDynamicObject()->setProperty("linkType", linkType);
-		if (linkType == MAPPING_INPUT) data.getDynamicObject()->setProperty("mappingValueIndex", mappingValueIndex);
+		if (linkType == MAPPING_INPUT) data.getDynamicObject()->setProperty("mappingValueIndex", jmax<int>(mappingValueIndex,0));
 		else if ((linkType == MULTIPLEX_LIST || linkType == CV_PRESET_PARAM) && list != nullptr && !listRef.wasObjectDeleted())
 		{
 			data.getDynamicObject()->setProperty("list", list->shortName);
@@ -387,7 +386,7 @@ void ParameterLink::loadJSONData(var data)
 	setLinkType((LinkType)(int)data.getProperty("linkType", NONE));
 
 	if (!data.isObject() || !isLinkable)  return;
-	if (linkType == MAPPING_INPUT) mappingValueIndex = data.getProperty("mappingValueIndex", 0);
+	if (linkType == MAPPING_INPUT) mappingValueIndex = jmax<int>(data.getProperty("mappingValueIndex", 0), 0);
 	else if (isMultiplexed())
 	{
 		if (linkType == MULTIPLEX_LIST)

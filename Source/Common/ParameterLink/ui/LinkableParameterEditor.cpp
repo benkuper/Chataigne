@@ -177,6 +177,8 @@ void LinkableParameterEditor::buttonClicked(Button* b)
 
 		p.showMenuAsync(PopupMenu::Options(), [this](int result)
 			{
+				if (result == 0) return;
+
 				if (result == -1) link->setLinkType(link->NONE);
 				else if (result == -2) link->setLinkType(link->INDEX_ZERO);
 				else if (result == -3) link->setLinkType(link->INDEX);
