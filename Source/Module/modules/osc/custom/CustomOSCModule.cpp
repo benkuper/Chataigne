@@ -472,6 +472,23 @@ void CustomOSCModule::afterLoadJSONDataInternal()
 
 void CustomOSCModule::setupModuleFromJSONData(var data)
 {
+	if (outputManager != nullptr)
+	{
+
+		var outputsData = data["defaults"]["OSC Outputs"];
+		if (outputsData.isObject())
+		{
+			outputManager->clear();
+			NamedValueSet nvSet = outputsData.getDynamicObject()->getProperties();
+			for (auto& nv : nvSet)
+			{
+				OSCOutput* o = outputManager->addItem(nullptr, var(), false);
+				o->setNiceName(nv.name.toString());
+				loadDefaultsParameterValuesForContainer(nv.value, o);
+			}
+		}
+	}
+
 	OSCModule::setupModuleFromJSONData(data);
 	autoAdd->setValue(false);
 	autoAdd->hideInEditor = true;
