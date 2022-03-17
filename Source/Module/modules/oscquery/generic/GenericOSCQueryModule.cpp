@@ -206,6 +206,14 @@ void GenericOSCQueryModule::updateTreeFromData(var data)
 		{
 			if (p->isOverriden) vData.getDynamicObject()->setProperty(p->getControlAddress(&valuesCC), p->value);
 		}
+
+		for (auto& cc : containers)
+		{
+			if (GenericOSCQueryValueContainer* gcc = dynamic_cast<GenericOSCQueryValueContainer*>(cc.get()))
+			{
+				if (gcc->enableListen->boolValue()) gcc->enableListen->setValue(true, false, true); //force relistening
+			}
+		}
 	}
 
 	//valuesCC.clear();
@@ -757,7 +765,7 @@ OSCQueryOutput::~OSCQueryOutput()
 {
 }
 
-InspectableEditor* OSCQueryOutput::getEditorInternal(bool isRoot)
+InspectableEditor* OSCQueryOutput::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
 {
 	return new OSCQueryModuleOutputEditor(this, isRoot);
 }
@@ -809,7 +817,7 @@ GenericOSCQueryValueContainer::~GenericOSCQueryValueContainer()
 {
 }
 
-InspectableEditor* GenericOSCQueryValueContainer::getEditorInternal(bool isRoot)
+InspectableEditor* GenericOSCQueryValueContainer::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
 {
 	return new GenericOSCQueryValueContainerEditor(this, isRoot);
 }

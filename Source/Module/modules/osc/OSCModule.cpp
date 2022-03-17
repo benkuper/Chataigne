@@ -448,7 +448,7 @@ void OSCModule::createThruControllable(ControllableContainer* cc)
 
 void OSCModule::setupFromManualCreation()
 {
-	if (outputManager != nullptr)
+	if (outputManager != nullptr && outputManager->items.isEmpty())
 	{
 		OSCOutput* o = outputManager->addItem(nullptr, var(), false);
 		o->remotePort->setValue(defaultRemotePort);
@@ -686,7 +686,7 @@ void OSCOutput::onContainerParameterChangedInternal(Parameter * p)
 	}
 }
 
-InspectableEditor * OSCOutput::getEditorInternal(bool isRoot)
+InspectableEditor * OSCOutput::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
 {
 	return new OSCOutputEditor(this, isRoot);
 }

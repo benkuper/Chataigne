@@ -8,10 +8,12 @@
   ==============================================================================
 */
 
-ModuleEditor::ModuleEditor(Module * _module, bool isRoot) :
-	BaseItemEditor(_module,isRoot),
-	module(_module)
+ModuleEditor::ModuleEditor(Array<Module *> modules, bool isRoot) :
+	BaseItemEditor(Inspectable::getArrayAs<Module, BaseItem>(modules), isRoot),
+	modules(modules)
 {
+    module = modules[0];
+
     module->addModuleListener(this);
 	logIncomingUI.reset(module->logIncomingData->createToggle());
 	logOutgoingUI.reset(module->logOutgoingData->createToggle());

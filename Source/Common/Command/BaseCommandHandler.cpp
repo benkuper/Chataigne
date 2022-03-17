@@ -254,7 +254,7 @@ var BaseCommandHandler::setCommandFromScript(const var::NativeFunctionArgs& a)
 	return var();
 }
 
-InspectableEditor* BaseCommandHandler::getEditorInternal(bool isRoot)
+InspectableEditor* BaseCommandHandler::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
 {
 	return new BaseCommandHandlerEditor(this, isRoot);
 }

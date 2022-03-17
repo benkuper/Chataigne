@@ -56,7 +56,7 @@ public:
 	OwnedArray<StaggerLauncher> staggerLaunchers;
 
 	void launcherFinished(StaggerLauncher* launcher);
-	InspectableEditor* getEditorInternal(bool isRoot) override;
+	InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables = Array<Inspectable*>()) override;
 
 	class ConsequenceManagerListener
 	{

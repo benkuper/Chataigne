@@ -157,7 +157,7 @@ StringArray ConvertedParameter::getValueNames() const
 	return defaultParam->getValuesNames();
 }
 
-InspectableEditor* ConvertedParameter::getEditorInternal(bool isRoot)
+InspectableEditor* ConvertedParameter::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
 {
 	return new ConvertedParameterEditor(this, isRoot);
 }

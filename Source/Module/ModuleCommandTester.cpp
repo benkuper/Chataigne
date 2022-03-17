@@ -36,7 +36,7 @@ void ModuleCommandTester::onControllableFeedbackUpdateInternal(ControllableConta
 	}
 }
 
-InspectableEditor* ModuleCommandTester::getEditorInternal(bool isRoot)
+InspectableEditor* ModuleCommandTester::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
 {
 	return new ModuleCommandTesterEditor(this, isRoot);
 }

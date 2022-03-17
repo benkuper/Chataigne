@@ -47,5 +47,5 @@ public:
 	virtual void finished(URL::DownloadTask* task, bool success) override;
 
 
-	InspectableEditor* getEditorInternal(bool isRoot) override;
+	InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables = Array<Inspectable*>()) override;
 };

@@ -24,7 +24,7 @@ CommandTemplateParameter::~CommandTemplateParameter()
 {
 }
 
-InspectableEditor * CommandTemplateParameter::getEditorInternal(bool isRoot)
+InspectableEditor * CommandTemplateParameter::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
 {
 	return new CommandTemplateParameterEditor(this, isRoot);
 }

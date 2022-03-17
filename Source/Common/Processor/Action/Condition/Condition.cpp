@@ -68,7 +68,7 @@ void Condition::setForceDisabled(bool value, bool force)
 	forceDisabled = value;
 }
 
-InspectableEditor* Condition::getEditorInternal(bool isRoot)
+InspectableEditor* Condition::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
 {
 	return new ConditionEditor(this, isRoot);
 }

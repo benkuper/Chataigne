@@ -66,7 +66,7 @@ public:
 	virtual var getJSONData() override;
 	virtual void loadJSONDataInternal(var data) override;
 
-	InspectableEditor* getEditorInternal(bool isRoot) override;
+	InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables = Array<Inspectable*>()) override;
 
 	virtual void parameterRangeChanged(Parameter*) override;
 

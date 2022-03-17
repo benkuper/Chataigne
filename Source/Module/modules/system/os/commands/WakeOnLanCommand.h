@@ -29,7 +29,7 @@ public:
 	void onContainerParameterChanged(Parameter* p) override;
 	void triggerInternal(int multiplexIndex) override;
 
-	InspectableEditor* getEditorInternal(bool isRoot) override;
+	InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables = Array<Inspectable*>()) override;
 
 	static WakeOnLanCommand* create(ControllableContainer* module, CommandContext context, var params, Multiplex* multiplex) { return new WakeOnLanCommand((OSModule*)module, context, params, multiplex); }
 

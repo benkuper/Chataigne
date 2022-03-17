@@ -68,7 +68,7 @@ void WakeOnLanCommand::triggerInternal(int multiplexIndex)
 	osModule->outActivityTrigger->trigger();
 }
 
-InspectableEditor * WakeOnLanCommand::getEditorInternal(bool isRoot)
+InspectableEditor * WakeOnLanCommand::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
 {
 	return new WakeOnLanCommandEditor(this, isRoot);
 }

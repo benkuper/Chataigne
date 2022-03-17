@@ -55,7 +55,7 @@ Controllable* BaseMultiplexList::createListControllable()
 	return ControllableFactory::createControllable(getTypeString());
 }
 
-InspectableEditor* BaseMultiplexList::getNumberListEditor(bool isFloat, bool isRoot)
+InspectableEditor* BaseMultiplexList::getNumberListEditor(bool isFloat, bool isRoot, Array<Inspectable*> inspectable)
 {
 	if (isFloat) return new NumberListEditor((MultiplexList<FloatParameter> *)this, isRoot);
 	else return new NumberListEditor((MultiplexList<IntParameter> *)this, isRoot);
@@ -184,7 +184,7 @@ void InputValueMultiplexList::fillFromExpression(const String& s)
 	}
 }
 
-InspectableEditor* InputValueMultiplexList::getEditorInternal(bool isRoot)
+InspectableEditor* InputValueMultiplexList::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
 {
 	return new InputValueListEditor(this, isRoot);
 }
@@ -234,7 +234,7 @@ void EnumMultiplexList::controllableAdded(Controllable* c)
 	MultiplexList::controllableAdded(c);
 }
 
-InspectableEditor* EnumMultiplexList::getEditorInternal(bool isRoot)
+InspectableEditor* EnumMultiplexList::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
 {
 	return new EnumMultiplexListEditor(this, isRoot);
 }
@@ -328,7 +328,7 @@ Parameter* CVPresetMultiplexList::getPresetParameterAt(int multiplexIndex, const
 	return nullptr;
 }
 
-InspectableEditor* CVPresetMultiplexList::getEditorInternal(bool isRoot)
+InspectableEditor* CVPresetMultiplexList::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
 {
 	return new CVPresetMultiplexListEditor(this, isRoot);
 }

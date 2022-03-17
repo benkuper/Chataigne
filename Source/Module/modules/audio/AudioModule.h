@@ -21,7 +21,7 @@ public:
 	~AudioModuleHardwareSettings() {}
 	AudioDeviceManager* am;
 
-	InspectableEditor* getEditorInternal(bool isRoot) override;
+	InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables = Array<Inspectable*>()) override;
 };
 
 class AudioModule :

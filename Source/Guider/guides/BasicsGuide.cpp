@@ -238,8 +238,8 @@ void BasicsGuide::currentInspectableChanged(Inspector *)
 {
 	if (currentStep == ADD_ACTION)
 	{
-		Action * a = dynamic_cast<Action *>(inspector->currentInspectable.get());
-		if (a != nullptr)
+		Inspectable* i = inspector->currentInspectables.size() > 0 ? inspector->currentInspectables[0] : nullptr;
+		if (Action* a = dynamic_cast<Action*>(i))
 		{
 			GenericControllableContainerEditor * cce = dynamic_cast<GenericControllableContainerEditor *>(inspector->currentEditor.get());
 			if (cce != nullptr)

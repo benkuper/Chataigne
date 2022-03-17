@@ -321,7 +321,7 @@ void MappingFilter::loadJSONDataInternal(var data)
 	BaseItem::loadJSONDataInternal(data);
 	filterParams.loadJSONData(data.getProperty("filterParams", var()));
 }
-InspectableEditor* MappingFilter::getEditorInternal(bool isRoot)
+InspectableEditor* MappingFilter::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
 {
 	return new MappingFilterEditor(this, isRoot);
 }

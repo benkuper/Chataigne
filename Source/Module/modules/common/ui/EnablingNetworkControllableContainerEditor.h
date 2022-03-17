@@ -14,12 +14,13 @@ class EnablingNetworkControllableContainerEditor :
 	public EnablingControllableContainerEditor
 {
 public:
-	EnablingNetworkControllableContainerEditor(EnablingControllableContainer * cc, bool isRoot);
+	EnablingNetworkControllableContainerEditor(Array<EnablingControllableContainer *> cc, bool isRoot);
 	~EnablingNetworkControllableContainerEditor();
 
 	void resizedInternalHeader(Rectangle<int> &r) override;
 
 	Label ipLabel;
 
-	static InspectableEditor * create(ControllableContainer * cc, bool isRoot) { return new EnablingNetworkControllableContainerEditor(dynamic_cast<EnablingControllableContainer *>(cc), isRoot); }
+	static InspectableEditor * create(bool isRoot, Array<ControllableContainer *> containers) { 
+		return new EnablingNetworkControllableContainerEditor(Inspectable::getArrayAs<ControllableContainer, EnablingControllableContainer>(containers), isRoot); }
 };
