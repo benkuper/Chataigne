@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+juce_ImplementSingleton(GenericControllableCommand::ValueInterpolator::Manager);
+
 GenericControllableCommand::GenericControllableCommand(Module* _module, CommandContext context, var params, Multiplex* multiplex) :
 	BaseCommand(_module, context, params, multiplex),
 	target(nullptr),
@@ -18,7 +20,7 @@ GenericControllableCommand::GenericControllableCommand(Module* _module, CommandC
 {
 	saveAndLoadRecursiveData = true;
 
-	action = (Action)(int)params.getProperty("action", 0);
+	action = (Action)(int)params.getProperty("action", SET_VALUE);
 	int64 rootPtr = (int64)params.getProperty("root", 0);
 	ControllableContainer* rootCC = rootPtr == 0 ? nullptr : (ControllableContainer*)rootPtr;
 	target = addTargetParameter("Target ", "The target to set the value to or trigger", rootCC);
@@ -52,7 +54,22 @@ GenericControllableCommand::GenericControllableCommand(Module* _module, CommandC
 
 GenericControllableCommand::~GenericControllableCommand()
 {
+	if (ValueInterpolator::Manager::getInstanceWithoutCreating() == nullptr) return;
 
+	if (action == GO_TO_VALUE)
+	{
+		if (!isMultiplexed()) ValueInterpolator::Manager::getInstance()->removeInterpolationWith((Parameter*)target->target.get());
+		else
+		{
+			for (int i = 0; i < getMultiplexCount(); i++)
+			{
+				if (Parameter* p = dynamic_cast<Parameter*>(getTargetControllableAtIndex(i)))
+				{
+					ValueInterpolator::Manager::getInstance()->removeInterpolationWith(p);
+				}
+			}
+		}
+	}
 }
 
 void GenericControllableCommand::updateComponentFromTarget()
@@ -101,12 +118,12 @@ void GenericControllableCommand::updateValueFromTargetAndComponent()
 		getLinkedParam(value);
 		removeControllable(value.get());
 	}
-	
+
 	value = nullptr;
 	if (target == nullptr) return;
 
 	Parameter* cTarget = dynamic_cast<Parameter*>(getControllableFromTarget());
-	
+
 	if (cTarget != nullptr)
 	{
 		var compData = componentOperator->getValueData();
@@ -411,18 +428,7 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 				if (action == SET_VALUE) p->setValue(targetValue);
 				else if (action == GO_TO_VALUE)
 				{
-					if (interpolatorMap.contains(p))
-					{
-						ValueInterpolator* interp = interpolatorMap[p];
-						interpolatorMap.remove(p);
-						interpolators.removeObject(interp);
-					}
-
-					ValueInterpolator* interp = new ValueInterpolator(p, targetValue, getLinkedValue(time, multiplexIndex), automation.get());
-					interpolators.add(interp);
-					interpolatorMap.set(p, interp);
-					MessageManagerLock mmLock;
-					interp->addChangeListener(this);
+					ValueInterpolator::Manager::getInstance()->interpolate(p, targetValue, getLinkedValue(time, multiplexIndex), automation.get());
 				}
 			}
 		}
@@ -498,12 +504,6 @@ bool GenericControllableCommand::checkEnableTargetFilter(Controllable* c)
 	return c->canBeDisabledByUser;
 }
 
-void GenericControllableCommand::changeListenerCallback(ChangeBroadcaster* source)
-{
-	ValueInterpolator* interp = (ValueInterpolator*)source;
-	interpolatorMap.removeValue(interp);
-	interpolators.removeObject(interp);
-}
 
 BaseCommand* GenericControllableCommand::create(ControllableContainer* module, CommandContext context, var params, Multiplex* multiplex)
 {
@@ -565,5 +565,35 @@ void GenericControllableCommand::ValueInterpolator::run()
 
 			parameter->setValue(tVal);
 		}
+	}
+}
+
+void GenericControllableCommand::ValueInterpolator::Manager::interpolate(WeakReference<Parameter> p, var targetValue, float time, Automation* a)
+{
+	removeInterpolationWith(p);
+
+	ValueInterpolator* interp = new ValueInterpolator(p, targetValue, time, a);
+	interpolators.add(interp);
+	interpolatorMap.set(p, interp);
+	MessageManagerLock mmLock;
+	interp->addChangeListener(this);
+}
+
+
+void GenericControllableCommand::ValueInterpolator::Manager::changeListenerCallback(ChangeBroadcaster* source)
+{
+	if (ValueInterpolator* interp = (ValueInterpolator*)source)
+	{
+		removeInterpolationWith(interp->parameter);
+	}
+}
+
+void GenericControllableCommand::ValueInterpolator::Manager::removeInterpolationWith(Parameter* p)
+{
+	if (interpolatorMap.contains(p))
+	{
+		ValueInterpolator* interp = interpolatorMap[p];
+		interpolatorMap.remove(p);
+		interpolators.removeObject(interp);
 	}
 }

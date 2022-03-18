@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    GenericControllableCommand.h
-    Created: 25 May 2021 10:34:11am
-    Author:  bkupe
+	GenericControllableCommand.h
+	Created: 25 May 2021 10:34:11am
+	Author:  bkupe
 
   ==============================================================================
 */
@@ -12,8 +12,7 @@
 
 class GenericControllableCommand :
 	public BaseCommand,
-	public EngineListener,
-	public ChangeListener
+	public EngineListener
 {
 public:
 
@@ -23,10 +22,10 @@ public:
 	virtual ~GenericControllableCommand();
 
 	enum Operator { EQUAL, INVERSE, ADD, SUBTRACT, MULTIPLY, DIVIDE, MAX, MIN, NEXT_ENUM, PREV_ENUM, RANDOM };
-	
+
 	Action action;
 	TargetParameter* target;
-	
+
 	EnumParameter* valueOperator;
 	EnumParameter* componentOperator;
 	BoolParameter* loop;
@@ -50,13 +49,28 @@ public:
 		var targetValue;
 		float time;
 		Automation* automation;
+
 		void run() override;
+
+		class Manager :
+			public ChangeListener
+		{
+		public:
+			juce_DeclareSingleton(Manager, true);
+
+			void interpolate(WeakReference<Parameter> p, var targetValue, float time, Automation* a);
+			void changeListenerCallback(ChangeBroadcaster* source) override;
+
+			void removeInterpolationWith(Parameter* p);
+
+			HashMap<Parameter*, ValueInterpolator*> interpolatorMap;
+			OwnedArray<ValueInterpolator> interpolators;
+		};
+
 	};
 
 	FloatParameter* time;
 	std::unique_ptr<Automation> automation;
-	OwnedArray<ValueInterpolator> interpolators;
-	HashMap<Parameter *, ValueInterpolator*> interpolatorMap;
 
 	virtual void updateComponentFromTarget();
 	virtual void updateValueFromTargetAndComponent();
@@ -77,7 +91,7 @@ public:
 
 	static bool checkEnableTargetFilter(Controllable* c);
 
-	void changeListenerCallback(ChangeBroadcaster * source) override;
+	//void changeListenerCallback(ChangeBroadcaster* source) override;
 
 	static BaseCommand* create(ControllableContainer* module, CommandContext context, var params, Multiplex* multiplex = nullptr);
 };
