@@ -1,3 +1,4 @@
+#include "HTTPModule.h"
 /*
   ==============================================================================
 
@@ -175,7 +176,7 @@ void HTTPModule::createControllablesFromJSONResult(var data, ControllableContain
 	{
 		if (!p.name.isValid()) continue;
 
-		if (p.value.isArray())
+		if (p.value.isArray() && p.value.size() > 0 && p.value[0].isObject())
 		{
 			for (int i = 0; i < p.value.size(); ++i)
 			{
@@ -191,9 +192,7 @@ void HTTPModule::createControllablesFromJSONResult(var data, ControllableContain
 
 				createControllablesFromJSONResult(p.value[i], cc);
 			}
-
-		}
-		else if (p.value.isObject())
+		}else if(p.value.isObject() && !p.value.isArray())
 		{
 			ControllableContainer* cc = container->getControllableContainerByName(p.name.toString(), true);
 			if (cc == nullptr)
@@ -209,41 +208,46 @@ void HTTPModule::createControllablesFromJSONResult(var data, ControllableContain
 		}
 		else
 		{
-			Controllable* newC = container->getControllableByName(p.name.toString(), true);
-			if (newC == nullptr)
-			{
-				if (p.value.isBool()) newC = new BoolParameter(p.name.toString(), p.name.toString(), false);
-				else if (p.value.isDouble()) newC = new FloatParameter(p.name.toString(), p.name.toString(), 0);
-				else if (p.value.isInt()) newC = new IntParameter(p.name.toString(), p.name.toString(), 0);
-				else if (p.value.isString() || p.value.isVoid()) newC = new StringParameter(p.name.toString(), p.name.toString(), "");
-				else if (p.value.isArray())
-				{
-					if (p.value.size() == 1) newC = new FloatParameter(p.name.toString(), p.name.toString(), 0);
-					else if (p.value.size() == 2) newC = new Point2DParameter(p.name.toString(), p.name.toString());
-					else if (p.value.size() == 3) newC = new Point3DParameter(p.name.toString(), p.name.toString());
-					else if (p.value.size() == 3) newC = new ColorParameter(p.name.toString(), p.name.toString());
-				}
+			createControllableFromJSONObject(p.name.toString(), p.value, container);
+		}
+	}
+}
+
+void HTTPModule::createControllableFromJSONObject(const String& cName, var data, ControllableContainer* container)
+{
+	Controllable* newC = container->getControllableByName(cName, true);
+	if (newC == nullptr)
+	{
+		if (data.isBool()) newC = new BoolParameter(cName, cName, false);
+		else if (data.isDouble()) newC = new FloatParameter(cName, cName, 0);
+		else if (data.isInt()) newC = new IntParameter(cName, cName, 0);
+		else if (data.isString() || data.isVoid()) newC = new StringParameter(cName, cName, "");
+		else if (data.isArray())
+		{
+			if (data.size() == 1) newC = new FloatParameter(cName, cName, 0);
+			else if (data.size() == 2) newC = new Point2DParameter(cName, cName);
+			else if (data.size() == 3) newC = new Point3DParameter(cName, cName);
+			else if (data.size() == 3) newC = new ColorParameter(cName, cName);
+		}
 
 
-				if (newC != nullptr)
-				{
-					newC->isCustomizableByUser = true;
-					newC->isRemovableByUser = true;
-					newC->isSavable = true;
-					newC->saveValueOnly = false;
-					container->addControllable(newC);
-				}
-			}
+		if (newC != nullptr)
+		{
+			newC->isCustomizableByUser = true;
+			newC->isRemovableByUser = true;
+			newC->isSavable = true;
+			newC->saveValueOnly = false;
+			container->addControllable(newC);
+		}
+	}
 
-			if (newC != nullptr)
-			{
-				if (newC->type == Controllable::TRIGGER && (int)p.value != 0) ((Trigger*)newC)->trigger();
-				else
-				{
-					Parameter* param = dynamic_cast<Parameter*>(newC);
-					if (param != nullptr) param->setValue(p.value.isVoid() ? "" : p.value, false, true);
-				}
-			}
+	if (newC != nullptr)
+	{
+		if (newC->type == Controllable::TRIGGER && (int)data != 0) ((Trigger*)newC)->trigger();
+		else
+		{
+			Parameter* param = dynamic_cast<Parameter*>(newC);
+			if (param != nullptr) param->setValue(data.isVoid() ? "" : data, false, true);
 		}
 	}
 }

@@ -67,6 +67,7 @@ public:
 	bool requestProgressCallback(int byteDownloaded, int bytesTotal);
 
 	void createControllablesFromJSONResult(var data, ControllableContainer* container);
+	void createControllableFromJSONObject(const String &name, var data, ControllableContainer* container);
 	void createControllablesFromXMLResult(XmlElement * data, ControllableContainer* container);
 	void onControllableFeedbackUpdateInternal(ControllableContainer*, Controllable* c) override;
 
