@@ -259,7 +259,9 @@ var OSModule::getRunningProcessesFromScript(const var::NativeFunctionArgs& args)
 
 void OSModule::appControlCreateControllable(ControllableContainer* c)
 {
-	c->addFileParameter("App File 1", "App File to watch, launch and kill", "");
+	FileParameter * fp = c->addFileParameter("App File 1", "App File to watch, launch and kill", "");
+	fp->saveValueOnly = false;
+
 	updateAppControlValues();
 }
 
