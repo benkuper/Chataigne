@@ -217,12 +217,12 @@ void OSCModule::setupModuleFromJSONData(var data)
 
 	if (receiveCC != nullptr)
 	{
-		receiveCC->enabled->setValue(hasInput);
+		if (!receiveCC->enabled->isOverriden) receiveCC->enabled->setValue(hasInput);
 		receiveCC->hideInEditor = !hasInput;
 	}
 	if (outputManager != nullptr)
 	{
-		outputManager->enabled->setValue(hasOutput);
+		if(!outputManager->enabled->isOverriden) outputManager->enabled->setValue(hasOutput);
 		outputManager->hideInEditor = !hasOutput;
 	}
 }

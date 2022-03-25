@@ -419,9 +419,9 @@ void CustomOSCModule::showMenuAndCreateValue(ControllableContainer* container)
 		{
 			if (c == nullptr) return;
 
-			AlertWindow * window = new AlertWindow("Add a value", "Configure the parameters for this value", AlertWindow::AlertIconType::NoIcon);
+			AlertWindow* window = new AlertWindow("Add a value", "Configure the parameters for this value", AlertWindow::AlertIconType::NoIcon);
 			window->addTextEditor("address", "/myValue" + String(container->controllables.size(
-)+1), "OSC Address");
+			) + 1), "OSC Address");
 			window->addButton("OK", 1, KeyPress(KeyPress::returnKey));
 			window->addButton("Cancel", 0, KeyPress(KeyPress::escapeKey));
 
@@ -444,7 +444,7 @@ void CustomOSCModule::showMenuAndCreateValue(ControllableContainer* container)
 					}
 				}),
 				true
-			);
+					);
 		}
 	, true);
 
@@ -474,7 +474,6 @@ void CustomOSCModule::setupModuleFromJSONData(var data)
 {
 	if (outputManager != nullptr)
 	{
-
 		var outputsData = data["defaults"]["OSC Outputs"];
 		if (outputsData.isObject())
 		{
@@ -482,9 +481,20 @@ void CustomOSCModule::setupModuleFromJSONData(var data)
 			NamedValueSet nvSet = outputsData.getDynamicObject()->getProperties();
 			for (auto& nv : nvSet)
 			{
-				OSCOutput* o = outputManager->addItem(nullptr, var(), false);
-				o->setNiceName(nv.name.toString());
-				loadDefaultsParameterValuesForContainer(nv.value, o);
+				if (nv.value.isObject())
+				{
+					OSCOutput* o = outputManager->addItem(nullptr, var(), false);
+					o->setNiceName(nv.name.toString());
+					loadDefaultsParameterValuesForContainer(nv.value, o);
+				}
+				else
+				{
+
+					if (Parameter* p = static_cast<Parameter*>(outputManager->getControllableByName(nv.name.toString(), true)))
+					{
+						p->setValue(nv.value);
+					}
+				}
 			}
 		}
 	}
@@ -493,4 +503,5 @@ void CustomOSCModule::setupModuleFromJSONData(var data)
 	autoAdd->setValue(false);
 	autoAdd->hideInEditor = true;
 	splitArgs->hideInEditor = true;
+	setupIOConfiguration(hasInput && receiveCC != nullptr && receiveCC->enabled->boolValue(), hasOutput && outputManager != nullptr && outputManager->enabled->boolValue());
 }
