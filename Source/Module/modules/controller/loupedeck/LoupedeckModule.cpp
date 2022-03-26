@@ -243,7 +243,7 @@ void LoupedeckModule::processDataBytesInternal(Array<uint8> bytes)
 
 	buffer.addArray(bytes.getRawDataPointer(), jmin<int>(bytes.size(), expectedLength - buffer.size()));
 
-	if (buffer.size() < expectedLength) return;
+	if (buffer.size() == 0 || buffer.size() < expectedLength) return;
 
 	uint8 id = buffer[0];
 
@@ -255,28 +255,30 @@ void LoupedeckModule::processDataBytesInternal(Array<uint8> bytes)
 
 	case 5: // buttons and knobs
 	{
-		int pot = buffer[3] - 1;
-
-		if (pot >= 6)
+		if (buffer.size() > 5)
 		{
-			buttons[pot - 6]->setValue(buffer[4] == 0);
-		}
-		else if (pot >= 0)
-		{
-			if (buffer[1])
+			int pot = buffer[3] - 1;
+			if (pot >= 6)
 			{
-				float val = buffer[4] == 255 ? -1 : 1;
-				knobRelatives[pot]->setValue(val);
-				knobAbsolutes[pot]->setValue(knobAbsolutes[pot]->floatValue() + val * knobSensitivity->floatValue());
+				buttons[pot - 6]->setValue(buffer[4] == 0);
+			}
+			else if (pot >= 0)
+			{
+				if (buffer[1])
+				{
+					float val = buffer[4] == 255 ? -1 : 1;
+					knobRelatives[pot]->setValue(val);
+					knobAbsolutes[pot]->setValue(knobAbsolutes[pot]->floatValue() + val * knobSensitivity->floatValue());
+				}
+				else
+				{
+					knobButtons[pot]->setValue(buffer[4] == 0);
+				}
 			}
 			else
 			{
-				knobButtons[pot]->setValue(buffer[4] == 0);
+				DBG("Pot : " << pot << " unknown");
 			}
-		}
-		else
-		{
-			DBG("Pot : " << pot << " unknown");
 		}
 	}
 	break;
@@ -290,6 +292,9 @@ void LoupedeckModule::processDataBytesInternal(Array<uint8> bytes)
 
 void LoupedeckModule::processTouchData(Array<uint8_t> data)
 {
+	if (data.size() < 7) return;
+	if (data[1] != 77 && data[1] != 109) return; //CT : data[1] has another data layout for events, filtering out only main screen touch right now
+
 	bool touched = data[1] == 77;
 
 	int touchID = data[3];
@@ -302,13 +307,17 @@ void LoupedeckModule::processTouchData(Array<uint8_t> data)
 	if (!touchPadMap.contains(touchID))
 	{
 		int pad = getPadIDForPos(curPos);
+		if (pad >= padsTouchPositions.size()) return;
+
 		touchPadMap.set(touchID, pad);
 		posOnTouchMap.set(touchID, curPos);
-		if (pad >= 0) padsTouchPositions[pad]->setPoint(0, 0);
+		if(pad >= 0) padsTouchPositions[pad]->setPoint(0, 0);
 	}
+
 
 	int curPad = touchPadMap[touchID];
 	Point<int> posOnTouch = posOnTouchMap[touchID];
+
 
 	if (touched)
 	{
