@@ -176,6 +176,10 @@ I do this on my own free time, feel free to buy me a beer :)
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=KLQ6QBDF3ZL2W&lc=FR&item_name=Chataigne&item_number=chataigne%2dgithub&currency_code=EUR&bn=PP%2dDonationsBF%3adonate%2epng%3aNonHosted)
 
+[![Donate](https://benjamin.kuperberg.fr/chataigne/user/images/paypal_qr.png)](https://www.paypal.com/donate/?hosted_button_id=VCCTD7P9EG27Q)
+
+Donate with Metamask ! Public key : 0x2773f9E037f1cfA97FA218456330dc7BB9464cea
+
 Are you using Chataigne on a regular basis ? Then why not support me accordingly, so I can have a more stable way to work on it !
 
 Choose your angel weapon :
