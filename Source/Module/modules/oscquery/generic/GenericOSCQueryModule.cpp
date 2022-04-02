@@ -27,6 +27,7 @@ GenericOSCQueryModule::GenericOSCQueryModule(const String& name, int defaultRemo
 	syncTrigger = moduleParams.addTrigger("Sync Data", "Sync the data");
 	serverName = moduleParams.addStringParameter("Server Name", "The name of the OSCQuery server, if provided", "");
 	onlySyncSameName = moduleParams.addBoolParameter("Only sync from same name", "If checked, this will not sync if the server name is different", true);
+	useAddressForNaming = moduleParams.addBoolParameter("Use address for naming", "If checked, the parameter's ADDRESS field will be used for naming instead of the DESCRIPTION field", false);
 	listenAllTrigger = moduleParams.addTrigger("Listen to all", "This will automatically enable listen to all containers");
 
 	sendCC.reset(new OSCQueryOutput(this));
@@ -45,7 +46,7 @@ GenericOSCQueryModule::GenericOSCQueryModule(const String& name, int defaultRemo
 	scriptObject.setMethod("send", GenericOSCQueryModule::sendOSCFromScript);
 
 	defManager->add(CommandDefinition::createDef(this, "", "Set Value", &GenericControllableCommand::create, CommandContext::BOTH)->addParam("action", GenericControllableCommand::SET_VALUE)->addParam("root", (int64)&valuesCC));
-	defManager->add(CommandDefinition::createDef(this, "", "Go to Value", &GenericControllableCommand::create, CommandContext::BOTH)->addParam("action", GenericControllableCommand::GO_TO_VALUE)->addParam("root",(int64)&valuesCC));
+	defManager->add(CommandDefinition::createDef(this, "", "Go to Value", &GenericControllableCommand::create, CommandContext::BOTH)->addParam("action", GenericControllableCommand::GO_TO_VALUE)->addParam("root", (int64)&valuesCC));
 	defManager->add(CommandDefinition::createDef(this, "", "Trigger", &GenericControllableCommand::create, CommandContext::BOTH)->addParam("action", GenericControllableCommand::TRIGGER)->addParam("root", (int64)&valuesCC));
 
 	sender.connect("0.0.0.0", 0);
@@ -196,7 +197,7 @@ void GenericOSCQueryModule::updateTreeFromData(var data)
 			}
 		}
 	}
-	
+
 
 	var vData(new DynamicObject());
 	if (keepValuesOnSync->boolValue())
@@ -260,7 +261,7 @@ void GenericOSCQueryModule::updateContainerFromData(ControllableContainer* cc, v
 
 	Array<WeakReference<ControllableContainer>> containersToDelete = cc->getAllContainers();
 	Array<WeakReference<Controllable>> controllablesToDelete = cc->getAllControllables();
-	
+
 	if (GenericOSCQueryValueContainer* vc = dynamic_cast<GenericOSCQueryValueContainer*>(cc)) controllablesToDelete.removeAllInstancesOf(vc->enableListen);
 
 	if (dataObject != nullptr)
@@ -272,7 +273,8 @@ void GenericOSCQueryModule::updateContainerFromData(ControllableContainer* cc, v
 			bool isGroup = /*access == 0 || */nv.value.hasProperty("CONTENTS");
 			if (isGroup) //group
 			{
-				String ccNiceName = nv.value.getProperty("DESCRIPTION", "");
+				String ccNiceName;
+				if (!useAddressForNaming->boolValue()) ccNiceName = nv.value.getProperty("DESCRIPTION", "");
 				if (ccNiceName.isEmpty()) ccNiceName = nv.name.toString();
 
 				GenericOSCQueryValueContainer* childCC = dynamic_cast<GenericOSCQueryValueContainer*>(cc->getControllableContainerByName(ccNiceName, true));
@@ -284,7 +286,11 @@ void GenericOSCQueryModule::updateContainerFromData(ControllableContainer* cc, v
 					childCC->setCustomShortName(nv.name.toString());
 					childCC->editorIsCollapsed = true;
 				}
-				else containersToDelete.removeAllInstancesOf(childCC);
+				else
+				{
+					containersToDelete.removeAllInstancesOf(childCC);
+					childCC->setNiceName(ccNiceName);
+				}
 
 				updateContainerFromData(childCC, nv.value);
 
@@ -300,14 +306,15 @@ void GenericOSCQueryModule::updateContainerFromData(ControllableContainer* cc, v
 	}
 
 	for (auto& cd : controllablesToDelete) cc->removeControllable(cd);
-	for (auto& ccd : containersToDelete) cc->removeChildControllableContainer(ccd);	
+	for (auto& ccd : containersToDelete) cc->removeChildControllableContainer(ccd);
 }
 
 void GenericOSCQueryModule::createOrUpdateControllableFromData(ControllableContainer* parentCC, Controllable* sourceC, StringRef name, var data)
 {
 	Controllable* c = sourceC;
 
-	String cNiceName = data.getProperty("DESCRIPTION", "");
+	String cNiceName;
+	if(!useAddressForNaming->boolValue()) cNiceName = data.getProperty("DESCRIPTION", "");
 	if (cNiceName.isEmpty()) cNiceName = name;
 
 	String type = data.getProperty("TYPE", "").toString();
@@ -447,12 +454,13 @@ void GenericOSCQueryModule::createOrUpdateControllableFromData(ControllableConta
 		else ((BoolParameter*)c)->setValue(value[0]);
 	}
 	break;
-        default:
-            break;
+	default:
+		break;
 	}
 
 	if (c != nullptr)
 	{
+		c->setNiceName(cNiceName);
 		c->setCustomShortName(name);
 		if (access == 1) c->setControllableFeedbackOnly(true);
 		if (addToContainer) parentCC->addControllable(c);
@@ -494,7 +502,7 @@ void GenericOSCQueryModule::onControllableFeedbackUpdateInternal(ControllableCon
 	{
 		remoteHost->setEnabled(!useLocal->boolValue());
 	}
-	else if (c == enabled || c == syncTrigger || c == remoteHost || c == remotePort)
+	else if (c == enabled || c == syncTrigger || c == remoteHost || c == remotePort || c == useAddressForNaming)
 	{
 		syncData();
 	}
@@ -548,11 +556,11 @@ void GenericOSCQueryModule::dataReceived(const MemoryBlock& data)
 {
 	if (!enabled->boolValue()) return;
 
-	
+
 
 	OSCPacketParser parser(data.getData(), (int)data.getSize());
 	OSCMessage m = parser.readMessage();
-	
+
 	if (logIncomingData->boolValue())
 	{
 		String s = m.getAddressPattern().toString();
@@ -573,7 +581,7 @@ void GenericOSCQueryModule::dataReceived(const MemoryBlock& data)
 void GenericOSCQueryModule::messageReceived(const String& message)
 {
 	if (!enabled->boolValue()) return;
-	
+
 	if (logIncomingData->boolValue())
 	{
 		NLOG(niceName, "Websocket message received : " << message);
@@ -675,9 +683,9 @@ void GenericOSCQueryModule::requestHostInfo()
 
 			hasListenExtension = data.getProperty("EXTENSIONS", var()).getProperty("LISTEN", false);
 			setupWSClient();
-			
-			
-			
+
+
+
 			requestStructure();
 		}
 	}

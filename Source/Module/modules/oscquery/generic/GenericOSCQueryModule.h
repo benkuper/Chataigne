@@ -49,6 +49,7 @@ public:
 	BoolParameter* keepValuesOnSync;
 	StringParameter* serverName;
 	BoolParameter* onlySyncSameName;
+	BoolParameter* useAddressForNaming;
 	Trigger* listenAllTrigger;
 
 	std::unique_ptr<OSCQueryOutput> sendCC;
