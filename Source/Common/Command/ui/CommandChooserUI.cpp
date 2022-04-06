@@ -65,10 +65,11 @@ void CommandChooserUI::setLabel(const String& text, bool ghostMode)
 
 void CommandChooserUI::showPopupAndGetDefinition()
 {
-	CommandFactory::showMenuAndGetCommand(context, [this](CommandDefinition* def)
+	CommandFactory::showMenuAndGetCommand(context,[this](CommandDefinition* def)
 		{
 			if (def != nullptr) chooserListeners.call(&Listener::definitionChosen, def);
-		}
+		},
+		lockedModule
 	);
 }
 
