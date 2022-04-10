@@ -261,6 +261,7 @@ void OSModule::appControlCreateControllable(ControllableContainer* c)
 {
 	FileParameter * fp = c->addFileParameter("App File 1", "App File to watch, launch and kill", "");
 	fp->saveValueOnly = false;
+	fp->isRemovableByUser = true;
 
 	updateAppControlValues();
 }
