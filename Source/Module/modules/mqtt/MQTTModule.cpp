@@ -113,6 +113,15 @@ void MQTTClientModule::topicsCreateCallback(ControllableContainer* cc)
 
 void MQTTClientModule::publishMessage(const String& topic, const String& message)
 {
+	if (!enabled->boolValue()) return;
+
+#if JUCE_WINDOWS
+	if (!isConnected->boolValue())
+	{
+		NLOGWARNING(niceName, "Not connected, not sending");
+		return;
+	}
+
 	int mid = 0;
 	int result = publish(&mid, topic.toStdString().c_str(), message.length(), message.toStdString().c_str());
 
@@ -120,16 +129,18 @@ void MQTTClientModule::publishMessage(const String& topic, const String& message
 	{
 		NLOG(niceName, "Sent topic (" << result << ") : " << topic << ", message : " << message);
 	}
-
+#endif
 }
 
 void MQTTClientModule::updateTopicSubs()
 {
+#if JUCE_WINDOWS
 	for (int i = 0; i < topicsCC.controllables.size(); i++)
 	{
 		int mid = topicMap[i];
 		unsubscribe(&mid, ((StringParameter*)topicsCC.controllables[i])->stringValue().toStdString().c_str());
 	}
+#endif
 
 	valuesCC.clear();
 	topicMap.clear();

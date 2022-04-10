@@ -18,8 +18,8 @@ class MQTTClientModule :
 	public Module
 #if JUCE_WINDOWS
 	, public mosqpp::mosquittopp
-	, public Thread
 #endif
+	, public Thread
 {
 public:
 	MQTTClientModule(const String& name = "MQTT Client", bool canHaveInput = true, bool canHaveOutput = true);
