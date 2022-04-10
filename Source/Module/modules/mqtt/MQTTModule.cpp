@@ -1,4 +1,3 @@
-#include "MQTTModule.h"
 /*
   ==============================================================================
 
@@ -40,6 +39,9 @@ MQTTClientModule::MQTTClientModule(const String& name, bool canHaveInput, bool c
 	topicsCC.userCanAddControllables = true;
 	topicsCC.customUserCreateControllableFunc = std::bind(&MQTTClientModule::topicsCreateCallback, this, std::placeholders::_1);
 	moduleParams.addChildControllableContainer(&topicsCC);
+
+	includeValuesInSave = true;
+	valuesCC.saveAndLoadRecursiveData = true;
 
 	setupIOConfiguration(true, true);
 	if (!Engine::mainEngine->isLoadingFile) startThread();
@@ -88,6 +90,11 @@ void MQTTClientModule::onControllableFeedbackUpdateInternal(ControllableContaine
 		}
 	}
 
+	if (c == clearValues)
+	{
+		for (auto& cc : valuesCC.controllableContainers) cc->clear();
+	}
+
 }
 
 void MQTTClientModule::childStructureChanged(ControllableContainer* cc)
@@ -132,15 +139,24 @@ void MQTTClientModule::publishMessage(const String& topic, const String& message
 #endif
 }
 
-void MQTTClientModule::updateTopicSubs()
+void MQTTClientModule::updateTopicSubs(bool keepData)
 {
+	var oldData(new DynamicObject());
+
 #if JUCE_WINDOWS
 	for (int i = 0; i < topicsCC.controllables.size(); i++)
 	{
 		int mid = topicMap[i];
-		unsubscribe(&mid, ((StringParameter*)topicsCC.controllables[i])->stringValue().toStdString().c_str());
+		String t = ((StringParameter*)topicsCC.controllables[i])->stringValue();
+		unsubscribe(&mid, t.toStdString().c_str());
+
+		if (ControllableContainer* cc = valuesCC.getControllableContainerByName(t))
+		{
+			oldData.getDynamicObject()->setProperty(t, cc->getJSONData());
+		}
 	}
 #endif
+
 
 	valuesCC.clear();
 	topicMap.clear();
@@ -157,6 +173,10 @@ void MQTTClientModule::updateTopicSubs()
 		case JSON:
 		{
 			ControllableContainer* cc = new ControllableContainer(s);
+			cc->userCanAddControllables = true;
+			cc->saveAndLoadRecursiveData = true;
+			cc->saveAndLoadName = true;
+			if (oldData.hasProperty(s)) cc->loadJSONData(oldData.getDynamicObject()->getProperty(s));
 			valuesCC.addChildControllableContainer(cc, true);
 		}
 		break;

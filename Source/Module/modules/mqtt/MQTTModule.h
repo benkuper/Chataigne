@@ -33,6 +33,7 @@ public:
 	IntParameter* port;
 	IntParameter* keepAlive;
 	BoolParameter* isConnected;
+	Trigger* clearValues;
 
 	Array<int> topicMap;
 	ControllableContainer topicsCC;
@@ -47,7 +48,7 @@ public:
 
 	void publishMessage(const String& topic, const String& message);
 
-	void updateTopicSubs();
+	void updateTopicSubs(bool keepData = true);
 
 	void afterLoadJSONDataInternal() override;
 
