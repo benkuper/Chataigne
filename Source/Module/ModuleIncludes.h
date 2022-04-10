@@ -108,6 +108,7 @@
 #include "modules/abletonlink/AbletonLinkModule.h"
 
 
+
 #include "modules/generic/ChataigneGenericModule.h"
 #include "modules/generic/commands/ChataigneLogCommand.h"
 #include "modules/generic/commands/GenericAppCommand.h"
@@ -190,7 +191,8 @@
 #include "modules/tcp/tcpserver/TCPServerConnectionManager.h"
 #include "modules/tcp/tcpserver/TCPServerModule.h"
 
-
+#include "modules/mqtt/MQTTModule.h"
+#include "modules/mqtt/commands/MQTTCommands.h"
 
 #include "ui/ModuleChooserUI.h"
 #include "ui/ModuleUI.h"

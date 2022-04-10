@@ -38,3 +38,6 @@
 #include "modules/websocket/ui/WebSocketServerModuleUI.cpp"
 
 #include "modules/abletonlink/AbletonLinkModule.cpp"
+
+#include "modules/mqtt/MQTTModule.cpp"
+#include "modules/mqtt/commands/MQTTCommands.cpp"

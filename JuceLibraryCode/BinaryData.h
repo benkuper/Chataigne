@@ -71,6 +71,9 @@ namespace BinaryData
     extern const char*   Mouse_png;
     const int            Mouse_pngSize = 2911;
 
+    extern const char*   MQTT_png;
+    const int            MQTT_pngSize = 3362;
+
     extern const char*   OS_png;
     const int            OS_pngSize = 1669;
 
@@ -225,7 +228,7 @@ namespace BinaryData
     const int            custom_cextSize = 1111;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 72;
+    const int namedResourceListSize = 73;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

@@ -1,29 +1,30 @@
 /*
   ==============================================================================
 
-    ModuleFactory.cpp
-    Created: 8 Dec 2016 2:36:06pm
-    Author:  Ben
+	ModuleFactory.cpp
+	Created: 8 Dec 2016 2:36:06pm
+	Author:  Ben
 
   ==============================================================================
 */
 
 ModuleFactory::ModuleFactory() {
-	
+
 	defs.add(new ModuleDefinition("Protocol", "OSC", &CustomOSCModule::create));
 	defs.add(new ModuleDefinition("Protocol", "OSCQuery", &GenericOSCQueryModule::create));
 	defs.add(new ModuleDefinition("Protocol", "MIDI", &MIDIModule::create));
 	defs.add(new ModuleDefinition("Protocol", "DMX", &DMXModule::create));
 	defs.add(new ModuleDefinition("Protocol", "Serial", &SerialModule::create));
-	defs.add(new ModuleDefinition("Protocol", "UDP", &UDPModule::create));  
+	defs.add(new ModuleDefinition("Protocol", "UDP", &UDPModule::create));
 	defs.add(new ModuleDefinition("Protocol", "TCP Client", &TCPClientModule::create));
 	defs.add(new ModuleDefinition("Protocol", "TCP Server", &TCPServerModule::create));
 	defs.add(new ModuleDefinition("Protocol", "HTTP", &HTTPModule::create));
 	defs.add(new ModuleDefinition("Protocol", "WebSocket Client", &WebSocketClientModule::create));
 	defs.add(new ModuleDefinition("Protocol", "WebSocket Server", &WebSocketServerModule::create));
+	defs.add(new ModuleDefinition("Protocol", "MQTT Client", &MQTTClientModule::create));
 	defs.add(new ModuleDefinition("Protocol", "PJLink", &PJLinkModule::create));
 	defs.add(new ModuleDefinition("Protocol", "Ableton Link", &AbletonLinkModule::create));
-	
+
 
 	defs.add(new ModuleDefinition("Hardware", "Sound Card", &AudioModule::create));
 
@@ -48,11 +49,11 @@ ModuleFactory::ModuleFactory() {
 	defs.add(new ModuleDefinition("Software", "Reaper", &ReaperModule::create));
 	defs.add(new ModuleDefinition("Software", "Resolume", &ResolumeModule::create));
 	defs.add(new ModuleDefinition("Software", "Watchout", &WatchoutModule::create));
-    defs.add(new ModuleDefinition("Software", "PowerPoint", &PowerPointModule::create));
+	defs.add(new ModuleDefinition("Software", "PowerPoint", &PowerPointModule::create));
 
 	defs.add(new ModuleDefinition("Generator", "Metronome", &MetronomeModule::create));
 	defs.add(new ModuleDefinition("Generator", "Signal", &SignalModule::create));
-	
+
 	defs.add(new ModuleDefinition("System", "Time", &TimeModule::create));
 	defs.add(new ModuleDefinition("System", "OS", &OSModule::create));
 
@@ -69,7 +70,7 @@ void ModuleFactory::addCustomModules(bool log)
 	File modulesFolder = getCustomModulesFolder();
 	modulesFolder.createDirectory();
 	addCustomModulesInFolder(modulesFolder, false, log);
-	
+
 	File f = Engine::mainEngine->getFile();
 	if (f.existsAsFile())
 	{
@@ -110,7 +111,7 @@ void ModuleFactory::addCustomModulesInFolder(File folder, bool isLocal, bool log
 
 			if (ModuleDefinition* sourceDef = getDefinitionForType(moduleType))
 			{
-				if(log) LOG("Found custom module : " << moduleMenuPath << ":" << moduleName << (isLocal ? " (local)" : ""));
+				if (log) LOG("Found custom module : " << moduleMenuPath << ":" << moduleName << (isLocal ? " (local)" : ""));
 
 				ModuleDefinition* def = new ModuleDefinition(moduleMenuPath, moduleName, sourceDef->createFunc);
 				defs.add(def);
@@ -142,7 +143,7 @@ void ModuleFactory::addCustomModulesInFolder(File folder, bool isLocal, bool log
 
 void ModuleFactory::updateCustomModules(bool log)
 {
-	for (HashMap<String, ModuleDefinition *>::Iterator i(customModulesDefMap); i.next();) defs.removeObject(i.getValue());
+	for (HashMap<String, ModuleDefinition*>::Iterator i(customModulesDefMap); i.next();) defs.removeObject(i.getValue());
 	customModulesDefMap.clear();
 	addCustomModules(log);
 	buildPopupMenu();
@@ -178,7 +179,7 @@ void ModuleFactory::buildPopupMenu()
 	Array<String> subMenuNames;
 	Array<bool> lastDefIsCustom;
 
-	for (auto &d : defs)
+	for (auto& d : defs)
 	{
 		ModuleDefinition* md = static_cast<ModuleDefinition*>(d);
 		int itemID = defs.indexOf(d) + 1;//start at 1 for menu
@@ -210,7 +211,7 @@ void ModuleFactory::buildPopupMenu()
 
 		if (md->isCustomModule && !lastDefIsCustom[subMenuIndex])
 		{
-			if(subMenus[subMenuIndex]->getNumItems() > 0) subMenus[subMenuIndex]->addSeparator();
+			if (subMenus[subMenuIndex]->getNumItems() > 0) subMenus[subMenuIndex]->addSeparator();
 			subMenus[subMenuIndex]->addSectionHeader("Community Modules");
 		}
 
@@ -241,11 +242,11 @@ Module* ModuleFactory::createFromMenuResult(int result)
 
 ModuleDefinition* ModuleFactory::getDefinitionForType(const String& moduleType)
 {
-	for (auto &m : defs)
+	for (auto& m : defs)
 	{
-		if (m->type == moduleType) return static_cast<ModuleDefinition *>(m);
+		if (m->type == moduleType) return static_cast<ModuleDefinition*>(m);
 	}
-	
+
 	return nullptr;
 }
 
@@ -256,7 +257,7 @@ File ModuleFactory::getCustomModulesFolder() const
 
 Module* ModuleFactory::create(BaseFactoryDefinition<Module>* def)
 {
-	Module * m = Factory::create(def);
+	Module* m = Factory::create(def);
 	if (m == nullptr) return nullptr;
 
 	if (ModuleDefinition* md = dynamic_cast<ModuleDefinition*>(def))

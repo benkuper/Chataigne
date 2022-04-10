@@ -236,6 +236,12 @@
     <Filter Include="Chataigne\Source\Module\Community">
       <UniqueIdentifier>{6CEFF08B-E267-C21D-34E5-C8EAE64F596A}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\mqtt\commands">
+      <UniqueIdentifier>{4DE12FF1-245E-9F00-3BFD-48206F57D466}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\mqtt">
+      <UniqueIdentifier>{3E12FC47-4DB8-69D9-D5E9-8573D63CB75E}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Module\modules\abletonlink">
       <UniqueIdentifier>{FF0E773C-E63C-01FF-8F6C-A27709B05F4B}</UniqueIdentifier>
     </Filter>
@@ -1947,6 +1953,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\Community\CommunityModuleManager.cpp">
       <Filter>Chataigne\Source\Module\Community</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\mqtt\commands\MQTTCommands.cpp">
+      <Filter>Chataigne\Source\Module\modules\mqtt\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\mqtt\MQTTModule.cpp">
+      <Filter>Chataigne\Source\Module\modules\mqtt</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\abletonlink\AbletonLinkModule.cpp">
       <Filter>Chataigne\Source\Module\modules\abletonlink</Filter>
@@ -6116,6 +6128,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\Community\CommunityModuleManager.h">
       <Filter>Chataigne\Source\Module\Community</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\mqtt\commands\MQTTCommands.h">
+      <Filter>Chataigne\Source\Module\modules\mqtt\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\mqtt\MQTTModule.h">
+      <Filter>Chataigne\Source\Module\modules\mqtt</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\abletonlink\AbletonLinkModule.h">
       <Filter>Chataigne\Source\Module\modules\abletonlink</Filter>
@@ -12978,6 +12996,9 @@
       <Filter>Chataigne\Resources\Modules</Filter>
     </None>
     <None Include="..\..\Resources\Modules\Mouse.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\MQTT.png">
       <Filter>Chataigne\Resources\Modules</Filter>
     </None>
     <None Include="..\..\Resources\Modules\OS.png">
