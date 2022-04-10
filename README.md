@@ -30,6 +30,7 @@ You can check the tutorials to better understand what and how you can use Chatai
     - UDP
     - TCP
     - HTTP
+    - MQTT
     - WebSockets
     - PJLink
     - Ableton Link
