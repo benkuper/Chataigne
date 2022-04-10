@@ -40,7 +40,7 @@
         <FILE id="rV6E05" name="MIDI.png" compile="0" resource="1" file="Resources/Modules/MIDI.png"/>
         <FILE id="XUwKVr" name="Millumin.png" compile="0" resource="1" file="Resources/Modules/Millumin.png"/>
         <FILE id="UjV2cF" name="Mouse.png" compile="0" resource="1" file="Resources/Modules/Mouse.png"/>
-        <FILE id="BiDfyl" name="MQTT.png" compile="0" resource="1" file="Resources/Modules/MQTT.png"/>
+        <FILE id="E9Dt6s" name="MQTT Client.png" compile="0" resource="1" file="Resources/Modules/MQTT Client.png"/>
         <FILE id="i5QUZ4" name="OS.png" compile="0" resource="1" file="Resources/Modules/OS.png"/>
         <FILE id="CBoeF1" name="OSC.png" compile="0" resource="1" file="Resources/Modules/OSC.png"/>
         <FILE id="mQRViU" name="OSCQuery.png" compile="0" resource="1" file="Resources/Modules/OSCQuery.png"/>

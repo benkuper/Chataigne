@@ -71,8 +71,8 @@ namespace BinaryData
     extern const char*   Mouse_png;
     const int            Mouse_pngSize = 2911;
 
-    extern const char*   MQTT_png;
-    const int            MQTT_pngSize = 3362;
+    extern const char*   MQTT_Client_png;
+    const int            MQTT_Client_pngSize = 3362;
 
     extern const char*   OS_png;
     const int            OS_pngSize = 1669;

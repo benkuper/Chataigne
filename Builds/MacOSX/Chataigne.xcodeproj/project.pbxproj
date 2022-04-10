@@ -766,7 +766,6 @@
 		CDE9EF9B0E1277DC6C2D8577 /* BaseCommandHandlerEditor.cpp */ /* BaseCommandHandlerEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BaseCommandHandlerEditor.cpp; path = ../../Source/Common/Command/ui/BaseCommandHandlerEditor.cpp; sourceTree = SOURCE_ROOT; };
 		CE846B4CD970FE96AD866873 /* MetronomeModule.h */ /* MetronomeModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MetronomeModule.h; path = ../../Source/Module/modules/generators/metronome/MetronomeModule.h; sourceTree = SOURCE_ROOT; };
 		CE9837F0BBB91B9A4C09E2C9 /* DLightModule.h */ /* DLightModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DLightModule.h; path = ../../Source/Module/modules/osc/dlight/DLightModule.h; sourceTree = SOURCE_ROOT; };
-		CEF67F83171AD08D1DB8E02F /* MQTT.png */ /* MQTT.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MQTT.png; path = ../../Resources/Modules/MQTT.png; sourceTree = SOURCE_ROOT; };
 		CF04D613489A49CB8D6C417F /* Point3DComparators.cpp */ /* Point3DComparators.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Point3DComparators.cpp; path = ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/comparators/Point3DComparators.cpp; sourceTree = SOURCE_ROOT; };
 		CF6BBDEFC5E44064A6FFE9DB /* DelayFilter.cpp */ /* DelayFilter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DelayFilter.cpp; path = ../../Source/Common/Processor/Mapping/Filter/filters/DelayFilter.cpp; sourceTree = SOURCE_ROOT; };
 		CFDFDA098CB0A28A21BB937C /* ModuleRouterView.cpp */ /* ModuleRouterView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ModuleRouterView.cpp; path = ../../Source/Module/Routing/ui/ModuleRouterView.cpp; sourceTree = SOURCE_ROOT; };
@@ -887,6 +886,7 @@
 		F0125278582079E86238C74E /* Consequence.cpp */ /* Consequence.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Consequence.cpp; path = ../../Source/Common/Processor/Action/Consequence/Consequence.cpp; sourceTree = SOURCE_ROOT; };
 		F14BD61EF6AB97B4C7433424 /* JoyCon.png */ /* JoyCon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = JoyCon.png; path = ../../Resources/Modules/JoyCon.png; sourceTree = SOURCE_ROOT; };
 		F241AE2457B316DE1E6FDB01 /* CustomVariablesIncludes.h */ /* CustomVariablesIncludes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CustomVariablesIncludes.h; path = ../../Source/CustomVariables/CustomVariablesIncludes.h; sourceTree = SOURCE_ROOT; };
+		F2F08BE6A058D3D9823220A9 /* MQTT Client.png */ /* MQTT Client.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "MQTT Client.png"; path = "../../Resources/Modules/MQTT Client.png"; sourceTree = SOURCE_ROOT; };
 		F35462981F7C3D05330D2FFD /* ConversionParamValueLinkUI.h */ /* ConversionParamValueLinkUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ConversionParamValueLinkUI.h; path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConversionParamValueLinkUI.h; sourceTree = SOURCE_ROOT; };
 		F36349200785EF7B0D1E7329 /* WebKit.framework */ /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		F368B34014E1E66273070D7B /* CommandTemplateManager.h */ /* CommandTemplateManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CommandTemplateManager.h; path = ../../Source/Common/Command/Template/CommandTemplateManager.h; sourceTree = SOURCE_ROOT; };
@@ -1875,7 +1875,7 @@
 				E3D81D58A2F55922C54F1F18,
 				278F096FADEA555F2103718E,
 				6B60D0981196488A639E9EE9,
-				CEF67F83171AD08D1DB8E02F,
+				F2F08BE6A058D3D9823220A9,
 				9D0A3612B3732B6D0B69FF7E,
 				5A09E732212BD7F0F838B951,
 				54D225421E0211F8F2E4EBFA,

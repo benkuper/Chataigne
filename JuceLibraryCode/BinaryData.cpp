@@ -867,7 +867,7 @@ static const unsigned char temp_binary_data_20[] =
 
 const char* Mouse_png = (const char*) temp_binary_data_20;
 
-//================== MQTT.png ==================
+//================== MQTT Client.png ==================
 static const unsigned char temp_binary_data_21[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,32,0,0,0,32,8,6,0,0,0,115,122,122,244,0,0,0,9,112,72,89,115,0,0,11,19,0,0,11,19,1,0,154,156,24,0,0,4,238,105,84,88,116,88,77,76,58,99,111,109,46,97,100,111,98,101,46,120,109,112,0,0,0,0,0,60,63,120,
 112,97,99,107,101,116,32,98,101,103,105,110,61,34,239,187,191,34,32,105,100,61,34,87,53,77,48,77,112,67,101,104,105,72,122,114,101,83,122,78,84,99,122,107,99,57,100,34,63,62,32,60,120,58,120,109,112,109,101,116,97,32,120,109,108,110,115,58,120,61,34,
@@ -917,7 +917,7 @@ static const unsigned char temp_binary_data_21[] =
 177,99,31,42,131,197,4,88,239,20,0,96,28,227,8,250,131,18,106,15,165,76,58,87,142,75,134,3,104,104,68,137,74,239,15,189,41,118,86,151,149,76,107,166,12,218,217,204,192,239,128,63,3,227,70,238,106,52,209,208,136,169,24,161,182,16,142,9,183,95,202,153,
 246,204,129,241,74,20,184,221,136,125,225,190,20,127,115,166,25,139,110,17,21,81,125,192,223,255,7,8,188,77,148,137,116,173,168,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
 
-const char* MQTT_png = (const char*) temp_binary_data_21;
+const char* MQTT_Client_png = (const char*) temp_binary_data_21;
 
 //================== OS.png ==================
 static const unsigned char temp_binary_data_22[] =
@@ -4962,7 +4962,7 @@ const char* getNamedResource (const char* resourceNameUTF8, int& numBytes)
         case 0xcc9c840b:  numBytes = 3792; return MIDI_png;
         case 0xb76f2ce3:  numBytes = 3457; return Millumin_png;
         case 0x9a6a636f:  numBytes = 2911; return Mouse_png;
-        case 0x8fb6ea8e:  numBytes = 3362; return MQTT_png;
+        case 0x40df4fd0:  numBytes = 3362; return MQTT_Client_png;
         case 0x8b8d594e:  numBytes = 1669; return OS_png;
         case 0xe48b8cc9:  numBytes = 3566; return OSC_png;
         case 0xa0f50e13:  numBytes = 3840; return OSCQuery_png;
@@ -5044,7 +5044,7 @@ const char* namedResourceList[] =
     "MIDI_png",
     "Millumin_png",
     "Mouse_png",
-    "MQTT_png",
+    "MQTT_Client_png",
     "OS_png",
     "OSC_png",
     "OSCQuery_png",
@@ -5121,7 +5121,7 @@ const char* originalFilenames[] =
     "MIDI.png",
     "Millumin.png",
     "Mouse.png",
-    "MQTT.png",
+    "MQTT Client.png",
     "OS.png",
     "OSC.png",
     "OSCQuery.png",
