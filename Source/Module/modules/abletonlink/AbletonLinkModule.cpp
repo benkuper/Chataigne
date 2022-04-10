@@ -33,6 +33,7 @@ AbletonLinkModule::AbletonLinkModule() :
 
 	//timeToStart = valuesCC.addFloatParameter("Pre Start", "Time to wait until peer starts, relative to a bar", 0, 0, 1);
 
+#if USE_ABLETONLINK
 	link.reset(new ableton::Link{ bpm->floatValue() });
 
 	link->setTempoCallback([this](const double p) {
@@ -48,12 +49,15 @@ AbletonLinkModule::AbletonLinkModule() :
 		});
 
 	startThread();
+#endif
 }
 
 AbletonLinkModule::~AbletonLinkModule()
 {
 	stopThread(200);
+#if USE_ABLETONLINK
 	link->enable(false);
+#endif
 }
 
 void AbletonLinkModule::clearItem()
@@ -65,17 +69,20 @@ void AbletonLinkModule::clearItem()
 void AbletonLinkModule::onContainerParameterChangedInternal(Parameter* p)
 {
 	Module::onContainerParameterChangedInternal(p);
+#if USE_ABLETONLINK
 	if (p == enabled)
 	{
 		if (enabled->boolValue()) startThread();
 		else stopThread(200);
 	}
+#endif
 }
 
 void AbletonLinkModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
 {
 	Module::onControllableFeedbackUpdateInternal(cc, c);
 
+#if USE_ABLETONLINK
 	if (c == curBeat)
 	{
 		newBeat->trigger();
@@ -100,10 +107,12 @@ void AbletonLinkModule::onControllableFeedbackUpdateInternal(ControllableContain
 		session.setIsPlaying(c == play, link->clock().micros());
 		link->commitAudioSessionState(session);
 	}
+#endif
 }
 
 void AbletonLinkModule::run()
 {
+#if USE_ABLETONLINK
 	wait(50);
 
 	link->enableStartStopSync(true);
@@ -128,4 +137,5 @@ void AbletonLinkModule::run()
 	}
 
 	link->enable(false);
+#endif
 }

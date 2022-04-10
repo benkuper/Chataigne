@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.5b29"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.5b30"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="VST_LOGGING=0"
@@ -1660,7 +1660,7 @@
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>
-    <VS2022 targetFolder="Builds/VisualStudio2022" extraDefs="USE_KINECT=1&#10;LINK_PLATFORM_WINDOWS=1"
+    <VS2022 targetFolder="Builds/VisualStudio2022" extraDefs="USE_KINECT=1&#10;USE_ABLETONLINK=1&#10;LINK_PLATFORM_WINDOWS=1"
             extraLinkerFlags="/HEAP:0x200000,0x10000" externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib&#10;JoyShockLibrary.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib&#10;iphlpapi.lib&#10;hid.lib&#10;hidapi_static.lib"
             smallIcon="nVz6Li" bigIcon="nVz6Li">
       <CONFIGURATIONS>
@@ -1760,7 +1760,7 @@
         <MODULEPATH id="juce_sharedtexture" path="Modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
-    <VS2019 targetFolder="Builds/VisualStudio2019_CI" extraDefs="USE_KINECT=1&#10;LINK_PLATFORM_WINDOWS=1"
+    <VS2019 targetFolder="Builds/VisualStudio2019_CI" extraDefs="USE_KINECT=1&#10;USE_ABLETONLINK=1&#10;LINK_PLATFORM_WINDOWS=1"
             extraCompilerFlags="/Zm1000" externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib&#10;JoyShockLibrary.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib&#10;iphlpapi.lib&#10;hid.lib&#10;hidapi_static.lib"
             smallIcon="nVz6Li" bigIcon="nVz6Li" extraLinkerFlags="/HEAP:0x400000,0x10000">
       <CONFIGURATIONS>
@@ -1794,7 +1794,7 @@
     </VS2019>
     <VS2019 targetFolder="Builds/VisualStudio2019_Win7CI" smallIcon="nVz6Li"
             bigIcon="nVz6Li" extraCompilerFlags="/Zm1000" externalLibraries="Setupapi.lib&#10;hid.lib&#10;JoyShockLibrary.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib&#10;iphlpapi.lib&#10;hid.lib&#10;hidapi_static.lib"
-            extraDefs="USE_KINECT=0&#10;LINK_PLATFORM_WINDOWS=1" extraLinkerFlags="/HEAP:0x400000,0x10000">
+            extraDefs="USE_KINECT=0&#10;USE_ABLETONLINK=0" extraLinkerFlags="/HEAP:0x400000,0x10000">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" libraryPath="../../External/joycon/lib/win&#10;../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/hidapi/lib/win/x64"
                        binaryPath="Binaries/CI" winArchitecture="x64"/>

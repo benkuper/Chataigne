@@ -10,11 +10,13 @@
 
 #pragma once
 
+#if USE_ABLETONLINK
 #pragma warning(push)
 #pragma warning(disable:4996)
 #include <ableton/Link.hpp>
 #include <ableton/link/HostTimeFilter.hpp>
 #pragma warning(pop)
+#endif
 
 class AbletonLinkModule :
 	public Module,
@@ -44,7 +46,9 @@ public:
 	Trigger* newBeat;
 	Trigger* newBar;
 
+#if USE_ABLETONLINK
 	std::unique_ptr<ableton::Link> link;
+#endif
 
 	void onContainerParameterChangedInternal(Parameter* p) override;
 	void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
