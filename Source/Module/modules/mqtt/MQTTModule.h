@@ -31,9 +31,16 @@ public:
 
 	StringParameter* host;
 	IntParameter* port;
+
+
 	IntParameter* keepAlive;
 	BoolParameter* isConnected;
 	Trigger* clearValues;
+
+
+	EnablingControllableContainer authenticationCC;
+	StringParameter* username;
+	StringParameter* pass;
 
 	Array<int> topicMap;
 	ControllableContainer topicsCC;

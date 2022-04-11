@@ -14,7 +14,8 @@ MQTTClientModule::MQTTClientModule(const String& name, bool canHaveInput, bool c
 #if JUCE_WINDOWS
 	mosquittopp("Chataigne"),
 #endif
-	topicsCC("Topics")
+	topicsCC("Topics"),
+	authenticationCC("Authentication")
 {
 
 #if JUCE_WINDOWS
@@ -33,8 +34,10 @@ MQTTClientModule::MQTTClientModule(const String& name, bool canHaveInput, bool c
 	isConnected->setControllableFeedbackOnly(true);
 	connectionFeedbackRef = isConnected;
 
-	defManager->add(CommandDefinition::createDef(this, "", "Publish", &MQTTCommand::create));
-
+	username = authenticationCC.addStringParameter("Username", "If using authentication, this is the username to use for the authentication", "");
+	pass = authenticationCC.addStringParameter("Password", "If using authentication, this is the password to use for the authentication", "");
+	authenticationCC.enabled->setValue(false);
+	moduleParams.addChildControllableContainer(&authenticationCC);
 
 	topicsCC.userCanAddControllables = true;
 	topicsCC.customUserCreateControllableFunc = std::bind(&MQTTClientModule::topicsCreateCallback, this, std::placeholders::_1);
@@ -42,6 +45,8 @@ MQTTClientModule::MQTTClientModule(const String& name, bool canHaveInput, bool c
 
 	includeValuesInSave = true;
 	valuesCC.saveAndLoadRecursiveData = true;
+
+	defManager->add(CommandDefinition::createDef(this, "", "Publish", &MQTTCommand::create));
 
 	setupIOConfiguration(true, true);
 	if (!Engine::mainEngine->isLoadingFile) startThread();
@@ -78,7 +83,7 @@ void MQTTClientModule::onControllableFeedbackUpdateInternal(ControllableContaine
 
 	if (!isCurrentlyLoadingData)
 	{
-		if (c == host || c == port || c == keepAlive)
+		if (c == host || c == port || c == keepAlive || c == authenticationCC.enabled || c == username || c == pass)
 		{
 			stopThread(1000);
 			if (enabled->boolValue()) startThread();
@@ -219,6 +224,10 @@ void MQTTClientModule::run()
 	}
 
 	NLOG(niceName, "Connecting to " << host->stringValue() << ":" << port->intValue() << "...");
+
+	if (authenticationCC.enabled->boolValue()) username_pw_set(username->stringValue().toStdString().c_str(), pass->stringValue().toStdString().c_str());
+	else username_pw_set(NULL);
+
 	int result = connect(host->stringValue().toStdString().c_str(), port->intValue(), keepAlive->intValue());
 
 	if (result == 0)
