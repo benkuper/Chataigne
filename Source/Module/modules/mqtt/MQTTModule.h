@@ -41,7 +41,7 @@ public:
 	EnablingControllableContainer authenticationCC;
 	StringParameter* username;
 	StringParameter* pass;
-
+	//BoolParameter* useTLS;
 	Array<int> topicMap;
 	ControllableContainer topicsCC;
 

@@ -36,6 +36,8 @@ MQTTClientModule::MQTTClientModule(const String& name, bool canHaveInput, bool c
 
 	username = authenticationCC.addStringParameter("Username", "If using authentication, this is the username to use for the authentication", "");
 	pass = authenticationCC.addStringParameter("Password", "If using authentication, this is the password to use for the authentication", "");
+	//useTLS = authenticationCC.addBoolParameter("Use TLS", "If using authentication, this decides if using TLS or not", false);
+
 	authenticationCC.enabled->setValue(false);
 	moduleParams.addChildControllableContainer(&authenticationCC);
 
@@ -83,7 +85,7 @@ void MQTTClientModule::onControllableFeedbackUpdateInternal(ControllableContaine
 
 	if (!isCurrentlyLoadingData)
 	{
-		if (c == host || c == port || c == keepAlive || c == authenticationCC.enabled || c == username || c == pass)
+		if (c == host || c == port || c == keepAlive || c == authenticationCC.enabled || c == username || c == pass /* || c == useTLS*/)
 		{
 			stopThread(1000);
 			if (enabled->boolValue()) startThread();
@@ -134,8 +136,7 @@ void MQTTClientModule::publishMessage(const String& topic, const String& message
 		return;
 	}
 
-	int mid = 0;
-	int result = publish(&mid, topic.toStdString().c_str(), message.length(), message.toStdString().c_str());
+	int result = publish(NULL, topic.toStdString().c_str(), message.length(), message.toStdString().c_str(), 2);
 
 	if (logOutgoingData->boolValue())
 	{
@@ -225,15 +226,19 @@ void MQTTClientModule::run()
 
 	NLOG(niceName, "Connecting to " << host->stringValue() << ":" << port->intValue() << "...");
 
-	if (authenticationCC.enabled->boolValue()) username_pw_set(username->stringValue().toStdString().c_str(), pass->stringValue().toStdString().c_str());
+	if (authenticationCC.enabled->boolValue())
+	{
+		username_pw_set(username->stringValue().toStdString().c_str(), pass->stringValue().toStdString().c_str());
+		//add tls here
+	}
 	else username_pw_set(NULL);
 
 	int result = connect(host->stringValue().toStdString().c_str(), port->intValue(), keepAlive->intValue());
 
+
 	if (result == 0)
 	{
 		NLOG(niceName, "Connected");
-		isConnected->setValue(true);
 	}
 	else
 	{
@@ -241,19 +246,18 @@ void MQTTClientModule::run()
 		return;
 	}
 
-	//Subscribe
-	for (int i = 0; i < topicsCC.controllables.size(); i++)
-	{
-		int mid = topicMap[i];
-		subscribe(&mid, ((StringParameter*)topicsCC.controllables[i])->stringValue().toStdString().c_str());
-		DBG(mid << " <> " << topicMap[i]);
-		topicMap.set(i, mid);
-	}
+
 
 	while (!threadShouldExit())
 	{
-		loop(1000, 10);
-		wait(10);
+		int rc = loop();
+		if (rc)
+		{
+			//LOG("Disconnected, reconnect");
+			reconnect();
+			//LOG("Reconnection : " << rr);
+		}
+		//wait(2);
 	}
 
 	isConnected->setValue(false);
@@ -264,13 +268,29 @@ void MQTTClientModule::run()
 #if JUCE_WINDOWS
 void MQTTClientModule::on_connect(int rc)
 {
-	DBG("MQTT Connected event reveiced");
+	//LOG("MQTT Connected : " << rc);
+	//DBG("MQTT Connected event reveiced " << rc);
+	isConnected->setValue(rc == 0);
 
+	if (rc != 0) return;
+
+	//Subscribe
+	for (int i = 0; i < topicsCC.controllables.size(); i++)
+	{
+		int mid = topicMap[i];
+		String topic = ((StringParameter*)topicsCC.controllables[i])->stringValue();
+		if (topic.isEmpty()) continue;
+		subscribe(&mid, topic.toStdString().c_str());
+		DBG(mid << " <> " << topicMap[i]);
+		topicMap.set(i, mid);
+	}
 }
 
 void MQTTClientModule::on_disconnect(int rc)
 {
+	if(rc != 14) LOG("MQTT Disconnected : " << rc); //14 is loop disconnection, autoreconnect
 	isConnected->setValue(false);
+	if (rc != 0) reconnect();
 }
 
 void MQTTClientModule::on_publish(int mid)
@@ -317,14 +337,14 @@ void MQTTClientModule::on_message(const mosquitto_message* message)
 
 void MQTTClientModule::on_subscribe(int mid, int qos_count, const int* granted_qos)
 {
-	int index = topicMap.indexOf(mid);
-	if (index >= 0 && topicsCC.controllables.size() > index) NLOG(niceName, "Subscribed to " << ((Parameter*)topicsCC.controllables[index])->stringValue());
+	//int index = topicMap.indexOf(mid);
+	//if (index >= 0 && topicsCC.controllables.size() > index) NLOG(niceName, "Subscribed to " << ((Parameter*)topicsCC.controllables[index])->stringValue());
 }
 
 void MQTTClientModule::on_unsubscribe(int mid)
 {
-	int index = topicMap.indexOf(mid);
-	if (index >= 0 && topicsCC.controllables.size() > index) NLOG(niceName, "Unsubscribed from " << ((Parameter*)topicsCC.controllables[index])->stringValue());
+	//int index = topicMap.indexOf(mid);
+	//if (index >= 0 && topicsCC.controllables.size() > index) NLOG(niceName, "Unsubscribed from " << ((Parameter*)topicsCC.controllables[index])->stringValue());
 }
 
 void MQTTClientModule::on_log(int level, const char* str)
