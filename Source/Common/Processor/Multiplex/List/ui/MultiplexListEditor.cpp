@@ -194,24 +194,29 @@ void InputValueListEditor::buttonClicked(Button* b)
 						PopupMenu cp;
 						int offset = 0;
 						Array<Module*> modules = ModuleManager::getInstance()->getModuleList();
-						OwnedArray<ContainerChooserPopupMenu> choosers;
+						OwnedArray<ContainerChooserPopupMenu>* choosers = new OwnedArray<ContainerChooserPopupMenu>();
 						for (auto& m : modules)
 						{
 							ContainerChooserPopupMenu* chooser = new ContainerChooserPopupMenu(&m->valuesCC, offset, -1, nullptr, StringArray(), StringArray(), true);
-							choosers.add(chooser);
+							choosers->add(chooser);
 							cp.addSubMenu(m->niceName, *chooser);
 							offset += 100000;
 						}
 
-						cp.showMenuAsync(PopupMenu::Options(), [this, &choosers](int ccResult)
+						cp.showMenuAsync(PopupMenu::Options(), [this, choosers](int ccResult)
 							{
-								int chooserIndex = (int)floor(ccResult / 100000.0f);
-								ControllableContainer* cc = choosers[chooserIndex]->getContainerForResult(ccResult);
-								Array<WeakReference<Controllable>> cList = cc->getAllControllables();
-								for (int i = 0; i < list->listSize && i < cList.size(); i++)
+								if (ccResult > 0)
 								{
-									((TargetParameter*)list->list[i])->setValueFromTarget(cList[i]);
+									int chooserIndex = (int)floor(ccResult / 100000.0f);
+									ControllableContainer* cc = (*choosers)[chooserIndex]->getContainerForResult(ccResult);
+									Array<WeakReference<Controllable>> cList = cc->getAllControllables();
+									for (int i = 0; i < list->listSize && i < cList.size(); i++)
+									{
+										((TargetParameter*)list->list[i])->setValueFromTarget(cList[i]);
+									}
 								}
+
+								delete choosers;
 							}
 						);
 
@@ -222,14 +227,20 @@ void InputValueListEditor::buttonClicked(Button* b)
 					}
 					else
 					{
-						ContainerChooserPopupMenu chooser(Engine::mainEngine, 0, -1, nullptr, StringArray(), StringArray(), true);
-						chooser.showAndGetContainer([this](ControllableContainer* cc)
+						ContainerChooserPopupMenu* chooser = new ContainerChooserPopupMenu(Engine::mainEngine, 0, -1, nullptr, StringArray(), StringArray(), true);
+						chooser->showAndGetContainer([this, chooser](ControllableContainer* cc)
 							{
-								Array<WeakReference<Controllable>> cList = cc->getAllControllables();
-								for (int i = 0; i < list->listSize && i < cList.size(); i++)
+								if (cc != nullptr)
 								{
-									((TargetParameter*)list->list[i])->setValueFromTarget(cList[i]);
+									Array<WeakReference<Controllable>> cList = cc->getAllControllables();
+									for (int i = 0; i < list->listSize && i < cList.size(); i++)
+									{
+										((TargetParameter*)list->list[i])->setValueFromTarget(cList[i]);
+									}
 								}
+
+								delete chooser;
+
 							}
 						);
 					}
