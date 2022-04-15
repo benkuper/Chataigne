@@ -99,8 +99,8 @@ void SendStreamStringCommand::triggerInternal(int multiplexIndex)
 	case STRING:
 	{
 		if (prefix != nullptr) valString = getLinkedValue(prefix, multiplexIndex).toString() + valString;
-		if (appendCR != nullptr && appendCR->boolValue()) valString += "\r";
-		if (appendNL != nullptr && appendNL->boolValue()) valString += "\n";
+		if (appendCR != nullptr && (bool)getLinkedValue(appendCR, multiplexIndex)) valString += "\r";
+		if (appendNL != nullptr && (bool)getLinkedValue(appendNL, multiplexIndex)) valString += "\n";
 
 		streamingModule->sendMessage(valString);
 	}
