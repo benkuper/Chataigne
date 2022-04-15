@@ -35,8 +35,13 @@
 #include "Action/Condition/conditions/StandardCondition/Comparator/comparators/Point3DComparators.cpp"
 #include "Action/Condition/conditions/StandardCondition/Comparator/comparators/StringComparators.cpp"
 #include "Action/Condition/conditions/StandardCondition/Comparator/ui/BaseComparatorUI.cpp"
+
 #include "Action/Condition/conditions/StandardCondition/StandardCondition.cpp"
 #include "Action/Condition/conditions/StandardCondition/ui/StandardConditionEditor.cpp"
+
+#include "Action/Condition/conditions/MultiplexIndex/MultiplexIndexCondition.cpp"
+#include "Action/Condition/conditions/MultiplexIndex/ui/MultiplexIndexConditionEditor.cpp"
+
 #include "Action/Condition/ui/ConditionEditor.cpp"
 #include "Action/Condition/ui/ConditionManagerEditor.cpp"
 #include "Action/Consequence/Consequence.cpp"

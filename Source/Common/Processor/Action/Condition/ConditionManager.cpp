@@ -26,7 +26,11 @@ ConditionManager::ConditionManager(Multiplex * multiplex) :
 
 	managerFactory = &factory;
 	factory.defs.add(MultiplexTargetDefinition<Condition>::createDef<StandardCondition>("", StandardCondition::getTypeStringStatic(false), multiplex));
-	if (isMultiplexed()) factory.defs.add(MultiplexTargetDefinition<Condition>::createDef<StandardCondition>("", StandardCondition::getTypeStringStatic(true), multiplex)->addParam("listMode", true));
+	if (isMultiplexed()) 
+	{
+		factory.defs.add(MultiplexTargetDefinition<Condition>::createDef<StandardCondition>("", StandardCondition::getTypeStringStatic(true), multiplex)->addParam("listMode", true));
+		factory.defs.add(MultiplexTargetDefinition<Condition>::createDef<MultiplexIndexCondition>("", MultiplexIndexCondition::getTypeStringStatic(), multiplex));
+	}
 
 	factory.defs.add(MultiplexTargetDefinition<Condition>::createDef<ConditionGroup>("", ConditionGroup::getTypeStringStatic(), multiplex));
 	factory.defs.add(MultiplexTargetDefinition<Condition>::createDef<ScriptCondition>("", ScriptCondition::getTypeStringStatic(), multiplex));

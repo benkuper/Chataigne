@@ -23,6 +23,12 @@ public:
 	const Identifier lessId = "<";
 	const Identifier greaterOrEqualId = ">=";
 	const Identifier lessOrEqualId = "<=";
+	const Identifier moduloEqualId = "%=";
+	const Identifier moduloGreaterId = "%>";
+	const Identifier moduloLessId = "%<";
+	const Identifier floorEqualId = "f=";
+	const Identifier floorGreaterId = "f>"; 
+	const Identifier floorLessId = "f<"; 
 	const Identifier diffGreaterId = "d>";
 	const Identifier diffLessId = "d<";
 	const Identifier inRangeId = "r";

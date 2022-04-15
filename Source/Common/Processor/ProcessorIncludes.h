@@ -42,6 +42,7 @@
 
 
 #include "Action/Condition/conditions/StandardCondition/StandardCondition.h"
+#include "Action/Condition/conditions/MultiplexIndex/MultiplexIndexCondition.h"
 
 #include "Action/Consequence/Consequence.h"
 #include "Action/Consequence/ConsequenceManager.h"
@@ -105,6 +106,8 @@
 
 #include "Action/Condition/conditions/StandardCondition/Comparator/ui/BaseComparatorUI.h"
 #include "Action/Condition/conditions/StandardCondition/ui/StandardConditionEditor.h"
+
+#include "Action/Condition/conditions/MultiplexIndex/ui/MultiplexIndexConditionEditor.h"
 
 
 #include "ui/ProcessorUI.h"
