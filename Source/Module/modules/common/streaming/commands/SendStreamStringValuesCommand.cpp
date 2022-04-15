@@ -63,9 +63,9 @@ void SendStreamStringValuesCommand::triggerInternal(int multiplexIndex)
 		s += ss;
 	}
 
-	s = getLinkedValue(prefix, multiplexIndex) + s + getLinkedValue(suffix, multiplexIndex).toString();
-	if (getLinkedValue(appendCR, multiplexIndex)) s += "\r";
-	if (getLinkedValue(appendNL, multiplexIndex)) s += "\n";
+	s = getLinkedValue(prefix, multiplexIndex).toString() + s + getLinkedValue(suffix, multiplexIndex).toString();
+	if ((bool)getLinkedValue(appendCR, multiplexIndex)) s += "\r";
+	if ((bool)getLinkedValue(appendNL, multiplexIndex)) s += "\n";
 
 	streamingModule->sendMessage(s);
 }
