@@ -80,6 +80,12 @@
     <Filter Include="Chataigne\Source\Common\Processor\Conductor">
       <UniqueIdentifier>{AB762D6B-82AF-347D-2084-E878BCF86F1B}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Common\Processor\Action\Condition\conditions\MultiplexIndex\ui">
+      <UniqueIdentifier>{1C737E39-22F7-B143-5A23-507BFB460A65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Common\Processor\Action\Condition\conditions\MultiplexIndex">
+      <UniqueIdentifier>{0D5C9CCD-AAD9-DB53-19D8-D18E2314C38B}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Common\Processor\Action\Condition\conditions\ActivationCondition">
       <UniqueIdentifier>{D8DA1A28-055B-3ADC-1082-1CCF339BC5AE}</UniqueIdentifier>
     </Filter>
@@ -1650,6 +1656,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Conductor\ConductorCue.cpp">
       <Filter>Chataigne\Source\Common\Processor\Conductor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\MultiplexIndex\ui\MultiplexIndexConditionEditor.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Action\Condition\conditions\MultiplexIndex\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\MultiplexIndex\MultiplexIndexCondition.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Action\Condition\conditions\MultiplexIndex</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\ActivationCondition\ActivationCondition.cpp">
       <Filter>Chataigne\Source\Common\Processor\Action\Condition\conditions\ActivationCondition</Filter>
@@ -5837,6 +5849,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Conductor\ConductorCue.h">
       <Filter>Chataigne\Source\Common\Processor\Conductor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\conditions\MultiplexIndex\ui\MultiplexIndexConditionEditor.h">
+      <Filter>Chataigne\Source\Common\Processor\Action\Condition\conditions\MultiplexIndex\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\conditions\MultiplexIndex\MultiplexIndexCondition.h">
+      <Filter>Chataigne\Source\Common\Processor\Action\Condition\conditions\MultiplexIndex</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\conditions\ActivationCondition\ActivationCondition.h">
       <Filter>Chataigne\Source\Common\Processor\Action\Condition\conditions\ActivationCondition</Filter>

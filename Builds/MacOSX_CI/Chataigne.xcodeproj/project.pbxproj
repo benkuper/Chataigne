@@ -265,6 +265,7 @@
 		31DF86E3221ACBF249C401A8 /* DMXSerialDevice.cpp */ /* DMXSerialDevice.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DMXSerialDevice.cpp; path = ../../Source/Common/DMX/device/DMXSerialDevice.cpp; sourceTree = SOURCE_ROOT; };
 		3217E99161A613C57EACAB97 /* NumberComparators.cpp */ /* NumberComparators.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NumberComparators.cpp; path = ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/comparators/NumberComparators.cpp; sourceTree = SOURCE_ROOT; };
 		3284BC58968CCABCFCEDABCF /* WebSocket Client.png */ /* WebSocket Client.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "WebSocket Client.png"; path = "../../Resources/Modules/WebSocket Client.png"; sourceTree = SOURCE_ROOT; };
+		329DC76E50833986ACFD72D2 /* MultiplexIndexConditionEditor.h */ /* MultiplexIndexConditionEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MultiplexIndexConditionEditor.h; path = ../../Source/Common/Processor/Action/Condition/conditions/MultiplexIndex/ui/MultiplexIndexConditionEditor.h; sourceTree = SOURCE_ROOT; };
 		331643DFCB261592E0B722B9 /* icon.png */ /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = ../../Resources/icon.png; sourceTree = SOURCE_ROOT; };
 		334608D7C30F294FB4AFA0DD /* PlayAudioFileCommand.cpp */ /* PlayAudioFileCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PlayAudioFileCommand.cpp; path = ../../Source/Module/modules/audio/commands/PlayAudioFileCommand.cpp; sourceTree = SOURCE_ROOT; };
 		33698FA29E16C5EF3535B38B /* ModuleManagerUI.cpp */ /* ModuleManagerUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ModuleManagerUI.cpp; path = ../../Source/Module/ui/ModuleManagerUI.cpp; sourceTree = SOURCE_ROOT; };
@@ -400,6 +401,7 @@
 		589D06AF4BF9A0E8EC90AE00 /* SerialDevice.h */ /* SerialDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SerialDevice.h; path = ../../Source/Common/Serial/SerialDevice.h; sourceTree = SOURCE_ROOT; };
 		5A09E732212BD7F0F838B951 /* OSC.png */ /* OSC.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = OSC.png; path = ../../Resources/Modules/OSC.png; sourceTree = SOURCE_ROOT; };
 		5A60F64718B023B15C6B6F70 /* Metronome.png */ /* Metronome.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Metronome.png; path = ../../Resources/Modules/Metronome.png; sourceTree = SOURCE_ROOT; };
+		5AC3C505C5605D2918E9333F /* MultiplexIndexConditionEditor.cpp */ /* MultiplexIndexConditionEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MultiplexIndexConditionEditor.cpp; path = ../../Source/Common/Processor/Action/Condition/conditions/MultiplexIndex/ui/MultiplexIndexConditionEditor.cpp; sourceTree = SOURCE_ROOT; };
 		5B511E02E1C41667C324732B /* timecode.c */ /* timecode.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = timecode.c; path = ../../Source/Common/LTC/timecode.c; sourceTree = SOURCE_ROOT; };
 		5B9E2B5BB241EBB715F08431 /* MorpherViewUI.cpp */ /* MorpherViewUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MorpherViewUI.cpp; path = ../../Source/CustomVariables/Preset/Morpher/ui/MorpherViewUI.cpp; sourceTree = SOURCE_ROOT; };
 		5BB5895E78590A3C0C655891 /* ResolumeFXCommand.h */ /* ResolumeFXCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ResolumeFXCommand.h; path = ../../Source/Module/modules/osc/resolume/commands/ResolumeFXCommand.h; sourceTree = SOURCE_ROOT; };
@@ -420,6 +422,7 @@
 		6313EC26291DA0D987B28559 /* ColorShiftFilter.cpp */ /* ColorShiftFilter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ColorShiftFilter.cpp; path = ../../Source/Common/Processor/Mapping/Filter/filters/color/ColorShiftFilter.cpp; sourceTree = SOURCE_ROOT; };
 		63721D54ECE83C8FC7B1E667 /* ProcessorManagerUI.h */ /* ProcessorManagerUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ProcessorManagerUI.h; path = ../../Source/Common/Processor/ui/ProcessorManagerUI.h; sourceTree = SOURCE_ROOT; };
 		63D8A941A592D9916B9BE56D /* CommunityModuleInfoEditor.h */ /* CommunityModuleInfoEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CommunityModuleInfoEditor.h; path = ../../Source/Module/Community/ui/CommunityModuleInfoEditor.h; sourceTree = SOURCE_ROOT; };
+		642738E6EF3BF7896C88E958 /* MultiplexIndexCondition.cpp */ /* MultiplexIndexCondition.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MultiplexIndexCondition.cpp; path = ../../Source/Common/Processor/Action/Condition/conditions/MultiplexIndex/MultiplexIndexCondition.cpp; sourceTree = SOURCE_ROOT; };
 		64731A5930462AB9DB5DDE0D /* QuartzCore.framework */ /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		64F92362AABC4519953B36C5 /* CVPresetMorphUI.cpp */ /* CVPresetMorphUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CVPresetMorphUI.cpp; path = ../../Source/CustomVariables/Preset/Morpher/ui/CVPresetMorphUI.cpp; sourceTree = SOURCE_ROOT; };
 		658DBFD6B17D26B9F8952B15 /* MultiplexCommands.cpp */ /* MultiplexCommands.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MultiplexCommands.cpp; path = ../../Source/Module/modules/multiplex/commands/MultiplexCommands.cpp; sourceTree = SOURCE_ROOT; };
@@ -453,6 +456,7 @@
 		6DA48147D997BF10B507F9B9 /* MappingInputEditor.cpp */ /* MappingInputEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MappingInputEditor.cpp; path = ../../Source/Common/Processor/Mapping/Input/ui/MappingInputEditor.cpp; sourceTree = SOURCE_ROOT; };
 		6DAB0FB37CD6A7C9A1BC50D2 /* CommandTemplate.h */ /* CommandTemplate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CommandTemplate.h; path = ../../Source/Common/Command/Template/CommandTemplate.h; sourceTree = SOURCE_ROOT; };
 		6DBB1A3C473C2388AD85BC2C /* ConvertedParameterManagerEditor.cpp */ /* ConvertedParameterManagerEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ConvertedParameterManagerEditor.cpp; path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConvertedParameterManagerEditor.cpp; sourceTree = SOURCE_ROOT; };
+		6DBE64795B43BE2595C22027 /* MultiplexIndexCondition.h */ /* MultiplexIndexCondition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MultiplexIndexCondition.h; path = ../../Source/Common/Processor/Action/Condition/conditions/MultiplexIndex/MultiplexIndexCondition.h; sourceTree = SOURCE_ROOT; };
 		6DDE46B937874C068E754258 /* KeyboardModule.h */ /* KeyboardModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = KeyboardModule.h; path = ../../Source/Module/modules/controller/keyboard/KeyboardModule.h; sourceTree = SOURCE_ROOT; };
 		6E49F2DD376B0AA6A86A75E9 /* Guider.h */ /* Guider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Guider.h; path = ../../Source/Guider/Guider.h; sourceTree = SOURCE_ROOT; };
 		6E734C416FC137CEF01B0CFD /* PowerpointModule.cpp */ /* PowerpointModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PowerpointModule.cpp; path = ../../Source/Module/modules/osc/powerpoint/PowerpointModule.cpp; sourceTree = SOURCE_ROOT; };
@@ -1943,6 +1947,15 @@
 			name = Preset;
 			sourceTree = "<group>";
 		};
+		5D05CFFAA33347442FDFF6A8 /* ui */ = {
+			isa = PBXGroup;
+			children = (
+				5AC3C505C5605D2918E9333F,
+				329DC76E50833986ACFD72D2,
+			);
+			name = ui;
+			sourceTree = "<group>";
+		};
 		5E9EB47562389C44727010A5 /* ui */ = {
 			isa = PBXGroup;
 			children = (
@@ -2467,6 +2480,7 @@
 		9BE8DAE593848F8E1C48119E /* conditions */ = {
 			isa = PBXGroup;
 			children = (
+				D1BCDB2DBBF96D2152E33E58,
 				D6FB4773F3AE25F3A9B6374B,
 				D4FB3E50FB755F0202DF8DD7,
 				9F6067AE0BCC3B27E2C692F1,
@@ -3015,6 +3029,16 @@
 				4545E10ABE8AF2EF652D28E0,
 			);
 			name = Filter;
+			sourceTree = "<group>";
+		};
+		D1BCDB2DBBF96D2152E33E58 /* MultiplexIndex */ = {
+			isa = PBXGroup;
+			children = (
+				5D05CFFAA33347442FDFF6A8,
+				642738E6EF3BF7896C88E958,
+				6DBE64795B43BE2595C22027,
+			);
+			name = MultiplexIndex;
 			sourceTree = "<group>";
 		};
 		D2B0B4BC8878A5157D9AE392 /* layers */ = {
@@ -3741,8 +3765,8 @@
 					"JUCE_COREGRAPHICS_DRAW_ASYNC=1",
 					"LINK_PLATFORM_MACOSX=1",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.9.6",
-					"JUCE_APP_VERSION_HEX=0x10906",
+					"JUCE_APP_VERSION=1.9.7b1",
+					"JUCE_APP_VERSION_HEX=0x10907",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
 					"JucePlugin_Build_AU=0",
@@ -3818,8 +3842,8 @@
 					"JUCE_COREGRAPHICS_DRAW_ASYNC=1",
 					"LINK_PLATFORM_MACOSX=1",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.9.6",
-					"JUCE_APP_VERSION_HEX=0x10906",
+					"JUCE_APP_VERSION=1.9.7b1",
+					"JUCE_APP_VERSION_HEX=0x10907",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
 					"JucePlugin_Build_AU=0",

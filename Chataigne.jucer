@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.6"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.7b1"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="VST_LOGGING=0"
@@ -350,6 +350,18 @@
           <GROUP id="{797800DA-0DCB-1B89-AF24-83A7716BB83C}" name="Action">
             <GROUP id="{769E1555-7F3A-B046-7FF9-5B14A6197BBD}" name="Condition">
               <GROUP id="{D6ADE71C-FE26-85F8-193D-108C1D0EF059}" name="conditions">
+                <GROUP id="{3401077A-E12F-45BD-4F18-E9CD6465CC4C}" name="MultiplexIndex">
+                  <GROUP id="{44EC7EF1-A107-592C-74A7-755346BCEC7E}" name="ui">
+                    <FILE id="DzS0R2" name="MultiplexIndexConditionEditor.cpp" compile="0"
+                          resource="0" file="Source/Common/Processor/Action/Condition/conditions/MultiplexIndex/ui/MultiplexIndexConditionEditor.cpp"/>
+                    <FILE id="blw5T8" name="MultiplexIndexConditionEditor.h" compile="0"
+                          resource="0" file="Source/Common/Processor/Action/Condition/conditions/MultiplexIndex/ui/MultiplexIndexConditionEditor.h"/>
+                  </GROUP>
+                  <FILE id="hYqnFS" name="MultiplexIndexCondition.cpp" compile="0" resource="0"
+                        file="Source/Common/Processor/Action/Condition/conditions/MultiplexIndex/MultiplexIndexCondition.cpp"/>
+                  <FILE id="UZ0NjC" name="MultiplexIndexCondition.h" compile="0" resource="0"
+                        file="Source/Common/Processor/Action/Condition/conditions/MultiplexIndex/MultiplexIndexCondition.h"/>
+                </GROUP>
                 <GROUP id="{42D35307-D62F-0CDA-D315-E549DE0408B4}" name="ActivationCondition">
                   <FILE id="P4Tgf2" name="ActivationCondition.cpp" compile="0" resource="0"
                         file="Source/Common/Processor/Action/Condition/conditions/ActivationCondition/ActivationCondition.cpp"/>
