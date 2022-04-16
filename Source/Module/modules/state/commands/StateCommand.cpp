@@ -53,6 +53,7 @@ StateCommand::StateCommand(StateModule* _module, CommandContext context, var par
 
 	case CONDUCTOR_NEXT_TRIGGER:
 	case CONDUCTOR_SET_CUE_INDEX:
+	case CONDUCTOR_TRIGGER_INDEX:
 		target->customGetTargetContainerFunc = &StateManager::showMenuAndGetConductor;
 		target->defaultParentLabelLevel = 1;
 		break;
@@ -71,7 +72,7 @@ StateCommand::StateCommand(StateModule* _module, CommandContext context, var par
 		val = addIntParameter("Value", "The activation / enable state to set this element to.", 0, 0);
 		linkParamToMappingIndex(val, 0);
 	}
-	else if (actionType == CONDUCTOR_SET_CUE_INDEX)
+	else if (actionType == CONDUCTOR_SET_CUE_INDEX || actionType == CONDUCTOR_TRIGGER_INDEX)
 	{
 		val = addIntParameter("Value", "The index of the next cue that will be triggered by the conductor.", 1, 1);
 		linkParamToMappingIndex(val, 0);
@@ -166,7 +167,12 @@ void StateCommand::triggerInternal(int multiplexIndex)
 		break;
 
 	case CONDUCTOR_SET_CUE_INDEX:
-		if (Conductor* c = getLinkedTargetContainerAs<Conductor>(target, multiplexIndex)) c->nextCueIndex->setValue(val->intValue());
+	case CONDUCTOR_TRIGGER_INDEX:
+		if (Conductor* c = getLinkedTargetContainerAs<Conductor>(target, multiplexIndex))
+		{
+			c->nextCueIndex->setValue(val->intValue());
+			if (actionType == CONDUCTOR_TRIGGER_INDEX) c->triggerOn->trigger();
+		}
 		break;
 	}
 }

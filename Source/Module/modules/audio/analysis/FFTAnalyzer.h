@@ -21,7 +21,6 @@ public:
 	FloatParameter* position;
 	FloatParameter* size;
 	FloatParameter * value;
-	ColorParameter * color;
 
 	void process(float * fftSamples, int numSamples);
 

@@ -25,9 +25,6 @@ MultiplexUI::MultiplexUI(Multiplex* mp) :
     previewUI.reset(multiplex->previewIndex->createStepper());
     addAndMakeVisible(previewUI.get());
 
-    baseBGColor = Colours::deepskyblue.darker().withSaturation(.4f);
-    updateBGColor();
-
     processorManagerUI.resized();
     updateProcessorManagerBounds();
 }

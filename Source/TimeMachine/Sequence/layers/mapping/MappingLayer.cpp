@@ -32,7 +32,7 @@ MappingLayer::MappingLayer(const String &name, Sequence *_sequence, var params) 
 
 	addChildControllableContainer(mapping.get());
 	
-	color->setColor(BG_COLOR.brighter(.1f));
+	itemColor->setDefaultValue(BG_COLOR.brighter(.1f));
 	
 }
 

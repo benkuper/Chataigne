@@ -13,18 +13,18 @@ Action::Action(var params, Multiplex* it) :
 {
 }
 
-Action::Action(const String &name, var params, Multiplex * multiplex, bool hasConditions, bool _hasOffConsequences) :
+Action::Action(const String& name, var params, Multiplex* multiplex, bool hasConditions, bool _hasOffConsequences) :
 	Processor(name),
 	MultiplexTarget(multiplex),
-    autoTriggerWhenAllConditionAreActives(true),
+	autoTriggerWhenAllConditionAreActives(true),
 	forceNoOffConsequences(false),
 	hasOffConsequences(false),
-    triggerOn(nullptr),
+	triggerOn(nullptr),
 	triggerPreview(nullptr),
-    forceChecking(false),
-    actionAsyncNotifier(10)
+	forceChecking(false),
+	actionAsyncNotifier(10)
 {
-	helpID = "Action"; 
+	helpID = "Action";
 	itemDataType = "Action";
 	type = ACTION;
 
@@ -63,6 +63,8 @@ void Action::updateConditionRoles()
 {
 	if (Engine::mainEngine->isClearing) return;
 	
+	if (cdm != nullptr && !cdm->hasActivationDefinitions()) return;
+
 	actionRoles.clear();
 	if (cdm != nullptr)
 	{
@@ -77,6 +79,18 @@ void Action::updateConditionRoles()
 	}
 
 	setHasOffConsequences(!forceNoOffConsequences && !actionRoles.contains(DEACTIVATE));
+
+	
+	if (!itemColor->isOverriden)
+	{
+		bool isA = actionRoles.contains(Action::ACTIVATE);
+		bool isD = actionRoles.contains(Action::DEACTIVATE);
+		
+		if (isA && isD) itemColor->setDefaultValue(Colours::orange.darker(1));
+		else if (isA) itemColor->setDefaultValue(GREEN_COLOR.darker(1));
+		else if (isD) itemColor->setDefaultValue(Colours::orange.darker(1));
+		else itemColor->setDefaultValue(ACTION_COLOR.darker(1));
+	}
 
 	actionListeners.call(&ActionListener::actionRoleChanged, this);
 	actionAsyncNotifier.addMessage(new ActionEvent(ActionEvent::ROLE_CHANGED, this));
@@ -97,7 +111,8 @@ void Action::setHasOffConsequences(bool value)
 			csmOff.reset(new ConsequenceManager("Consequences : FALSE", multiplex));
 			addChildControllableContainer(csmOff.get());
 		}
-	} else
+	}
+	else
 	{
 		removeChildControllableContainer(csmOff.get());
 		csmOff = nullptr;
@@ -107,7 +122,7 @@ void Action::setHasOffConsequences(bool value)
 void Action::updateDisables(bool force)
 {
 	Processor::updateDisables();
-	if(cdm != nullptr) cdm->setForceDisabled(forceDisabled || !enabled->boolValue(), force);
+	if (cdm != nullptr) cdm->setForceDisabled(forceDisabled || !enabled->boolValue(), force);
 	csmOn->setForceDisabled(forceDisabled || !enabled->boolValue(), force);
 	if (hasOffConsequences) csmOff->setForceDisabled(forceDisabled || !enabled->boolValue(), force);
 }
@@ -115,7 +130,7 @@ void Action::updateDisables(bool force)
 void Action::forceCheck(bool triggerIfChanged)
 {
 	if (!triggerIfChanged) forceChecking = true;
-	if(cdm != nullptr) cdm->forceCheck();
+	if (cdm != nullptr) cdm->forceCheck();
 	forceChecking = false;
 }
 
@@ -128,7 +143,7 @@ void Action::triggerConsequences(bool triggerTrue, int multiplexIndex)
 	{
 		if (triggerTrue) csmOn->triggerAll(multiplexIndex);
 		else csmOff->triggerAll(multiplexIndex);
-		
+
 		notifyActionTriggered(triggerTrue, multiplexIndex);
 	}
 }
@@ -136,9 +151,9 @@ void Action::triggerConsequences(bool triggerTrue, int multiplexIndex)
 var Action::getJSONData()
 {
 	var data = Processor::getJSONData();
-	if(cdm != nullptr) data.getDynamicObject()->setProperty("conditions", cdm->getJSONData());
+	if (cdm != nullptr) data.getDynamicObject()->setProperty("conditions", cdm->getJSONData());
 	data.getDynamicObject()->setProperty("consequences", csmOn->getJSONData());
-	if(hasOffConsequences) data.getDynamicObject()->setProperty("consequencesOff", csmOff->getJSONData());
+	if (hasOffConsequences) data.getDynamicObject()->setProperty("consequencesOff", csmOff->getJSONData());
 	return data;
 }
 
@@ -146,14 +161,14 @@ void Action::loadJSONDataItemInternal(var data)
 {
 	Processor::loadJSONDataItemInternal(data);
 
-	if(cdm != nullptr) cdm->loadJSONData(data.getProperty("conditions", var()));
+	if (cdm != nullptr) cdm->loadJSONData(data.getProperty("conditions", var()));
 	csmOn->loadJSONData(data.getProperty("consequences", var()));
 
 	updateConditionRoles();
 
 	if (enabled->boolValue() && !forceDisabled && actionRoles.contains(Role::ACTIVATE) && Engine::mainEngine->isLoadingFile) Engine::mainEngine->addEngineListener(this);
 
-	if(hasOffConsequences) csmOff->loadJSONData(data.getProperty("consequencesOff", var()));
+	if (hasOffConsequences) csmOff->loadJSONData(data.getProperty("consequencesOff", var()));
 }
 
 void Action::endLoadFile()
@@ -186,25 +201,25 @@ void Action::onContainerTriggerTriggered(Trigger* t)
 }
 
 
-void Action::onContainerParameterChangedInternal(Parameter * p)
+void Action::onContainerParameterChangedInternal(Parameter* p)
 {
 	Processor::onContainerParameterChangedInternal(p);
 
 	if (p == enabled)
 	{
-		if(triggerOn != nullptr) triggerOn->setEnabled(enabled->boolValue());
-		
+		if (triggerOn != nullptr) triggerOn->setEnabled(enabled->boolValue());
+
 		actionListeners.call(&Action::ActionListener::actionEnableChanged, this);
 		actionAsyncNotifier.addMessage(new ActionEvent(ActionEvent::ENABLED_CHANGED, this));
 	}
 }
 
 
-void Action::controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c)
+void Action::controllableFeedbackUpdate(ControllableContainer* cc, Controllable* c)
 {
 	Processor::controllableFeedbackUpdate(cc, c);
 
-	ActivationCondition * ac = c->getParentAs<ActivationCondition>();
+	ActivationCondition* ac = c->getParentAs<ActivationCondition>();
 	if (ac != nullptr && c == ac->enabled)
 	{
 		updateConditionRoles();
@@ -216,7 +231,7 @@ void Action::notifyActionTriggered(bool triggerTrue, int multiplexIndex)
 	actionListeners.call(&ActionListener::actionTriggered, this, triggerTrue, multiplexIndex);
 }
 
-void Action::conditionManagerValidationChanged(ConditionManager *, int multiplexIndex, bool dispatchOnChangeOnly)
+void Action::conditionManagerValidationChanged(ConditionManager*, int multiplexIndex, bool dispatchOnChangeOnly)
 {
 	if (forceChecking) return;
 
@@ -239,7 +254,7 @@ void Action::conditionManagerValidationChanged(ConditionManager *, int multiplex
 }
 
 
-void Action::itemAdded(Condition * c)
+void Action::itemAdded(Condition* c)
 {
 	updateConditionRoles();
 
@@ -247,7 +262,7 @@ void Action::itemAdded(Condition * c)
 	if (sc != nullptr) sc->sourceTarget->warningResolveInspectable = this;
 }
 
-void Action::itemRemoved(Condition *)
+void Action::itemRemoved(Condition*)
 {
 	updateConditionRoles();
 }
@@ -255,9 +270,9 @@ void Action::itemRemoved(Condition *)
 void Action::highlightLinkedInspectables(bool value)
 {
 	Processor::highlightLinkedInspectables(value);
-	if(cdm != nullptr) for (auto & cd : cdm->items) cd->highlightLinkedInspectables(value);
-	if (csmOn != nullptr) for (auto & cs : csmOn->items) cs->highlightLinkedInspectables(value);
-	if (csmOff != nullptr) for (auto & cs : csmOff->items) cs->highlightLinkedInspectables(value);
+	if (cdm != nullptr) for (auto& cd : cdm->items) cd->highlightLinkedInspectables(value);
+	if (csmOn != nullptr) for (auto& cs : csmOn->items) cs->highlightLinkedInspectables(value);
+	if (csmOff != nullptr) for (auto& cs : csmOff->items) cs->highlightLinkedInspectables(value);
 }
 
 
@@ -267,7 +282,7 @@ void Action::multiplexPreviewIndexChanged()
 }
 
 
-ProcessorUI * Action::getUI()
+ProcessorUI* Action::getUI()
 {
 	return new ActionUI(this);
 }

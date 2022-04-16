@@ -20,6 +20,7 @@ MainContentComponent::MainContentComponent()
 MainContentComponent::~MainContentComponent()
 {
 	SharedTextureManager::deleteInstance();
+	ActionUITimers::deleteInstance();
 }
 
 void MainContentComponent::init()

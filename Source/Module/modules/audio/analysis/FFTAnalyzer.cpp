@@ -18,7 +18,7 @@ FFTAnalyzer::FFTAnalyzer() :
 	value->setControllableFeedbackOnly(true);
 
 	Random r;
-	color = addColorParameter("Color", "Color to see in the visualizer", Colour::fromHSV(r.nextFloat(), 1, 1, 1));
+	itemColor->setDefaultValue(Colour::fromHSV(r.nextFloat(), 1, 1, 1));
 }
 
 FFTAnalyzer::~FFTAnalyzer()

@@ -38,10 +38,11 @@ void ConductorCueUI::resizedHeader(Rectangle<int>& r)
 
 void ConductorCueUI::updateBGColor()
 {
-    Colour c = Colours::mediumpurple.darker(.2f).withMultipliedSaturation(cue->isCurrent ? .9f : .4f);
+    Colour c = item->itemColor->getColor().withMultipliedSaturation(cue->isCurrent ? .9f : .4f);
     if (cue->isNext) c = Colours::orange.darker(.2f);
-    baseBGColor = c;
-    ProcessorUI::updateBGColor();
+    bgColor = c;
+    if (item->forceDisabled) bgColor = bgColor.withMultipliedSaturation(.2f);
+    shouldRepaint = true;
 }
 
 void ConductorCueUI::newMessage(const ConductorCue::ConductorCueEvent& e)
@@ -50,6 +51,7 @@ void ConductorCueUI::newMessage(const ConductorCue::ConductorCueEvent& e)
     {
         if (cue->isCurrent) processorUIListeners.call(&ProcessorUIListener::processorAskForFocus, this);
         updateBGColor();
+        repaint();
     }
     else if (e.type == e.INDEX_CHANGED)
     {

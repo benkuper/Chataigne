@@ -9,12 +9,14 @@
 */
 
 ProcessorUI::ProcessorUI(Processor * processor, bool showMiniModeBT) :
-	BaseItemUI<Processor>(processor, NONE, showMiniModeBT),
-	baseBGColor(PANEL_COLOR),
-	shouldRepaint(true)
+	BaseItemUI<Processor>(processor, NONE, showMiniModeBT)
 {
+	colorUI.reset(new ColorParameterUI(item->itemColor));
+	addAndMakeVisible(colorUI.get());
+
 	item->addAsyncProcessorListener(this);
-	startTimerHz(20);
+
+	updateBGColor();
 }
 
 ProcessorUI::~ProcessorUI()
@@ -24,9 +26,20 @@ ProcessorUI::~ProcessorUI()
 
 void ProcessorUI::updateBGColor()
 {
-	bgColor = baseBGColor;
+	bgColor = item->itemColor->getColor();
 	if(item->forceDisabled) bgColor = bgColor.withMultipliedSaturation(.2f);
-	shouldRepaint = true;
+	repaint();
+}
+
+void ProcessorUI::resizedInternalHeader(Rectangle<int>& r)
+{
+	colorUI->setBounds(r.removeFromRight(r.getHeight()).reduced(2));
+}
+
+void ProcessorUI::controllableFeedbackUpdateInternal(Controllable* c)
+{
+	BaseItemUI::controllableFeedbackUpdateInternal(c);
+	if (c == item->itemColor) updateBGColor();
 }
 
 void ProcessorUI::newMessage(const Processor::ProcessorEvent & e)
@@ -34,14 +47,5 @@ void ProcessorUI::newMessage(const Processor::ProcessorEvent & e)
 	if (e.type == Processor::ProcessorEvent::FORCE_DISABLED_CHANGED)
 	{
 		updateBGColor();
-	}
-}
-
-void ProcessorUI::timerCallback()
-{
-	if (shouldRepaint)
-	{
-		repaint();
-		shouldRepaint = false;
 	}
 }

@@ -12,24 +12,22 @@
 
 class ProcessorUI :
 	public BaseItemUI<Processor>,
-	public Processor::AsyncListener,
-	public Timer
+	public Processor::AsyncListener
 {
 public:
 	ProcessorUI(Processor *, bool showMiniModeBT = false);
 	virtual ~ProcessorUI();
 
-	Colour baseBGColor;
-
-	bool shouldRepaint;
+	std::unique_ptr<ColorParameterUI> colorUI;
 
 	virtual void updateBGColor();
 
+	void resizedInternalHeader(Rectangle<int>& r) override;
+
+	void controllableFeedbackUpdateInternal(Controllable* c) override;
 	void newMessage(const Processor::ProcessorEvent &e) override;
 
 
-	void timerCallback() override;
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ProcessorUI)
 
 	class ProcessorUIListener
 	{

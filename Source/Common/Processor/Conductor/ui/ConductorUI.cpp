@@ -23,8 +23,6 @@ ConductorUI::ConductorUI(Conductor* conductor) :
     cueUI->showLabel = false;
     addAndMakeVisible(cueUI.get());
 
-    baseBGColor = Colours::rebeccapurple.darker().withSaturation(.5f);
-
     nextCueUI.reset(conductor->nextCueName->createStringParameterUI());
     nextCueUI->showLabel = false;
     nextCueUI->useCustomTextColor = true;

@@ -50,6 +50,9 @@ Mapping::Mapping(var params, Multiplex* multiplex, bool canBeDisabled) :
 	fm.addFilterManagerListener(this);
 	im.addBaseManagerListener(this);
 
+	itemColor->setDefaultValue(MAPPING_COLOR);
+
+
 	helpID = "Mapping";
 }
 

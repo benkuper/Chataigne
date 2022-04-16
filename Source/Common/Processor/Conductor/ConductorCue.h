@@ -21,6 +21,11 @@ public:
     bool isNext;
     int index;
 
+    TargetParameter* linkedSequence;
+    BoolParameter* autoStart;
+    BoolParameter* forceStartFrom0;
+    BoolParameter* autoStop;
+
     void setIsCurrent(bool value);
     void setIsNext(bool value);
     void setIndex(int value);

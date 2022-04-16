@@ -9,14 +9,15 @@
 */
 
 Conductor::Conductor(var params, Multiplex* multiplex) :
-	Action(params, multiplex),
+	Action(getTypeString(), params, multiplex, true, true),
 	currentCue(nullptr),
 	processorManager("Processors", multiplex)
 {
 	saveAndLoadRecursiveData = true;
 	type = CONDUCTOR;
 
-	setNiceName("Conductor");
+	cdm->setHasActivationDefinitions(false, false);
+
 	nextCueIndex = addIntParameter("Next Cue", "The Index of the action that will be triggered when", 1, 1);
 
 	currentCueName = addStringParameter("Current Cue Name", "The name of the last triggered Cue.", "");
@@ -36,6 +37,8 @@ Conductor::Conductor(var params, Multiplex* multiplex) :
 	processorManager.hideInEditor = true;
 	processorManager.addBaseManagerListener(this);
 	addChildControllableContainer(&processorManager);
+
+	itemColor->setDefaultValue(Colours::rebeccapurple.darker().withSaturation(.5f));
 }
 
 Conductor::~Conductor()
@@ -125,7 +128,7 @@ void Conductor::triggerCue(ConductorCue* cue, bool triggeredFromConductor)
 	nextCueIndex->setValue(getValidIndexAfter(processorManager.items.indexOf(currentCue) + 1));
 	updateNextCue();
 
-	
+
 	if (!triggeredFromConductor)
 	{
 		if (triggerConductorConsequencesOnDirect->boolValue()) csmOn->triggerAll();

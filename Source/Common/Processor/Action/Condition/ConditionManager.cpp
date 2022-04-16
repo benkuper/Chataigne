@@ -1,3 +1,4 @@
+#include "ConditionManager.h"
 /*
   ==============================================================================
 
@@ -68,6 +69,11 @@ void ConditionManager::multiplexCountChanged()
 void ConditionManager::multiplexPreviewIndexChanged()
 {
 	conditionManagerAsyncNotifier.addMessage(new ConditionManagerEvent(ConditionManagerEvent::MULTIPLEX_PREVIEW_CHANGED, this));
+}
+
+bool ConditionManager::hasActivationDefinitions()
+{
+	return activateDef != nullptr || deactivateDef != nullptr;
 }
 
 void ConditionManager::setHasActivationDefinitions(bool hasActivation, bool hasDeactivation)

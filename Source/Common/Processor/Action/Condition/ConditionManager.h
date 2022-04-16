@@ -44,6 +44,7 @@ public:
 	void multiplexCountChanged() override;
 	void multiplexPreviewIndexChanged() override;
 
+	bool hasActivationDefinitions();
 	void setHasActivationDefinitions(bool hasActivation, bool hasDeactivation);
 
 	void addItemInternal(Condition*, var data) override;

@@ -73,10 +73,10 @@ void FFTAnalyzerManagerEditor::FFTViz::paint(Graphics& g)
 		path.cubicTo({ iPos + iSize / 4, 0 }, { iPos + iSize / 4, (float)r.getHeight() }, { iPos + iSize / 2, (float)r.getHeight() });
 		path.closeSubPath();
 
-		Colour c = i->enabled->boolValue() ? i->color->getColor() : Colours::grey;
+		Colour c = i->enabled->boolValue() ? i->itemColor->getColor() : Colours::grey;
 		g.setColour(c.withAlpha(.2f));
 		g.fillPath(path);
-		g.setColour(i->color->getColor().withAlpha(.5f));
+		g.setColour(i->itemColor->getColor().withAlpha(.5f));
 		g.strokePath(path, PathStrokeType(1));
 	}
 }

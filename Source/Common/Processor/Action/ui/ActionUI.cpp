@@ -8,17 +8,21 @@
   ==============================================================================
 */
 
+juce_ImplementSingleton(ActionUITimers)
+
 ActionUI::ActionUI(Action* _action, bool showMiniModeBT) :
 	ProcessorUI(_action, showMiniModeBT),
 	action(_action)
 {
+	ActionUITimers::getInstance()->registerAction(this);
+
 	acceptedDropTypes.add("Module");
 	acceptedDropTypes.add("CommandTemplate");
 
 	action->addAsyncActionListener(this);
 
-	triggerUI.reset(action->isMultiplexed()?action->triggerPreview->createButtonUI():action->triggerOn->createButtonUI());
-	if(action->isMultiplexed()) triggerUI->customLabel = "Trigger (" + String(action->getPreviewIndex() + 1) + ")"; 
+	triggerUI.reset(action->isMultiplexed() ? action->triggerPreview->createButtonUI() : action->triggerOn->createButtonUI());
+	if (action->isMultiplexed()) triggerUI->customLabel = "Trigger (" + String(action->getPreviewIndex() + 1) + ")";
 
 	addAndMakeVisible(triggerUI.get());
 
@@ -29,13 +33,12 @@ ActionUI::ActionUI(Action* _action, bool showMiniModeBT) :
 		addChildComponent(progressionUI.get());
 		progressionUI->setVisible(action->cdm->validationTime->floatValue() > 0);
 	}
-
-	updateBGColor();
 }
 
 ActionUI::~ActionUI()
 {
 	if (!inspectable.wasObjectDeleted()) action->removeAsyncActionListener(this);
+	if (ActionUITimers* t = ActionUITimers::getInstanceWithoutCreating()) t->unregisterAction(this);
 }
 
 void ActionUI::paint(Graphics& g)
@@ -49,18 +52,6 @@ void ActionUI::paint(Graphics& g)
 	}
 }
 
-void ActionUI::updateBGColor()
-{
-	bool isA = action->actionRoles.contains(Action::ACTIVATE);
-	bool isD = action->actionRoles.contains(Action::DEACTIVATE);
-
-	if (isA && isD) baseBGColor = Colours::orange.darker(1);
-	else if (isA) baseBGColor = GREEN_COLOR.darker(1);
-	else if (isD) baseBGColor = Colours::orange.darker(1);
-	else baseBGColor = ACTION_COLOR.darker(1);
-
-	ProcessorUI::updateBGColor();
-}
 
 void ActionUI::controllableFeedbackUpdateInternal(Controllable* c)
 {
@@ -78,7 +69,7 @@ void ActionUI::controllableFeedbackUpdateInternal(Controllable* c)
 
 void ActionUI::resizedInternalHeader(Rectangle<int>& r)
 {
-	BaseItemUI::resizedInternalHeader(r);
+	ProcessorUI::resizedInternalHeader(r);
 
 	if (triggerUI != nullptr) triggerUI->setBounds(r.removeFromRight(70));
 	if (progressionUI != nullptr && progressionUI->isVisible())
@@ -102,7 +93,7 @@ void ActionUI::itemDropped(const SourceDetails& details)
 	BaseItemUI::itemDropped(details);
 
 	String dataType = details.description.getProperty("dataType", "");
-	
+
 
 	std::function<void(CommandDefinition* def, bool, bool)> createFunc = [this](CommandDefinition* def, bool isInput, bool isConsequenceTrue)
 	{
@@ -114,7 +105,7 @@ void ActionUI::itemDropped(const SourceDetails& details)
 			c->setCommand(def);
 		}
 	};
-	
+
 	if (dataType == "Module")
 	{
 		ModuleUI* mui = dynamic_cast<ModuleUI*>(details.sourceComponent.get());
@@ -125,7 +116,7 @@ void ActionUI::itemDropped(const SourceDetails& details)
 		PopupMenu actionCommandMenuTrue = mui->item->getCommandMenu(20000, CommandContext::ACTION);
 		PopupMenu actionCommandMenuFalse = mui->item->getCommandMenu(30000, CommandContext::ACTION);
 
-		if(action->cdm != nullptr) pm.addSubMenu("Input", actionInputMenu);
+		if (action->cdm != nullptr) pm.addSubMenu("Input", actionInputMenu);
 		pm.addSubMenu("Consequence TRUE", actionCommandMenuTrue);
 		pm.addSubMenu("Consequence FALSE", actionCommandMenuFalse);
 
@@ -182,7 +173,7 @@ void ActionUI::itemDropped(const SourceDetails& details)
 		);
 	}
 
-	
+
 }
 
 void ActionUI::newMessage(const Action::ActionEvent& e)
@@ -193,7 +184,7 @@ void ActionUI::newMessage(const Action::ActionEvent& e)
 		break;
 
 	case Action::ActionEvent::ROLE_CHANGED:
-		updateBGColor();
+		//updateBGColor();
 		break;
 
 	case Action::ActionEvent::VALIDATION_CHANGED:
@@ -217,6 +208,10 @@ void ActionUI::newMessage(const Action::ActionEvent& e)
 	}
 }
 
+void ActionUI::handlePaintTimer()
+{
+}
+
 void ActionUI::addContextMenuItems(PopupMenu& p)
 {
 	if (action->cdm != nullptr)
@@ -224,7 +219,7 @@ void ActionUI::addContextMenuItems(PopupMenu& p)
 		p.addItem(100, "Copy conditions");
 		p.addItem(101, "Paste conditions");
 	}
-	
+
 
 	if (action->csmOn != nullptr)
 	{
@@ -251,4 +246,24 @@ void ActionUI::handleContextMenuResult(int result)
 	case 104: SystemClipboard::copyTextToClipboard(JSON::toString(action->csmOff->getJSONData())); break;
 	case 105: action->csmOff->loadJSONData(JSON::fromString(SystemClipboard::getTextFromClipboard())); break;
 	}
+}
+
+ActionUITimers::ActionUITimers()
+{
+	startTimerHz(20);
+}
+
+void ActionUITimers::registerAction(ActionUI* ui)
+{
+	actionsUI.addIfNotAlreadyThere(ui);
+}
+
+void ActionUITimers::unregisterAction(ActionUI* ui)
+{
+	actionsUI.removeAllInstancesOf(ui);
+}
+
+void ActionUITimers::timerCallback()
+{
+	for (auto& ui : actionsUI) ui->handlePaintTimer();
 }
