@@ -11,7 +11,7 @@
 #pragma once
 
 class FreezeFilter :
-	public TimeFilter
+	public MappingFilter
 {
 public:
 	FreezeFilter(var params, Multiplex* multiplex);
@@ -24,7 +24,7 @@ public:
 
 	void setupParametersInternal(int multiplexIndex, bool rangeOnly) override;
 	Parameter* setupSingleParameterInternal(Parameter* source, int multiplexIndex, bool rangeOnly) override;
-	virtual ProcessResult processSingleParameterTimeInternal(Parameter* source, Parameter* out, int multiplexIndex, double deltaTime) override;
+	virtual ProcessResult processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;
 
 	void onContainerTriggerTriggered(Trigger* t) override;
 

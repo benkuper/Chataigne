@@ -10,7 +10,7 @@
 
 
 FreezeFilter::FreezeFilter(var params, Multiplex* multiplex) :
-	TimeFilter(getTypeString(), params, multiplex)
+	MappingFilter(getTypeString(), params, multiplex)
 {
 	filterTypeFilters.add(Controllable::FLOAT, Controllable::INT, Controllable::POINT2D, Controllable::POINT3D);
 
@@ -29,7 +29,7 @@ FreezeFilter::~FreezeFilter()
 void FreezeFilter::setupParametersInternal(int multiplexIndex, bool rangeOnly)
 {
 	prevValueMap.clear();
-	TimeFilter::setupParametersInternal(multiplexIndex, rangeOnly);
+	MappingFilter::setupParametersInternal(multiplexIndex, rangeOnly);
 }
 
 Parameter* FreezeFilter::setupSingleParameterInternal(Parameter* source, int multiplexIndex, bool rangeOnly)
@@ -43,15 +43,12 @@ Parameter* FreezeFilter::setupSingleParameterInternal(Parameter* source, int mul
 	return p;
 }
 
-MappingFilter::ProcessResult FreezeFilter::processSingleParameterTimeInternal(Parameter* source, Parameter* out, int multiplexIndex, double deltaTime)
+MappingFilter::ProcessResult FreezeFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
 {
-	var oldVal = prevValueMap.contains(source) ? prevValueMap[source] : source->getValue();
+	var oldVal = out->getValue();
 	var newVal = source->getValue();
 
-	prevValueMap.set(source, newVal);
-
-	if (deltaTime == 0) return UNCHANGED;
-
+	prevValueMap.set(out, newVal);
 
 	FreezeMode m = mode->getValueDataAsEnum<FreezeMode>();
 
@@ -87,5 +84,9 @@ MappingFilter::ProcessResult FreezeFilter::processSingleParameterTimeInternal(Pa
 void FreezeFilter::onContainerTriggerTriggered(Trigger* t)
 {
 	MappingFilter::onContainerTriggerTriggered(t);
-	if (t == reset) prevValueMap.clear();
+	if (t == reset)
+	{
+		HashMap<Parameter*, var>::Iterator it(prevValueMap);
+		while (it.next()) it.getKey()->setValue(it.getValue());
+	}
 }
