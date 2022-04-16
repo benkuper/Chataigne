@@ -401,6 +401,9 @@
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\DampingFilter.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\FreezeFilter.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\InverseFilter.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1988,6 +1991,7 @@
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\CropFilter.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\CurveMapFilter.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\DampingFilter.h"/>
+    <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\FreezeFilter.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\InverseFilter.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\LagFilter.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\MathFilter.h"/>

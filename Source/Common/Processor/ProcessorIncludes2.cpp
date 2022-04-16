@@ -36,6 +36,7 @@
 #include "Mapping/Filter/filters/number/CurveMapFilter.cpp"
 #include "Mapping/Filter/filters/number/DampingFilter.cpp"
 #include "Mapping/Filter/filters/number/SpeedFilter.cpp"
+#include "Mapping/Filter/filters/number/FreezeFilter.cpp"
 #include "Mapping/Filter/filters/number/InverseFilter.cpp"
 #include "Mapping/Filter/filters/number/LagFilter.cpp"
 #include "Mapping/Filter/filters/DelayFilter.cpp"

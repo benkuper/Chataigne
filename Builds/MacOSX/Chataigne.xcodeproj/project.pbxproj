@@ -199,6 +199,7 @@
 		1BFA6EEFCE2A4D8498AB36DA /* SendStreamValuesCommand.cpp */ /* SendStreamValuesCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SendStreamValuesCommand.cpp; path = ../../Source/Module/modules/common/streaming/commands/SendStreamValuesCommand.cpp; sourceTree = SOURCE_ROOT; };
 		1C70373EF477EE7507E94DA2 /* ConductorCueUI.h */ /* ConductorCueUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ConductorCueUI.h; path = ../../Source/Common/Processor/Conductor/ui/ConductorCueUI.h; sourceTree = SOURCE_ROOT; };
 		1C9F9F116CF5C8DCD5CFCA72 /* MappingOutput.cpp */ /* MappingOutput.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MappingOutput.cpp; path = ../../Source/Common/Processor/Mapping/Output/MappingOutput.cpp; sourceTree = SOURCE_ROOT; };
+		1CAF857490AAFE8BFEA105E3 /* FreezeFilter.h */ /* FreezeFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FreezeFilter.h; path = ../../Source/Common/Processor/Mapping/Filter/filters/number/FreezeFilter.h; sourceTree = SOURCE_ROOT; };
 		1D3EEDB3310C60C71DD26A0C /* Info-App.plist */ /* Info-App.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Info-App.plist"; path = "Info-App.plist"; sourceTree = SOURCE_ROOT; };
 		1DA1A4B47B6494AC2A79311C /* TimeModule.cpp */ /* TimeModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TimeModule.cpp; path = ../../Source/Module/modules/system/time/TimeModule.cpp; sourceTree = SOURCE_ROOT; };
 		1E8699D50A40FE59A2B9A024 /* os_mac.m */ /* os_mac.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = os_mac.m; path = ../../Source/Module/modules/controller/wiimote/lib/wiiuse/os_mac/os_mac.m; sourceTree = SOURCE_ROOT; };
@@ -636,6 +637,7 @@
 		A949F877768B9F4072481556 /* HTTPModule.cpp */ /* HTTPModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = HTTPModule.cpp; path = ../../Source/Module/modules/http/HTTPModule.cpp; sourceTree = SOURCE_ROOT; };
 		A99666B3FB03511628C7425B /* FFTAnalyzerManagerEditor.cpp */ /* FFTAnalyzerManagerEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FFTAnalyzerManagerEditor.cpp; path = ../../Source/Module/modules/audio/analysis/ui/FFTAnalyzerManagerEditor.cpp; sourceTree = SOURCE_ROOT; };
 		A9FC803DA1FE5532CB11D833 /* UDPModule.h */ /* UDPModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = UDPModule.h; path = ../../Source/Module/modules/udp/UDPModule.h; sourceTree = SOURCE_ROOT; };
+		AA212A409393064209695562 /* FreezeFilter.cpp */ /* FreezeFilter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FreezeFilter.cpp; path = ../../Source/Common/Processor/Mapping/Filter/filters/number/FreezeFilter.cpp; sourceTree = SOURCE_ROOT; };
 		AA6D95775FFFE12E6CB93617 /* OSWindowCommand.h */ /* OSWindowCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OSWindowCommand.h; path = ../../Source/Module/modules/system/os/commands/OSWindowCommand.h; sourceTree = SOURCE_ROOT; };
 		AA881D5858A3809D2EE0A414 /* ModuleRouterManager.cpp */ /* ModuleRouterManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ModuleRouterManager.cpp; path = ../../Source/Module/Routing/ModuleRouterManager.cpp; sourceTree = SOURCE_ROOT; };
 		AA98076D35CE8DE50088BF5A /* SimpleConversionFilters.h */ /* SimpleConversionFilters.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SimpleConversionFilters.h; path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/SimpleConversionFilters.h; sourceTree = SOURCE_ROOT; };
@@ -2914,6 +2916,8 @@
 				6D5261F2E7952B94DBFD7FD7,
 				7CC48BF5AC5A35CF1B60C67F,
 				E7513C7B304255F7E208D7EF,
+				AA212A409393064209695562,
+				1CAF857490AAFE8BFEA105E3,
 				8F80D77F9012D15293997784,
 				197C3A8890035B180289E60E,
 				17733F84F51C6BC5BE25683A,

@@ -79,6 +79,7 @@
 #include "Mapping/Filter/filters/number/CropFilter.h"
 #include "Mapping/Filter/filters/number/DampingFilter.h"
 #include "Mapping/Filter/filters/number/SpeedFilter.h"
+#include "Mapping/Filter/filters/number/FreezeFilter.h"
 #include "Mapping/Filter/filters/number/InverseFilter.h"
 #include "Mapping/Filter/filters/number/LagFilter.h"
 #include "Mapping/Filter/filters/DelayFilter.h"

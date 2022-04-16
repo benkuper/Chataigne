@@ -515,6 +515,9 @@
                   <FILE id="mtaOQc" name="DampingFilter.cpp" compile="0" resource="0"
                         file="Source/Common/Processor/Mapping/Filter/filters/number/DampingFilter.cpp"/>
                   <FILE id="JEpS02" name="DampingFilter.h" compile="0" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/number/DampingFilter.h"/>
+                  <FILE id="AD17Pi" name="FreezeFilter.cpp" compile="0" resource="0"
+                        file="Source/Common/Processor/Mapping/Filter/filters/number/FreezeFilter.cpp"/>
+                  <FILE id="TuiG3T" name="FreezeFilter.h" compile="0" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/number/FreezeFilter.h"/>
                   <FILE id="DuqCwD" name="InverseFilter.cpp" compile="0" resource="0"
                         file="Source/Common/Processor/Mapping/Filter/filters/number/InverseFilter.cpp"/>
                   <FILE id="rlXidx" name="InverseFilter.h" compile="0" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/number/InverseFilter.h"/>

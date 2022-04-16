@@ -1279,6 +1279,9 @@
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\DampingFilter.cpp">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\number</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\FreezeFilter.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\number</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\InverseFilter.cpp">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\number</Filter>
     </ClCompile>
@@ -3208,6 +3211,9 @@
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\number</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\DampingFilter.h">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\number</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\FreezeFilter.h">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\number</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\InverseFilter.h">
