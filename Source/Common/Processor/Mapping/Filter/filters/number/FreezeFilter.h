@@ -23,10 +23,9 @@ public:
 	HashMap<Parameter*, var> prevValueMap;
 
 	void setupParametersInternal(int multiplexIndex, bool rangeOnly) override;
-	Parameter* setupSingleParameterInternal(Parameter* source, int multiplexIndex, bool rangeOnly) override;
 	virtual ProcessResult processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;
 
-	void onContainerTriggerTriggered(Trigger* t) override;
+	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable *c) override;
 
 	String getTypeString() const override { return "Freeze"; }
 };

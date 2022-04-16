@@ -32,16 +32,6 @@ void FreezeFilter::setupParametersInternal(int multiplexIndex, bool rangeOnly)
 	MappingFilter::setupParametersInternal(multiplexIndex, rangeOnly);
 }
 
-Parameter* FreezeFilter::setupSingleParameterInternal(Parameter* source, int multiplexIndex, bool rangeOnly)
-{
-	Parameter* p = MappingFilter::setupSingleParameterInternal(source, multiplexIndex, rangeOnly);
-	var v;
-	if (source->isComplex()) for (int i = 0; i < source->value.size(); i++) v.append(p->value[i]);
-	else v = p->getValue();
-
-	prevValueMap.set(source, source->getValue());
-	return p;
-}
 
 MappingFilter::ProcessResult FreezeFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
 {
@@ -81,12 +71,12 @@ MappingFilter::ProcessResult FreezeFilter::processSingleParameterInternal(Parame
 	return CHANGED;
 }
 
-void FreezeFilter::onContainerTriggerTriggered(Trigger* t)
+void FreezeFilter::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
 {
-	MappingFilter::onContainerTriggerTriggered(t);
-	if (t == reset)
+	if (c == reset)
 	{
 		HashMap<Parameter*, var>::Iterator it(prevValueMap);
 		while (it.next()) it.getKey()->setValue(it.getValue());
 	}
+	MappingFilter::onControllableFeedbackUpdateInternal(cc, c);
 }
