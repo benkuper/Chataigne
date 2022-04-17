@@ -15,11 +15,13 @@
 
 LinkableParameterEditor::LinkableParameterEditor(Array<ParameterLink*> pLinks, bool showMappingOptions) :
 	InspectableEditor(getLinksAs<Inspectable>(pLinks), false),
-	showMappingOptions(showMappingOptions&& pLinks[0]->canLinkToMapping),
+	showMappingOptions(showMappingOptions && pLinks.size() > 0 && pLinks[0] != nullptr && pLinks[0]->canLinkToMapping),
 	links(pLinks),
-	link(pLinks[0])
+	link(pLinks.size() > 0 ? pLinks[0] : nullptr)
 
 {
+	if (link == nullptr) return;
+
 	for (auto& l : links)
 	{
 		l->addAsyncParameterLinkListener(this);
