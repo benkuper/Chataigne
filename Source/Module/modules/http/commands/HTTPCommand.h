@@ -17,7 +17,7 @@ public:
 	HTTPCommand(HTTPModule * _module, CommandContext context, var params, Multiplex* multiplex = nullptr);
 	~HTTPCommand();
 
-	enum ContentType { URLENCODED, PLAIN };
+	enum ContentType { URLENCODED, PLAIN, FILE };
 
 	ContentType contentType;
 
@@ -29,6 +29,7 @@ public:
 
 	StringParameter* extraHeaders;
 	StringParameter* payload;
+	FileParameter* file;
 
 	void triggerInternal(int multiplexIndex) override;
 

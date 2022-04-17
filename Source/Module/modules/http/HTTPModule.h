@@ -37,6 +37,7 @@ public:
 	const Identifier sendPUTId = "sendPUT";
 	const Identifier sendPATCHId = "sendPATCH";
 	const Identifier sendDELETEId = "sendDELETE";
+	const Identifier uploadFileId = "uploadFile";
 
 	const Identifier jsonDataTypeId = "json";
 	const Identifier rawDataTypeId = "raw";
@@ -46,11 +47,11 @@ public:
 	static const String requestMethodNames[TYPE_MAX];
 
 
-	void sendRequest(StringRef address, RequestMethod method, ResultDataType dataType = ResultDataType::RAW, StringPairArray params = StringPairArray(), String extraHeaders = String(), String payload = String());
+	void sendRequest(StringRef address, RequestMethod method, ResultDataType dataType = ResultDataType::RAW, StringPairArray params = StringPairArray(), String extraHeaders = String(), String payload = String(), File file = File());
 
 	struct Request
 	{
-		Request(URL u, RequestMethod m, ResultDataType dataType = ResultDataType::DEFAULT, String extraHeaders = String()) : 
+		Request(URL u, RequestMethod m, ResultDataType dataType = ResultDataType::DEFAULT, String extraHeaders = String(), File file = File()) : 
 			url(u), method(m), resultDataType(dataType), extraHeaders(extraHeaders)
 		{
 		}
@@ -76,6 +77,7 @@ public:
 	static var sendPUTFromScript(const var::NativeFunctionArgs& args);
 	static var sendPATCHFromScript(const var::NativeFunctionArgs& args);
 	static var sendDELETEFromScript(const var::NativeFunctionArgs& args);
+	static var uploadFileFromScript(const var::NativeFunctionArgs& args);
 
 	String getDefaultTypeString() const override { return "HTTP"; }
 	static HTTPModule * create() { return new HTTPModule(); }

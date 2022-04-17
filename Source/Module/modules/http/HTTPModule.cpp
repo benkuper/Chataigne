@@ -1,4 +1,3 @@
-#include "HTTPModule.h"
 /*
   ==============================================================================
 
@@ -9,7 +8,7 @@
   ==============================================================================
 */
 
-const String HTTPModule::requestMethodNames[TYPE_MAX]{ "GET", "POST","PUT", "PATCH", "DELETE" };
+const String HTTPModule::requestMethodNames[TYPE_MAX]{ "GET", "POST","PUT", "PATCH", "DELETE"};
 
 HTTPModule::HTTPModule(const String& name) :
 	Module(name),
@@ -25,6 +24,7 @@ HTTPModule::HTTPModule(const String& name) :
 
 	username = authenticationCC.addStringParameter("Username", "If using authentication, this is the username to use for the authentication", "");
 	pass = authenticationCC.addStringParameter("Password", "If using authentication, this is the password to use for the authentication", "");
+
 	authenticationCC.enabled->setValue(false);
 	moduleParams.addChildControllableContainer(&authenticationCC);
 
@@ -35,12 +35,14 @@ HTTPModule::HTTPModule(const String& name) :
 
 	defManager->add(CommandDefinition::createDef(this, "", "Request", &HTTPCommand::create, CommandContext::BOTH));
 	defManager->add(CommandDefinition::createDef(this, "", "Request with payload", &HTTPCommand::create, CommandContext::BOTH)->addParam("contentType", HTTPCommand::PLAIN));
+	defManager->add(CommandDefinition::createDef(this, "", "Upload file", &HTTPCommand::create, CommandContext::BOTH)->addParam("contentType", HTTPCommand::FILE));
 
 	scriptObject.setMethod(sendGETId, HTTPModule::sendGETFromScript);
 	scriptObject.setMethod(sendPOSTId, HTTPModule::sendPOSTFromScript);
 	scriptObject.setMethod(sendPUTId, HTTPModule::sendPUTFromScript);
 	scriptObject.setMethod(sendPATCHId, HTTPModule::sendPATCHFromScript);
 	scriptObject.setMethod(sendDELETEId, HTTPModule::sendDELETEFromScript);
+	scriptObject.setMethod(uploadFileId, HTTPModule::uploadFileFromScript);
 	scriptManager->scriptTemplate += ChataigneAssetManager::getInstance()->getScriptTemplate("http");
 
 	startThread();
@@ -51,11 +53,19 @@ HTTPModule::~HTTPModule()
 	stopThread(3000);
 }
 
-void HTTPModule::sendRequest(StringRef address, RequestMethod method, ResultDataType dataType, StringPairArray params, String extraHeaders, String payload)
+void HTTPModule::sendRequest(StringRef address, RequestMethod method, ResultDataType dataType, StringPairArray params, String extraHeaders, String payload, File file)
 {
 
 	String urlString = baseAddress->stringValue() + address;
-	URL url = URL(urlString).withPOSTData(payload).withParameters(params);
+	URL url = URL(urlString);
+	if(file.existsAsFile())
+	{
+		url = url.withFileToUpload(payload, file, MIMETypes::getMIMEType(file.getFileExtension()));
+	}
+	else
+	{
+		url = url.withPOSTData(payload).withParameters(params);
+	}
 
 	if (authHeader.isNotEmpty()) extraHeaders += "\r\n" + authHeader;
 
@@ -260,6 +270,8 @@ void HTTPModule::sendRequestFromScript(const var::NativeFunctionArgs& args, Requ
 	String payload = "";
 	StringPairArray requestParams;
 
+	File file = File();
+
 	if (args.numArguments >= 2)
 	{
 		if (args.arguments[1].isObject())
@@ -281,6 +293,9 @@ void HTTPModule::sendRequestFromScript(const var::NativeFunctionArgs& args, Requ
 				if (i >= argArray.size() - 1) break;
 				requestParams.set(argArray[i], argArray[i + 1]);
 			}
+
+			var fp = o.getProperty("file", var());
+			file = File(fp.toString());
 		}
 		else
 		{
@@ -311,8 +326,7 @@ void HTTPModule::sendRequestFromScript(const var::NativeFunctionArgs& args, Requ
 		}
 	}
 
-
-	sendRequest(args.arguments[0].toString(), method, dataType, requestParams, extraHeaders, payload);
+	sendRequest(args.arguments[0].toString(), method, dataType, requestParams, extraHeaders, payload, file);
 	return;
 }
 
@@ -348,6 +362,13 @@ var HTTPModule::sendDELETEFromScript(const var::NativeFunctionArgs& args)
 {
 	HTTPModule* m = getObjectFromJS<HTTPModule>(args);
 	if (m != nullptr) m->sendRequestFromScript(args, METHOD_DELETE);
+	return var();
+}
+
+var HTTPModule::uploadFileFromScript(const var::NativeFunctionArgs& args)
+{
+	HTTPModule* m = getObjectFromJS<HTTPModule>(args);
+	if (m != nullptr) m->sendRequestFromScript(args, METHOD_POST);
 	return var();
 }
 
