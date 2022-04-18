@@ -454,7 +454,7 @@ var ToStringFilter::convertValue(Parameter* source, var sourceValue, int multipl
 					break;
 
 				case TIME:
-					result += StringUtil::valueToTimeString((float)sv);
+					result += StringUtil::valueToTimeString((float)sv, numDecimals->intValue());
 					break;
 				}
 			}
@@ -467,7 +467,7 @@ var ToStringFilter::convertValue(Parameter* source, var sourceValue, int multipl
 
 void ToStringFilter::filterParamChanged(Parameter* p)
 {
-	numDecimals->hideInEditor = format->getValueDataAsEnum<Format>() != NUMBER;
+	fixedLeading->hideInEditor = format->getValueDataAsEnum<Format>() != NUMBER;
 	SimpleConversionFilter::filterParamChanged(p);
 }
 
