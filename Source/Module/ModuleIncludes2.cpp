@@ -23,6 +23,8 @@
 #include "modules/generic/commands/ChataigneDashboardCommand.cpp"
 
 #include "modules/common/commands/generic/GenericControllableCommand.cpp"
+#include "modules/common/commands/osc/OSCCommand.cpp"
+#include "modules/common/commands/osc/CustomOSCCommand.cpp"
 
 #include "modules/gpio/GPIOModule.cpp"
 #include "modules/gpio/commands/GPIOCommands.cpp"
@@ -33,9 +35,7 @@
 #include "modules/multiplex/MultiplexModule.cpp"
 #include "modules/multiplex/commands/MultiplexCommands.cpp"
 #include "modules/osc/OSCModule.cpp"
-#include "modules/osc/commands/OSCCommand.cpp"
 #include "modules/osc/custom/CustomOSCModule.cpp"
-#include "modules/osc/custom/commands/CustomOSCCommand.cpp"
 #include "modules/osc/dlight/DLightModule.cpp"
 #include "modules/osc/heavym/HeavyMModule.cpp"
 #include "modules/osc/live/LiveOSCModule.cpp"

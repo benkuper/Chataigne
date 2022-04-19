@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.7b4"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.7b5"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="VST_LOGGING=0"
@@ -875,12 +875,24 @@
             <FILE id="o6qW7O" name="AudioModule.h" compile="0" resource="0" file="Source/Module/modules/audio/AudioModule.h"/>
           </GROUP>
           <GROUP id="{01EC461B-4BC5-C8F7-D379-477B101B8032}" name="common">
+            <GROUP id="{02AAA11C-8317-81E2-F032-E3F693C64077}" name="osc">
+              <FILE id="nOD91Y" name="IOSCSenderModule.h" compile="0" resource="0"
+                    file="Source/Module/modules/common/osc/IOSCSenderModule.h"/>
+            </GROUP>
             <GROUP id="{FAB3DA65-9EC2-9C28-3056-B0C9309EFBEE}" name="commands">
               <GROUP id="{6E900916-1961-12B7-A73F-68D2A99E80C7}" name="generic">
                 <FILE id="m4dmLo" name="GenericControllableCommand.cpp" compile="0"
                       resource="0" file="Source/Module/modules/common/commands/generic/GenericControllableCommand.cpp"/>
                 <FILE id="zVhnPE" name="GenericControllableCommand.h" compile="0" resource="0"
                       file="Source/Module/modules/common/commands/generic/GenericControllableCommand.h"/>
+              </GROUP>
+              <GROUP id="{627F6426-92FA-B54B-6132-AECC65CFD7B3}" name="osc">
+                <FILE id="Jf0RG6" name="CustomOSCCommand.cpp" compile="0" resource="0"
+                      file="Source/Module/modules/common/commands/osc/CustomOSCCommand.cpp"/>
+                <FILE id="zxI3if" name="CustomOSCCommand.h" compile="0" resource="0"
+                      file="Source/Module/modules/common/commands/osc/CustomOSCCommand.h"/>
+                <FILE id="ry7iie" name="OSCCommand.cpp" compile="0" resource="0" file="Source/Module/modules/common/commands/osc/OSCCommand.cpp"/>
+                <FILE id="KpREQG" name="OSCCommand.h" compile="0" resource="0" file="Source/Module/modules/common/commands/osc/OSCCommand.h"/>
               </GROUP>
               <GROUP id="{D2E06C78-3A38-5C4B-026F-DE4BEE83F13E}" name="scriptcallback">
                 <FILE id="kJSyrI" name="ScriptCallbackCommand.cpp" compile="0" resource="0"
@@ -1183,17 +1195,7 @@
                     file="Source/Module/modules/osc/heavym/HeavyMModule.cpp"/>
               <FILE id="QXWXaD" name="HeavyMModule.h" compile="0" resource="0" file="Source/Module/modules/osc/heavym/HeavyMModule.h"/>
             </GROUP>
-            <GROUP id="{1B95CD2F-342F-3FD8-868A-6AE9D1B94B50}" name="commands">
-              <FILE id="ozAL3O" name="OSCCommand.cpp" compile="0" resource="0" file="Source/Module/modules/osc/commands/OSCCommand.cpp"/>
-              <FILE id="UL19nP" name="OSCCommand.h" compile="0" resource="0" file="Source/Module/modules/osc/commands/OSCCommand.h"/>
-            </GROUP>
             <GROUP id="{4A0A8D04-83DA-560A-7267-B8BB6DE976B1}" name="custom">
-              <GROUP id="{BBC0F9D6-F906-1B01-36A4-C3C36BDFCF35}" name="commands">
-                <FILE id="AZHD58" name="CustomOSCCommand.cpp" compile="0" resource="0"
-                      file="Source/Module/modules/osc/custom/commands/CustomOSCCommand.cpp"/>
-                <FILE id="j9kqDf" name="CustomOSCCommand.h" compile="0" resource="0"
-                      file="Source/Module/modules/osc/custom/commands/CustomOSCCommand.h"/>
-              </GROUP>
               <FILE id="zsmxfd" name="CustomOSCModule.cpp" compile="0" resource="0"
                     file="Source/Module/modules/osc/custom/CustomOSCModule.cpp"/>
               <FILE id="zBRcyQ" name="CustomOSCModule.h" compile="0" resource="0"

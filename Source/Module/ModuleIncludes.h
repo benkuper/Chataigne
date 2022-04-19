@@ -55,6 +55,9 @@
 #include "modules/common/streaming/NetworkStreamingModule.h"
 
 #include "modules/common/commands/generic/GenericControllableCommand.h"
+#include "modules/common/osc/IOSCSenderModule.h"
+#include "modules/common/commands/osc/OSCCommand.h"
+#include "modules/common/commands/osc/CustomOSCCommand.h"
 
 #include "modules/common/streaming/commands/StreamingCommand.h"
 #include "modules/common/streaming/commands/SendStreamValuesCommand.h"
@@ -107,8 +110,6 @@
 
 #include "modules/abletonlink/AbletonLinkModule.h"
 
-
-
 #include "modules/generic/ChataigneGenericModule.h"
 #include "modules/generic/commands/ChataigneLogCommand.h"
 #include "modules/generic/commands/GenericAppCommand.h"
@@ -128,11 +129,10 @@
 #include "modules/multiplex/commands/MultiplexCommands.h"
 
 #include "modules/osc/OSCModule.h"
-#include "modules/osc/commands/OSCCommand.h"
 
 #include "modules/osc/custom/CustomOSCModule.h"
-#include "modules/osc/custom/commands/CustomOSCCommand.h"
 #include "modules/osc/dlight/DLightModule.h"
+
 
 #include "modules/osc/heavym/HeavyMModule.h"
 
@@ -204,3 +204,5 @@
 
 #include "modules/tcp/tcpserver/ui/TCPServerModuleUI.h"
 #include "modules/websocket/ui/WebSocketServerModuleUI.h"
+
+

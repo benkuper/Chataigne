@@ -22,10 +22,15 @@ CustomOSCModule::CustomOSCModule() :
 	useHierarchy = moduleParams.addBoolParameter("Use Hierarchy", "If checked, incoming messages will be sorted in nested containers instead of 1-level", false);
 	autoFeedback = moduleParams.addBoolParameter("Auto Feedback", "If checked, all changed values will be automatically sent back to the outputs", false);
 	colorMode = moduleParams.addEnumParameter("Color Send Mode", "The way to send color arguments.\nColor will send a 'r' argument with the encoded color.\nRGB Float will send 3 floats and RGBA Float will send 4 floats.");
-	colorMode->addOption("Color", ColorRGBA)->addOption("RGB Float", Float3)->addOption("RGBA Float", Float4);
+	colorMode->addOption("Color", OSCHelpers::ColorRGBA)->addOption("RGB Float", OSCHelpers::Float3)->addOption("RGBA Float", OSCHelpers::Float4);
 
 	valuesCC.userCanAddControllables = true;
 	valuesCC.customUserCreateControllableFunc = &CustomOSCModule::showMenuAndCreateValue;
+}
+
+OSCHelpers::ColorMode CustomOSCModule::getColorMode()
+{
+	return colorMode->getValueDataAsEnum<OSCHelpers::ColorMode>();
 }
 
 void CustomOSCModule::processMessageInternal(const OSCMessage& msg)
@@ -450,19 +455,6 @@ void CustomOSCModule::showMenuAndCreateValue(ControllableContainer* container)
 
 }
 
-void CustomOSCModule::addColorArgumentToMessage(OSCMessage& m, const Colour& c)
-{
-	ColorMode cm = colorMode->getValueDataAsEnum<ColorMode>();
-
-	if (cm == ColorRGBA) m.addColour(OSCHelpers::getOSCColour(c));
-	else
-	{
-		m.addFloat32(c.getFloatRed());
-		m.addFloat32(c.getFloatGreen());
-		m.addFloat32(c.getFloatBlue());
-		if (cm == Float4) m.addFloat32(c.getFloatAlpha());
-	}
-}
 
 void CustomOSCModule::afterLoadJSONDataInternal()
 {

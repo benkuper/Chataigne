@@ -1,4 +1,3 @@
-#include "CustomOSCCommand.h"
 /*
   ==============================================================================
 
@@ -9,9 +8,8 @@
   ==============================================================================
 */
 
-CustomOSCCommand::CustomOSCCommand(CustomOSCModule* module, CommandContext context, var params, Multiplex* multiplex) :
+CustomOSCCommand::CustomOSCCommand(IOSCSenderModule* module, CommandContext context, var params, Multiplex* multiplex) :
 	OSCCommand(module, context, params, multiplex),
-	customOSCModule(module),
 	addressHasWildcards(false)
 {
 	address->setControllableFeedbackOnly(false);
@@ -19,8 +17,6 @@ CustomOSCCommand::CustomOSCCommand(CustomOSCModule* module, CommandContext conte
 
 	removeChildControllableContainer(&argumentsContainer);
 	setUseCustomValues(true);
-
-	
 }
 
 CustomOSCCommand::~CustomOSCCommand()
@@ -63,7 +59,7 @@ void CustomOSCCommand::triggerInternal(int multiplexIndex)
 			case Controllable::INT: m.addInt32((int)pVal); break;
 			case Controllable::FLOAT: m.addFloat32((float)pVal); break;
 			case Controllable::STRING: m.addString(pVal.toString()); break;
-			case Controllable::COLOR: customOSCModule->addColorArgumentToMessage(m, Colour::fromFloatRGBA(pVal[0], pVal[1], pVal[2], pVal[3])); break;
+			case Controllable::COLOR: OSCHelpers::addColorArgumentToMessage(m, Colour::fromFloatRGBA(pVal[0], pVal[1], pVal[2], pVal[3]), oscModule->getColorMode()); break;
 
 			case Controllable::POINT2D:
 				m.addFloat32(pVal[0]);

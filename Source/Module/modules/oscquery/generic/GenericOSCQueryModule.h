@@ -36,6 +36,7 @@ public:
 
 class GenericOSCQueryModule :
 	public Module,
+	public IOSCSenderModule,
 	public SimpleWebSocketClientBase::Listener,
 	public Thread
 {
@@ -68,7 +69,7 @@ public:
 
 	void setupWSClient();
 
-	void sendOSCMessage(OSCMessage m);
+	void sendOSC(const OSCMessage& m) override;
 	void sendOSCForControllable(Controllable* c);
 
 	//Script

@@ -52,6 +52,7 @@ private:
 
 class OSCModule :
 	public Module,
+	public IOSCSenderModule,
 	public OSCReceiver::Listener<OSCReceiver::RealtimeCallback>,
 	public Thread, //for zeroconf async creation (smoother when creating an OSC module)
 	public BaseManager<OSCOutput>::ManagerListener
@@ -63,7 +64,6 @@ public:
 
 	//RECEIVE
 	IntParameter * localPort;
-	BoolParameter * isConnected;
 	OSCReceiver receiver;
 	OSCSender genericSender;
 	int defaultRemotePort;
@@ -94,7 +94,8 @@ public:
 
 	//SEND
 	virtual void setupSenders();
-	virtual void sendOSC(const OSCMessage& msg, String ip = "", int port = 0);
+	virtual void sendOSC(const OSCMessage& msg) override;
+	virtual void sendOSC(const OSCMessage& msg, String ip, int port = 0);
 
 	//ZEROCONF
 	void setupZeroConf();

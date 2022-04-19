@@ -8,8 +8,8 @@
   ==============================================================================
 */
 
-OSCCommand::OSCCommand(OSCModule * _module, CommandContext context, var params, Multiplex * multiplex) :
-	BaseCommand(_module, context, params, multiplex),
+OSCCommand::OSCCommand(IOSCSenderModule* _module, CommandContext context, var params, Multiplex * multiplex) :
+	BaseCommand(dynamic_cast<Module*>(_module), context, params, multiplex),
 	oscModule(_module),
 	argumentsContainer("Arguments", multiplex)
 {

@@ -49,6 +49,8 @@ GenericOSCQueryModule::GenericOSCQueryModule(const String& name, int defaultRemo
 	defManager->add(CommandDefinition::createDef(this, "", "Go to Value", &GenericControllableCommand::create, CommandContext::BOTH)->addParam("action", GenericControllableCommand::GO_TO_VALUE)->addParam("root", (int64)&valuesCC));
 	defManager->add(CommandDefinition::createDef(this, "", "Trigger", &GenericControllableCommand::create, CommandContext::BOTH)->addParam("action", GenericControllableCommand::TRIGGER)->addParam("root", (int64)&valuesCC));
 
+	defManager->add(CommandDefinition::createDef(this, "", "Custom Message", &CustomOSCCommand::create, CommandContext::BOTH));
+
 	sender.connect("0.0.0.0", 0);
 
 }
@@ -73,7 +75,7 @@ void GenericOSCQueryModule::setupWSClient()
 	wsClient->start(remoteHost->stringValue() + ":" + remotePort->stringValue() + "/");
 }
 
-void GenericOSCQueryModule::sendOSCMessage(OSCMessage m)
+void GenericOSCQueryModule::sendOSC(const OSCMessage& m)
 {
 	if (!enabled->boolValue()) return;
 
@@ -112,7 +114,7 @@ void GenericOSCQueryModule::sendOSCForControllable(Controllable* c)
 				m.addArgument(OSCHelpers::varToArgument(p->value));
 			}
 		}
-		sendOSCMessage(m);
+		sendOSC(m);
 	}
 	catch (OSCFormatError& e)
 	{
@@ -144,7 +146,7 @@ var GenericOSCQueryModule::sendOSCFromScript(const var::NativeFunctionArgs& a)
 			}
 		}
 
-		m->sendOSCMessage(msg);
+		m->sendOSC(msg);
 	}
 	catch (OSCFormatError& e)
 	{

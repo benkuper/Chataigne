@@ -16,10 +16,10 @@ class OSCCommand :
 	public BaseCommand
 {
 public:
-	OSCCommand(OSCModule * _module, CommandContext context, var params, Multiplex * multiplex = nullptr);
+	OSCCommand(IOSCSenderModule * _module, CommandContext context, var params, Multiplex * multiplex = nullptr);
 	virtual ~OSCCommand();
 
-	OSCModule * oscModule;
+	IOSCSenderModule* oscModule;
 	StringParameter * address;
 	ParamLinkContainer argumentsContainer;
 
@@ -44,7 +44,7 @@ public:
 
 	void triggerInternal(int multiplexIndex) override;
 
-	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex) { return new OSCCommand((OSCModule *)module, context, params, multiplex); }
+	static BaseCommand * create(ControllableContainer * cc, CommandContext context, var params, Multiplex * multiplex) { return new OSCCommand(dynamic_cast<IOSCSenderModule*>(cc), context, params, multiplex); }
 
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(OSCCommand)

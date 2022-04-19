@@ -22,11 +22,12 @@ public:
 	BoolParameter * useHierarchy;
 	BoolParameter * autoFeedback;
 	
-	enum ColorMode { ColorRGBA, Float3, Float4 };
 	EnumParameter* colorMode;
 
 	HashMap<String, WeakReference<Controllable>, DefaultHashFunctions, CriticalSection> controllableAddressMap;
 	bool hierarchyStructureSwitch;
+
+	OSCHelpers::ColorMode getColorMode();
 
 	void processMessageInternal(const OSCMessage &msg) override;
 
@@ -38,7 +39,6 @@ public:
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 
 	static void showMenuAndCreateValue(ControllableContainer * container);
-	void addColorArgumentToMessage(OSCMessage& m, const Colour& c);
 
 	void afterLoadJSONDataInternal() override;
 

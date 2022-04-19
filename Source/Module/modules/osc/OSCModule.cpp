@@ -1,4 +1,4 @@
-/*
+/*f
   ==============================================================================
 
 	OSCModule.cpp
@@ -243,6 +243,11 @@ void OSCModule::setupSenders()
 			o->receiver->addListener(this);
 		}
 	}
+}
+
+void OSCModule::sendOSC(const OSCMessage& msg)
+{
+	sendOSC(msg, "");
 }
 
 void OSCModule::sendOSC(const OSCMessage & msg, String ip, int port)
