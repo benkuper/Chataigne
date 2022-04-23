@@ -158,6 +158,7 @@ void Conductor::triggerConsequences(bool triggerTrue, int multiplexIndex)
 {
 	if (!enabled->boolValue() || forceDisabled) return;
 
+
 	if (triggerTrue)
 	{
 		int itemIndex = nextCueIndex->intValue() - 1;
@@ -172,7 +173,7 @@ void Conductor::triggerConsequences(bool triggerTrue, int multiplexIndex)
 		}
 	}
 
-	if (triggerConductorConsequencesOnDirect->boolValue()) notifyActionTriggered(triggerTrue, multiplexIndex); //only notify but do not make Action class trigger consequences here
+	if (triggerConductorConsequencesOnDirect->boolValue() && triggerTrue) notifyActionTriggered(triggerTrue, multiplexIndex); //only notify but do not make Action class trigger consequences here
 	else Action::triggerConsequences(triggerTrue, multiplexIndex);
 }
 

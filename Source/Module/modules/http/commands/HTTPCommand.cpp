@@ -27,7 +27,9 @@ HTTPCommand::HTTPCommand(HTTPModule* _module, CommandContext context, var params
 	resultDataType = addEnumParameter("Result Type", "The type of data to parse the received data. Default will let the module decide, depending on its Protocol parameter");
 	resultDataType->addOption("Default", HTTPModule::DEFAULT)->addOption("Raw", HTTPModule::RAW)->addOption("JSON", HTTPModule::JSON)->addOption("XML", HTTPModule::XML);
 
-	address = addStringParameter("Address", "Address to append to the module's base address", "anything");
+	resultDataType->setDefaultValue("JSON");
+
+	address = addStringParameter("Address", "Address to append to the module's base address", "character");
 
 	setUseCustomValues(true);
 
