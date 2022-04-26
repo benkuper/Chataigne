@@ -27,6 +27,11 @@ public:
     StringParameter* currentCueName;
     StringParameter* nextCueName;
 
+    Trigger* triggerPrevious;
+    Trigger* triggerCurrent;
+    Trigger* stopLinkedSequence;
+    Trigger* toggleLinkedSequence;
+
     ConductorCue* currentCue;
     BoolParameter* cueTriggerSetCurrent;
     BoolParameter* triggerConductorConsequencesOnDirect;
@@ -49,9 +54,11 @@ public:
 
     void updateIndices();
 
+    void onContainerTriggerTriggered(Trigger* t) override;
     void triggerConsequences(bool triggerTrue, int multiplexIndex = 0) override;
 
     int getValidIndexAfter(int index = 0);
+    int getValidIndexBefore(int index = 0);
 
     void updateNextCue();
 

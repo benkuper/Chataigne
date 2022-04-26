@@ -32,6 +32,12 @@ Conductor::Conductor(var params, Multiplex* multiplex) :
 
 	loop = addBoolParameter("Loop", "If checked, when finishing the cue list, this will set the cue index to 0 again", false);
 
+
+	triggerPrevious = addTrigger("Trigger Previous", "This will trigger the next cue and set the current one to next");
+	triggerCurrent = addTrigger("Trigger Current", "This will re-trigger the current cue");
+	stopLinkedSequence = addTrigger("Stop Linked Sequence", "If the current cue has a linked sequence, this will stop it");
+	toggleLinkedSequence = addTrigger("Toggle Linked Sequence", "If the current cue has a linked sequence, this will toggle play/pause it.");
+
 	processorManager.factory.defs.clear();
 	processorManager.factory.defs.add(MultiplexTargetDefinition<Processor>::createDef<ConductorCue>("", "Cue", multiplex));
 	processorManager.hideInEditor = true;
@@ -117,6 +123,8 @@ void Conductor::actionTriggered(Action* a, bool triggerTrue, int multiplexIndex)
 
 void Conductor::triggerCue(ConductorCue* cue, bool triggeredFromConductor)
 {
+	if (cue == nullptr) return;
+
 	if (currentCue != nullptr)
 	{
 		if (currentCue != nullptr) currentCue->setIsCurrent(false);
@@ -125,6 +133,7 @@ void Conductor::triggerCue(ConductorCue* cue, bool triggeredFromConductor)
 	currentCue = cue;
 	currentCue->setIsCurrent(true);
 	currentCueName->setValue(cue->niceName);
+	currentCueIndex->setValue(processorManager.items.indexOf(currentCue) + 1);
 	nextCueIndex->setValue(getValidIndexAfter(processorManager.items.indexOf(currentCue) + 1));
 	updateNextCue();
 
@@ -152,6 +161,37 @@ void Conductor::updateIndices()
 	}
 
 	updateNextCue();
+}
+
+void Conductor::onContainerTriggerTriggered(Trigger* t)
+{
+	Action::onContainerTriggerTriggered(t);
+	if (t == triggerPrevious)
+	{
+		int itemIndex = getValidIndexBefore(currentCueIndex->intValue() - 2);
+		if (itemIndex >= 0 && itemIndex < processorManager.items.size())
+		{
+			if (Action* a = dynamic_cast<Action*>(processorManager.items[itemIndex]))
+			{
+				if (ConductorCue* cue = dynamic_cast<ConductorCue*>(a)) triggerCue(cue, true);
+			}
+		}
+	}
+	else if (t == triggerCurrent)
+	{
+		triggerCue(currentCue, true);
+	}
+	else if (t == stopLinkedSequence || t == toggleLinkedSequence)
+	{
+		if (currentCue != nullptr)
+		{
+			if (Sequence* s = dynamic_cast<Sequence*>(currentCue->linkedSequence->targetContainer.get()))
+			{
+				if (t == stopLinkedSequence) s->stopTrigger->trigger();
+				else if (t == toggleLinkedSequence) s->togglePlayTrigger->trigger();
+			}
+		}
+	}
 }
 
 void Conductor::triggerConsequences(bool triggerTrue, int multiplexIndex)
@@ -186,6 +226,18 @@ int Conductor::getValidIndexAfter(int index)
 
 	if (loop->boolValue() && index > 0) return getValidIndexAfter(0);
 	return processorManager.items.size();
+}
+
+int Conductor::getValidIndexBefore(int index)
+{
+	if (loop->boolValue() && index == 0) return getValidIndexBefore(processorManager.items.size());
+
+	for (int i = index; i > 0; i--)
+	{
+		if (processorManager.items[i - 1]->enabled->boolValue()) return i;
+	}
+
+	return 0;
 }
 
 void Conductor::updateNextCue()
