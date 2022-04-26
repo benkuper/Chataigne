@@ -27,7 +27,7 @@ ConductorCue::ConductorCue(var params, Multiplex* multiplex) :
 	autoStop = addBoolParameter("Auto Stop", "If checked, this will stop the sequence when this cue is not current anymore", true);
 
 	cdm->setHasActivationDefinitions(false, false);
-	itemColor->setDefaultValue(Colours::mediumpurple.darker(.2f));
+	itemColor->setDefaultValue(Colours::mediumpurple.darker(.2f).withSaturation(.2f));
 }
 
 ConductorCue::~ConductorCue()

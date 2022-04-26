@@ -36,6 +36,13 @@ public:
     BoolParameter* cueTriggerSetCurrent;
     BoolParameter* triggerConductorConsequencesOnDirect;
 
+    ControllableContainer uiCC;
+    ColorParameter* currentColor;
+    ColorParameter* currentTextColor;
+    ColorParameter* nextColor;
+    ColorParameter* nextTextColor;
+
+
     ProcessorManager processorManager;
 
     void onContainerParameterChangedInternal(Parameter* p) override;

@@ -11,6 +11,7 @@
 Conductor::Conductor(var params, Multiplex* multiplex) :
 	Action(getTypeString(), params, multiplex, true, true, true),
 	currentCue(nullptr),
+	uiCC("UI Settings"),
 	processorManager("Processors", multiplex)
 {
 	saveAndLoadRecursiveData = true;
@@ -38,11 +39,19 @@ Conductor::Conductor(var params, Multiplex* multiplex) :
 	stopLinkedSequence = addTrigger("Stop Linked Sequence", "If the current cue has a linked sequence, this will stop it");
 	toggleLinkedSequence = addTrigger("Toggle Linked Sequence", "If the current cue has a linked sequence, this will toggle play/pause it.");
 
+	currentColor = uiCC.addColorParameter("Current Color", "Color of the current cue", Colours::purple);
+	currentTextColor = uiCC.addColorParameter("Current Text Color", "Color of the next cue", Colours::white);
+	nextColor = uiCC.addColorParameter("Next Color", "Color of the next cue", HIGHLIGHT_COLOR);
+	nextTextColor = uiCC.addColorParameter("Next Text Color", "Color of the next cue's text", Colours::white);
+	addChildControllableContainer(&uiCC);
+
 	processorManager.factory.defs.clear();
 	processorManager.factory.defs.add(MultiplexTargetDefinition<Processor>::createDef<ConductorCue>("", "Cue", multiplex));
 	processorManager.hideInEditor = true;
 	processorManager.addBaseManagerListener(this);
 	addChildControllableContainer(&processorManager);
+
+
 
 	itemColor->setDefaultValue(Colours::rebeccapurple.darker().withSaturation(.5f));
 }

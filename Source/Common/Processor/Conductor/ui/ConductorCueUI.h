@@ -24,5 +24,6 @@ public:
     void paint(Graphics& g) override;
     void resizedHeader(Rectangle<int> &r) override;
     void updateBGColor() override;
+
     void newMessage(const ConductorCue::ConductorCueEvent& e) override;
 };
