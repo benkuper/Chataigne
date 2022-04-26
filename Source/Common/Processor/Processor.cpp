@@ -8,8 +8,8 @@
   ==============================================================================
 */
 
-Processor::Processor(const String & name, bool canBeDisabled) :
-	BaseItem(name, canBeDisabled),
+Processor::Processor(const String & name, bool canBeDisabled, bool canHaveScripts) :
+	BaseItem(name, canBeDisabled, canHaveScripts),
 	forceDisabled(false),
 	processorNotifier(10)
 {

@@ -9,7 +9,7 @@
 */
 
 Conductor::Conductor(var params, Multiplex* multiplex) :
-	Action(getTypeString(), params, multiplex, true, true),
+	Action(getTypeString(), params, multiplex, true, true, true),
 	currentCue(nullptr),
 	processorManager("Processors", multiplex)
 {

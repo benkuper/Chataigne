@@ -13,8 +13,8 @@ Action::Action(var params, Multiplex* it) :
 {
 }
 
-Action::Action(const String& name, var params, Multiplex* multiplex, bool hasConditions, bool _hasOffConsequences) :
-	Processor(name),
+Action::Action(const String& name, var params, Multiplex* multiplex, bool hasConditions, bool _hasOffConsequences, bool canHaveScripts) :
+	Processor(name, true, canHaveScripts),
 	MultiplexTarget(multiplex),
 	autoTriggerWhenAllConditionAreActives(true),
 	forceNoOffConsequences(false),

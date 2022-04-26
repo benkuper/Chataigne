@@ -20,7 +20,7 @@ class Action :
 {
 public:
 	Action(var params = var(), Multiplex* it = nullptr);
-	Action(const String& name, var params, Multiplex* it, bool hasConditions, bool hasOffConsequences);
+	Action(const String& name, var params, Multiplex* it, bool hasConditions, bool hasOffConsequences, bool canHaveScripts = false);
 	virtual ~Action();
 
 	enum Role { ACTIVATE, DEACTIVATE };
