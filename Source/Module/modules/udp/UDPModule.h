@@ -10,12 +10,14 @@
 
 #pragma once
 
+
 class UDPModule :
 	public NetworkStreamingModule
 {
 public:
 	UDPModule(const String &name = "UDP", bool canHaveInput = true, bool canHaveOutput = true, int defaultLocalPort= 10000, int defaultRemotePort = 10001);
 	virtual ~UDPModule();
+
 
 	std::unique_ptr<DatagramSocket> receiver;
 	std::unique_ptr<DatagramSocket> sender;

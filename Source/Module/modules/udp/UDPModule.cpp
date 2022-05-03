@@ -1,22 +1,22 @@
 /*
   ==============================================================================
 
-    UDPModule.cpp
-    Created: 2 Jan 2018 11:54:51am
-    Author:  Ben
+	UDPModule.cpp
+	Created: 2 Jan 2018 11:54:51am
+	Author:  Ben
 
   ==============================================================================
 */
 
-UDPModule::UDPModule(const String & name, bool canHaveInput, bool canHaveOutput, int defaultLocalPort, int defaultRemotePort) :
-	NetworkStreamingModule(name, canHaveInput,canHaveOutput,defaultLocalPort,defaultRemotePort)
+UDPModule::UDPModule(const String& name, bool canHaveInput, bool canHaveOutput, int defaultLocalPort, int defaultRemotePort) :
+	NetworkStreamingModule(name, canHaveInput, canHaveOutput, defaultLocalPort, defaultRemotePort)
 {
 	scriptObject.setMethod("sendTo", &UDPModule::sendBytesToFromScript);
 	scriptObject.setMethod("sendMessageTo", &UDPModule::sendMessageToFromScript);
-	
+
 	listenToOutputFeedback = sendCC->addBoolParameter("Listen to Feedback", "If checked, this will listen to the (randomly set) bound port of this sender. This is useful when some softwares automatically detect incoming host and port to send back messages.", false);
 
-	if(!Engine::mainEngine->isLoadingFile) setupReceiver();
+	if (!Engine::mainEngine->isLoadingFile) setupReceiver();
 	setupSender();
 }
 
@@ -40,7 +40,7 @@ void UDPModule::setupReceiver()
 	}
 
 	receiver.reset(new DatagramSocket());
-	
+
 	bool syncSenderPort = sender != nullptr && sendCC != nullptr && sendCC->enabled->boolValue() && listenToOutputFeedback->boolValue();
 	receiver->setEnablePortReuse(syncSenderPort);
 
@@ -62,10 +62,10 @@ void UDPModule::setupReceiver()
 	Array<IPAddress> ad;
 	IPAddress::findAllAddresses(ad);
 	Array<String> ips;
-	for (auto &a : ad) ips.add(a.toString());
+	for (auto& a : ad) ips.add(a.toString());
 	ips.sort();
 	String s = "Local IPs:";
-	for (auto &ip : ips) s += String("\n > ") + ip;
+	for (auto& ip : ips) s += String("\n > ") + ip;
 }
 
 void UDPModule::setupSender()
@@ -76,7 +76,7 @@ void UDPModule::setupSender()
 	if (!enabled->boolValue()) return;
 	if (sendCC == nullptr) return;
 	if (!sendCC->enabled->boolValue()) return;
-	
+
 	sender.reset(new DatagramSocket(true));
 
 	bool syncReceiverPort = receiver != nullptr && receiveCC != nullptr && receiveCC->enabled->boolValue() && receiverIsBound->boolValue() && listenToOutputFeedback->boolValue();
@@ -106,29 +106,32 @@ bool UDPModule::isReadyToSend()
 	return sender->waitUntilReady(false, 300) == 1;
 }
 
-void UDPModule::sendMessageInternal(const String & message, var params)
+void UDPModule::sendMessageInternal(const String& message, var params)
 {
 	String targetHost = params.getProperty("ip", useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue());
 	int port = params.getProperty("port", remotePort->intValue());
-	if(sender != nullptr) sender->write(targetHost, port, message.getCharPointer(), message.length());
+	if (sender != nullptr) sender->write(targetHost, port, message.getCharPointer(), message.length());
 }
 
 void UDPModule::sendBytesInternal(Array<uint8> data, var params)
 {
 	String targetHost = params.getProperty("ip", useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue());
 	int port = params.getProperty("port", remotePort->intValue());
-	if(sender != nullptr) sender->write(targetHost, port, data.getRawDataPointer(), data.size());
+	if (sender != nullptr) sender->write(targetHost, port, data.getRawDataPointer(), data.size());
 }
 
 Array<uint8> UDPModule::readBytes()
 {
 	Array<uint8> result;
-	uint8 data[255];
+
+	const int maxPacketSize = 8192;
+	uint8 data[maxPacketSize];
+
 	while (true)
 	{
 		String senderAddress = "";
 		int senderPort = 0;
-		int numBytes = receiver->read(data, 255, false, senderAddress, senderPort);
+		int numBytes = receiver->read(data, maxPacketSize, false, senderAddress, senderPort);
 
 		if (numBytes == -1)
 		{
@@ -138,9 +141,9 @@ Array<uint8> UDPModule::readBytes()
 
 		if (numBytes == 0) break;
 
-		result.addArray((const uint8 *)data, numBytes);
+		result.addArray((const uint8*)data, numBytes);
 	}
-	
+
 	return result;
 
 }
@@ -187,7 +190,7 @@ var UDPModule::sendBytesToFromScript(const var::NativeFunctionArgs& a)
 	var params(new DynamicObject());
 	params.getDynamicObject()->setProperty("ip", a.arguments[0].toString());
 	params.getDynamicObject()->setProperty("port", (int)a.arguments[1]);
-	m->sendBytes(data,params);
+	m->sendBytes(data, params);
 	return var();
 
 }
