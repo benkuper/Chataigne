@@ -216,9 +216,12 @@ void SequenceCommand::triggerInternal(int multiplexIndex)
 	case SET_EDITING_SEQUENCE:
 		if (Sequence* s = getLinkedTargetContainerAs<Sequence>(target, multiplexIndex))
 		{
-			if (TimeMachineView* se = ShapeShifterManager::getInstance()->getContentForType<TimeMachineView>())
+			if (ShapeShifterManager* sm = ShapeShifterManager::getInstanceWithoutCreating())
 			{
-				se->setSequence(s);
+				if (TimeMachineView* se = sm->getContentForType<TimeMachineView>())
+				{
+					se->setSequence(s);
+				}
 			}
 		}
 	}
