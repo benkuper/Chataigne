@@ -1,3 +1,4 @@
+
 /*
   ==============================================================================
 
@@ -50,6 +51,12 @@ DMXModule::DMXModule() :
 		valuesCC.addParameter(dVal);
 		channelValues.add(dVal);
 	}
+
+
+	thruManager.reset(new ControllableContainer("Pass-through"));
+	thruManager->userCanAddControllables = true;
+	thruManager->customUserCreateControllableFunc = &DMXModule::createThruControllable;
+	moduleParams.addChildControllableContainer(thruManager.get());
 }
 
 DMXModule::~DMXModule()
@@ -88,7 +95,7 @@ void DMXModule::setCurrentDMXDevice(DMXDevice* d)
 void DMXModule::sendDMXValue(int channel, int value)
 {
 	if (dmxDevice == nullptr) return;
-	if (logOutgoingData->boolValue()) NLOG(niceName, "Send DMX : " + String(channel) + " > " + String(value));
+	if (logOutgoingData->boolValue()) NLOG(niceName, "Send DMX : " + String(channel + 1) + " > " + String(value));
 	outActivityTrigger->trigger();
 	dmxDevice->sendDMXValue(channel, value);
 }
@@ -98,7 +105,7 @@ void DMXModule::sendDMXValues(int startChannel, Array<int> values)
 	if (dmxDevice == nullptr) return;
 	if (logOutgoingData->boolValue())
 	{
-		String s = "Send DMX : " + String(startChannel) + ", " + String(values.size()) + " values";
+		String s = "Send DMX : " + String(startChannel + 1) + ", " + String(values.size()) + " values";
 		int ch = startChannel;
 		for (auto& v : values)
 		{
@@ -116,7 +123,7 @@ void DMXModule::sendDMXValues(int startChannel, Array<int> values)
 void DMXModule::send16BitDMXValue(int startChannel, int value, DMXByteOrder byteOrder)
 {
 	if (dmxDevice == nullptr) return;
-	if (logOutgoingData->boolValue()) NLOG(niceName, "Send 16-bit DMX : " + String(startChannel) + " > " + String(value));
+	if (logOutgoingData->boolValue()) NLOG(niceName, "Send 16-bit DMX : " + String(startChannel + 1) + " > " + String(value));
 	outActivityTrigger->trigger();
 	dmxDevice->sendDMXValue(startChannel, byteOrder == MSB ? (value >> 8) & 0xFF : value & 0xFF);
 	dmxDevice->sendDMXValue(startChannel + 1, byteOrder == MSB ? 0xFF : (value >> 8) & 0xFF);
@@ -125,7 +132,7 @@ void DMXModule::send16BitDMXValue(int startChannel, int value, DMXByteOrder byte
 void DMXModule::send16BitDMXValues(int startChannel, Array<int> values, DMXByteOrder byteOrder)
 {
 	if (dmxDevice == nullptr) return;
-	if (logOutgoingData->boolValue()) NLOG(niceName, "Send 16-bit DMX : " + String(startChannel) + " > " + String(values.size()) + " values");
+	if (logOutgoingData->boolValue()) NLOG(niceName, "Send 16-bit DMX : " + String(startChannel + 1) + " > " + String(values.size()) + " values");
 	outActivityTrigger->trigger();
 
 	Array<int> dmxValues;
@@ -255,6 +262,22 @@ void DMXModule::dmxDataInChanged(int numChannels, uint8* values, const String& s
 
 	inActivityTrigger->trigger();
 
+	if (thruManager != nullptr)
+	{
+		for (auto& c : thruManager->controllables)
+		{
+			;
+			if (TargetParameter* mt = (TargetParameter*)c)
+			{
+				if (!mt->enabled) continue;
+				if (DMXModule* m = (DMXModule*)(mt->targetContainer.get()))
+				{
+					m->sendDMXValues(0, Array<int>(values, numChannels));
+				}
+			}
+		}
+	}
+
 	var data;
 
 	for (int i = 0; i < numChannels; ++i)
@@ -274,6 +297,17 @@ void DMXModule::dmxDataInChanged(int numChannels, uint8* values, const String& s
 	}
 
 	scriptManager->callFunctionOnAllItems(dmxEventId, Array<var>{data});
+}
+
+void DMXModule::createThruControllable(ControllableContainer* cc)
+{
+	TargetParameter* p = new TargetParameter("Output module", "Target module to send the raw data to", "");
+	p->targetType = TargetParameter::CONTAINER;
+	p->customGetTargetContainerFunc = &ModuleManager::showAndGetModuleOfType<DMXModule>;
+	p->isRemovableByUser = true;
+	p->canBeDisabledByUser = true;
+	p->saveValueOnly = false;
+	cc->addParameter(p);
 }
 
 

@@ -90,6 +90,9 @@ public:
 	const Identifier dmxEventId = "dmxEvent";
 	const Identifier sendDMXId = "send";
 
+	std::unique_ptr<ControllableContainer> thruManager;
+
+
 	void setCurrentDMXDevice(DMXDevice * d);
 
 	void sendDMXValue(int channel, int value);
@@ -113,6 +116,8 @@ public:
 	void dmxDeviceDisconnected() override;
 
 	void dmxDataInChanged(int numChannels, uint8 * values, const String& sourceName = "") override;
+
+	static void createThruControllable(ControllableContainer* cc);
 
 	class DMXRouteParams :
 		public RouteParams
