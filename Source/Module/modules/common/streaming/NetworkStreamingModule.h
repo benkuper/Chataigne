@@ -42,7 +42,10 @@ public:
 	virtual void clearInternal() {}
 
 	virtual void onContainerParameterChangedInternal(Parameter* p) override;
-	virtual void controllableFeedbackUpdate(ControllableContainer *, Controllable * c) override;
+	virtual void onControllableFeedbackUpdateInternal(ControllableContainer *, Controllable * c) override;
+
+	virtual bool canReceive();
+	virtual bool canSend();
 
 	virtual void loadJSONDataInternal(var data) override;
 	virtual void afterLoadJSONDataInternal() override;

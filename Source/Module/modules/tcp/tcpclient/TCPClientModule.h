@@ -33,6 +33,8 @@ public:
 	virtual void sendBytesInternal(Array<uint8> data, var) override;
 
 	virtual Array<uint8> readBytes() override;
+
+	virtual bool canReceive() override { return canSend(); }
 	
 	virtual void clearInternal() override;
 

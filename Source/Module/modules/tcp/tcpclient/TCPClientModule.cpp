@@ -32,12 +32,14 @@ void TCPClientModule::setupSender()
 {
 	clearThread();
 	clearInternal();
+
+	sendCC->clearWarning();
 	
 	if (!enabled->boolValue() || isCurrentlyLoadingData ||
 		sendCC == nullptr || !sendCC->enabled->boolValue() || 
 		(Engine::mainEngine != nullptr && Engine::mainEngine->isClearing))
 	{
-		if(!sendCC->enabled->boolValue()) sendCC->clearWarning();
+		//if(!sendCC->enabled->boolValue()) sendCC->clearWarning();
 		//stopThread(1000);
 		return;
 	}

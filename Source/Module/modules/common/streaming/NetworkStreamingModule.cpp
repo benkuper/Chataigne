@@ -1,27 +1,27 @@
 /*
   ==============================================================================
 
-    NetworkStreamingModule.cpp
-    Created: 5 Jan 2018 10:42:43am
-    Author:  Ben
+	NetworkStreamingModule.cpp
+	Created: 5 Jan 2018 10:42:43am
+	Author:  Ben
 
   ==============================================================================
 */
 
-NetworkStreamingModule::NetworkStreamingModule(const String &name, bool canHaveInput, bool canHaveOutput, int defaultLocalPort, int defaultRemotePort) :
+NetworkStreamingModule::NetworkStreamingModule(const String& name, bool canHaveInput, bool canHaveOutput, int defaultLocalPort, int defaultRemotePort) :
 	StreamingModule(name),
-	Thread("stream_"+name),
+	Thread("stream_" + name),
 	receiveFrequency(nullptr),
-    useLocal(nullptr),
-    remoteHost(nullptr),
+	useLocal(nullptr),
+	remoteHost(nullptr),
 	remotePort(nullptr),
-    senderIsConnected(nullptr)
+	senderIsConnected(nullptr)
 {
 	setupIOConfiguration(canHaveInput, canHaveOutput);
 
 	//Receive
 	receiveFrequency = new IntParameter("Receive Frequency", "The frequency at which to receive data, only change it if you need much high frequency", 100, 1, 1000);
-	
+
 	if (canHaveInput)
 	{
 		receiveCC.reset(new EnablingControllableContainer("Input"));
@@ -82,29 +82,42 @@ void NetworkStreamingModule::onContainerParameterChangedInternal(Parameter* p)
 		if (!isCurrentlyLoadingData)
 		{
 			NLOG(niceName, "Module is " << (enabled->boolValue() ? "enabled" : "disabled") << ", " << (enabled->boolValue() ? "opening" : "closing") << " connections");
-			
+
 			setupSender();
 			setupReceiver();
 		}
 	}
 }
 
-void NetworkStreamingModule::controllableFeedbackUpdate(ControllableContainer* cc, Controllable* c)
+void NetworkStreamingModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
 {
 	StreamingModule::onControllableFeedbackUpdateInternal(cc, c);
-	if (c == remoteHost || c == remotePort || c == useLocal)
+	if (c->parentContainer == sendCC.get() && !c->isControllableFeedbackOnly)
 	{
 		if (c == useLocal) remoteHost->setEnabled(!useLocal->boolValue());
-		if(!isCurrentlyLoadingData) setupSender();
+		if (!isCurrentlyLoadingData) setupSender();
 	}
-	else if (c == localPort)
+	else if (c->parentContainer == receiveCC.get() && !c->isControllableFeedbackOnly)
 	{
 		if (!isCurrentlyLoadingData) setupReceiver();
 	}
-	else if ((receiveCC != nullptr && c == receiveCC->enabled) || (sendCC != nullptr && c == sendCC->enabled))
+	
+	if ((receiveCC != nullptr && c == receiveCC->enabled) || (sendCC != nullptr && c == sendCC->enabled))
 	{
-		setupIOConfiguration(receiveCC != nullptr?receiveCC->enabled->boolValue():false, sendCC != nullptr?sendCC->enabled->boolValue():false);
+		setupIOConfiguration(canReceive(), canSend());
 	}
+}
+
+bool NetworkStreamingModule::canReceive()
+{
+	if (receiveCC == nullptr) return false;
+	return receiveCC->enabled->boolValue();
+}
+
+bool NetworkStreamingModule::canSend()
+{
+	if (sendCC == nullptr) return false;
+	return sendCC->enabled->boolValue();
 }
 
 void NetworkStreamingModule::loadJSONDataInternal(var data)
@@ -161,9 +174,9 @@ void NetworkStreamingModule::run()
 
 				case LINES:
 				{
-					if (CharPointer_UTF8::isValidString((char *)bytes.getRawDataPointer(), numBytes))
+					if (CharPointer_UTF8::isValidString((char*)bytes.getRawDataPointer(), numBytes))
 					{
-						stringBuffer.append(String::fromUTF8((char *)bytes.getRawDataPointer(), numBytes), numBytes);
+						stringBuffer.append(String::fromUTF8((char*)bytes.getRawDataPointer(), numBytes), numBytes);
 						StringArray sa;
 						sa.addTokens(stringBuffer, "\r\n", "\"");
 						for (int i = 0; i < sa.size() - 1; ++i) processDataLine(sa[i]);
@@ -187,7 +200,8 @@ void NetworkStreamingModule::run()
 						{
 							processDataBytes(byteBuffer);
 							byteBuffer.clear();
-						} else
+						}
+						else
 						{
 							byteBuffer.add(b);
 						}
@@ -206,7 +220,7 @@ void NetworkStreamingModule::run()
 						if (b == 0)
 						{
 							uint8_t decodedData[255];
-							size_t numDecoded = cobs_decode(byteBuffer.getRawDataPointer() , byteBuffer.size(), decodedData);
+							size_t numDecoded = cobs_decode(byteBuffer.getRawDataPointer(), byteBuffer.size(), decodedData);
 							processDataBytes(Array<uint8>(decodedData, (int)numDecoded - 1));
 							byteBuffer.clear();
 						}
@@ -214,7 +228,8 @@ void NetworkStreamingModule::run()
 				}
 				break;
 				}
-			} catch (...)
+			}
+			catch (...)
 			{
 				DBG("### Streaming receive thread problem ");
 			}
