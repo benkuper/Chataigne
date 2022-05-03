@@ -25,10 +25,10 @@ DMXArtNetDevice::DMXArtNetDevice() :
 	outputSubnet = outputCC->addIntParameter("Subnet", "The subnet to send to, from 0 to 15", 0, 0, 15);
 	outputUniverse = outputCC->addIntParameter("Universe", "The Universe to send to, from 0 to 15", 0, 0, 15);
 
-	
+
 	memset(receiveBuffer, 0, MAX_PACKET_LENGTH);
 	memset(artnetPacket + DMX_HEADER_LENGTH, 0, NUM_CHANNELS);
-	
+
 	sender.bindToPort(0);
 
 	setupReceiver();
@@ -44,7 +44,7 @@ void DMXArtNetDevice::setupReceiver()
 {
 	stopThread(500);
 	setConnected(false);
-	if(receiver != nullptr) receiver->shutdown();
+	if (receiver != nullptr) receiver->shutdown();
 
 	if (!inputCC->enabled->boolValue())
 	{
@@ -58,7 +58,7 @@ void DMXArtNetDevice::setupReceiver()
 	{
 		receiver->setEnablePortReuse(false);
 		clearWarning();
-		NLOG(niceName,"Listening for ArtNet on port " << localPort->intValue());
+		NLOG(niceName, "Listening for ArtNet on port " << localPort->intValue());
 	}
 	else
 	{
@@ -72,7 +72,7 @@ void DMXArtNetDevice::setupReceiver()
 
 void DMXArtNetDevice::sendDMXValue(int channel, int value)
 {
-	artnetPacket[channel-1 + DMX_HEADER_LENGTH] = (uint8)value;
+	artnetPacket[channel - 1 + DMX_HEADER_LENGTH] = (uint8)value;
 	DMXDevice::sendDMXValue(channel, value);
 }
 
@@ -87,7 +87,7 @@ void DMXArtNetDevice::sendDMXRange(int startChannel, Array<int> values)
 
 		artnetPacket[channel - 1 + DMX_HEADER_LENGTH] = (uint8)(values[i]);
 	}
-	
+
 
 	DMXDevice::sendDMXRange(startChannel, values);
 
@@ -128,21 +128,33 @@ void DMXArtNetDevice::run()
 		int rPort = 0;
 
 		int bytesRead = receiver->read(receiveBuffer, MAX_PACKET_LENGTH, false, rAddress, rPort);
-		
+
+		bool artExtPacket = false;
+
 		if (bytesRead > 0)
 		{
 			for (uint8 i = 0; i < 8; ++i)
 			{
+				DBG("Check " << (char)receiveBuffer[i] << " <> " << (char)artnetPacket[i]);
 				if (receiveBuffer[i] != artnetPacket[i])
 				{
-					NLOGWARNING(niceName, "Received packet is not valid ArtNet");
-					break;
+					if (receiveBuffer[i] != artextPacket[i])
+					{
+						NLOGWARNING(niceName, "Received packet is not valid ArtNet");
+						break;
+					}
+					else
+					{
+						artExtPacket = true;
+					}
 				}
 			}
 
 			int opcode = receiveBuffer[8] | receiveBuffer[9] << 8;
 
-			if (opcode == DMX_OPCODE)
+			switch (opcode)
+			{
+			case DMX_OPCODE:
 			{
 				//int sequence = receiveBuffer[12];
 
@@ -160,9 +172,17 @@ void DMXArtNetDevice::run()
 					setDMXValuesIn(dmxDataLength, receiveBuffer + DMX_HEADER_LENGTH, 0, sName);
 				}
 			}
-			else
+			break;
+
+			case DMX_SYNC_OPCODE:
+				DBG("Received Sync opcode, " << bytesRead);
+				break;
+
+			default:
 			{
 				DBG("ArtNet OpCode not handled : " << opcode << "( 0x" << String::toHexString(opcode) << ")");
+			}
+			break;
 			}
 		}
 		else

@@ -11,6 +11,7 @@
 #pragma once
 
 #define DMX_OPCODE 0x5000
+#define DMX_SYNC_OPCODE 0x5200
 #define PROTOCOL_VERSION 14
 #define NUM_CHANNELS 512
 #define DMX_HEADER_LENGTH 18
@@ -43,6 +44,7 @@ public:
 
 	uint8 sequenceNumber;
 	uint8 artnetPacket[MAX_PACKET_LENGTH]{ 'A','r','t','-','N','e','t',0, 0x00 , 0x50,  0, PROTOCOL_VERSION };
+	uint8 artextPacket[MAX_PACKET_LENGTH]{ 'A','r','t','-','E','x','t',0, 0x00 , 0x50,  0, PROTOCOL_VERSION };
 	uint8 receiveBuffer[MAX_PACKET_LENGTH];
 
 
