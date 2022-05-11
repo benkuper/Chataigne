@@ -7,7 +7,7 @@ env:
 jobs:
   windows:
     name: Windows
-    #if: false # always skip job (heap space needs fix)
+    if: false # tmp disable
     runs-on: windows-2019
     strategy:
       matrix:
@@ -89,7 +89,7 @@ jobs:
           pass: ${{ secrets.UPLOADPASS }}
 
   osx:
-    #if: false # tmp disable
+    if: false # tmp disable
     name: OSX
     runs-on: macos-latest
 
@@ -146,7 +146,7 @@ jobs:
           pass: ${{ secrets.UPLOADPASS }}
           
   linux:
-    #if: false # tmp disable
+    if: false # tmp disable
 
     name: Linux
     runs-on: ubuntu-latest
@@ -256,3 +256,11 @@ jobs:
           pkg-name: ./Builds/${{ matrix.buildFolder }}/${{ steps.create_package.outputs.pkg-name }}
           url: ${{ secrets.UPLOADURL }}
           pass: ${{ secrets.UPLOADPASS }}
+
+  rpiDebug:
+    name: Linux
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup upterm session
+      uses: lhotari/action-upterm@v1
