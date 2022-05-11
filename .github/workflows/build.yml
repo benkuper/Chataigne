@@ -7,7 +7,7 @@ env:
 jobs:
   windows:
     name: Windows
-    if: false # tmp disable
+    #if: false # always skip job (heap space needs fix)
     runs-on: windows-2019
     strategy:
       matrix:
@@ -89,7 +89,7 @@ jobs:
           pass: ${{ secrets.UPLOADPASS }}
 
   osx:
-    if: false # tmp disable
+    #if: false # tmp disable
     name: OSX
     runs-on: macos-latest
 
@@ -146,7 +146,7 @@ jobs:
           pass: ${{ secrets.UPLOADPASS }}
           
   linux:
-    if: false # tmp disable
+    #if: false # tmp disable
 
     name: Linux
     runs-on: ubuntu-latest
@@ -156,8 +156,9 @@ jobs:
         - arch: linux-x64
           buildFolder: "LinuxMakefile"
 
-        - arch: linux-armhf
-          buildFolder: "Raspberry"
+        # - arch: linux-armhf
+        #   buildFolder: "Raspberry"
+          
       fail-fast: false
 
     steps:
@@ -202,8 +203,7 @@ jobs:
             
             sudo apt-get update
             echo "Installing armhf cross compilation tools"
-            sudo apt-get autoremove
-            sudo apt-get install -qyf g++-arm-linux-gnueabihf --no-install-recommends
+            sudo apt-get install -qy g++-arm-linux-gnueabihf
 
             echo "Installing extra lib dependencies"
             sudo apt-get install -qyf libgdk-pixbuf2.0-dev:armhf libpango1.0-dev:armhf libsoup2.4-dev:armhf libharfbuzz-dev:armhf libxml2-dev:armhf libicu-dev:armhf libc6-dev:armhf libxft-dev:armhf
@@ -256,13 +256,3 @@ jobs:
           pkg-name: ./Builds/${{ matrix.buildFolder }}/${{ steps.create_package.outputs.pkg-name }}
           url: ${{ secrets.UPLOADURL }}
           pass: ${{ secrets.UPLOADPASS }}
-
-  rpiDebug:
-    name: Debug SSH
-    runs-on: ubuntu-latest
-    steps:
-    - name: Start SSH session
-      uses: luchihoratiu/debug-via-ssh@main
-      with:
-        NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
-        SSH_PASS: ${{ secrets.SSH_PASS }}
