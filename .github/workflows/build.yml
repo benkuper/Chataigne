@@ -202,7 +202,8 @@ jobs:
             
             sudo apt-get update
             echo "Installing armhf cross compilation tools"
-            sudo apt-get install -qyf gcc-7-arm-linux-gnueabihf gcc-arm-linux-gnueabihf g++-7-arm-linux-gnueabihf g++-arm-linux-gnueabihf
+            sudo apt-get autoremove
+            sudo apt-get install -qyf g++-arm-linux-gnueabihf
 
             echo "Installing extra lib dependencies"
             sudo apt-get install -qyf libgdk-pixbuf2.0-dev:armhf libpango1.0-dev:armhf libsoup2.4-dev:armhf libharfbuzz-dev:armhf libxml2-dev:armhf libicu-dev:armhf libc6-dev:armhf libxft-dev:armhf
