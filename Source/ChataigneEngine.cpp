@@ -180,7 +180,7 @@ void ChataigneEngine::importSelection(File f)
 	if (!f.existsAsFile())
 	{
 		FileChooser* fc(new FileChooser("Load a LilNut", File::getCurrentWorkingDirectory(), "*.lilnut"));
-		fc->launchAsync(FileBrowserComponent::FileChooserFlags::saveMode, [this](const FileChooser& fc)
+		fc->launchAsync(FileBrowserComponent::FileChooserFlags::openMode | FileBrowserComponent::FileChooserFlags::canSelectFiles, [this](const FileChooser& fc)
 			{
 				File f = fc.getResult();
 				delete& fc;
@@ -214,7 +214,7 @@ void ChataigneEngine::exportSelection()
 	String s = JSON::toString(data);
 
 	FileChooser* fc(new FileChooser("Save a LilNut", File::getCurrentWorkingDirectory(), "*.lilnut"));
-	fc->launchAsync(FileBrowserComponent::FileChooserFlags::saveMode, [s](const FileChooser& fc)
+	fc->launchAsync(FileBrowserComponent::FileChooserFlags::saveMode | FileBrowserComponent::FileChooserFlags::canSelectFiles, [s](const FileChooser& fc)
 		{
 			File f = fc.getResult();
 			delete& fc;
