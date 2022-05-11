@@ -149,7 +149,7 @@ jobs:
     #if: false # tmp disable
 
     name: Linux
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         include:
