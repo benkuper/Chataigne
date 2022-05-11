@@ -27,7 +27,7 @@ public:
 	HashMap<String, WeakReference<Controllable>, DefaultHashFunctions, CriticalSection> controllableAddressMap;
 	bool hierarchyStructureSwitch;
 
-	OSCHelpers::ColorMode getColorMode();
+	OSCHelpers::ColorMode getColorMode() override;
 
 	void processMessageInternal(const OSCMessage &msg) override;
 

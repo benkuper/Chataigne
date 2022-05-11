@@ -14,8 +14,8 @@ MQTTClientModule::MQTTClientModule(const String& name, bool canHaveInput, bool c
 #if JUCE_WINDOWS
 	mosquittopp("Chataigne"),
 #endif
-	topicsCC("Topics"),
-	authenticationCC("Authentication")
+	authenticationCC("Authentication"),
+	topicsCC("Topics")
 {
 
 #if JUCE_WINDOWS
