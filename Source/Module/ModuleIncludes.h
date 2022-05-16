@@ -194,6 +194,9 @@
 #include "modules/mqtt/MQTTModule.h"
 #include "modules/mqtt/commands/MQTTCommands.h"
 
+#include "modules/posistagenet/PosiStageNetModule.h"
+#include "modules/posistagenet/commands/PosiStageNetCommand.h"
+
 #include "ui/ModuleChooserUI.h"
 #include "ui/ModuleUI.h"
 #include "ui/ModuleManagerUI.h"

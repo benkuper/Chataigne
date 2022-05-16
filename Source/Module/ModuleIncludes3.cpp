@@ -41,3 +41,6 @@
 
 #include "modules/mqtt/MQTTModule.cpp"
 #include "modules/mqtt/commands/MQTTCommands.cpp"
+
+#include "modules/posistagenet/PosiStageNetModule.cpp"
+#include "modules/posistagenet/commands/PosiStageNetCommand.h"

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.7b11"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.7b12"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="VST_LOGGING=0"
               splashScreenColour="Dark" cppLanguageStandard="17" companyCopyright="Ben Kuper"
-              headerPath="../../Source&#10;../../External/wiiuse&#10;../../External/serial/include&#10;../../External/asio&#10;../../External/asiodriver&#10;../../External/kinect/include&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/ois/include&#10;../../External/sdl/include&#10;../../External/hidapi/include&#10;../../External/abletonlink/include&#10;../../External/libusb/include/libusb-1.0&#10;../../External/mosquitto/include"
+              headerPath="../../Source&#10;../../External/wiiuse&#10;../../External/serial/include&#10;../../External/asio&#10;../../External/asiodriver&#10;../../External/kinect/include&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/ois/include&#10;../../External/sdl/include&#10;../../External/hidapi/include&#10;../../External/abletonlink/include&#10;../../External/libusb/include/libusb-1.0&#10;../../External/mosquitto/include&#10;../../External/posistagenet/include"
               projectLineFeed="&#10;" jucerFormatVersion="1">
   <MAINGROUP id="EDDVhd" name="Chataigne">
     <GROUP id="{E61F6705-4C4B-3F04-F742-20CC91F590E4}" name="Resources">
@@ -1400,6 +1400,18 @@
             </GROUP>
             <FILE id="r5gPbq" name="GPIOModule.cpp" compile="0" resource="0" file="Source/Module/modules/gpio/GPIOModule.cpp"/>
             <FILE id="vShhSX" name="GPIOModule.h" compile="0" resource="0" file="Source/Module/modules/gpio/GPIOModule.h"/>
+          </GROUP>
+          <GROUP id="{303429D4-46AF-662A-ECEA-C139C35E331F}" name="posistagenet">
+            <GROUP id="{0DC9D488-4014-3860-2CE6-051EA2FF4884}" name="commands">
+              <FILE id="tC8dwY" name="PosiStageNetCommand.cpp" compile="0" resource="0"
+                    file="Source/Module/modules/posistagenet/commands/PosiStageNetCommand.cpp"/>
+              <FILE id="f2ssRJ" name="PosiStageNetCommand.h" compile="0" resource="0"
+                    file="Source/Module/modules/posistagenet/commands/PosiStageNetCommand.h"/>
+            </GROUP>
+            <FILE id="t40dE2" name="PosiStageNetModule.cpp" compile="0" resource="0"
+                  file="Source/Module/modules/posistagenet/PosiStageNetModule.cpp"/>
+            <FILE id="O19KOs" name="PosiStageNetModule.h" compile="0" resource="0"
+                  file="Source/Module/modules/posistagenet/PosiStageNetModule.h"/>
           </GROUP>
           <GROUP id="{82D5E4C7-8C1C-9378-EEE7-C988DD90549E}" name="websocket">
             <GROUP id="{4FA7479C-2A94-C90F-41FE-7D5B84A26E65}" name="ui">

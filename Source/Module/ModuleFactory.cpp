@@ -23,6 +23,7 @@ ModuleFactory::ModuleFactory() {
 	defs.add(new ModuleDefinition("Protocol", "WebSocket Server", &WebSocketServerModule::create));
 	defs.add(new ModuleDefinition("Protocol", "MQTT Client", &MQTTClientModule::create));
 	defs.add(new ModuleDefinition("Protocol", "PJLink", &PJLinkModule::create));
+	defs.add(new ModuleDefinition("Protocol", "PosiStageNet", &PosiStageNetModule::create));
 	defs.add(new ModuleDefinition("Protocol", "Ableton Link", &AbletonLinkModule::create));
 
 

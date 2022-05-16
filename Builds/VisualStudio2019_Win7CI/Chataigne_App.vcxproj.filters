@@ -524,6 +524,12 @@
     <Filter Include="Chataigne\Source\Module\modules\gpio">
       <UniqueIdentifier>{95883558-2B5B-67E4-B81C-3AFA9E47F7AF}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\posistagenet\commands">
+      <UniqueIdentifier>{A03AAC79-C5A8-F84B-CF45-4BAC94EBF383}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\posistagenet">
+      <UniqueIdentifier>{8315CC6E-A442-E46E-6881-E59DA25239A7}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Module\modules\websocket\ui">
       <UniqueIdentifier>{B293CBA1-C418-03EF-CF1A-854113923B86}</UniqueIdentifier>
     </Filter>
@@ -1872,6 +1878,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\gpio\GPIOModule.cpp">
       <Filter>Chataigne\Source\Module\modules\gpio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\posistagenet\commands\PosiStageNetCommand.cpp">
+      <Filter>Chataigne\Source\Module\modules\posistagenet\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\posistagenet\PosiStageNetModule.cpp">
+      <Filter>Chataigne\Source\Module\modules\posistagenet</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\websocket\ui\WebSocketServerModuleUI.cpp">
       <Filter>Chataigne\Source\Module\modules\websocket\ui</Filter>
@@ -3755,6 +3767,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\gpio\GPIOModule.h">
       <Filter>Chataigne\Source\Module\modules\gpio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\posistagenet\commands\PosiStageNetCommand.h">
+      <Filter>Chataigne\Source\Module\modules\posistagenet\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\posistagenet\PosiStageNetModule.h">
+      <Filter>Chataigne\Source\Module\modules\posistagenet</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\websocket\ui\WebSocketServerModuleUI.h">
       <Filter>Chataigne\Source\Module\modules\websocket\ui</Filter>
