@@ -149,15 +149,22 @@ jobs:
     #if: false # tmp disable
 
     name: Linux
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     strategy:
       matrix:
         include:
         - arch: linux-x64
           buildFolder: "LinuxMakefile"
 
-        # - arch: linux-armhf
+        - arch: armhf
+          packageArch: armhf
+          buildFolder: "Raspberry"
+          buildConfig: "Release"
+
+        # - arch: aarch64
+        #   packageArch: arm64
         #   buildFolder: "Raspberry"
+        #   buildConfig: "Release64"
           
       fail-fast: false
 
@@ -185,59 +192,69 @@ jobs:
         #shell: bash {0} # Opt out of fail-fast behavior (necessary to ignore fetch errors)
         run: |
           echo "Target system architecture: ${{ matrix.arch }}"
-          if [ "${{ matrix.arch }}" == "linux-armhf" ]; 
+          if [ "${{ matrix.arch }}" != "x64" ]; 
           then
+
+            DEP_ARCH="${{ matrix.packageArch }}"
+
             sudo tee /etc/apt/sources.list << END
           deb [arch=amd64] http://us.archive.ubuntu.com/ubuntu/ bionic main restricted universe multiverse
           deb [arch=amd64] http://us.archive.ubuntu.com/ubuntu/ bionic-updates main restricted universe multiverse
           deb [arch=amd64] http://us.archive.ubuntu.com/ubuntu/ bionic-backports main restricted universe multiverse
           deb [arch=amd64] http://security.ubuntu.com/ubuntu bionic-security main restricted universe multiverse
 
-          deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports/ bionic main restricted universe multiverse
-          deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports/ bionic-updates main restricted universe multiverse
-          deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports/ bionic-backports main restricted universe multiverse
-          deb [arch=armhf] http://ports.ubuntu.com/ubuntu-ports/ bionic-security main restricted universe multiverse
+          deb [arch=$DEP_ARCH] http://ports.ubuntu.com/ubuntu-ports/ bionic main restricted universe multiverse
+          deb [arch=$DEP_ARCH] http://ports.ubuntu.com/ubuntu-ports/ bionic-updates main restricted universe multiverse
+          deb [arch=$DEP_ARCH] http://ports.ubuntu.com/ubuntu-ports/ bionic-backports main restricted universe multiverse
+          deb [arch=$DEP_ARCH] http://ports.ubuntu.com/ubuntu-ports/ bionic-security main restricted universe multiverse
           END
 
-            sudo dpkg --add-architecture armhf
-            
+            sudo dpkg --add-architecture $DEP_ARCH
             sudo apt-get update
-            echo "Installing armhf cross compilation tools"
-            sudo apt-get install -qy g++-arm-linux-gnueabihf
+
+            if [ "${{ matrix.arch }}" == "armhf" ]; 
+            then
+              sudo apt-get install -qy g++-arm-linux-gnueabihf
+            else
+              sudo apt-get install -qy g++-aarch64-linux-gnu
+            fi
 
             echo "Installing extra lib dependencies"
-            sudo apt-get install -qyf libgdk-pixbuf2.0-dev:armhf libpango1.0-dev:armhf libsoup2.4-dev:armhf libharfbuzz-dev:armhf libxml2-dev:armhf libicu-dev:armhf libc6-dev:armhf libxft-dev:armhf
+            sudo apt-get install -qyf linux-libc-dev:$DEP_ARCH libgdk-pixbuf2.0-dev:$DEP_ARCH libpango1.0-dev:$DEP_ARCH libsoup2.4-dev:$DEP_ARCH libharfbuzz-dev:$DEP_ARCH libicu-dev:$DEP_ARCH libc6-dev:$DEP_ARCH libxft-dev:$DEP_ARCH libatomic1:$DEP_ARCH libatomic1-$DEP_ARCH-cross
 
-            echo "Downloading AppImage runtime for armhf"
+            echo "Downloading AppImage runtime for ${{ matrix.arch }}"
             cd ${{ github.workspace }}
-            wget "https://github.com/AppImage/AppImageKit/releases/download/12/runtime-armhf"
-            echo "::set-output name=appImageRuntime::--runtime-file ${{ github.workspace }}/runtime-armhf"
-
-            # DEP_ARCH is used later when downloading the dependencies
-            DEP_ARCH="armhf"
+            wget "https://github.com/AppImage/AppImageKit/releases/download/12/runtime-${{ matrix.arch }}"
+            echo "::set-output name=appImageRuntime::--runtime-file ${{ github.workspace }}/runtime-${{ matrix.arch }}"
           fi
 
           sudo apt-get update
           echo "Installing JUCE lib dependencies and extra tools"
-          sudo apt-get install -qyf libfreetype6-dev:$DEP_ARCH libx11-dev:$DEP_ARCH libxinerama-dev:$DEP_ARCH libxrandr-dev:$DEP_ARCH libxcursor-dev:$DEP_ARCH libxcomposite-dev:$DEP_ARCH mesa-common-dev:$DEP_ARCH libasound2-dev:$DEP_ARCH freeglut3-dev:$DEP_ARCH libcurl4-gnutls-dev:$DEP_ARCH libasound2-dev:$DEP_ARCH libjack-dev:$DEP_ARCH libbluetooth-dev:$DEP_ARCH libgtk-3-dev:$DEP_ARCH libwebkit2gtk-4.0-dev:$DEP_ARCH libsdl2-dev:$DEP_ARCH  libfuse2:$DEP_ARCH libusb-1.0-0-dev:$DEP_ARCH libhidapi-dev:$DEP_ARCH
+          sudo apt-get install -qyf libcurl3-gnutls:$DEP_ARCH libfreetype6-dev:$DEP_ARCH libx11-dev:$DEP_ARCH libxinerama-dev:$DEP_ARCH libxrandr-dev:$DEP_ARCH libxcursor-dev:$DEP_ARCH libxcomposite-dev:$DEP_ARCH mesa-common-dev:$DEP_ARCH libasound2-dev:$DEP_ARCH freeglut3-dev:$DEP_ARCH libcurl4-gnutls-dev:$DEP_ARCH libasound2-dev:$DEP_ARCH libjack-dev:$DEP_ARCH libbluetooth-dev:$DEP_ARCH libgtk-3-dev:$DEP_ARCH libwebkit2gtk-4.0-dev:$DEP_ARCH libsdl2-dev:$DEP_ARCH  libfuse2:$DEP_ARCH libusb-1.0-0-dev:$DEP_ARCH libhidapi-dev:$DEP_ARCH ladspa-sdk:$DEP_ARCH libssl-dev:$DEP_ARCH
           sudo apt-get install -qy curl
 
           cd ${{ github.workspace }}
-          wget "https://github.com/AppImage/AppImageKit/releases/download/12/appimagetool-x86_64.AppImage"
+          wget "https://github.com/AppImage/AppImageKit/releases/download/13/appimagetool-x86_64.AppImage"
           chmod a+x appimagetool-x86_64.AppImage
 
       - name: Build
         run: |
-          if [ "${{ matrix.arch }}" == "linux-armhf" ]; 
+          if [ "${{ matrix.arch }}" == "armhf" ]; 
           then
             export CXX=arm-linux-gnueabihf-g++
             export CC=arm-linux-gnueabihf-gcc
             export PKG_CONFIG_PATH=/usr/lib/arm-linux-gnueabihf/pkgconfig
-            export TARGET_ARCH="-march=armv8-a" # TARGET_ARCH is used in the Makefile
+          fi
+
+          if [ "${{ matrix.arch }}" == "aarch64" ]; 
+          then
+            export CXX=aarch64-linux-gnu-gcc
+            export CC=aarch64-linux-gnu-g++
+            export PKG_CONFIG_PATH=/usr/lib/aarch64-linux-gnu/pkgconfig
           fi
 
           cd ${{ github.workspace }}/Builds/${{ matrix.buildFolder }}
-          make -j2 CONFIG=Release
+          make -j2 CONFIG=${{ matrix.buildConfig }}
 
       - name: Create AppImage
         id: create_package
