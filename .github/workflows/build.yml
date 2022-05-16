@@ -153,7 +153,7 @@ jobs:
     strategy:
       matrix:
         include:
-        - arch: linux-x64
+        - arch: x64
           buildFolder: "LinuxMakefile"
 
         - arch: armhf
