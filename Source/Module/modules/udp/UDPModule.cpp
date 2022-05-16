@@ -11,6 +11,7 @@
 UDPModule::UDPModule(const String& name, bool canHaveInput, bool canHaveOutput, int defaultLocalPort, int defaultRemotePort) :
 	NetworkStreamingModule(name, canHaveInput, canHaveOutput, defaultLocalPort, defaultRemotePort)
 {
+	multicastMode = moduleParams.addBoolParameter("Multicast Mode", "If check, instead of binding and connecting, it will try to join a multicast network.", false);
 	scriptObject.setMethod("sendTo", &UDPModule::sendBytesToFromScript);
 	scriptObject.setMethod("sendMessageTo", &UDPModule::sendMessageToFromScript);
 
@@ -46,11 +47,18 @@ void UDPModule::setupReceiver()
 
 	receiver->bindToPort(localPort->intValue());
 	receiverIsBound->setValue(receiver->getBoundPort() != -1);
+
 	if (receiverIsBound->boolValue())
 	{
 		NLOG(niceName, "UDP Receiver bound to port " << localPort->intValue());
 		localPort->clearWarning();
 		if (syncSenderPort) setupSender();
+
+		if (multicastMode->boolValue())
+		{
+			receiver->joinMulticast(remoteHost->stringValue());
+		}
+
 		startThread();
 	}
 	else
@@ -73,14 +81,41 @@ void UDPModule::setupSender()
 	sender.reset();
 	proxySender = nullptr;
 
+	clearWarning("Multicast");
+
 	if (!enabled->boolValue()) return;
 	if (sendCC == nullptr) return;
 	if (!sendCC->enabled->boolValue()) return;
 
-	sender.reset(new DatagramSocket(true));
+	sender.reset(new DatagramSocket(!multicastMode->boolValue()));
 
 	bool syncReceiverPort = receiver != nullptr && receiveCC != nullptr && receiveCC->enabled->boolValue() && receiverIsBound->boolValue() && listenToOutputFeedback->boolValue();
-	if (syncReceiverPort)
+
+	if (multicastMode->boolValue())
+	{
+		sender->setEnablePortReuse(true);
+		bool portBound = sender->bindToPort(remotePort->intValue());
+		if (!portBound)
+		{
+			NLOGERROR(niceName, "Could not bind multicast port " << remotePort->stringValue());
+			setWarningMessage("Could not bind multicast port " + remotePort->stringValue(), "Multicast");
+		}
+		else
+		{
+			bool multicastResult = sender->joinMulticast(remoteHost->stringValue());
+			if (!multicastResult)
+			{
+				NLOGERROR(niceName, "Could not join multicast on address " << remoteHost->stringValue());
+				setWarningMessage("Could not join multicast", "Multicast");
+			}
+			else
+			{
+				clearWarning("Multicast");
+				if (syncReceiverPort) sender->setMulticastLoopbackEnabled(true);
+			}
+		}
+	}
+	else if (syncReceiverPort)
 	{
 		sender->setEnablePortReuse(true);
 		sender->bindToPort(receiver->getBoundPort());
@@ -89,6 +124,8 @@ void UDPModule::setupSender()
 	{
 		sender->bindToPort(0);
 	}
+
+
 
 	senderIsConnected->setValue(true);
 }
@@ -146,6 +183,16 @@ Array<uint8> UDPModule::readBytes()
 
 	return result;
 
+}
+
+void UDPModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
+{
+	NetworkStreamingModule::onControllableFeedbackUpdateInternal(cc, c);
+	if (c == multicastMode)
+	{
+		setupReceiver();
+		setupSender();
+	}
 }
 
 void UDPModule::clearInternal()

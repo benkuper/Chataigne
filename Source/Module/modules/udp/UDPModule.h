@@ -18,6 +18,7 @@ public:
 	UDPModule(const String &name = "UDP", bool canHaveInput = true, bool canHaveOutput = true, int defaultLocalPort= 10000, int defaultRemotePort = 10001);
 	virtual ~UDPModule();
 
+	BoolParameter* multicastMode;
 
 	std::unique_ptr<DatagramSocket> receiver;
 	std::unique_ptr<DatagramSocket> sender;
@@ -34,6 +35,8 @@ public:
 	virtual void sendBytesInternal(Array<uint8> data, var params) override;
 
 	virtual Array<uint8> readBytes() override;
+
+	virtual void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
 
 	virtual void clearInternal() override;
 
