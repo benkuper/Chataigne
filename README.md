@@ -34,6 +34,7 @@ You can check the tutorials to better understand what and how you can use Chatai
     - WebSockets
     - PJLink
     - Ableton Link
+    - PosiStageNet
     
   - Supports communication and synchronization of the following hardware :
     - KinectV2 (Windows only)
