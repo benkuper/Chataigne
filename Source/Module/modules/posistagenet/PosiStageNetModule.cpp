@@ -124,13 +124,7 @@ void PosiStageNetModule::sendSlotsData(long timestamp)
 
 	outActivityTrigger->trigger();
 
-	if (logOutgoingData->boolValue())
-	{
-		String s = std::string("Sending PSN_DATA_PACKET : ")
-			+ std::string("Frame Id = ") + std::to_string(psn_encoder.get_last_data_frame_id())
-			+ std::string(", Packet Count = ") + std::to_string(data_packets.size());
-		NLOG(niceName, s);
-	}
+	if (logOutgoingData->boolValue()) NLOG(niceName, "Sending PSN_DATA_PACKET, Frame Id =  " << (int)psn_encoder.get_last_info_frame_id() << ", Packet Count : " << (int)data_packets.size());
 
 	for (auto it = data_packets.begin(); it != data_packets.end(); ++it)
 	{
@@ -148,13 +142,7 @@ void PosiStageNetModule::sendSlotsInfo(long timestamp)
 
 	outActivityTrigger->trigger();
 
-	if (logOutgoingData->boolValue()) {
-		String s = std::string("Sending PSN_INFO_PACKET : ")
-			+ std::string("Frame Id = ") + std::to_string(psn_encoder.get_last_info_frame_id())
-			+ std::string(" , Packet Count = ") + std::to_string(info_packets.size())
-			+ std::string(" , Trackers = ") + std::to_string(trackers.size());
-		NLOG(niceName, s);
-	}
+	if (logOutgoingData->boolValue())  NLOG(niceName, "Sending PSN_INFO_PACKET, Frame Id =  " << (int)psn_encoder.get_last_info_frame_id() << ", Packet Count : " << (int)info_packets.size());
 
 	for (auto it = info_packets.begin(); it != info_packets.end(); ++it)
 		udp->write(multiCastAddress->value, multiCastPort->value, it->c_str(), (int)it->size());
@@ -227,7 +215,7 @@ void PosiStageNetModule::run()
 
 				if (logIncomingData->boolValue())
 				{
-					NLOG(niceName, "Received PSN from " << decoder.get_info().system_name << ", frame id : " << (int)lastFrameId << ", timestamp : " << decoder.get_data().header.timestamp_usec << ", Trackers : " << recv_trackers.size());
+					NLOG(niceName, "Received PSN from " << String(decoder.get_info().system_name) << ", frame id : " << (int)lastFrameId << ", timestamp : " << (int)decoder.get_data().header.timestamp_usec << ", Trackers : " << (int)recv_trackers.size());
 				}
 
 				for (auto it = recv_trackers.begin(); it != recv_trackers.end(); ++it)
