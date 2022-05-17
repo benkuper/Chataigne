@@ -86,6 +86,9 @@ namespace BinaryData
     extern const char*   PJLink_png;
     const int            PJLink_pngSize = 1008;
 
+    extern const char*   PosiStageNet_png;
+    const int            PosiStageNet_pngSize = 3332;
+
     extern const char*   PowerPoint_png;
     const int            PowerPoint_pngSize = 2548;
 
@@ -228,7 +231,7 @@ namespace BinaryData
     const int            custom_cextSize = 1111;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 73;
+    const int namedResourceListSize = 74;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

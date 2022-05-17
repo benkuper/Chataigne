@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    PosiStageNetModule.h
-    Created: 17 May 2022 12:00:03am
-    Author:  bkupe
+	PosiStageNetModule.h
+	Created: 17 May 2022 12:00:03am
+	Author:  bkupe
 
   ==============================================================================
 */
@@ -13,49 +13,56 @@
 #include "psn_lib.hpp"
 
 class PosiStageNetModule :
-    public Module,
-    public Thread
+	public Module,
+	public Thread
 {
 public:
-    PosiStageNetModule();
-    ~PosiStageNetModule();
+	PosiStageNetModule();
+	~PosiStageNetModule();
 
-    StringParameter* serverName;
-    StringParameter* multiCastAddress;
-    IntParameter* multiCastPort;
-    BoolParameter* loopback;
+	StringParameter* serverName;
+	StringParameter* multiCastAddress;
+	IntParameter* multiCastPort;
+	BoolParameter* loopback;
 
-    IntParameter* numSlots;
+	IntParameter* numSlots;
 
-    BoolParameter* isConnected;
+	BoolParameter* isConnected;
+	BoolParameter* sendMode;
 
-    std::unique_ptr<DatagramSocket> udp;
-    ::psn::tracker_map trackers;
-    ::psn::psn_encoder psn_encoder;
-    uint64_t timestamp = 0;
+	std::unique_ptr<DatagramSocket> udp;
+	
+	SpinLock trackerLock;
 
-    struct SlotValue
-    {
-        SlotValue(ControllableContainer* container, Point3DParameter* position) : container(container), position(position) {}
-        ControllableContainer* container;
-        Point3DParameter* position;
-        psn::tracker* tracker;
-    };
+	psn::tracker_map trackers;
+	psn::psn_encoder psn_encoder;
+	long timestamp = 0;
 
-    OwnedArray<SlotValue> slotValues;
 
-    void setupSlots();
-    void setupMulticast();
-    void setPositionAt(int slotID, Vector3D<float> pos, bool send = false);
+	struct SlotValue
+	{
+		SlotValue(int id, ControllableContainer* container, Point3DParameter* position) : id(id), container(container), position(position) {}
+		int id;
+		ControllableContainer* container;
+		Point3DParameter* position;
+	};
 
-    void sendSlotsData();
-    void sendSlotsInfo();
+	OwnedArray<SlotValue> slotValues;
+	HashMap<Point3DParameter*, SlotValue*> p3dSlotMap;
 
-    void onContainerParameterChangedInternal(Parameter* p) override;
-    void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
+	void setupSlots();
+	void setupMulticast();
+	void setPositionAt(int slotID, Vector3D<float> pos);
 
-    void run() override;
+	void sendSlotsData(long timestamp);
+	void sendSlotsInfo(long timestamp);
 
-    static PosiStageNetModule* create() { return new PosiStageNetModule(); }
-    virtual String getDefaultTypeString() const override { return "PosiStageNet"; }
+
+	void onContainerParameterChangedInternal(Parameter* p) override;
+	void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
+
+	void run() override;
+
+	static PosiStageNetModule* create() { return new PosiStageNetModule(); }
+	virtual String getDefaultTypeString() const override { return "PosiStageNet"; }
 };

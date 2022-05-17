@@ -45,6 +45,8 @@
         <FILE id="CBoeF1" name="OSC.png" compile="0" resource="1" file="Resources/Modules/OSC.png"/>
         <FILE id="mQRViU" name="OSCQuery.png" compile="0" resource="1" file="Resources/Modules/OSCQuery.png"/>
         <FILE id="hswQuk" name="PJLink.png" compile="0" resource="1" file="Resources/Modules/PJLink.png"/>
+        <FILE id="I0gbJJ" name="PosiStageNet.png" compile="0" resource="1"
+              file="Resources/Modules/PosiStageNet.png"/>
         <FILE id="Hlm2j3" name="PowerPoint.png" compile="0" resource="1" file="Resources/Modules/PowerPoint.png"/>
         <FILE id="CIlbr7" name="QLab.png" compile="0" resource="1" file="Resources/Modules/QLab.png"/>
         <FILE id="ccXjD9" name="Reaper.png" compile="0" resource="1" file="Resources/Modules/Reaper.png"/>

@@ -3475,6 +3475,7 @@
     <None Include="..\..\Resources\Modules\OSC.png"/>
     <None Include="..\..\Resources\Modules\OSCQuery.png"/>
     <None Include="..\..\Resources\Modules\PJLink.png"/>
+    <None Include="..\..\Resources\Modules\PosiStageNet.png"/>
     <None Include="..\..\Resources\Modules\PowerPoint.png"/>
     <None Include="..\..\Resources\Modules\QLab.png"/>
     <None Include="..\..\Resources\Modules\Reaper.png"/>

@@ -7658,6 +7658,9 @@
     <None Include="..\..\Resources\Modules\PJLink.png">
       <Filter>Chataigne\Resources\Modules</Filter>
     </None>
+    <None Include="..\..\Resources\Modules\PosiStageNet.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
     <None Include="..\..\Resources\Modules\PowerPoint.png">
       <Filter>Chataigne\Resources\Modules</Filter>
     </None>

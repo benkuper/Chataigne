@@ -346,6 +346,7 @@
 		4BA7F1A7C277D8A5EC1FB968 /* MQTTModule.cpp */ /* MQTTModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MQTTModule.cpp; path = ../../Source/Module/modules/mqtt/MQTTModule.cpp; sourceTree = SOURCE_ROOT; };
 		4BCDE8AC4E4B125F794861AE /* MappingLayerTimeline.h */ /* MappingLayerTimeline.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MappingLayerTimeline.h; path = ../../Source/TimeMachine/Sequence/layers/mapping/ui/MappingLayerTimeline.h; sourceTree = SOURCE_ROOT; };
 		4BED9251CCB1DFC4B4F541A1 /* SerialDeviceParameter.h */ /* SerialDeviceParameter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SerialDeviceParameter.h; path = ../../Source/Common/Serial/SerialDeviceParameter.h; sourceTree = SOURCE_ROOT; };
+		4C80D60C2583CCA80CF5E4BB /* PosiStageNet.png */ /* PosiStageNet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PosiStageNet.png; path = ../../Resources/Modules/PosiStageNet.png; sourceTree = SOURCE_ROOT; };
 		4CD7424E98D53E826B1E9B0B /* smallstripe.png */ /* smallstripe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = smallstripe.png; path = ../../Resources/smallstripe.png; sourceTree = SOURCE_ROOT; };
 		4CE96507F1DE9FCD311D77C0 /* SendStreamRawDataCommand.cpp */ /* SendStreamRawDataCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SendStreamRawDataCommand.cpp; path = ../../Source/Module/modules/common/streaming/commands/SendStreamRawDataCommand.cpp; sourceTree = SOURCE_ROOT; };
 		4D147E8D071C0C93CB433813 /* include_juce_timeline.cpp */ /* include_juce_timeline.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_juce_timeline.cpp; path = ../../JuceLibraryCode/include_juce_timeline.cpp; sourceTree = SOURCE_ROOT; };
@@ -1876,6 +1877,7 @@
 				5A09E732212BD7F0F838B951,
 				54D225421E0211F8F2E4EBFA,
 				B1FD26BF556916851197C97B,
+				4C80D60C2583CCA80CF5E4BB,
 				DF7E4C10AE96476C8D27E827,
 				20B2101A94BA96900CED2A4B,
 				70E1471749F3AF5353951EC5,
