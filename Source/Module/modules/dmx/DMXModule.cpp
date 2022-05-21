@@ -95,7 +95,7 @@ void DMXModule::setCurrentDMXDevice(DMXDevice* d)
 void DMXModule::sendDMXValue(int channel, int value)
 {
 	if (dmxDevice == nullptr) return;
-	if (logOutgoingData->boolValue()) NLOG(niceName, "Send DMX : " + String(channel + 1) + " > " + String(value));
+	if (logOutgoingData->boolValue()) NLOG(niceName, "Send DMX : " + String(channel) + " > " + String(value));
 	outActivityTrigger->trigger();
 	dmxDevice->sendDMXValue(channel, value);
 }
