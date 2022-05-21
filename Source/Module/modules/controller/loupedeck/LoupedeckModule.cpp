@@ -255,7 +255,7 @@ void LoupedeckModule::processDataBytesInternal(Array<uint8> bytes)
 
 	case 5: // buttons and knobs
 	{
-		if (buffer.size() > 5)
+		if (buffer.size() >= 5)
 		{
 			int pot = buffer[3] - 1;
 			if (pot >= 6)
