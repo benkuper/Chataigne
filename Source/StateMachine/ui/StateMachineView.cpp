@@ -36,7 +36,7 @@ StateMachineView::StateMachineView(const String &contentName, StateManager * _ma
 	updatePositionOnDragMove = true;
 
 	enableSnapping = true;
-
+	
 	setShowPane(true);
 
 	setViewZoom(manager->viewZoom);
@@ -138,6 +138,7 @@ void StateMachineView::showMenuAndAddItem(bool fromAddButton, Point<int> positio
 	p.addItem(2, "Add Comment");
 	p.addItem(3, "Create Transition", manager->items.size() >= 2);
 	p.addItem(4, "Snapping",true, enableSnapping);
+	p.addItem(5, showTools ? "Hide Tools" : "Show Tools");
 
 	p.showMenuAsync(PopupMenu::Options(), [this, fromAddButton, position](int result)
 		{
@@ -145,8 +146,8 @@ void StateMachineView::showMenuAndAddItem(bool fromAddButton, Point<int> positio
 			else if (result == 2) commentManagerUI->addItemFromMenu(fromAddButton, position);
 			else if (result == 3) startCreateTransition(nullptr);
 			else if (result == 4) enableSnapping = !enableSnapping;
+			else if (result == 5) setShowTools(!showTools);
 		}
-
 	);
 }
 
