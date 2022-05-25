@@ -180,6 +180,8 @@ bool ScriptCommand::Dependency::process()
 	{
 	case EQUALS: depIsOk = valueToCheck == value; break;
 	case NOT_EQUALS: depIsOk = valueToCheck != value; break;
+	case LESS_THAN: depIsOk = valueToCheck < value; break;
+	case GREATER_THAN: depIsOk = valueToCheck > value; break;
 	default: break;
 	}
 
