@@ -83,8 +83,8 @@ public:
 	class Dependency
 	{
 	public:
-		enum CheckType { CHECK_NOT_SET, EQUALS, NOT_EQUALS, MAX_TYPES };
-		const Array<String> checkTypeNames{ "notset", "equals","notEquals" };
+		enum CheckType { CHECK_NOT_SET, EQUALS, NOT_EQUALS, LESS_THAN, GREATER_THAN, MAX_TYPES };
+		const Array<String> checkTypeNames{ "notset", "equals","notEquals","lessThan","greaterThan"};
 
 		enum DepAction { ACTION_NOT_SET, SHOW, ENABLE, MAX_ACTIONS };
 		const Array<String> actionNames{ "notset", "show", "enable" };
