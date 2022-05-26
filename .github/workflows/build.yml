@@ -263,7 +263,7 @@ jobs:
           mkdir -p ${{ env.ProjectName }}.AppDir/usr/bin/
           cp build/${{ env.ProjectName }} ${{ env.ProjectName }}.AppDir/usr/bin/
 
-          PKGNAME=${{ env.ProjectName }}-${{ steps.set_variables.outputs.suffix }}.AppImage
+          PKGNAME=${{ env.ProjectName }}-linux-${{ steps.set_variables.outputs.suffix }}.AppImage
           echo "::set-output name=pkg-name::$PKGNAME"
           ${{ github.workspace }}/appimagetool-x86_64.AppImage ${{ steps.install_deps.outputs.appImageRuntime }} ${{ env.ProjectName }}.AppDir $PKGNAME
         working-directory: ./Builds/${{ matrix.buildFolder }}
