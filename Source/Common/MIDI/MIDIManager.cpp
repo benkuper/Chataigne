@@ -85,31 +85,31 @@ void MIDIManager::checkDevices()
 	}
 
 
-	int idIndex = 1; //keep track of ids
+	//int idIndex = 1; //keep track of ids
 	for (auto& i : outputInfos)
 	{
 
-		if (i.name == "Microsoft GS Wavetable Synth") continue; // remove this, nobody wants it anyway
+		//if (i.name == "Microsoft GS Wavetable Synth") continue; // remove this, nobody wants it anyway
 
-		//This is a ugly hack to take name from ordered input with same identifier, because WinRT stack has a bug and is still not fixed.
-		//See https://forum.juce.com/t/winrt-midi-output-wrong-device-names/43301/6
+		////This is a ugly hack to take name from ordered input with same identifier, because WinRT stack has a bug and is still not fixed.
+		////See https://forum.juce.com/t/winrt-midi-output-wrong-device-names/43301/6
 
-		if (i.identifier.startsWith("{00000000-0000-0000-FFFF-FFFFFFFFFFFF}"))
-		{
-			String expectedID = "{00000000-0000-0000-FFFF-FFFFFFFFFFFF}";
-			if (idIndex > 1) expectedID += "-" + String(idIndex);
+		//if (i.identifier.startsWith("{00000000-0000-0000-FFFF-FFFFFFFFFFFF}"))
+		//{
+		//	String expectedID = "{00000000-0000-0000-FFFF-FFFFFFFFFFFF}";
+		//	if (idIndex > 1) expectedID += "-" + String(idIndex);
 
-			for (auto& ii : inputInfos)
-			{
-				if (ii.identifier == expectedID)
-				{
-					i.name = ii.name;
-					break;
-				}
-			}
+		//	for (auto& ii : inputInfos)
+		//	{
+		//		if (ii.identifier == expectedID)
+		//		{
+		//			i.name = ii.name;
+		//			break;
+		//		}
+		//	}
 
-			idIndex++;
-		}
+		//	idIndex++;
+		//}
 
 		addOutputDeviceIfNotThere(i);
 	}

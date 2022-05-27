@@ -72,7 +72,7 @@
 // juce_audio_devices flags:
 
 #ifndef    JUCE_USE_WINRT_MIDI
- #define   JUCE_USE_WINRT_MIDI 1
+ #define   JUCE_USE_WINRT_MIDI 0
 #endif
 
 #ifndef    JUCE_ASIO
