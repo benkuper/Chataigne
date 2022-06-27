@@ -56,7 +56,7 @@ void Multiplex::updateDisables(bool force)
 	processorManager.setForceDisabled(!enabled->boolValue() || forceDisabled);
 }
 
-void Multiplex::showAndGetList(std::function<void(ControllableContainer*)> returnFunc)
+void Multiplex::showAndGetList(ControllableContainer* startFromCC, std::function<void(ControllableContainer*)> returnFunc)
 {
 	PopupMenu p;
 	for (int i = 0; i < listManager.items.size(); i++) p.addItem(i + 1, listManager.items[i]->niceName);

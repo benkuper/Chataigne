@@ -31,11 +31,11 @@ public:
 	void addItemInternal(Module* module, var data) override;
 
 	//Input values menu
-	static void showAllValuesAndGetControllable(const StringArray& typeFilters, const StringArray& excludeTypeFilters, std::function<void(Controllable*)> returnFunc);
+	static void showAllValuesAndGetControllable(const StringArray& typeFilters, const StringArray& excludeTypeFilters, ControllableContainer* startFromCC, std::function<void(Controllable*)> returnFunc);
 	static bool checkControllableIsAValue(Controllable* c);
 
 	template <class T>
-	static void showAndGetModuleOfType(std::function<void(ControllableContainer*)> returnFunc)
+	static void showAndGetModuleOfType(ControllableContainer* startFromCC, std::function<void(ControllableContainer*)> returnFunc)
 	{
 		PopupMenu menu;
 		Array<Module*> validModules;

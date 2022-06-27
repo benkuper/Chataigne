@@ -56,13 +56,13 @@ public:
 	void itemRemoved(StateTransition* s) override;
 	void itemsRemoved(Array<StateTransition*> s) override;
 
-	static void showMenuAndGetState(std::function<void(State *)> returnFunc);
-	static void showMenuAndGetAction(std::function<void(Action*)> returnFunc);
-	static void showMenuAndGetMapping(std::function<void(Mapping*)> returnFunc);
-	static void showMenuAndGetConductor(std::function<void(Mapping*)> returnFunc);
+	static void showMenuAndGetState(ControllableContainer* startFromCC, std::function<void(State *)> returnFunc);
+	static void showMenuAndGetAction(ControllableContainer* startFromCC, std::function<void(Action*)> returnFunc);
+	static void showMenuAndGetMapping(ControllableContainer* startFromCC, std::function<void(Mapping*)> returnFunc);
+	static void showMenuAndGetConductor(ControllableContainer* startFromCC, std::function<void(Mapping*)> returnFunc);
 	static PopupMenu getProcessorMenuForManager(ProcessorManager* manager, Processor::ProcessorType type, Array<Processor*> *arrayToFill);
 
-	static void showMenuAndGetToggleCondition(std::function<void(StandardCondition*)> returnFunc);
+	static void showMenuAndGetToggleCondition(ControllableContainer* startFromCC, std::function<void(StandardCondition*)> returnFunc);
 	static PopupMenu getToggleConditionMenuForConditionManager(ConditionManager * a, Array<StandardCondition *> * arrayToFill);
 
 	Array<State *> getLinkedStates(State * s, Array<State *> * statesToAvoid = nullptr);

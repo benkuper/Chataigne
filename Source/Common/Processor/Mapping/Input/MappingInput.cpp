@@ -29,7 +29,7 @@ MappingInput::MappingInput(var params, Multiplex * processor) :
 		inputTarget->targetType = TargetParameter::CONTAINER;
 		inputTarget->setRootContainer(&multiplex->listManager);
 
-		std::function<void(std::function<void(ControllableContainer*)>)> getListFunc = std::bind(&Multiplex::showAndGetList, multiplex, std::placeholders::_1);
+		std::function<void(ControllableContainer* startFromCC, std::function<void(ControllableContainer*)>)> getListFunc = std::bind(&Multiplex::showAndGetList, multiplex, std::placeholders::_1, std::placeholders::_2);
 		inputTarget->customGetTargetContainerFunc = getListFunc;
 		inputTarget->showParentNameInEditor = false;
 	}

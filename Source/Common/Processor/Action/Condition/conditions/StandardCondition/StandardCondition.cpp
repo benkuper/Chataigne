@@ -22,7 +22,7 @@ StandardCondition::StandardCondition(var params, Multiplex* processor) :
 		sourceTarget->targetType = TargetParameter::CONTAINER;
 		sourceTarget->setRootContainer(&multiplex->listManager);
 
-		std::function<void(std::function<void(ControllableContainer*)>)> getListFunc = std::bind(&Multiplex::showAndGetList, multiplex, std::placeholders::_1);
+		std::function<void(ControllableContainer*, std::function<void(ControllableContainer*)>)> getListFunc = std::bind(&Multiplex::showAndGetList, multiplex, std::placeholders::_1, std::placeholders::_2);
 		sourceTarget->customGetTargetContainerFunc = getListFunc;
 		sourceTarget->showParentNameInEditor = false;
 	}

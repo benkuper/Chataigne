@@ -49,7 +49,7 @@ void ModuleManager::addItemInternal(Module * module, var data)
 	module->templateManager->setupDefinitionsFromModule();
 }
 
-void ModuleManager::showAllValuesAndGetControllable(const StringArray & typeFilters, const StringArray& excludeTypeFilters, std::function<void(Controllable*)> returnFunc)
+void ModuleManager::showAllValuesAndGetControllable(const StringArray & typeFilters, const StringArray& excludeTypeFilters, ControllableContainer* startFromCC, std::function<void(Controllable*)> returnFunc)
 {
 	PopupMenu menu;
 	

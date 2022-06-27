@@ -19,6 +19,9 @@ CVGroup::CVGroup(const String& name) :
 {
 	itemDataType = "CVGroup";
 
+	setHasCustomColor(true);
+	itemColor->setDefaultValue(BG_COLOR.brighter(.2f));
+
 	pm.reset(new CVPresetManager(this));
 
 

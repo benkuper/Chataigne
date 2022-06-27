@@ -173,7 +173,7 @@ void StateManager::itemsRemoved(Array<StateTransition*> states)
 }
 
 
-void StateManager::showMenuAndGetState(std::function<void(State*)> returnFunc)
+void StateManager::showMenuAndGetState(ControllableContainer* startFromCC, std::function<void(State*)> returnFunc)
 {
 	PopupMenu menu;
 	StateManager* sm = StateManager::getInstance();
@@ -191,37 +191,46 @@ void StateManager::showMenuAndGetState(std::function<void(State*)> returnFunc)
 
 }
 
-void StateManager::showMenuAndGetAction(std::function<void(Action*)> returnFunc)
+void StateManager::showMenuAndGetAction(ControllableContainer* startFromCC, std::function<void(Action*)> returnFunc)
 {
 	PopupMenu menu;
 	StateManager* sm = StateManager::getInstance();
 
 	Array<Processor*> actions;
-	for (auto& s : sm->items)
+
+	if (ProcessorManager* pm = dynamic_cast<ProcessorManager*>(startFromCC)) menu = getProcessorMenuForManager(pm, Processor::ACTION, &actions);
+	else
 	{
-		PopupMenu sMenu = getProcessorMenuForManager(s->pm.get(), Processor::ACTION, &actions);
-		menu.addSubMenu(s->niceName, sMenu);
+		for (auto& s : sm->items)
+		{
+			PopupMenu sMenu = getProcessorMenuForManager(s->pm.get(), Processor::ACTION, &actions);
+			menu.addSubMenu(s->niceName, sMenu);
+		}
 	}
 
 	menu.showMenuAsync(PopupMenu::Options(), [actions, returnFunc](int result)
 		{
 			if (result <= 0) return;
-			returnFunc((Action *)actions[result - 1]);
+			returnFunc((Action*)actions[result - 1]);
 		}
 	);
 }
 
-void StateManager::showMenuAndGetMapping(std::function<void(Mapping*)> returnFunc)
+void StateManager::showMenuAndGetMapping(ControllableContainer* startFromCC, std::function<void(Mapping*)> returnFunc)
 {
 	PopupMenu menu;
 	StateManager* sm = StateManager::getInstance();
 
 	Array<Processor*> mappings;
 
-	for (auto& s : sm->items)
+	if (ProcessorManager* pm = dynamic_cast<ProcessorManager*>(startFromCC)) menu = getProcessorMenuForManager(pm, Processor::MAPPING, &mappings);
+	else
 	{
-		PopupMenu sMenu = getProcessorMenuForManager(s->pm.get(), Processor::MAPPING, &mappings);
-		menu.addSubMenu(s->niceName, sMenu);
+		for (auto& s : sm->items)
+		{
+			PopupMenu sMenu = getProcessorMenuForManager(s->pm.get(), Processor::MAPPING, &mappings);
+			menu.addSubMenu(s->niceName, sMenu);
+		}
 	}
 
 	menu.showMenuAsync(PopupMenu::Options(), [mappings, returnFunc](int result)
@@ -232,17 +241,21 @@ void StateManager::showMenuAndGetMapping(std::function<void(Mapping*)> returnFun
 	);
 }
 
-void StateManager::showMenuAndGetConductor(std::function<void(Mapping*)> returnFunc)
+void StateManager::showMenuAndGetConductor(ControllableContainer* startFromCC, std::function<void(Mapping*)> returnFunc)
 {
 	PopupMenu menu;
 	StateManager* sm = StateManager::getInstance();
 
 	Array<Processor*> conductors;
 
-	for (auto& s : sm->items)
+	if (ProcessorManager* pm = dynamic_cast<ProcessorManager*>(startFromCC)) menu = getProcessorMenuForManager(pm, Processor::CONDUCTOR, &conductors);
+	else
 	{
-		PopupMenu sMenu = getProcessorMenuForManager(s->pm.get(), Processor::CONDUCTOR, &conductors);
-		menu.addSubMenu(s->niceName, sMenu);
+		for (auto& s : sm->items)
+		{
+			PopupMenu sMenu = getProcessorMenuForManager(s->pm.get(), Processor::CONDUCTOR, &conductors);
+			menu.addSubMenu(s->niceName, sMenu);
+		}
 	}
 
 	menu.showMenuAsync(PopupMenu::Options(), [conductors, returnFunc](int result)
@@ -273,7 +286,7 @@ PopupMenu StateManager::getProcessorMenuForManager(ProcessorManager* manager, Pr
 	return result;
 }
 
-void StateManager::showMenuAndGetToggleCondition(std::function<void(StandardCondition*)> returnFunc)
+void StateManager::showMenuAndGetToggleCondition(ControllableContainer* startFromCC, std::function<void(StandardCondition*)> returnFunc)
 {
 	PopupMenu menu;
 	StateManager* sm = StateManager::getInstance();
