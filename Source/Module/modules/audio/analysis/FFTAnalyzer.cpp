@@ -18,6 +18,7 @@ FFTAnalyzer::FFTAnalyzer() :
 	value->setControllableFeedbackOnly(true);
 
 	Random r;
+	setHasCustomColor(true);
 	itemColor->setDefaultValue(Colour::fromHSV(r.nextFloat(), 1, 1, 1));
 }
 

@@ -11,9 +11,6 @@
 ProcessorUI::ProcessorUI(Processor * processor, bool showMiniModeBT) :
 	BaseItemUI<Processor>(processor, NONE, showMiniModeBT)
 {
-	colorUI.reset(new ColorParameterUI(item->itemColor));
-	addAndMakeVisible(colorUI.get());
-
 	item->addAsyncProcessorListener(this);
 
 	updateBGColor();
@@ -31,15 +28,11 @@ void ProcessorUI::updateBGColor()
 	repaint();
 }
 
-void ProcessorUI::resizedInternalHeader(Rectangle<int>& r)
-{
-	colorUI->setBounds(r.removeFromRight(r.getHeight()).reduced(2));
-}
 
 void ProcessorUI::controllableFeedbackUpdateInternal(Controllable* c)
 {
-	BaseItemUI::controllableFeedbackUpdateInternal(c);
 	if (c == item->itemColor) updateBGColor();
+	else BaseItemUI::controllableFeedbackUpdateInternal(c);
 }
 
 void ProcessorUI::newMessage(const Processor::ProcessorEvent & e)

@@ -14,6 +14,9 @@ State::State() :
 
 	itemDataType = "State";
 
+	setHasCustomColor(true);
+	itemColor->setDefaultValue(BG_COLOR.brighter(.1f));
+
 	active = addBoolParameter("Active", "If active, the state's actions and mappings will be effective, otherwise this state won't do anything.", false);
 	loadActivationBehavior = addEnumParameter("On Load Behavior", "This is defining how the state is initializing when loading");
 	loadActivationBehavior->addOption("Restore last state", KEEP)->addOption("Activate", ACTIVE)->addOption("Deactivate", NONACTIVE);

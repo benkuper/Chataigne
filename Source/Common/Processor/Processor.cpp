@@ -14,6 +14,7 @@ Processor::Processor(const String & name, bool canBeDisabled, bool canHaveScript
 	processorNotifier(10)
 {
 	itemDataType = "Processor";
+	setHasCustomColor(true);
 	editorIsCollapsed = true;
 	showWarningInUI = true;
 }

@@ -18,11 +18,7 @@ public:
 	ProcessorUI(Processor *, bool showMiniModeBT = false);
 	virtual ~ProcessorUI();
 
-	std::unique_ptr<ColorParameterUI> colorUI;
-
 	virtual void updateBGColor();
-
-	void resizedInternalHeader(Rectangle<int>& r) override;
 
 	void controllableFeedbackUpdateInternal(Controllable* c) override;
 	void newMessage(const Processor::ProcessorEvent &e) override;

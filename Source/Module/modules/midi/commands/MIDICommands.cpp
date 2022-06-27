@@ -125,7 +125,7 @@ void MIDINoteAndCCCommand::updateNoteParams()
 void MIDINoteAndCCCommand::setValue(var value, int multiplexIndex)
 {
 	float mapFactor = (remap01To127 != nullptr && remap01To127->boolValue()) ? maxRemap : 1;
-	if (value.isArray()) value[0] = (float)value[0] * mapFactor;
+	if (value.isArray()) for (int i = 0; i < value.size(); i++) value[i] = (float)value[i] * mapFactor;
 	else value = (float)value * mapFactor;
 
 	MIDICommand::setValue(value, multiplexIndex);

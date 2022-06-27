@@ -27,6 +27,9 @@ Module::Module(const String& name) :
 
 	canInspectChildContainers = true;
 
+	setHasCustomColor(true);
+	itemColor->setDefaultValue(BG_COLOR.brighter(.2f));
+
 	inActivityTrigger.reset(new Trigger("IN Activity", "Incoming Activity Signal"));
 	outActivityTrigger.reset(new Trigger("OUT Activity", "Outgoing Activity Signal"));
 
