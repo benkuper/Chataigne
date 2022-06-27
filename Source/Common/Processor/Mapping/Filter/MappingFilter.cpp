@@ -272,7 +272,7 @@ void MappingFilter::setExcludedChannels(Array<int> channels)
 
 bool MappingFilter::isChannelEligible(int index)
 {
-	return !canFilterChannels || sourceParams[0].size() <= 1 || excludedChannels.isEmpty() || !excludedChannels.contains(index);
+	return !canFilterChannels || excludedChannels.isEmpty() || sourceParams[0].size() <= 1 || !excludedChannels.contains(index);
 }
 
 void MappingFilter::multiplexPreviewIndexChanged()
