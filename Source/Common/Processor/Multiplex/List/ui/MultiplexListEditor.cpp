@@ -168,6 +168,7 @@ void InputValueListEditor::buttonClicked(Button* b)
 		p.addItem(1, "From Expression");
 		p.addItem(2, "From Input Values");
 		p.addItem(3, "From Container");
+		p.addItem(4, "From First Element");
 
 		p.showMenuAsync(PopupMenu::Options(), [this](int result)
 			{
@@ -244,6 +245,12 @@ void InputValueListEditor::buttonClicked(Button* b)
 							}
 						);
 					}
+				}
+				break;
+
+				case 4:
+				{
+					for (auto& c : list->list) ((Parameter*)c)->setValue(((Parameter*)list->list[0])->value);
 				}
 				break;
 				}
