@@ -150,7 +150,7 @@ public:
 	void addModuleListener(ModuleListener* newListener) { moduleListeners.add(newListener); }
 	void removeModuleListener(ModuleListener* listener) { moduleListeners.remove(listener); }
 
-	static String getTargetLabelForValueControllable(Controllable *);
+	static Array<TargetStepButton *> getTargetLabelForValueControllable(Controllable *);
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Module)
 };

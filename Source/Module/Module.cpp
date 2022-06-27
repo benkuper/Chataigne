@@ -382,27 +382,32 @@ ModuleUI* Module::getModuleUI()
 	return new ModuleUI(this);
 }
 
-String Module::getTargetLabelForValueControllable(Controllable* c)
+Array<TargetStepButton *> Module::getTargetLabelForValueControllable(Controllable* c)
 {
-	String label = c->niceName;
+	Array<TargetStepButton *> result;
+
+	//String label = c->niceName;
 
 	int maxLevels = 3;
 
 	Module* m = ControllableUtil::findParentAs<Module>(c);
-	if (m == nullptr) return c->getControlAddress();
+	if (m == nullptr) return result;// c->getControlAddress();
 
 	int index = 0;
 	ControllableContainer* cc = c->parentContainer;
 	while (cc != nullptr && cc != &m->valuesCC && index < maxLevels)
 	{
-		label = cc->niceName + "/" + label;
+		result.insert(0, new TargetStepButton(cc->niceName+" >", cc));
+		//label = cc->niceName + "/" + label;
 		cc = cc->parentContainer;
 		index++;
 	}
 
-	label = m->niceName + " > " + label;
+	result.insert(0, new TargetStepButton(m->niceName+" >", &m->valuesCC));
+	//label = m->niceName + " > " + label;
 
-	return label;
+	result.add(new TargetStepButton(c->niceName, nullptr));
+	return result;
 }
 
 

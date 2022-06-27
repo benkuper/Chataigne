@@ -36,39 +36,6 @@ public:
 	var ghostOperator;
 	var ghostComponent;
 
-	class ValueInterpolator :
-		public Thread,
-		public ChangeBroadcaster
-	{
-	public:
-		ValueInterpolator(WeakReference<Parameter> p, var targetValue, float time, Automation* a);
-		~ValueInterpolator();
-
-		WeakReference<Parameter> parameter;
-		var valueAtStart;
-		var targetValue;
-		float time;
-		Automation* automation;
-
-		void run() override;
-
-		class Manager :
-			public ChangeListener
-		{
-		public:
-			juce_DeclareSingleton(Manager, true);
-
-			void interpolate(WeakReference<Parameter> p, var targetValue, float time, Automation* a);
-			void changeListenerCallback(ChangeBroadcaster* source) override;
-
-			void removeInterpolationWith(Parameter* p);
-
-			HashMap<Parameter*, ValueInterpolator*> interpolatorMap;
-			OwnedArray<ValueInterpolator> interpolators;
-		};
-
-	};
-
 	FloatParameter* time;
 	std::unique_ptr<Automation> automation;
 

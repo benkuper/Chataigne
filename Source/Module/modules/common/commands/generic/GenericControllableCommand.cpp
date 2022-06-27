@@ -8,7 +8,6 @@
   ==============================================================================
 */
 
-juce_ImplementSingleton(GenericControllableCommand::ValueInterpolator::Manager);
 
 GenericControllableCommand::GenericControllableCommand(Module* _module, CommandContext context, var params, Multiplex* multiplex) :
 	BaseCommand(_module, context, params, multiplex),
@@ -16,7 +15,8 @@ GenericControllableCommand::GenericControllableCommand(Module* _module, CommandC
 	valueOperator(nullptr),
 	componentOperator(nullptr),
 	loop(nullptr),
-	value(nullptr)
+	value(nullptr),
+	time(nullptr)
 {
 	saveAndLoadRecursiveData = true;
 
@@ -54,18 +54,18 @@ GenericControllableCommand::GenericControllableCommand(Module* _module, CommandC
 
 GenericControllableCommand::~GenericControllableCommand()
 {
-	if (ValueInterpolator::Manager::getInstanceWithoutCreating() == nullptr) return;
+	if (Parameter::ValueInterpolator::Manager::getInstanceWithoutCreating() == nullptr) return;
 
 	if (action == GO_TO_VALUE)
 	{
-		if (!isMultiplexed()) ValueInterpolator::Manager::getInstance()->removeInterpolationWith((Parameter*)target->target.get());
+		if (!isMultiplexed()) Parameter::ValueInterpolator::Manager::getInstance()->removeInterpolationWith((Parameter*)target->target.get());
 		else
 		{
 			for (int i = 0; i < getMultiplexCount(); i++)
 			{
 				if (Parameter* p = dynamic_cast<Parameter*>(getTargetControllableAtIndex(i)))
 				{
-					ValueInterpolator::Manager::getInstance()->removeInterpolationWith(p);
+					Parameter::ValueInterpolator::Manager::getInstance()->removeInterpolationWith(p);
 				}
 			}
 		}
@@ -425,10 +425,16 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 
 			if (!targetValue.isVoid())
 			{
-				if (action == SET_VALUE) p->setValue(targetValue);
+				float lTime = getLinkedValue(time, multiplexIndex);
+				if (action == SET_VALUE || (action == GO_TO_VALUE && lTime == 0))
+				{
+					Parameter::ValueInterpolator::Manager::getInstance()->removeInterpolationWith(p);
+					p->setValue(targetValue);
+				}
+
 				else if (action == GO_TO_VALUE)
 				{
-					ValueInterpolator::Manager::getInstance()->interpolate(p, targetValue, getLinkedValue(time, multiplexIndex), automation.get());
+					Parameter::ValueInterpolator::Manager::getInstance()->interpolate(p, targetValue, lTime, automation.get());
 				}
 			}
 		}
@@ -508,92 +514,4 @@ bool GenericControllableCommand::checkEnableTargetFilter(Controllable* c)
 BaseCommand* GenericControllableCommand::create(ControllableContainer* module, CommandContext context, var params, Multiplex* multiplex)
 {
 	return new GenericControllableCommand((CustomVariablesModule*)module, context, params, multiplex);
-}
-
-GenericControllableCommand::ValueInterpolator::ValueInterpolator(WeakReference<Parameter> p, var targetValue, float time, Automation* a) :
-	Thread("Value Interpolator"),
-	parameter(p),
-	targetValue(targetValue),
-	time(time),
-	automation(a)
-{
-	startThread();
-}
-
-GenericControllableCommand::ValueInterpolator::~ValueInterpolator()
-{
-	stopThread(10);
-}
-
-void GenericControllableCommand::ValueInterpolator::run()
-{
-	double timeAtStart = Time::getMillisecondCounterHiRes() / 1000.0;
-	valueAtStart = parameter->getValue();
-
-	jassert(valueAtStart.size() == targetValue.size());
-
-	while (!threadShouldExit() && !parameter.wasObjectDeleted())
-	{
-		sleep(2);
-
-		double t = Time::getMillisecondCounterHiRes() / 1000.0;
-		double relT = (t - timeAtStart) / time;
-
-		if (relT >= 1)
-		{
-			parameter->setValue(targetValue);
-			sendChangeMessage();
-			return;
-		}
-		else
-		{
-			var tVal;
-
-			float pos = automation->getValueAtPosition(relT);
-
-			if (targetValue.isArray())
-			{
-				for (int i = 0; i < targetValue.size(); i++)
-				{
-					tVal.append(jmap<float>(pos, (float)valueAtStart[i], (float)targetValue[i]));
-				}
-			}
-			else
-			{
-				tVal = jmap<float>(pos, (float)valueAtStart, (float)targetValue);
-			}
-
-			parameter->setValue(tVal);
-		}
-	}
-}
-
-void GenericControllableCommand::ValueInterpolator::Manager::interpolate(WeakReference<Parameter> p, var targetValue, float time, Automation* a)
-{
-	removeInterpolationWith(p);
-
-	ValueInterpolator* interp = new ValueInterpolator(p, targetValue, time, a);
-	interpolators.add(interp);
-	interpolatorMap.set(p, interp);
-	MessageManagerLock mmLock;
-	interp->addChangeListener(this);
-}
-
-
-void GenericControllableCommand::ValueInterpolator::Manager::changeListenerCallback(ChangeBroadcaster* source)
-{
-	if (ValueInterpolator* interp = (ValueInterpolator*)source)
-	{
-		removeInterpolationWith(interp->parameter);
-	}
-}
-
-void GenericControllableCommand::ValueInterpolator::Manager::removeInterpolationWith(Parameter* p)
-{
-	if (interpolatorMap.contains(p))
-	{
-		ValueInterpolator* interp = interpolatorMap[p];
-		interpolatorMap.remove(p);
-		interpolators.removeObject(interp);
-	}
 }

@@ -64,7 +64,6 @@ ChataigneEngine::~ChataigneEngine()
 	WindowsHooker::deleteInstance();
 #endif
 
-	GenericControllableCommand::ValueInterpolator::Manager::deleteInstance();
 
 	ZeroconfManager::deleteInstance();
 	CommunityModuleManager::deleteInstance();
