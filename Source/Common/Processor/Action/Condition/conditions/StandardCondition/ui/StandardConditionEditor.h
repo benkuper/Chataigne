@@ -32,6 +32,7 @@ public:
 	void resizedInternalHeaderItemInternal(Rectangle<int> &r) override;
 	void resizedInternalContent(Rectangle<int> &r) override;
 	void updateUI() override;
+	void updateVisibility() override;
 
 	void childBoundsChanged(Component* c) override;
 

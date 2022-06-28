@@ -18,6 +18,7 @@ StandardConditionEditor::StandardConditionEditor(StandardCondition* _condition, 
 	alwaysTriggerUI.reset(standardCondition->alwaysTrigger->createToggle());
 	addChildComponent(alwaysTriggerUI.get());
 
+
 	toggleModeUI.reset(standardCondition->toggleMode->createToggle(ImageCache::getFromMemory(BinaryData::toggle_png, BinaryData::toggle_pngSize)));
 
 	addChildComponent(toggleModeUI.get());
@@ -50,6 +51,7 @@ void StandardConditionEditor::resetAndBuild()
 {
 	// do nothing
 	//DBG("Here reset and build");
+
 }
 
 void StandardConditionEditor::resizedInternalHeaderItemInternal(Rectangle<int> & r)
@@ -111,7 +113,20 @@ void StandardConditionEditor::updateUI()
 		comparatorUI->setVisible(!standardCondition->editorIsCollapsed);
 	}
 
+	targetUI->setVisible(!standardCondition->editorIsCollapsed);
+	alwaysTriggerUI->setVisible(!standardCondition->editorIsCollapsed);
+	toggleModeUI->setVisible(!standardCondition->editorIsCollapsed);
+
 	resized();
+}
+
+void StandardConditionEditor::updateVisibility()
+{
+	InspectableEditor::updateVisibility();
+	targetUI->setVisible(!standardCondition->editorIsCollapsed);
+	alwaysTriggerUI->setVisible(!standardCondition->editorIsCollapsed);
+	toggleModeUI->setVisible(!standardCondition->editorIsCollapsed);
+	if (comparatorUI != nullptr) comparatorUI->setVisible(!standardCondition->editorIsCollapsed);
 }
 
 void StandardConditionEditor::childBoundsChanged(Component* c)
