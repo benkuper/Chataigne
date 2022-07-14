@@ -24,7 +24,7 @@ LoupedeckModule::LoupedeckModule() :
 {
 	//baudRate->setValue(9600);
 
-	portParam->vidFilter = 0x2ec2;
+	portParam->vidFilters.add(0x2ec2);
 
 	autoAdd->hideInEditor = true;
 	autoAdd->setValue(false);
