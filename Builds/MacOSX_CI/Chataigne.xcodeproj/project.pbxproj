@@ -11,6 +11,7 @@
 		0B711A96469657F81C4C9FA8 /* CoreAudio.framework */ = {isa = PBXBuildFile; fileRef = 48D6B341F756699DA2054362; };
 		0E603ED38A513D919F5271A0 /* Condition.cpp */ = {isa = PBXBuildFile; fileRef = B7BBA4821B4CAD95A467E9DE; };
 		14B03BE884B82BE8EC264AE9 /* include_juce_simpleweb.cpp */ = {isa = PBXBuildFile; fileRef = A344ECDA05A5372A32341886; };
+		1E38E7F8E4ECF0F020101DF4 /* include_juce_audio_processors_lv2_libs.cpp */ = {isa = PBXBuildFile; fileRef = DE62E8E7E1EBB5191F56029B; };
 		212B67A3534DE8B8475EFD36 /* include_juce_organicui2.cpp */ = {isa = PBXBuildFile; fileRef = 03B34F65CD67AA62113F23C3; };
 		2231890C46C454B84C7D5049 /* include_juce_opengl.mm */ = {isa = PBXBuildFile; fileRef = F4590876F89E291434F6B792; };
 		2270C7A2C18C1C8F04F83D18 /* include_juce_organicui.cpp */ = {isa = PBXBuildFile; fileRef = 066DA60AFB60B8BE77E819E7; };
@@ -47,7 +48,6 @@
 		723A26BA39C61F2DF6E8EFC7 /* nunchuk.c */ = {isa = PBXBuildFile; fileRef = 20E319398349A41336586E9D; };
 		733770874198A88DEBACE61E /* classic.c */ = {isa = PBXBuildFile; fileRef = 8676DFC506B9817640312891; };
 		73EEDC57D3D78D60970F77CB /* pigpio.c */ = {isa = PBXBuildFile; fileRef = BC14EC6636D09A4F7D7524D3; };
-		7438DDB36BA97435A0318452 /* Carbon.framework */ = {isa = PBXBuildFile; fileRef = 4A2D120957D96E42971F3697; };
 		779C955137FDB88F7CD846DC /* util.c */ = {isa = PBXBuildFile; fileRef = E5AA04B82683E9B39FCBFDD3; };
 		782417B2B787FC9875A8CC95 /* include_juce_sharedtexture.cpp */ = {isa = PBXBuildFile; fileRef = FED4546FEBC99A8405106EFE; };
 		85E25915D57CB69541CADBC8 /* include_juce_audio_formats.mm */ = {isa = PBXBuildFile; fileRef = A375FF401D9AB143A47EC093; };
@@ -83,6 +83,7 @@
 		DAFC4F097C396F425F32EE4F /* serial.cc */ = {isa = PBXBuildFile; fileRef = 4F4804536C25AE1613284CDE; };
 		DD2464F57B8E65E34C00CDE7 /* StateMachineIncludes.cpp */ = {isa = PBXBuildFile; fileRef = F697A6937365CFBE8B6E51B6; };
 		DE87F2B6FF24002E15984FBE /* Cocoa.framework */ = {isa = PBXBuildFile; fileRef = 3149349D002EF31FDDDBA326; };
+		DE8BE67185C7EF8133B2DAD3 /* include_juce_audio_processors_ara.cpp */ = {isa = PBXBuildFile; fileRef = A4AAE625E3A138990E5B2D15; };
 		E0AA64D538AA9C2130C98D5C /* CommonIncludes.cpp */ = {isa = PBXBuildFile; fileRef = 0C5BDC490B538FDD806BB14A; };
 		E1DDA4FC164C8A6BB5F78E3D /* ModuleIncludes.cpp */ = {isa = PBXBuildFile; fileRef = BBC2FE8F1F37EFC9262168E3; };
 		E6279834EBEDBB31676923B4 /* IOBluetooth.framework */ = {isa = PBXBuildFile; fileRef = F71AEFD7622D0B0B810D246E; };
@@ -337,7 +338,6 @@
 		48D6B341F756699DA2054362 /* CoreAudio.framework */ /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		4940D086A0FEB08B35EF76A8 /* WindowsHooker.h */ /* WindowsHooker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WindowsHooker.h; path = ../../Source/Module/modules/controller/keyboard/WindowsHooker.h; sourceTree = SOURCE_ROOT; };
 		498E36E4BBEBDCC6F4155CB4 /* Module.cpp */ /* Module.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Module.cpp; path = ../../Source/Module/Module.cpp; sourceTree = SOURCE_ROOT; };
-		4A2D120957D96E42971F3697 /* Carbon.framework */ /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		4A2E002198407598BE5F2D27 /* BinaryData.h */ /* BinaryData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BinaryData.h; path = ../../JuceLibraryCode/BinaryData.h; sourceTree = SOURCE_ROOT; };
 		4A7839D73F1B5D61CB692D0F /* CVPresetManager.cpp */ /* CVPresetManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CVPresetManager.cpp; path = ../../Source/CustomVariables/Preset/CVPresetManager.cpp; sourceTree = SOURCE_ROOT; };
 		4AB737A3CFA4289120C76020 /* MathFilter.h */ /* MathFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MathFilter.h; path = ../../Source/Common/Processor/Mapping/Filter/filters/number/MathFilter.h; sourceTree = SOURCE_ROOT; };
@@ -626,6 +626,7 @@
 		A3BEB8CF6471FD37FEFED3F9 /* OSCQueryModuleEditor.h */ /* OSCQueryModuleEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OSCQueryModuleEditor.h; path = ../../Source/Module/modules/oscquery/generic/ui/OSCQueryModuleEditor.h; sourceTree = SOURCE_ROOT; };
 		A48ADB0BCE07CA8C68387D27 /* GPIOCommands.cpp */ /* GPIOCommands.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = GPIOCommands.cpp; path = ../../Source/Module/modules/gpio/commands/GPIOCommands.cpp; sourceTree = SOURCE_ROOT; };
 		A49C324D7AAF7C3F83973E3F /* TimeFilter.h */ /* TimeFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TimeFilter.h; path = ../../Source/Common/Processor/Mapping/Filter/filters/TimeFilter.h; sourceTree = SOURCE_ROOT; };
+		A4AAE625E3A138990E5B2D15 /* include_juce_audio_processors_ara.cpp */ /* include_juce_audio_processors_ara.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_juce_audio_processors_ara.cpp; path = ../../JuceLibraryCode/include_juce_audio_processors_ara.cpp; sourceTree = SOURCE_ROOT; };
 		A4FB2D0362885AAE4B11528D /* decoder.c */ /* decoder.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = decoder.c; path = ../../Source/Common/LTC/decoder.c; sourceTree = SOURCE_ROOT; };
 		A50FF9242BE570B75142ACEE /* TimeMachineIncludes.h */ /* TimeMachineIncludes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TimeMachineIncludes.h; path = ../../Source/TimeMachine/TimeMachineIncludes.h; sourceTree = SOURCE_ROOT; };
 		A58C745D1F37BDB174FAB845 /* crash.png */ /* crash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = crash.png; path = ../../Resources/crash.png; sourceTree = SOURCE_ROOT; };
@@ -825,6 +826,7 @@
 		DC429F63AB712823DC8D776E /* OSPowerCommand.cpp */ /* OSPowerCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = OSPowerCommand.cpp; path = ../../Source/Module/modules/system/os/commands/OSPowerCommand.cpp; sourceTree = SOURCE_ROOT; };
 		DD3EE502856770F0B005957C /* ChataigneTriggerLayer.cpp */ /* ChataigneTriggerLayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ChataigneTriggerLayer.cpp; path = ../../Source/TimeMachine/Sequence/layers/trigger/ChataigneTriggerLayer.cpp; sourceTree = SOURCE_ROOT; };
 		DE11D226FA3C16D2908002A7 /* FFTAnalyzerManager.h */ /* FFTAnalyzerManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FFTAnalyzerManager.h; path = ../../Source/Module/modules/audio/analysis/FFTAnalyzerManager.h; sourceTree = SOURCE_ROOT; };
+		DE62E8E7E1EBB5191F56029B /* include_juce_audio_processors_lv2_libs.cpp */ /* include_juce_audio_processors_lv2_libs.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_juce_audio_processors_lv2_libs.cpp; path = ../../JuceLibraryCode/include_juce_audio_processors_lv2_libs.cpp; sourceTree = SOURCE_ROOT; };
 		DF7E4C10AE96476C8D27E827 /* PowerPoint.png */ /* PowerPoint.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PowerPoint.png; path = ../../Resources/Modules/PowerPoint.png; sourceTree = SOURCE_ROOT; };
 		E001D75A29B5AF290246E897 /* ActivationCondition.cpp */ /* ActivationCondition.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ActivationCondition.cpp; path = ../../Source/Common/Processor/Action/Condition/conditions/ActivationCondition/ActivationCondition.cpp; sourceTree = SOURCE_ROOT; };
 		E08D835A5E1D91FDDEA88D11 /* WindowsHooker.cpp */ /* WindowsHooker.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = WindowsHooker.cpp; path = ../../Source/Module/modules/controller/keyboard/WindowsHooker.cpp; sourceTree = SOURCE_ROOT; };
@@ -938,7 +940,6 @@
 			files = (
 				E7E26B688401C505E1ABD1F1,
 				EE6988BFFAFF13490987EAD2,
-				7438DDB36BA97435A0318452,
 				DE87F2B6FF24002E15984FBE,
 				0B711A96469657F81C4C9FA8,
 				AF39E567B08EC2A6120300D6,
@@ -1323,6 +1324,8 @@
 				BC6F1B625EFCC97D0A8A1558,
 				A375FF401D9AB143A47EC093,
 				14E5D0E29E9A6BEAD9C32A03,
+				A4AAE625E3A138990E5B2D15,
+				DE62E8E7E1EBB5191F56029B,
 				8802698D52924F5FAB243444,
 				46F2EDE77746DD3B70BA3157,
 				C6D2FE7E6817726C8813E755,
@@ -2150,7 +2153,6 @@
 			children = (
 				DA1455ABA352149A51F70529,
 				1952BD304214810D645BBDF6,
-				4A2D120957D96E42971F3697,
 				3149349D002EF31FDDDBA326,
 				48D6B341F756699DA2054362,
 				F7C65A10F005D2BA26D357E8,
@@ -3511,7 +3513,7 @@
 		CFE62146BE7CC7A0837B591F = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1320;
+				LastUpgradeCheck = 1340;
 				ORGANIZATIONNAME = "Ben Kuper";
 				TargetAttributes = {
 					DD2989001B2BF710FEA75ED3 = {
@@ -3622,6 +3624,8 @@
 				24C5EB1BCD88A7B29DDAAB00,
 				85E25915D57CB69541CADBC8,
 				CEF52996937104AFE201FA08,
+				DE8BE67185C7EF8133B2DAD3,
+				1E38E7F8E4ECF0F020101DF4,
 				4D75BBCB531AE4968206FB8D,
 				24E9DAD33ACCFA87158E4D92,
 				DA910C499A52C803D9A9158E,
@@ -3773,10 +3777,10 @@
 					"JucePlugin_Build_VST3=0",
 					"JucePlugin_Build_AU=0",
 					"JucePlugin_Build_AUv3=0",
-					"JucePlugin_Build_RTAS=0",
 					"JucePlugin_Build_AAX=0",
 					"JucePlugin_Build_Standalone=0",
 					"JucePlugin_Build_Unity=0",
+					"JucePlugin_Build_LV2=0",
 				);
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
@@ -3814,7 +3818,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../Modules $(SRCROOT)/../../Source $(SRCROOT)/../../External/wiiuse $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/asio $(SRCROOT)/../../External/asiodriver $(SRCROOT)/../../External/kinect/include $(SRCROOT)/../../External/joycon/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../External/dnssd/include $(SRCROOT)/../../External/ois/include $(SRCROOT)/../../External/sdl/include $(SRCROOT)/../../External/hidapi/include $(SRCROOT)/../../External/abletonlink/include $(SRCROOT)/../../External/libusb/include/libusb-1.0 $(SRCROOT)/../../External/mosquitto/include $(SRCROOT)/../../External/posistagenet/include";
-				OTHER_LDFLAGS = "-lServus -lhidapi -lJoyShockLibrary -lssl -lcrypto";
+				OTHER_LDFLAGS = "-lServus -lhidapi -lJoyShockLibrary -lssl -lcrypto -weak_framework Metal -weak_framework MetalKit";
 				PRODUCT_BUNDLE_IDENTIFIER = benkuper.Chataigne;
 				PRODUCT_NAME = "Chataigne";
 				USE_HEADERMAP = NO;
@@ -3851,10 +3855,10 @@
 					"JucePlugin_Build_VST3=0",
 					"JucePlugin_Build_AU=0",
 					"JucePlugin_Build_AUv3=0",
-					"JucePlugin_Build_RTAS=0",
 					"JucePlugin_Build_AAX=0",
 					"JucePlugin_Build_Standalone=0",
 					"JucePlugin_Build_Unity=0",
+					"JucePlugin_Build_LV2=0",
 				);
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
@@ -3893,7 +3897,7 @@
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../Modules $(SRCROOT)/../../Source $(SRCROOT)/../../External/wiiuse $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/asio $(SRCROOT)/../../External/asiodriver $(SRCROOT)/../../External/kinect/include $(SRCROOT)/../../External/joycon/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../External/dnssd/include $(SRCROOT)/../../External/ois/include $(SRCROOT)/../../External/sdl/include $(SRCROOT)/../../External/hidapi/include $(SRCROOT)/../../External/abletonlink/include $(SRCROOT)/../../External/libusb/include/libusb-1.0 $(SRCROOT)/../../External/mosquitto/include $(SRCROOT)/../../External/posistagenet/include";
-				OTHER_LDFLAGS = "-lServus -lhidapi -lJoyShockLibrary -lssl -lcrypto";
+				OTHER_LDFLAGS = "-lServus -lhidapi -lJoyShockLibrary -lssl -lcrypto -weak_framework Metal -weak_framework MetalKit";
 				PRODUCT_BUNDLE_IDENTIFIER = benkuper.Chataigne;
 				PRODUCT_NAME = "Chataigne";
 				USE_HEADERMAP = NO;
