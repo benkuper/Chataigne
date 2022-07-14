@@ -23,8 +23,8 @@ public:
 
 	String ghostData;
 	int openBaudRate;
-	int vidFilter;
-	int pidFilter;
+	Array<int> vidFilters;
+	Array<int> pidFilters;
 
 	void setValueInternal(var &value) override;
 
