@@ -21,6 +21,7 @@ public:
     bool isNext;
     int index;
 
+    ControllableContainer seqCC;
     TargetParameter* linkedSequence;
     BoolParameter* autoStart;
     BoolParameter* forceStartFrom0;
@@ -31,6 +32,9 @@ public:
     void setIndex(int value);
 
     ProcessorUI* getUI() override;
+
+    virtual var getJSONData() override;
+    virtual void loadJSONDataItemInternal(var data) override;
     
     String getTypeString() const override { return "Cue"; }
 

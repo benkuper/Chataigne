@@ -69,6 +69,8 @@ public:
 
     void updateNextCue();
 
+    virtual var getJSONData() override;
+    virtual void loadJSONDataItemInternal(var data) override;
     void afterLoadJSONDataInternal() override;
 
     ProcessorUI* getUI() override;

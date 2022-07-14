@@ -64,9 +64,9 @@ public:
 
 	virtual void highlightLinkedInspectables(bool value) override;
 
-	var getJSONData() override;
-	void loadJSONDataItemInternal(var data) override;
-	void endLoadFile() override;
+	virtual var getJSONData() override;
+	virtual void loadJSONDataItemInternal(var data) override;
+	virtual void endLoadFile() override;
 
 	virtual ProcessorUI* getUI() override;
 

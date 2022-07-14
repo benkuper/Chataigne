@@ -1,3 +1,4 @@
+#include "Conductor.h"
 /*
   ==============================================================================
 
@@ -265,6 +266,16 @@ void Conductor::updateNextCue()
 	}
 
 	nextCueName->setValue(nextName);
+}
+
+var Conductor::getJSONData()
+{
+	return Processor::getJSONData(); //bypass action
+}
+
+void Conductor::loadJSONDataItemInternal(var data)
+{
+	Processor::loadJSONDataItemInternal(data); //bypass action
 }
 
 void Conductor::afterLoadJSONDataInternal()
