@@ -117,10 +117,10 @@ void CustomOSCModule::processMessageInternal(const OSCMessage& msg)
 				Parameter* p = (Parameter*)c;
 				switch (c->type)
 				{
-				case Controllable::BOOL: p->setValue(getFloatArg(msg[i]) >= 1); break;
-				case Controllable::FLOAT: p->setValue(getFloatArg(msg[i])); break;
-				case Controllable::INT: p->setValue(getIntArg(msg[i])); break;
-				case Controllable::STRING: p->setValue(getStringArg(msg[i])); break;
+				case Controllable::BOOL: p->setValue(OSCHelpers::getFloatArg(msg[i]) >= 1); break;
+				case Controllable::FLOAT: p->setValue(OSCHelpers::getFloatArg(msg[i])); break;
+				case Controllable::INT: p->setValue(OSCHelpers::getIntArg(msg[i])); break;
+				case Controllable::STRING: p->setValue(OSCHelpers::getStringArg(msg[i])); break;
 				default:
 					break;
 				}
@@ -170,14 +170,14 @@ void CustomOSCModule::processMessageInternal(const OSCMessage& msg)
 				break;
 
 			case Controllable::BOOL:
-				((Parameter*)c)->setValue(getFloatArg(msg[0]) >= 1); break;
+				((Parameter*)c)->setValue(OSCHelpers::getFloatArg(msg[0]) >= 1); break;
 				break;
 
 			case Controllable::FLOAT:
 				if (msg.size() >= 1)
 				{
 					FloatParameter* f = (FloatParameter*)c;
-					f->setValue(getFloatArg(msg[0]));
+					f->setValue(OSCHelpers::getFloatArg(msg[0]));
 				}
 				break;
 
@@ -185,24 +185,24 @@ void CustomOSCModule::processMessageInternal(const OSCMessage& msg)
 				if (msg.size() >= 1)
 				{
 					IntParameter* i = (IntParameter*)c;
-					i->setValue(getIntArg(msg[0]));
+					i->setValue(OSCHelpers::getIntArg(msg[0]));
 				}
 				break;
 
 			case Controllable::STRING:
-				if (msg.size() >= 1) ((StringParameter*)c)->setValue(getStringArg(msg[0]));
+				if (msg.size() >= 1) ((StringParameter*)c)->setValue(OSCHelpers::getStringArg(msg[0]));
 				break;
 
 			case Controllable::POINT2D:
-				if (msg.size() >= 2) ((Point2DParameter*)c)->setPoint(getFloatArg(msg[0]), getFloatArg(msg[1]));
+				if (msg.size() >= 2) ((Point2DParameter*)c)->setPoint(OSCHelpers::getFloatArg(msg[0]), OSCHelpers::getFloatArg(msg[1]));
 				break;
 
 			case Controllable::POINT3D:
-				if (msg.size() >= 3) ((Point3DParameter*)c)->setVector(Vector3D<float>(getFloatArg(msg[0]), getFloatArg(msg[1]), getFloatArg(msg[2])));
+				if (msg.size() >= 3) ((Point3DParameter*)c)->setVector(Vector3D<float>(OSCHelpers::getFloatArg(msg[0]), OSCHelpers::getFloatArg(msg[1]), OSCHelpers::getFloatArg(msg[2])));
 				break;
 
 			case Controllable::COLOR:
-				if (msg.size() >= 3) ((ColorParameter*)c)->setColor(Colour((uint8)(getFloatArg(msg[0]) * 255), (uint8)(getFloatArg(msg[1]) * 255), (uint8)(getFloatArg(msg[2]) * 255), msg.size() >= 4 ? getFloatArg(msg[3]) : 1));
+				if (msg.size() >= 3) ((ColorParameter*)c)->setColor(Colour((uint8)(OSCHelpers::getFloatArg(msg[0]) * 255), (uint8)(OSCHelpers::getFloatArg(msg[1]) * 255), (uint8)(OSCHelpers::getFloatArg(msg[2]) * 255), msg.size() >= 4 ? OSCHelpers::getFloatArg(msg[3]) : 1));
 				else if (msg.size() > 0 && msg[0].isColour()) ((ColorParameter*)c)->setColor(OSCHelpers::getColourFromOSC(msg[0].getColour()));
 				break;
 
@@ -243,41 +243,41 @@ void CustomOSCModule::processMessageInternal(const OSCMessage& msg)
 			//duplicate because may have other mechanism
 			if (msg[0].isInt32())
 			{
-				c = new IntParameter(cNiceName, "", getIntArg(msg[0]));
+				c = new IntParameter(cNiceName, "", OSCHelpers::getIntArg(msg[0]));
 			}
 			else if (msg[0].isFloat32())
 			{
 				c = new Point2DParameter(cNiceName, "");
-				((Point2DParameter*)c)->setPoint(getFloatArg(msg[0]), getFloatArg(msg[1]));
+				((Point2DParameter*)c)->setPoint(OSCHelpers::getFloatArg(msg[0]), OSCHelpers::getFloatArg(msg[1]));
 			}
 			else if (msg[0].isString())
 			{
-				c = new StringParameter(cNiceName, "", getStringArg(msg[0]));
+				c = new StringParameter(cNiceName, "", OSCHelpers::getStringArg(msg[0]));
 			}
 			break;
 
 		case 3:
-			if (msg[0].isInt32()) c = new IntParameter(cNiceName, "", getIntArg(msg[0]), getIntArg(msg[1]), getIntArg(msg[2]));
+			if (msg[0].isInt32()) c = new IntParameter(cNiceName, "", OSCHelpers::getIntArg(msg[0]), OSCHelpers::getIntArg(msg[1]), OSCHelpers::getIntArg(msg[2]));
 			else if (msg[0].isFloat32())
 			{
 
 				c = new Point3DParameter(cNiceName, "");
-				((Point3DParameter*)c)->setVector(getFloatArg(msg[0]), getFloatArg(msg[1]), getFloatArg(msg[2]));
+				((Point3DParameter*)c)->setVector(OSCHelpers::getFloatArg(msg[0]), OSCHelpers::getFloatArg(msg[1]), OSCHelpers::getFloatArg(msg[2]));
 			}
 			else if (msg[0].isString())
 			{
-				c = new StringParameter(cNiceName, "", getStringArg(msg[0]));
+				c = new StringParameter(cNiceName, "", OSCHelpers::getStringArg(msg[0]));
 			}
 			break;
 
 		case 4:
 			if (msg[0].isFloat32() && msg[1].isFloat32() && msg[2].isFloat32() && msg[3].isFloat32())
 			{
-				c = new ColorParameter(cNiceName, "", Colour((uint8)(getFloatArg(msg[0]) * 255), (uint8)(getFloatArg(msg[1]) * 255), (uint8)(getFloatArg(msg[2]) * 255), getFloatArg(msg[3])));
+				c = new ColorParameter(cNiceName, "", Colour((uint8)(OSCHelpers::getFloatArg(msg[0]) * 255), (uint8)(OSCHelpers::getFloatArg(msg[1]) * 255), (uint8)(OSCHelpers::getFloatArg(msg[2]) * 255), OSCHelpers::getFloatArg(msg[3])));
 			}
 			else if (msg[0].isString())
 			{
-				c = new StringParameter(cNiceName, "", getStringArg(msg[0]));
+				c = new StringParameter(cNiceName, "", OSCHelpers::getStringArg(msg[0]));
 			}
 			break;
 

@@ -126,51 +126,12 @@ void OSCModule::setupReceiver()
 	
 }
 
-float OSCModule::getFloatArg(OSCArgument a)
-{
-	if (a.isFloat32()) return a.getFloat32();
-	if (a.isInt32()) return (float)a.getInt32();
-	if (a.isString()) return a.getString().getFloatValue();
-	if (a.isColour()) return getIntArg(a);
-	return 0;
-}
-
-int OSCModule::getIntArg(OSCArgument a)
-{
-	if (a.isInt32()) return a.getInt32();
-	if (a.isFloat32()) return roundf(a.getFloat32());
-	if (a.isString()) return a.getString().getIntValue();
-	if (a.isColour()) return a.getColour().toInt32();
-		//return c.red << 24 | c.green << 16 | c.blue << 8 | c.alpha;
-	//}
-
-	return 0;
-}
-
-String OSCModule::getStringArg(OSCArgument a)
-{
-	if (a.isString()) return a.getString();
-	if (a.isInt32()) return String(a.getInt32());
-	if (a.isFloat32()) return String(a.getFloat32());
-	if (a.isColour()) return OSCHelpers::getColourFromOSC(a.getColour()).toString();
-	return "";
-}
-
-Colour OSCModule::getColorArg(OSCArgument a)
-{
-	if (a.isColour()) return OSCHelpers::getColourFromOSC(a.getColour());
-	if (a.isString()) return Colour::fromString(a.getString());
-	if (a.isInt32()) return Colour(a.getInt32());
-	if (a.isFloat32()) return Colour(a.getFloat32());
-	return Colours::black;
-}
-
 void OSCModule::processMessage(const OSCMessage & msg)
 {
 	if (logIncomingData->boolValue())
 	{
 		String s = "";
-		for (auto &a : msg) s += String(" ") + getStringArg(a);
+		for (auto &a : msg) s += String(" ") + OSCHelpers::getStringArg(a);
 		NLOG(niceName, msg.getAddressPattern().toString() << " :" << s);
 	}
 
@@ -262,7 +223,7 @@ void OSCModule::sendOSC(const OSCMessage & msg, String ip, int port)
 		NLOG(niceName, "Send OSC : " << msg.getAddressPattern().toString());
 		for (auto &a : msg)
 		{
-			LOG(getStringArg(a));
+			LOG(OSCHelpers::getStringArg(a));
 		}
 	}
 
