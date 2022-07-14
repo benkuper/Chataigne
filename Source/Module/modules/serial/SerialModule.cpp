@@ -222,8 +222,31 @@ void SerialModule::loadJSONDataInternal(var data)
 
 void SerialModule::setupModuleFromJSONData(var data)
 {
-	if (data.hasProperty("vidFilter")) portParam->vidFilter = data.getDynamicObject()->getProperty("vidFilter").toString().getHexValue32();
-	if (data.hasProperty("pidFilter")) portParam->pidFilter = data.getDynamicObject()->getProperty("pidFilter").toString().getHexValue32();
+	if (data.hasProperty("vidFilter"))
+	{
+		var vidFilter = data.getProperty("vidFilter", "");
+		if (vidFilter.isArray())
+		{
+			for (int i = 0; i < vidFilter.size(); i++) portParam->vidFilters.add(vidFilter[i].toString().getHexValue32());
+		}
+		else if (vidFilter.toString().isNotEmpty())
+		{
+			portParam->vidFilters.add(vidFilter.toString().getHexValue32());
+		}
+	}
+
+	if (data.hasProperty("pidFilter"))
+	{
+		var pidFilter = data.getProperty("pidFilter", "");
+		if (pidFilter.isArray())
+		{
+			for (int i = 0; i < pidFilter.size(); i++) portParam->pidFilters.add(pidFilter[i].toString().getHexValue32());
+		}
+		else if (pidFilter.toString().isNotEmpty())
+		{
+			portParam->pidFilters.add(pidFilter.toString().getHexValue32());
+		}
+	}
 
 	StreamingModule::setupModuleFromJSONData(data);
 }
