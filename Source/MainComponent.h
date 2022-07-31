@@ -66,4 +66,7 @@ public:
 	StringArray getMenuBarNames() override;
 	virtual PopupMenu getMenuForIndex(int topLevelMenuIndex, const String& menuName) override;
 	void fillFileMenuInternal(PopupMenu& menu) override;
+
+	static void parameterAddToContextMenu(ControllableUI* ui, PopupMenu* m);
+	static bool parameterHandleContextMenuResult(ControllableUI* ui, int result);
 };

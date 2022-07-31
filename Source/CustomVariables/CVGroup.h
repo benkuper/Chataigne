@@ -54,6 +54,9 @@ public:
 	float interpolationTime;
 	FloatParameter* interpolationProgress;
 
+	void addItemFromParameter(Parameter* source, bool linkAsMaster = true);
+	void addItemsFromGroup(CVGroup* source);
+
 	void itemAdded(GenericControllableItem* item) override;
 	void itemsAdded(Array<GenericControllableItem*> item) override;
 	
@@ -77,4 +80,8 @@ public:
 	void loadJSONDataInternal(var data) override;
 
 	void run() override;
+
+
+	String getTypeString() const override { return getTypeStringStatic(); }
+	static String getTypeStringStatic() { return "CVGroup"; }
 };

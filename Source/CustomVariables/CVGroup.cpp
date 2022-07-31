@@ -17,7 +17,7 @@ CVGroup::CVGroup(const String& name) :
 	interpolationAutomation(nullptr),
 	interpolationTime(0)
 {
-	itemDataType = "CVGroup";
+	itemDataType = getTypeString();
 
 	setHasCustomColor(true);
 	itemColor->setDefaultValue(BG_COLOR.brighter(.2f));
@@ -58,6 +58,23 @@ CVGroup::~CVGroup()
 {
 	if (morpher != nullptr) morpher->removeMorpherListener(this);
 	stopThread(100);
+}
+
+void CVGroup::addItemFromParameter(Parameter* source, bool linkAsMaster)
+{
+	if (source == nullptr) return;
+	GenericControllableItem* gci = values.addItemFrom(source);
+	if (linkAsMaster)
+	{
+		source->setControlMode(Parameter::REFERENCE);
+		source->referenceTarget->setValueFromTarget(gci->controllable);
+	}
+
+}
+
+void CVGroup::addItemsFromGroup(CVGroup* source)
+{
+	for (auto& gci : source->values.items) addItemFromParameter(dynamic_cast<Parameter*>(gci->controllable), false);
 }
 
 void CVGroup::itemAdded(GenericControllableItem* item)
@@ -372,7 +389,7 @@ void CVGroup::run()
 	Automation a;
 	a.isSelectable = false;
 	a.hideInEditor = true;
-	if(interpolationAutomation != nullptr && !automationRef.wasObjectDeleted()) a.loadJSONData(interpolationAutomation->getJSONData());
+	if (interpolationAutomation != nullptr && !automationRef.wasObjectDeleted()) a.loadJSONData(interpolationAutomation->getJSONData());
 
 	interpolationProgress->setValue(0);
 
@@ -405,6 +422,7 @@ CVGroup::ValuesManager::ValuesManager() :
 CVGroup::ValuesManager::~ValuesManager()
 {
 }
+
 
 DashboardItem* CVGroup::ValuesManager::createDashboardItem()
 {

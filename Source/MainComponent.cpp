@@ -49,6 +49,9 @@ void MainContentComponent::init()
 		DialogWindow::showDialog("Welcome", welcomeScreen.get(), getTopLevelComponent(), Colours::black, true);
 	}
 
+	ParameterUI::customAddToContextMenuFunc = MainContentComponent::parameterAddToContextMenu;
+	ParameterUI::handleCustomContextMenuResultFunc = MainContentComponent::parameterHandleContextMenuResult;
+
 }
 
 SequenceManagerUI* MainContentComponent::createSequenceManagerUI(const String& name)
@@ -57,6 +60,26 @@ SequenceManagerUI* MainContentComponent::createSequenceManagerUI(const String& n
 }
 
 
+void MainContentComponent::parameterAddToContextMenu(ControllableUI* ui, PopupMenu* m)
+{
+	if (ui->controllable.wasObjectDeleted() || ui->controllable->type == Controllable::TRIGGER || ui->controllable->isControllableFeedbackOnly) return;
+	
+	PopupMenu cvMenu;
+	for (auto& g : CVGroupManager::getInstance()->items)
+	{
+		cvMenu.addItem(g->niceName, [g, ui]() { g->addItemFromParameter((Parameter*)ui->controllable.get()); });
+	}
+
+	m->addSubMenu("Add & Link to Custom Variable...", cvMenu);
+}
+
+bool MainContentComponent::parameterHandleContextMenuResult(ControllableUI* ui, int result)
+{
+	return false;
+}
+
+
+//Menubar Component
 
 ChataigneMenuBarComponent::ChataigneMenuBarComponent(MainContentComponent* mainComp, ChataigneEngine* engine) :
 	Component("Chataigne Menu Bar"),
@@ -139,7 +162,7 @@ void ChataigneMenuBarComponent::run()
 
 		startTimer(120000); // every 2 minutes
 
-        MessageManager::callAsync([this](){this->timerCallback();});
+		MessageManager::callAsync([this]() {this->timerCallback(); });
 	}
 
 }

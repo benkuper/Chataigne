@@ -1,3 +1,4 @@
+#include "MainComponent.h"
 /*
  ==============================================================================
 
@@ -176,6 +177,8 @@ void MainContentComponent::fillFileMenuInternal(PopupMenu& menu)
 	menu.addCommandItem(&getCommandManager(), ChataigneCommandIDs::goToCommunityModules);
 	menu.addCommandItem(&getCommandManager(), ChataigneCommandIDs::reloadCustomModules);
 }
+
+
 
 bool MainContentComponent::perform(const InvocationInfo& info)
 {

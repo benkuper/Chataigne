@@ -20,6 +20,8 @@ public:
 
 	void resizedInternalHeader(Rectangle<int> &r) override;
 	void controllableFeedbackUpdateInternal(Controllable* c) override;
+
+	void itemDropped(const DragAndDropTarget::SourceDetails& d) override;
 };
 
 

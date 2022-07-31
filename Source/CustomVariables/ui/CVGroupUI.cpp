@@ -59,6 +59,8 @@ void CVGroupVariablesEditor::handleMenuSelectedID(int result)
 CVGroupUI::CVGroupUI(CVGroup* item) :
 	BaseItemUI(item)
 {
+	acceptedDropTypes.add(CVGroup::getTypeStringStatic());
+
 	presetProgressionUI.reset(item->interpolationProgress->createSlider());
 	presetProgressionUI->showLabel = false;
 	presetProgressionUI->showValue = false;
@@ -81,5 +83,23 @@ void CVGroupUI::controllableFeedbackUpdateInternal(Controllable* c)
 	if (c == item->interpolationProgress)
 	{
 		presetProgressionUI->setVisible(item->interpolationProgress->floatValue() > 0);
+	}
+}
+
+void CVGroupUI::itemDropped(const DragAndDropTarget::SourceDetails& details)
+{
+	String type = details.description.getProperty("type", "").toString();
+
+	BaseItemUI::itemDropped(details);
+	
+	if (CVGroupUI* gui = dynamic_cast<CVGroupUI*>(details.sourceComponent.get()))
+	{
+
+		if (gui == this) return;
+
+		PopupMenu p;
+		p.addItem("Merge into group (after)", [this, gui] { this->item->addItemsFromGroup(gui->item); });
+		p.showMenuAsync(PopupMenu::Options());
+		return;
 	}
 }
