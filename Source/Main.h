@@ -17,7 +17,7 @@
 class ChataigneApplication : public OrganicApplication
 {
 public:
-	//==============================================================================
+	//============================================================================== 
 	ChataigneApplication();
 
 	//---- GLOBAL SETTINGS CHATAIGNE SPECIFIC
