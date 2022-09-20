@@ -1271,6 +1271,11 @@
             <FILE id="G7KYlG" name="OSCModule.cpp" compile="0" resource="0" file="Source/Module/modules/osc/OSCModule.cpp"/>
             <FILE id="CTrveI" name="OSCModule.h" compile="0" resource="0" file="Source/Module/modules/osc/OSCModule.h"/>
           </GROUP>
+          <GROUP id="{61A4FD72-C2AE-2C88-07F8-C9AA5EDC2CF1}" name="script">
+            <FILE id="E6ZhJl" name="ScriptModule.cpp" compile="0" resource="0"
+                  file="Source/Module/modules/script/ScriptModule.cpp"/>
+            <FILE id="Ms23c7" name="ScriptModule.h" compile="0" resource="0" file="Source/Module/modules/script/ScriptModule.h"/>
+          </GROUP>
           <GROUP id="{6854EEF3-7B84-E51F-E79E-0915F38F4484}" name="sequence">
             <GROUP id="{831BBAD9-461B-0A0D-14AD-A205FE1C3A70}" name="commands">
               <FILE id="u8PCjB" name="SequenceAudioCommand.cpp" compile="0" resource="0"
