@@ -1,3 +1,4 @@
+#include "Module/ModuleIncludes.h"
 /*
   ==============================================================================
 
@@ -41,6 +42,8 @@ PJLinkModule::PJLinkModule() :
 	defManager->add(getBasePJCommand("", "Shutter Video and Audio Off", "%1AVMT 30", CommandContext::BOTH));
 	defManager->add(getBasePJCommand("", "Shutter Status Request", "%1AVMT ?", CommandContext::ACTION));
 
+	startTimer(15000);
+
 }
 
 void PJLinkModule::sendMessageInternal(const String& message, var params)
@@ -79,6 +82,14 @@ void PJLinkModule::runInternal()
 //		sender.close();
 //		signalThreadShouldExit();
 //	}
+}
+
+void PJLinkModule::timerCallback()
+{
+	if (senderIsConnected->boolValue())
+	{
+		sendMessage("%1AVMT ?\r");
+	}
 }
 
 void PJLinkModule::processDataLineInternal(const String & message)

@@ -13,7 +13,8 @@
 #pragma once
 
 class PJLinkModule :
-	public TCPClientModule
+	public TCPClientModule,
+	public Timer
 {
 public:
 	PJLinkModule();
@@ -37,6 +38,8 @@ public:
 
 	void initThread() override;
 	void runInternal() override;
+
+	void timerCallback() override;
 
 	void processDataLineInternal(const String &message) override;
 
