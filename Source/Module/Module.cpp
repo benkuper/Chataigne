@@ -172,8 +172,8 @@ var Module::getJSONData()
 
 void Module::loadJSONDataItemInternal(var data)
 {
-	if (includeValuesInSave) valuesCC.loadJSONData(data.getProperty(valuesCC.shortName, var()), true);
 	moduleParams.loadJSONData(data.getProperty("params", var())); //keep "params" to avoid conflict with container's parameter
+	if (includeValuesInSave) valuesCC.loadJSONData(data.getProperty(valuesCC.shortName, var()), true);
 	templateManager->loadJSONData(data.getProperty(templateManager->shortName, var()), true);
 }
 
