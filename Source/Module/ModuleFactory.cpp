@@ -58,6 +58,8 @@ ModuleFactory::ModuleFactory() {
 	defs.add(new ModuleDefinition("System", "Time", &TimeModule::create));
 	defs.add(new ModuleDefinition("System", "OS", &OSModule::create));
 
+	defs.add(new ModuleDefinition("Custom", "Empty", &EmptyModule::create));
+
 	addCustomModules();
 	buildPopupMenu();
 }

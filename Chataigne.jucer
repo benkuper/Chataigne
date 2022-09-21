@@ -27,6 +27,7 @@
               file="Resources/Modules/Ableton Live.png"/>
         <FILE id="MPJkAm" name="DLight.png" compile="0" resource="1" file="Resources/Modules/DLight.png"/>
         <FILE id="kdkONp" name="DMX.png" compile="0" resource="1" file="Resources/Modules/DMX.png"/>
+        <FILE id="eqnFj9" name="Empty.png" compile="0" resource="1" file="Resources/Modules/Empty.png"/>
         <FILE id="yfJH3x" name="Gamepad.png" compile="0" resource="1" file="Resources/Modules/Gamepad.png"/>
         <FILE id="I0DSTK" name="HeavyM.png" compile="0" resource="1" file="Resources/Modules/HeavyM.png"/>
         <FILE id="OrCxSg" name="HTTP.png" compile="0" resource="1" file="Resources/Modules/HTTP.png"/>
@@ -1082,6 +1083,12 @@
                     file="Source/Module/modules/controller/wiimote/WiimotePairUtil.cpp"/>
               <FILE id="XcRtFc" name="WiimotePairUtil.h" compile="0" resource="0"
                     file="Source/Module/modules/controller/wiimote/WiimotePairUtil.h"/>
+            </GROUP>
+          </GROUP>
+          <GROUP id="{61A4FD72-C2AE-2C88-07F8-C9AA5EDC2CF1}" name="custom">
+            <GROUP id="{4C1EF337-9073-0EFA-6C37-4B9F7CF8B8E7}" name="empty">
+              <FILE id="iZCdX1" name="EmptyModule.cpp" compile="0" resource="0" file="Source/Module/modules/custom/empty/EmptyModule.cpp"/>
+              <FILE id="edkhVX" name="EmptyModule.h" compile="0" resource="0" file="Source/Module/modules/custom/empty/EmptyModule.h"/>
             </GROUP>
           </GROUP>
           <GROUP id="{EDF4ADAF-A6E6-5AE0-4BD1-F931B7209F8B}" name="dmx">
