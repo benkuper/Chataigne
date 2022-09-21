@@ -359,6 +359,12 @@
     <Filter Include="Chataigne\Source\Module\modules\controller">
       <UniqueIdentifier>{517D74AE-E135-43AA-E62E-F57F7BAD53DB}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\custom\empty">
+      <UniqueIdentifier>{1155180F-2BE3-1C57-8207-FFA3B0B7962C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\custom">
+      <UniqueIdentifier>{B35BD3F3-7676-8DEC-6FE7-6F88C9F7666C}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Module\modules\dmx\ui">
       <UniqueIdentifier>{D7F73496-CE7B-2BD4-BEA6-4DB358591E58}</UniqueIdentifier>
     </Filter>
@@ -1692,6 +1698,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\controller\wiimote\WiimotePairUtil.cpp">
       <Filter>Chataigne\Source\Module\modules\controller\wiimote</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\custom\empty\EmptyModule.cpp">
+      <Filter>Chataigne\Source\Module\modules\custom\empty</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\dmx\ui\DMXModuleUI.cpp">
       <Filter>Chataigne\Source\Module\modules\dmx\ui</Filter>
@@ -3590,6 +3599,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\controller\wiimote\WiimotePairUtil.h">
       <Filter>Chataigne\Source\Module\modules\controller\wiimote</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\custom\empty\EmptyModule.h">
+      <Filter>Chataigne\Source\Module\modules\custom\empty</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\dmx\ui\DMXModuleUI.h">
       <Filter>Chataigne\Source\Module\modules\dmx\ui</Filter>
@@ -7614,6 +7626,9 @@
       <Filter>Chataigne\Resources\Modules</Filter>
     </None>
     <None Include="..\..\Resources\Modules\DMX.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\Empty.png">
       <Filter>Chataigne\Resources\Modules</Filter>
     </None>
     <None Include="..\..\Resources\Modules\Gamepad.png">

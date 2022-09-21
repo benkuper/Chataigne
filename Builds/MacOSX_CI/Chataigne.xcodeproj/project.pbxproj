@@ -218,6 +218,7 @@
 		21D1C7EA304A7B4384016B50 /* os_mac_find.m */ /* os_mac_find.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = os_mac_find.m; path = ../../Source/Module/modules/controller/wiimote/lib/wiiuse/os_mac/os_mac_find.m; sourceTree = SOURCE_ROOT; };
 		21E4E451D91AF4AFB25C5C4D /* SimpleSmoothFilter.h */ /* SimpleSmoothFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SimpleSmoothFilter.h; path = ../../Source/Common/Processor/Mapping/Filter/filters/number/SimpleSmoothFilter.h; sourceTree = SOURCE_ROOT; };
 		222768EED0BC479A58D02617 /* GPIOModule.cpp */ /* GPIOModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = GPIOModule.cpp; path = ../../Source/Module/modules/gpio/GPIOModule.cpp; sourceTree = SOURCE_ROOT; };
+		22AEC77F11379387105F9B5C /* EmptyModule.cpp */ /* EmptyModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = EmptyModule.cpp; path = ../../Source/Module/modules/custom/empty/EmptyModule.cpp; sourceTree = SOURCE_ROOT; };
 		22FB58EDF9E50359B62B0489 /* StateTransition.h */ /* StateTransition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StateTransition.h; path = ../../Source/StateMachine/Transition/StateTransition.h; sourceTree = SOURCE_ROOT; };
 		23D51CB5DFF7968E66A388DD /* StateTransitionManager.h */ /* StateTransitionManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StateTransitionManager.h; path = ../../Source/StateMachine/Transition/StateTransitionManager.h; sourceTree = SOURCE_ROOT; };
 		23DDF3B6DEC463FC8B8F1644 /* include_juce_organicui4.cpp */ /* include_juce_organicui4.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_juce_organicui4.cpp; path = ../../JuceLibraryCode/include_juce_organicui4.cpp; sourceTree = SOURCE_ROOT; };
@@ -482,6 +483,7 @@
 		737E21C8DA88D5497CA535E5 /* ColorMappingLayerTimeline.cpp */ /* ColorMappingLayerTimeline.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ColorMappingLayerTimeline.cpp; path = ../../Source/TimeMachine/Sequence/layers/mapping/color/ui/ColorMappingLayerTimeline.cpp; sourceTree = SOURCE_ROOT; };
 		738E296A5EF0DA62F12E13C9 /* ConversionParamValueLink.h */ /* ConversionParamValueLink.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ConversionParamValueLink.h; path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ConversionParamValueLink.h; sourceTree = SOURCE_ROOT; };
 		743E0CFF477957077A08AB44 /* StreamDeck.h */ /* StreamDeck.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StreamDeck.h; path = ../../Source/Module/modules/controller/streamdeck/StreamDeck.h; sourceTree = SOURCE_ROOT; };
+		74637658C178668184A2A835 /* Empty.png */ /* Empty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Empty.png; path = ../../Resources/Modules/Empty.png; sourceTree = SOURCE_ROOT; };
 		74C4116DBE0820ADF3C139A2 /* MQTTModule.h */ /* MQTTModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MQTTModule.h; path = ../../Source/Module/modules/mqtt/MQTTModule.h; sourceTree = SOURCE_ROOT; };
 		75264E6590D2A292044545A1 /* CustomValuesCommandArgumentManagerEditor.h */ /* CustomValuesCommandArgumentManagerEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CustomValuesCommandArgumentManagerEditor.h; path = ../../Source/Common/Command/CustomValues/ui/CustomValuesCommandArgumentManagerEditor.h; sourceTree = SOURCE_ROOT; };
 		7548D863C3CCA4FF27887C03 /* ZeroconfManager.cpp */ /* ZeroconfManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ZeroconfManager.cpp; path = ../../Source/Common/Zeroconf/ZeroconfManager.cpp; sourceTree = SOURCE_ROOT; };
@@ -587,6 +589,7 @@
 		980F0059A08F3731FE4468C3 /* ProcessorIncludes.cpp */ /* ProcessorIncludes.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ProcessorIncludes.cpp; path = ../../Source/Common/Processor/ProcessorIncludes.cpp; sourceTree = SOURCE_ROOT; };
 		9820E02666CCFA688707B1F4 /* command.c */ /* command.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = command.c; path = ../../Source/Module/modules/gpio/pigpio/command.c; sourceTree = SOURCE_ROOT; };
 		984421D8D5601C8121824F56 /* decoder.h */ /* decoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = decoder.h; path = ../../Source/Common/LTC/decoder.h; sourceTree = SOURCE_ROOT; };
+		98CB613184790A7CE68CB744 /* EmptyModule.h */ /* EmptyModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EmptyModule.h; path = ../../Source/Module/modules/custom/empty/EmptyModule.h; sourceTree = SOURCE_ROOT; };
 		98E016F4A116225BB074537A /* MultiplexList.h */ /* MultiplexList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MultiplexList.h; path = ../../Source/Common/Processor/Multiplex/List/MultiplexList.h; sourceTree = SOURCE_ROOT; };
 		98F1316C32E887C2041FD8CE /* ConversionParamValueLinkUI.cpp */ /* ConversionParamValueLinkUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ConversionParamValueLinkUI.cpp; path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConversionParamValueLinkUI.cpp; sourceTree = SOURCE_ROOT; };
 		994EDE9AEAF567E3F2CA471C /* CVDashboardItem.h */ /* CVDashboardItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CVDashboardItem.h; path = ../../Source/CustomVariables/dashboard/CVDashboardItem.h; sourceTree = SOURCE_ROOT; };
@@ -1684,6 +1687,7 @@
 				9E1DD129C66F6E811ADD96CD,
 				12C8B5AA077D6DBB00FB91A0,
 				F8AE04C7094D4FF5D9786FDE,
+				E1B5C538CC945016B0E9D7FE,
 				20A3A33F2667093FC95A2A55,
 				EAECA465AF99B19374D7BA35,
 				C4B5A56AF9E60B23C4052B42,
@@ -1862,6 +1866,7 @@
 				6C76365E6A0B310E2734B571,
 				5E64FD363DAEBC97B49C0E98,
 				068D5BDCBB49D14D8C13012E,
+				74637658C178668184A2A835,
 				0E23FCDD33ADDAC7FAFF8BD6,
 				C60629FA5A98B14697D1DA4E,
 				119888D65DE05EACD18D1B11,
@@ -3072,6 +3077,15 @@
 			name = layers;
 			sourceTree = "<group>";
 		};
+		D42D1A7490DA10F7B086FEED /* empty */ = {
+			isa = PBXGroup;
+			children = (
+				22AEC77F11379387105F9B5C,
+				98CB613184790A7CE68CB744,
+			);
+			name = empty;
+			sourceTree = "<group>";
+		};
 		D450727BDA4BACBA916E8A08 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -3214,6 +3228,14 @@
 				619FE26D927D040CE08081F5,
 			);
 			name = qlab;
+			sourceTree = "<group>";
+		};
+		E1B5C538CC945016B0E9D7FE /* custom */ = {
+			isa = PBXGroup;
+			children = (
+				D42D1A7490DA10F7B086FEED,
+			);
+			name = custom;
 			sourceTree = "<group>";
 		};
 		E33A19928DCC0685B4218957 /* pitch */ = {
@@ -3771,7 +3793,7 @@
 					"JUCE_COREGRAPHICS_DRAW_ASYNC=1",
 					"LINK_PLATFORM_MACOSX=1",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.9.8b4",
+					"JUCE_APP_VERSION=1.9.8b5",
 					"JUCE_APP_VERSION_HEX=0x10908",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -3849,7 +3871,7 @@
 					"JUCE_COREGRAPHICS_DRAW_ASYNC=1",
 					"LINK_PLATFORM_MACOSX=1",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.9.8b4",
+					"JUCE_APP_VERSION=1.9.8b5",
 					"JUCE_APP_VERSION_HEX=0x10908",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",

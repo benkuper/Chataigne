@@ -32,6 +32,9 @@ namespace BinaryData
     extern const char*   DMX_png;
     const int            DMX_pngSize = 1298;
 
+    extern const char*   Empty_png;
+    const int            Empty_pngSize = 1745;
+
     extern const char*   Gamepad_png;
     const int            Gamepad_pngSize = 3840;
 
@@ -231,7 +234,7 @@ namespace BinaryData
     const int            custom_cextSize = 1111;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 74;
+    const int namedResourceListSize = 75;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];
