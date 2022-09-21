@@ -15,8 +15,8 @@
 #include "StateMachine/StateMachineIncludes.h" //for state module
 #include "modules/state/StateModule.cpp"
 
+#include "modules/custom/empty/EmptyModule.cpp"
 
-#include "modules/script/ScriptModule.cpp"
 #include "modules/serial/SerialModule.cpp"
 #include "modules/state/commands/StateCommand.cpp"
 #include "modules/system/os/OSModule.cpp"

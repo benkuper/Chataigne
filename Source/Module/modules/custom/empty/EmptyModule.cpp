@@ -1,4 +1,4 @@
-ScriptModule::ScriptModule(const String & name) :
+EmptyModule::EmptyModule(const String & name) :
 	Module(name)
 {
 	setupIOConfiguration(false, false);
@@ -10,18 +10,18 @@ ScriptModule::ScriptModule(const String & name) :
 	canHandleRouteValues = true;
 }
 
-ScriptModule::~ScriptModule()
+EmptyModule::~EmptyModule()
 {
 }
 
-void ScriptModule::handleRoutedModuleValue(Controllable* c, RouteParams* p)
+void EmptyModule::handleRoutedModuleValue(Controllable* c, RouteParams* p)
 {
 	if (c == nullptr || p == nullptr)
 	{
 		return;
 	}
 	
-	if (ScriptRouteParams* op = dynamic_cast<ScriptRouteParams*>(p))
+	if (EmptyRouteParams* op = dynamic_cast<EmptyRouteParams*>(p))
 	{
 		if (Parameter* targetParameter = dynamic_cast<Parameter*>(op->target->target.get()))
 		{
@@ -31,7 +31,7 @@ void ScriptModule::handleRoutedModuleValue(Controllable* c, RouteParams* p)
 	}
 }
 
-ScriptModule::ScriptRouteParams::ScriptRouteParams(Module* sourceModule, ScriptModule* dstModule, Controllable* c)
+EmptyModule::EmptyRouteParams::EmptyRouteParams(Module* sourceModule, EmptyModule* dstModule, Controllable* c)
 {
 	target = addTargetParameter("Target", "Value to assign the routing to.", dstModule);
 

@@ -173,7 +173,7 @@
 #include "modules/controller/loupedeck/LoupedeckModule.h"
 #include "modules/controller/loupedeck/commands/LoupedeckCommands.h"
 
-#include "modules/script/ScriptModule.h"
+#include "modules/custom/empty/EmptyModule.h"
 
 #include "modules/state/commands/StateCommand.h"
 #include "modules/state/StateModule.h"
