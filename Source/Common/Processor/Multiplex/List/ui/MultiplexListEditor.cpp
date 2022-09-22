@@ -410,7 +410,7 @@ void NumberListEditor::setAllRange(var min, var max)
 	{
 		for (int i = 0; i < intList->list.size(); i++)
 		{
-			if (IntParameter* ip = dynamic_cast<IntParameter*>(floatList->list[i]))
+			if (IntParameter* ip = dynamic_cast<IntParameter*>(intList->list[i]))
 			{
 				ip->setRange(min, max);
 			}
@@ -434,7 +434,7 @@ void NumberListEditor::clearAllRange()
 	{
 		for (int i = 0; i < intList->list.size(); i++)
 		{
-			if (IntParameter* ip = dynamic_cast<IntParameter*>(floatList->list[i]))
+			if (IntParameter* ip = dynamic_cast<IntParameter*>(intList->list[i]))
 			{
 				ip->clearRange();
 			}
