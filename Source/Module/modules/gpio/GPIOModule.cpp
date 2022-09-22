@@ -36,7 +36,7 @@ GPIOModule::GPIOModule() :
 #ifdef GPIO_SUPPORT
     if (gpioInitialise() < 0)
     {
-        LOGERROR("Error initializing GPIO");
+        LOGERROR("Error initializing GPIO, do you have the rights ?\nTry launching Chataigne with sudo or settings the udev rules for GPIO :\nhttps://roboticsbackend.com/raspberry-pi-hardware-permissions/#GPIOs");
     }
     else
     {
