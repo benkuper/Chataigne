@@ -29,6 +29,10 @@ public:
 	String passBytes;
 	float timeAtConnect;
 
+	bool assigningFromRemote;
+
+	virtual void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
+
 	virtual void sendMessageInternal(const String& message, var) override;
 
 	CommandDefinition * getBasePJCommand(const String &menu, const String &commandName, const String &command, CommandContext context = CommandContext::ACTION);

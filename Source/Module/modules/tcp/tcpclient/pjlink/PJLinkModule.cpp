@@ -11,9 +11,10 @@
 
 PJLinkModule::PJLinkModule() :
 	TCPClientModule(getDefaultTypeString(), 4352),
-	passBytes(0)
+	passBytes(0),
+	assigningFromRemote(false)
 {
-	autoReconnect = false;
+	autoReconnect = true;
 
 	alwaysShowValues = true;
 	includeValuesInSave = true;
@@ -42,8 +43,21 @@ PJLinkModule::PJLinkModule() :
 	defManager->add(getBasePJCommand("", "Shutter Video and Audio Off", "%1AVMT 30", CommandContext::BOTH));
 	defManager->add(getBasePJCommand("", "Shutter Status Request", "%1AVMT ?", CommandContext::ACTION));
 
-	startTimer(15000);
+	startTimer(5000);
 
+}
+
+void PJLinkModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
+{
+	TCPClientModule::onControllableFeedbackUpdateInternal(cc, c);
+	if (c == shutterAudioStatus || c == shutterVideoStatus)
+	{
+		if (!assigningFromRemote)
+		{
+			if (c == shutterVideoStatus) sendMessage("%1AVMT 1" + String(shutterVideoStatus->intValue())+"\r");
+			else if (c == shutterAudioStatus) sendMessage("%1AVMT 2" + String(shutterAudioStatus->intValue())+"\r");
+		}
+	}
 }
 
 void PJLinkModule::sendMessageInternal(const String& message, var params)
@@ -132,6 +146,7 @@ void PJLinkModule::processDataLineInternal(const String & message)
 		bool isAudio = message[7] == '2' || message[7] == '3';
 		bool isOn = message[8] == '1';
 
+		assigningFromRemote = true;
 		if (isVideo)
 		{
 			if (logIncomingData->boolValue()) NLOG(niceName, "Received Video shutter status " << (isOn?"ON":"OFF"));
@@ -143,5 +158,6 @@ void PJLinkModule::processDataLineInternal(const String & message)
 			if (logIncomingData->boolValue()) NLOG(niceName, "Received Video shutter status " << (isOn ? "ON" : "OFF"));
 			shutterAudioStatus->setValue(isOn);
 		}
+		assigningFromRemote = false;
 	}
 }
