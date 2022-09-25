@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "Module/ModuleIncludes.h"
+
 AudioModule::AudioModule(const String& name) :
 	Module(name),
 	hs(&am),
@@ -307,7 +309,12 @@ void AudioModule::loadJSONDataInternal(var data)
 	else clearWarning();
 }
 
-void AudioModule::audioDeviceIOCallback(const float** inputChannelData, int numInputChannels, float** outputChannelData, int numOutputChannels, int numSamples)
+void AudioModule::audioDeviceIOCallbackWithContext(const float* const* inputChannelData,
+	int numInputChannels,
+	float* const* outputChannelData,
+	int numOutputChannels,
+	int numSamples,
+	const AudioIODeviceCallbackContext& context)
 {
 	//DBG("audio callback");
 
