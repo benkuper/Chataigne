@@ -499,6 +499,7 @@
 		789BEEB77C5B2E458CCC99A5 /* ComparatorFactory.h */ /* ComparatorFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ComparatorFactory.h; path = ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/ComparatorFactory.h; sourceTree = SOURCE_ROOT; };
 		78B240F53429613DC1AD4C8F /* AudioModuleHardwareEditor.cpp */ /* AudioModuleHardwareEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = AudioModuleHardwareEditor.cpp; path = ../../Source/Module/modules/audio/ui/AudioModuleHardwareEditor.cpp; sourceTree = SOURCE_ROOT; };
 		78C84326D3A277B976137BA7 /* ConsequenceManager.h */ /* ConsequenceManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ConsequenceManager.h; path = ../../Source/Common/Processor/Action/Consequence/ConsequenceManager.h; sourceTree = SOURCE_ROOT; };
+		78E8421875B7E2181F55685B /* juce_cryptography */ /* juce_cryptography */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_cryptography; path = ../../JUCE/modules/juce_cryptography; sourceTree = SOURCE_ROOT; };
 		79A8BC1C27053A422D07A1B6 /* StreamDeckMini.cpp */ /* StreamDeckMini.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = StreamDeckMini.cpp; path = ../../Source/Module/modules/controller/streamdeck/models/StreamDeckMini.cpp; sourceTree = SOURCE_ROOT; };
 		79C7DF572850E6FDA55CEC12 /* ChataigneSequenceManager.cpp */ /* ChataigneSequenceManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ChataigneSequenceManager.cpp; path = ../../Source/TimeMachine/ChataigneSequenceManager.cpp; sourceTree = SOURCE_ROOT; };
 		79EA796B591281322DA21A35 /* GamepadModule.h */ /* GamepadModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GamepadModule.h; path = ../../Source/Module/modules/controller/gamepad/GamepadModule.h; sourceTree = SOURCE_ROOT; };
@@ -2795,6 +2796,7 @@
 		BB9E045D62346673C5E1636E /* JUCE Modules */ = {
 			isa = PBXGroup;
 			children = (
+				78E8421875B7E2181F55685B,
 				8E3E93C35A0A71C64796898E,
 				B13DE335EC494723D3988D40,
 				6B49F91B2A3C9EC69F04FB2D,
