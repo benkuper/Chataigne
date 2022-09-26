@@ -361,9 +361,13 @@ void MIDIModule::sysExReceived(const MidiMessage& msg)
 
 void MIDIModule::fullFrameTimecodeReceived(const MidiMessage& msg)
 {
+	if (!enabled->boolValue()) return;
+	inActivityTrigger->trigger();
+	
 	int hours = 0, minutes = 0, seconds = 0, frames = 0;
 	MidiMessage::SmpteTimecodeType timecodeType;
 	msg.getFullFrameParameters(hours, minutes, seconds, frames, timecodeType);
+
 
 	if (logIncomingData->boolValue())
 	{
@@ -406,6 +410,8 @@ void MIDIModule::afterTouchReceived(const int& channel, const int& note, const i
 
 void MIDIModule::midiMessageReceived(const MidiMessage& msg)
 {
+	if (!enabled->boolValue()) return;
+	
 	if (thruManager != nullptr)
 	{
 		for (auto& c : thruManager->controllables)
@@ -429,6 +435,7 @@ void MIDIModule::midiClockReceived()
 {
 	if (!enabled->boolValue()) return;
 	inActivityTrigger->trigger();
+
 	//if (logIncomingData->boolValue())
 	//{
 	//	NLOG(niceName, "MIDI Clock received");

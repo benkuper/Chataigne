@@ -69,7 +69,6 @@ void MIDIInputDevice::handleIncomingMidiMessage(MidiInput * source, const MidiMe
 	else if (message.isNoteOff()) inputListeners.call(&MIDIInputListener::noteOffReceived, message.getChannel(), message.getNoteNumber(), 0); //force note off to velocity 0
 	else if (message.isController()) inputListeners.call(&MIDIInputListener::controlChangeReceived, message.getChannel(), message.getControllerNumber(), message.getControllerValue());
   else if (message.isProgramChange()) inputListeners.call(&MIDIInputListener::programChangeReceived, message.getChannel(), message.getProgramChangeNumber());
-	else if (message.isSysEx()) inputListeners.call(&MIDIInputListener::sysExReceived, message);
 	else if (message.isFullFrame()) inputListeners.call(&MIDIInputListener::fullFrameTimecodeReceived, message);
 	else if (message.isQuarterFrame()) inputListeners.call(&MIDIInputListener::quarterFrameTimecodeReceived, message);
 	else if (message.isPitchWheel()) inputListeners.call(&MIDIInputListener::pitchWheelReceived, message.getChannel(), message.getPitchWheelValue());
@@ -80,6 +79,7 @@ void MIDIInputDevice::handleIncomingMidiMessage(MidiInput * source, const MidiMe
 	else if (message.isMidiStop()) inputListeners.call(&MIDIInputListener::midiStopReceived);
 	else if (message.isMidiContinue()) inputListeners.call(&MIDIInputListener::midiContinueReceived);
 	else if (message.isMidiMachineControlMessage()) inputListeners.call(&MIDIInputListener::midiMachineControlCommandReceived, message.getMidiMachineControlCommand());
+	else if (message.isSysEx()) inputListeners.call(&MIDIInputListener::sysExReceived, message);
 	else
 	{
 		int hours, minutes, seconds, frames;
