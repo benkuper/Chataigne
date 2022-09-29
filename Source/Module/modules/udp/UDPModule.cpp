@@ -12,8 +12,8 @@ UDPModule::UDPModule(const String& name, bool canHaveInput, bool canHaveOutput, 
 	NetworkStreamingModule(name, canHaveInput, canHaveOutput, defaultLocalPort, defaultRemotePort)
 {
 	multicastMode = moduleParams.addBoolParameter("Multicast Mode", "If check, instead of binding and connecting, it will try to join a multicast network.", false);
-	scriptObject.setMethod("sendTo", &UDPModule::sendBytesToFromScript);
-	scriptObject.setMethod("sendMessageTo", &UDPModule::sendMessageToFromScript);
+	scriptObject.setMethod("sendTo", &UDPModule::sendMessageToFromScript);
+	scriptObject.setMethod("sendBytesTo", &UDPModule::sendBytesToFromScript);
 
 	listenToOutputFeedback = sendCC->addBoolParameter("Listen to Feedback", "If checked, this will listen to the (randomly set) bound port of this sender. This is useful when some softwares automatically detect incoming host and port to send back messages.", false);
 
@@ -205,7 +205,7 @@ void UDPModule::clearInternal()
 var UDPModule::sendMessageToFromScript(const var::NativeFunctionArgs& a)
 {
 	StreamingModule* m = getObjectFromJS<StreamingModule>(a);
-	if (checkNumArgs(m->niceName, a, 3)) return false;
+	if (!checkNumArgs(m->niceName, a, 3)) return false;
 
 	var params(new DynamicObject());
 	params.getDynamicObject()->setProperty("ip", a.arguments[0].toString());
@@ -219,7 +219,7 @@ var UDPModule::sendMessageToFromScript(const var::NativeFunctionArgs& a)
 var UDPModule::sendBytesToFromScript(const var::NativeFunctionArgs& a)
 {
 	StreamingModule* m = getObjectFromJS<StreamingModule>(a);
-	if (checkNumArgs(m->niceName, a, 3)) return false;
+	if (!checkNumArgs(m->niceName, a, 3)) return false;
 	Array<uint8> data;
 	for (int i = 2; i < a.numArguments; ++i)
 	{

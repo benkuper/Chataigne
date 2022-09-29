@@ -7,6 +7,7 @@
 
   ==============================================================================
 */
+#include "Module/ModuleIncludes.h"
 
 StreamingModule::StreamingModule(const String& name) :
 	Module(name)
@@ -693,7 +694,7 @@ var StreamingModule::sendBytesFromScript(const var::NativeFunctionArgs& a)
 var StreamingModule::sendStringToFromScript(const var::NativeFunctionArgs& a)
 {
 	StreamingModule* m = getObjectFromJS<StreamingModule>(a);
-	if (!checkNumArgs(m->niceName, a, 2)) return false;
+	if (!checkNumArgs(m->niceName, a, 3)) return false;
 	String s = getStringFromArgs(a, 1);
 	m->sendMessage(s, getToExcludeParamObject(a, "include"));
 	return var();
