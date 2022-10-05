@@ -35,7 +35,7 @@ NumberComparator::NumberComparator(Parameter* sourceParam, Multiplex* multiplex)
 	addCompareOption("Diff >", diffGreaterId);
 	addCompareOption("Diff <", diffLessId);
 	addCompareOption("Range", inRangeId);
-	addCompareOption("Change", Identifier());
+	addCompareOption("Change", changeId);
 }
 
 NumberComparator::~NumberComparator()
@@ -74,8 +74,6 @@ void NumberComparator::setupReferenceParam()
 
 bool NumberComparator::compareInternal(Parameter* sourceParam, int multiplexIndex)
 {
-	if (currentFunctionId.isNull()) return true;
-
 	var value = isMultiplexed() ? refLink->getLinkedValue(multiplexIndex) : reference->getValue();
 
 	if (currentFunctionId == equalsId)				return sourceParam->floatValue() == (float)value;

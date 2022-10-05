@@ -19,6 +19,7 @@ public:
 
 	const Identifier equalsId = "=";
 	const Identifier differentId = "!=";
+	const Identifier changeId = "ch";
 
 	EnumParameter * enumRef;
 

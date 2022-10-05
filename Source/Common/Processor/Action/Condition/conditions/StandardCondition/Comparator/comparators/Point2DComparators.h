@@ -24,6 +24,7 @@ public:
 	const Identifier xLessId = "x<";
 	const Identifier yGreaterId = "y>";
 	const Identifier yLessId = "y<";
+	const Identifier changeId = "ch";
 
 	Parameter* sourceParam;
 

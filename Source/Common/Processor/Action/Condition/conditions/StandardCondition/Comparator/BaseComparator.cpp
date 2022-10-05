@@ -28,6 +28,9 @@ BaseComparator::~BaseComparator()
 
 void BaseComparator::setReferenceParam(Parameter* p)
 {
+	if (p == reference) return;
+
+	GenericScopedLock lock(compareLock);
 	if (reference != nullptr)
 	{
 		removeControllable(reference);
@@ -73,6 +76,9 @@ void BaseComparator::loadJSONDataInternal(var data)
 bool BaseComparator::compare(Parameter* sourceParam, int multiplexIndex)
 {
 	GenericScopedLock lock(compareLock);
+	if (reference == nullptr || currentFunctionId.isNull()) return false;
+	if (currentFunctionId == changeId) return true;
+
 	return compareInternal(sourceParam, multiplexIndex);
 }
 

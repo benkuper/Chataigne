@@ -20,7 +20,7 @@ EnumComparator::EnumComparator(Parameter * sourceParam, Multiplex* multiplex) :
 
 	addCompareOption("=", equalsId);
 	addCompareOption("!=", differentId);
-	addCompareOption("Change", Identifier());
+	addCompareOption("Change", changeId);
 
 	enumRef->setValue(ep->value, false, true, true);
 }
@@ -31,7 +31,6 @@ EnumComparator::~EnumComparator()
 
 bool EnumComparator::compareInternal(Parameter* sourceParam, int multiplexIndex)
 {
-	if (currentFunctionId.isNull()) return true;
 	var value = isMultiplexed() ? refLink->getLinkedValue(multiplexIndex) : enumRef->getValueData();
 	if (currentFunctionId == equalsId) return ((EnumParameter*)sourceParam)->getValueData() == value;
 	if (currentFunctionId == differentId) return ((EnumParameter *)sourceParam)->getValueData() != value;

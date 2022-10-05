@@ -16,7 +16,7 @@ BoolComparator::BoolComparator(Parameter * sourceParam, Multiplex* multiplex) :
 
 	addCompareOption("=", equalsId);
 	addCompareOption("!=", differentId);
-	addCompareOption("Change", Identifier());
+	addCompareOption("Change", changeId);
 }
 
 BoolComparator::~BoolComparator()
@@ -25,7 +25,6 @@ BoolComparator::~BoolComparator()
 
 bool BoolComparator::compareInternal(Parameter * sourceParam, int multiplexIndex)
 {
-	if (currentFunctionId.isNull()) return true;
 	bool value = isMultiplexed() ? (bool)refLink->getLinkedValue(multiplexIndex) : reference->boolValue();
 	if (currentFunctionId == equalsId) return sourceParam->boolValue() == value;
 	if (currentFunctionId == differentId) return sourceParam->boolValue() != reference->boolValue();

@@ -27,6 +27,9 @@ public:
 	EnumParameter* compareFunction;
 	Identifier currentFunctionId;
 	SpinLock compareLock;
+
+	const Identifier changeId = "ch";
+
 	
 	void setReferenceParam(Parameter*); //go through this to have automatic link for multiplex
 

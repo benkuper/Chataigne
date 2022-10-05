@@ -32,6 +32,7 @@ public:
 	const Identifier diffGreaterId = "d>";
 	const Identifier diffLessId = "d<";
 	const Identifier inRangeId = "r";
+	const Identifier changeId = "ch";
 
 	bool isFloat;
 	Parameter * refParam;

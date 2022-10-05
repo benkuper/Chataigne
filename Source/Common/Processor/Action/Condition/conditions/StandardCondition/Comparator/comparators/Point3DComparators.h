@@ -26,6 +26,7 @@ public:
 	const Identifier yLessId = "y<";
 	const Identifier zGreaterId = "z>";
 	const Identifier zLessId = "z<";
+	const Identifier changeId = "ch";
 	Parameter* sourceParam;
 
 	void onContainerParameterChanged(Parameter* p) override;
