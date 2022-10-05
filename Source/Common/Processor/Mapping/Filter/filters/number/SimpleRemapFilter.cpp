@@ -53,7 +53,7 @@ Parameter* SimpleRemapFilter::setupSingleParameterInternal(Parameter* source, in
 	
 	if (!source->isComplex() && forceFloatOutput->boolValue())
 	{
-		p = new FloatParameter(source->niceName, source->description, source->value, source->minimumValue, source->maximumValue);
+		p = new FloatParameter(source->niceName, source->description, source->value.clone(), source->minimumValue, source->maximumValue);
 		p->isSavable = false;
 		p->setControllableFeedbackOnly(true);
 	}
@@ -93,17 +93,17 @@ MappingFilter::ProcessResult  SimpleRemapFilter::processSingleParameterInternal(
 
 var SimpleRemapFilter::getRemappedValueFor(Parameter* source, int multiplexIndex)
 {
-	var sourceVal = source->getValue();
+	var sourceVal = source->getValue().clone(); //copy the value to avoid access problems
 	var targetVal = sourceVal;
 
 	var linkOut = filterParams.getLinkedValue(targetOut, multiplexIndex);
 
 	if (linkOut[0] == linkOut[1])
 	{
-		if (source->isComplex())
+		if (sourceVal.isArray())
 		{
 			var tVal;
-			for (int i = 0; i < source->value.size(); i++) tVal.append(linkOut[0]);
+			for (int i = 0; i < sourceVal.size(); i++) tVal.append(linkOut[0]);
 			return tVal;
 		}
 		else
@@ -113,9 +113,9 @@ var SimpleRemapFilter::getRemappedValueFor(Parameter* source, int multiplexIndex
 	}
 
 	var tOut;
-	if (source->isComplex())
+	if (sourceVal.isArray())
 	{
-		for (int i = 0; i < source->value.size(); i++)
+		for (int i = 0; i < sourceVal.size(); i++)
 		{
 			var ttOut;
 			ttOut.append(linkOut[0]);
@@ -135,9 +135,9 @@ var SimpleRemapFilter::getRemappedValueFor(Parameter* source, int multiplexIndex
 	var tIn;
 	if (!source->hasRange() || useCustomInputRange->boolValue())
 	{
-		if (source->isComplex())
+		if (sourceVal.isArray())
 		{
-			for (int i = 0; i < source->value.size(); i++)
+			for (int i = 0; i < sourceVal.size(); i++)
 			{
 				var ttIn;
 				ttIn.append(linkIn[0]);
