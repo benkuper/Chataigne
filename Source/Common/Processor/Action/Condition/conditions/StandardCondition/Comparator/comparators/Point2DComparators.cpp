@@ -52,6 +52,8 @@ void Point2DComparator::updateReferenceParam()
 		//reference = nullptr;
 	}
 
+	Parameter* newRef = nullptr;
+
 	if (currentFunctionId != changeId)
 	{
 		if (currentFunctionId == equalsId)
