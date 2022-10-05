@@ -144,6 +144,7 @@ var SimpleRemapFilter::getRemappedValueFor(Parameter* source, int multiplexIndex
 				ttIn.append(linkIn[1]);
 				tIn.append(ttIn);
 			}
+			DBG(tIn.size() << " / " << sourceVal.size());
 		}
 		else
 		{
@@ -152,14 +153,28 @@ var SimpleRemapFilter::getRemappedValueFor(Parameter* source, int multiplexIndex
 	}
 	else
 	{
-		tIn.append(source->minimumValue);
-		tIn.append(source->maximumValue);
+		if (sourceVal.isArray())
+		{
+			for (int i = 0; i < sourceVal.size(); i++)
+			{
+				var ttIn;
+				ttIn.append(source->minimumValue[i]);
+				ttIn.append(source->maximumValue[i]);
+				tIn.append(ttIn);
+			}
+		}
+		else
+		{
+			tIn.append(source->minimumValue);
+			tIn.append(source->maximumValue);
+		}
 	}
 
 
 	if (sourceVal.isArray())
 	{
 		var targetVal;
+		DBG(tIn.size() << " / " << sourceVal.size());
 		for (int i = 0; i < sourceVal.size(); i++)
 		{
 			var ttIn = tIn[i];
