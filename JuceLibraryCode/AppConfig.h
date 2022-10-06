@@ -311,7 +311,7 @@
 #endif
 
 #ifndef    JUCE_USE_WIN_WEBVIEW2
- //#define JUCE_USE_WIN_WEBVIEW2 0
+ #define   JUCE_USE_WIN_WEBVIEW2 1
 #endif
 
 #ifndef    JUCE_ENABLE_LIVE_CONSTANT_EDITOR

@@ -1421,6 +1421,9 @@
     <ClCompile Include="..\..\Modules\juce_organicui\dashboard\ui\DashboardGroupItemUI.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\dashboard\ui\DashboardIFrameItemUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\dashboard\ui\DashboardItemManagerUI.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1452,6 +1455,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\dashboard\DashboardGroupItem.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\dashboard\DashboardIFrameItem.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\dashboard\DashboardItem.cpp">
@@ -2376,6 +2382,7 @@
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\Trigger.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\dashboard\ui\DashboardCommentItemUI.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\dashboard\ui\DashboardGroupItemUI.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\dashboard\ui\DashboardIFrameItemUI.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\dashboard\ui\DashboardItemManagerUI.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\dashboard\ui\DashboardItemUI.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\dashboard\ui\DashboardLinkItemUI.h"/>
@@ -2387,6 +2394,7 @@
     <ClInclude Include="..\..\Modules\juce_organicui\dashboard\DashboardCommentItem.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\dashboard\DashboardFeedbackBroadcaster.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\dashboard\DashboardGroupItem.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\dashboard\DashboardIFrameItem.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\dashboard\DashboardItem.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\dashboard\DashboardItemFactory.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\dashboard\DashboardItemManager.h"/>
@@ -3573,10 +3581,14 @@
     <None Include="..\..\Modules\juce_simpleweb\README.md"/>
     <None Include="..\..\Modules\juce_timeline\README.md"/>
     <None Include=".\icon.ico"/>
+    <None Include="packages.config"/>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include=".\resources.rc"/>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets"/>
-  <ImportGroup Label="ExtensionTargets"/>
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="packages\Microsoft.Web.WebView2.1.0.902.49\build\native\Microsoft.Web.WebView2.targets"
+            Condition="Exists('packages\Microsoft.Web.WebView2.1.0.902.49\build\native\Microsoft.Web.WebView2.targets')"/>
+  </ImportGroup>
 </Project>
