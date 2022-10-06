@@ -50,14 +50,6 @@ jobs:
           cmd.exe /c "call `"C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat`" && set > %temp%\vcvars.txt"
           Get-Content "$env:temp\vcvars.txt" | Foreach-Object { if ($_ -match "^(.*?)=(.*)$") { Set-Content "env:\$($matches[1])" $matches[2] }}
      
-      - name: Setup NuGet.exe for use with actions
-        uses: NuGet/setup-nuget@v1.0.7
-
-      - name: Install WebView2 Package
-        shell: powershell
-        run: |
-          NuGet\Install-Package Microsoft.Web.WebView2 -Version 1.0.1369-prerelease
-      
       - name: Build
         run:  msbuild "Builds/${{ matrix.buildFolder }}/${{ env.ProjectName }}.sln" /p:PreferredToolArchitecture=x64 /m /verbosity:normal /p:Configuration=${{ steps.set_variables.outputs.config }}
 
