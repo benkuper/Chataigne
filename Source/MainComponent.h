@@ -55,6 +55,7 @@ public:
 
 	void init() override;
 
+
 	std::unique_ptr<WelcomeScreen> welcomeScreen;
 	std::unique_ptr<AboutWindow> aboutWindow;
 
