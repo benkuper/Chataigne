@@ -1813,9 +1813,9 @@
             externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib&#10;JoyShockLibrary.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib&#10;iphlpapi.lib&#10;hid.lib&#10;hidapi_static.lib&#10;mosquitto.lib&#10;mosquittopp.lib"
             smallIcon="nVz6Li" bigIcon="nVz6Li">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" binaryPath="Binaries/CI" libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib/win&#10;../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/hidapi/lib/win/x64&#10;../../External/mosquitto/lib/win"
+        <CONFIGURATION isDebug="1" name="Debug" binaryPath="Binaries/CI" libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib/win&#10;../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/hidapi/lib/win/x64&#10;../../External/mosquitto/lib/win&#10;../../External/webview2/lib/x64"
                        winArchitecture="x64" headerPath="../../External/webview2/include"/>
-        <CONFIGURATION isDebug="0" name="Release" binaryPath="Binaries/CI" libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib/win&#10;../../External/servus/lib/win/x64/release&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/hidapi/lib/win/x64&#10;../../External/mosquitto/lib/win"
+        <CONFIGURATION isDebug="0" name="Release" binaryPath="Binaries/CI" libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib/win&#10;../../External/servus/lib/win/x64/release&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/hidapi/lib/win/x64&#10;../../External/mosquitto/lib/win&#10;../../External/webview2/lib/x64"
                        winArchitecture="x64" alwaysGenerateDebugSymbols="1" debugInformationFormat="ProgramDatabase"
                        headerPath="../../External/webview2/include"/>
       </CONFIGURATIONS>
@@ -1846,9 +1846,9 @@
             externalLibraries="Setupapi.lib&#10;hid.lib&#10;JoyShockLibrary.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib&#10;iphlpapi.lib&#10;hid.lib&#10;hidapi_static.lib&#10;mosquitto.lib&#10;mosquittopp.lib"
             smallIcon="nVz6Li" bigIcon="nVz6Li">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" binaryPath="Binaries/CI" libraryPath="../../External/joycon/lib/win&#10;../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/hidapi/lib/win/x64&#10;../../External/mosquitto/lib/win"
+        <CONFIGURATION isDebug="1" name="Debug" binaryPath="Binaries/CI" libraryPath="../../External/joycon/lib/win&#10;../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/hidapi/lib/win/x64&#10;../../External/mosquitto/lib/win&#10;../../External/webview2/lib/x64"
                        winArchitecture="x64" headerPath="../../External/webview2/include"/>
-        <CONFIGURATION isDebug="0" name="Release" binaryPath="Binaries/CI" libraryPath="../../External/joycon/lib/win&#10;../../External/servus/lib/win/x64/release&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/hidapi/lib/win/x64&#10;../../External/mosquitto/lib/win"
+        <CONFIGURATION isDebug="0" name="Release" binaryPath="Binaries/CI" libraryPath="../../External/joycon/lib/win&#10;../../External/servus/lib/win/x64/release&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/hidapi/lib/win/x64&#10;../../External/mosquitto/lib/win&#10;../../External/webview2/lib/x64"
                        winArchitecture="x64" headerPath="../../External/webview2/include"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
