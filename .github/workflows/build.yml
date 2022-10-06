@@ -8,16 +8,16 @@ jobs:
   windows:
     name: Windows
     #if: false # always skip job (heap space needs fix)
-    runs-on: windows-2019
+    runs-on: windows-2022
     strategy:
       matrix:
         include:
         - arch: win-x64
-          buildFolder: "VisualStudio2019_CI"
+          buildFolder: "VisualStudio2022_CI"
           installerName: install
 
         - arch: win7-x64
-          buildFolder: "VisualStudio2019_Win7CI"
+          buildFolder: "VisualStudio2022_Win7CI"
           installerName: installWin7
 
       fail-fast: false
@@ -47,7 +47,7 @@ jobs:
       - name: Force 64-bit Linker
         shell: powershell
         run: |
-          cmd.exe /c "call `"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat`" && set > %temp%\vcvars.txt"
+          cmd.exe /c "call `"C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat`" && set > %temp%\vcvars.txt"
           Get-Content "$env:temp\vcvars.txt" | Foreach-Object { if ($_ -match "^(.*?)=(.*)$") { Set-Content "env:\$($matches[1])" $matches[2] }}
     
       - name: Build
