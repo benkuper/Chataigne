@@ -50,8 +50,8 @@ jobs:
           cmd.exe /c "call `"C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat`" && set > %temp%\vcvars.txt"
           Get-Content "$env:temp\vcvars.txt" | Foreach-Object { if ($_ -match "^(.*?)=(.*)$") { Set-Content "env:\$($matches[1])" $matches[2] }}
      
-      - name: Setup Nuget.exe
-        uses: warrenbuckley/Setup-Nuget@v1
+      - name: Setup NuGet.exe for use with actions
+        uses: NuGet/setup-nuget@v1.0.7
 
       - name: Install WebView2 Package
         shell: powershell
