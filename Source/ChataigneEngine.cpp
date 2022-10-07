@@ -43,7 +43,7 @@ ChataigneEngine::ChataigneEngine() :
 	MIDIManager::getInstance(); //Trigger constructor, declare settings
 
 	CommunityModuleManager::getInstance(); //Trigger constructor, declare settings
-
+	
 	ZeroconfManager::getInstance()->addSearcher("OSC", "_osc._udp.");
 	ZeroconfManager::getInstance()->addSearcher("OSCQuery", "_oscjson._tcp.");
 	ZeroconfManager::getInstance()->addSearcher("Workstation", "_workstation._tcp.");
@@ -131,7 +131,7 @@ void ChataigneEngine::loadJSONDataInternalEngine(var data, ProgressTask* loading
 	ProgressTask* sequenceTask = loadingTask->addTask("Sequences");
 	ProgressTask* routerTask = loadingTask->addTask("Router");
 
-	ModuleManager::getInstance()->factory->updateCustomModules();
+	ModuleManager::getInstance()->factory->updateCustomModules(false);
 
 	moduleTask->start();
 	ModuleManager::getInstance()->loadJSONData(data.getProperty(ModuleManager::getInstance()->shortName, var()));

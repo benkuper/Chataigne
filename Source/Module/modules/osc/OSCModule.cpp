@@ -109,14 +109,18 @@ void OSCModule::setupReceiver()
 
 		Array<IPAddress> ad;
 
-		IPAddress::findAllAddresses(ad);
-		Array<String> ips;
-		for (auto &a : ad) ips.add(a.toString());
-		ips.sort();
-		String s = "Local IPs:";
-		for (auto &ip : ips) s += String("\n > ") + ip;
+		if (!isCurrentlyLoadingData)
+		{
+			IPAddress::findAllAddresses(ad);
+			Array<String> ips;
+			for (auto& a : ad) ips.add(a.toString());
+			ips.sort();
+			String s = "Local IPs:";
+			for (auto& ip : ips) s += String("\n > ") + ip;
 
-		NLOG(niceName, s);
+			NLOG(niceName, s);
+		}
+	
 		localPort->clearWarning();
 	} else
 	{
