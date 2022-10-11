@@ -31,7 +31,7 @@ public:
 
 	void processMessageInternal(const OSCMessage &msg) override;
 
-	Array<Controllable*> getMatchingControllables(const OSCAddressPattern& address);
+	Array<WeakReference<Controllable>> getMatchingControllables(const OSCAddressPattern& address);
 	void updateControllableAddressMap();
 
 	void childStructureChanged(ControllableContainer * cc) override;

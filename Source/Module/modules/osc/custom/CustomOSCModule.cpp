@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "Module/ModuleIncludes.h"
+
 CustomOSCModule::CustomOSCModule() :
 	OSCModule("OSC"),
 	autoAdd(nullptr),
@@ -151,7 +153,7 @@ void CustomOSCModule::processMessageInternal(const OSCMessage& msg)
 	}
 	else //Standard handling of incoming messages
 	{
-		Array<Controllable*> matchCont = getMatchingControllables(msg.getAddressPattern());
+		Array<WeakReference<Controllable> > matchCont = getMatchingControllables(msg.getAddressPattern());
 		if (matchCont.size() == 0 && msg.getAddressPattern().toString().containsChar(' '))
 		{
 			Controllable* c = valuesCC.getControllableByName(msg.getAddressPattern().toString(), true);
@@ -159,8 +161,10 @@ void CustomOSCModule::processMessageInternal(const OSCMessage& msg)
 		}
 		if (matchCont.size() > 0) c = matchCont[0];
 
-		for (auto& c : matchCont)
+		for (auto& wc : matchCont)
 		{
+			if (wc == nullptr ||wc.wasObjectDeleted()) continue;
+			Controllable* c = wc.get();
 			if (c == nullptr) continue;
 
 			switch (c->type)
@@ -301,9 +305,11 @@ void CustomOSCModule::processMessageInternal(const OSCMessage& msg)
 	}
 }
 
-Array<Controllable*> CustomOSCModule::getMatchingControllables(const OSCAddressPattern& address)
+Array<WeakReference<Controllable>> CustomOSCModule::getMatchingControllables(const OSCAddressPattern& address)
 {
-	Array<Controllable*> matchCont;
+	GenericScopedLock lock(controllableAddressMap.getLock());
+
+	Array<WeakReference<Controllable>> matchCont;
 	HashMap<String, WeakReference<Controllable>, DefaultHashFunctions, CriticalSection>::Iterator it(controllableAddressMap);
 	while (it.next())
 	{
@@ -324,6 +330,7 @@ Array<Controllable*> CustomOSCModule::getMatchingControllables(const OSCAddressP
 
 void CustomOSCModule::updateControllableAddressMap()
 {
+	GenericScopedLock lock(controllableAddressMap.getLock());
 	controllableAddressMap.clear();
 	Array<WeakReference<Controllable>> cont = valuesCC.getAllControllables(true);
 	for (auto& c : cont)
@@ -338,7 +345,10 @@ void CustomOSCModule::updateControllableAddressMap()
 void CustomOSCModule::childStructureChanged(ControllableContainer* cc)
 {
 	ControllableContainer::childStructureChanged(cc);
-	if (!isCurrentlyLoadingData && !hierarchyStructureSwitch) updateControllableAddressMap();
+	if (!isCurrentlyLoadingData && !hierarchyStructureSwitch)
+	{
+		updateControllableAddressMap();
+	}
 }
 
 
