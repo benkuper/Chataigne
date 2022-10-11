@@ -188,7 +188,10 @@ void ActionUI::newMessage(const Action::ActionEvent& e)
 		break;
 
 	case Action::ActionEvent::VALIDATION_CHANGED:
-		if (action->actionRoles.size() == 0) shouldRepaint = true;
+		if (action->actionRoles.size() == 0)
+		{
+			shouldRepaint = true;
+		}
 		if (action->cdm->getIsValid(action->getPreviewIndex()) && action->actionRoles.size() == 0)
 		{
 			processorUIListeners.call(&ProcessorUIListener::processorAskForFocus, this);
@@ -210,6 +213,8 @@ void ActionUI::newMessage(const Action::ActionEvent& e)
 
 void ActionUI::handlePaintTimer()
 {
+	if (shouldRepaint) repaint();
+	shouldRepaint = false;
 }
 
 void ActionUI::addContextMenuItems(PopupMenu& p)
