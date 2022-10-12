@@ -8,7 +8,7 @@
   ==============================================================================
 */
 
-#include "TimeMachine/ChataigneSequenceManager.h"
+#include "Module/ModuleIncludes.h"
 
 SequenceCommand::SequenceCommand(SequenceModule* _module, CommandContext context, var params, Multiplex* multiplex) :
 	BaseCommand(_module, context, params, multiplex),
@@ -76,6 +76,12 @@ SequenceCommand::SequenceCommand(SequenceModule* _module, CommandContext context
 
 	case GOTO_CUE:
 		target->customGetTargetContainerFunc = &ChataigneSequenceManager::showMenuAndGetCueStatic;
+		playFromStart = addBoolParameter("Play", "If enabled, will force playing the sequence after setting the time to the cue", false);
+		break;
+
+	case GOTO_PREV_CUE:
+	case GOTO_NEXT_CUE:
+		target->customGetTargetContainerFunc = &ChataigneSequenceManager::showMenuAndGetSequenceStatic;
 		playFromStart = addBoolParameter("Play", "If enabled, will force playing the sequence after setting the time to the cue", false);
 		break;
 
@@ -202,6 +208,16 @@ void SequenceCommand::triggerInternal(int multiplexIndex)
 		{
 			Sequence* s = cue->getSequence();
 			s->setCurrentTime(cue->time->floatValue(), true, true);
+			if (getLinkedValue(playFromStart, multiplexIndex)) s->playTrigger->trigger();
+		}
+		break;
+
+	case GOTO_PREV_CUE:
+	case GOTO_NEXT_CUE:
+		if (Sequence* s = getLinkedTargetContainerAs<Sequence>(target, multiplexIndex))
+		{
+			Trigger* t = (actionType == GOTO_PREV_CUE) ? s->prevCue : s->nextCue;
+			t->trigger();
 			if (getLinkedValue(playFromStart, multiplexIndex)) s->playTrigger->trigger();
 		}
 		break;

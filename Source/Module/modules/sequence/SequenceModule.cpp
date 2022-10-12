@@ -24,6 +24,8 @@ SequenceModule::SequenceModule(ChataigneSequenceManager * _manager) :
 	defManager->add(createBaseDefinition("Time", "Set Current Time", CommandContext::BOTH, SequenceCommand::SET_TIME));
 	defManager->add(createBaseDefinition("Time", "Move Time", CommandContext::BOTH,SequenceCommand::MOVE_TIME));
 	defManager->add(createBaseDefinition("Time", "Go to cue", CommandContext::BOTH, SequenceCommand::GOTO_CUE));
+	defManager->add(createBaseDefinition("Time", "Go to prev cue", CommandContext::BOTH, SequenceCommand::GOTO_PREV_CUE));
+	defManager->add(createBaseDefinition("Time", "Go to next cue", CommandContext::BOTH, SequenceCommand::GOTO_NEXT_CUE));
 	defManager->add(createBaseDefinition("Layer", "Enable Layer",CommandContext::BOTH, SequenceCommand::ENABLE_LAYER));
 	defManager->add(createBaseDefinition("Layer", "Disable layer", CommandContext::BOTH, SequenceCommand::DISABLE_LAYER));
 	defManager->add(createBaseDefinition("Layer", "Toggle layer", CommandContext::BOTH, SequenceCommand::TOGGLE_LAYER));
