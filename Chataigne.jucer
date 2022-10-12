@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.8b8"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.8b9"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="VST_LOGGING=0"
@@ -727,18 +727,6 @@
         </GROUP>
       </GROUP>
       <GROUP id="{B7AE4CF6-C109-933F-DE7E-494B9C9E3C1A}" name="CustomVariables">
-        <GROUP id="{6CFEA09A-6A96-EB28-6A78-AC8AA681A87C}" name="dashboard">
-          <GROUP id="{615BEE1F-084F-5F2F-E4D9-C5BBA3F4D762}" name="ui">
-            <FILE id="KTR6pg" name="CVDashboardItemUI.cpp" compile="0" resource="0"
-                  file="Source/CustomVariables/dashboard/ui/CVDashboardItemUI.cpp"/>
-            <FILE id="e0pRIC" name="CVDashboardItemUI.h" compile="0" resource="0"
-                  file="Source/CustomVariables/dashboard/ui/CVDashboardItemUI.h"/>
-          </GROUP>
-          <FILE id="mmG1QQ" name="CVDashboardItem.cpp" compile="0" resource="0"
-                file="Source/CustomVariables/dashboard/CVDashboardItem.cpp"/>
-          <FILE id="FJ1Zeo" name="CVDashboardItem.h" compile="0" resource="0"
-                file="Source/CustomVariables/dashboard/CVDashboardItem.h"/>
-        </GROUP>
         <GROUP id="{5F538722-534C-6E5F-A390-C27908706068}" name="Preset">
           <GROUP id="{7C4600DA-EA87-31A9-C169-F36E4160C336}" name="Morpher">
             <GROUP id="{32C80DA9-7285-3DA9-4A81-1CFC8EC1FF47}" name="ui">

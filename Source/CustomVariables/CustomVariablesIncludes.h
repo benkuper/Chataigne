@@ -31,5 +31,3 @@
 #include "ui/CVGroupUI.h"
 #include "ui/CVGroupManagerUI.h"
 
-#include "dashboard/CVDashboardItem.h"
-#include "dashboard/ui/CVDashboardItemUI.h"

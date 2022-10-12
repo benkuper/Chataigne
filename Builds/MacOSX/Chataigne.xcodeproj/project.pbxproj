@@ -144,7 +144,6 @@
 		07424E4DC32BDC636B956365 /* ModuleCommandTester.cpp */ /* ModuleCommandTester.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ModuleCommandTester.cpp; path = ../../Source/Module/ModuleCommandTester.cpp; sourceTree = SOURCE_ROOT; };
 		074C067EBC69776F87BBCDD0 /* FFTAnalyzerEditor.h */ /* FFTAnalyzerEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FFTAnalyzerEditor.h; path = ../../Source/Module/modules/audio/analysis/ui/FFTAnalyzerEditor.h; sourceTree = SOURCE_ROOT; };
 		07AB011925F95832C5B2D642 /* TCPServerModule.h */ /* TCPServerModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TCPServerModule.h; path = ../../Source/Module/modules/tcp/tcpserver/TCPServerModule.h; sourceTree = SOURCE_ROOT; };
-		080282A727D9600F747C5731 /* CVDashboardItem.cpp */ /* CVDashboardItem.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CVDashboardItem.cpp; path = ../../Source/CustomVariables/dashboard/CVDashboardItem.cpp; sourceTree = SOURCE_ROOT; };
 		0835723566717978DA39C93A /* ConductorCue.cpp */ /* ConductorCue.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ConductorCue.cpp; path = ../../Source/Common/Processor/Conductor/ConductorCue.cpp; sourceTree = SOURCE_ROOT; };
 		09E3B9DC39267AB5D9BAD384 /* StateTransition.cpp */ /* StateTransition.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = StateTransition.cpp; path = ../../Source/StateMachine/Transition/StateTransition.cpp; sourceTree = SOURCE_ROOT; };
 		09F517E8BB12782E3FF11E32 /* ConditionEditor.cpp */ /* ConditionEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ConditionEditor.cpp; path = ../../Source/Common/Processor/Action/Condition/ui/ConditionEditor.cpp; sourceTree = SOURCE_ROOT; };
@@ -166,7 +165,6 @@
 		0E0C3BD22A615072B34BFC26 /* Consequence.h */ /* Consequence.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Consequence.h; path = ../../Source/Common/Processor/Action/Consequence/Consequence.h; sourceTree = SOURCE_ROOT; };
 		0E23FCDD33ADDAC7FAFF8BD6 /* Gamepad.png */ /* Gamepad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Gamepad.png; path = ../../Resources/Modules/Gamepad.png; sourceTree = SOURCE_ROOT; };
 		0F7CC9EDAC51BF91B47A3687 /* StreamDeckV1.h */ /* StreamDeckV1.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StreamDeckV1.h; path = ../../Source/Module/modules/controller/streamdeck/models/StreamDeckV1.h; sourceTree = SOURCE_ROOT; };
-		102668235A9BC5FE2ED9A793 /* CVDashboardItemUI.h */ /* CVDashboardItemUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CVDashboardItemUI.h; path = ../../Source/CustomVariables/dashboard/ui/CVDashboardItemUI.h; sourceTree = SOURCE_ROOT; };
 		10B33E7F3EE7009BEA77D0AC /* Mapping.h */ /* Mapping.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Mapping.h; path = ../../Source/Common/Processor/Mapping/Mapping.h; sourceTree = SOURCE_ROOT; };
 		10C259C57E6992D9DC19D7DF /* ChataigneEngine.cpp */ /* ChataigneEngine.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ChataigneEngine.cpp; path = ../../Source/ChataigneEngine.cpp; sourceTree = SOURCE_ROOT; };
 		10E36BD392E35F89F77DC7BA /* ConditionManager.cpp */ /* ConditionManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ConditionManager.cpp; path = ../../Source/Common/Processor/Action/Condition/ConditionManager.cpp; sourceTree = SOURCE_ROOT; };
@@ -308,7 +306,6 @@
 		3F10206FF9B4E3D590F2539F /* cobs.cpp */ /* cobs.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = cobs.cpp; path = ../../Source/Common/Serial/lib/cobs/cobs.cpp; sourceTree = SOURCE_ROOT; };
 		3F35FA52B76126D0BEC152CC /* KeyboardMacFunctions.h */ /* KeyboardMacFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = KeyboardMacFunctions.h; path = ../../Source/Module/modules/controller/keyboard/KeyboardMacFunctions.h; sourceTree = SOURCE_ROOT; };
 		3F49C5463CB01384FC57BD67 /* WakeOnLanCommandEditor.cpp */ /* WakeOnLanCommandEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = WakeOnLanCommandEditor.cpp; path = ../../Source/Module/modules/system/os/commands/ui/WakeOnLanCommandEditor.cpp; sourceTree = SOURCE_ROOT; };
-		3F85E68FD0840290DCBF1FC6 /* CVDashboardItemUI.cpp */ /* CVDashboardItemUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CVDashboardItemUI.cpp; path = ../../Source/CustomVariables/dashboard/ui/CVDashboardItemUI.cpp; sourceTree = SOURCE_ROOT; };
 		4068BB40DCE6688B3437FB45 /* GPIOCommands.h */ /* GPIOCommands.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GPIOCommands.h; path = ../../Source/Module/modules/gpio/commands/GPIOCommands.h; sourceTree = SOURCE_ROOT; };
 		4117B7EBA8E2519477B13B03 /* StreamDeckManager.cpp */ /* StreamDeckManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = StreamDeckManager.cpp; path = ../../Source/Module/modules/controller/streamdeck/StreamDeckManager.cpp; sourceTree = SOURCE_ROOT; };
 		414020D909CC3A3EE0316795 /* ModuleCommandTesterEditor.h */ /* ModuleCommandTesterEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ModuleCommandTesterEditor.h; path = ../../Source/Module/ui/ModuleCommandTesterEditor.h; sourceTree = SOURCE_ROOT; };
@@ -592,7 +589,6 @@
 		98CB613184790A7CE68CB744 /* EmptyModule.h */ /* EmptyModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EmptyModule.h; path = ../../Source/Module/modules/custom/empty/EmptyModule.h; sourceTree = SOURCE_ROOT; };
 		98E016F4A116225BB074537A /* MultiplexList.h */ /* MultiplexList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MultiplexList.h; path = ../../Source/Common/Processor/Multiplex/List/MultiplexList.h; sourceTree = SOURCE_ROOT; };
 		98F1316C32E887C2041FD8CE /* ConversionParamValueLinkUI.cpp */ /* ConversionParamValueLinkUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ConversionParamValueLinkUI.cpp; path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConversionParamValueLinkUI.cpp; sourceTree = SOURCE_ROOT; };
-		994EDE9AEAF567E3F2CA471C /* CVDashboardItem.h */ /* CVDashboardItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CVDashboardItem.h; path = ../../Source/CustomVariables/dashboard/CVDashboardItem.h; sourceTree = SOURCE_ROOT; };
 		99532205E848C75B528FEB0D /* KinectV2Module.h */ /* KinectV2Module.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = KinectV2Module.h; path = ../../Source/Module/modules/controller/kinect/KinectV2Module.h; sourceTree = SOURCE_ROOT; };
 		9966740636DADE2FEF173085 /* QLabWorkspaceCommand.cpp */ /* QLabWorkspaceCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = QLabWorkspaceCommand.cpp; path = ../../Source/Module/modules/osc/qlab/commands/QLabWorkspaceCommand.cpp; sourceTree = SOURCE_ROOT; };
 		9A67BA2570C4D67ECE35F809 /* OSCModule.h */ /* OSCModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OSCModule.h; path = ../../Source/Module/modules/osc/OSCModule.h; sourceTree = SOURCE_ROOT; };
@@ -1491,16 +1487,6 @@
 				8C49B305FD4D86D068A653A7,
 			);
 			name = wiimote;
-			sourceTree = "<group>";
-		};
-		3452848D8BC822B437E5EE93 /* dashboard */ = {
-			isa = PBXGroup;
-			children = (
-				F4FBA6CE52ADF5AE0D4F7241,
-				080282A727D9600F747C5731,
-				994EDE9AEAF567E3F2CA471C,
-			);
-			name = dashboard;
 			sourceTree = "<group>";
 		};
 		3457292F6E978711D2036222 /* ui */ = {
@@ -3001,7 +2987,6 @@
 		CA79AE04437B8324C214D2A4 /* CustomVariables */ = {
 			isa = PBXGroup;
 			children = (
-				3452848D8BC822B437E5EE93,
 				5BCBD7C5FB4FF899CECCB276,
 				FA7E648343BBF73F63410236,
 				8C02374E6B2F4B81B1922184,
@@ -3368,15 +3353,6 @@
 				C83B5CE21064E44E054924B8,
 			);
 			name = streamdeck;
-			sourceTree = "<group>";
-		};
-		F4FBA6CE52ADF5AE0D4F7241 /* ui */ = {
-			isa = PBXGroup;
-			children = (
-				3F85E68FD0840290DCBF1FC6,
-				102668235A9BC5FE2ED9A793,
-			);
-			name = ui;
 			sourceTree = "<group>";
 		};
 		F7C4EC0B8215B585D925A333 /* powerpoint */ = {
@@ -3795,7 +3771,7 @@
 					"JUCE_COREGRAPHICS_DRAW_ASYNC=1",
 					"LINK_PLATFORM_MACOSX=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.9.8b8",
+					"JUCE_APP_VERSION=1.9.8b9",
 					"JUCE_APP_VERSION_HEX=0x10908",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -3874,7 +3850,7 @@
 					"JUCE_COREGRAPHICS_DRAW_ASYNC=1",
 					"LINK_PLATFORM_MACOSX=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.9.8b8",
+					"JUCE_APP_VERSION=1.9.8b9",
 					"JUCE_APP_VERSION_HEX=0x10908",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",

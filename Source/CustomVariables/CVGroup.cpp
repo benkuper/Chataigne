@@ -424,11 +424,6 @@ CVGroup::ValuesManager::~ValuesManager()
 }
 
 
-//DashboardItem* CVGroup::ValuesManager::createDashboardItem()
-//{
-//	return new CVVariablesDashboardItem(this);
-//}
-
 void CVGroup::ValuesManager::addAllItemsToDashboard(Dashboard* d)
 {
 	if (d == nullptr) d = DashboardManager::getInstance()->addItem();

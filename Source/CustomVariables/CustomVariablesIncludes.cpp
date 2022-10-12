@@ -25,5 +25,3 @@
 #include "ui/CVGroupUI.cpp"
 #include "ui/CVGroupManagerUI.cpp"
 
-#include "dashboard/CVDashboardItem.cpp"
-#include "dashboard/ui/CVDashboardItemUI.cpp"
