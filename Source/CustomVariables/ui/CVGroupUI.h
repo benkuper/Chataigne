@@ -29,8 +29,10 @@ class CVGroupVariablesEditor:
 	public GenericManagerEditor<GenericControllableItem>
 {
 public:
-	CVGroupVariablesEditor(GenericControllableManager * manager, bool isRoot);
+	CVGroupVariablesEditor(CVGroup::ValuesManager * manager, bool isRoot);
 	~CVGroupVariablesEditor();
+
+	CVGroup::ValuesManager* valuesManager;
 
 	void addPopupMenuItems(PopupMenu* p) override;
 	void handleMenuSelectedID(int result) override;

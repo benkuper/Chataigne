@@ -424,9 +424,25 @@ CVGroup::ValuesManager::~ValuesManager()
 }
 
 
-DashboardItem* CVGroup::ValuesManager::createDashboardItem()
+//DashboardItem* CVGroup::ValuesManager::createDashboardItem()
+//{
+//	return new CVVariablesDashboardItem(this);
+//}
+
+void CVGroup::ValuesManager::addAllItemsToDashboard(Dashboard* d)
 {
-	return new CVVariablesDashboardItem(this);
+	if (d == nullptr) d = DashboardManager::getInstance()->addItem();
+
+	if (d != nullptr)
+	{
+		Array<DashboardItem*> itemsToAdd;
+		for (auto& v : items)
+		{
+			itemsToAdd.add(v->controllable->createDashboardItem());
+		}
+
+		d->itemManager.addItems(itemsToAdd);
+	}
 }
 
 InspectableEditor* CVGroup::ValuesManager::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)

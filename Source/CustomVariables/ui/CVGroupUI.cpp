@@ -9,8 +9,9 @@
 */
 
 
-CVGroupVariablesEditor::CVGroupVariablesEditor(GenericControllableManager* manager, bool isRoot) :
-	GenericManagerEditor(manager, isRoot)
+CVGroupVariablesEditor::CVGroupVariablesEditor(CVGroup::ValuesManager* manager, bool isRoot) :
+	GenericManagerEditor(manager, isRoot),
+	valuesManager(manager)
 {
 }
 
@@ -37,22 +38,11 @@ void CVGroupVariablesEditor::handleMenuSelectedID(int result)
 {
 	GenericManagerEditor::handleMenuSelectedID(result);
 
-	if (result >= -10001 && result+1000 < DashboardManager::getInstance()->items.size())
+	if (result >= -10001 && result + 1000 < DashboardManager::getInstance()->items.size())
 	{
-		Dashboard* d;
-		if (result == -10001) d = DashboardManager::getInstance()->addItem();
-		else d = DashboardManager::getInstance()->items[result + 10000];
-
-		if (d != nullptr)
-		{
-			Array<DashboardItem*> itemsToAdd;
-			for (auto& v : manager->items)
-			{
-				itemsToAdd.add(v->controllable->createDashboardItem());
-			}
-
-			d->itemManager.addItems(itemsToAdd);
-		}
+		Dashboard* d = nullptr;
+		if (result != -10001) d = DashboardManager::getInstance()->items[result + 10000];
+		valuesManager->addAllItemsToDashboard(d);
 	}
 }
 
@@ -91,7 +81,7 @@ void CVGroupUI::itemDropped(const DragAndDropTarget::SourceDetails& details)
 	String type = details.description.getProperty("type", "").toString();
 
 	BaseItemUI::itemDropped(details);
-	
+
 	if (CVGroupUI* gui = dynamic_cast<CVGroupUI*>(details.sourceComponent.get()))
 	{
 
