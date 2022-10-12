@@ -106,9 +106,9 @@ public:
 	void loadJSONDataInternal(var data) override;
 
 	// Inherited via AudioIODeviceCallback
-	virtual void audioDeviceIOCallbackWithContext(const float* const* inputChannelData,
+	virtual void audioDeviceIOCallbackWithContext(const float** inputChannelData,
 		int numInputChannels,
-		float* const* outputChannelData,
+		float** outputChannelData,
 		int numOutputChannels,
 		int numSamples,
 		const AudioIODeviceCallbackContext& context) override;
