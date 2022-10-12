@@ -15,6 +15,7 @@ BaseCommand::BaseCommand(Module* _module, CommandContext _context, var _params, 
 	moduleRef(_module),
 	params(_params),
 	saveAndLoadTargetMappings(false),
+	autoLoadPreviousCommandData(false),
 	linkedTemplate(nullptr),
 	customValuesManager(nullptr)
 {
@@ -228,6 +229,11 @@ var BaseCommand::getLinkedCustomArgumentValueAt(int argIndex, int multiplexIndex
 	if (customValuesManager == nullptr) return var();
 	if (argIndex < 0 || argIndex >= customValuesManager->items.size()) return var();
 	return customValuesManager->items[argIndex]->getLinkedValue(multiplexIndex);
+}
+
+void BaseCommand::loadPreviousCommandData(var data)
+{
+	if (autoLoadPreviousCommandData) loadJSONData(data); 
 }
 
 void BaseCommand::inspectableDestroyed(Inspectable* i)

@@ -12,6 +12,8 @@ CustomOSCCommand::CustomOSCCommand(IOSCSenderModule* module, CommandContext cont
 	OSCCommand(module, context, params, multiplex),
 	addressHasWildcards(false)
 {
+	autoLoadPreviousCommandData = true;
+
 	address->setControllableFeedbackOnly(false);
 	address->isSavable = true;
 
@@ -151,7 +153,6 @@ void CustomOSCCommand::setInputNamesFromParams(Array<WeakReference<Parameter>> o
 	OSCCommand::setInputNamesFromParams(outParams);
 	if(wildcardsContainer != nullptr) wildcardsContainer->setInputNames(inputNames);
 }
-
 
 var CustomOSCCommand::getJSONData()
 {

@@ -31,6 +31,7 @@ public:
 	var params;
 	Controllable::Type valueType;
 	bool saveAndLoadTargetMappings;
+	bool autoLoadPreviousCommandData;
 
 	//Template
 	CommandTemplate * linkedTemplate;
@@ -63,7 +64,7 @@ public:
 
 	virtual var getLinkedCustomArgumentValueAt(int argIndex, int multiplexIndex);
 
-	virtual void loadPreviousCommandData(var data) { } //default behavior is nothing, can override that to trying hot swap of commands
+	virtual void loadPreviousCommandData(var data);
 	
 	void inspectableDestroyed(Inspectable * i) override;
 

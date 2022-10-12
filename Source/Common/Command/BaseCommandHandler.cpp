@@ -81,9 +81,8 @@ void BaseCommandHandler::setCommand(CommandDefinition* commandDef)
 	{
 		addChildControllableContainer(command.get());
 
-		/*if(!prevCommandData.isVoid()) command->loadPreviousCommandData(prevCommandData); //keep as much as similar parameter possible
-		else */
-		if (!ghostCommandData.isVoid()) command->loadJSONData(ghostCommandData);
+		if(!prevCommandData.isVoid()) command->loadPreviousCommandData(prevCommandData); //keep as much as similar parameter possible
+		else if (!ghostCommandData.isVoid()) command->loadJSONData(ghostCommandData);
 		//else if (!isCurrentlyLoadingData) setNiceName(commandDef->commandType);
 
 		ghostModuleName = command->module->shortName;
