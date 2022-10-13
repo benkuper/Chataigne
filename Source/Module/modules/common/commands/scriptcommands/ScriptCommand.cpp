@@ -1,14 +1,14 @@
 /*
   ==============================================================================
 
-    ScriptCommand.cpp
-    Created: 1 Aug 2018 5:47:34pm
-    Author:  Ben
+	ScriptCommand.cpp
+	Created: 1 Aug 2018 5:47:34pm
+	Author:  Ben
 
   ==============================================================================
 */
 
-ScriptCommand::ScriptCommand(Module * module, CommandContext context, var params, Multiplex* multiplex) :
+ScriptCommand::ScriptCommand(Module* module, CommandContext context, var params, Multiplex* multiplex) :
 	BaseCommand(module, context, params, multiplex)
 {
 	saveAndLoadTargetMappings = true;
@@ -16,7 +16,7 @@ ScriptCommand::ScriptCommand(Module * module, CommandContext context, var params
 
 	//load params here
 	var commandData = params.getProperty("commandData", var());
-	
+
 	if (!commandData.isVoid())
 	{
 		callback = commandData.getProperty("callback", "defaultCallback").toString();
@@ -29,7 +29,7 @@ ScriptCommand::ScriptCommand(Module * module, CommandContext context, var params
 
 
 	//process all dependencies
-	for (auto &dep : dependencies) dep->process();
+	for (auto& dep : dependencies) dep->process();
 }
 
 ScriptCommand::~ScriptCommand()
@@ -37,20 +37,19 @@ ScriptCommand::~ScriptCommand()
 }
 
 
-void ScriptCommand::processDependencies(Parameter * p)
+void ScriptCommand::processDependencies(Parameter* p)
 {
-//Dependencies
-bool changed = false;
-for (auto& d : dependencies)
-{
+	//Dependencies
+	bool changed = false;
+	for (auto& d : dependencies)
+	{
+		if (d->source == p) if (d->process()) changed = true;
+	}
 
-	if (d->source == p) if (d->process()) changed = true;
-}
-
-if (changed)
-{
-	queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
-}
+	if (changed)
+	{
+		queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
+	}
 }
 
 void ScriptCommand::onContainerParameterChanged(Parameter* p)
@@ -153,14 +152,14 @@ void ScriptCommand::triggerInternal(int multiplexIndex)
 //DEPENDENCY
 
 
-ScriptCommand::Dependency::Dependency(Parameter * source, Parameter * target, var value, CheckType checkType, DepAction depAction)
+ScriptCommand::Dependency::Dependency(Parameter* source, Parameter* target, var value, CheckType checkType, DepAction depAction)
 	: source(source), target(target), value(value), type(checkType), action(depAction)
 {
 	//DBG("New dependency :" << type << " /" << action);
 }
 
 
-ScriptCommand::Dependency::Dependency(Parameter * source, Parameter * target, var value, StringRef typeName, StringRef actionName) :
+ScriptCommand::Dependency::Dependency(Parameter* source, Parameter* target, var value, StringRef typeName, StringRef actionName) :
 	Dependency(source, target, value, CHECK_NOT_SET, ACTION_NOT_SET)
 {
 	type = (CheckType)jmax(checkTypeNames.indexOf(typeName), 0);
@@ -174,7 +173,7 @@ bool ScriptCommand::Dependency::process()
 	bool depIsOk = false;
 
 	var valueToCheck = source->value;
-	if (source->type == Controllable::ENUM) valueToCheck = ((EnumParameter *)source)->getValueData();
+	if (source->type == Controllable::ENUM) valueToCheck = ((EnumParameter*)source)->getValueData();
 
 	switch (type)
 	{
@@ -185,7 +184,7 @@ bool ScriptCommand::Dependency::process()
 	default: break;
 	}
 
-	
+
 	bool changed = false;
 
 	switch (action)
@@ -197,7 +196,7 @@ bool ScriptCommand::Dependency::process()
 
 	case ENABLE:
 		changed = target->enabled == !depIsOk;
-		target->setEnabled(depIsOk); 
+		target->setEnabled(depIsOk);
 		break;
 	default: break;
 	}
