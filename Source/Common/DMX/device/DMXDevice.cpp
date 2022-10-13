@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "JuceHeader.h"
+
 DMXDevice::DMXDevice(const String& name, Type _type, bool canReceive) :
 	ControllableContainer(name),
 	type(_type),
@@ -147,7 +149,7 @@ void DMXDevice::onControllableFeedbackUpdate(ControllableContainer* cc, Controll
 	{
 		if (c == alwaysSend) targetRate->setEnabled(alwaysSend->boolValue());
 		
-		if (alwaysSend->boolValue()) startTimer(1000/targetRate->intValue());
+		if (alwaysSend->boolValue()) startTimer(1000.0f/targetRate->intValue());
 		else stopTimer();
 	}
 }
