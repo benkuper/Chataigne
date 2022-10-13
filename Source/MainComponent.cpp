@@ -43,11 +43,13 @@ void MainContentComponent::init()
 
 	String lastVersion = getAppProperties().getUserSettings()->getValue("lastVersion", "");
 
+#if !JUCE_LINUX
 	if (lastVersion != getAppVersion())
 	{
 		welcomeScreen.reset(new WelcomeScreen());
 		DialogWindow::showDialog("Welcome", welcomeScreen.get(), getTopLevelComponent(), Colours::black, true);
 	}
+#endif
 
 	ParameterUI::customAddToContextMenuFunc = MainContentComponent::parameterAddToContextMenu;
 	ParameterUI::handleCustomContextMenuResultFunc = MainContentComponent::parameterHandleContextMenuResult;
