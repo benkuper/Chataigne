@@ -188,22 +188,6 @@ jobs:
         with:
           os: ${{ matrix.arch }}
 
-      # - name: Start SSH via ngrok
-      #   uses: P3TERX/ssh2actions@main
-      #   with:
-      #     mode: ngrok
-      #   env:
-      #     # After sign up on the https://ngrok.com
-      #     # You can find this token here: https://dashboard.ngrok.com/auth/your-authtoken
-      #     NGROK_TOKEN: ${{ secrets.NGROK_TOKEN }}
-          
-      #     # ngrok server region [us, eu, au, ap, sa, jp, in] (optional, default: us)
-      #     # You can find this server region here: https://ngrok.com/docs#global-locations
-      #     NGROK_REGION: us
-
-      #     # This password you will use when authorizing via SSH
-      #     SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
-
       - name: Installing dependencies
         id: install_deps
         #shell: bash {0} # Opt out of fail-fast behavior (necessary to ignore fetch errors)
@@ -237,7 +221,7 @@ jobs:
             fi
 
             echo "Installing extra lib dependencies"
-            sudo apt-get install -qyf linux-libc-dev:$DEP_ARCH libgdk-pixbuf2.0-dev:$DEP_ARCH libpango1.0-dev:$DEP_ARCH libsoup2.4-dev:$DEP_ARCH libharfbuzz-dev:$DEP_ARCH libicu-dev:$DEP_ARCH libc6-dev:$DEP_ARCH libxft-dev:$DEP_ARCH libatomic1:$DEP_ARCH libatomic1-$DEP_ARCH-cross libc6-dev-armel-cross:$DEP_ARCH
+            sudo apt-get install -qyf linux-libc-dev:$DEP_ARCH libgdk-pixbuf2.0-dev:$DEP_ARCH libpango1.0-dev:$DEP_ARCH libsoup2.4-dev:$DEP_ARCH libharfbuzz-dev:$DEP_ARCH libicu-dev:$DEP_ARCH libc6-dev:$DEP_ARCH libxft-dev:$DEP_ARCH libatomic1:$DEP_ARCH libatomic1-$DEP_ARCH-cross
 
             echo "Downloading AppImage runtime for ${{ matrix.arch }}"
             cd ${{ github.workspace }}
@@ -253,6 +237,22 @@ jobs:
           cd ${{ github.workspace }}
           wget "https://github.com/AppImage/AppImageKit/releases/download/13/appimagetool-x86_64.AppImage"
           chmod a+x appimagetool-x86_64.AppImage
+
+      - name: Start SSH via ngrok
+        uses: P3TERX/ssh2actions@main
+        with:
+          mode: ngrok
+        env:
+          # After sign up on the https://ngrok.com
+          # You can find this token here: https://dashboard.ngrok.com/auth/your-authtoken
+          NGROK_TOKEN: ${{ secrets.NGROK_TOKEN }}
+          
+          # ngrok server region [us, eu, au, ap, sa, jp, in] (optional, default: us)
+          # You can find this server region here: https://ngrok.com/docs#global-locations
+          NGROK_REGION: us
+
+          # This password you will use when authorizing via SSH
+          SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
 
       - name: Build
         run: |
