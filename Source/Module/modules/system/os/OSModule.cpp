@@ -415,7 +415,7 @@ void OSModule::PingThread::run()
 #if JUCE_WINDOWS
 			String command = "ping -n 1 -w 500 " + ip;
 #else
-			Sring command = "ping -c 1 -W 1 " + ip;
+			String command = "ping -c 1 -W 1 " + ip;
 #endif
 
 			process.start(command);
