@@ -7,7 +7,7 @@ env:
 jobs:
   windows:
     name: Windows
-    #if: false # always skip job (heap space needs fix)
+    if: false # always skip job
     runs-on: windows-2022
     strategy:
       matrix:
@@ -89,7 +89,7 @@ jobs:
           pass: ${{ secrets.UPLOADPASS }}
 
   osx:
-    #if: false # tmp disable
+    if: false # tmp disable
     name: OSX
     runs-on: macos-latest
 
@@ -153,9 +153,9 @@ jobs:
     strategy:
       matrix:
         include:
-        - arch: x64
-          buildFolder: "LinuxMakefile"
-          buildConfig: "Release"
+        # - arch: x64
+        #   buildFolder: "LinuxMakefile"
+        #   buildConfig: "Release"
           
         - arch: armhf
           packageArch: armhf
