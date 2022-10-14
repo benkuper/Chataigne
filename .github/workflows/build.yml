@@ -238,21 +238,21 @@ jobs:
           wget "https://github.com/AppImage/AppImageKit/releases/download/13/appimagetool-x86_64.AppImage"
           chmod a+x appimagetool-x86_64.AppImage
 
-      - name: Start SSH via ngrok
-        uses: P3TERX/ssh2actions@main
-        with:
-          mode: ngrok
-        env:
-          # After sign up on the https://ngrok.com
-          # You can find this token here: https://dashboard.ngrok.com/auth/your-authtoken
-          NGROK_TOKEN: ${{ secrets.NGROK_TOKEN }}
+      # - name: Start SSH via ngrok
+      #   uses: P3TERX/ssh2actions@main
+      #   with:
+      #     mode: ngrok
+      #   env:
+      #     # After sign up on the https://ngrok.com
+      #     # You can find this token here: https://dashboard.ngrok.com/auth/your-authtoken
+      #     NGROK_TOKEN: ${{ secrets.NGROK_TOKEN }}
           
-          # ngrok server region [us, eu, au, ap, sa, jp, in] (optional, default: us)
-          # You can find this server region here: https://ngrok.com/docs#global-locations
-          NGROK_REGION: us
+      #     # ngrok server region [us, eu, au, ap, sa, jp, in] (optional, default: us)
+      #     # You can find this server region here: https://ngrok.com/docs#global-locations
+      #     NGROK_REGION: us
 
-          # This password you will use when authorizing via SSH
-          SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+      #     # This password you will use when authorizing via SSH
+      #     SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
 
       - name: Build
         run: |

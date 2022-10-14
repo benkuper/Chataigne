@@ -1898,7 +1898,7 @@
     <LINUX_MAKE targetFolder="Builds/Raspberry" smallIcon="nVz6Li" bigIcon="nVz6Li"
                 extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;&#10;-Wl,--as-needed"
                 externalLibraries="bluetooth&#10;Servus&#10;curl&#10;SDL2&#10;usb-1.0&#10;hidapi-hidraw&#10;pthread&#10;JoyShockLibrary&#10;atomic"
-                extraDefs="LINK_PLATFORM_LINUX=1" extraCompilerFlags="-mfloat-abi=soft">
+                extraDefs="LINK_PLATFORM_LINUX=1" extraCompilerFlags="-mfloat-abi=hard&#10;-mfpu=neon-fp-armv8">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" headerPath="/usr/include/freetype2" libraryPath="../../External/servus/lib/raspberry&#10;../../External/sdl/lib/raspberry&#10;../../External/joycon/lib/raspberry&#10;/usr/lib/arm-linux-gnueabihf"
                        linuxArchitecture="-march=armv8-a" optimisation="3" isDebug="1"/>

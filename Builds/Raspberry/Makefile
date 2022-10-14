@@ -43,7 +43,7 @@ ifeq ($(CONFIG),Debug)
   JUCE_CPPFLAGS_APP :=  "-DJucePlugin_Build_VST=0" "-DJucePlugin_Build_VST3=0" "-DJucePlugin_Build_AU=0" "-DJucePlugin_Build_AUv3=0" "-DJucePlugin_Build_AAX=0" "-DJucePlugin_Build_Standalone=0" "-DJucePlugin_Build_Unity=0" "-DJucePlugin_Build_LV2=0"
   JUCE_TARGET_APP := Chataigne
 
-  JUCE_CFLAGS += $(JUCE_CPPFLAGS) $(TARGET_ARCH) -g -ggdb -O3 -mfloat-abi=soft $(CFLAGS)
+  JUCE_CFLAGS += $(JUCE_CPPFLAGS) $(TARGET_ARCH) -g -ggdb -O3 -mfloat-abi=hard -mfpu=neon-fp-armv8 $(CFLAGS)
   JUCE_CXXFLAGS += $(JUCE_CFLAGS) -std=c++17 $(CXXFLAGS)
   JUCE_LDFLAGS += $(TARGET_ARCH) -L$(JUCE_BINDIR) -L$(JUCE_LIBDIR) -L../../External/servus/lib/raspberry -L../../External/sdl/lib/raspberry -L../../External/joycon/lib/raspberry -L/usr/lib/arm-linux-gnueabihf -L../../Modules/juce_simpleweb/libs/Linux/armv8-a $(shell $(PKG_CONFIG) --libs alsa freetype2 libcurl) -fvisibility=hidden -Wl,-rpath,"lib" -Wl,--as-needed -lrt -ldl -lpthread -lGL -lssl -lcrypto -lbluetooth -lServus -lcurl -lSDL2 -lusb-1.0 -lhidapi-hidraw -lpthread -lJoyShockLibrary -latomic $(LDFLAGS)
 
@@ -64,7 +64,7 @@ ifeq ($(CONFIG),Release)
   JUCE_CPPFLAGS_APP :=  "-DJucePlugin_Build_VST=0" "-DJucePlugin_Build_VST3=0" "-DJucePlugin_Build_AU=0" "-DJucePlugin_Build_AUv3=0" "-DJucePlugin_Build_AAX=0" "-DJucePlugin_Build_Standalone=0" "-DJucePlugin_Build_Unity=0" "-DJucePlugin_Build_LV2=0"
   JUCE_TARGET_APP := Chataigne
 
-  JUCE_CFLAGS += $(JUCE_CPPFLAGS) $(TARGET_ARCH) -O3 -mfloat-abi=soft $(CFLAGS)
+  JUCE_CFLAGS += $(JUCE_CPPFLAGS) $(TARGET_ARCH) -O3 -mfloat-abi=hard -mfpu=neon-fp-armv8 $(CFLAGS)
   JUCE_CXXFLAGS += $(JUCE_CFLAGS) -std=c++17 $(CXXFLAGS)
   JUCE_LDFLAGS += $(TARGET_ARCH) -L$(JUCE_BINDIR) -L$(JUCE_LIBDIR) -L../../External/servus/lib/raspberry -L../../External/sdl/lib/raspberry -L../../External/joycon/lib/raspberry -L/usr/lib/arm-linux-gnueabihf -L../../Modules/juce_simpleweb/libs/Linux/armv8-a $(shell $(PKG_CONFIG) --libs alsa freetype2 libcurl) -fvisibility=hidden -Wl,-rpath,"lib" -Wl,--as-needed -lrt -ldl -lpthread -lGL -lssl -lcrypto -lbluetooth -lServus -lcurl -lSDL2 -lusb-1.0 -lhidapi-hidraw -lpthread -lJoyShockLibrary -latomic $(LDFLAGS)
 
