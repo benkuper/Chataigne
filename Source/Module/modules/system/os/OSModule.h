@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    OSModule.h
-    Created: 5 Jan 2018 3:41:34pm
-    Author:  Ben
+	OSModule.h
+	Created: 5 Jan 2018 3:41:34pm
+	Author:  Ben
 
   ==============================================================================
 */
@@ -21,19 +21,26 @@ class OSModule :
 public:
 	OSModule();
 	~OSModule();
-	
+
 	enum OSType { OS_WIN, OS_MAC, OS_LINUX };
 
 	Trigger* listIPs;
-	
-	EnumParameter * osType;
-	StringParameter * osName;
+	IntParameter* pingFrequency; // in seconds
+
+	EnumParameter* osType;
+	StringParameter* osName;
 	StringParameter* ips;
+	StringParameter* mac;
 	Trigger* terminateTrigger;
 	Trigger* crashedTrigger;
 
 	ControllableContainer appControlNamesCC;
 	ControllableContainer appControlStatusCC;
+	ControllableContainer pingIPsCC;
+	ControllableContainer pingStatusCC;
+
+	//Ping
+	OwnedArray<ChildProcess> pingProcesses;
 
 	//Script
 	const Identifier launchAppId = "launchApp";
@@ -43,9 +50,22 @@ public:
 	const Identifier isProcessRunningId = "isProcessRunning";
 
 	//child process
-	String commandToRun;
-	std::unique_ptr<ChildProcess> childProcess;
+	Array<String, CriticalSection> commandsToRun;
 
+	class PingThread :
+		public Thread
+	{
+	public:
+		PingThread(OSModule* m) : Thread("Ping"), osModule(m), moduleRef(m) {}
+		~PingThread() {}
+
+		OSModule* osModule;
+		WeakReference<Inspectable> moduleRef;
+
+		void run() override;
+	};
+
+	PingThread pingThread;
 
 	void updateIps();
 
@@ -57,8 +77,10 @@ public:
 
 	void checkAppControl();
 	void updateAppControlValues();
+	void updatePingStatusValues();
 
 	void appControlCreateControllable(ControllableContainer* c);
+	void pingIPsCreateControllable(ControllableContainer* c);
 
 	void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
 
@@ -68,15 +90,14 @@ public:
 	static var isProcessRunningFromScript(const var::NativeFunctionArgs& args);
 	static var getRunningProcessesFromScript(const var::NativeFunctionArgs& args);
 
-	bool isProcessRunning(const String &processName);
+	bool isProcessRunning(const String& processName);
 	StringArray getRunningProcesses();
 
 	void timerCallback(int timerID) override;
 	void run() override;
 
-
 	void afterLoadJSONDataInternal() override;
 
 	virtual String getDefaultTypeString() const override { return "OS"; }
-	static OSModule * create() { return new OSModule(); }
+	static OSModule* create() { return new OSModule(); }
 };

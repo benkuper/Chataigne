@@ -8,16 +8,21 @@
   ==============================================================================
 */
 
+#include "Module/ModuleIncludes.h"
+
 #if JUCE_WINDOWS
 #include <TlHelp32.h>
-#include "OSModule.h"
 #endif
+
 
 OSModule::OSModule() :
 	Module(getDefaultTypeString()),
 	Thread("OS-ChildProcess"),
 	appControlNamesCC("App Control"),
-	appControlStatusCC("App Control")
+	appControlStatusCC("App Control"),
+	pingIPsCC("Ping IPs"),
+	pingStatusCC("Ping Status"),
+	pingThread(this)
 {
 	osType = valuesCC.addEnumParameter("OS Type", "Type of OS");
 	osType->addOption("Windows", OS_WIN)->addOption("MacOS", OS_MAC)->addOption("Linux", OS_LINUX);
@@ -32,17 +37,30 @@ OSModule::OSModule() :
 	//moduleParams.hideInEditor = true;
 
 	listIPs = moduleParams.addTrigger("List IPs", "List all IPs of all network interfaces");
+	pingFrequency = moduleParams.addIntParameter("Ping Frequency", "Time between each ping routine, in seconds.", 5);
 
 	appControlNamesCC.userCanAddControllables = true;
 	appControlNamesCC.customUserCreateControllableFunc = std::bind(&OSModule::appControlCreateControllable, this, std::placeholders::_1);
 	moduleParams.addChildControllableContainer(&appControlNamesCC);
 
+	pingIPsCC.userCanAddControllables = true;
+	pingIPsCC.customUserCreateControllableFunc = std::bind(&OSModule::pingIPsCreateControllable, this, std::placeholders::_1);
+	moduleParams.addChildControllableContainer(&pingIPsCC);
+
 	valuesCC.addChildControllableContainer(&appControlStatusCC);
+	valuesCC.addChildControllableContainer(&pingStatusCC);
 
 	osName = valuesCC.addStringParameter("OS Name", "Name of the OS", SystemStats::getOperatingSystemName());
 
-
 	ips = valuesCC.addStringParameter("IP", "IP that has been detected than most probable to be a LAN IP", NetworkHelpers::getLocalIP());
+
+	Array<MACAddress> macList = MACAddress::getAllAddresses();
+	String macs = "";
+	for (int i = 0; i < macList.size(); i++) macs += (i > 0 ? "\n" : "") + macList[i].toString().replace("-", ":").toUpperCase();
+
+	mac = valuesCC.addStringParameter("MAC", "Mac address of the IP", macs);
+	mac->multiline = true;
+
 	terminateTrigger = valuesCC.addTrigger("Terminate", "This will be triggered when the program is about to terminate.");
 	crashedTrigger = valuesCC.addTrigger("Crashed", "This will be triggered when the program has crashed, just before killing itself like a sad puppy.");
 
@@ -77,6 +95,7 @@ OSModule::~OSModule()
 	stopTimer(OS_IP_TIMER);
 	stopTimer(OS_APP_TIMER);
 	stopThread(100);
+	pingThread.stopThread(1000);
 }
 
 void OSModule::updateIps()
@@ -119,16 +138,15 @@ void OSModule::launchCommand(const String& command, bool silentMode)
 
 void OSModule::launchChildProcess(const String& command)
 {
-	stopThread(100);
-	commandToRun = command;
+	commandsToRun.add(command);
 	startThread();
 }
 
 String OSModule::launchChildProcessBlocking(const String& command)
 {
-	childProcess.reset(new ChildProcess());
-	if (commandToRun.isNotEmpty()) childProcess->start(commandToRun);
-	return childProcess->readAllProcessOutput();
+	ChildProcess process = ChildProcess();
+	process.start(command);
+	return process.readAllProcessOutput();
 }
 
 var OSModule::launchFileFromScript(const var::NativeFunctionArgs& args)
@@ -186,10 +204,26 @@ void OSModule::updateAppControlValues()
 	for (auto& c : appControlNamesCC.controllables)
 	{
 		File f = ((FileParameter*)c)->getFile();
-		BoolParameter* b = appControlStatusCC.addBoolParameter(f.existsAsFile()?f.getFileName():"[noapp]", "Status for this process", false);
+		BoolParameter* b = appControlStatusCC.addBoolParameter(f.existsAsFile() ? f.getFileName() : "[noapp]", "Status for this process", false);
 		b->isSavable = false;
 	}
 }
+
+void OSModule::updatePingStatusValues()
+{
+	pingThread.stopThread(1000);
+	pingStatusCC.clear();
+
+	for (auto& c : pingIPsCC.controllables)
+	{
+		String s = ((StringParameter*)c)->stringValue();
+		BoolParameter* b = pingStatusCC.addBoolParameter(s.isNotEmpty() ? s : "[noip]", "Status for this IP", false);
+		b->isSavable = false;
+	}
+
+	if (pingIPsCC.controllables.size() > 0) pingThread.startThread();
+}
+
 
 var OSModule::launchProcessFromScript(const var::NativeFunctionArgs& args)
 {
@@ -219,6 +253,10 @@ void OSModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc, C
 	if (c->parentContainer.get() == &appControlNamesCC)
 	{
 		if (!isCurrentlyLoadingData) updateAppControlValues();
+	}
+	else if (c->parentContainer.get() == &pingIPsCC)
+	{
+		if (!isCurrentlyLoadingData) updatePingStatusValues();
 	}
 	else if (c->parentContainer.get() == &appControlStatusCC)
 	{
@@ -259,12 +297,22 @@ var OSModule::getRunningProcessesFromScript(const var::NativeFunctionArgs& args)
 
 void OSModule::appControlCreateControllable(ControllableContainer* c)
 {
-	FileParameter * fp = c->addFileParameter("App File 1", "App File to watch, launch and kill", "");
+	FileParameter* fp = c->addFileParameter("App File 1", "App File to watch, launch and kill", "");
 	fp->saveValueOnly = false;
 	fp->isRemovableByUser = true;
 
 	updateAppControlValues();
 }
+
+void OSModule::pingIPsCreateControllable(ControllableContainer* c)
+{
+	StringParameter* sp = c->addStringParameter("IP 1", "IP to ping", "");
+	sp->saveValueOnly = false;
+	sp->isRemovableByUser = true;
+
+	updatePingStatusValues();
+}
+
 
 bool OSModule::isProcessRunning(const String& processName)
 {
@@ -309,26 +357,86 @@ void OSModule::timerCallback(int timerID)
 
 void OSModule::run()
 {
-	if (childProcess != nullptr && childProcess->isRunning()) childProcess->kill();
-	childProcess.reset(new ChildProcess());
-	if (commandToRun.isNotEmpty()) childProcess->start(commandToRun);
-
-	char buffer[1024];
-	while (!threadShouldExit() && childProcess->isRunning())
+	while (!threadShouldExit() && !commandsToRun.isEmpty())
 	{
-		int numRead = childProcess->readProcessOutput(buffer, 1024);
-		if (numRead > 0)
-		{
-			String s(buffer, numRead);
-			scriptManager->callFunctionOnAllItems("processDataReceived", s);
-		}
-	}
+		String command = commandsToRun.removeAndReturn(0);
+		if (command.isEmpty()) continue;
 
-	if (childProcess != nullptr && childProcess->isRunning()) childProcess->kill();
+		ChildProcess process;
+		process.start(command);
+
+		char buffer[1024];
+		while (!threadShouldExit() && process.isRunning())
+		{
+			int numRead = process.readProcessOutput(buffer, 1024);
+			if (numRead > 0)
+			{
+				String s(buffer, numRead);
+				Array<var> args;
+				args.add(s);
+				args.add(command);
+				scriptManager->callFunctionOnAllItems("processDataReceived", args);
+			}
+		}
+
+		process.kill();
+	}
 }
 
 void OSModule::afterLoadJSONDataInternal()
 {
 	Module::afterLoadJSONDataInternal();
 	updateAppControlValues();
+	updatePingStatusValues();
+}
+
+
+void OSModule::PingThread::run()
+{
+	while (!threadShouldExit() && !moduleRef.wasObjectDeleted())
+	{
+		wait(osModule->pingFrequency->intValue() * 1000);
+
+		Array<WeakReference<Parameter>> ipParams = osModule->pingIPsCC.getAllParameters();
+		Array<WeakReference<Parameter>> statusParams = osModule->pingStatusCC.getAllParameters();
+
+		if (ipParams.isEmpty()) return;
+
+		for (int i = 0; i < ipParams.size(); i++)
+		{
+			if (threadShouldExit() || moduleRef.wasObjectDeleted()) return;
+			if (ipParams[i].wasObjectDeleted() || statusParams[i].wasObjectDeleted()) continue;
+			String ip = ipParams[i]->stringValue();
+			if (ip.isEmpty()) continue;
+
+			if (osModule->logOutgoingData->boolValue()) NLOG(osModule->niceName, "Pinging " + ipParams[i]->stringValue() + " ...");
+
+			ChildProcess process;
+#if JUCE_WINDOWS
+			String command = "ping -n 1 -w 500 " + ip;
+#else
+			Sring command = "ping -c 1 -W 1 " + ip;
+#endif
+
+			process.start(command);
+
+			String result = process.readAllProcessOutput();
+
+#if JUCE_WINDOWS
+			bool success = result.contains("Received = 1");
+#else
+			bool success = result.contains("0% packet loss");
+#endif
+
+			if (osModule->logOutgoingData->boolValue())
+			{
+				if (success) NLOG(osModule->niceName, ipParams[i]->stringValue() << " is alive");
+				else NLOGWARNING(osModule->niceName, ipParams[i]->stringValue() << " is dead");
+			}
+
+			if (!statusParams[i].wasObjectDeleted()) statusParams[i]->setValue(success);
+		}
+
+		LOG("Stop pinging thread");
+	}
 }
