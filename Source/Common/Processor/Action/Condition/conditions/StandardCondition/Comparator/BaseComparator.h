@@ -26,7 +26,7 @@ public:
 
 	EnumParameter* compareFunction;
 	Identifier currentFunctionId;
-	SpinLock compareLock;
+	CriticalSection compareLock;
 
 	const Identifier changeId = "ch";
 
