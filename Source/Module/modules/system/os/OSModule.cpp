@@ -367,7 +367,7 @@ void OSModule::run()
 
 		char buffer[1024];
 		while (!threadShouldExit() && process.isRunning())
-		{
+		{rs
 			int numRead = process.readProcessOutput(buffer, 1024);
 			if (numRead > 0)
 			{
@@ -436,7 +436,7 @@ void OSModule::PingThread::run()
 
 			if (!statusParams[i].wasObjectDeleted()) statusParams[i]->setValue(success);
 		}
-
-		LOG("Stop pinging thread");
 	}
+	
+	if (!moduleRef.wasObjectDeleted() && osModule->logOutgoingData->boolValue()) LOG("Stop pinging thread");
 }
