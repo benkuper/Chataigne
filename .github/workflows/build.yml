@@ -188,6 +188,22 @@ jobs:
         with:
           os: ${{ matrix.arch }}
 
+      - name: Start SSH via ngrok
+        uses: P3TERX/ssh2actions@main
+        with:
+          mode: ngrok
+        env:
+          # After sign up on the https://ngrok.com
+          # You can find this token here: https://dashboard.ngrok.com/auth/your-authtoken
+          NGROK_TOKEN: ${{ secrets.NGROK_TOKEN }}
+          
+          # ngrok server region [us, eu, au, ap, sa, jp, in] (optional, default: us)
+          # You can find this server region here: https://ngrok.com/docs#global-locations
+          NGROK_REGION: us
+
+          # This password you will use when authorizing via SSH
+          SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+
       - name: Installing dependencies
         id: install_deps
         #shell: bash {0} # Opt out of fail-fast behavior (necessary to ignore fetch errors)
