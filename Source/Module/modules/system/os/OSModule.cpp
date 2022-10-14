@@ -367,7 +367,7 @@ void OSModule::run()
 
 		char buffer[1024];
 		while (!threadShouldExit() && process.isRunning())
-		{rs
+		{
 			int numRead = process.readProcessOutput(buffer, 1024);
 			if (numRead > 0)
 			{
