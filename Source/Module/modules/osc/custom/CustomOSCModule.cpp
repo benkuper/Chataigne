@@ -70,7 +70,7 @@ void CustomOSCModule::processMessageInternal(const OSCMessage& msg)
 
 					for (auto& s : addSplit)
 					{
-						ControllableContainer* cc = childContainer->getControllableContainerByName(s);
+						ControllableContainer* cc = childContainer->getControllableContainerByName(s, true, true);
 						if (cc == nullptr)
 						{
 							cc = new ControllableContainer(s);
@@ -103,7 +103,7 @@ void CustomOSCModule::processMessageInternal(const OSCMessage& msg)
 	{
 		for (int i = 0; i < msg.size(); ++i)
 		{
-			c = cParentContainer->getControllableByName(cShortName + "_" + String(i));
+			c = cParentContainer->getControllableByName(cShortName + "_" + String(i), true, true);
 
 			//OSCAddressPattern address(msg.getAddressPattern().toString() + "_" + String(i));
 			//Array<Controllable*> matchCont = getMatchingControllables(address);
