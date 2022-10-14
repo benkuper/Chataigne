@@ -237,7 +237,7 @@ jobs:
             fi
 
             echo "Installing extra lib dependencies"
-            sudo apt-get install -qyf linux-libc-dev:$DEP_ARCH libgdk-pixbuf2.0-dev:$DEP_ARCH libpango1.0-dev:$DEP_ARCH libsoup2.4-dev:$DEP_ARCH libharfbuzz-dev:$DEP_ARCH libicu-dev:$DEP_ARCH libc6-dev:$DEP_ARCH libxft-dev:$DEP_ARCH libatomic1:$DEP_ARCH libatomic1-$DEP_ARCH-cross
+            sudo apt-get install -qyf linux-libc-dev:$DEP_ARCH libgdk-pixbuf2.0-dev:$DEP_ARCH libpango1.0-dev:$DEP_ARCH libsoup2.4-dev:$DEP_ARCH libharfbuzz-dev:$DEP_ARCH libicu-dev:$DEP_ARCH libc6-dev:$DEP_ARCH libxft-dev:$DEP_ARCH libatomic1:$DEP_ARCH libatomic1-$DEP_ARCH-cross libc6-dev-armel-cross
 
             echo "Downloading AppImage runtime for ${{ matrix.arch }}"
             cd ${{ github.workspace }}
