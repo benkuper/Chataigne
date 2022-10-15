@@ -15,12 +15,12 @@ ModuleUI::ModuleUI(Module * module) :
 
 	module->addModuleListener(this);
 
-	inActivityUI.reset(module->inActivityTrigger->createImageUI(ChataigneAssetManager::getInstance()->getInImage()));
+	inActivityUI.reset(module->inActivityTrigger->createImageUI(AssetManager::getInstance()->inImage));
 	inActivityUI->showLabel = false;
 	addAndMakeVisible(inActivityUI.get());
 	inActivityUI->setVisible(module->hasInput);
 
-	outActivityUI.reset(module->outActivityTrigger->createImageUI(ChataigneAssetManager::getInstance()->getOutImage()));
+	outActivityUI.reset(module->outActivityTrigger->createImageUI(AssetManager::getInstance()->outImage));
 	outActivityUI->showLabel = false;
 	addAndMakeVisible(outActivityUI.get());
 	outActivityUI->setVisible(module->hasOutput);
