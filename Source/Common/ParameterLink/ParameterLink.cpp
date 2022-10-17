@@ -67,7 +67,7 @@ void ParameterLink::setLinkType(LinkType type)
 	if (linkType != CV_PRESET_PARAM) presetParamName = "";
 
 
-	parameter->setControllableFeedbackOnly(linkType != NONE);
+	if(parameter != nullptr && !parameter.wasObjectDeleted()) parameter->setControllableFeedbackOnly(linkType != NONE);
 
 	notifyLinkUpdated();
 }
