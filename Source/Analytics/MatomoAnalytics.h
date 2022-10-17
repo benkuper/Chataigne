@@ -30,6 +30,8 @@ public:
 	String actionToLog;
 	StringPairArray optionsToLog;
 	bool actionIsPing;
+
+	bool hasAlreadyShownWarning;
 	
 	void log(AnalyticsAction action, StringPairArray options = {});
 	void log(StringRef actionName, StringPairArray options = {});

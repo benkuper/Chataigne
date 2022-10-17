@@ -17,7 +17,8 @@ String getAppVersion();
 
 MatomoAnalytics::MatomoAnalytics() :
 	Thread("Matamo"),
-	actionIsPing(false)
+	actionIsPing(false),
+	hasAlreadyShownWarning(false)
 {
 
 	String name = SystemStats::getFullUserName();
@@ -83,6 +84,7 @@ void MatomoAnalytics::log(StringRef actionName, StringPairArray options)
 
 void MatomoAnalytics::run()
 {
+	if (actionToLog.isEmpty() || actionToLog == actionNames[NONE]) return;
 
 	URL url = baseURL;
 	if (!actionIsPing) url = url.withParameter("action_name", actionToLog);
@@ -93,6 +95,8 @@ void MatomoAnalytics::run()
 	//DBG("Send to analytics " << url.toString(false) << ", params :\n > " << url.getParameterValues().joinIntoString("\n > "));
 	StringPairArray responseHeaders;
 	int statusCode = 0;
+
+	actionToLog = "";
 
 	std::unique_ptr<InputStream> stream(url.createInputStream(
 		URL::InputStreamOptions(URL::ParameterHandling::inPostData)
@@ -105,7 +109,8 @@ void MatomoAnalytics::run()
 #if JUCE_WINDOWS
 	if (statusCode != 200)
 	{
-		NLOGWARNING("Matamo Analytics", "Failed to connect, status code = " + String(statusCode));
+		if(!hasAlreadyShownWarning) NLOGWARNING("Matamo Analytics", "Failed to connect, status code = " + String(statusCode));
+		hasAlreadyShownWarning = true;
 		return;
 	}
 #endif
@@ -119,12 +124,13 @@ void MatomoAnalytics::run()
 	}
 	else
 	{
-		NLOGWARNING("Matomo Analytics", "Error with request, status code : " << statusCode << ", url : " << url.toString(true));
+		if(!hasAlreadyShownWarning) NLOGWARNING("Matomo Analytics", "Error with request, status code : " << statusCode << ", url : " << url.toString(true));
+		hasAlreadyShownWarning = true;
 	}
 }
 
 void MatomoAnalytics::timerCallback()
 {
 	//DBG("Send ping");
-	log(PING);
+	if (!isThreadRunning()) log(PING);
 }

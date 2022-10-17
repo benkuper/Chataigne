@@ -80,7 +80,7 @@ void ChataigneApplication::handleCrashed()
 		m->crashedTrigger->trigger();
 	}
 
-	if (enableSendAnalytics->boolValue())
+	if (!launchedFromCrash && enableSendAnalytics->boolValue())
 	{
 		MatomoAnalytics::getInstance()->log(MatomoAnalytics::CRASH);
 		while (MatomoAnalytics::getInstance()->isThreadRunning())
