@@ -53,7 +53,7 @@ Parameter* SimpleRemapFilter::setupSingleParameterInternal(Parameter* source, in
 	
 	if (!source->isComplex() && forceFloatOutput->boolValue())
 	{
-		p = new FloatParameter(source->niceName, source->description, source->value.clone(), source->minimumValue, source->maximumValue);
+		p = new FloatParameter(source->niceName, source->description, source->getValue().clone(), source->minimumValue, source->maximumValue);
 		p->isSavable = false;
 		p->setControllableFeedbackOnly(true);
 	}
@@ -67,7 +67,8 @@ Parameter* SimpleRemapFilter::setupSingleParameterInternal(Parameter* source, in
 	{
 		var minVal;
 		var maxVal;
-		for (int i = 0; i < p->value.size(); i++)
+		int numVals = p->getValue().size();
+		for (int i = 0; i < numVals; i++)
 		{
 			minVal.append(jmin<float>(targetOut->x, targetOut->y));
 			maxVal.append(jmax<float>(targetOut->x, targetOut->y));
@@ -174,7 +175,6 @@ var SimpleRemapFilter::getRemappedValueFor(Parameter* source, int multiplexIndex
 	if (sourceVal.isArray())
 	{
 		var targetVal;
-		DBG(tIn.size() << " / " << sourceVal.size());
 		for (int i = 0; i < sourceVal.size(); i++)
 		{
 			var ttIn = tIn[i];
@@ -201,7 +201,7 @@ var SimpleRemapFilter::getRemappedValueFor(Parameter* source, int multiplexIndex
 		}
 	}
 
-	return source->getValue();
+	return sourceVal;
 }
 
 void SimpleRemapFilter::computeOutRanges()

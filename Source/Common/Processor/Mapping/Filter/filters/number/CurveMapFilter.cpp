@@ -48,7 +48,8 @@ MappingFilter::ProcessResult CurveMapFilter::processSingleParameterInternal(Para
 	if (source->isComplex())
 	{
 		var normCurveVal;
-		for (int i = 0; i < source->value.size(); i++)
+		var sourceVal = source->getValue().clone();
+		for (int i = 0; i < sourceVal.size(); i++)
 		{
 			float normVal = jmap<float>(remappedVal[i], (float)out->minimumValue[i], (float)out->maximumValue[i], 0.f, 1.f);
 			normCurveVal.append(curve.getValueAtPosition(normVal));

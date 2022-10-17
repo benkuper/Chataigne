@@ -137,6 +137,7 @@ void SimpleConversionFilter::filterParamChanged(Parameter* p)
 
 void SimpleConversionFilter::updateOutRange(Parameter* source, Parameter* out)
 {
+	var sourceVal = source->getValue().clone();
 	if (source->hasRange())
 	{
 		if (out->isComplex() == source->isComplex())
@@ -154,7 +155,7 @@ void SimpleConversionFilter::updateOutRange(Parameter* source, Parameter* out)
 			case MIN:
 				newMin = INT32_MAX;
 				newMax = INT32_MAX;
-				for (int i = 0; i < source->value.size(); i++)
+				for (int i = 0; i < sourceVal.size(); i++)
 				{
 					newMin = jmin((float)newMin, (float)source->minimumValue[i]);
 					newMax = jmin((float)newMax, (float)source->maximumValue[i]);
@@ -164,7 +165,7 @@ void SimpleConversionFilter::updateOutRange(Parameter* source, Parameter* out)
 			case MAX:
 				newMin = INT32_MIN;
 				newMax = INT32_MIN;
-				for (int i = 0; i < source->value.size(); i++)
+				for (int i = 0; i < sourceVal.size(); i++)
 				{
 					newMin = jmax((float)newMin, (float)source->minimumValue[i]);
 					newMax = jmax((float)newMax, (float)source->maximumValue[i]);
@@ -174,7 +175,7 @@ void SimpleConversionFilter::updateOutRange(Parameter* source, Parameter* out)
 			case AVERAGE:
 				newMin = INT32_MAX;
 				newMax = INT32_MIN;
-				for (int i = 0; i < source->value.size(); i++)
+				for (int i = 0; i < sourceVal.size(); i++)
 				{
 					newMin = jmin((float)newMin, (float)source->minimumValue[i]);
 					newMax = jmax((float)newMax, (float)source->maximumValue[i]);
@@ -184,7 +185,7 @@ void SimpleConversionFilter::updateOutRange(Parameter* source, Parameter* out)
 			case LENGTH:
 				newMin = 0;
 				newMax = 0;
-				for (int i = 0; i < source->value.size(); i++)
+				for (int i = 0; i < sourceVal.size(); i++)
 				{
 					float diff = (float)source->maximumValue[i] - (float)source->minimumValue[i];
 					newMax = (float)newMax + diff * diff;
@@ -195,7 +196,7 @@ void SimpleConversionFilter::updateOutRange(Parameter* source, Parameter* out)
 			case AREA:
 				newMin = 0;
 				newMax = 1;
-				for (int i = 0; i < source->value.size(); i++)
+				for (int i = 0; i < sourceVal.size(); i++)
 				{
 					float diff = (float)source->maximumValue[i] - (float)source->minimumValue[i];
 					newMax = (float)newMax * fabsf(diff);
@@ -203,7 +204,7 @@ void SimpleConversionFilter::updateOutRange(Parameter* source, Parameter* out)
 				break;
 
 			default:
-				if (targetData < source->value.size())
+				if (targetData < sourceVal.size())
 				{
 					newMin = source->minimumValue[targetData];
 					newMax = source->maximumValue[targetData];

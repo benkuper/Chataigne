@@ -109,7 +109,7 @@ void Mapping::checkFiltersNeedContinuousProcess()
 	}
 
 	updateRate->setEnabled(need);
-	if(!sendOnOutputChangeOnly->isOverriden) sendOnOutputChangeOnly->setDefaultValue(updateRate->enabled);
+	if (!sendOnOutputChangeOnly->isOverriden) sendOnOutputChangeOnly->setDefaultValue(updateRate->enabled);
 }
 
 void Mapping::updateMappingChain(MappingFilter* afterThisFilter, bool processAfter, bool rangeOnly, bool afterProcessSendOutput)
@@ -117,7 +117,7 @@ void Mapping::updateMappingChain(MappingFilter* afterThisFilter, bool processAft
 	if (isCurrentlyLoadingData || isClearing) return;
 	if (isRebuilding)
 	{
-		if(afterThisFilter == nullptr && !rangeOnly) rebuildPending = true; //avoid infinite rebuilding
+		if (afterThisFilter == nullptr && !rangeOnly) rebuildPending = true; //avoid infinite rebuilding
 		return;
 	}
 
@@ -213,7 +213,7 @@ void Mapping::multiplexPreviewIndexChanged()
 
 void Mapping::process(bool sendOutput, int multiplexIndex)
 {
-	if ((canBeDisabled && (enabled != nullptr && !enabled->boolValue())) || forceDisabled) return;
+	if ((canBeDisabled && !enabled->boolValue()) || forceDisabled) return;
 	if (im.items.size() == 0) return;
 	if (isCurrentlyLoadingData || isRebuilding || isProcessing || isClearing) return;
 
@@ -250,7 +250,7 @@ void Mapping::process(bool sendOutput, int multiplexIndex)
 				}
 			}
 
-			if(sendOutput) om.updateOutputValues(multiplexIndex, sendOnOutputChangeOnly->boolValue());
+			if (sendOutput) om.updateOutputValues(multiplexIndex, sendOnOutputChangeOnly->boolValue());
 		}
 
 		isProcessing = false;
@@ -282,7 +282,7 @@ void Mapping::updateContinuousProcess()
 void Mapping::setForceDisabled(bool value, bool force)
 {
 	Processor::setForceDisabled(value, force);
-	
+
 	if ((value != forceDisabled) || force)
 	{
 		if (value && sendOnActivate->boolValue()) for (int i = 0; i < getMultiplexCount(); i++) om.updateOutputValues(i);
@@ -317,7 +317,7 @@ void Mapping::afterLoadJSONDataInternal()
 	updateMappingChain(nullptr, false);
 	if (sendAfterLoad->boolValue())
 	{
-		if (enabled->boolValue() && !forceDisabled)
+		if ((enabled != nullptr && enabled->boolValue()) && !forceDisabled)
 		{
 			for (int i = 0; i < getMultiplexCount(); i++) om.updateOutputValues(i);
 		}
