@@ -25,6 +25,10 @@ KeyboardModuleCommands::KeyboardModuleCommands(KeyboardModule* _module, CommandC
 	{
 		keyID->addOption(it.getValue(), it.getKey());
 	}
+#elif JUCE_MAC
+	LOGWARNING("This command only works on Windows for now.\nIf you wish to send fake keys, you can use sendkeys-macos and launch it from Chataigne with an OS module.");
+#else
+	LOGWARNING("This command only works on Windows for now.\nIf you wish to send fake keys, you can use xdotool and launch it from Chataigne with an OS module.");
 #endif
 
 	if (type == KEY_HIT)
