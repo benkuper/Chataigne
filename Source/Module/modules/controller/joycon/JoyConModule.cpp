@@ -58,8 +58,8 @@ JoyConModule::JoyConModule() :
 	plus = rightValues.addBoolParameter("+", "", false);
 	home = rightValues.addBoolParameter("Home", "", false);
 
-	for (auto &c : leftValues.controllables) c->isControllableFeedbackOnly = true;
-	for (auto &c : rightValues.controllables) c->isControllableFeedbackOnly = true;
+	//for (auto &c : leftValues.controllables) c->isControllableFeedbackOnly = true;
+	//for (auto &c : rightValues.controllables) c->isControllableFeedbackOnly = true;
 
 
 	startThread();
