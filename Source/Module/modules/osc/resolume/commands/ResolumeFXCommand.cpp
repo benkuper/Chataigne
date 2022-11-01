@@ -181,9 +181,9 @@ void ResolumeFXCommand::setupValueParam()
 	{
 		if (fxParamType == nullptr) valueParam = new FloatParameter("Value", "Target parameter value", 0, 0, 1);
 		else valueParam = dynamic_cast<Parameter *>(ControllableFactory::createControllable(fxParamType->getValueData().toString()));
-		valueParam->setNiceName("Value");
 		if (valueParam != nullptr)
 		{
+			valueParam->setNiceName("Value");
 			if (valueParam->type == Controllable::STRING)
 			{
 				((StringParameter *)valueParam)->defaultUI = StringParameter::TEXT;
