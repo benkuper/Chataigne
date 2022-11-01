@@ -19,7 +19,7 @@ public:
 
 	WatchoutModule * wModule;
 
-	std::unique_ptr<ControllableContainer> paramContainer;
+	Array<Parameter*> argsParams;
 
 	void triggerInternal(int multiplexIndex) override;
 
