@@ -12,7 +12,7 @@ SendStreamStringCommand::SendStreamStringCommand(StreamingModule* _module, Comma
 	StreamingCommand(_module, context, params, multiplex),
 	appendCR(nullptr),
 	appendNL(nullptr),
-    prefix(nullptr)
+	prefix(nullptr)
 {
 	if (context == CommandContext::MAPPING)
 	{
@@ -33,6 +33,7 @@ SendStreamStringCommand::SendStreamStringCommand(StreamingModule* _module, Comma
 		{
 			valueParam->setControllableFeedbackOnly(true);
 			valueParam->setValue(params.getProperty("fixedValue", ""));
+			valueParam->multiline = false;
 		}
 
 		if (params.hasProperty("forceCR"))
