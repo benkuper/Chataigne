@@ -59,7 +59,7 @@ AudioModule::AudioModule(const String& name) :
 	ltcFPS->resetValue();
 	curLTCFPS = ltcFPS->getValueData();
 
-	ltcChannel = ltcParamsCC.addIntParameter("LTC Channel", "Enable and select the channel you want to use to decode LTC", 1, 1, 32, false);
+	ltcChannel = ltcParamsCC.addIntParameter("LTC Channel", "Enable and select the channel you want to use to decode LTC", 1, 1, 64, false);
 
 	//Values
 	detectedVolume = valuesCC.addFloatParameter("Volume", "Volume of the audio input", 0, 0, 1);
