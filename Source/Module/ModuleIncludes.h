@@ -187,7 +187,9 @@
 #include "modules/system/time/TimeModule.h"
 
 #include "modules/tcp/tcpclient/TCPClientModule.h"
-#include "modules/tcp/tcpclient/pjlink/PJLinkModule.h"
+#include "modules/tcp/pjlink/PJLinkModule.h"
+#include "modules/tcp/pjlink/commands/PJLinkCommand.h"
+#include "modules/tcp/pjlink/ui/PJLinkModuleUI.h"
 #include "modules/tcp/tcpclient/watchout/WatchoutModule.h"
 #include "modules/tcp/tcpclient/watchout/commands/WatchoutCommand.h"
 #include "modules/tcp/tcpserver/TCPServerConnectionManager.h"

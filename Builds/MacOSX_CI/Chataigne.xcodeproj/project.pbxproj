@@ -187,7 +187,6 @@
 		1801A84E852A7D8B922A5D78 /* keyframe_on.png */ /* keyframe_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = keyframe_on.png; path = ../../Resources/keyframe_on.png; sourceTree = SOURCE_ROOT; };
 		18BEE3D308EBE1EB8F857535 /* MappingOutputManager.h */ /* MappingOutputManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MappingOutputManager.h; path = ../../Source/Common/Processor/Mapping/Output/MappingOutputManager.h; sourceTree = SOURCE_ROOT; };
 		18C577D40DFB00A4DCA92D40 /* Mapping2DLayerTimeline.h */ /* Mapping2DLayerTimeline.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Mapping2DLayerTimeline.h; path = ../../Source/TimeMachine/Sequence/layers/mapping/automation/2d/ui/Mapping2DLayerTimeline.h; sourceTree = SOURCE_ROOT; };
-		1919D8FF97CC9BF35C683A94 /* PJLinkModule.cpp */ /* PJLinkModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PJLinkModule.cpp; path = ../../Source/Module/modules/tcp/tcpclient/pjlink/PJLinkModule.cpp; sourceTree = SOURCE_ROOT; };
 		1952BD304214810D645BBDF6 /* AudioToolbox.framework */ /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		197076D5A22E98797D3FB07B /* KinectV2.png */ /* KinectV2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = KinectV2.png; path = ../../Resources/Modules/KinectV2.png; sourceTree = SOURCE_ROOT; };
 		197C3A8890035B180289E60E /* InverseFilter.h */ /* InverseFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = InverseFilter.h; path = ../../Source/Common/Processor/Mapping/Filter/filters/number/InverseFilter.h; sourceTree = SOURCE_ROOT; };
@@ -237,6 +236,7 @@
 		29D04BA49B995123DB200E5E /* MathFilter.cpp */ /* MathFilter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MathFilter.cpp; path = ../../Source/Common/Processor/Mapping/Filter/filters/number/MathFilter.cpp; sourceTree = SOURCE_ROOT; };
 		2A4DEB95692D60A22A3C60C3 /* ConditionManager.h */ /* ConditionManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ConditionManager.h; path = ../../Source/Common/Processor/Action/Condition/ConditionManager.h; sourceTree = SOURCE_ROOT; };
 		2A69A873D95E3C38B47969AF /* KeyboardModuleCommands.h */ /* KeyboardModuleCommands.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = KeyboardModuleCommands.h; path = ../../Source/Module/modules/controller/keyboard/commands/KeyboardModuleCommands.h; sourceTree = SOURCE_ROOT; };
+		2BAFF327FC54783886F8620F /* PJLinkModule.cpp */ /* PJLinkModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PJLinkModule.cpp; path = ../../Source/Module/modules/tcp/pjlink/PJLinkModule.cpp; sourceTree = SOURCE_ROOT; };
 		2BE3C41C55C2BFCAD0385D14 /* Main.h */ /* Main.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Main.h; path = ../../Source/Main.h; sourceTree = SOURCE_ROOT; };
 		2C044AD874B79A1418B10F82 /* Mapping1DLayerPanel.h */ /* Mapping1DLayerPanel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Mapping1DLayerPanel.h; path = ../../Source/TimeMachine/Sequence/layers/mapping/automation/1d/ui/Mapping1DLayerPanel.h; sourceTree = SOURCE_ROOT; };
 		2C8F111514373C5BA8A33B7B /* TCPServerConnectionManager.cpp */ /* TCPServerConnectionManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TCPServerConnectionManager.cpp; path = ../../Source/Module/modules/tcp/tcpserver/TCPServerConnectionManager.cpp; sourceTree = SOURCE_ROOT; };
@@ -253,6 +253,7 @@
 		2F4F15F3B838C8ED91761D44 /* ConvertedParameter.h */ /* ConvertedParameter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ConvertedParameter.h; path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ConvertedParameter.h; sourceTree = SOURCE_ROOT; };
 		2F6A8DB66048BB90BBA7B248 /* DMXSACNDevice.cpp */ /* DMXSACNDevice.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DMXSACNDevice.cpp; path = ../../Source/Common/DMX/device/DMXSACNDevice.cpp; sourceTree = SOURCE_ROOT; };
 		2FAC44CBAAC99F2D1B182674 /* MappingOutputManager.cpp */ /* MappingOutputManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MappingOutputManager.cpp; path = ../../Source/Common/Processor/Mapping/Output/MappingOutputManager.cpp; sourceTree = SOURCE_ROOT; };
+		2FD6364DFC1971E33C9290FF /* PJLinkCommand.cpp */ /* PJLinkCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PJLinkCommand.cpp; path = ../../Source/Module/modules/tcp/pjlink/commands/PJLinkCommand.cpp; sourceTree = SOURCE_ROOT; };
 		3003594D522C89372E5FEB57 /* ConversionConnector.h */ /* ConversionConnector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ConversionConnector.h; path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConversionConnector.h; sourceTree = SOURCE_ROOT; };
 		306C379FA8EDF09052FE046B /* MIDIDeviceParameterUI.h */ /* MIDIDeviceParameterUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MIDIDeviceParameterUI.h; path = ../../Source/Common/MIDI/ui/MIDIDeviceParameterUI.h; sourceTree = SOURCE_ROOT; };
 		310E26AB137BF1DFD19D2067 /* StateTransitionManagerUI.h */ /* StateTransitionManagerUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StateTransitionManagerUI.h; path = ../../Source/StateMachine/Transition/ui/StateTransitionManagerUI.h; sourceTree = SOURCE_ROOT; };
@@ -365,6 +366,7 @@
 		4F83B5397387A9D6D179A881 /* QLabModule.cpp */ /* QLabModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = QLabModule.cpp; path = ../../Source/Module/modules/osc/qlab/QLabModule.cpp; sourceTree = SOURCE_ROOT; };
 		4FA5781315A5657F555CCE52 /* MIDICommands.h */ /* MIDICommands.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MIDICommands.h; path = ../../Source/Module/modules/midi/commands/MIDICommands.h; sourceTree = SOURCE_ROOT; };
 		4FA68B3C0FA6694B5F420FA8 /* SpeedFilter.cpp */ /* SpeedFilter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SpeedFilter.cpp; path = ../../Source/Common/Processor/Mapping/Filter/filters/number/SpeedFilter.cpp; sourceTree = SOURCE_ROOT; };
+		4FFA30F725B39EC4B8DF6C4A /* PJLinkModuleUI.cpp */ /* PJLinkModuleUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PJLinkModuleUI.cpp; path = ../../Source/Module/modules/tcp/pjlink/ui/PJLinkModuleUI.cpp; sourceTree = SOURCE_ROOT; };
 		5025C5BAF50937621E4ACEA9 /* CustomVariablesModule.cpp */ /* CustomVariablesModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CustomVariablesModule.cpp; path = ../../Source/Module/modules/customvariables/CustomVariablesModule.cpp; sourceTree = SOURCE_ROOT; };
 		50F4C9323D195AD213E37F98 /* ScriptCommand.cpp */ /* ScriptCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ScriptCommand.cpp; path = ../../Source/Module/modules/common/commands/scriptcommands/ScriptCommand.cpp; sourceTree = SOURCE_ROOT; };
 		5163443F8020E6D7801B6CC0 /* Signal.png */ /* Signal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Signal.png; path = ../../Resources/Modules/Signal.png; sourceTree = SOURCE_ROOT; };
@@ -373,7 +375,6 @@
 		51FDE47C4EDEF58051AC4915 /* ChataigneAudioLayer.cpp */ /* ChataigneAudioLayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ChataigneAudioLayer.cpp; path = ../../Source/TimeMachine/Sequence/layers/audio/ChataigneAudioLayer.cpp; sourceTree = SOURCE_ROOT; };
 		526F7B3CB32C2F185CE3428D /* ProcessorManager.h */ /* ProcessorManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ProcessorManager.h; path = ../../Source/Common/Processor/ProcessorManager.h; sourceTree = SOURCE_ROOT; };
 		53784EA2F05A99905184F791 /* SimpleRemapFilter.cpp */ /* SimpleRemapFilter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SimpleRemapFilter.cpp; path = ../../Source/Common/Processor/Mapping/Filter/filters/number/SimpleRemapFilter.cpp; sourceTree = SOURCE_ROOT; };
-		5391EA9CE86CA7CE99D66015 /* PJLinkModule.h */ /* PJLinkModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PJLinkModule.h; path = ../../Source/Module/modules/tcp/tcpclient/pjlink/PJLinkModule.h; sourceTree = SOURCE_ROOT; };
 		53A5A48ED7FEF0F32D648EA3 /* KeyboardModule.cpp */ /* KeyboardModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = KeyboardModule.cpp; path = ../../Source/Module/modules/controller/keyboard/KeyboardModule.cpp; sourceTree = SOURCE_ROOT; };
 		53D926D7C103930896CAAA73 /* TCPServerModuleUI.h */ /* TCPServerModuleUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TCPServerModuleUI.h; path = ../../Source/Module/modules/tcp/tcpserver/ui/TCPServerModuleUI.h; sourceTree = SOURCE_ROOT; };
 		543FDED6F64A77819875F097 /* ActionUI.cpp */ /* ActionUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ActionUI.cpp; path = ../../Source/Common/Processor/Action/ui/ActionUI.cpp; sourceTree = SOURCE_ROOT; };
@@ -452,6 +453,7 @@
 		6DBB1A3C473C2388AD85BC2C /* ConvertedParameterManagerEditor.cpp */ /* ConvertedParameterManagerEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ConvertedParameterManagerEditor.cpp; path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConvertedParameterManagerEditor.cpp; sourceTree = SOURCE_ROOT; };
 		6DBE64795B43BE2595C22027 /* MultiplexIndexCondition.h */ /* MultiplexIndexCondition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MultiplexIndexCondition.h; path = ../../Source/Common/Processor/Action/Condition/conditions/MultiplexIndex/MultiplexIndexCondition.h; sourceTree = SOURCE_ROOT; };
 		6DDE46B937874C068E754258 /* KeyboardModule.h */ /* KeyboardModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = KeyboardModule.h; path = ../../Source/Module/modules/controller/keyboard/KeyboardModule.h; sourceTree = SOURCE_ROOT; };
+		6E04BB4C68574F7357E4E06F /* PJLinkCommand.h */ /* PJLinkCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PJLinkCommand.h; path = ../../Source/Module/modules/tcp/pjlink/commands/PJLinkCommand.h; sourceTree = SOURCE_ROOT; };
 		6E49F2DD376B0AA6A86A75E9 /* Guider.h */ /* Guider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Guider.h; path = ../../Source/Guider/Guider.h; sourceTree = SOURCE_ROOT; };
 		6E734C416FC137CEF01B0CFD /* PowerpointModule.cpp */ /* PowerpointModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PowerpointModule.cpp; path = ../../Source/Module/modules/osc/powerpoint/PowerpointModule.cpp; sourceTree = SOURCE_ROOT; };
 		6EAF69491475B1BC390D110E /* InputDeviceHelpers.cpp */ /* InputDeviceHelpers.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = InputDeviceHelpers.cpp; path = ../../Source/Common/InputSystem/InputDeviceHelpers.cpp; sourceTree = SOURCE_ROOT; };
@@ -558,6 +560,7 @@
 		8EA7B502B21B808319BF9498 /* e131.h */ /* e131.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = e131.h; path = ../../Source/Common/DMX/device/sacn/e131.h; sourceTree = SOURCE_ROOT; };
 		8EAE45830C7DE886C140D709 /* MergeFilter.h */ /* MergeFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MergeFilter.h; path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/MergeFilter.h; sourceTree = SOURCE_ROOT; };
 		8EB292748351756688228DCB /* Point2DComparators.h */ /* Point2DComparators.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Point2DComparators.h; path = ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/comparators/Point2DComparators.h; sourceTree = SOURCE_ROOT; };
+		8EF33C0D2641C219CE9C9AD3 /* PJLinkModule.h */ /* PJLinkModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PJLinkModule.h; path = ../../Source/Module/modules/tcp/pjlink/PJLinkModule.h; sourceTree = SOURCE_ROOT; };
 		8EFE304B0BBA3DFA624E0D0F /* DMXOpenUSBDevice.h */ /* DMXOpenUSBDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DMXOpenUSBDevice.h; path = ../../Source/Common/DMX/device/DMXOpenUSBDevice.h; sourceTree = SOURCE_ROOT; };
 		8F138647B18B05C8E209974A /* WatchoutCommand.h */ /* WatchoutCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WatchoutCommand.h; path = ../../Source/Module/modules/tcp/tcpclient/watchout/commands/WatchoutCommand.h; sourceTree = SOURCE_ROOT; };
 		8F1E0B684D1010283648DB5F /* genericScriptTemplate.js */ /* genericScriptTemplate.js */ = {isa = PBXFileReference; lastKnownFileType = file.js; name = genericScriptTemplate.js; path = ../../Resources/Templates/Scripts/genericScriptTemplate.js; sourceTree = SOURCE_ROOT; };
@@ -712,6 +715,7 @@
 		BC78C63D601E0DC13788C4B6 /* ChataigneGenericModule.h */ /* ChataigneGenericModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ChataigneGenericModule.h; path = ../../Source/Module/modules/generic/ChataigneGenericModule.h; sourceTree = SOURCE_ROOT; };
 		BCFC0BB3E475D8AD41B05535 /* Mapping1DLayerPanel.cpp */ /* Mapping1DLayerPanel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Mapping1DLayerPanel.cpp; path = ../../Source/TimeMachine/Sequence/layers/mapping/automation/1d/ui/Mapping1DLayerPanel.cpp; sourceTree = SOURCE_ROOT; };
 		BDA85DB254FB6555E7BC6680 /* FFTAnalyzerManager.cpp */ /* FFTAnalyzerManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FFTAnalyzerManager.cpp; path = ../../Source/Module/modules/audio/analysis/FFTAnalyzerManager.cpp; sourceTree = SOURCE_ROOT; };
+		BDAB402CC923EFE36C5149A8 /* PJLinkModuleUI.h */ /* PJLinkModuleUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PJLinkModuleUI.h; path = ../../Source/Module/modules/tcp/pjlink/ui/PJLinkModuleUI.h; sourceTree = SOURCE_ROOT; };
 		BDB99CA1C253489009BCD225 /* Morpher.h */ /* Morpher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Morpher.h; path = ../../Source/CustomVariables/Preset/Morpher/Morpher.h; sourceTree = SOURCE_ROOT; };
 		BDD749FA254591C8E052CB10 /* MergeFilter.cpp */ /* MergeFilter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MergeFilter.cpp; path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/MergeFilter.cpp; sourceTree = SOURCE_ROOT; };
 		BE4924D424A41C0A3275F3C4 /* ModuleUI.cpp */ /* ModuleUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ModuleUI.cpp; path = ../../Source/Module/ui/ModuleUI.cpp; sourceTree = SOURCE_ROOT; };
@@ -971,7 +975,6 @@
 		01C949A12AA7CA273F33B9FF /* tcpclient */ = {
 			isa = PBXGroup;
 			children = (
-				B6AF022D168AE1F92B7959A1,
 				E627E9076BC591A06A5F9D7D,
 				021E427BFA3E8B6BC6AC3D5A,
 				B58F472712F98039790C5BD8,
@@ -1469,6 +1472,7 @@
 		30D6E5F603110E42C1ABDBF9 /* tcp */ = {
 			isa = PBXGroup;
 			children = (
+				85475C6E1E280D9E88119CFF,
 				0E2A85ADA00C6289CFBA8E8F,
 				01C949A12AA7CA273F33B9FF,
 			);
@@ -2313,6 +2317,17 @@
 			name = commands;
 			sourceTree = "<group>";
 		};
+		85475C6E1E280D9E88119CFF /* pjlink */ = {
+			isa = PBXGroup;
+			children = (
+				AD14D98808E099FA592F62F7,
+				C969A4F11441A1E3140DB77B,
+				2BAFF327FC54783886F8620F,
+				8EF33C0D2641C219CE9C9AD3,
+			);
+			name = pjlink;
+			sourceTree = "<group>";
+		};
 		85AF94443B2E5BDE86EC8051 /* ui */ = {
 			isa = PBXGroup;
 			children = (
@@ -2653,6 +2668,15 @@
 			name = ui;
 			sourceTree = "<group>";
 		};
+		AD14D98808E099FA592F62F7 /* ui */ = {
+			isa = PBXGroup;
+			children = (
+				4FFA30F725B39EC4B8DF6C4A,
+				BDAB402CC923EFE36C5149A8,
+			);
+			name = ui;
+			sourceTree = "<group>";
+		};
 		AD2699229312AD99E4264B25 /* commands */ = {
 			isa = PBXGroup;
 			children = (
@@ -2734,15 +2758,6 @@
 				C8F7B577E4F08EE149D8F1F8,
 			);
 			name = commands;
-			sourceTree = "<group>";
-		};
-		B6AF022D168AE1F92B7959A1 /* pjlink */ = {
-			isa = PBXGroup;
-			children = (
-				1919D8FF97CC9BF35C683A94,
-				5391EA9CE86CA7CE99D66015,
-			);
-			name = pjlink;
 			sourceTree = "<group>";
 		};
 		B9EAD53B0C8F0BE48BEC78B1 /* ui */ = {
@@ -2982,6 +2997,15 @@
 				07014CDD7326EA2B3E0B7F59,
 			);
 			name = lib;
+			sourceTree = "<group>";
+		};
+		C969A4F11441A1E3140DB77B /* commands */ = {
+			isa = PBXGroup;
+			children = (
+				2FD6364DFC1971E33C9290FF,
+				6E04BB4C68574F7357E4E06F,
+			);
+			name = commands;
 			sourceTree = "<group>";
 		};
 		CA79AE04437B8324C214D2A4 /* CustomVariables */ = {
@@ -3771,8 +3795,8 @@
 					"JUCE_COREGRAPHICS_DRAW_ASYNC=1",
 					"LINK_PLATFORM_MACOSX=1",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.9.8",
-					"JUCE_APP_VERSION_HEX=0x10908",
+					"JUCE_APP_VERSION=1.9.9b1",
+					"JUCE_APP_VERSION_HEX=0x10909",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
 					"JucePlugin_Build_AU=0",
@@ -3849,8 +3873,8 @@
 					"JUCE_COREGRAPHICS_DRAW_ASYNC=1",
 					"LINK_PLATFORM_MACOSX=1",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.9.8",
-					"JUCE_APP_VERSION_HEX=0x10908",
+					"JUCE_APP_VERSION=1.9.9b1",
+					"JUCE_APP_VERSION_HEX=0x10909",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
 					"JucePlugin_Build_AU=0",

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.8"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.9b1"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="VST_LOGGING=0"
@@ -1338,6 +1338,22 @@
             <FILE id="JLZs5a" name="HTTPModule.h" compile="0" resource="0" file="Source/Module/modules/http/HTTPModule.h"/>
           </GROUP>
           <GROUP id="{60EE0B8D-6DCD-2F5E-B462-3F4F3DCA4184}" name="tcp">
+            <GROUP id="{8F10D26F-5F4B-ECF8-B98E-F96007E97033}" name="pjlink">
+              <GROUP id="{6EFC51B5-9CCD-1FD3-6F2D-228CDE312154}" name="ui">
+                <FILE id="eQUJK6" name="PJLinkModuleUI.cpp" compile="0" resource="0"
+                      file="Source/Module/modules/tcp/pjlink/ui/PJLinkModuleUI.cpp"/>
+                <FILE id="hf0y6o" name="PJLinkModuleUI.h" compile="0" resource="0"
+                      file="Source/Module/modules/tcp/pjlink/ui/PJLinkModuleUI.h"/>
+              </GROUP>
+              <GROUP id="{3ECB3E62-15A0-01D2-38F8-FA8D711AA334}" name="commands">
+                <FILE id="JvXMZu" name="PJLinkCommand.cpp" compile="0" resource="0"
+                      file="Source/Module/modules/tcp/pjlink/commands/PJLinkCommand.cpp"/>
+                <FILE id="r5oks2" name="PJLinkCommand.h" compile="0" resource="0" file="Source/Module/modules/tcp/pjlink/commands/PJLinkCommand.h"/>
+              </GROUP>
+              <FILE id="m1Ewf0" name="PJLinkModule.cpp" compile="0" resource="0"
+                    file="Source/Module/modules/tcp/pjlink/PJLinkModule.cpp"/>
+              <FILE id="qqI0ag" name="PJLinkModule.h" compile="0" resource="0" file="Source/Module/modules/tcp/pjlink/PJLinkModule.h"/>
+            </GROUP>
             <GROUP id="{8D7C6264-1681-0666-5410-2523AE1B6FC1}" name="tcpserver">
               <GROUP id="{3586C115-8317-8ED7-FDFE-E0428B2754C4}" name="ui">
                 <FILE id="BTLrla" name="TCPServerModuleUI.cpp" compile="0" resource="0"
@@ -1355,11 +1371,6 @@
                     file="Source/Module/modules/tcp/tcpserver/TCPServerModule.h"/>
             </GROUP>
             <GROUP id="{EADB0130-532F-2520-BBA3-A72E5A2C0C1E}" name="tcpclient">
-              <GROUP id="{D1DD19AA-A54A-A2C4-74C2-387FA9D7D733}" name="pjlink">
-                <FILE id="GN4KEU" name="PJLinkModule.cpp" compile="0" resource="0"
-                      file="Source/Module/modules/tcp/tcpclient/pjlink/PJLinkModule.cpp"/>
-                <FILE id="WlzAAJ" name="PJLinkModule.h" compile="0" resource="0" file="Source/Module/modules/tcp/tcpclient/pjlink/PJLinkModule.h"/>
-              </GROUP>
               <GROUP id="{9D17EC97-106B-0725-8345-5F980F75F41B}" name="watchout">
                 <GROUP id="{2737ADD7-CED7-52D1-1D60-B63B50947807}" name="commands">
                   <FILE id="Hxn6iB" name="WatchoutCommand.cpp" compile="0" resource="0"

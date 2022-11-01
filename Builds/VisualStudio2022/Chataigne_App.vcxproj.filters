@@ -491,14 +491,20 @@
     <Filter Include="Chataigne\Source\Module\modules\http">
       <UniqueIdentifier>{D08B4676-A304-E303-0415-85A97C6159AD}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\tcp\pjlink\ui">
+      <UniqueIdentifier>{5A81AD6B-17C3-D5C6-1784-38FC2C1C2565}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\tcp\pjlink\commands">
+      <UniqueIdentifier>{1501074E-3F6F-9ABE-7EE5-6BB9CE1613A4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\tcp\pjlink">
+      <UniqueIdentifier>{056DAAEC-3110-E1F3-2D92-A612A2BF0B21}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Module\modules\tcp\tcpserver\ui">
       <UniqueIdentifier>{79848392-2320-A507-44A6-DBB8A764369A}</UniqueIdentifier>
     </Filter>
     <Filter Include="Chataigne\Source\Module\modules\tcp\tcpserver">
       <UniqueIdentifier>{13C22839-0474-1746-2AED-DF9E50D83B08}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Module\modules\tcp\tcpclient\pjlink">
-      <UniqueIdentifier>{B80B7BA6-0750-C92D-1C5D-7FF9A07E0EC3}</UniqueIdentifier>
     </Filter>
     <Filter Include="Chataigne\Source\Module\modules\tcp\tcpclient\watchout\commands">
       <UniqueIdentifier>{8E798873-96AF-189B-A4B8-1882EA5CB2DA}</UniqueIdentifier>
@@ -1849,6 +1855,15 @@
     <ClCompile Include="..\..\Source\Module\modules\http\HTTPModule.cpp">
       <Filter>Chataigne\Source\Module\modules\http</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\tcp\pjlink\ui\PJLinkModuleUI.cpp">
+      <Filter>Chataigne\Source\Module\modules\tcp\pjlink\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\tcp\pjlink\commands\PJLinkCommand.cpp">
+      <Filter>Chataigne\Source\Module\modules\tcp\pjlink\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\tcp\pjlink\PJLinkModule.cpp">
+      <Filter>Chataigne\Source\Module\modules\tcp\pjlink</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\tcp\tcpserver\ui\TCPServerModuleUI.cpp">
       <Filter>Chataigne\Source\Module\modules\tcp\tcpserver\ui</Filter>
     </ClCompile>
@@ -1857,9 +1872,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\tcp\tcpserver\TCPServerModule.cpp">
       <Filter>Chataigne\Source\Module\modules\tcp\tcpserver</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\tcp\tcpclient\pjlink\PJLinkModule.cpp">
-      <Filter>Chataigne\Source\Module\modules\tcp\tcpclient\pjlink</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\tcp\tcpclient\watchout\commands\WatchoutCommand.cpp">
       <Filter>Chataigne\Source\Module\modules\tcp\tcpclient\watchout\commands</Filter>
@@ -3780,6 +3792,15 @@
     <ClInclude Include="..\..\Source\Module\modules\http\HTTPModule.h">
       <Filter>Chataigne\Source\Module\modules\http</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\tcp\pjlink\ui\PJLinkModuleUI.h">
+      <Filter>Chataigne\Source\Module\modules\tcp\pjlink\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\tcp\pjlink\commands\PJLinkCommand.h">
+      <Filter>Chataigne\Source\Module\modules\tcp\pjlink\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\tcp\pjlink\PJLinkModule.h">
+      <Filter>Chataigne\Source\Module\modules\tcp\pjlink</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\tcp\tcpserver\ui\TCPServerModuleUI.h">
       <Filter>Chataigne\Source\Module\modules\tcp\tcpserver\ui</Filter>
     </ClInclude>
@@ -3788,9 +3809,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\tcp\tcpserver\TCPServerModule.h">
       <Filter>Chataigne\Source\Module\modules\tcp\tcpserver</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Module\modules\tcp\tcpclient\pjlink\PJLinkModule.h">
-      <Filter>Chataigne\Source\Module\modules\tcp\tcpclient\pjlink</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\tcp\tcpclient\watchout\commands\WatchoutCommand.h">
       <Filter>Chataigne\Source\Module\modules\tcp\tcpclient\watchout\commands</Filter>
