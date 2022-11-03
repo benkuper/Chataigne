@@ -20,7 +20,13 @@ PJLinkModule::PJLinkModule() :
 	alwaysShowValues = true;
 	includeValuesInSave = true;
 
-	numClients = moduleParams.addIntParameter("Num Projectors", "Numbero of projectors to control", 1, 1, 100);
+	numClients = moduleParams.addIntParameter("Num Projectors", "Number of projectors to control", 1, 1, 100);
+	autoRequestTime = moduleParams.addIntParameter("Auto Request Timer", "If enabled, this is the number of seconds between auto request, alternating power and shutter status", 5, 1, 100, false);
+	autoRequestTime->canBeDisabledByUser = true;
+
+	allProjectorsPoweredOn = valuesCC.addBoolParameter("All Powered On", "Are all projectors powered on ?", false);
+	allProjectorsPoweredOff = valuesCC.addBoolParameter("All Powered Off", "Are all projectors powered off ?", false);
+
 
 	moduleParams.addChildControllableContainer(&clientsParamsCC);
 	valuesCC.addChildControllableContainer(&clientsValuesCC);
@@ -32,13 +38,14 @@ PJLinkModule::PJLinkModule() :
 	allClientsAreConnected->hideInEditor = true;
 	connectionFeedbackRef = allClientsAreConnected;
 
+
 	defManager->add(CommandDefinition::createDef(this, "", "Power", &PJLinkCommand::create, CommandContext::BOTH)->addParam("action", PJLinkCommand::POWER));
 	defManager->add(CommandDefinition::createDef(this, "", "Shutter", &PJLinkCommand::create, CommandContext::BOTH)->addParam("action", PJLinkCommand::SHUTTER));
 	defManager->add(CommandDefinition::createDef(this, "", "Custom", &PJLinkCommand::create, CommandContext::BOTH)->addParam("action", PJLinkCommand::CUSTOM));
 
 	updateClientsSetup();
 
-	startTimer(5000);
+	startTimer(autoRequestTime->intValue() * 1000);
 	startThread();
 }
 
@@ -59,11 +66,13 @@ void PJLinkModule::updateClientsSetup()
 	{
 		addClient();
 	}
+
+	updateAllPoweredStatuses();
 }
 
 PJLinkModule::PJLinkClient* PJLinkModule::addClient()
 {
-	PJLinkClient* c = new PJLinkClient(this, clients.size());
+	PJLinkClient* c = new PJLinkClient(this, clients.size() + 1);
 	clientsParamsCC.addChildControllableContainer(&c->paramsCC);
 	clientsValuesCC.addChildControllableContainer(&c->valuesCC);
 	clients.add(c);
@@ -86,6 +95,7 @@ void PJLinkModule::onControllableFeedbackUpdateInternal(ControllableContainer* c
 	Module::onControllableFeedbackUpdateInternal(cc, c);
 
 	if (c == numClients) updateClientsSetup();
+	else if (c == autoRequestTime) startTimer(autoRequestTime->intValue() * 1000);
 	else if (cc == &valuesCC)
 	{
 		ControllableContainer* pc = c->parentContainer.get();
@@ -100,6 +110,10 @@ void PJLinkModule::onControllableFeedbackUpdateInternal(ControllableContainer* c
 						if (c == client->shutterVideoStatus) sendMessageToClient("%1AVMT 1" + String(client->shutterVideoStatus->intValue()), client->id);
 						else if (c == client->shutterAudioStatus) sendMessageToClient("%1AVMT 2" + String(client->shutterAudioStatus->intValue()), client->id);
 					}
+				}
+				else if (c == client->powerStatus)
+				{
+					updateAllPoweredStatuses();
 				}
 			}
 		}
@@ -138,7 +152,33 @@ void PJLinkModule::updateConnectedStatus()
 	}
 
 	allClientsAreConnected->setValue(true);
+
+	updateAllPoweredStatuses();
 }
+
+
+void PJLinkModule::updateAllPoweredStatuses()
+{
+	bool off = true;
+	bool on = true;
+
+	for (auto& c : clients)
+	{
+		if (!c->paramsCC.enabled->boolValue()) continue;
+		if (!c->isConnected->boolValue()) on = false;
+
+		String s = c->powerStatus->getValueData().toString();
+		bool poweredOff = s == "0";
+		bool poweredOn = s == "1";
+
+		if (!poweredOn) on = false;
+		if (!poweredOff) off = false;
+	}
+
+	allProjectorsPoweredOn->setValue(on);
+	allProjectorsPoweredOff->setValue(off);
+}
+
 
 void PJLinkModule::sendMessageToClient(const String& message, int id)
 {
@@ -148,11 +188,13 @@ void PJLinkModule::sendMessageToClient(const String& message, int id)
 
 	if (id == -1)
 	{
-		for (int i = 0; i < clients.size(); i++) sendMessageToClient(message, i);
+		for (int i = 1; i <= clients.size(); i++) sendMessageToClient(message, i);
 		return;
 	}
 
-	PJLinkClient* client = clients[id];
+	if (id <= 0 || id > clients.size())  return;
+
+	PJLinkClient* client = clients[id - 1];
 	if (client == nullptr) return;
 
 	String msg = message + "\r";
@@ -165,27 +207,30 @@ void PJLinkModule::sendMessageToClient(const String& message, int id)
 		int numWritten = client->client.write(encodedMessage.toStdString().c_str(), encodedMessage.length());
 		if (numWritten == -1)
 		{
-			NLOGERROR(niceName, "Error writing to client " << (client->id + 1));
+			NLOGERROR(niceName, "Error writing to client " << client->id);
 			client->isConnected->setValue(false);
 		}
 		else
 		{
-			if (logOutgoingData->boolValue()) NLOG(niceName, message << " sent to projector " << (client->id + 1));
+			if (logOutgoingData->boolValue()) NLOG(niceName, message << " sent to projector " << client->id);
 		}
 	}
 	else
 	{
-		if (logOutgoingData->boolValue()) NLOGWARNING(niceName, "Did not send message to : " << message << ", client " << (client->id + 1) << " is not connected");
+		if (logOutgoingData->boolValue()) NLOGWARNING(niceName, "Did not send message to : " << message << ", client " << client->id << " is not connected");
 	}
 }
 
 
 void PJLinkModule::timerCallback()
 {
+	if (!autoRequestTime->enabled) return;
+
 	for (auto& c : clients)
 	{
 		if (c == nullptr) return;
-		if (!c->isConnected->boolValue()) c->setupClient();
+		if (!c->isConnected->boolValue() || !c->lastRequestReplied) c->setupClient();
+		c->lastRequestReplied = false;
 	}
 
 	sendMessageToClient(autoRequestIsPower ? "%1POWR ?" : "%1AVMT ?");
@@ -229,8 +274,14 @@ void PJLinkModule::processClient(PJLinkModule::PJLinkClient* c)
 }
 void PJLinkModule::processClientLine(PJLinkClient* c, const String& message)
 {
+
+	inActivityTrigger->trigger();
+	if (logIncomingData->boolValue()) NLOG(niceName, "Received : " << message);
+
 	if (message.contains("PJLINK"))
 	{
+		c->lastRequestReplied = true;
+
 		StringArray mSplit;
 		mSplit.addTokens(message, true);
 		if (mSplit[1] == "1")
@@ -238,16 +289,16 @@ void PJLinkModule::processClientLine(PJLinkClient* c, const String& message)
 			if (mSplit.size() >= 3)
 			{
 				c->passBytes = mSplit[2];
-				if (logIncomingData->boolValue()) NLOG(niceName, "Received PJLINK handshake with password gen key " << mSplit[2]);
+				if (logIncomingData->boolValue()) NLOG(niceName, "> PJLINK handshake with password gen key " << mSplit[2]);
 			}
 		}
 		else if (mSplit[1] == "0")
 		{
-			if (logIncomingData->boolValue()) NLOG(niceName, "Received PJLINK handshake, projector is not password protected");
+			if (logIncomingData->boolValue()) NLOG(niceName, "> PJLINK handshake, projector is not password protected");
 		}
 		else if (mSplit[1].contains("ERR"))
 		{
-			NLOGERROR(niceName, "PJLINK Authentication error for projector " << c->id + 1 << ", please verify password !");
+			NLOGERROR(niceName, "PJLINK Authentication error for projector " << c->id << ", please verify password !");
 		}
 	}
 	else if (message.contains("%1POWR="))
@@ -255,12 +306,12 @@ void PJLinkModule::processClientLine(PJLinkClient* c, const String& message)
 		String status = message.substring(7);
 		if (status != "OK")
 		{
-			if (logIncomingData->boolValue()) NLOG(niceName, "Received Power status " << status);
+			if (logIncomingData->boolValue()) NLOG(niceName, " > Received Power status " << status);
 			c->powerStatus->setValueWithData(status);
 		}
 		else
 		{
-			if (logIncomingData->boolValue()) NLOG(niceName, "Project power command accepted !");
+			if (logIncomingData->boolValue()) NLOG(niceName, " > Project power command accepted !");
 		}
 	}
 	else if (message.contains("%1AVMT="))
@@ -272,13 +323,13 @@ void PJLinkModule::processClientLine(PJLinkClient* c, const String& message)
 		c->assigningFromRemote = true;
 		if (isVideo)
 		{
-			if (logIncomingData->boolValue()) NLOG(niceName, "Received Video shutter status " << (isOn ? "ON" : "OFF"));
+			if (logIncomingData->boolValue()) NLOG(niceName, " > Received Video shutter status " << (isOn ? "ON" : "OFF"));
 			c->shutterVideoStatus->setValue(isOn);
 		}
 
 		if (isAudio)
 		{
-			if (logIncomingData->boolValue()) NLOG(niceName, "Received Video shutter status " << (isOn ? "ON" : "OFF"));
+			if (logIncomingData->boolValue()) NLOG(niceName, " > Received Audio shutter status " << (isOn ? "ON" : "OFF"));
 			c->shutterAudioStatus->setValue(isOn);
 		}
 		c->assigningFromRemote = false;
@@ -291,8 +342,8 @@ PJLinkModule::PJLinkClient::PJLinkClient(PJLinkModule* m, int id) :
 	id(id),
 	passBytes(0),
 	assigningFromRemote(false),
-	paramsCC("Projector " + String(id + 1)),
-	valuesCC("Projector " + String(id + 1))
+	paramsCC("Projector " + String(id)),
+	valuesCC("Projector " + String(id))
 {
 
 	std::function<InspectableEditor* (bool, Array<ControllableContainer*>)> func = [&](bool, Array<ControllableContainer*>) { return new PJLinkClientParamContainerEditor(this); };
@@ -348,5 +399,5 @@ void PJLinkModule::PJLinkClient::run()
 	isConnected->setValue(true);
 	paramsCC.clearWarning();
 
-	if (pjlinkModule->logOutgoingData->boolValue()) LOG("Connected to projector " << (id + 1) << " (" << remoteHost->stringValue() << ":" << remotePort->intValue() << ")");
+	if (pjlinkModule->logOutgoingData->boolValue()) LOG("Connected to projector " << (id) << " (" << remoteHost->stringValue() << ":" << remotePort->intValue() << ")");
 }

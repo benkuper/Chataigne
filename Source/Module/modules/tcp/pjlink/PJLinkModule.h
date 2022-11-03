@@ -49,6 +49,8 @@ public:
 		float timeAtConnect;
 		bool assigningFromRemote;
 
+		bool lastRequestReplied;
+
 		String stringBuffer;
 
 		void setupClient();
@@ -56,12 +58,15 @@ public:
 	};
 
 	IntParameter* numClients;
+	IntParameter* autoRequestTime;
 	OwnedArray<PJLinkClient, CriticalSection> clients;
 
 	ControllableContainer clientsParamsCC;
 	ControllableContainer clientsValuesCC;
 
 	BoolParameter* allClientsAreConnected;
+	BoolParameter* allProjectorsPoweredOn;
+	BoolParameter* allProjectorsPoweredOff;
 
 	bool autoRequestIsPower;
 
@@ -73,6 +78,7 @@ public:
 	virtual void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
 
 	void updateConnectedStatus();
+	void updateAllPoweredStatuses();
 
 	void sendMessageToClient(const String& message, int id = -1);
 
