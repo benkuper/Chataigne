@@ -8,13 +8,15 @@
   ==============================================================================
 */
 
+#include "Common/Processor/ProcessorIncludes.h"
+
 SimpleConversionFilter::SimpleConversionFilter(const String& name, var params, StringRef outTypeString, Multiplex* multiplex) :
 	MappingFilter(name, params, multiplex),
 	outTypeString(outTypeString),
 	autoLoadDataOnSetup(true),
-    useBaseValue(true),
-    baseValue(nullptr)
-	
+	useBaseValue(true),
+	baseValue(nullptr)
+
 {
 	autoSetRange = false;
 
@@ -310,7 +312,7 @@ var SimpleConversionFilter::getJSONData()
 {
 	var data = MappingFilter::getJSONData();
 
-	var goData = var(new DynamicObject());
+	var goData = ghostOptions.isObject() ? ghostOptions.clone() : var(new DynamicObject());
 	goData.getDynamicObject()->setProperty("retarget", retargetComponent->getValueData());
 	data.getDynamicObject()->setProperty("ghostOptions", goData);
 	return data;
@@ -319,6 +321,7 @@ var SimpleConversionFilter::getJSONData()
 void SimpleConversionFilter::loadJSONDataItemInternal(var data)
 {
 	ghostOptions = data.getProperty("ghostOptions", var());
+	DBG(JSON::toString(ghostOptions));
 	MappingFilter::loadJSONDataItemInternal(data);
 }
 
@@ -408,6 +411,8 @@ void ToStringFilter::setupParametersInternal(int multiplexIndex, bool rangeOnly)
 		{
 			enumConvertMode = filterParams.addEnumParameter("Convert Mode", "What to convert in the enum");
 			enumConvertMode->addOption("Key", KEY)->addOption("Value", VALUE);
+			DBG(JSON::toString(ghostOptions));
+			if (ghostOptions.hasProperty("convertMode")) enumConvertMode->setValueWithData(ghostOptions.getDynamicObject()->getProperty("convertMode"));
 		}
 	}
 }
@@ -471,6 +476,14 @@ void ToStringFilter::filterParamChanged(Parameter* p)
 	fixedLeading->hideInEditor = format->getValueDataAsEnum<Format>() != NUMBER;
 	SimpleConversionFilter::filterParamChanged(p);
 }
+
+var ToStringFilter::getJSONData()
+{
+	var data = SimpleConversionFilter::getJSONData();
+	if (enumConvertMode != nullptr) data.getProperty("ghostOptions", var()).getDynamicObject()->setProperty("convertMode", enumConvertMode->getValueData());
+	return data;
+}
+
 
 ToPoint2DFilter::ToPoint2DFilter(var params, Multiplex* multiplex) :
 	SimpleConversionFilter(getTypeString(), params, Point2DParameter::getTypeStringStatic(), multiplex)

@@ -27,6 +27,8 @@ public:
 	bool useBaseValue;
 	Parameter * baseValue;
 
+	var convertModeData; //ghost loading
+
 	var getJSONData() override;
 	void loadJSONDataItemInternal(var data) override;
 	
@@ -108,6 +110,7 @@ public:
 	void setupParametersInternal(int multiplexIndex, bool rangeOnly) override;
 	var convertValue(Parameter * source, var sourceValue, int multiplexIndex) override;
 
+	var getJSONData() override;
 
 	void filterParamChanged(Parameter*) override;
 
