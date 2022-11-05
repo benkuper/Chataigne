@@ -23,6 +23,7 @@
 #include "Common/Command/ui/BaseCommandHandlerManagerEditor.h"
 
 #include "Action/Condition/Condition.h"
+#include "Action/Condition/ConditionManagerListener.h"
 #include "Action/Condition/ConditionManager.h"
 
 #include "Action/Condition/conditions/ActivationCondition/ActivationCondition.h"

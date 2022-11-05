@@ -12,7 +12,7 @@
 
 class ConditionGroup :
 	public Condition,
-	public ConditionManager::ConditionManagerListener
+	public ConditionManagerListener
 {
 public:
 	ConditionGroup(var params = var(), Multiplex* multiplex = nullptr);

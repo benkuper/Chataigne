@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    TimeMachineIncludes.h
-    Created: 10 Mar 2021 9:54:20am
-    Author:  bkupe
+	TimeMachineIncludes.h
+	Created: 10 Mar 2021 9:54:20am
+	Author:  bkupe
 
   ==============================================================================
 */
@@ -14,6 +14,7 @@
 
 #include "Sequence/layers/audio/ChataigneAudioLayerListener.h"
 #include "Common/CommonIncludes.h"
+#include "Common/Processor/Action/Condition/ConditionManagerListener.h" //for ChataigneCue
 
 #include "ChataigneSequenceManager.h"
 #include "Sequence/ChataigneSequence.h"
@@ -23,6 +24,8 @@
 #include "Sequence/layers/audio/ui/ChataigneAudioLayerTimeline.h"
 
 #include "Sequence/layers/mapping/MappingLayer.h"
+
+#include "Sequence/Cue/ChataigneCue.h"
 
 #include "Sequence/layers/trigger/ChataigneTimeTrigger.h"
 #include "Sequence/layers/trigger/ChataigneTriggerLayer.h"

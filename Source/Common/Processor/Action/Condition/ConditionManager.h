@@ -81,32 +81,13 @@ public:
 
 	InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables = Array<Inspectable*>()) override;
 
-	class ConditionManagerListener
-	{
-	public:
-		virtual ~ConditionManagerListener() {}
-		virtual void conditionManagerValidationChanged(ConditionManager*, int multiplexIndex, bool dispatchOnChangeOnly) {}
-	};
-
 
 	ListenerList<ConditionManagerListener> conditionManagerListeners;
 	void addConditionManagerListener(ConditionManagerListener* newListener) { conditionManagerListeners.add(newListener); }
 	void removeConditionManagerListener(ConditionManagerListener* listener) { conditionManagerListeners.remove(listener); }
-	
-
-	class ConditionManagerEvent {
-	public:
-		enum Type { VALIDATION_CHANGED, SEQUENTIAL_CONDITION_INDEX_CHANGED, MULTIPLEX_PREVIEW_CHANGED };
-		ConditionManagerEvent(Type type, ConditionManager* cdm, int multiplexIndex = -1) : type(type), conditionManager(cdm), multiplexIndex(multiplexIndex) {}
-		Type type;
-		ConditionManager* conditionManager;
-		int multiplexIndex;
-	};
 
 	QueuedNotifier<ConditionManagerEvent> conditionManagerAsyncNotifier;
-	typedef QueuedNotifier<ConditionManagerEvent>::Listener AsyncListener;
-
-	void addAsyncConditionManagerListener(AsyncListener* newListener) { conditionManagerAsyncNotifier.addListener(newListener); }
-	void addAsyncCoalescedConditionManagerListener(AsyncListener* newListener) { conditionManagerAsyncNotifier.addAsyncCoalescedListener(newListener); }
-	void removeAsyncConditionManagerListener(AsyncListener* listener) { conditionManagerAsyncNotifier.removeListener(listener); }
+	void addAsyncConditionManagerListener(ConditionManagerAsyncListener* newListener) { conditionManagerAsyncNotifier.addListener(newListener); }
+	void addAsyncCoalescedConditionManagerListener(ConditionManagerAsyncListener* newListener) { conditionManagerAsyncNotifier.addAsyncCoalescedListener(newListener); }
+	void removeAsyncConditionManagerListener(ConditionManagerAsyncListener* listener) { conditionManagerAsyncNotifier.removeListener(listener); }
 };

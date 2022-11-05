@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.9b2"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.9b3"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="VST_LOGGING=0"
@@ -455,6 +455,8 @@
                     xcodeResource="0"/>
               <FILE id="Kzci4R" name="ConditionManager.h" compile="0" resource="0"
                     file="Source/Common/Processor/Action/Condition/ConditionManager.h"/>
+              <FILE id="yYAnXK" name="ConditionManagerListener.h" compile="0" resource="0"
+                    file="Source/Common/Processor/Action/Condition/ConditionManagerListener.h"/>
             </GROUP>
             <GROUP id="{E5695483-8CF1-233B-B7FA-0DB866638800}" name="Consequence">
               <GROUP id="{9FB564A9-C7BD-8893-5458-027460564BC3}" name="ui">
@@ -1560,6 +1562,11 @@
       </GROUP>
       <GROUP id="{385034AB-BB8A-1A0B-677C-4890320C1929}" name="TimeMachine">
         <GROUP id="{34E053CC-6BB4-AEF4-A5AE-B46B09297363}" name="Sequence">
+          <GROUP id="{70B17A15-EBB4-2733-9324-2E8F4EBDABBB}" name="Cue">
+            <FILE id="BnvtRX" name="ChataigneCue.cpp" compile="0" resource="0"
+                  file="Source/TimeMachine/Sequence/Cue/ChataigneCue.cpp"/>
+            <FILE id="b2cvna" name="ChataigneCue.h" compile="0" resource="0" file="Source/TimeMachine/Sequence/Cue/ChataigneCue.h"/>
+          </GROUP>
           <GROUP id="{D10B0FB5-159B-06C6-95CF-79B2E2FE1F11}" name="layers">
             <GROUP id="{11579F84-0750-EA75-82AA-9E0475910F93}" name="trigger">
               <FILE id="eaRx9H" name="ChataigneTriggerLayer.cpp" compile="0" resource="0"
@@ -1709,7 +1716,7 @@
   <EXPORTFORMATS>
     <VS2022 targetFolder="Builds/VisualStudio2022" extraDefs="USE_KINECT=1&#10;USE_ABLETONLINK=1&#10;LINK_PLATFORM_WINDOWS=1"
             extraLinkerFlags="/HEAP:0x200000,0x10000" externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib&#10;JoyShockLibrary.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib&#10;iphlpapi.lib&#10;hid.lib&#10;hidapi_static.lib&#10;mosquitto.lib&#10;mosquittopp.lib"
-            smallIcon="nVz6Li" bigIcon="nVz6Li">
+            smallIcon="nVz6Li" bigIcon="nVz6Li" extraCompilerFlags="/bigobj">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib/win&#10;../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/hidapi/lib/win/x64&#10;../../External/mosquitto/lib/win"
                        binaryPath="Binaries/Debug"/>
@@ -1808,7 +1815,7 @@
       </MODULEPATHS>
     </LINUX_MAKE>
     <VS2022 targetFolder="Builds/VisualStudio2022_CI" extraDefs="USE_KINECT=1&#10;USE_ABLETONLINK=1&#10;LINK_PLATFORM_WINDOWS=1"
-            extraCompilerFlags="/Zm1000" extraLinkerFlags="/HEAP:0x400000,0x10000"
+            extraCompilerFlags="/Zm1000 /bigobj" extraLinkerFlags="/HEAP:0x400000,0x10000"
             externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib&#10;JoyShockLibrary.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib&#10;iphlpapi.lib&#10;hid.lib&#10;hidapi_static.lib&#10;mosquitto.lib&#10;mosquittopp.lib"
             smallIcon="nVz6Li" bigIcon="nVz6Li">
       <CONFIGURATIONS>
@@ -1840,7 +1847,7 @@
       </MODULEPATHS>
     </VS2022>
     <VS2022 targetFolder="Builds/VisualStudio2022_Win7CI" extraDefs="USE_KINECT=0&#10;USE_ABLETONLINK=0"
-            extraCompilerFlags="/Zm1000" extraLinkerFlags="/HEAP:0x400000,0x10000"
+            extraCompilerFlags="/Zm1000 /bigobj" extraLinkerFlags="/HEAP:0x400000,0x10000"
             externalLibraries="Setupapi.lib&#10;hid.lib&#10;JoyShockLibrary.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib&#10;iphlpapi.lib&#10;hid.lib&#10;hidapi_static.lib&#10;mosquitto.lib&#10;mosquittopp.lib"
             smallIcon="nVz6Li" bigIcon="nVz6Li">
       <CONFIGURATIONS>

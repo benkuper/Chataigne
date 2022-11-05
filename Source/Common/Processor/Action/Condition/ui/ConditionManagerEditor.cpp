@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "Common/Processor/ProcessorIncludes.h"
+
 ConditionManagerEditor::ConditionManagerEditor(ConditionManager * _manager, bool isRoot) :
 	GenericManagerEditor<Condition>(_manager, isRoot),
 	conditionManager(_manager)
@@ -59,7 +61,7 @@ void ConditionManagerEditor::resetAndBuild()
 	if(isSequential) updateSequentialUI();
 }
 
-void ConditionManagerEditor::newMessage(const ConditionManager::ConditionManagerEvent& e)
+void ConditionManagerEditor::newMessage(const ConditionManagerEvent& e)
 {
 	if ((e.type == e.VALIDATION_CHANGED && e.multiplexIndex == conditionManager->getPreviewIndex())
 		|| e.type == e.MULTIPLEX_PREVIEW_CHANGED)

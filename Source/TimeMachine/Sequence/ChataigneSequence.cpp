@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "TimeMachine/TimeMachineIncludes.h"
+
 ChataigneSequence::ChataigneSequence() :
 	Sequence(),
 	masterAudioModule(nullptr),
@@ -42,6 +44,9 @@ ChataigneSequence::ChataigneSequence() :
 	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Sequences", &SequenceBlockLayer::create, this)->addParam("manager", ChataigneSequenceManager::getInstance()->getControlAddress()));
 
 	layerManager->addBaseManagerListener(this);
+
+	std::function<TimeCue* (float, TimeCueManager*)> customCreateCueFunc = [](float t, TimeCueManager* m) { return new ChataigneCue(t, m); };
+	cueManager->customCreateCueFunc = customCreateCueFunc;
 
 	ChataigneSequenceManager::getInstance()->snapKeysToFrames->addParameterListener(this);
 }

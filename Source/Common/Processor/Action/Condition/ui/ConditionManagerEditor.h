@@ -12,7 +12,7 @@
 
 class ConditionManagerEditor :
 	public GenericManagerEditor<Condition>,
-	public ConditionManager::AsyncListener
+	public ConditionManagerAsyncListener
 {
 public:
 	ConditionManagerEditor(ConditionManager *_manager, bool isRoot);
@@ -27,6 +27,5 @@ public:
 
 	void resetAndBuild() override;
 
-	void newMessage(const ConditionManager::ConditionManagerEvent& e) override;
-
+	void newMessage(const ConditionManagerEvent& e) override;
 };

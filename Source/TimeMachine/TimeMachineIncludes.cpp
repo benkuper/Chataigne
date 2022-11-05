@@ -19,6 +19,7 @@
 #include "Sequence/layers/audio/ChataigneAudioLayer.cpp"
 #include "Sequence/layers/audio/ui/ChataigneAudioLayerPanel.cpp"
 #include "Sequence/layers/audio/ui/ChataigneAudioLayerTimeline.cpp"
+#include "Sequence/Cue/ChataigneCue.cpp"
 #include "Sequence/layers/mapping/MappingLayer.cpp"
 #include "Sequence/layers/mapping/automation/1d/Mapping1DLayer.cpp"
 #include "Sequence/layers/mapping/automation/1d/ui/Mapping1DLayerPanel.cpp"

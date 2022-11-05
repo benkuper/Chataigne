@@ -575,6 +575,9 @@
     <Filter Include="Chataigne\Source\StateMachine">
       <UniqueIdentifier>{90B3A8D6-B737-31F4-417D-F161DB6DFA8B}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\TimeMachine\Sequence\Cue">
+      <UniqueIdentifier>{3BB1EFAC-7286-C773-C80F-361257F69508}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\TimeMachine\Sequence\layers\trigger">
       <UniqueIdentifier>{FD8AC6FE-ABB8-D6A7-888F-0314955A6179}</UniqueIdentifier>
     </Filter>
@@ -2002,6 +2005,9 @@
     <ClCompile Include="..\..\Source\StateMachine\StateManager.cpp">
       <Filter>Chataigne\Source\StateMachine</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\TimeMachine\Sequence\Cue\ChataigneCue.cpp">
+      <Filter>Chataigne\Source\TimeMachine\Sequence\Cue</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\trigger\ChataigneTriggerLayer.cpp">
       <Filter>Chataigne\Source\TimeMachine\Sequence\layers\trigger</Filter>
     </ClCompile>
@@ -3243,6 +3249,9 @@
     <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\ConditionManager.h">
       <Filter>Chataigne\Source\Common\Processor\Action\Condition</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\ConditionManagerListener.h">
+      <Filter>Chataigne\Source\Common\Processor\Action\Condition</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Action\Consequence\ui\ConsequenceManagerEditor.h">
       <Filter>Chataigne\Source\Common\Processor\Action\Consequence\ui</Filter>
     </ClInclude>
@@ -3932,6 +3941,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\StateMachine\StateManager.h">
       <Filter>Chataigne\Source\StateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\TimeMachine\Sequence\Cue\ChataigneCue.h">
+      <Filter>Chataigne\Source\TimeMachine\Sequence\Cue</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\trigger\ChataigneTriggerLayer.h">
       <Filter>Chataigne\Source\TimeMachine\Sequence\layers\trigger</Filter>

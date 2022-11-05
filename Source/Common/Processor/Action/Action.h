@@ -13,7 +13,7 @@
 class Action :
 	public Processor,
 	public MultiplexTarget,
-	public ConditionManager::ConditionManagerListener,
+	public ConditionManagerListener,
 	public ConditionManager::ManagerListener,
 	public Condition::ConditionListener,
 	public EngineListener
