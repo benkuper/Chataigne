@@ -25,8 +25,7 @@ ChataigneCue::~ChataigneCue()
 bool ChataigneCue::isCurrentlyActive()
 {
 	if (!TimeCue::isCurrentlyActive()) return false;
-	if (!cdm->getIsValid()) return false;
-	return true;
+	cdm->getIsValid(0, true);
 }
 
 
