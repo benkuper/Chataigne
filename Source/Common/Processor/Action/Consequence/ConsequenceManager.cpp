@@ -167,6 +167,15 @@ void ConsequenceManager::StaggerLauncher::run()
 
 		if (triggerIndex >= csm->items.size()) return;
 		BaseItem* bi = csm->items[triggerIndex];
+
+		while (bi != nullptr && !bi->enabled->boolValue())
+		{
+			triggerIndex++;
+			if (triggerIndex >= csm->items.size()) return;
+			bi = csm->items[triggerIndex];
+		}
+
+		if (bi == nullptr) return;
 		if (Consequence* c = dynamic_cast<Consequence*>(bi)) c->triggerCommand(multiplexIndex);
 		else if (ConsequenceGroup* g = dynamic_cast<ConsequenceGroup*>(bi)) if(g->enabled->boolValue()) g->csm.triggerAll(multiplexIndex);
 
