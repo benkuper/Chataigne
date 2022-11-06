@@ -29,14 +29,16 @@ public:
 	Array<int> sequentialConditionIndices;
 
 	FloatParameter* validationTime;
+	FloatParameter* invalidationTime;
 	FloatParameter* validationProgressFeedback;
 
 	Array<bool> isValids;
 	Array<float> validationProgresses;
-	Array<bool> validationWaitings;
+	Array<bool> validationTargets;
 	Array<double> prevTimerTimes;
 
 	bool forceDisabled;
+	bool useValidationProgress;
 
 	//sameSource sync check to avoid parameterListener order bug when 2 conditions have the same source but different operators
 	bool isCheckingOtherConditionsWithSameSource;

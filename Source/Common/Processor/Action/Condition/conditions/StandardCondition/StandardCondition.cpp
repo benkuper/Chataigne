@@ -9,6 +9,7 @@
 */
 
 #include "Module/ModuleIncludes.h"
+#include "JuceHeader.h"
 
 StandardCondition::StandardCondition(var params, Multiplex* processor) :
 	Condition(getTypeStringStatic(params.getProperty("listMode", false)), params, processor),
@@ -53,7 +54,7 @@ void StandardCondition::clearItem()
 	if (sourceControllable != nullptr)
 	{
 		if (sourceControllable->type == Controllable::TRIGGER) ((Trigger*)sourceControllable.get())->removeTriggerListener(this);
-		else ((Parameter *)sourceControllable.get())->removeParameterListener(this);
+		else ((Parameter*)sourceControllable.get())->removeParameterListener(this);
 	}
 }
 
@@ -90,7 +91,7 @@ void StandardCondition::updateSourceFromTarget()
 		}
 
 		sourceList = dynamic_cast<BaseMultiplexList*>(sourceTarget->targetContainer.get());
-		
+
 		if (sourceList != nullptr)
 		{
 			sourceList->addListListener(this);
@@ -100,6 +101,7 @@ void StandardCondition::updateSourceFromTarget()
 	{
 		if (sourceControllable != nullptr)
 		{
+			DBG("Remove Parameter Listener");
 			if (sourceControllable->type == Controllable::TRIGGER) ((Trigger*)sourceControllable.get())->removeTriggerListener(this);
 			else ((Parameter*)sourceControllable.get())->removeParameterListener(this);
 		}
@@ -108,6 +110,8 @@ void StandardCondition::updateSourceFromTarget()
 
 		if (sourceControllable != nullptr)
 		{
+			DBG("Add Parameter Listener");
+
 			if (sourceControllable->type == Controllable::TRIGGER) ((Trigger*)sourceControllable.get())->addTriggerListener(this);
 			else ((Parameter*)sourceControllable.get())->addParameterListener(this);
 		}
@@ -186,7 +190,7 @@ void StandardCondition::checkComparator(int multiplexIndex)
 			setValid(multiplexIndex, true);
 			setValid(multiplexIndex, false);
 		}
-		else if(comparator != nullptr)
+		else if (comparator != nullptr)
 		{
 			setValid(multiplexIndex, comparator->compare((Parameter*)c, multiplexIndex));
 		}
