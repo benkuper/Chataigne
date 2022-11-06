@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "Module/ModuleIncludes.h"
+
 GenericOSCQueryModule::GenericOSCQueryModule(const String& name, int defaultRemotePort) :
 	Module(name),
 	Thread("OSCQuery"),
@@ -23,12 +25,19 @@ GenericOSCQueryModule::GenericOSCQueryModule(const String& name, int defaultRemo
 
 	setupIOConfiguration(true, true);
 
+	syncOnConnect = moduleParams.addBoolParameter("Sync On Connect", "If checked, this will sync data when the websocket connection is opened", false);
 	keepValuesOnSync = moduleParams.addBoolParameter("Keep Values On Sync", "If checked, this will force keeping the current values when syncing the OSCQuery remote data structure.", false);
 	syncTrigger = moduleParams.addTrigger("Sync Data", "Sync the data");
 	serverName = moduleParams.addStringParameter("Server Name", "The name of the OSCQuery server, if provided", "");
 	onlySyncSameName = moduleParams.addBoolParameter("Only sync from same name", "If checked, this will not sync if the server name is different", true);
 	useAddressForNaming = moduleParams.addBoolParameter("Use address for naming", "If checked, the parameter's ADDRESS field will be used for naming instead of the DESCRIPTION field", false);
+
+	isConnected = moduleParams.addBoolParameter("Is Connected", "Is Connected to server's websocket", false);
+	isConnected->hideInEditor = true;
+	connectionFeedbackRef = isConnected;
+
 	listenAllTrigger = moduleParams.addTrigger("Listen to all", "This will automatically enable listen to all containers");
+	listenNoneTrigger = moduleParams.addTrigger("Listen to none", "This will automatically disable listen to all containers");
 
 	sendCC.reset(new OSCQueryOutput(this));
 	moduleParams.addChildControllableContainer(sendCC.get());
@@ -64,6 +73,7 @@ GenericOSCQueryModule::~GenericOSCQueryModule()
 
 void GenericOSCQueryModule::setupWSClient()
 {
+	isConnected->setValue(false);
 	if (wsClient != nullptr) wsClient->stop();
 	wsClient.reset();
 	if (isCurrentlyLoadingData) return;
@@ -316,7 +326,7 @@ void GenericOSCQueryModule::createOrUpdateControllableFromData(ControllableConta
 	Controllable* c = sourceC;
 
 	String cNiceName;
-	if(!useAddressForNaming->boolValue()) cNiceName = data.getProperty("DESCRIPTION", "");
+	if (!useAddressForNaming->boolValue()) cNiceName = data.getProperty("DESCRIPTION", "");
 	if (cNiceName.isEmpty()) cNiceName = name;
 
 	String type = data.getProperty("TYPE", "").toString();
@@ -526,14 +536,16 @@ void GenericOSCQueryModule::onControllableFeedbackUpdateInternal(ControllableCon
 			sendOSCForControllable(c);
 		}
 	}
-	else if (c == listenAllTrigger)
+	else if (c == listenAllTrigger || c == listenNoneTrigger)
 	{
+		bool listenVal = c == listenAllTrigger;
+
 		if (hasListenExtension)
 		{
 			Array<WeakReference<ControllableContainer>> containers = valuesCC.getAllContainers(true);
 			for (auto& cc : containers)
 			{
-				if (GenericOSCQueryValueContainer* gcc = dynamic_cast<GenericOSCQueryValueContainer*>(cc.get())) gcc->enableListen->setValue(true);
+				if (GenericOSCQueryValueContainer* gcc = dynamic_cast<GenericOSCQueryValueContainer*>(cc.get())) gcc->enableListen->setValue(listenVal);
 			}
 		}
 	}
@@ -542,23 +554,25 @@ void GenericOSCQueryModule::onControllableFeedbackUpdateInternal(ControllableCon
 void GenericOSCQueryModule::connectionOpened()
 {
 	NLOG(niceName, "Websocket connection is opened, let's get bi, baby !");
+	isConnected->setValue(true);
+	if (syncOnConnect->boolValue() && enabled->boolValue()) syncData();
 }
 
 void GenericOSCQueryModule::connectionClosed(int status, const String& reason)
 {
 	NLOG(niceName, "Websocket connection is closed, bye bye!");
+	isConnected->setValue(false);
 }
 
 void GenericOSCQueryModule::connectionError(const String& errorMessage)
 {
 	if (enabled->boolValue()) NLOGERROR(niceName, "Connection error " << errorMessage);
+	isConnected->setValue(false);
 }
 
 void GenericOSCQueryModule::dataReceived(const MemoryBlock& data)
 {
 	if (!enabled->boolValue()) return;
-
-
 
 	OSCPacketParser parser(data.getData(), (int)data.getSize());
 	OSCMessage m = parser.readMessage();
@@ -623,6 +637,8 @@ void GenericOSCQueryModule::run()
 
 void GenericOSCQueryModule::requestHostInfo()
 {
+	isConnected->setValue(false);
+	
 	URL url("http://" + (useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue()) + ":" + String(remotePort->intValue()) + "?HOST_INFO");
 	StringPairArray responseHeaders;
 	int statusCode = 0;

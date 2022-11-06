@@ -47,11 +47,14 @@ public:
 	const Identifier dataStructureEventId = "dataStructureEvent";
 
 	Trigger* syncTrigger;
+	BoolParameter* syncOnConnect;
 	BoolParameter* keepValuesOnSync;
 	StringParameter* serverName;
 	BoolParameter* onlySyncSameName;
 	BoolParameter* useAddressForNaming;
+	BoolParameter* isConnected;
 	Trigger* listenAllTrigger;
+	Trigger* listenNoneTrigger;
 
 	std::unique_ptr<OSCQueryOutput> sendCC;
 	BoolParameter* useLocal;
