@@ -1,17 +1,16 @@
 /*
   ==============================================================================
 
-    GenericAppCommand.cpp
-    Created: 15 May 2019 7:37:31pm
-    Author:  bkupe
+	GenericAppCommand.cpp
+	Created: 15 May 2019 7:37:31pm
+	Author:  bkupe
 
   ==============================================================================
 */
 
-static OrganicApplication& getApp() { return *dynamic_cast<OrganicApplication*>(JUCEApplication::getInstance()); }
+#include "Module/ModuleIncludes.h"
 
-
-GenericAppCommand::GenericAppCommand(ChataigneGenericModule* _module, CommandContext context, var params, Multiplex * multiplex) :
+GenericAppCommand::GenericAppCommand(ChataigneGenericModule* _module, CommandContext context, var params, Multiplex* multiplex) :
 	BaseCommand(_module, context, params, multiplex)
 {
 	type = (Type)(int)(params.getProperty("type", NEW_SESSION));
@@ -40,7 +39,7 @@ void GenericAppCommand::triggerInternal(int multiplexIndex)
 
 	case OPEN_SESSION:
 	{
-		if(file->getFile().exists())
+		if (file->getFile().exists())
 		{
 			auto loadFileFunc = std::bind(&Engine::loadDocument, Engine::mainEngine, file->getFile());
 			Timer::callAfterDelay(.01f, loadFileFunc); //force timer to avoid clearing everything inside the trigger func which will bubble up after everything has been deleted
@@ -51,6 +50,10 @@ void GenericAppCommand::triggerInternal(int multiplexIndex)
 		}
 	}
 	break;
+
+	case SAVE_SESSION:
+		if (Engine::mainEngine->getFile().exists()) Engine::mainEngine->saveDocument(Engine::mainEngine->getFile());
+		break;
 
 	case CLOSE_APP:
 	{
@@ -85,7 +88,7 @@ void GenericAppCommand::triggerInternal(int multiplexIndex)
 	}
 }
 
-BaseCommand* GenericAppCommand::create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex)
+BaseCommand* GenericAppCommand::create(ControllableContainer* module, CommandContext context, var params, Multiplex* multiplex)
 {
 	return new GenericAppCommand((ChataigneGenericModule*)module, context, params, multiplex);
 

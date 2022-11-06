@@ -23,6 +23,7 @@ ChataigneGenericModule::ChataigneGenericModule() :
 	defManager->add(CommandDefinition::createDef(this, "", "Select Dashboard Index", &ChataigneDashboardCommand::create)->addParam("type", ChataigneDashboardCommand::SELECT_DASHBOARD_INDEX));
 	defManager->add(CommandDefinition::createDef(this, "", "New Session", &GenericAppCommand::create, CommandContext::ACTION)->addParam("type", GenericAppCommand::NEW_SESSION));
 	defManager->add(CommandDefinition::createDef(this, "", "Open Session", &GenericAppCommand::create, CommandContext::ACTION)->addParam("type", GenericAppCommand::OPEN_SESSION));
+	defManager->add(CommandDefinition::createDef(this, "", "Save Session", &GenericAppCommand::create, CommandContext::ACTION)->addParam("type", GenericAppCommand::SAVE_SESSION));
 	defManager->add(CommandDefinition::createDef(this, "", "Close App", &GenericAppCommand::create, CommandContext::ACTION)->addParam("type", GenericAppCommand::CLOSE_APP));
 	defManager->add(CommandDefinition::createDef(this, "", "Minimize Window", &GenericAppCommand::create, CommandContext::ACTION)->addParam("type", GenericAppCommand::MINIMIZE));
 	defManager->add(CommandDefinition::createDef(this, "", "Maximize Window", &GenericAppCommand::create, CommandContext::ACTION)->addParam("type", GenericAppCommand::MAXIMIZE));
