@@ -87,18 +87,18 @@ void ProcessorManagerUI::itemDropped(const SourceDetails& details)
 
 		PopupMenu pm;
 
-		ControllableChooserPopupMenu actionInputMenu(&mui->item->valuesCC, 0);
-		ControllableChooserPopupMenu mappingInputMenu(&mui->item->valuesCC, 10000, -1, StringArray(), StringArray(Trigger::getTypeStringStatic()));
+		ControllableChooserPopupMenu* actionInputMenu = new ControllableChooserPopupMenu(&mui->item->valuesCC, 0);
+		ControllableChooserPopupMenu* mappingInputMenu = new ControllableChooserPopupMenu(&mui->item->valuesCC, 10000, -1, StringArray(), StringArray(Trigger::getTypeStringStatic()));
 
 		PopupMenu actionCommandMenu = mui->item->getCommandMenu(20000, CommandContext::ACTION);
 		PopupMenu mappingCommandMenu = mui->item->getCommandMenu(30000, CommandContext::MAPPING);
 
-		pm.addSubMenu("Action Input", actionInputMenu);
-		pm.addSubMenu("Mapping Input", mappingInputMenu);
+		pm.addSubMenu("Action Input", *actionInputMenu);
+		pm.addSubMenu("Mapping Input", *mappingInputMenu);
 		pm.addSubMenu("Action Consequence", actionCommandMenu);
 		pm.addSubMenu("Mapping Output", mappingCommandMenu);
 
-		pm.showMenuAsync(PopupMenu::Options(), [this, mui, &actionInputMenu, &mappingInputMenu, createDef](int result)
+		pm.showMenuAsync(PopupMenu::Options(), [this, mui, actionInputMenu, mappingInputMenu, createDef](int result)
 			{
 				CommandDefinition* def = nullptr;
 				bool isForAction = (result > 0 && result < 10000) || (result > 20000 && result < 30000);
@@ -112,7 +112,7 @@ void ProcessorManagerUI::itemDropped(const SourceDetails& details)
 						if (a != nullptr && a->cdm != nullptr)
 						{
 							StandardCondition* c = dynamic_cast<StandardCondition*>(a->cdm->addItem(a->cdm->factory.create(StandardCondition::getTypeStringStatic(false))));
-							Controllable* target = actionInputMenu.getControllableForResult(result);
+							Controllable* target = actionInputMenu->getControllableForResult(result);
 							if (c != nullptr) c->sourceTarget->setValueFromTarget(target);
 						}
 					}
@@ -121,7 +121,7 @@ void ProcessorManagerUI::itemDropped(const SourceDetails& details)
 						Mapping* mapp = dynamic_cast<Mapping*>(manager->addItem(manager->factory.create("Mapping")));
 						if (mapp != nullptr)
 						{
-							Controllable* target = mappingInputMenu.getControllableForResult(result);
+							Controllable* target = mappingInputMenu->getControllableForResult(result);
 							MappingInput* mi = mapp->im.addItem();
 							mi->inputTarget->setValueFromTarget(target);
 						}
@@ -133,6 +133,9 @@ void ProcessorManagerUI::itemDropped(const SourceDetails& details)
 				}
 
 				createDef(def, isInput, isForAction);
+
+				delete actionInputMenu;
+				delete mappingInputMenu;
 			}
 		);
 	}
