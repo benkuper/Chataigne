@@ -1,14 +1,14 @@
 /*
   ==============================================================================
 
-    OSCQueryModuleEditor.cpp
-    Created: 3 Mar 2019 12:36:47pm
-    Author:  bkupe
+	OSCQueryModuleEditor.cpp
+	Created: 3 Mar 2019 12:36:47pm
+	Author:  bkupe
 
   ==============================================================================
 */
 
-OSCQueryModuleOutputEditor::OSCQueryModuleOutputEditor(OSCQueryOutput * output, bool isRoot) :
+OSCQueryModuleOutputEditor::OSCQueryModuleOutputEditor(OSCQueryOutput* output, bool isRoot) :
 	EnablingControllableContainerEditor(output, isRoot),
 	zeroconfMenu("Auto detect")
 {
@@ -41,7 +41,7 @@ void OSCQueryModuleOutputEditor::showMenuAndSetupOutput()
 	);
 }
 
-void OSCQueryModuleOutputEditor::buttonClicked(Button * b)
+void OSCQueryModuleOutputEditor::buttonClicked(Button* b)
 {
 	EnablingControllableContainerEditor::buttonClicked(b);
 	if (b == &zeroconfMenu) showMenuAndSetupOutput();
@@ -52,6 +52,9 @@ GenericOSCQueryValueContainerEditor::GenericOSCQueryValueContainerEditor(Generic
 {
 	enableListenUI.reset(cc->enableListen->createToggle());
 	addAndMakeVisible(enableListenUI.get());
+
+	syncUI.reset(cc->syncContent->createToggle());
+	addAndMakeVisible(syncUI.get());
 }
 
 GenericOSCQueryValueContainerEditor::~GenericOSCQueryValueContainerEditor()
@@ -63,4 +66,7 @@ void GenericOSCQueryValueContainerEditor::resizedInternalHeader(Rectangle<int>& 
 	GenericControllableContainerEditor::resizedInternalHeader(r);
 	enableListenUI->setVisible(container->controllables.size() > 1);
 	enableListenUI->setBounds(r.removeFromRight(100).reduced(3));
+	r.removeFromRight(2);
+	syncUI->setVisible(container->controllables.size() > 1);
+	syncUI->setBounds(r.removeFromRight(100).reduced(3));
 }

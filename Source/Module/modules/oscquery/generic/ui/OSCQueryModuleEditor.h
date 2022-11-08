@@ -18,6 +18,7 @@ public:
 	~GenericOSCQueryValueContainerEditor();
 
 	std::unique_ptr<BoolToggleUI> enableListenUI;
+	std::unique_ptr<BoolToggleUI> syncUI;
 
 	void resizedInternalHeader(Rectangle<int>& r) override;
 };

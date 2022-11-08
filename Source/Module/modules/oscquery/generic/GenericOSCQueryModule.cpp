@@ -31,7 +31,7 @@ GenericOSCQueryModule::GenericOSCQueryModule(const String& name, int defaultRemo
 	onlySyncSameName = moduleParams.addBoolParameter("Only sync from same name", "If checked, this will not sync if the server name is different", true);
 	useAddressForNaming = moduleParams.addBoolParameter("Use address for naming", "If checked, the parameter's ADDRESS field will be used for naming instead of the DESCRIPTION field", false);
 
-	autoSyncTime = moduleParams.addIntParameter("Auto Sync Time", "If enabled, this will automatically connect if not already connected every x seconds", 5, 1);
+	autoSyncTime = moduleParams.addIntParameter("Auto Connect Time", "If enabled, this will automatically connect if not already connected every x seconds", 5, 1);
 	autoSyncTime->canBeDisabledByUser = true;
 
 	isConnected = moduleParams.addBoolParameter("Is Connected", "Is Connected to server's websocket", false);
@@ -277,9 +277,15 @@ void GenericOSCQueryModule::updateContainerFromData(ControllableContainer* cc, v
 	Array<WeakReference<ControllableContainer>> containersToDelete = cc->getAllContainers();
 	Array<WeakReference<Controllable>> controllablesToDelete = cc->getAllControllables();
 
-	if (GenericOSCQueryValueContainer* vc = dynamic_cast<GenericOSCQueryValueContainer*>(cc)) controllablesToDelete.removeAllInstancesOf(vc->enableListen);
+	bool syncContent = true;
+	if (GenericOSCQueryValueContainer* vc = dynamic_cast<GenericOSCQueryValueContainer*>(cc))
+	{
+		controllablesToDelete.removeAllInstancesOf(vc->enableListen);
+		controllablesToDelete.removeAllInstancesOf(vc->syncContent);
+		syncContent = vc->syncContent->boolValue();
+	}
 
-	if (dataObject != nullptr)
+	if (syncContent && dataObject != nullptr)
 	{
 		NamedValueSet nvSet = dataObject->getProperties();
 		for (auto& nv : nvSet)
@@ -513,7 +519,7 @@ void GenericOSCQueryModule::onControllableStateChanged(Controllable* c)
 {
 	if (c == autoSyncTime)
 	{
-		if (!isConnected->boolValue()) syncData();
+		if (!isConnected->boolValue()) if (!isCurrentlyLoadingData) setupWSClient();
 		if (autoSyncTime->enabled && !isConnected->boolValue()) startTimer(autoSyncTime->intValue() * 1000);
 		else stopTimer();
 	}
@@ -533,8 +539,11 @@ void GenericOSCQueryModule::onControllableFeedbackUpdateInternal(ControllableCon
 	}
 	else if (c == autoSyncTime || c == isConnected)
 	{
-		if (!isConnected->boolValue()) syncData();
-		if (autoSyncTime->enabled && !isConnected->boolValue()) startTimer(autoSyncTime->intValue() * 1000);
+		if (autoSyncTime->enabled && !isConnected->boolValue())
+		{
+			setupWSClient();
+			startTimer(autoSyncTime->intValue() * 1000);
+		}
 		else stopTimer();
 	}
 	else if (cc == &valuesCC)
@@ -544,6 +553,10 @@ void GenericOSCQueryModule::onControllableFeedbackUpdateInternal(ControllableCon
 			if (c == gcc->enableListen)
 			{
 				updateListenToContainer(gcc);
+			}
+			else if (c == gcc->syncContent)
+			{
+				syncData();
 			}
 			else
 			{
@@ -645,7 +658,7 @@ void GenericOSCQueryModule::afterLoadJSONDataInternal()
 
 void GenericOSCQueryModule::timerCallback()
 {
-	if (!isConnected->boolValue()) syncData();
+	if (!isConnected->boolValue()) setupWSClient();
 }
 
 void GenericOSCQueryModule::run()
@@ -653,9 +666,7 @@ void GenericOSCQueryModule::run()
 	if (useLocal == nullptr || remoteHost == nullptr || remotePort == nullptr) return;
 
 	wait(100); //safety
-
 	requestHostInfo();
-
 }
 
 void GenericOSCQueryModule::requestHostInfo()
@@ -727,8 +738,6 @@ void GenericOSCQueryModule::requestHostInfo()
 
 			hasListenExtension = data.getProperty("EXTENSIONS", var()).getProperty("LISTEN", false);
 			setupWSClient();
-
-
 
 			requestStructure();
 		}
@@ -871,6 +880,9 @@ GenericOSCQueryValueContainer::GenericOSCQueryValueContainer(const String& name)
 {
 	enableListen = addBoolParameter("Listen", "This will activate listening to this container", false);
 	enableListen->hideInEditor = true;
+
+	syncContent = addBoolParameter("Sync", "This will activate syncing on this container", true);
+	syncContent->hideInEditor = true;
 }
 
 GenericOSCQueryValueContainer::~GenericOSCQueryValueContainer()

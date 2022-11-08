@@ -18,6 +18,7 @@ public:
 	~GenericOSCQueryValueContainer();
 
 	BoolParameter* enableListen;
+	BoolParameter* syncContent;
 
 	InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables = Array<Inspectable*>()) override;
 };
@@ -54,6 +55,7 @@ public:
 	BoolParameter* onlySyncSameName;
 	BoolParameter* useAddressForNaming;
 	BoolParameter* isConnected;
+
 	Trigger* listenAllTrigger;
 	Trigger* listenNoneTrigger;
 
@@ -84,7 +86,7 @@ public:
 	virtual void syncData();
 	virtual void updateTreeFromData(var data);
 	virtual void updateContainerFromData(ControllableContainer* cc, var data);
-	virtual void createOrUpdateControllableFromData(ControllableContainer * parentCC, Controllable* c, StringRef name, var data);
+	virtual void createOrUpdateControllableFromData(ControllableContainer* parentCC, Controllable* c, StringRef name, var data);
 
 	void updateListenToContainer(GenericOSCQueryValueContainer* gcc);
 
