@@ -15,13 +15,13 @@ ChataigneAudioLayer::ChataigneAudioLayer(ChataigneSequence* _sequence, var param
 	timeAtStartRecord(0)
 {
 	ModuleManager::getInstance()->addBaseManagerListener(this);
-	
+
 	helpID = "AudioLayer";
 
 	arm = addBoolParameter("Arm", "If checked, this will record audio and save it", false);
 	autoDisarm = addBoolParameter("Auto Disarm", "If checked, this will automatically set Arm to false when the sequence stops", false);
 
-	
+
 	uiHeight->setValue(80);
 }
 
@@ -37,11 +37,11 @@ void ChataigneAudioLayer::clearItem()
 	setAudioModule(nullptr);
 }
 
-void ChataigneAudioLayer::setAudioModule(AudioModule * newModule)
+void ChataigneAudioLayer::setAudioModule(AudioModule* newModule)
 {
 	if (audioModule != nullptr)
 	{
-        audioModule->removeAudioModuleListener(this);
+		audioModule->removeAudioModuleListener(this);
 	}
 
 	audioModule = newModule;
@@ -49,7 +49,7 @@ void ChataigneAudioLayer::setAudioModule(AudioModule * newModule)
 	if (audioModule != nullptr)
 	{
 		setAudioProcessorGraph(&audioModule->graph, AUDIO_OUTPUT_GRAPH_ID);
-        audioModule->addAudioModuleListener(this);
+		audioModule->addAudioModuleListener(this);
 	}
 	else
 	{
@@ -66,13 +66,13 @@ AudioLayerProcessor* ChataigneAudioLayer::createAudioLayerProcessor()
 	return new ChataigneAudioLayerProcessor(this);
 }
 
-void ChataigneAudioLayer::itemAdded(Module * m)
+void ChataigneAudioLayer::itemAdded(Module* m)
 {
-	AudioModule * am = dynamic_cast<AudioModule *>(m);
-	if (audioModule == nullptr &&  am != nullptr) setAudioModule(am);
+	AudioModule* am = dynamic_cast<AudioModule*>(m);
+	if (audioModule == nullptr && am != nullptr) setAudioModule(am);
 }
 
-void ChataigneAudioLayer::itemRemoved(Module * m)
+void ChataigneAudioLayer::itemRemoved(Module* m)
 {
 	if (audioModule == m)
 	{
@@ -82,7 +82,7 @@ void ChataigneAudioLayer::itemRemoved(Module * m)
 
 float ChataigneAudioLayer::getVolumeFactor()
 {
-	if(audioModule == nullptr) return 0.0f;
+	if (audioModule == nullptr) return 0.0f;
 	return AudioLayer::getVolumeFactor() * audioModule->outVolume->floatValue();
 }
 
@@ -96,47 +96,48 @@ void ChataigneAudioLayer::exportRMS(bool toNewMappingLayer, bool toClipboard, bo
 	AudioSampleBuffer buffer;
 	AudioLayerClip* curClip = nullptr;
 
+
 	for (int i = 0; i < numFrames; ++i)
 	{
 		float t = i * frameLength;
 		float value = 0;
-		AudioLayerClip* clip = (AudioLayerClip *)clipManager.getBlockAtTime(t);
-		
+		AudioLayerClip* clip = (AudioLayerClip*)clipManager.getBlockAtTime(t);
+
 		if (clip != curClip)
 		{
 			curClip = clip;
-			if (curClip != nullptr)
+			if (curClip != nullptr && curClip->readerSource != nullptr)
 			{
 				buffer.setSize(2, (int)curClip->readerSource->getAudioFormatReader()->lengthInSamples, false, true);
 				curClip->readerSource->getAudioFormatReader()->read(&buffer, 0, buffer.getNumSamples(), 0, true, true);
 			}
 		}
 
-		
+
 		if (curClip != nullptr)
 		{
 			int rmsSampleCount = frameLength * buffer.getNumSamples() / curClip->coreLength->floatValue() * 10;
 			int startSample = (t - clip->time->floatValue()) * buffer.getNumSamples() / curClip->coreLength->floatValue();
-			
-			value = buffer.getRMSLevel(0, startSample, jmin(rmsSampleCount,buffer.getNumSamples()-startSample));
+
+			if (rmsSampleCount > 0) value = buffer.getRMSLevel(0, startSample, jmin(rmsSampleCount, buffer.getNumSamples() - startSample));
 		}
 
 		values.add({ t, value });
 	}
-;
+
 	String s = "";
 	for (int i = 0; i < values.size(); ++i)
 	{
 		if (i > 0) s += "\n";
 		if (!dataOnly) s += String(i) + "\t" + String(values[i].x, 3) + "\t";
-		s+= String(values[i].y, 3);
+		s += String(values[i].y, 3);
 	}
 
 
 	if (toClipboard)
 	{
 		SystemClipboard::copyTextToClipboard(s);
-		NLOG(niceName, values.size() <<  " keys copied to clipboard");
+		NLOG(niceName, values.size() << " keys copied to clipboard");
 	}
 
 	if (toNewMappingLayer)
@@ -157,15 +158,15 @@ void ChataigneAudioLayer::sequencePlayStateChanged(Sequence* s)
 	{
 		if (arm->boolValue() && currentProcessor != nullptr)
 		{
-			timeAtStartRecord = sequence->currentTime->floatValue(); 
-			((ChataigneAudioLayerProcessor *)currentProcessor)->startRecording(); 
+			timeAtStartRecord = sequence->currentTime->floatValue();
+			((ChataigneAudioLayerProcessor*)currentProcessor)->startRecording();
 		}
 	}
 	else
 	{
 		if (ChataigneAudioLayerProcessor* cProc = (ChataigneAudioLayerProcessor*)currentProcessor)
 		{
-			if(cProc->isRecording())
+			if (cProc->isRecording())
 			{
 				cProc->stopRecording();
 				AudioLayerClip* clip = (AudioLayerClip*)clipManager.addBlockAt(timeAtStartRecord);
@@ -246,7 +247,7 @@ void ChataigneAudioLayerProcessor::startRecording()
 				// write the data to disk on our background thread.
 				threadedWriter.reset(new AudioFormatWriter::ThreadedWriter(writer, backgroundThread, 32768));
 
-				recorderListeners.call(&RecorderListener::recordingStarted, numInputChannels , getSampleRate());
+				recorderListeners.call(&RecorderListener::recordingStarted, numInputChannels, getSampleRate());
 
 				// And now, swap over our active writer pointer so that the audio callback will start using it..
 				const ScopedLock sl(writerLock);
@@ -269,9 +270,9 @@ void ChataigneAudioLayerProcessor::stopRecording()
 	// take a little time while remaining data gets flushed to disk, so it's best to avoid blocking
 	// the audio callback while this happens.
 	threadedWriter.reset();
-	
+
 	backgroundThread.stopThread(500);
-	
+
 	recorderListeners.call(&RecorderListener::recordingStopped);
 }
 
