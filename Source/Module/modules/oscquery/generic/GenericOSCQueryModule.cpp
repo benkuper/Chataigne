@@ -743,7 +743,7 @@ void GenericOSCQueryModule::requestHostInfo()
 	}
 	else
 	{
-		clearWarning();
+		clearWarning("sync");
 	}
 }
 
