@@ -92,7 +92,9 @@ void BaseCommand::updateParameterFromTemplate(CommandTemplateParameter* ctp)
 
 	String addr = ctp->getControlAddress(&linkedTemplate->paramsContainer);
 	Parameter* p = dynamic_cast<Parameter*>(getControllableForAddress(addr));
-	jassert(p != nullptr);
+	
+	if (p == nullptr) return;
+
 	p->setControllableFeedbackOnly(!ctp->editable->boolValue());
 
 	if (!ctp->editable->boolValue())
