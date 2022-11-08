@@ -45,6 +45,8 @@ public:
 	Array<int> topicMap;
 	ControllableContainer topicsCC;
 
+	const Identifier dataEventId = "dataEvent";
+
 	void clearItem() override;
 
 	void onContainerParameterChangedInternal(Parameter* p) override;

@@ -304,10 +304,16 @@ void MQTTClientModule::on_message(const mosquitto_message* message)
 
 	String topic(message->topic);
 	String data((char*)message->payload, message->payloadlen);
+	Array<var> args;
+
 	if (logIncomingData->boolValue())
 	{
 		NLOG(niceName, "Received from topic " << topic << " : " << data);
 	}
+
+	args.add(data);
+	args.add(topic);
+	scriptManager->callFunctionOnAllItems(dataEventId, args);
 
 	inActivityTrigger->trigger();
 
