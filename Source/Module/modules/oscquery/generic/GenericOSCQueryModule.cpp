@@ -25,12 +25,14 @@ GenericOSCQueryModule::GenericOSCQueryModule(const String& name, int defaultRemo
 
 	setupIOConfiguration(true, true);
 
-	syncOnConnect = moduleParams.addBoolParameter("Sync On Connect", "If checked, this will sync data when the websocket connection is opened", false);
 	keepValuesOnSync = moduleParams.addBoolParameter("Keep Values On Sync", "If checked, this will force keeping the current values when syncing the OSCQuery remote data structure.", false);
 	syncTrigger = moduleParams.addTrigger("Sync Data", "Sync the data");
 	serverName = moduleParams.addStringParameter("Server Name", "The name of the OSCQuery server, if provided", "");
 	onlySyncSameName = moduleParams.addBoolParameter("Only sync from same name", "If checked, this will not sync if the server name is different", true);
 	useAddressForNaming = moduleParams.addBoolParameter("Use address for naming", "If checked, the parameter's ADDRESS field will be used for naming instead of the DESCRIPTION field", false);
+
+	autoSyncTime = moduleParams.addIntParameter("Auto Sync Time", "If enabled, this will automatically connect if not already connected every x seconds", 5, 1);
+	autoSyncTime->canBeDisabledByUser = true;
 
 	isConnected = moduleParams.addBoolParameter("Is Connected", "Is Connected to server's websocket", false);
 	isConnected->hideInEditor = true;
@@ -62,6 +64,7 @@ GenericOSCQueryModule::GenericOSCQueryModule(const String& name, int defaultRemo
 
 	sender.connect("0.0.0.0", 0);
 
+	startTimer(autoSyncTime->intValue() * 1000);
 }
 
 GenericOSCQueryModule::~GenericOSCQueryModule()
@@ -506,6 +509,16 @@ void GenericOSCQueryModule::updateListenToContainer(GenericOSCQueryValueContaine
 
 }
 
+void GenericOSCQueryModule::onControllableStateChanged(Controllable* c)
+{
+	if (c == autoSyncTime)
+	{
+		if (!isConnected->boolValue()) syncData();
+		if (autoSyncTime->enabled && !isConnected->boolValue()) startTimer(autoSyncTime->intValue() * 1000);
+		else stopTimer();
+	}
+}
+
 void GenericOSCQueryModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
 {
 	Module::onControllableFeedbackUpdateInternal(cc, c);
@@ -517,6 +530,12 @@ void GenericOSCQueryModule::onControllableFeedbackUpdateInternal(ControllableCon
 	else if (c == enabled || c == syncTrigger || c == remoteHost || c == remotePort || c == useAddressForNaming)
 	{
 		syncData();
+	}
+	else if (c == autoSyncTime || c == isConnected)
+	{
+		if (!isConnected->boolValue()) syncData();
+		if (autoSyncTime->enabled && !isConnected->boolValue()) startTimer(autoSyncTime->intValue() * 1000);
+		else stopTimer();
 	}
 	else if (cc == &valuesCC)
 	{
@@ -555,7 +574,6 @@ void GenericOSCQueryModule::connectionOpened()
 {
 	NLOG(niceName, "Websocket connection is opened, let's get bi, baby !");
 	isConnected->setValue(true);
-	if (syncOnConnect->boolValue() && enabled->boolValue()) syncData();
 }
 
 void GenericOSCQueryModule::connectionClosed(int status, const String& reason)
@@ -625,6 +643,11 @@ void GenericOSCQueryModule::afterLoadJSONDataInternal()
 	syncData();
 }
 
+void GenericOSCQueryModule::timerCallback()
+{
+	if (!isConnected->boolValue()) syncData();
+}
+
 void GenericOSCQueryModule::run()
 {
 	if (useLocal == nullptr || remoteHost == nullptr || remotePort == nullptr) return;
@@ -638,7 +661,7 @@ void GenericOSCQueryModule::run()
 void GenericOSCQueryModule::requestHostInfo()
 {
 	isConnected->setValue(false);
-	
+
 	URL url("http://" + (useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue()) + ":" + String(remotePort->intValue()) + "?HOST_INFO");
 	StringPairArray responseHeaders;
 	int statusCode = 0;
@@ -650,11 +673,12 @@ void GenericOSCQueryModule::requestHostInfo()
 		.withStatusCode(&statusCode)
 	));
 
+	bool success = false;
+
 #if JUCE_WINDOWS
 	if (statusCode != 200)
 	{
-		NLOGWARNING(niceName, "Failed to request HOST_INFO, status code = " + String(statusCode));
-		return;
+		stream.reset();
 	}
 #endif
 
@@ -669,6 +693,8 @@ void GenericOSCQueryModule::requestHostInfo()
 		if (data.isObject())
 		{
 			if (logIncomingData->boolValue()) NLOG(niceName, "Received HOST_INFO :\n" << JSON::toString(data));
+
+			success = true;
 
 			String curServerName = serverName->stringValue();
 			String newServerName = data.getProperty("NAME", "");
@@ -706,10 +732,18 @@ void GenericOSCQueryModule::requestHostInfo()
 
 			requestStructure();
 		}
+
+	}
+
+	if (!success)
+	{
+		setWarningMessage("Can't connect to OSCQuery server", "sync");
+
+		if (getWarningMessage("sync").isEmpty()) NLOGERROR(niceName, "Error with host info request, status code : " << statusCode << ", url : " << url.toString(true));
 	}
 	else
 	{
-		if (logIncomingData->boolValue()) NLOGWARNING(niceName, "Error with host info request, status code : " << statusCode << ", url : " << url.toString(true));
+		clearWarning();
 	}
 }
 

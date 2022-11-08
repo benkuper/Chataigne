@@ -38,7 +38,8 @@ class GenericOSCQueryModule :
 	public Module,
 	public IOSCSenderModule,
 	public SimpleWebSocketClientBase::Listener,
-	public Thread
+	public Thread,
+	public Timer
 {
 public:
 	GenericOSCQueryModule(const String& name = "OSCQuery", int defaultRemotePort = 5678);
@@ -47,7 +48,7 @@ public:
 	const Identifier dataStructureEventId = "dataStructureEvent";
 
 	Trigger* syncTrigger;
-	BoolParameter* syncOnConnect;
+	IntParameter* autoSyncTime;
 	BoolParameter* keepValuesOnSync;
 	StringParameter* serverName;
 	BoolParameter* onlySyncSameName;
@@ -87,6 +88,7 @@ public:
 
 	void updateListenToContainer(GenericOSCQueryValueContainer* gcc);
 
+	virtual void onControllableStateChanged(Controllable* c) override;
 	virtual void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
 
 	void connectionOpened() override;
@@ -99,6 +101,8 @@ public:
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 	void afterLoadJSONDataInternal() override;
+
+	void timerCallback();
 
 	// Inherited via Thread
 	virtual void run() override;
