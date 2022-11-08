@@ -92,7 +92,7 @@ void GamepadParameterUI::newMessage(const InputSystemManager::InputSystemEvent &
 
 void GamepadParameterUI::comboBoxChanged(ComboBox * c)
 {
-	if (!parameter.wasObjectDeleted())
+	if (!parameter.wasObjectDeleted() && gamepadParam != nullptr)
 	{
 		if (chooser.getSelectedId() == -2)
 		{

@@ -294,7 +294,7 @@ void ChataigneAudioLayerProcessor::processBlock(AudioBuffer<float>& buffer, Midi
 {
 	//Do before buffer is potentially cleared
 	numInputChannels = buffer.getNumChannels();
-	if (isRecording())
+	if (isRecording() && numInputChannels > 0)
 	{
 		{
 			const GenericScopedLock sl(writerLock);
