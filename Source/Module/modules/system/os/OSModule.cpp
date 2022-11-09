@@ -24,6 +24,8 @@ OSModule::OSModule() :
 	pingStatusCC("Ping Status"),
 	pingThread(this)
 {
+	includeValuesInSave = true;
+
 	osType = valuesCC.addEnumParameter("OS Type", "Type of OS");
 	osType->addOption("Windows", OS_WIN)->addOption("MacOS", OS_MAC)->addOption("Linux", OS_LINUX);
 #if JUCE_WINDOWS
@@ -199,26 +201,37 @@ var OSModule::launchCommandFromScript(const var::NativeFunctionArgs& args)
 
 void OSModule::updateAppControlValues()
 {
+	var data = appControlStatusCC.getJSONData();
 	appControlStatusCC.clear();
 
 	for (auto& c : appControlNamesCC.controllables)
 	{
 		File f = ((FileParameter*)c)->getFile();
 		BoolParameter* b = appControlStatusCC.addBoolParameter(f.existsAsFile() ? f.getFileName() : "[noapp]", "Status for this process", false);
-		b->isSavable = false;
+		b->saveValueOnly = false;
 	}
+
+	appControlStatusCC.loadJSONData(data, false); //force reload styles
+
 }
 
 void OSModule::updatePingStatusValues()
 {
 	pingThread.stopThread(1000);
+	var data = pingStatusCC.getJSONData();
 	pingStatusCC.clear();
 
 	for (auto& c : pingIPsCC.controllables)
 	{
 		String s = ((StringParameter*)c)->stringValue();
 		BoolParameter* b = pingStatusCC.addBoolParameter(s.isNotEmpty() ? s : "[noip]", "Status for this IP", false);
-		b->isSavable = false;
+		b->saveValueOnly = false;
+	}
+
+	pingStatusCC.loadJSONData(data, false); //force reload styles
+	for (auto& c : pingIPsCC.controllables)
+	{
+		if (BoolParameter* p = dynamic_cast<BoolParameter*>(c)) p->setValue(false);
 	}
 
 	if (pingIPsCC.controllables.size() > 0) pingThread.startThread();
@@ -437,6 +450,6 @@ void OSModule::PingThread::run()
 			if (!statusParams[i].wasObjectDeleted()) statusParams[i]->setValue(success);
 		}
 	}
-	
+
 	if (!moduleRef.wasObjectDeleted() && osModule->logOutgoingData->boolValue()) LOG("Stop pinging thread");
 }

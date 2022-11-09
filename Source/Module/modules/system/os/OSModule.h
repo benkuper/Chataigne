@@ -42,6 +42,8 @@ public:
 	//Ping
 	OwnedArray<ChildProcess> pingProcesses;
 
+	var statusAndIpGhostData;
+
 	//Script
 	const Identifier launchAppId = "launchApp";
 	const Identifier launchCommandId = "launchCommand";
