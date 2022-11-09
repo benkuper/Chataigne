@@ -65,8 +65,8 @@ void GenericOSCQueryValueContainerEditor::resizedInternalHeader(Rectangle<int>& 
 {
 	GenericControllableContainerEditor::resizedInternalHeader(r);
 	enableListenUI->setVisible(container->controllables.size() > 1);
-	enableListenUI->setBounds(r.removeFromRight(100).reduced(3));
-	r.removeFromRight(2);
+	enableListenUI->setBounds(r.removeFromRight(60).reduced(3));
+	r.removeFromRight(16);
 	syncUI->setVisible(container->controllables.size() > 1);
-	syncUI->setBounds(r.removeFromRight(100).reduced(3));
+	syncUI->setBounds(r.removeFromRight(60).reduced(3));
 }
