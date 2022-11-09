@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "Module/ModuleIncludes.h"
+
 ChataigneDashboardCommand::ChataigneDashboardCommand(ChataigneGenericModule* _module, CommandContext context, var params, Multiplex* multiplex) :
 	BaseCommand(_module, context, params, multiplex),
 	target(nullptr)
@@ -42,7 +44,7 @@ void ChataigneDashboardCommand::triggerInternal(int multiplexIndex)
 	{
 		if (Dashboard* d = getLinkedTargetContainerAs<Dashboard>((TargetParameter*)target, multiplexIndex))
 		{
-			DashboardManager::getInstance()->setCurrentDashboard(d, setInClients->boolValue());
+			DashboardManager::getInstance()->setCurrentDashboard(d, setInClients->boolValue(), true);
 		}
 	}
 	break;
@@ -53,7 +55,7 @@ void ChataigneDashboardCommand::triggerInternal(int multiplexIndex)
 		if (index >= 0 && index < DashboardManager::getInstance()->items.size())
 		{
 			Dashboard* d = DashboardManager::getInstance()->items[index];
-			DashboardManager::getInstance()->setCurrentDashboard(d, setInClients->boolValue());
+			DashboardManager::getInstance()->setCurrentDashboard(d, setInClients->boolValue(), true);
 
 		}
 	}
