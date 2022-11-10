@@ -1,4 +1,4 @@
-EmptyModule::EmptyModule(const String & name) :
+EmptyModule::EmptyModule(const String& name) :
 	Module(name)
 {
 	setupIOConfiguration(false, false);
@@ -20,7 +20,7 @@ void EmptyModule::handleRoutedModuleValue(Controllable* c, RouteParams* p)
 	{
 		return;
 	}
-	
+
 	if (EmptyRouteParams* op = dynamic_cast<EmptyRouteParams*>(p))
 	{
 		if (Parameter* targetParameter = dynamic_cast<Parameter*>(op->target->target.get()))
