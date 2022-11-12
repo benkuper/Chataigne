@@ -49,7 +49,6 @@ public:
 	const Identifier dataStructureEventId = "dataStructureEvent";
 
 	Trigger* syncTrigger;
-	IntParameter* autoSyncTime;
 	BoolParameter* keepValuesOnSync;
 	StringParameter* serverName;
 	BoolParameter* onlySyncSameName;
@@ -67,6 +66,7 @@ public:
 
 	OSCSender sender;
 	std::unique_ptr<SimpleWebSocketClientBase> wsClient;
+	bool isUpdatingStructure;
 	bool hasListenExtension;
 	var treeData; //to keep on save
 
@@ -88,9 +88,9 @@ public:
 	virtual void updateContainerFromData(ControllableContainer* cc, var data);
 	virtual void createOrUpdateControllableFromData(ControllableContainer* parentCC, Controllable* c, StringRef name, var data);
 
+	void updateAllListens();
 	void updateListenToContainer(GenericOSCQueryValueContainer* gcc);
 
-	virtual void onControllableStateChanged(Controllable* c) override;
 	virtual void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
 
 	void connectionOpened() override;

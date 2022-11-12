@@ -16,6 +16,7 @@ GenericOSCQueryModule::GenericOSCQueryModule(const String& name, int defaultRemo
 	useLocal(nullptr),
 	remoteHost(nullptr),
 	remotePort(nullptr),
+	isUpdatingStructure(false),
 	hasListenExtension(false)
 {
 	alwaysShowValues = true;
@@ -30,9 +31,6 @@ GenericOSCQueryModule::GenericOSCQueryModule(const String& name, int defaultRemo
 	serverName = moduleParams.addStringParameter("Server Name", "The name of the OSCQuery server, if provided", "");
 	onlySyncSameName = moduleParams.addBoolParameter("Only sync from same name", "If checked, this will not sync if the server name is different", true);
 	useAddressForNaming = moduleParams.addBoolParameter("Use address for naming", "If checked, the parameter's ADDRESS field will be used for naming instead of the DESCRIPTION field", false);
-
-	autoSyncTime = moduleParams.addIntParameter("Auto Connect Time", "If enabled, this will automatically connect if not already connected every x seconds", 5, 1);
-	autoSyncTime->canBeDisabledByUser = true;
 
 	isConnected = moduleParams.addBoolParameter("Is Connected", "Is Connected to server's websocket", false);
 	isConnected->hideInEditor = true;
@@ -64,7 +62,7 @@ GenericOSCQueryModule::GenericOSCQueryModule(const String& name, int defaultRemo
 
 	sender.connect("0.0.0.0", 0);
 
-	startTimer(autoSyncTime->intValue() * 1000);
+	startTimer(5000);
 }
 
 GenericOSCQueryModule::~GenericOSCQueryModule()
@@ -79,12 +77,12 @@ void GenericOSCQueryModule::setupWSClient()
 	isConnected->setValue(false);
 	if (wsClient != nullptr) wsClient->stop();
 	wsClient.reset();
-	if (isCurrentlyLoadingData) return;
+	if (isCurrentlyLoadingData || !hasListenExtension) return;
 
-	if (!enabled->intValue() || !hasListenExtension) return;
-	NLOG(niceName, "Server has LISTEN extension, setting up websocket");
+	if (!enabled->boolValue()) return;
 	wsClient.reset(new SimpleWebSocketClient());
 	wsClient->addWebSocketListener(this);
+
 	wsClient->start(remoteHost->stringValue() + ":" + remotePort->stringValue() + "/");
 }
 
@@ -193,6 +191,8 @@ void GenericOSCQueryModule::updateTreeFromData(var data)
 {
 	if (data.isVoid()) return;
 
+	isUpdatingStructure = true;
+
 	Array<String> enableListenContainers;
 	Array<String> expandedContainers;
 	Array<WeakReference<ControllableContainer>> containers = valuesCC.getAllContainers(true);
@@ -268,6 +268,7 @@ void GenericOSCQueryModule::updateTreeFromData(var data)
 	}
 
 	treeData = data;
+	isUpdatingStructure = false;
 }
 
 void GenericOSCQueryModule::updateContainerFromData(ControllableContainer* cc, var data)
@@ -490,15 +491,28 @@ void GenericOSCQueryModule::createOrUpdateControllableFromData(ControllableConta
 }
 
 
+void GenericOSCQueryModule::updateAllListens()
+{
+	Array<WeakReference<ControllableContainer>> containers = valuesCC.getAllContainers(true);
+	for (auto& cc : containers)
+	{
+		if (GenericOSCQueryValueContainer* gcc = dynamic_cast<GenericOSCQueryValueContainer*>(cc.get()))
+		{
+			updateListenToContainer(gcc);
+		}
+	}
+}
+
 void GenericOSCQueryModule::updateListenToContainer(GenericOSCQueryValueContainer* gcc)
 {
-	if (!enabled->boolValue() || !hasListenExtension || isCurrentlyLoadingData) return;
+	if (!enabled->boolValue() || !hasListenExtension || isCurrentlyLoadingData || isUpdatingStructure) return;
 	if (wsClient == nullptr || !wsClient->isConnected)
 	{
 		NLOGWARNING(niceName, "Websocket not connected, can't LISTEN");
 		return;
 	}
 
+	DBG("Add listen for " << gcc->niceName);
 	String command = gcc->enableListen->boolValue() ? "LISTEN" : "IGNORE";
 	Array<WeakReference<Controllable>> params = gcc->getAllControllables();
 
@@ -515,15 +529,6 @@ void GenericOSCQueryModule::updateListenToContainer(GenericOSCQueryValueContaine
 
 }
 
-void GenericOSCQueryModule::onControllableStateChanged(Controllable* c)
-{
-	if (c == autoSyncTime)
-	{
-		if (!isConnected->boolValue()) if (!isCurrentlyLoadingData) setupWSClient();
-		if (autoSyncTime->enabled && !isConnected->boolValue()) startTimer(autoSyncTime->intValue() * 1000);
-		else stopTimer();
-	}
-}
 
 void GenericOSCQueryModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
 {
@@ -536,15 +541,6 @@ void GenericOSCQueryModule::onControllableFeedbackUpdateInternal(ControllableCon
 	else if (c == enabled || c == syncTrigger || c == remoteHost || c == remotePort || c == useAddressForNaming)
 	{
 		syncData();
-	}
-	else if (c == autoSyncTime || c == isConnected)
-	{
-		if (autoSyncTime->enabled && !isConnected->boolValue())
-		{
-			setupWSClient();
-			startTimer(autoSyncTime->intValue() * 1000);
-		}
-		else stopTimer();
 	}
 	else if (cc == &valuesCC)
 	{
@@ -587,6 +583,8 @@ void GenericOSCQueryModule::connectionOpened()
 {
 	NLOG(niceName, "Websocket connection is opened, let's get bi, baby !");
 	isConnected->setValue(true);
+	clearWarning("sync");
+	updateAllListens();
 }
 
 void GenericOSCQueryModule::connectionClosed(int status, const String& reason)
@@ -597,7 +595,7 @@ void GenericOSCQueryModule::connectionClosed(int status, const String& reason)
 
 void GenericOSCQueryModule::connectionError(const String& errorMessage)
 {
-	if (enabled->boolValue()) NLOGERROR(niceName, "Connection error " << errorMessage);
+	NLOGERROR(niceName, "Connection error " << errorMessage);
 	isConnected->setValue(false);
 }
 
@@ -641,12 +639,14 @@ var GenericOSCQueryModule::getJSONData()
 {
 	var data = Module::getJSONData();
 	data.getDynamicObject()->setProperty("treeData", treeData);
+	data.getDynamicObject()->setProperty("hasListenExtension", hasListenExtension);
 	return data;
 }
 
 void GenericOSCQueryModule::loadJSONDataInternal(var data)
 {
 	updateTreeFromData(data.getProperty("treeData", var()));
+	hasListenExtension = data.getProperty("hasListenExtension", false);
 	Module::loadJSONDataInternal(data);
 }
 
@@ -658,7 +658,7 @@ void GenericOSCQueryModule::afterLoadJSONDataInternal()
 
 void GenericOSCQueryModule::timerCallback()
 {
-	if (!isConnected->boolValue()) setupWSClient();
+	if (hasListenExtension && !isConnected->boolValue()) setupWSClient();
 }
 
 void GenericOSCQueryModule::run()
@@ -672,6 +672,7 @@ void GenericOSCQueryModule::run()
 void GenericOSCQueryModule::requestHostInfo()
 {
 	isConnected->setValue(false);
+	hasListenExtension = false;
 
 	URL url("http://" + (useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue()) + ":" + String(remotePort->intValue()) + "?HOST_INFO");
 	StringPairArray responseHeaders;
@@ -737,9 +738,9 @@ void GenericOSCQueryModule::requestHostInfo()
 			}
 
 			hasListenExtension = data.getProperty("EXTENSIONS", var()).getProperty("LISTEN", false);
-			setupWSClient();
-
+			NLOG(niceName, "Server has LISTEN extension, setting up websocket");
 			requestStructure();
+			setupWSClient();
 		}
 
 	}
