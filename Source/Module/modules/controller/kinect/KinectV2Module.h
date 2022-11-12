@@ -31,9 +31,11 @@ class KinectPersonValues :
 {
 public:
 	KinectPersonValues(int id);
+	KinectPersonValues(const String& name);
 	~KinectPersonValues();
 
 	IntParameter * bodyId; 
+	BoolParameter* isTracked;
 	FloatParameter * bodyX;
 	FloatParameter * bodyY;
 	FloatParameter * bodyZ;
@@ -61,11 +63,17 @@ public:
 	IntParameter* numPersons;
 	OwnedArray<KinectPersonValues> personValues;
 
+	KinectPersonValues nearest;
+	KinectPersonValues oldest;
+	KinectPersonValues newest;
+
 	bool initKinect();
 	void updateKinect();
 
 #if USE_KINECT
 	void processBody(int nBodyCount, IBody** ppBodies);
+
+	void copyBodyTo(KinectPersonValues* source, KinectPersonValues* dest);
 #endif
 
 

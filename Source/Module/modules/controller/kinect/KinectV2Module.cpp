@@ -8,9 +8,14 @@
   ==============================================================================
 */
 
+#include "Module/ModuleIncludes.h"
+
 KinectV2Module::KinectV2Module() :
 	Module("Kinect V2"),
-	Thread("Kinect V2")
+	Thread("Kinect V2"),
+	nearest("Nearest Person"),
+	oldest("Oldest Person"),
+	newest("Newest Person")
 {
 	setupIOConfiguration(true, false);
 	moduleParams.hideInEditor = true;
@@ -18,14 +23,18 @@ KinectV2Module::KinectV2Module() :
 	numPersons = valuesCC.addIntParameter("Number of Persons", "Number of detected persons", 0, 0, 6);
 	numPersons->setControllableFeedbackOnly(true);
 
+	valuesCC.addChildControllableContainer(&newest);
+	valuesCC.addChildControllableContainer(&oldest);
+	valuesCC.addChildControllableContainer(&nearest);
+
 	for (int i = 0; i < KINECT_MAX_PERSONS; ++i)
 	{
-		KinectPersonValues * kpv = new KinectPersonValues(i + 1);
+		KinectPersonValues* kpv = new KinectPersonValues(i + 1);
 		personValues.add(kpv);
 		valuesCC.addChildControllableContainer(kpv);
 	}
 
-	
+
 	bool initResult = initKinect();
 	if (!initResult) return;
 
@@ -83,7 +92,7 @@ bool KinectV2Module::initKinect()
 
 #else
 	LOGERROR("Kinect has not been compiled in this version");
-    return false;
+	return false;
 #endif
 
 }
@@ -129,7 +138,7 @@ void KinectV2Module::updateKinect()
 }
 
 #if USE_KINECT
-void KinectV2Module::processBody(int nBodyCount, IBody ** ppBodies)
+void KinectV2Module::processBody(int nBodyCount, IBody** ppBodies)
 {
 	/*
 	if (curBodyIndex != -1)
@@ -146,15 +155,19 @@ void KinectV2Module::processBody(int nBodyCount, IBody ** ppBodies)
 
 	int numDetectedBodies = 0;
 
+	KinectPersonValues* curNearest = nullptr;
+	KinectPersonValues* curOldest = nullptr;
+	KinectPersonValues* curNewest = nullptr;
+
 	for (int i = 0; i < nBodyCount && i < KINECT_MAX_PERSONS; ++i)
 	{
 		IBody* b = ppBodies[i];
 		if (!b) continue;
-		BOOLEAN t;
-		HRESULT hr = b->get_IsTracked(&t);
-		if (SUCCEEDED(hr) && t)
-		{
+		BOOLEAN isTracked;
+		HRESULT hr = b->get_IsTracked(&isTracked);
 
+		if (SUCCEEDED(hr))
+		{
 			Joint joints[JointType_Count];
 			HandState leftHandState = HandState_Unknown;
 			HandState rightHandState = HandState_Unknown;
@@ -172,9 +185,12 @@ void KinectV2Module::processBody(int nBodyCount, IBody ** ppBodies)
 			Point<float> left2D = Point<float>(leftHandPos.x, leftHandPos.y);
 			Point<float> right2D = Point<float>(rightHandPos.x, rightHandPos.y);
 
-			KinectPersonValues * kpv = personValues[numDetectedBodies];
-			
-			kpv->bodyId->setValue(i + 1);
+			KinectPersonValues* kpv = personValues[i];
+
+			uint64 trackingID = 0;
+			b->get_TrackingId(&trackingID);
+			kpv->bodyId->setValue((int)trackingID);
+			kpv->isTracked->setValue(isTracked);
 			kpv->bodyX->setValue(bodyPos.x);
 			kpv->bodyY->setValue(bodyPos.y);
 			kpv->bodyZ->setValue(bodyPos.z);
@@ -192,12 +208,57 @@ void KinectV2Module::processBody(int nBodyCount, IBody ** ppBodies)
 			kpv->leftHandOpen->setValue(leftHandState == HandState_Open);
 			kpv->rightHandOpen->setValue(rightHandState == HandState_Open);
 
-			numDetectedBodies++;
-
+			if (isTracked)
+			{
+				if (curNearest == nullptr || kpv->bodyZ->floatValue() < curNearest->bodyZ->floatValue()) curNearest = kpv;
+				if (curOldest == nullptr || kpv->bodyId->intValue() < curOldest->bodyId->intValue()) curOldest = kpv;
+				if (curNewest == nullptr || kpv->bodyId->intValue() > curNewest->bodyId->intValue()) curNewest = kpv;
+			}
 		}
+
+		copyBodyTo(curNearest, &nearest);
+		copyBodyTo(curOldest, &oldest);
+		copyBodyTo(curNewest, &newest);
 
 		numPersons->setValue(numDetectedBodies);
 	}
+}
+void KinectV2Module::copyBodyTo(KinectPersonValues* source, KinectPersonValues* dest)
+{
+	if (dest == nullptr) return;
+
+	if (source == nullptr)
+	{
+		dest->isTracked->setValue(false);
+		return;
+	}
+
+	dest->bodyId->setValue(source->bodyId->intValue());
+
+	if (!source->isTracked->boolValue())
+	{
+		dest->isTracked->setValue(false);
+		return;
+	}
+
+	dest->isTracked->setValue(true);
+
+	dest->bodyX->setValue(source->bodyX->getValue());
+	dest->bodyY->setValue(source->bodyY->getValue());
+	dest->bodyZ->setValue(source->bodyZ->getValue());
+
+	dest->headX->setValue(source->headX->getValue());
+	dest->headY->setValue(source->headY->getValue());
+	dest->headZ->setValue(source->headZ->getValue());
+
+	dest->leftHandX->setValue(source->leftHandX->getValue());
+	dest->leftHandY->setValue(source->leftHandY->getValue());
+	dest->rightHandX->setValue(source->rightHandX->getValue());
+	dest->rightHandY->setValue(source->rightHandY->getValue());
+	dest->handsDistance->setValue(source->handsDistance->getValue());
+	dest->handsAngle->setValue(source->handsAngle->getValue());
+	dest->leftHandOpen->setValue(source->leftHandOpen->getValue());
+	dest->rightHandOpen->setValue(source->rightHandOpen->getValue());
 }
 #endif
 
@@ -211,9 +272,17 @@ void KinectV2Module::run()
 }
 
 KinectPersonValues::KinectPersonValues(int id) :
-	ControllableContainer("Person "+String(id))
+	KinectPersonValues("Person " + String(id))
 {
-	bodyId = addIntParameter("ID", "", 1, 1, 6);
+
+}
+
+KinectPersonValues::KinectPersonValues(const String& name) :
+	ControllableContainer(name)
+{
+	bodyId = addIntParameter("ID", "", 0, 0);
+	isTracked = addBoolParameter("Tracked", "Is this person tracked", false);
+
 	bodyX = addFloatParameter("Body X", "", 0, -5, 5);
 	bodyY = addFloatParameter("Body Y", "", 0, -5, 5);
 	bodyZ = addFloatParameter("Body Z", "", 0, -5, 5);
@@ -228,11 +297,11 @@ KinectPersonValues::KinectPersonValues(int id) :
 	rightHandY = addFloatParameter("Right Hand Y", "Right Hand Y", 0, -5, 5);
 
 	handsDistance = addFloatParameter("Hands Distance", "Hands Distance", 0, 0, 3);
-	handsAngle =    addFloatParameter("Hands Rotation", "Hands Rotation", 0, 0, 360);
-	leftHandOpen =  addBoolParameter("Left Hand Open", "Left Hand Open", false);
+	handsAngle = addFloatParameter("Hands Rotation", "Hands Rotation", 0, 0, 360);
+	leftHandOpen = addBoolParameter("Left Hand Open", "Left Hand Open", false);
 	rightHandOpen = addBoolParameter("Right Hand Open", "Right Hand Open", false);
 
-	for (auto &c : controllables) c->isControllableFeedbackOnly = true;
+	for (auto& c : controllables) c->isControllableFeedbackOnly = true;
 }
 
 KinectPersonValues::~KinectPersonValues()
