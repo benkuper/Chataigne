@@ -1757,18 +1757,21 @@ static const unsigned char temp_binary_data_44[] =
 "\n"
 "/*\n"
 "If this script is in a mapping, then this will be called whenever the value from the mapping is updated\n"
+"script parameters linked values are added to the function signature, so you can modify this function depending on the parameters you manually added to the script\n"
 "*/\n"
-"function setValue(value)\n"
-"{\n"
-"\tscript.log(\"Set value \"+value);\n"
+"function setValue(values, multiplexIndex) {\n"
+"    script.log(\"Set values :\");\n"
+"    for (var i = 0; i < values.length; i++) {\n"
+"        script.log(\" > \" + values[i]);\r\n"
+"    }\n"
 "}\n"
 "\n"
 "/*\n"
 "This will be called either when the consequence is triggered if it is in an Action, or just after setValue() if it is in a Mapping\n"
+"script parameters linked values are added to the function signature, so you can modify this function depending on the parameters you manually added to the script\n"
 "*/\n"
-"function trigger()\n"
-"{\n"
-"\tscript.log(\"Trigger !\");\n"
+"function trigger(multiplexIndex) {\n"
+"    script.log(\"Trigger !\");\n"
 "}";
 
 const char* commandScriptTemplate_js = (const char*) temp_binary_data_44;
@@ -5067,7 +5070,7 @@ const char* getNamedResource (const char* resourceNameUTF8, int& numBytes)
         case 0xc88c2f4d:  numBytes = 3542; return WebSocket_Client_png;
         case 0x1a00eec5:  numBytes = 3517; return WebSocket_Server_png;
         case 0x924bc834:  numBytes = 2124; return Wiimote_png;
-        case 0xdd901558:  numBytes = 427; return commandScriptTemplate_js;
+        case 0xdd901558:  numBytes = 876; return commandScriptTemplate_js;
         case 0x7fffe188:  numBytes = 5455; return conditionScriptTemplate_js;
         case 0x5c8768cb:  numBytes = 1343; return filterScriptTemplate_js;
         case 0xa23dd44c:  numBytes = 5618; return genericScriptTemplate_js;
