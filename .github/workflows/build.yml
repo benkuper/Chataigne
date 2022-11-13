@@ -61,14 +61,13 @@ jobs:
           Invoke-WebRequest "${{ secrets.DEPDIRURL }}${{ env.ProjectName }}-win-x64-${{ steps.set_variables.outputs.dep }}-dependencies.zip" -OutFile ./deps.zip
           7z e deps.zip -aoa
           &"C:/Program Files (x86)/Inno Setup 6/ISCC.exe" "${{ github.workspace }}/${{ matrix.installerName }}.iss" /O. /F$PKGNAME
-          echo "pkg-name=$PKGNAME.exe" >> $GITHUB_OUTPUT
-          echo "pdb-name=$PKGNAME.pdb" >> $GITHUB_OUTPUT
+          echo "pkg-name=$PKGNAME" >> $GITHUB_OUTPUT
         working-directory: ./Binaries/CI/App
 
       - name: Upload
         uses: ./.github/actions/upload
         with:
-          pkg-name: ./Binaries/CI/App/${{ steps.create_package.outputs.pkg-name }}
+          pkg-name: ./Binaries/CI/App/${{ steps.create_package.outputs.pkg-name }}.exe
           url: ${{ secrets.UPLOADURL }}
           pass: ${{ secrets.UPLOADPASS }}
 
@@ -77,14 +76,14 @@ jobs:
         id: rename_pdb
         shell: powershell
         run: |
-          Rename-Item -Path "./Chataigne.pdb" -NewName "${{ steps.create_package.outputs.pdb-name }}"
+          Rename-Item -Path "./Chataigne.pdb" -NewName "${{ steps.create_package.outputs.pkg-name }}.pdb"
         working-directory: ./Builds/${{ matrix.buildFolder }}/x64/${{ steps.set_variables.outputs.config }}/App
 
       - name: Upload PDB
         if: ${{ steps.set_variables.outputs.config == 'Release' && matrix.arch == 'win-x64' }}
         uses: ./.github/actions/upload
         with:
-          pkg-name: ./Builds/${{ matrix.buildFolder }}/x64/${{ steps.set_variables.outputs.config }}/App/${{ steps.create_package.outputs.pdb-name }}
+          pkg-name: ./Builds/${{ matrix.buildFolder }}/x64/${{ steps.set_variables.outputs.config }}/App/${{ steps.create_package.outputs.pkg-name }}.pdb
           url: ${{ secrets.PDBUPLOADURL }}
           pass: ${{ secrets.UPLOADPASS }}
 
