@@ -229,7 +229,6 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        arch: [armhf, aarch64]
         include:
         - arch: armhf
           cpu: cortex-a7 #suitable for Pi3, Pi4, Pi Zero 2. 
@@ -281,6 +280,7 @@ jobs:
         id: build
         uses: pguyot/arm-runner-action@v2
         with:
+          image_additional_mb: 1024
           base_image: ${{ matrix.base_image }}
           cpu: ${{ matrix.cpu }}
           copy_artifact_path: Builds/${{ matrix.buildFolder }}/build/${{ env.ProjectName }}
