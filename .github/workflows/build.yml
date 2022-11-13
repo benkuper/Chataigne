@@ -294,7 +294,7 @@ jobs:
             apt-get install -qy curl
 
             cd Builds/${{ matrix.buildFolder }}
-            make CONFIG=${{ matrix.buildConfig }}
+            make -j4 CONFIG=${{ matrix.buildConfig }}
 
       - name: Create AppImage
         id: create_package
