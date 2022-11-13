@@ -61,8 +61,8 @@ jobs:
           Invoke-WebRequest "${{ secrets.DEPDIRURL }}${{ env.ProjectName }}-win-x64-${{ steps.set_variables.outputs.dep }}-dependencies.zip" -OutFile ./deps.zip
           7z e deps.zip -aoa
           &"C:/Program Files (x86)/Inno Setup 6/ISCC.exe" "${{ github.workspace }}/${{ matrix.installerName }}.iss" /O. /F$PKGNAME
-          echo "::set-output name=pkg-name::$PKGNAME.exe"
-          echo "::set-output name=pdb-name::$PKGNAME.pdb"
+          echo "pkg-name=$PKGNAME.exe" >> $GITHUB_OUTPUT
+          echo "pdb-name=$PKGNAME.pdb" >> $GITHUB_OUTPUT
         working-directory: ./Binaries/CI/App
 
       - name: Upload
@@ -135,7 +135,7 @@ jobs:
           packagesbuild ${{ env.ProjectName }}.pkgproj
           PKGNAME=${{ env.ProjectName }}-${{ steps.set_variables.outputs.suffix }}.pkg
           mv ${{ env.ProjectName }}.pkg $PKGNAME
-          echo "::set-output name=pkg-name::$PKGNAME"
+          echo "pkg-name=$PKGNAME" >> $GITHUB_OUTPUT
         working-directory: ./Package
 
       - name: Upload
@@ -211,7 +211,7 @@ jobs:
           cp build/${{ env.ProjectName }} ${{ env.ProjectName }}.AppDir/usr/bin/
 
           PKGNAME=${{ env.ProjectName }}-linux-${{ steps.set_variables.outputs.suffix }}.AppImage
-          echo "::set-output name=pkg-name::$PKGNAME"
+          echo "pkg-name=$PKGNAME" >> $GITHUB_OUTPUT
           ${{ github.workspace }}/appimagetool-x86_64.AppImage ${{ env.ProjectName }}.AppDir $PKGNAME
         working-directory: ./Builds/LinuxMakefile
 
@@ -301,7 +301,7 @@ jobs:
         id: create_package
         run: |
           PKGNAME=${{ env.ProjectName }}-linux-${{ steps.set_variables.outputs.suffix }}.AppImage
-          echo "::set-output name=pkg-name::$PKGNAME"
+          echo "pkg-name=$PKGNAME" >> $GITHUB_OUTPUT
           ${{ github.workspace }}/appimagetool-x86_64.AppImage --runtime-file ${{ github.workspace }}/runtime-${{ matrix.arch }} ${{ env.ProjectName }}.AppDir $PKGNAME
         working-directory: ./Builds/${{ matrix.buildFolder }}
 
