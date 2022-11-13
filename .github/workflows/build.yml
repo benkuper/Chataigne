@@ -267,8 +267,8 @@ jobs:
 
       - name: Download and prepare AppImage
         run: |
-          apt-get update
-          apt-get install libfuse2 # required on ubuntu 22.04
+          sudo apt-get update
+          sudo apt-get install libfuse2 # required on ubuntu 22.04
 
           wget "https://github.com/AppImage/AppImageKit/releases/download/13/appimagetool-x86_64.AppImage"
           chmod a+x appimagetool-x86_64.AppImage
