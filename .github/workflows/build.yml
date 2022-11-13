@@ -61,8 +61,8 @@ jobs:
           Invoke-WebRequest "${{ secrets.DEPDIRURL }}${{ env.ProjectName }}-win-x64-${{ steps.set_variables.outputs.dep }}-dependencies.zip" -OutFile ./deps.zip
           7z e deps.zip -aoa
           &"C:/Program Files (x86)/Inno Setup 6/ISCC.exe" "${{ github.workspace }}/${{ matrix.installerName }}.iss" /O. /F$PKGNAME
-          echo "pkg-name=$PKGNAME.exe" >> $GITHUB_OUTPUT
-          echo "pdb-name=$PKGNAME.pdb" >> $GITHUB_OUTPUT
+          echo "pkg-name=$PKGNAME.exe" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
+          echo "pdb-name=$PKGNAME.pdb" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
         working-directory: ./Binaries/CI/App
 
       - name: Upload
