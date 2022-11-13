@@ -280,7 +280,7 @@ jobs:
         id: build
         uses: pguyot/arm-runner-action@v2
         with:
-          image_additional_mb: 1024
+          image_additional_mb: 2048
           base_image: ${{ matrix.base_image }}
           cpu: ${{ matrix.cpu }}
           copy_artifact_path: Builds/${{ matrix.buildFolder }}/build/${{ env.ProjectName }}
