@@ -232,7 +232,7 @@ jobs:
         include:
         - arch: armhf
           cpu: cortex-a7 #suitable for Pi3, Pi4, Pi Zero 2. 
-          base_image: raspios_lite:2022-04-04
+          base_image: raspios_lite:2021-05-07 
           cpu_info: raspberrypi_3b
           buildFolder: "Raspberry"
           buildConfig: "Release"
