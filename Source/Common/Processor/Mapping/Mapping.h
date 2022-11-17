@@ -37,7 +37,7 @@ public:
 	enum ProcessMode { VALUE_CHANGE, MANUAL, TIMER };
 	ProcessMode processMode;
 
-	SpinLock mappingLock;
+	CriticalSection mappingLock;
 	bool isRebuilding;
 	bool isProcessing;
 	bool shouldRebuildAfterProcess;
