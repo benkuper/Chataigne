@@ -61,8 +61,8 @@ jobs:
           Invoke-WebRequest "${{ secrets.DEPDIRURL }}${{ env.ProjectName }}-win-x64-${{ steps.set_variables.outputs.dep }}-dependencies.zip" -OutFile ./deps.zip
           7z e deps.zip -aoa
           &"C:/Program Files (x86)/Inno Setup 6/ISCC.exe" "${{ github.workspace }}/${{ matrix.installerName }}.iss" /O. /F$PKGNAME
-          echo "::set-output name=pkg-name::$PKGNAME.exe"
-          echo "::set-output name=pdb-name::$PKGNAME.pdb"
+          echo "pkg-name=$PKGNAME.exe" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
+          echo "pdb-name=$PKGNAME.pdb" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
         working-directory: ./Binaries/CI/App
 
       - name: Upload
@@ -135,7 +135,7 @@ jobs:
           packagesbuild ${{ env.ProjectName }}.pkgproj
           PKGNAME=${{ env.ProjectName }}-${{ steps.set_variables.outputs.suffix }}.pkg
           mv ${{ env.ProjectName }}.pkg $PKGNAME
-          echo "::set-output name=pkg-name::$PKGNAME"
+          echo "pkg-name=$PKGNAME" >> $GITHUB_OUTPUT
         working-directory: ./Package
 
       - name: Upload
@@ -150,24 +150,6 @@ jobs:
 
     name: Linux
     runs-on: ubuntu-22.04
-    strategy:
-      matrix:
-        include:
-        - arch: x64
-          buildFolder: "LinuxMakefile"
-          buildConfig: "Release"
-          
-        - arch: armhf
-          packageArch: armhf
-          buildFolder: "Raspberry"
-          buildConfig: "Release"
-
-        # - arch: aarch64
-        #   packageArch: arm64
-        #   buildFolder: "Raspberry"
-        #   buildConfig: "Release64"
-          
-      fail-fast: false
 
     steps:
       - name: Checkout repo
@@ -186,52 +168,15 @@ jobs:
         id: set_variables
         uses: ./.github/actions/set-suffix
         with:
-          os: ${{ matrix.arch }}
+          os: 'x64'
 
       - name: Installing dependencies
         id: install_deps
         #shell: bash {0} # Opt out of fail-fast behavior (necessary to ignore fetch errors)
         run: |
-          echo "Target system architecture: ${{ matrix.arch }}"
-          if [ "${{ matrix.arch }}" != "x64" ]; 
-          then
-
-            DEP_ARCH="${{ matrix.packageArch }}"
-
-            sudo tee /etc/apt/sources.list << END
-          deb [arch=amd64] http://us.archive.ubuntu.com/ubuntu/ jammy main restricted universe multiverse
-          deb [arch=amd64] http://us.archive.ubuntu.com/ubuntu/ jammy-updates main restricted universe multiverse
-          deb [arch=amd64] http://us.archive.ubuntu.com/ubuntu/ jammy-backports main restricted universe multiverse
-          deb [arch=amd64] http://security.ubuntu.com/ubuntu jammy-security main restricted universe multiverse
-
-          deb [arch=$DEP_ARCH] http://ports.ubuntu.com/ubuntu-ports/ jammy main restricted universe multiverse
-          deb [arch=$DEP_ARCH] http://ports.ubuntu.com/ubuntu-ports/ jammy-updates main restricted universe multiverse
-          deb [arch=$DEP_ARCH] http://ports.ubuntu.com/ubuntu-ports/ jammy-backports main restricted universe multiverse
-          deb [arch=$DEP_ARCH] http://ports.ubuntu.com/ubuntu-ports/ jammy-security main restricted universe multiverse
-          END
-
-            sudo dpkg --add-architecture $DEP_ARCH
-            sudo apt-get update
-
-            if [ "${{ matrix.arch }}" == "armhf" ]; 
-            then
-              sudo apt-get install -qy g++-arm-linux-gnueabihf
-            else
-              sudo apt-get install -qy g++-aarch64-linux-gnu
-            fi
-
-            echo "Installing extra lib dependencies"
-            sudo apt-get install -qyf linux-libc-dev:$DEP_ARCH libgdk-pixbuf2.0-dev:$DEP_ARCH libpango1.0-dev:$DEP_ARCH libsoup2.4-dev:$DEP_ARCH libharfbuzz-dev:$DEP_ARCH libicu-dev:$DEP_ARCH libc6-dev:$DEP_ARCH libxft-dev:$DEP_ARCH libatomic1:$DEP_ARCH libatomic1-$DEP_ARCH-cross
-
-            echo "Downloading AppImage runtime for ${{ matrix.arch }}"
-            cd ${{ github.workspace }}
-            wget "https://github.com/AppImage/AppImageKit/releases/download/12/runtime-${{ matrix.arch }}"
-            echo "::set-output name=appImageRuntime::--runtime-file ${{ github.workspace }}/runtime-${{ matrix.arch }}"
-          fi
-
           sudo apt-get update
           echo "Installing JUCE lib dependencies and extra tools"
-          sudo apt-get install -qyf libcurl3-gnutls:$DEP_ARCH libfreetype6-dev:$DEP_ARCH libx11-dev:$DEP_ARCH libxinerama-dev:$DEP_ARCH libxrandr-dev:$DEP_ARCH libxcursor-dev:$DEP_ARCH libxcomposite-dev:$DEP_ARCH mesa-common-dev:$DEP_ARCH libasound2-dev:$DEP_ARCH freeglut3-dev:$DEP_ARCH libcurl4-gnutls-dev:$DEP_ARCH libasound2-dev:$DEP_ARCH libjack-dev:$DEP_ARCH libbluetooth-dev:$DEP_ARCH libgtk-3-dev:$DEP_ARCH libwebkit2gtk-4.0-dev:$DEP_ARCH libsdl2-dev:$DEP_ARCH libfuse2 libfuse2:$DEP_ARCH libusb-1.0-0-dev:$DEP_ARCH libhidapi-dev:$DEP_ARCH ladspa-sdk:$DEP_ARCH libssl-dev:$DEP_ARCH
+          sudo apt-get install -qyf libcurl3-gnutls libfreetype6-dev libx11-dev libxinerama-dev libxrandr-dev libxcursor-dev libxcomposite-dev mesa-common-dev libasound2-dev freeglut3-dev libcurl4-gnutls-dev libasound2-dev libjack-dev libbluetooth-dev libgtk-3-dev libwebkit2gtk-4.0-dev libsdl2-dev libfuse2 libfuse2 libusb-1.0-0-dev libhidapi-dev ladspa-sdk libssl-dev
           sudo apt-get install -qy curl
 
           cd ${{ github.workspace }}
@@ -256,22 +201,8 @@ jobs:
 
       - name: Build
         run: |
-          if [ "${{ matrix.arch }}" == "armhf" ]; 
-          then
-            export CXX=arm-linux-gnueabihf-g++
-            export CC=arm-linux-gnueabihf-gcc
-            export PKG_CONFIG_PATH=/usr/lib/arm-linux-gnueabihf/pkgconfig
-          fi
-
-          if [ "${{ matrix.arch }}" == "aarch64" ]; 
-          then
-            export CXX=aarch64-linux-gnu-gcc
-            export CC=aarch64-linux-gnu-g++
-            export PKG_CONFIG_PATH=/usr/lib/aarch64-linux-gnu/pkgconfig
-          fi
-
-          cd ${{ github.workspace }}/Builds/${{ matrix.buildFolder }}
-          make -j2 CONFIG=${{ matrix.buildConfig }}
+          cd ${{ github.workspace }}/Builds/LinuxMakefile
+          make -j2 CONFIG=Release
 
       - name: Create AppImage
         id: create_package
@@ -280,8 +211,98 @@ jobs:
           cp build/${{ env.ProjectName }} ${{ env.ProjectName }}.AppDir/usr/bin/
 
           PKGNAME=${{ env.ProjectName }}-linux-${{ steps.set_variables.outputs.suffix }}.AppImage
-          echo "::set-output name=pkg-name::$PKGNAME"
-          ${{ github.workspace }}/appimagetool-x86_64.AppImage ${{ steps.install_deps.outputs.appImageRuntime }} ${{ env.ProjectName }}.AppDir $PKGNAME
+          echo "pkg-name=$PKGNAME" >> $GITHUB_OUTPUT
+          ${{ github.workspace }}/appimagetool-x86_64.AppImage ${{ env.ProjectName }}.AppDir $PKGNAME
+        working-directory: ./Builds/LinuxMakefile
+
+      - name: Upload
+        uses: ./.github/actions/upload
+        with:
+          pkg-name: ./Builds/LinuxMakefile/${{ steps.create_package.outputs.pkg-name }}
+          url: ${{ secrets.UPLOADURL }}
+          pass: ${{ secrets.UPLOADPASS }}
+  
+  raspberrypi:
+    # if: false # tmp disable
+
+    name: Raspberry Pi
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        include:
+        - arch: armhf
+          cpu: cortex-a7 #suitable for Pi3, Pi4, Pi Zero 2. 
+          base_image: raspios_lite:2021-05-07 
+          cpu_info: raspberrypi_3b
+          buildFolder: "Raspberry"
+          buildConfig: "Release"
+          
+        - arch: aarch64
+          cpu: cortex-a53
+          base_image: raspios_lite_arm64:2022-04-04
+          cpu_info: raspberrypi_zero2_w_arm64_w
+          buildFolder: "Raspberry64"
+          buildConfig: "Release"
+
+      fail-fast: false
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
+
+      - name: Checkout JUCE
+        uses: actions/checkout@v2
+        with:
+          repository: benkuper/JUCE
+          ref: develop-local
+          path: JUCE
+
+      - name: Set Suffix
+        id: set_variables
+        uses: ./.github/actions/set-suffix
+        with:
+          os: ${{ matrix.arch }}
+
+      - name: Download and prepare AppImage
+        run: |
+          sudo apt-get update
+          sudo apt-get install libfuse2 # required on ubuntu 22.04
+
+          wget "https://github.com/AppImage/AppImageKit/releases/download/13/appimagetool-x86_64.AppImage"
+          chmod a+x appimagetool-x86_64.AppImage
+
+          echo "Downloading AppImage runtime for ${{ matrix.arch }}"
+          wget "https://github.com/AppImage/AppImageKit/releases/download/13/runtime-${{ matrix.arch }}"
+
+          mkdir -p ./Builds/${{ matrix.buildFolder }}/${{ env.ProjectName }}.AppDir/usr/bin/
+        working-directory: ${{ github.workspace }}
+
+      - name: Install dependencies and build
+        id: build
+        uses: pguyot/arm-runner-action@v2
+        with:
+          image_additional_mb: 2048
+          base_image: ${{ matrix.base_image }}
+          cpu: ${{ matrix.cpu }}
+          copy_artifact_path: Builds/${{ matrix.buildFolder }}/build/${{ env.ProjectName }}
+          copy_artifact_dest: Builds/${{ matrix.buildFolder }}/${{ env.ProjectName }}.AppDir/usr/bin/
+          commands: |
+            apt-get update
+            echo "Installing JUCE lib dependencies and extra tools"
+            apt-get install -qyf libcurl3-gnutls libfreetype6-dev libx11-dev libxinerama-dev libxrandr-dev libxcursor-dev libxcomposite-dev mesa-common-dev libasound2-dev freeglut3-dev libcurl4-gnutls-dev libasound2-dev libjack-dev libbluetooth-dev libgtk-3-dev libwebkit2gtk-4.0-dev libsdl2-dev libusb-1.0-0-dev libhidapi-dev ladspa-sdk libssl-dev
+            apt-get install -qy curl
+
+            cd Builds/${{ matrix.buildFolder }}
+            make -j2 CONFIG=${{ matrix.buildConfig }}
+
+      - name: Create AppImage
+        id: create_package
+        run: |
+          PKGNAME=${{ env.ProjectName }}-linux-${{ steps.set_variables.outputs.suffix }}.AppImage
+          echo "pkg-name=$PKGNAME" >> $GITHUB_OUTPUT
+          ${{ github.workspace }}/appimagetool-x86_64.AppImage --runtime-file ${{ github.workspace }}/runtime-${{ matrix.arch }} ${{ env.ProjectName }}.AppDir $PKGNAME
         working-directory: ./Builds/${{ matrix.buildFolder }}
 
       - name: Upload
