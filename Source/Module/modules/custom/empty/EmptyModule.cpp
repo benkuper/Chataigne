@@ -1,7 +1,11 @@
+#include "Module/ModuleIncludes.h"
+
 EmptyModule::EmptyModule(const String& name) :
 	Module(name)
 {
 	setupIOConfiguration(false, false);
+
+	alwaysShowValues = true;
 
 	includeValuesInSave = true;
 	valuesCC.userCanAddControllables = true;
