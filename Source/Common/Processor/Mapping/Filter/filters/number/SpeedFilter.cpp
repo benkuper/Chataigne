@@ -93,14 +93,14 @@ MappingFilter::ProcessResult SpeedFilter::processSingleParameterTimeInternal(Par
 		for (int j = 0; j < speed.size(); j++)
 		{
 			float s = 0;
-			for (int i = 0; i < smoothCount; i++) s += (double)sMap[i][j] / smoothCount;
+			for (int i = 0; i < smoothCount && i < sMap.size(); i++) s += (double)sMap[i][j] / smoothCount;
 			smoothSpeed.append(s);
 		}
 	}
 	else
 	{
 		smoothSpeed = 0;
-		for (int i = 0; i < smoothCount; i++) smoothSpeed = (double)smoothSpeed + (double)sMap[i] / smoothCount;
+		for (int i = 0; i < smoothCount && i < sMap.size(); i++) smoothSpeed = (double)smoothSpeed + (double)sMap[i] / smoothCount;
 	}
 
 	out->setValue(smoothSpeed);
