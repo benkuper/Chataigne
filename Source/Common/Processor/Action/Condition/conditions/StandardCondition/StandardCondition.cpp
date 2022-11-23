@@ -101,7 +101,6 @@ void StandardCondition::updateSourceFromTarget()
 	{
 		if (sourceControllable != nullptr)
 		{
-			DBG("Remove Parameter Listener");
 			if (sourceControllable->type == Controllable::TRIGGER) ((Trigger*)sourceControllable.get())->removeTriggerListener(this);
 			else ((Parameter*)sourceControllable.get())->removeParameterListener(this);
 		}
@@ -130,8 +129,8 @@ void StandardCondition::updateComparatorFromSource()
 		bool rebuildComparator = comparator == nullptr || c->type != comparator->reference->type;
 		if (rebuildComparator)
 		{
-			var oldData = var();
-			if (comparator != nullptr) oldData = comparator->getJSONData();
+			//var oldData = var();
+			//if (comparator != nullptr) oldData = comparator->getJSONData();
 			if (comparator != nullptr)
 			{
 				removeChildControllableContainer(comparator.get());
@@ -150,7 +149,7 @@ void StandardCondition::updateComparatorFromSource()
 					{
 						comparator->loadJSONData(loadingComparatorData);
 					}
-					else if (!oldData.isVoid()) comparator->loadJSONData(oldData);
+					//else if (!oldData.isVoid()) comparator->loadJSONData(oldData);
 				}
 
 				comparator->hideInEditor = true;
