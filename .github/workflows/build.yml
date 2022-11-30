@@ -231,9 +231,9 @@ jobs:
       matrix:
         include:
         - arch: armhf
-          cpu: cortex-a7 #suitable for Pi3, Pi4, Pi Zero 2. 
+          cpu: arm1176 #suitable for all Pi versions
           base_image: raspios_lite:2021-05-07 
-          cpu_info: raspberrypi_3b
+          cpu_info: raspberrypi_zero_w
           buildFolder: "Raspberry"
           buildConfig: "Release"
           
