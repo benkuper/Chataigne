@@ -36,9 +36,9 @@ SerialModule::~SerialModule()
 	setCurrentPort(nullptr);
 }
 
-bool SerialModule::setPortStatus(bool status) 
+bool SerialModule::setPortStatus(bool status)
 {
-	if (port == nullptr) 
+	if (port == nullptr)
 	{
 		isConnected->setValue(false);
 		return false;
@@ -94,7 +94,7 @@ void SerialModule::setCurrentPort(SerialDevice* _port)
 		lastOpenedPortID = port->info->deviceID;
 		portOpenedInternal();
 	}
-	
+
 	serialModuleListeners.call(&SerialModuleListener::currentPortChanged);
 }
 

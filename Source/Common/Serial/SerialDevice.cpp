@@ -8,17 +8,19 @@
   ==============================================================================
 */
 
+#include "Module/ModuleIncludes.h"
+
 #if SERIALSUPPORT
-SerialDevice::SerialDevice(Serial * _port, SerialDeviceInfo  * _info, PortMode _mode) :
-thread(_info->port, this),
-port(_port),
-info(_info),
-mode(_mode)
+SerialDevice::SerialDevice(Serial* _port, SerialDeviceInfo* _info, PortMode _mode) :
+	thread(_info->port, this),
+	port(_port),
+	info(_info),
+	mode(_mode)
 {
 	open();
 }
 #else
-SerialDevice::SerialDevice(SerialDeviceInfo  * _info, PortMode _mode) :
+SerialDevice::SerialDevice(SerialDeviceInfo* _info, PortMode _mode) :
 	info(_info),
 	mode(_mode),
 	thread(_info->port, this)
@@ -70,7 +72,7 @@ void SerialDevice::setParity(int parity)
 
 		port->setParity((parity_t)parity);
 	}
-	
+
 }
 
 void SerialDevice::setStopBits(int stopBits)
@@ -104,11 +106,11 @@ void SerialDevice::open(int baud)
 	if (port == nullptr) return;
 	try
 	{
-		if(baud != -1) port->setBaudrate(baud);
+		if (baud != -1) port->setBaudrate(baud);
 		if (!port->isOpen())  port->open();
 		port->setDTR();
 		port->setRTS();
-		
+
 
 		if (!thread.isThreadRunning())
 		{
@@ -125,7 +127,7 @@ void SerialDevice::open(int baud)
 	}
 	catch (std::exception e)
 	{
-		NLOGERROR("Serial", "Error opening the port " << info->description <<", try reconnecting the device.");
+		NLOGERROR("Serial", "Error opening the port " << info->description << ", try reconnecting the device.");
 		openedOk = false;
 	}
 
@@ -209,13 +211,13 @@ int SerialDevice::writeBytes(Array<uint8_t> data)
 #endif
 }
 
-void SerialDevice::dataReceived(const var & data) {
+void SerialDevice::dataReceived(const var& data) {
 	listeners.call(&SerialDeviceListener::serialDataReceived, data);
 }
 
-void SerialDevice::addSerialDeviceListener(SerialDeviceListener * newListener) { listeners.add(newListener); }
+void SerialDevice::addSerialDeviceListener(SerialDeviceListener* newListener) { listeners.add(newListener); }
 
-void SerialDevice::removeSerialDeviceListener(SerialDeviceListener * listener) {
+void SerialDevice::removeSerialDeviceListener(SerialDeviceListener* listener) {
 	listeners.remove(listener);
 	if (listeners.size() == 0) {
 		SerialManager* manager = SerialManager::getInstance();
@@ -223,7 +225,7 @@ void SerialDevice::removeSerialDeviceListener(SerialDeviceListener * listener) {
 	}
 }
 
-SerialReadThread::SerialReadThread(String name, SerialDevice * _port) :
+SerialReadThread::SerialReadThread(String name, SerialDevice* _port) :
 	Thread(name + "_thread"),
 	port(_port)
 {
@@ -261,17 +263,26 @@ void SerialReadThread::run()
 				while (port->port->available() && port->mode == SerialDevice::PortMode::LINES)
 				{
 					std::string line = port->port->readline();
-					if(line.size() > 0) serialThreadListeners.call(&SerialThreadListener::dataReceived, var(line));
+					if (line.size() > 0) serialThreadListeners.call(&SerialThreadListener::dataReceived, var(line));
 				}
+			}
+			break;
+
+			case SerialDevice::PortMode::DIRECT:
+			{
+				std::vector<uint8_t> data;
+				port->port->read(data, numBytes);
+				String s(std::string(data.begin(), data.end()));
+				serialThreadListeners.call(&SerialThreadListener::dataReceived, var(s));
 			}
 			break;
 
 			case SerialDevice::PortMode::RAW:
 			{
 				std::vector<uint8_t> data;
-				port->port->read(data,numBytes);
+				port->port->read(data, numBytes);
 				//for (int i = 0; i < data.size(); ++i) DBG("Data " << data[i]);
-				serialThreadListeners.call(&SerialThreadListener::dataReceived, var(data.data(),numBytes));
+				serialThreadListeners.call(&SerialThreadListener::dataReceived, var(data.data(), numBytes));
 			}
 			break;
 
@@ -282,13 +293,30 @@ void SerialReadThread::run()
 					uint8_t b = port->port->read(1)[0];
 					if (b == 255)
 					{
-						serialThreadListeners.call(&SerialThreadListener::dataReceived, var(byteBuffer.data(),byteBuffer.size()));
+						serialThreadListeners.call(&SerialThreadListener::dataReceived, var(byteBuffer.data(), byteBuffer.size()));
 						byteBuffer.clear();
 					}
 					else
 					{
 						byteBuffer.push_back(b);
 					}
+				}
+			}
+			break;
+
+
+			case SerialDevice::PortMode::JSON:
+			{
+				std::vector<uint8_t> data;
+				port->port->read(data, numBytes);
+				byteBuffer.insert(byteBuffer.end(), data.begin(), data.end());
+
+				String s(std::string(byteBuffer.begin(), byteBuffer.end()));
+				var o = JSON::parse(s);
+				if (o.isObject())
+				{
+					serialThreadListeners.call(&SerialThreadListener::dataReceived, var(s));
+					byteBuffer.clear();
 				}
 			}
 			break;
@@ -353,6 +381,6 @@ SerialDeviceInfo::SerialDeviceInfo(String _port, String _description, String _ha
 	}
 
 	deviceID = hardwareID;
-    uniqueDescription = (vid == 0 && pid == 0)? _port : description + "(SN : " + sn + ")";
+	uniqueDescription = (vid == 0 && pid == 0) ? _port : description + "(SN : " + sn + ")";
 #endif
 }
