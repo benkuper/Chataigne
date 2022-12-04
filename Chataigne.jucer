@@ -1887,9 +1887,9 @@
                embeddedFrameworks="../../External/sdl/lib/osx/SDL2.framework">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" libraryPath="../../External/servus/lib/osx/debug&#10;../../External/joycon/lib/osx"
-                       osxCompatibility="10.8 SDK" macOSDeploymentTarget="10.8"/>
+                       osxCompatibility="10.10 SDK" macOSDeploymentTarget="10.10"/>
         <CONFIGURATION isDebug="0" name="Release" libraryPath="../../External/servus/lib/osx/release&#10;../../External/joycon/lib/osx"
-                       osxCompatibility="10.8 SDK" macOSDeploymentTarget="10.8"/>
+                       osxCompatibility="10.10 SDK" macOSDeploymentTarget="10.10"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_timeline" path="Modules"/>

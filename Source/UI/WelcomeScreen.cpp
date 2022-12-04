@@ -38,9 +38,11 @@ void WelcomeScreen::resized()
 }
 
 
-WelcomeScreen::WebComp::WebComp() :
-	WebBrowserComponent(WebBrowserComponent::Options().withBackend(WebBrowserComponent::Options::Backend::webview2).withWinWebView2Options(
+WelcomeScreen::WebComp::WebComp() 
+#if JUCE_WINDOWS 
+	: WebBrowserComponent(WebBrowserComponent::Options().withBackend(WebBrowserComponent::Options::Backend::webview2).withWinWebView2Options(
 		WebBrowserComponent::Options::WinWebView2().withUserDataFolder(File::getSpecialLocation(File::windowsLocalAppData).getChildFile("Chataigne")).withStatusBarDisabled()))
+#endif
 {
 
 }
