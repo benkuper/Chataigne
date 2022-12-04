@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "Module/ModuleIncludes.h"
+
 SendStreamValuesCommand::SendStreamValuesCommand(StreamingModule * module, CommandContext context, var params, Multiplex* multiplex) :
 	StreamingCommand(module, context, params, multiplex)
 {
@@ -71,5 +73,5 @@ void SendStreamValuesCommand::triggerInternal(int multiplexIndex)
 	}
 
 	Array<uint8> bytes((uint8 *)data.getData(), (int)data.getDataSize());
-	streamingModule->sendBytes(bytes);
+	streamingModule->sendBytes(bytes, getCustomParams(multiplexIndex));
 }

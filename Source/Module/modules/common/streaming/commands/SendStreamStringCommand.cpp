@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "Module/ModuleIncludes.h"
+
 SendStreamStringCommand::SendStreamStringCommand(StreamingModule* _module, CommandContext context, var params, Multiplex* multiplex) :
 	StreamingCommand(_module, context, params, multiplex),
 	appendCR(nullptr),
@@ -26,8 +28,6 @@ SendStreamStringCommand::SendStreamStringCommand(StreamingModule* _module, Comma
 	switch (dataMode)
 	{
 	case STRING:
-		appendCR = addBoolParameter("Append CR", "Append \\r at the end of the message", false);
-		appendNL = addBoolParameter("Append NL", "Append \\n at the end of the message", true);
 
 		if (params.hasProperty("fixedValue"))
 		{
@@ -36,23 +36,29 @@ SendStreamStringCommand::SendStreamStringCommand(StreamingModule* _module, Comma
 			valueParam->multiline = false;
 		}
 
-		if (params.hasProperty("forceCR"))
+		if (!params.getProperty("hideNLCR", false))
 		{
-			appendCR->setValue(params.getProperty("forceCR", false));
-			appendCR->hideInEditor = true;
-		}
+			appendCR = addBoolParameter("Append CR", "Append \\r at the end of the message", false);
+			appendNL = addBoolParameter("Append NL", "Append \\n at the end of the message", true);
 
+			if (params.hasProperty("forceCR"))
+			{
+				appendCR->setValue(params.getProperty("forceCR", false));
+				appendCR->hideInEditor = true;
+			}
 
-		if (params.hasProperty("forceNL"))
-		{
-			appendNL->setValue(params.getProperty("forceNL", true));
-			appendNL->hideInEditor = true;
+			if (params.hasProperty("forceNL"))
+			{
+				appendNL->setValue(params.getProperty("forceNL", true));
+				appendNL->hideInEditor = true;
+			}
 		}
 
 		if (context == CommandContext::MAPPING)
 		{
 			linkParamToMappingIndex(valueParam, 0);
 		}
+
 
 		break;
 
@@ -103,7 +109,7 @@ void SendStreamStringCommand::triggerInternal(int multiplexIndex)
 		if (appendCR != nullptr && (bool)getLinkedValue(appendCR, multiplexIndex)) valString += "\r";
 		if (appendNL != nullptr && (bool)getLinkedValue(appendNL, multiplexIndex)) valString += "\n";
 
-		streamingModule->sendMessage(valString);
+		streamingModule->sendMessage(valString, getCustomParams(multiplexIndex));
 	}
 	break;
 
@@ -126,7 +132,7 @@ void SendStreamStringCommand::triggerInternal(int multiplexIndex)
 			}
 		}
 
-		streamingModule->sendBytes(values);
+		streamingModule->sendBytes(values, getCustomParams(multiplexIndex));
 	}
 	break;
 

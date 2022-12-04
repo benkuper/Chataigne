@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "Module/ModuleIncludes.h"
+
 SendStreamRawDataCommand::SendStreamRawDataCommand(StreamingModule* _module, CommandContext context, var params, Multiplex* multiplex) :
 	SendStreamValuesCommand(_module, context, params, multiplex)
 {
@@ -26,7 +28,7 @@ void SendStreamRawDataCommand::triggerInternal(int multiplexIndex)
 
 	Array<uint8> data;
 	for (auto &i : customValuesManager->items) data.add((int) i->getLinkedValue(multiplexIndex));
-	streamingModule->sendBytes(data);
+	streamingModule->sendBytes(data, getCustomParams(multiplexIndex));
 }
 
 void SendStreamRawDataCommand::customValueCreated(Parameter * p, var data)

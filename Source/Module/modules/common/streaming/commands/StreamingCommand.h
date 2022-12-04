@@ -18,4 +18,8 @@ public:
 	virtual ~StreamingCommand();
 
 	StreamingModule * streamingModule;
+
+	Array<Parameter*> customParams;
+
+	virtual var getCustomParams(int multiplexIndex = 0);
 };
