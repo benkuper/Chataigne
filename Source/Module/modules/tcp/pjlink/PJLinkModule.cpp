@@ -11,7 +11,7 @@
 #include "Module/ModuleIncludes.h"
 
 PJLinkModule::PJLinkModule() :
-	Module(getDefaultTypeString()),
+	StreamingModule(getDefaultTypeString()),
 	Thread("PJLink"),
 	clientsParamsCC("Projectors"),
 	clientsValuesCC("Projectors"),
@@ -19,6 +19,10 @@ PJLinkModule::PJLinkModule() :
 {
 	alwaysShowValues = true;
 	includeValuesInSave = true;
+	valuesCC.userCanAddControllables = true;
+	valuesCC.customUserCreateControllableFunc = nullptr;
+	setAutoAddAvailable(false);
+
 
 	numClients = moduleParams.addIntParameter("Num Projectors", "Number of projectors to control", 1, 1, 100);
 	autoRequestTime = moduleParams.addIntParameter("Auto Request Timer", "If enabled, this is the number of seconds between auto request, alternating power and shutter status", 5, 1, 100, false);
@@ -37,6 +41,23 @@ PJLinkModule::PJLinkModule() :
 	allClientsAreConnected->setControllableFeedbackOnly(true);
 	allClientsAreConnected->hideInEditor = true;
 	connectionFeedbackRef = allClientsAreConnected;
+
+	var customParams;
+	DynamicObject* o(new DynamicObject());
+	o->setProperty("index", 0);
+	o->setProperty("name", "Projector ID");
+	o->setProperty("type", IntParameter::getTypeStringStatic());
+	o->setProperty("default", 1);
+	o->setProperty("min", 1);
+	o->setProperty("canBeDisabled", true);
+	o->setProperty("enabled", false);
+	customParams.append(o);
+
+	//for (auto& d : defManager->definitions) d->addParam("customParams", customParams);
+	
+	defManager->definitions.clear();
+	defManager->add(CommandDefinition::createDef(this, "", "Send string", &SendStreamStringCommand::create, CommandContext::BOTH)->addParam("customParams", customParams)->addParam("hideNLCR",true));
+	defManager->add(CommandDefinition::createDef(this, "", "Send values as string", &SendStreamStringValuesCommand::create, CommandContext::BOTH)->addParam("customParams", customParams)->addParam("hideNLCR", true));
 
 
 	defManager->add(CommandDefinition::createDef(this, "", "Power", &PJLinkCommand::create, CommandContext::BOTH)->addParam("action", PJLinkCommand::POWER));
@@ -179,6 +200,10 @@ void PJLinkModule::updateAllPoweredStatuses()
 	allProjectorsPoweredOff->setValue(off);
 }
 
+void PJLinkModule::sendMessageInternal(const String& message, var params)
+{
+	sendMessageToClient(message, params.getProperty("projectorID", -1));
+}
 
 void PJLinkModule::sendMessageToClient(const String& message, int id)
 {

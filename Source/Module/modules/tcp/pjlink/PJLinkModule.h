@@ -13,7 +13,7 @@
 #pragma once
 
 class PJLinkModule :
-	public Module,
+	public StreamingModule,
 	public Thread,
 	public Timer
 {
@@ -80,7 +80,11 @@ public:
 	void updateConnectedStatus();
 	void updateAllPoweredStatuses();
 
+	void sendMessageInternal(const String& message, var params) override;
+
 	void sendMessageToClient(const String& message, int id = -1);
+
+	bool isReadyToSend() { return true; }
 
 	void timerCallback() override;
 	void run() override;
