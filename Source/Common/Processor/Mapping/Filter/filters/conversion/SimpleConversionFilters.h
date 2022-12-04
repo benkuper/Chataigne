@@ -98,7 +98,7 @@ public:
 	ToStringFilter(var params, Multiplex* multiplex);
 	~ToStringFilter() {}
 
-	enum Format { NUMBER, TIME };
+	enum Format { NUMBER, TIME, HEXA };
 	EnumParameter* format;
 	IntParameter* numDecimals;
 	IntParameter * fixedLeading;

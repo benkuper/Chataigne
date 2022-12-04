@@ -379,7 +379,7 @@ ToStringFilter::ToStringFilter(var params, Multiplex* multiplex) :
 	enumConvertMode(nullptr)
 {
 	format = filterParams.addEnumParameter("Format", "The format of the string");
-	format->addOption("Number", NUMBER)->addOption("Time", TIME);
+	format->addOption("Number", NUMBER)->addOption("Time", TIME)->addOption("Hexadecimal", HEXA);
 	numDecimals = filterParams.addIntParameter("Number of Decimals", "Maximum number of decimals", 3, 0, 26);
 	fixedLeading = filterParams.addIntParameter("Fixed Leading", "If enabled, this will force the output to be with a certain mount of digits before the decimals", 3, 0, 100, false);
 	fixedLeading->canBeDisabledByUser = true;
@@ -457,6 +457,10 @@ var ToStringFilter::convertValue(Parameter* source, var sourceValue, int multipl
 						String first = String::repeatedString("0", (int)filterParams.getLinkedValue(fixedLeading, multiplexIndex) - s[0].length()) + s[0];
 						result = first + (s.size() > 1 ? "." + s[1] : "");
 					}
+					break;
+
+				case HEXA:
+					result += String::toHexString((int)sv);
 					break;
 
 				case TIME:
