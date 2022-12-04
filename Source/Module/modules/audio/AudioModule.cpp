@@ -309,9 +309,9 @@ void AudioModule::loadJSONDataInternal(var data)
 	else clearWarning();
 }
 
-void AudioModule::audioDeviceIOCallbackWithContext(const float** inputChannelData,
+void AudioModule::audioDeviceIOCallbackWithContext(const float* const* inputChannelData,
 	int numInputChannels,
-	float** outputChannelData,
+	float* const* outputChannelData,
 	int numOutputChannels,
 	int numSamples,
 	const AudioIODeviceCallbackContext& context)

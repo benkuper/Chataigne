@@ -24,7 +24,7 @@ public:
 		public WebBrowserComponent
 	{
 	public:
-		WebComp() {}
+		WebComp();
 		~WebComp() {}
 		String baseURL;
 		void setBaseURL(StringRef url);

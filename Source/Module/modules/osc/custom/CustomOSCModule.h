@@ -23,11 +23,13 @@ public:
 	BoolParameter * autoFeedback;
 	
 	EnumParameter* colorMode;
+	EnumParameter* boolMode;
 
 	HashMap<String, WeakReference<Controllable>, DefaultHashFunctions, CriticalSection> controllableAddressMap;
 	bool hierarchyStructureSwitch;
 
 	OSCHelpers::ColorMode getColorMode() override;
+	OSCHelpers::BoolMode getBoolMode() override;
 
 	void processMessageInternal(const OSCMessage &msg) override;
 

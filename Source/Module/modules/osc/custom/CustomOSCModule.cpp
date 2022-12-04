@@ -26,6 +26,9 @@ CustomOSCModule::CustomOSCModule() :
 	colorMode = moduleParams.addEnumParameter("Color Send Mode", "The way to send color arguments.\nColor will send a 'r' argument with the encoded color.\nRGB Float will send 3 floats and RGBA Float will send 4 floats.");
 	colorMode->addOption("Color", OSCHelpers::ColorRGBA)->addOption("RGB Float", OSCHelpers::Float3)->addOption("RGBA Float", OSCHelpers::Float4);
 
+	boolMode = moduleParams.addEnumParameter("Boolean Send Mode", "The way to send boolean arguments.\nInt will send a 'i' argument with the value to 0 or 1\nFloat will send a 'f' argument with the value to 0.0 or 1.0\nT-F will send T or F arguments for True or False");
+	boolMode->addOption("Int", OSCHelpers::Int)->addOption("Float", OSCHelpers::Float)->addOption("T-F", OSCHelpers::TF);
+
 	valuesCC.userCanAddControllables = true;
 	valuesCC.customUserCreateControllableFunc = &CustomOSCModule::showMenuAndCreateValue;
 }
@@ -33,6 +36,11 @@ CustomOSCModule::CustomOSCModule() :
 OSCHelpers::ColorMode CustomOSCModule::getColorMode()
 {
 	return colorMode->getValueDataAsEnum<OSCHelpers::ColorMode>();
+}
+
+OSCHelpers::BoolMode CustomOSCModule::getBoolMode()
+{
+	return boolMode->getValueDataAsEnum<OSCHelpers::BoolMode>();
 }
 
 void CustomOSCModule::processMessageInternal(const OSCMessage& msg)
@@ -119,7 +127,7 @@ void CustomOSCModule::processMessageInternal(const OSCMessage& msg)
 				Parameter* p = (Parameter*)c;
 				switch (c->type)
 				{
-				case Controllable::BOOL: p->setValue(OSCHelpers::getFloatArg(msg[i]) >= 1); break;
+				case Controllable::BOOL: p->setValue(OSCHelpers::getBoolArg(msg[i])); break;
 				case Controllable::FLOAT: p->setValue(OSCHelpers::getFloatArg(msg[i])); break;
 				case Controllable::INT: p->setValue(OSCHelpers::getIntArg(msg[i])); break;
 				case Controllable::STRING: p->setValue(OSCHelpers::getStringArg(msg[i])); break;
@@ -163,7 +171,7 @@ void CustomOSCModule::processMessageInternal(const OSCMessage& msg)
 
 		for (auto& wc : matchCont)
 		{
-			if (wc == nullptr ||wc.wasObjectDeleted()) continue;
+			if (wc == nullptr || wc.wasObjectDeleted()) continue;
 			Controllable* c = wc.get();
 			if (c == nullptr) continue;
 
@@ -174,7 +182,7 @@ void CustomOSCModule::processMessageInternal(const OSCMessage& msg)
 				break;
 
 			case Controllable::BOOL:
-				((Parameter*)c)->setValue(OSCHelpers::getFloatArg(msg[0]) >= 1); break;
+				((Parameter*)c)->setValue(OSCHelpers::getBoolArg(msg[0])); break;
 				break;
 
 			case Controllable::FLOAT:
@@ -231,7 +239,11 @@ void CustomOSCModule::processMessageInternal(const OSCMessage& msg)
 			break;
 
 		case 1:
-			if (msg[0].isInt32())
+			if (msg[0].isTorF())
+			{
+				c = new BoolParameter(cNiceName, "", msg[0].getBool());
+			}
+			else if (msg[0].isInt32())
 			{
 				c = new IntParameter(cNiceName, "", msg[0].getInt32());
 			}

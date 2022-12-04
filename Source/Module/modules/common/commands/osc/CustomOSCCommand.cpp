@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "Module/ModuleIncludes.h"
+
 CustomOSCCommand::CustomOSCCommand(IOSCSenderModule* module, CommandContext context, var params, Multiplex* multiplex) :
 	OSCCommand(module, context, params, multiplex),
 	addressHasWildcards(false)
@@ -57,7 +59,7 @@ void CustomOSCCommand::triggerInternal(int multiplexIndex)
 			if (p == nullptr) continue;
 			switch (p->type)
 			{
-			case Controllable::BOOL: m.addInt32(pVal ? 1 : 0); break;
+			case Controllable::BOOL: OSCHelpers::addBoolArgumentToMessage(m, pVal, oscModule->getBoolMode()); break;
 			case Controllable::INT: m.addInt32((int)pVal); break;
 			case Controllable::FLOAT: m.addFloat32((float)pVal); break;
 			case Controllable::STRING: m.addString(pVal.toString()); break;
@@ -107,7 +109,7 @@ void CustomOSCCommand::updateWildcardsMap(const String& address)
 	for (std::sregex_iterator i = source_begin; i != source_end; ++i)
 	{
 		std::smatch m = *i;
-		wildcardsMap.add(m [1].str());
+		wildcardsMap.add(m[1].str());
 	}
 
 	addressHasWildcards = wildcardsMap.size() > 0;
@@ -151,7 +153,7 @@ void CustomOSCCommand::updateMappingInputValue(var value, int multiplexIndex)
 void CustomOSCCommand::setInputNamesFromParams(Array<WeakReference<Parameter>> outParams)
 {
 	OSCCommand::setInputNamesFromParams(outParams);
-	if(wildcardsContainer != nullptr) wildcardsContainer->setInputNames(inputNames);
+	if (wildcardsContainer != nullptr) wildcardsContainer->setInputNames(inputNames);
 }
 
 var CustomOSCCommand::getJSONData()
@@ -159,7 +161,7 @@ var CustomOSCCommand::getJSONData()
 	var data = BaseCommand::getJSONData(); //do not inherit OSC:Command to avoid saving "arguments"
 	var customValuesData = customValuesManager->getJSONData();
 	if (!customValuesData.isVoid()) data.getDynamicObject()->setProperty("argManager", customValuesData);
-	if(wildcardsContainer != nullptr) data.getDynamicObject()->setProperty(wildcardsContainer->shortName, wildcardsContainer->getJSONData());
+	if (wildcardsContainer != nullptr) data.getDynamicObject()->setProperty(wildcardsContainer->shortName, wildcardsContainer->getJSONData());
 	return data;
 }
 
@@ -167,5 +169,5 @@ void CustomOSCCommand::loadJSONDataInternal(var data)
 {
 	OSCCommand::loadJSONDataInternal(data);
 	customValuesManager->loadJSONData(data.getProperty("argManager", var()), true);
-	if(wildcardsContainer != nullptr) wildcardsContainer->loadJSONData(data.getProperty(wildcardsContainer->shortName, var()), true);
+	if (wildcardsContainer != nullptr) wildcardsContainer->loadJSONData(data.getProperty(wildcardsContainer->shortName, var()), true);
 }
