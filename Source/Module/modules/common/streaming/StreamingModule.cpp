@@ -16,8 +16,8 @@ StreamingModule::StreamingModule(const String& name) :
 	setupIOConfiguration(true, true);
 	canHandleRouteValues = hasOutput;
 
-	streamingType = moduleParams.addEnumParameter("Protocol", "Protocol for treating the incoming data");
-	streamingType->addOption("Lines", LINES)->addOption("Raw", RAW)->addOption("Data255", DATA255)->addOption("COBS", COBS)->addOption("JSON", TYPE_JSON);
+	streamingType = moduleParams.addEnumParameter("Protocol", "Protocol for treating the incoming data.\nLines will detect new lines and process messages when it finds one.\nDirect will just consider any incoming data as a new data.\nData255 uses the byte 255 as message split.\nJSON will try to parse the incoming data as a JSON Object.\nCOBS is another messaging protocol.");
+	streamingType->addOption("Lines", LINES)->addOption("Direct", DIRECT)->addOption("Raw", RAW)->addOption("Data255", DATA255)->addOption("JSON", TYPE_JSON)->addOption("COBS", COBS);
 
 	autoAdd = moduleParams.addBoolParameter("Auto Add", "If checked, incoming data will be parsed depending on the Message Structure parameter, and if eligible will be added as values", true);
 	messageStructure = moduleParams.addEnumParameter("Message Structure", "The expected structure of a message, determining how it should be interpreted to auto create values from it");
@@ -75,6 +75,7 @@ void StreamingModule::buildMessageStructureOptions()
 	{
 
 	case LINES:
+	case DIRECT:
 	{
 		messageStructure->addOption("Space separated", LINES_SPACE)
 			->addOption("Tab separated", LINES_TAB)

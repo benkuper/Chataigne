@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    StreamingModule.h
-    Created: 5 Jan 2018 10:39:38am
-    Author:  Ben
+	StreamingModule.h
+	Created: 5 Jan 2018 10:39:38am
+	Author:  Ben
 
   ==============================================================================
 */
@@ -14,24 +14,24 @@ class StreamingModule :
 	public Module
 {
 public:
-	StreamingModule(const String &name = "Streaming");
+	StreamingModule(const String& name = "Streaming");
 	virtual ~StreamingModule();
 
-	enum StreamingType { LINES, DATA255, RAW, COBS, TYPE_JSON };
-	enum MessageStructure { LINES_SPACE, LINES_TAB, LINES_COMMA, LINES_COLON, LINES_SEMICOLON, LINES_EQUALS, NO_SEPARATION, RAW_1BYTE, RAW_FLOATS, RAW_COLORS};
-	EnumParameter * streamingType;
+	enum StreamingType { LINES, DIRECT, DATA255, TYPE_JSON, RAW, COBS };
+	enum MessageStructure { LINES_SPACE, LINES_TAB, LINES_COMMA, LINES_COLON, LINES_SEMICOLON, LINES_EQUALS, NO_SEPARATION, RAW_1BYTE, RAW_FLOATS, RAW_COLORS };
+	EnumParameter* streamingType;
 
-	BoolParameter * autoAdd;
-	EnumParameter * messageStructure;
-	BoolParameter * firstValueIsTheName;
+	BoolParameter* autoAdd;
+	EnumParameter* messageStructure;
+	BoolParameter* firstValueIsTheName;
 
 	std::unique_ptr<ControllableContainer> thruManager;
 
 	const Identifier dataEventId = "dataReceived";
-	
+
 	const Identifier sendId = "send";
 	const Identifier sendToId = "sendTo";
-	const Identifier sendExcludeId = "sendExclude"; 
+	const Identifier sendExcludeId = "sendExclude";
 
 	const Identifier sendBytesId = "sendBytes";
 	const Identifier sendBytesToId = "sendBytesTo";
@@ -42,24 +42,24 @@ public:
 
 	virtual void buildMessageStructureOptions();
 
-	virtual void processDataLine(const String &message);
-	virtual void processDataLineInternal(const String &message) {}
+	virtual void processDataLine(const String& message);
+	virtual void processDataLineInternal(const String& message) {}
 	virtual void processDataBytes(Array<uint8> data);
 	virtual void processDataBytesInternal(Array<uint8> data) {}
-	virtual void processDataJSON(const var &data);
+	virtual void processDataJSON(const var& data);
 	virtual void processDataJSONInternal(const var& message) {}
 
 	void createControllablesFromJSONResult(var data, ControllableContainer* container);
 
-	virtual void sendMessage(const String &message, var params = var());
-	virtual void sendMessageInternal(const String &message, var params) {}
+	virtual void sendMessage(const String& message, var params = var());
+	virtual void sendMessageInternal(const String& message, var params) {}
 	virtual void sendBytes(Array<uint8> bytes, var params = var());
 	virtual void sendBytesInternal(Array<uint8> bytes, var params) {}
 
-	static void showMenuAndCreateValue(ControllableContainer * container);
+	static void showMenuAndCreateValue(ControllableContainer* container);
 	static void createThruControllable(ControllableContainer* cc);
 
-	virtual void onControllableFeedbackUpdateInternal(ControllableContainer *, Controllable * c) override;
+	virtual void onControllableFeedbackUpdateInternal(ControllableContainer*, Controllable* c) override;
 
 	virtual bool isReadyToSend() { return false; }
 
@@ -69,7 +69,7 @@ public:
 	public:
 		StreamingRouteParams(Module* sourceModule, Controllable* c);
 		~StreamingRouteParams() {}
-		
+
 		StringParameter* prefix;
 
 		BoolParameter* appendNL;
@@ -81,8 +81,8 @@ public:
 
 	void loadJSONDataInternal(var data) override;
 
-	static var sendStringFromScript(const var::NativeFunctionArgs &a);
-	static var sendBytesFromScript(const var::NativeFunctionArgs &a);
+	static var sendStringFromScript(const var::NativeFunctionArgs& a);
+	static var sendBytesFromScript(const var::NativeFunctionArgs& a);
 
 	static var sendStringToFromScript(const var::NativeFunctionArgs& a);
 	static var sendStringExcludeFromScript(const var::NativeFunctionArgs& a);

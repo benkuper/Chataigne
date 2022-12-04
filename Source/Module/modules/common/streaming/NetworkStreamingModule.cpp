@@ -103,7 +103,7 @@ void NetworkStreamingModule::onControllableFeedbackUpdateInternal(ControllableCo
 	{
 		if (!isCurrentlyLoadingData) setupReceiver();
 	}
-	
+
 	if ((receiveCC != nullptr && c == receiveCC->enabled) || (sendCC != nullptr && c == sendCC->enabled))
 	{
 		setupIOConfiguration(canReceive(), canSend());
@@ -161,19 +161,6 @@ void NetworkStreamingModule::run()
 				StreamingType m = streamingType->getValueDataAsEnum<StreamingType>();
 				switch (m)
 				{
-
-				case TYPE_JSON:
-				{
-					stringBuffer.append(String::fromUTF8((char*)bytes.getRawDataPointer(), numBytes), numBytes);
-					var data = JSON::parse(stringBuffer);
-					if (!data.isVoid())
-					{
-						processDataJSON(data);
-						stringBuffer = "";
-					}
-				}
-				break;
-
 				case LINES:
 				{
 					if (CharPointer_UTF8::isValidString((char*)bytes.getRawDataPointer(), numBytes))
@@ -183,6 +170,16 @@ void NetworkStreamingModule::run()
 						sa.addTokens(stringBuffer, "\r\n", "\"");
 						for (int i = 0; i < sa.size() - 1; ++i) processDataLine(sa[i]);
 						stringBuffer = sa[sa.size() - 1];
+					}
+				}
+				break;
+
+				case DIRECT:
+				{
+					if (CharPointer_UTF8::isValidString((char*)bytes.getRawDataPointer(), numBytes))
+					{
+						String s = String::fromUTF8((char*)bytes.getRawDataPointer(), numBytes);
+						processDataLine(s);
 					}
 				}
 				break;
@@ -209,6 +206,18 @@ void NetworkStreamingModule::run()
 						}
 					}
 
+				}
+				break;
+
+				case TYPE_JSON:
+				{
+					stringBuffer.append(String::fromUTF8((char*)bytes.getRawDataPointer(), numBytes), numBytes);
+					var data = JSON::parse(stringBuffer);
+					if (!data.isVoid())
+					{
+						processDataJSON(data);
+						stringBuffer = "";
+					}
 				}
 				break;
 
