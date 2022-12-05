@@ -43,8 +43,8 @@ PJLinkCommand::PJLinkCommand(PJLinkModule* _module, CommandContext context, var 
 	}
 	else
 	{
-		message = addStringParameter("Message", "This data to send", cmdMessage);
-		message->setControllableFeedbackOnly(true);
+		message = addStringParameter("Message", "The data to send", cmdMessage);
+		//message->setControllableFeedbackOnly(true);
 	}
 
 

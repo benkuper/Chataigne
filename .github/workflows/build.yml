@@ -77,7 +77,7 @@ jobs:
         id: rename_pdb
         shell: powershell
         run: |
-          Rename-Item -Path "./Chataigne.pdb" -NewName "${{ steps.create_package.outputs.pdb-name }}"
+          Rename-Item -Path "./${{ env.ProjectName }}.pdb" -NewName "${{ steps.create_package.outputs.pdb-name }}"
         working-directory: ./Builds/${{ matrix.buildFolder }}/x64/${{ steps.set_variables.outputs.config }}/App
 
       - name: Upload PDB
