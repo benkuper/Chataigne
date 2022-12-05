@@ -30,7 +30,7 @@ runs:
           echo "::set-output name=dep::release"
         else
           echo "::set-output name=suffix::${{ inputs.os }}-bleedingedge"
-          echo "::set-output name=config::Debug"
-          echo "::set-output name=dep::debug"
+          echo "::set-output name=config::Release"
+          echo "::set-output name=dep::release"
         fi
       shell: bash
