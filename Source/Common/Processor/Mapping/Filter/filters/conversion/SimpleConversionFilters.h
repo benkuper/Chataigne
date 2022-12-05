@@ -101,7 +101,11 @@ public:
 	enum Format { NUMBER, TIME, HEXA };
 	EnumParameter* format;
 	IntParameter* numDecimals;
-	IntParameter * fixedLeading;
+	IntParameter* fixedLeading;
+
+	enum Case { UPPER, LOWER, LCAMEL, UCAMEL };
+	EnumParameter * forceCase;
+	
 	StringParameter* prefix;
 	StringParameter* suffix;
 	enum ConvertMode { KEY, VALUE };
@@ -109,6 +113,7 @@ public:
 
 	void setupParametersInternal(int multiplexIndex, bool rangeOnly) override;
 	var convertValue(Parameter * source, var sourceValue, int multiplexIndex) override;
+	String getCasedString(const String& value);
 
 	var getJSONData() override;
 

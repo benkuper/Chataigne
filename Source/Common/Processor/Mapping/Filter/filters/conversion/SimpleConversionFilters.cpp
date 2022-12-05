@@ -374,6 +374,7 @@ ToStringFilter::ToStringFilter(var params, Multiplex* multiplex) :
 	format(nullptr),
 	numDecimals(nullptr),
 	fixedLeading(nullptr),
+	forceCase(nullptr),
 	prefix(nullptr),
 	suffix(nullptr),
 	enumConvertMode(nullptr)
@@ -383,6 +384,9 @@ ToStringFilter::ToStringFilter(var params, Multiplex* multiplex) :
 	numDecimals = filterParams.addIntParameter("Number of Decimals", "Maximum number of decimals", 3, 0, 26);
 	fixedLeading = filterParams.addIntParameter("Fixed Leading", "If enabled, this will force the output to be with a certain mount of digits before the decimals", 3, 0, 100, false);
 	fixedLeading->canBeDisabledByUser = true;
+	forceCase = filterParams.addEnumParameter("Force Case", "If enabled, this will force the cas", false);
+	forceCase->addOption("UPPERCASE", UPPER)->addOption("lowercase", LOWER)->addOption("CamelCase", UCAMEL)->addOption("lowerCamelCase", LCAMEL);
+	forceCase->canBeDisabledByUser = true;
 
 	prefix = filterParams.addStringParameter("Prefix", "Something prepended to the result", "");
 	suffix = filterParams.addStringParameter("Suffix", "Something appended  to the result", "");
@@ -420,7 +424,7 @@ void ToStringFilter::setupParametersInternal(int multiplexIndex, bool rangeOnly)
 
 var ToStringFilter::convertValue(Parameter* source, var sourceValue, int multiplexIndex)
 {
-	String result = filterParams.getLinkedValue(prefix, multiplexIndex).toString();
+	String result = "";;
 
 	var sv = sourceValue;
 
@@ -449,7 +453,9 @@ var ToStringFilter::convertValue(Parameter* source, var sourceValue, int multipl
 				switch (f)
 				{
 				case NUMBER:
-					result += String((float)sv, (int)filterParams.getLinkedValue(numDecimals, multiplexIndex));
+				case HEXA:
+					result += f == HEXA ? String::toHexString((int)sv) : String((float)sv, (int)filterParams.getLinkedValue(numDecimals, multiplexIndex));
+
 					if (fixedLeading->enabled)
 					{
 						StringArray s;
@@ -459,8 +465,7 @@ var ToStringFilter::convertValue(Parameter* source, var sourceValue, int multipl
 					}
 					break;
 
-				case HEXA:
-					result += String::toHexString((int)sv);
+
 					break;
 
 				case TIME:
@@ -471,8 +476,30 @@ var ToStringFilter::convertValue(Parameter* source, var sourceValue, int multipl
 		}
 	}
 
-	result += filterParams.getLinkedValue(suffix, multiplexIndex).toString();
+	result = getCasedString(result);
+	result = filterParams.getLinkedValue(prefix, multiplexIndex).toString() + result + filterParams.getLinkedValue(suffix, multiplexIndex).toString();
 	return result;
+}
+
+String ToStringFilter::getCasedString(const String& value)
+{
+	if (!forceCase->enabled) return value;
+	Case c = forceCase->getValueDataAsEnum<Case>();
+	switch (c)
+	{
+	case UPPER: return value.toUpperCase(); break;
+	case LOWER: return value.toLowerCase(); break;
+	case UCAMEL:
+	case LCAMEL:
+	{
+		String lCamel = StringUtil::toShortName(value);
+		if (c == LCAMEL) return lCamel;
+		return lCamel.substring(0, 1).toUpperCase() + lCamel.substring(1);
+	}
+	break;
+	}
+
+	return value;
 }
 
 void ToStringFilter::filterParamChanged(Parameter* p)
