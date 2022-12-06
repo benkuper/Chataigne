@@ -309,12 +309,20 @@ void AudioModule::loadJSONDataInternal(var data)
 	else clearWarning();
 }
 
-void AudioModule::audioDeviceIOCallbackWithContext(const float* const* inputChannelData,
+void AudioModule::audioDeviceIOCallbackWithContext(const float** inputChannelData,
 	int numInputChannels,
-	float* const* outputChannelData,
+	float** outputChannelData,
 	int numOutputChannels,
 	int numSamples,
 	const AudioIODeviceCallbackContext& context)
+
+//7.0.3
+//(const float* const* inputChannelData,
+//	int numInputChannels,
+//	float* const* outputChannelData,
+//	int numOutputChannels,
+//	int numSamples,
+//	const AudioIODeviceCallbackContext& context)
 {
 	//DBG("audio callback");
 
