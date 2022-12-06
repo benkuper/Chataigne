@@ -50,6 +50,7 @@ public:
 
 	GenericControllableManager* manager;
 	HashMap<Parameter*, Parameter*> linkMap;
+	Array<Parameter*, CriticalSection> changingParams;
 
 	bool keepValuesInSync;
 
@@ -70,6 +71,7 @@ public:
 	void onExternalParameterValueChanged(Parameter * p) override;
 	void parameterRangeChanged(Parameter*) override;
 	void controllableNameChanged(Controllable*) override;
+	void controllableAttributeChanged(Controllable* c, const String& attribute) override;
 
 	Parameter* getParameterForSource(Parameter* p);
 	Parameter* getSourceForParameter(Parameter* p);

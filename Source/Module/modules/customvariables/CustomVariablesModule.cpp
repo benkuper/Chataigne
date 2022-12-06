@@ -1,15 +1,16 @@
 /*
   ==============================================================================
 
-    CustomVariablesModule.cpp
-    Created: 22 Feb 2018 6:28:07pm
-    Author:  Ben
+	CustomVariablesModule.cpp
+	Created: 22 Feb 2018 6:28:07pm
+	Author:  Ben
 
   ==============================================================================
 */
 
+#include "Module/ModuleIncludes.h"
 
-CustomVariablesModule::CustomVariablesModule(CVGroupManager * manager) :
+CustomVariablesModule::CustomVariablesModule(CVGroupManager* manager) :
 	Module("Custom Variables"),
 	manager(manager)
 {
@@ -26,7 +27,7 @@ CustomVariablesModule::CustomVariablesModule(CVGroupManager * manager) :
 		->addParam("root", (int64)(void*)&valuesCC)
 		->addParam("labelLevel", 0)
 	);
-	
+
 	defManager->add(CommandDefinition::createDef(this, "", "Set Preset", &CVCommand::create)->addParam("type", CVCommand::SET_PRESET));
 	defManager->add(CommandDefinition::createDef(this, "", "Go to preset", &CVCommand::create)->addParam("type", CVCommand::GO_TO_PRESET));
 	defManager->add(CommandDefinition::createDef(this, "", "Kill Go to preset", &CVCommand::create, CommandContext::ACTION)->addParam("type", CVCommand::KILL_GO_TO_PRESET));
@@ -45,9 +46,9 @@ CustomVariablesModule::~CustomVariablesModule()
 }
 
 
-GenericControllableManagerLinkedContainer* CustomVariablesModule::getValueCCForGroup(CVGroup * g)
+GenericControllableManagerLinkedContainer* CustomVariablesModule::getValueCCForGroup(CVGroup* g)
 {
-	for (auto &cc : valuesContainers) if (cc->manager == &g->values) return cc;
+	for (auto& cc : valuesContainers) if (cc->manager == &g->values) return cc;
 	return nullptr;
 }
 
@@ -56,8 +57,8 @@ void CustomVariablesModule::clearItems()
 	while (valuesContainers.size() > 0)
 	{
 		valuesCC.removeChildControllableContainer(valuesContainers[0]);
-		
-		CVGroup * g = dynamic_cast<CVGroup *>(valuesContainers[0]->manager->parentContainer.get());
+
+		CVGroup* g = dynamic_cast<CVGroup*>(valuesContainers[0]->manager->parentContainer.get());
 		jassert(g != nullptr);
 		g->removeControllableContainerListener(this);
 
@@ -67,9 +68,9 @@ void CustomVariablesModule::clearItems()
 }
 
 
-void CustomVariablesModule::itemAdded(CVGroup * g)
+void CustomVariablesModule::itemAdded(CVGroup* g)
 {
-	GenericControllableManagerLinkedContainer* cc = new GenericControllableManagerLinkedContainer(g->niceName,&g->values,true);
+	GenericControllableManagerLinkedContainer* cc = new GenericControllableManagerLinkedContainer(g->niceName, &g->values, true);
 	valuesCC.addChildControllableContainer(cc);
 	g->addControllableContainerListener(this);
 	valuesContainers.add(cc);
@@ -86,11 +87,11 @@ void CustomVariablesModule::itemsAdded(Array<CVGroup*> groups)
 	}
 }
 
-void CustomVariablesModule::itemRemoved(CVGroup * g)
+void CustomVariablesModule::itemRemoved(CVGroup* g)
 {
 	GenericControllableManagerLinkedContainer* cc = getValueCCForGroup(g);
 	if (cc == nullptr) return;
-	
+
 	valuesCC.removeChildControllableContainer(cc);
 	g->removeControllableContainerListener(this);
 	valuesContainers.removeObject(cc);
@@ -109,15 +110,15 @@ void CustomVariablesModule::itemsRemoved(Array<CVGroup*> groups)
 	}
 }
 
-void CustomVariablesModule::childAddressChanged(ControllableContainer * cc)
+void CustomVariablesModule::childAddressChanged(ControllableContainer* cc)
 {
 	Module::childAddressChanged(cc);
 
-	CVGroup * g = dynamic_cast<CVGroup *>(cc);
+	CVGroup* g = dynamic_cast<CVGroup*>(cc);
 	if (g == nullptr) return;
 	GenericControllableManagerLinkedContainer* mlc = getValueCCForGroup(g);
 	if (mlc == nullptr) return;
-	
+
 	mlc->setNiceName(g->niceName);
 }
 
@@ -188,6 +189,9 @@ void GenericControllableManagerLinkedContainer::syncItem(Parameter* p, Parameter
 	if (source->hasRange()) p->setRange(source->minimumValue, source->maximumValue);
 	else p->clearRange();
 
+	p->alwaysNotify = source->alwaysNotify;
+	p->setControllableFeedbackOnly(source->isControllableFeedbackOnly);
+
 	if (p->type == Parameter::ENUM)
 	{
 		EnumParameter* es = (EnumParameter*)source;
@@ -246,7 +250,7 @@ void GenericControllableManagerLinkedContainer::itemsReordered()
 
 void GenericControllableManagerLinkedContainer::enumOptionAdded(EnumParameter* source, const String&)
 {
-	Parameter* p = getParameterForSource(source); 
+	Parameter* p = getParameterForSource(source);
 	syncItem(p, source);
 }
 
@@ -267,16 +271,28 @@ void GenericControllableManagerLinkedContainer::onContainerParameterChanged(Para
 {
 	ControllableContainer::onContainerParameterChanged(p);
 	if (!keepValuesInSync) return;
-
-	if (Parameter* tp = getSourceForParameter(p)) tp->setValue(p->value);
+	if (changingParams.contains(p)) return;
+	
+	if (Parameter* tp = getSourceForParameter(p))
+	{
+		changingParams.add(tp);
+		tp->setValue(p->value);
+		changingParams.removeAllInstancesOf(tp);
+	}
 }
 
 void GenericControllableManagerLinkedContainer::onExternalParameterValueChanged(Parameter* p)
 {
 	ControllableContainer::onExternalParameterValueChanged(p);
 	if (!keepValuesInSync) return;
+	if (changingParams.contains(p)) return;
 
-	if (Parameter* tp = getParameterForSource(p)) tp->setValue(p->value);
+	if (Parameter* tp = getParameterForSource(p))
+	{
+		changingParams.add(tp);
+		tp->setValue(p->getValue());
+		changingParams.removeAllInstancesOf(tp);
+	}
 }
 
 
@@ -297,6 +313,18 @@ void GenericControllableManagerLinkedContainer::controllableNameChanged(Controll
 	if (p == nullptr) return;
 	syncItem(p, source, keepValuesInSync);
 }
+
+void GenericControllableManagerLinkedContainer::controllableAttributeChanged(Controllable* c, const String&)
+{
+	Parameter* source = dynamic_cast<Parameter*>(c);
+	if (source == nullptr) return;
+
+	Parameter* p = getParameterForSource(source);
+	if (p == nullptr) return;
+
+	syncItem(p, source, false);
+}
+
 
 Parameter* GenericControllableManagerLinkedContainer::getParameterForSource(Parameter* p)
 {
