@@ -8,6 +8,7 @@
   ==============================================================================
 */
 
+#include "Module/ModuleIncludes.h"
 
 AbletonLinkModule::AbletonLinkModule() :
 	Module(getTypeString()),

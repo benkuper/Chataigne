@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.12"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.13b1"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="VST_LOGGING=0"
@@ -1750,7 +1750,7 @@
                customPList="&lt;plist&gt;&#10;&lt;dict&gt;&#10;&lt;key&gt;NSAppTransportSecurity&lt;/key&gt;&#10;&#9;&lt;dict&gt;&#10;&#9;&#9;&lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;&#10;&#9;&#9;&lt;true/&gt;&#10;&#9;&lt;/dict&gt;&#10;&lt;/dict&gt;&#10;&lt;/plist&gt;"
                externalLibraries="Servus&#10;hidapi&#10;JoyShockLibrary" microphonePermissionNeeded="1"
                hardenedRuntimeOptions="com.apple.security.cs.allow-jit,com.apple.security.device.audio-input"
-               extraDefs="JUCE_SUPPORT_CARBON=0&#10;JUCE_COREGRAPHICS_DRAW_ASYNC=1&#10;LINK_PLATFORM_MACOSX=1"
+               extraDefs="JUCE_SUPPORT_CARBON=0&#10;JUCE_COREGRAPHICS_DRAW_ASYNC=1&#10;USE_ABLETONLINK=1&#10;LINK_PLATFORM_MACOSX=1"
                xcodeValidArchs="x86_64" embeddedFrameworks="../../External/sdl/lib/osx/SDL2.framework"
                frameworkSearchPaths="../../External/sdl/lib/osx">
       <CONFIGURATIONS>
@@ -1784,7 +1784,7 @@
     </XCODE_MAC>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile" externalLibraries="bluetooth&#10;Servus&#10;curl&#10;SDL2&#10;usb-1.0&#10;hidapi-hidraw&#10;JoyShockLibrary"
                 extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;&#10;-Wl,--as-needed"
-                smallIcon="nVz6Li" bigIcon="nVz6Li" extraDefs="LINK_PLATFORM_LINUX=1&#10;GDK_BACKEND=x11">
+                smallIcon="nVz6Li" bigIcon="nVz6Li" extraDefs="USE_ABLETONLINK=1&#10;LINK_PLATFORM_LINUX=1&#10;GDK_BACKEND=x11">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" optimisation="3" targetName="Chataigne" linuxArchitecture="-m64"
                        libraryPath="../../External/servus/lib/linux&#10;../../External/sdl/lib/linux&#10;/usr/lib/x86_64-linux-gnu/&#10;../../External/joycon/lib/linux"
@@ -1882,7 +1882,7 @@
                smallIcon="nVz6Li" bigIcon="nVz6Li" hardenedRuntimeOptions="com.apple.security.cs.allow-jit"
                customPList="&lt;plist&gt;&#10;&lt;dict&gt;&#10;&lt;key&gt;NSAppTransportSecurity&lt;/key&gt;&#10;&#9;&lt;dict&gt;&#10;&#9;&#9;&lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;&#10;&#9;&#9;&lt;true/&gt;&#10;&#9;&lt;/dict&gt;&#10;&lt;/dict&gt;&#10;&lt;/plist&gt;"
                microphonePermissionNeeded="1" extraFrameworks="IOBluetooth, ForceFeedback, IOKit"
-               documentExtensions="noisette" extraDefs="JUCE_SUPPORT_CARBON=0&#10;JUCE_COREGRAPHICS_DRAW_ASYNC=1&#10;LINK_PLATFORM_MACOSX=1"
+               documentExtensions="noisette" extraDefs="JUCE_SUPPORT_CARBON=0&#10;JUCE_COREGRAPHICS_DRAW_ASYNC=1&#10;USE_ABLETONLINK=1&#10;LINK_PLATFORM_MACOSX=1"
                xcodeValidArchs="x86_64" frameworkSearchPaths="../../External/sdl/lib/osx"
                embeddedFrameworks="../../External/sdl/lib/osx/SDL2.framework">
       <CONFIGURATIONS>
@@ -1916,7 +1916,7 @@
     <LINUX_MAKE targetFolder="Builds/Raspberry" smallIcon="nVz6Li" bigIcon="nVz6Li"
                 extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;&#10;-Wl,--as-needed"
                 externalLibraries="bluetooth&#10;Servus&#10;curl&#10;SDL2&#10;usb-1.0&#10;hidapi-hidraw&#10;pthread&#10;JoyShockLibrary&#10;atomic"
-                extraDefs="LINK_PLATFORM_LINUX=1">
+                extraDefs="USE_ABLETONLINK=1&#10;LINK_PLATFORM_LINUX=1">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" headerPath="/usr/include/freetype2" libraryPath="../../External/servus/lib/raspberry&#10;../../External/sdl/lib/raspberry&#10;../../External/joycon/lib/raspberry&#10;/usr/lib/arm-linux-gnueabihf"
                        linuxArchitecture="-march=armv8-a" optimisation="3" isDebug="1"/>
@@ -1945,7 +1945,7 @@
         <MODULEPATH id="juce_cryptography" path="JUCE/modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
-    <LINUX_MAKE targetFolder="Builds/Raspberry64" extraDefs="LINK_PLATFORM_LINUX=1"
+    <LINUX_MAKE targetFolder="Builds/Raspberry64" extraDefs="USE_ABLETONLINK=1&#10;LINK_PLATFORM_LINUX=1"
                 extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;&#10;-Wl,--as-needed"
                 externalLibraries="bluetooth&#10;Servus&#10;curl&#10;SDL2&#10;usb-1.0&#10;hidapi-hidraw&#10;pthread&#10;JoyShockLibrary&#10;atomic"
                 smallIcon="nVz6Li" bigIcon="nVz6Li">
