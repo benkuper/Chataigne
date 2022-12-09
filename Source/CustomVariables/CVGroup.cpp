@@ -17,7 +17,6 @@ CVGroup::CVGroup(const String& name) :
 	interpolationAutomation(nullptr),
 	interpolationTime(0)
 {
-	itemDataType = getTypeString();
 
 	setHasCustomColor(true);
 	itemColor->setDefaultValue(BG_COLOR.brighter(.2f));

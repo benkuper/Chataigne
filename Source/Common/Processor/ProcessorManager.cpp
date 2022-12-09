@@ -13,7 +13,6 @@ ProcessorManager::ProcessorManager(const String& name, Multiplex* multiplex) :
 	forceDisabled(false)
 {
 	isSelectable = false;
-	itemDataType = "Processor";
 
 	managerFactory = &factory;
 	factory.defs.add(MultiplexTargetDefinition<Processor>::createDef<Action>("", "Action", multiplex));

@@ -85,5 +85,5 @@ public:
 
 	DECLARE_ASYNC_EVENT(Mapping, Mapping, mapping, { OUTPUT_TYPE_CHANGED } )
 
-	String getTypeString() const override { return "Mapping"; };
+	DECLARE_TYPE("Mapping")
 };

@@ -46,6 +46,8 @@ public:
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
+	DECLARE_TYPE("CommandTemplate")
+
 	InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables = Array<Inspectable*>()) override;
 
 	class TemplateListener

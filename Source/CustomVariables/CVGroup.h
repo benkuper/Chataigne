@@ -82,6 +82,5 @@ public:
 	void run() override;
 
 
-	String getTypeString() const override { return getTypeStringStatic(); }
-	static String getTypeStringStatic() { return "CVGroup"; }
+	DECLARE_TYPE("CVGroup")
 };

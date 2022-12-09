@@ -20,9 +20,9 @@ ConsequenceManager::ConsequenceManager(const String& name, Multiplex* multiplex)
 
 	selectItemWhenCreated = false;
 
-	factory.defs.add(MultiplexTargetDefinition<BaseItem>::createDef<Consequence>("", "BaseItem", multiplex)); //for legacy support, should be removed after 1.9 is widely used !
 	factory.defs.add(MultiplexTargetDefinition<BaseItem>::createDef<Consequence>("", "Consequence", multiplex));
 	factory.defs.add(MultiplexTargetDefinition<BaseItem>::createDef<ConsequenceGroup>("", "Group", multiplex));
+
 	managerFactory = &factory;
 
 	delay = addFloatParameter("Delay", "Delay the triggering of the commands", 0, 0);

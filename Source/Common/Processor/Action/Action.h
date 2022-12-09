@@ -101,7 +101,7 @@ public:
 	void removeAsyncActionListener(AsyncListener* listener) { actionAsyncNotifier.removeListener(listener); }
 
 
-	String getTypeString() const override { return "Action"; };
+	DECLARE_TYPE("Action");
 	//InspectableEditor * getEditor(bool /*isRoot*/) override;
 
 

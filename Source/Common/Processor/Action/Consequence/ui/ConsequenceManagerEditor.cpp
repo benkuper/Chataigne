@@ -8,10 +8,13 @@
   ==============================================================================
 */
 
+#include "Common/Processor/ProcessorIncludes.h"
+
 ConsequenceManagerEditor::ConsequenceManagerEditor(ConsequenceManager* csm, CommandContext context, bool isRoot, bool multiplexMode) :
 	BaseCommandHandlerManagerEditor(csm, context, isRoot, multiplexMode),
 	csm(csm)
 {
+	for (auto& f : csm->factory.defs) acceptedDropTypes.add(f->type);
 }
 
 ConsequenceManagerEditor::~ConsequenceManagerEditor()

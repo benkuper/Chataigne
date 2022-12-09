@@ -13,7 +13,6 @@ Processor::Processor(const String & name, bool canBeDisabled, bool canHaveScript
 	forceDisabled(false),
 	processorNotifier(10)
 {
-	itemDataType = "Processor";
 	setHasCustomColor(true);
 	editorIsCollapsed = true;
 	showWarningInUI = true;

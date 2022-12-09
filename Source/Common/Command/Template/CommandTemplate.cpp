@@ -14,7 +14,6 @@ CommandTemplate::CommandTemplate(Module * m, var params) :
 	paramsContainer("Parameters"),
 	sourceDef(nullptr)
 {
-	itemDataType = "CommandTemplate";
 	showInspectorOnSelect = false;
 
 	triggerTrigger = addTrigger("Trigger","Trigger a command from this template");
@@ -49,7 +48,6 @@ CommandTemplate::CommandTemplate(var params) :
 	paramsContainer("Parameters"),
 	sourceDef(nullptr)
 {
-	itemDataType = "CommandTemplate";
 	showInspectorOnSelect = false;
 
 	Module * m = ModuleManager::getInstance()->getModuleWithName(params.getProperty("module",""));

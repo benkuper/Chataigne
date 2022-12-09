@@ -24,7 +24,6 @@ Mapping::Mapping(var params, Multiplex* multiplex, bool canBeDisabled) :
 	inputIsLocked(false),
 	mappingNotifier(10)
 {
-	itemDataType = "Mapping";
 	type = MAPPING;
 
 	updateRate = mappingParams.addIntParameter("Update rate", "This is the update rate at which the mapping is processing. This is used only when continuous filters like Smooth and Damping are presents", 50, 1, 500, false);

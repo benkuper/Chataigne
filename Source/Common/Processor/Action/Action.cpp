@@ -24,8 +24,6 @@ Action::Action(const String& name, var params, Multiplex* multiplex, bool hasCon
 	forceChecking(false),
 	actionAsyncNotifier(10)
 {
-	helpID = "Action";
-	itemDataType = "Action";
 	type = ACTION;
 
 	triggerOn = addTrigger("Trigger", "This will trigger as if the conditions have been validated, and trigger all the Consequences:TRUE");
