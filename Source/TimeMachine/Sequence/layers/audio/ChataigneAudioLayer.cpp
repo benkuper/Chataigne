@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "TimeMachine/TimeMachineIncludes.h"
+
 ChataigneAudioLayer::ChataigneAudioLayer(ChataigneSequence* _sequence, var params) :
 	AudioLayer(_sequence, params),
 	audioModule(nullptr),
@@ -48,7 +50,7 @@ void ChataigneAudioLayer::setAudioModule(AudioModule* newModule)
 
 	if (audioModule != nullptr)
 	{
-		setAudioProcessorGraph(&audioModule->graph, AUDIO_OUTPUT_GRAPH_ID);
+		setAudioProcessorGraph(&audioModule->graph, AUDIO_OUTPUTMIXER_GRAPH_ID);
 		audioModule->addAudioModuleListener(this);
 	}
 	else

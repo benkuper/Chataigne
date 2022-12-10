@@ -39,7 +39,9 @@ AudioModule::AudioModule(const String& name) :
 
 
 	moduleParams.addChildControllableContainer(&inputVolumesCC);
-	//moduleParams.addChildControllableContainer(&outputVolumesCC);
+
+	outputVolumesCC.editorIsCollapsed = true;
+	moduleParams.addChildControllableContainer(&outputVolumesCC);
 
 
 	monitorParams.enabled->setValue(false);
@@ -102,13 +104,22 @@ AudioModule::AudioModule(const String& name) :
 
 	if (setup.outputDeviceName.isEmpty()) setWarningMessage("Module is not connected to an audio output");
 
-	graph.setPlayConfigDetails(0, 2, currentSampleRate, currentBufferSize);
+	graph.setPlayConfigDetails(0, 6, currentSampleRate, currentBufferSize);
 	graph.prepareToPlay(currentSampleRate, currentBufferSize);
 
 	std::unique_ptr<AudioProcessorGraph::AudioGraphIOProcessor> procIn(new AudioProcessorGraph::AudioGraphIOProcessor(AudioProcessorGraph::AudioGraphIOProcessor::audioInputNode));
 	std::unique_ptr<AudioProcessorGraph::AudioGraphIOProcessor> procOut(new AudioProcessorGraph::AudioGraphIOProcessor(AudioProcessorGraph::AudioGraphIOProcessor::audioOutputNode));
-	graph.addNode(std::move(procIn), AudioProcessorGraph::NodeID(1));
-	graph.addNode(std::move(procOut), AudioProcessorGraph::NodeID(2));
+	graph.addNode(std::move(procIn), AUDIO_INPUT_GRAPH_ID);
+	graph.addNode(std::move(procOut), AUDIO_OUTPUT_GRAPH_ID);
+
+	auto iProc = std::unique_ptr<MixerProcessor>(new MixerProcessor(this, true));
+	inputMixer = iProc.get();
+
+	auto oProc = std::unique_ptr<MixerProcessor>(new MixerProcessor(this, false));
+	outputMixer = oProc.get();
+
+	graph.addNode(std::move(iProc), AUDIO_INPUTMIXER_GRAPH_ID);
+	graph.addNode(std::move(oProc), AUDIO_OUTPUTMIXER_GRAPH_ID);
 
 	player.setProcessor(&graph);
 
@@ -157,6 +168,8 @@ void AudioModule::updateAudioSetup()
 
 	int numChannels = graph.getMainBusNumOutputChannels();
 	AudioChannelSet channelSet = graph.getChannelLayoutOfBus(false, 0);
+
+
 	for (int i = 0; i < numChannels; ++i)
 	{
 		String channelName = AudioChannelSet::getChannelTypeName(channelSet.getTypeOfChannel(i));
@@ -178,21 +191,32 @@ void AudioModule::updateAudioSetup()
 	int numInputChannels = graph.getMainBusNumInputChannels();
 	int numOutputChannels = graph.getMainBusNumOutputChannels();
 
-	AudioChannelSet inputChannelSet = graph.getChannelLayoutOfBus(false, 0);
+	graph.disconnectNode(AUDIO_INPUTMIXER_GRAPH_ID);
+	inputMixer->setPlayConfigDetails(graph.getMainBusNumInputChannels(), graph.getMainBusNumInputChannels(), currentSampleRate, currentBufferSize);
+
+	graph.disconnectNode(AUDIO_OUTPUTMIXER_GRAPH_ID);
+	outputMixer->setPlayConfigDetails(graph.getMainBusNumOutputChannels(), graph.getMainBusNumOutputChannels(), currentSampleRate, currentBufferSize);
+
+	AudioChannelSet inputChannelSet = graph.getChannelLayoutOfBus(true, 0);
 	for (int i = 0; i < numInputChannels; ++i)
 	{
-		String channelName = AudioChannelSet::getChannelTypeName(inputChannelSet.getTypeOfChannel(i));
+		String channelName = "Input " + String(i + 1);// AudioChannelSet::getChannelTypeName(inputChannelSet.getTypeOfChannel(i));
 		FloatParameter* v = inputVolumesCC.addFloatParameter(channelName + " Gain", "Gain to apply to this input channel", 1, 0, 3);
 		inputVolumes.add(v);
+
+		graph.addConnection(AudioProcessorGraph::Connection({ AUDIO_INPUT_GRAPH_ID, i }, { AUDIO_INPUTMIXER_GRAPH_ID, i }));
 	}
 	inputVolumesCC.loadJSONData(inData);
 
-	AudioChannelSet outputChannelSet = graph.getChannelLayoutOfBus(false, 1);
+	AudioChannelSet outputChannelSet = graph.getChannelLayoutOfBus(false, 0);
 	for (int i = 0; i < numOutputChannels; ++i)
 	{
-		String channelName = AudioChannelSet::getChannelTypeName(outputChannelSet.getTypeOfChannel(i));
+		String channelName = "Output " + String(i + 1);
 		FloatParameter* v = outputVolumesCC.addFloatParameter(channelName + " Gain", "Gain to apply to this input channel", 1, 0, 3);
 		outputVolumes.add(v);
+
+		graph.addConnection(AudioProcessorGraph::Connection({ AUDIO_OUTPUTMIXER_GRAPH_ID, i }, { AUDIO_OUTPUT_GRAPH_ID, i }));
+
 	}
 	outputVolumesCC.loadJSONData(outData);
 
@@ -453,4 +477,94 @@ AudioModuleHardwareSettings::AudioModuleHardwareSettings(AudioDeviceManager* am)
 InspectableEditor* AudioModuleHardwareSettings::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
 {
 	return new AudioModuleHardwareEditor(this, isRoot);
+}
+
+
+
+// MIXER
+
+
+MixerProcessor::MixerProcessor(AudioModule* m, bool isInput) :
+	AudioProcessor(),
+	audioModule(m),
+	isInput(isInput)
+{
+	gains = isInput ? &audioModule->inputVolumes : &audioModule->outputVolumes;
+}
+
+void MixerProcessor::prepareToPlay(double sampleRate, int maximumExpectedSamplesPerBlock)
+{
+}
+
+void MixerProcessor::releaseResources()
+{
+
+}
+
+void MixerProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer& midiMessages)
+{
+	prevGains.resize(gains->size());
+
+	for (int i = 0; i < buffer.getNumChannels() && i < gains->size(); i++)
+	{
+		float newGain = gains->getUnchecked(i)->floatValue();
+		buffer.applyGainRamp(i, 0, buffer.getNumSamples(), prevGains[i], newGain);
+		prevGains.set(i, newGain);
+	}
+}
+
+double MixerProcessor::getTailLengthSeconds() const
+{
+	return 0.0;
+}
+
+bool MixerProcessor::acceptsMidi() const
+{
+	return false;
+}
+
+bool MixerProcessor::producesMidi() const
+{
+	return false;
+}
+
+AudioProcessorEditor* MixerProcessor::createEditor()
+{
+	return nullptr;
+}
+
+bool MixerProcessor::hasEditor() const
+{
+	return false;
+}
+
+int MixerProcessor::getNumPrograms()
+{
+	return 0;
+}
+
+int MixerProcessor::getCurrentProgram()
+{
+	return 0;
+}
+
+void MixerProcessor::setCurrentProgram(int index)
+{
+}
+
+const String MixerProcessor::getProgramName(int index)
+{
+	return String();
+}
+
+void MixerProcessor::changeProgramName(int index, const String& newName)
+{
+}
+
+void MixerProcessor::getStateInformation(juce::MemoryBlock& destData)
+{
+}
+
+void MixerProcessor::setStateInformation(const void* data, int sizeInBytes)
+{
 }

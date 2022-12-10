@@ -10,8 +10,10 @@
 
 #pragma once
 
-#define AUDIO_INPUT_GRAPH_ID 1
-#define AUDIO_OUTPUT_GRAPH_ID 2
+#define AUDIO_INPUT_GRAPH_ID AudioProcessorGraph::NodeID(1)
+#define AUDIO_OUTPUT_GRAPH_ID AudioProcessorGraph::NodeID(2)
+#define AUDIO_INPUTMIXER_GRAPH_ID AudioProcessorGraph::NodeID(3)
+#define AUDIO_OUTPUTMIXER_GRAPH_ID AudioProcessorGraph::NodeID(4)
 
 class AudioModuleHardwareSettings :
 	public ControllableContainer
@@ -22,6 +24,38 @@ public:
 	AudioDeviceManager* am;
 
 	InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables = Array<Inspectable*>()) override;
+};
+
+class AudioModule;
+
+class MixerProcessor :
+	public AudioProcessor
+{
+public:
+	MixerProcessor(AudioModule* audioModule, bool isInput);
+
+	AudioModule* audioModule;
+	bool isInput;
+	Array<FloatParameter*>* gains;
+	Array<float> prevGains;
+
+	// Hérité via AudioProcessor
+	virtual const String getName() const override { return "Mixer"; }
+	virtual void prepareToPlay(double sampleRate, int maximumExpectedSamplesPerBlock) override;
+	virtual void releaseResources() override;
+	virtual void processBlock(AudioBuffer<float>& buffer, MidiBuffer& midiMessages) override;
+	virtual double getTailLengthSeconds() const override;
+	virtual bool acceptsMidi() const override;
+	virtual bool producesMidi() const override;
+	virtual AudioProcessorEditor* createEditor() override;
+	virtual bool hasEditor() const override;
+	virtual int getNumPrograms() override;
+	virtual int getCurrentProgram() override;
+	virtual void setCurrentProgram(int index) override;
+	virtual const String getProgramName(int index) override;
+	virtual void changeProgramName(int index, const String& newName) override;
+	virtual void getStateInformation(juce::MemoryBlock& destData) override;
+	virtual void setStateInformation(const void* data, int sizeInBytes) override;
 };
 
 class AudioModule :
@@ -38,6 +72,9 @@ public:
 	AudioDeviceManager am;
 	AudioProcessorPlayer player;
 	AudioProcessorGraph graph;
+
+	MixerProcessor* inputMixer;
+	MixerProcessor* outputMixer;
 
 	double currentSampleRate;
 	int currentBufferSize;
@@ -127,7 +164,7 @@ public:
 	static AudioModule* create() { return new AudioModule(); }
 	virtual String getDefaultTypeString() const override { return AudioModule::getTypeStringStatic(); }
 	static String getTypeStringStatic() { return "Sound Card"; }
-	
+
 	class AudioModuleListener
 	{
 	public:
