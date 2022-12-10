@@ -22,6 +22,7 @@ public:
 	FloatParameter* delay;
 	FloatParameter* stagger;
 	BoolParameter* killDelaysOnTrigger;
+	FloatParameter* staggerProgression;
 
 	Factory<BaseItem> factory;
 
@@ -53,9 +54,11 @@ public:
 
 		void run() override;
 	};
-	OwnedArray<StaggerLauncher> staggerLaunchers;
+	OwnedArray<StaggerLauncher, CriticalSection> staggerLaunchers;
 
+	void launcherTriggered(StaggerLauncher* launcher);
 	void launcherFinished(StaggerLauncher* launcher);
+
 	InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables = Array<Inspectable*>()) override;
 
 	class ConsequenceManagerListener

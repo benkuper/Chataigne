@@ -21,6 +21,7 @@ public:
 	Action* action;
 	std::unique_ptr<TriggerButtonUI> triggerUI;
 	std::unique_ptr<FloatSliderUI> progressionUI;
+	std::unique_ptr<FloatSliderUI> staggerUI;
 	bool shouldRepaint;
 
 	virtual void paint(Graphics &g) override;

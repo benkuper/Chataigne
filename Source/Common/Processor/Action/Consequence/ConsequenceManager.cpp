@@ -8,11 +8,12 @@
   ==============================================================================
 */
 
+#include "Common/Processor/ProcessorIncludes.h"
 
 ConsequenceManager::ConsequenceManager(const String& name, Multiplex* multiplex) :
 	BaseManager<BaseItem>(name),
 	MultiplexTarget(multiplex),
-    killDelaysOnTrigger(nullptr),
+	killDelaysOnTrigger(nullptr),
 	forceDisabled(false)
 {
 	canBeDisabled = false;
@@ -31,6 +32,10 @@ ConsequenceManager::ConsequenceManager(const String& name, Multiplex* multiplex)
 	stagger = addFloatParameter("Stagger", "If multiple consequences are there, delay between each consequence trigger", 0, 0);
 	stagger->defaultUI = FloatParameter::TIME;
 	stagger->hideInEditor = true;
+
+	staggerProgression = addFloatParameter("Stagger Progression", "If stagger is used, this animates the progression of the stagger", 0, 0, 1);
+	staggerProgression->hideInEditor = true;
+	staggerProgression->setControllableFeedbackOnly(true);
 }
 
 ConsequenceManager::~ConsequenceManager()
@@ -121,9 +126,20 @@ void ConsequenceManager::removeItemInternal(BaseItem*)
 	stagger->hideInEditor = items.size() < 2;
 }
 
+void ConsequenceManager::launcherTriggered(StaggerLauncher* launcher)
+{
+	if (staggerLaunchers.size() == 0 || items.size() == 0) return;
+	if (launcher != staggerLaunchers.getLast()) return;
+	staggerProgression->setValue((launcher->triggerIndex + 1)*1.0f / items.size());
+}
+
 void ConsequenceManager::launcherFinished(StaggerLauncher* launcher)
 {
-	staggerLaunchers.removeObject(launcher);
+	MessageManager::getInstance()->callAsync([=]()
+		{
+			staggerLaunchers.removeObject(launcher);
+		}
+	);
 }
 
 InspectableEditor* ConsequenceManager::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
@@ -159,26 +175,29 @@ void ConsequenceManager::StaggerLauncher::run()
 		uint32 nextTriggerTime = timeAtRun + d + s * triggerIndex;
 		while (nextTriggerTime > curTime)
 		{
-			if (threadShouldExit()) return;
+			if (threadShouldExit()) break;
 			wait(jmin<uint32>(nextTriggerTime - curTime, 20));
 			curTime = Time::getMillisecondCounter();
 			nextTriggerTime = timeAtRun + d + s * triggerIndex;
 		}
 
-		if (triggerIndex >= csm->items.size()) return;
+		if (triggerIndex >= csm->items.size()) break;
 		BaseItem* bi = csm->items[triggerIndex];
 
 		while (bi != nullptr && !bi->enabled->boolValue())
 		{
 			triggerIndex++;
-			if (triggerIndex >= csm->items.size()) return;
+			if (triggerIndex >= csm->items.size()) break;
 			bi = csm->items[triggerIndex];
 		}
 
-		if (bi == nullptr) return;
+		if (bi == nullptr) break;;
 		if (Consequence* c = dynamic_cast<Consequence*>(bi)) c->triggerCommand(multiplexIndex);
-		else if (ConsequenceGroup* g = dynamic_cast<ConsequenceGroup*>(bi)) if(g->enabled->boolValue()) g->csm.triggerAll(multiplexIndex);
+		else if (ConsequenceGroup* g = dynamic_cast<ConsequenceGroup*>(bi)) if (g->enabled->boolValue()) g->csm.triggerAll(multiplexIndex);
 
+		csm->launcherTriggered(this);
 		triggerIndex++;
 	}
+
+	csm->launcherFinished(this);
 }

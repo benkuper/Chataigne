@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "Common/Processor/ProcessorIncludes.h"
+
 juce_ImplementSingleton(ActionUITimers)
 
 ActionUI::ActionUI(Action* _action, bool showMiniModeBT) :
@@ -33,6 +35,16 @@ ActionUI::ActionUI(Action* _action, bool showMiniModeBT) :
 		addChildComponent(progressionUI.get());
 		progressionUI->setVisible(action->cdm->validationTime->floatValue() > 0);
 	}
+
+	if (action->csmOn != nullptr && action->csmOn->staggerProgression != nullptr)
+	{
+		staggerUI.reset(action->csmOn->staggerProgression->createSlider());
+		staggerUI->customFGColor = Colours::lightpink;
+		staggerUI->useCustomFGColor = true;
+		staggerUI->showValue = false;
+		addChildComponent(staggerUI.get());
+		staggerUI->setVisible(action->csmOn->stagger->floatValue() > 0);
+	}
 }
 
 ActionUI::~ActionUI()
@@ -56,6 +68,16 @@ void ActionUI::paint(Graphics& g)
 void ActionUI::controllableFeedbackUpdateInternal(Controllable* c)
 {
 	ProcessorUI::controllableFeedbackUpdateInternal(c);
+	if (action->csmOn != nullptr && c == action->csmOn->stagger && staggerUI != nullptr)
+	{
+		bool v = action->csmOn->stagger->floatValue() > 0;
+		if (staggerUI->isVisible() != v)
+		{
+			staggerUI->setVisible(v);
+			resized();
+		}
+	}
+
 	if (action->cdm != nullptr && c == action->cdm->validationTime && progressionUI != nullptr)
 	{
 		bool v = action->cdm->validationTime->floatValue() > 0;
@@ -72,9 +94,15 @@ void ActionUI::resizedInternalHeader(Rectangle<int>& r)
 	ProcessorUI::resizedInternalHeader(r);
 
 	if (triggerUI != nullptr) triggerUI->setBounds(r.removeFromRight(70));
+
 	if (progressionUI != nullptr && progressionUI->isVisible())
 	{
 		progressionUI->setBounds(r.removeFromRight(40).reduced(2, 6));
+	}
+
+	if (staggerUI != nullptr && staggerUI->isVisible())
+	{
+		staggerUI->setBounds(r.removeFromRight(40).reduced(2, 6));
 	}
 }
 
