@@ -249,6 +249,15 @@
     <ClCompile Include="..\..\Source\Common\Command\CommandFactory.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Common\DMX\ui\DMXUniverseEditor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\DMX\DMXUniverseManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\DMX\DMXUniverse.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\DMX\device\sacn\e131.c"/>
     <ClCompile Include="..\..\Source\Common\DMX\device\DMXArtNetDevice.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
@@ -2507,6 +2516,9 @@
     <ClInclude Include="..\..\Source\Common\Command\CommandDefinition.h"/>
     <ClInclude Include="..\..\Source\Common\Command\CommandDefinitionManager.h"/>
     <ClInclude Include="..\..\Source\Common\Command\CommandFactory.h"/>
+    <ClInclude Include="..\..\Source\Common\DMX\ui\DMXUniverseEditor.h"/>
+    <ClInclude Include="..\..\Source\Common\DMX\DMXUniverseManager.h"/>
+    <ClInclude Include="..\..\Source\Common\DMX\DMXUniverse.h"/>
     <ClInclude Include="..\..\Source\Common\DMX\device\sacn\e131.h"/>
     <ClInclude Include="..\..\Source\Common\DMX\device\DMXArtNetDevice.h"/>
     <ClInclude Include="..\..\Source\Common\DMX\device\DMXDevice.h"/>

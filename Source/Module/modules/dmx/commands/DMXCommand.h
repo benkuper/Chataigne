@@ -22,6 +22,8 @@ public:
 	DMXAction dmxAction;
 	DMXModule * dmxModule;
 
+	TargetParameter* dmxUniverse;
+
 	EnumParameter * byteOrder;
 
 	IntParameter * channel;

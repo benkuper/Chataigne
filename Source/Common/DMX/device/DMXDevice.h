@@ -1,58 +1,49 @@
 /*
   ==============================================================================
 
-    DMXDevice.h
-    Created: 7 Apr 2017 11:22:47am
-    Author:  Ben
+	DMXDevice.h
+	Created: 7 Apr 2017 11:22:47am
+	Author:  Ben
 
   ==============================================================================
 */
 #pragma once
 
+
 class DMXDevice :
 	public ControllableContainer,
-	public DMXManager::DMXManagerListener,
-	public HighResolutionTimer
+	public DMXManager::DMXManagerListener
 {
 public:
-	enum Type { OPENDMX, ENTTEC_DMXPRO, ENTTEC_MK2, ARTNET, SACN};
-	DMXDevice(const String &name, Type type, bool canReceive);
+	enum Type { OPENDMX, ENTTEC_DMXPRO, ENTTEC_MK2, ARTNET, SACN };
+	DMXDevice(const String& name, Type type, bool canReceive);
 	virtual ~DMXDevice();
 
 	Type type;
 
 	bool enabled;
 	bool isConnected;
-	
+
 	CriticalSection dmxLock;
 
-	uint8 dmxDataOut[512];
-	uint8 dmxDataIn[512];
 	bool canReceive;
 
 	EnablingControllableContainer* inputCC;
-
 	EnablingControllableContainer* outputCC;
-	BoolParameter * alwaysSend;
-	IntParameter * targetRate;
 
 	void setConnected(bool value);
 	virtual void refreshEnabled() {};
 
-	virtual void sendDMXValue(int channel, int value);
-	virtual void sendDMXRange(int startChannel, Array<int> values);
-	virtual void sendDMXValues();
-	virtual void sendDMXValuesInternal() = 0;
+	//virtual void sendDMXValue(int net, int subnet, int universe, int channel, int value);
+	//virtual void sendDMXRange(int net, int subnet, int universe, int startChannel, Array<int> values);
+	virtual void sendDMXValues(DMXUniverse* u);
+	virtual void sendDMXValuesInternal(DMXUniverse* u) = 0;
 
-	void setDMXValuesIn(int numChannels, uint8* values, int startChannel = 0, const String & sourceName = "");
+	void setDMXValuesIn(int net, int subnet, int universe, Array<uint8> values, const String& sourceName = "");
 
 	virtual void clearDevice();
-	
-	static DMXDevice * create(Type type);
 
-	void onControllableFeedbackUpdate(ControllableContainer * cc, Controllable * c) override;
-
-	virtual void hiResTimerCallback() override;
+	static DMXDevice* create(Type type);
 
 	class DMXDeviceListener
 	{
@@ -61,7 +52,7 @@ public:
 
 		virtual void dmxDeviceConnected() {}
 		virtual void dmxDeviceDisconnected() {}
-		virtual void dmxDataInChanged(int /*numChannels*/, uint8* /*values*/, const String &sourceName = "") {}
+		virtual void dmxDataInChanged(int net, int subnet, int universe, Array<uint8> values, const String& sourceName = "") {}
 	};
 
 	ListenerList<DMXDeviceListener> dmxDeviceListeners;

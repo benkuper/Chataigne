@@ -39,7 +39,7 @@ public:
 	Array<FloatParameter*>* gains;
 	Array<float> prevGains;
 
-	// Hérité via AudioProcessor
+	// HÃ©ritÃ© via AudioProcessor
 	virtual const String getName() const override { return "Mixer"; }
 	virtual void prepareToPlay(double sampleRate, int maximumExpectedSamplesPerBlock) override;
 	virtual void releaseResources() override;

@@ -1,12 +1,14 @@
 /*
   ==============================================================================
 
-    DMXManager.cpp
-    Created: 6 Apr 2017 10:23:15pm
-    Author:  Ben
+	DMXManager.cpp
+	Created: 6 Apr 2017 10:23:15pm
+	Author:  Ben
 
   ==============================================================================
 */
+
+#include "Common/CommonIncludes.h"
 
 juce_ImplementSingleton(DMXManager)
 
@@ -54,5 +56,5 @@ void DMXManager::run()
 		}
 		wait(20);
 	}
-	
+
 }

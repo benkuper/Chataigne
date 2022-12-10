@@ -8,11 +8,12 @@
   ==============================================================================
 */
 
+#include "Common/CommonIncludes.h"
 
 DMXEnttecProDevice::DMXEnttecProDevice() :
 	DMXSerialDevice("DMX Pro", ENTTEC_DMXPRO, true)
 {
-    inputCC->enabled->setValue(false);
+	inputCC->enabled->setValue(false);
 }
 
 DMXEnttecProDevice::~DMXEnttecProDevice()
@@ -35,16 +36,16 @@ void DMXEnttecProDevice::setPortConfig()
 	dmxPort->port->write(changeAlwaysData, 6); //to avoid blocking the dmxPro on send
 }
 
-void DMXEnttecProDevice::sendDMXValuesSerialInternal()
+void DMXEnttecProDevice::sendDMXValuesSerialInternal(DMXUniverse* u)
 {
-    if(dmxPort == nullptr || dmxPort->port == nullptr)
-    {
-        LOGWARNING("Error with DMX Pro, please disconnect and reconnect");
-        return;
-    }
-    
+	if (dmxPort == nullptr || dmxPort->port == nullptr)
+	{
+		LOGWARNING("Error with DMX Pro, please disconnect and reconnect");
+		return;
+	}
+
 	dmxPort->port->write(sendHeaderData, 5);
-	dmxPort->port->write(dmxDataOut, dmxChannels);
+	dmxPort->port->write(u->values, DMX_NUM_CHANNELS);
 	dmxPort->port->write(sendFooterData, 1);
 	dmxPort->port->flush();
 
@@ -54,14 +55,14 @@ void DMXEnttecProDevice::sendDMXValuesSerialInternal()
 	for (int i = 0; i < 4; ++i) DBG("Send DMX Data " << i <<  (int)dmxDataOut[i]);
 	*/
 
-	if(inputCC->enabled->boolValue()) dmxPort->port->write(changeAlwaysData, 6); //to avoid blocking the dmxPro on send
+	if (inputCC->enabled->boolValue()) dmxPort->port->write(changeAlwaysData, 6); //to avoid blocking the dmxPro on send
 }
 
-void DMXEnttecProDevice::changeDMXChannels()
-{
-	sendHeaderData[2] = (dmxChannels + 1) & 255;
-	sendHeaderData[3] = ((dmxChannels + 1) >> 8) & 255;
-}
+//void DMXEnttecProDevice::changeDMXChannels()
+//{
+//	sendHeaderData[2] = (dmxChannels + 1) & 255;
+//	sendHeaderData[3] = ((dmxChannels + 1) >> 8) & 255;
+//}
 
 
 void DMXEnttecProDevice::serialDataReceived(const var& data)
@@ -72,9 +73,9 @@ void DMXEnttecProDevice::serialDataReceived(const var& data)
 		return;
 	}
 
-	MemoryBlock * binaryData = data.getBinaryData();
+	MemoryBlock* binaryData = data.getBinaryData();
 
-	serialBuffer.addArray((const uint8_t *)binaryData->getData(), (int)binaryData->getSize());
+	serialBuffer.addArray((const uint8_t*)binaryData->getData(), (int)binaryData->getSize());
 
 	int endIndex = 0;
 	Array<uint8> packet = getDMXPacket(serialBuffer, endIndex);
@@ -156,7 +157,7 @@ void DMXEnttecProDevice::processDMXPacket(Array<uint8> bytes)
 void DMXEnttecProDevice::readDMXPacket(Array<uint8> bytes, int expectedLength)
 {
 	//expected length includes DMX_START_CODE and DMX_END_CODE
-	if (expectedLength > DMXPRO_CHANNEL_COUNT + 2)
+	if (expectedLength > DMX_NUM_CHANNELS + 2)
 	{
 		LOGWARNING("Bad DMX Length : " << expectedLength);
 		return;
@@ -174,6 +175,6 @@ void DMXEnttecProDevice::readDMXPacket(Array<uint8> bytes, int expectedLength)
 		return;
 	}
 
-	setDMXValuesIn(expectedLength - 1, bytes.getRawDataPointer() + DMXPRO_HEADER_LENGTH + 1);
+	setDMXValuesIn(0, 0, 0, Array<uint8>(bytes.getRawDataPointer() + DMXPRO_HEADER_LENGTH + 1, DMX_NUM_CHANNELS));
 }
 

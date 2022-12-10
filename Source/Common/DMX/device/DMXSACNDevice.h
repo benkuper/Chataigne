@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    DMXSACNDevice.h
-    Created: 7 Apr 2021 7:49:19pm
-    Author:  bkupe
+	DMXSACNDevice.h
+	Created: 7 Apr 2021 7:49:19pm
+	Author:  bkupe
 
   ==============================================================================
 */
@@ -19,7 +19,7 @@
 
 class DMXSACNDevice :
 	public DMXDevice,
-//	public EngineListener,
+	//	public EngineListener,
 	public Thread //receiving
 {
 public:
@@ -28,15 +28,15 @@ public:
 
 	//EnumParameter * networkInterface;
 	IntParameter* localPort;
-	BoolParameter* receiveMulticast;
-	IntParameter* inputUniverse;
+	//BoolParameter* receiveMulticast;
+	//IntParameter* inputUniverse;
 
 
 	StringParameter* remoteHost;
 	IntParameter* remotePort;
 	StringParameter* nodeName;
-	BoolParameter* sendMulticast;
-	IntParameter* outputUniverse;
+	//BoolParameter* sendMulticast;
+	//IntParameter* outputUniverse;
 	IntParameter* priority;
 
 	//Receiver
@@ -53,12 +53,12 @@ public:
 	void setupReceiver();
 	void setupSender();
 
-	void sendDMXValue(int channel, int value) override;
-	void sendDMXRange(int startChannel, Array<int> values) override;
+	//void sendDMXValue(int channel, int value) override;
+	//void sendDMXRange(int startChannel, Array<int> values) override;
 
-	void sendDMXValuesInternal() override;
+	void sendDMXValuesInternal(DMXUniverse* u) override;
 
-//	void endLoadFile() override;
+	//	void endLoadFile() override;
 
 	String getMulticastIPForUniverse(int universe) const;
 

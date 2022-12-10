@@ -12,12 +12,16 @@
 #include "MainIncludes.h"
 
 #include "DMX/DMXManager.cpp"
+#include "DMX/DMXUniverse.cpp"
+#include "DMX/DMXUniverseManager.cpp"
 #include "DMX/device/DMXDevice.cpp"
 #include "DMX/device/DMXSerialDevice.cpp"
 #include "DMX/device/DMXArtNetDevice.cpp"
 #include "DMX/device/DMXEnttecProDevice.cpp"
 #include "DMX/device/DMXOpenUSBDevice.cpp"
 #include "DMX/device/DMXSACNDevice.cpp"
+
+#include "DMX/ui/DMXUniverseEditor.cpp"
 
 #include "MIDI/MIDIDevice.cpp"
 #include "MIDI/MIDIDeviceParameter.cpp"

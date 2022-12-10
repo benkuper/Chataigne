@@ -8,6 +8,9 @@
   ==============================================================================
 */
 
+#include "Module/ModuleIncludes.h"
+
+
 DMXCommand::DMXCommand(DMXModule* _module, CommandContext context, var params, Multiplex* multiplex) :
 	BaseCommand(_module, context, params, multiplex),
 	dmxModule(_module),
@@ -16,11 +19,17 @@ DMXCommand::DMXCommand(DMXModule* _module, CommandContext context, var params, M
 	channel2(nullptr),
 	value(nullptr),
 	colorParam(nullptr),
-    remapTarget(0),
+	remapTarget(0),
 	remap01To255(nullptr)
 {
 
 	dmxAction = (DMXAction)(int)params.getProperty("action", 0);
+
+	dmxUniverse = addTargetParameter("Universe", "The Universe to use, you can create multiple ones in the Module Parameters", &dmxModule->outputUniverseManager);
+	dmxUniverse->targetType = TargetParameter::CONTAINER;
+	dmxUniverse->maxDefaultSearchLevel = 0;
+
+	if (dmxModule->outputUniverseManager.items.size() > 0) dmxUniverse->setValueFromTarget(dmxModule->outputUniverseManager.items[0]);
 
 	if (dmxAction == SET_VALUE_16BIT)
 	{
@@ -116,49 +125,52 @@ void DMXCommand::triggerInternal(int multiplexIndex)
 {
 	BaseCommand::triggerInternal(multiplexIndex);
 
-	switch (dmxAction) 
+
+	DMXUniverse* u = getLinkedTargetContainerAs<DMXUniverse>(dmxUniverse, multiplexIndex);
+
+	switch (dmxAction)
 	{
 
 	case SET_VALUE:
-		dmxModule->sendDMXValue(getLinkedValue(channel, multiplexIndex), getLinkedValue(value, multiplexIndex));
+		dmxModule->sendDMXValue(u, getLinkedValue(channel, multiplexIndex), (uint8)(int)getLinkedValue(value, multiplexIndex));
 		break;
 
 	case SET_VALUE_16BIT:
 	{
 		int val = getLinkedValue(value, multiplexIndex);
-		int v1 = val & 0xFF;
-		int v2 = val >> 8 & 0xFF;
-		bool msb = byteOrder->getValueDataAsEnum<DMXByteOrder>() == DMXByteOrder::MSB;
-		
-		int dmxV1 = msb ? v2 : v1;
-		int dmxV2 = msb ? v1 : v2;
+		//int v1 = val & 0xFF;
+		//int v2 = val >> 8 & 0xFF;
+		//bool msb = byteOrder->getValueDataAsEnum<DMXByteOrder>() == DMXByteOrder::MSB;
 
-		Array<int> values(dmxV1, dmxV2);
-		dmxModule->sendDMXValues(getLinkedValue(channel, multiplexIndex), values);
+		//int dmxV1 = msb ? v2 : v1;
+		//int dmxV2 = msb ? v1 : v2;
+
+		//Array<int> values(dmxV1, dmxV2);
+		dmxModule->send16BitDMXValue(u, getLinkedValue(channel, multiplexIndex), val, byteOrder->getValueDataAsEnum<DMXByteOrder>());
 	}
 	break;
 
 	case SET_RANGE:
 	case SET_ALL:
 	{
-		Array<int> values;
+		Array<uint8> values;
 		int chVal = (int)getLinkedValue(channel, multiplexIndex);
 		int numValues = dmxAction == SET_ALL ? 512 : jmax((int)getLinkedValue(channel2, multiplexIndex) - chVal + 1, 0);
 		int startChannel = dmxAction == SET_ALL ? 1 : chVal;
 		values.resize(numValues);
 		values.fill((int)getLinkedValue(value, multiplexIndex));
-		dmxModule->sendDMXValues(startChannel, values);
+		dmxModule->sendDMXRange(u, startChannel, values);
 	}
 	break;
 
 	case SET_CUSTOM:
 	{
-		Array<int> values;
+		Array<uint8> values;
 		for (auto& i : customValuesManager->items)
 		{
-			values.add(i->getLinkedValue(multiplexIndex));
+			values.add((uint8)(int)i->getLinkedValue(multiplexIndex));
 		}
-		dmxModule->sendDMXValues(getLinkedValue(channel, multiplexIndex), values);
+		dmxModule->sendDMXRange(u, getLinkedValue(channel, multiplexIndex), values);
 	}
 	break;
 
@@ -166,18 +178,18 @@ void DMXCommand::triggerInternal(int multiplexIndex)
 	case COLOR:
 	{
 		var val = getLinkedValue(colorParam, multiplexIndex);
-		Array<int> values;
-		for (int i = 0; i < 3; ++i) values.add((int)((float)val[i] * 255));
-		dmxModule->sendDMXValues(getLinkedValue(channel, multiplexIndex), values);
+		Array<uint8> values;
+		for (int i = 0; i < 3; ++i) values.add((uint8)(int)((float)val[i] * 255));
+		dmxModule->sendDMXRange(u, getLinkedValue(channel, multiplexIndex), values);
 	}
 	break;
 
 	case BLACK_OUT:
 	{
-		Array<int> values;
+		Array<uint8> values;
 		values.resize(512);
 		values.fill(0);
-		dmxModule->sendDMXValues(1, values);
+		dmxModule->sendDMXRange(u, 1, values);
 	}
 	break;
 	}
@@ -186,14 +198,14 @@ void DMXCommand::triggerInternal(int multiplexIndex)
 var DMXCommand::getJSONData()
 {
 	var data = BaseCommand::getJSONData();
-	if(customValuesManager != nullptr) data.getDynamicObject()->setProperty("customValues", customValuesManager->getJSONData());
+	if (customValuesManager != nullptr) data.getDynamicObject()->setProperty("customValues", customValuesManager->getJSONData());
 	return data;
 }
 
 void DMXCommand::loadJSONDataInternal(var data)
 {
 	BaseCommand::loadJSONDataInternal(data);
-	if(customValuesManager != nullptr) customValuesManager->loadJSONData(data.getProperty("customValues", var()), true);
+	if (customValuesManager != nullptr) customValuesManager->loadJSONData(data.getProperty("customValues", var()), true);
 }
 
 void DMXCommand::itemAdded(CustomValuesCommandArgument* a)

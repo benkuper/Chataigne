@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "Common/CommonIncludes.h"
+
 DMXArtNetDevice::DMXArtNetDevice() :
 	DMXDevice("ArtNet", ARTNET, true),
 	Thread("ArtNetReceive"),
@@ -15,19 +17,19 @@ DMXArtNetDevice::DMXArtNetDevice() :
 {
 
 	localPort = inputCC->addIntParameter("Local Port", "Local port to receive ArtNet data. This needs to be enabled in order to receive data", 6454, 0, 65535);
-	inputNet = inputCC->addIntParameter("Net", "The net to receive from, from 0 to 15", 0, 0, 127);
-	inputSubnet = inputCC->addIntParameter("Subnet", "The subnet to receive from, from 0 to 15", 0, 0, 15);
-	inputUniverse = inputCC->addIntParameter("Universe", "The Universe to receive from, from 0 to 15", 0, 0, 15);
+	//inputNet = inputCC->addIntParameter("Net", "The net to receive from, from 0 to 15", 0, 0, 127);
+	//inputSubnet = inputCC->addIntParameter("Subnet", "The subnet to receive from, from 0 to 15", 0, 0, 15);
+	//inputUniverse = inputCC->addIntParameter("Universe", "The Universe to receive from, from 0 to 15", 0, 0, 15);
 
 	remoteHost = outputCC->addStringParameter("Remote Host", "IP to which send the Art-Net to", "127.0.0.1");
 	remotePort = outputCC->addIntParameter("Remote Port", "Local port to receive ArtNet data", 6454, 0, 65535);
-	outputNet = outputCC->addIntParameter("Net", "The net to send to, from 0 to 15", 0, 0, 127);
-	outputSubnet = outputCC->addIntParameter("Subnet", "The subnet to send to, from 0 to 15", 0, 0, 15);
-	outputUniverse = outputCC->addIntParameter("Universe", "The Universe to send to, from 0 to 15", 0, 0, 15);
+	//outputNet = outputCC->addIntParameter("Net", "The net to send to, from 0 to 15", 0, 0, 127);
+	//outputSubnet = outputCC->addIntParameter("Subnet", "The subnet to send to, from 0 to 15", 0, 0, 15);
+	//outputUniverse = outputCC->addIntParameter("Universe", "The Universe to send to, from 0 to 15", 0, 0, 15);
 
 
 	memset(receiveBuffer, 0, MAX_PACKET_LENGTH);
-	memset(artnetPacket + DMX_HEADER_LENGTH, 0, NUM_CHANNELS);
+	memset(artnetPacket + DMX_HEADER_LENGTH, 0, DMX_NUM_CHANNELS);
 
 	sender.bindToPort(0);
 
@@ -70,37 +72,37 @@ void DMXArtNetDevice::setupReceiver()
 	setConnected(true);
 }
 
-void DMXArtNetDevice::sendDMXValue(int channel, int value)
-{
-	artnetPacket[channel - 1 + DMX_HEADER_LENGTH] = (uint8)value;
-	DMXDevice::sendDMXValue(channel, value);
-}
+//void DMXArtNetDevice::sendDMXValue(int channel, int value)
+//{
+//	artnetPacket[channel - 1 + DMX_HEADER_LENGTH] = (uint8)value;
+//	DMXDevice::sendDMXValue(channel, value);
+//}
+//
+//void DMXArtNetDevice::sendDMXRange(int startChannel, Array<int> values)
+//{
+//	int numValues = values.size();
+//	for (int i = 0; i < numValues; ++i)
+//	{
+//		int channel = startChannel + i;
+//		if (channel < 0) continue;
+//		if (channel > 512) break;
+//
+//		artnetPacket[channel - 1 + DMX_HEADER_LENGTH] = (uint8)(values[i]);
+//	}
+//
+//
+//	DMXDevice::sendDMXRange(startChannel, values);
+//
+//}
 
-void DMXArtNetDevice::sendDMXRange(int startChannel, Array<int> values)
-{
-	int numValues = values.size();
-	for (int i = 0; i < numValues; ++i)
-	{
-		int channel = startChannel + i;
-		if (channel < 0) continue;
-		if (channel > 512) break;
-
-		artnetPacket[channel - 1 + DMX_HEADER_LENGTH] = (uint8)(values[i]);
-	}
-
-
-	DMXDevice::sendDMXRange(startChannel, values);
-
-}
-
-void DMXArtNetDevice::sendDMXValuesInternal()
+void DMXArtNetDevice::sendDMXValuesInternal(DMXUniverse* u)
 {
 	sequenceNumber = (sequenceNumber + 1) % 256;
 
 	artnetPacket[12] = sequenceNumber;
 	artnetPacket[13] = 0;
-	artnetPacket[14] = (outputSubnet->intValue() << 4) | outputUniverse->intValue();
-	artnetPacket[15] = outputNet->intValue();
+	artnetPacket[14] = (u->subnet->intValue() << 4) | u->universe->intValue();
+	artnetPacket[15] = u->net->intValue();
 	artnetPacket[16] = 2;
 	artnetPacket[17] = 0;
 
@@ -121,6 +123,8 @@ void DMXArtNetDevice::onControllableFeedbackUpdate(ControllableContainer* cc, Co
 void DMXArtNetDevice::run()
 {
 	if (!enabled) return;
+
+
 
 	while (!threadShouldExit())
 	{
@@ -165,12 +169,14 @@ void DMXArtNetDevice::run()
 
 				//LOG("Received with universe : " << universe << "/" << subnet << "/" << net);
 
-				if (net == inputNet->intValue() && subnet == inputSubnet->intValue() && universe == inputUniverse->intValue())
-				{
-					int dmxDataLength = jmin(receiveBuffer[17] | receiveBuffer[16] << 8, NUM_CHANNELS);
-					String sName = rAddress + ":" + String(rPort);
-					setDMXValuesIn(dmxDataLength, receiveBuffer + DMX_HEADER_LENGTH, 0, sName);
-				}
+
+				int dmxDataLength = receiveBuffer[17] | receiveBuffer[16] << 8;
+				jassert(dmxDataLength == DMX_NUM_CHANNELS);
+
+				String sName = rAddress + ":" + String(rPort);
+				Array<uint8> values = Array<uint8>(receiveBuffer + DMX_HEADER_LENGTH, DMX_NUM_CHANNELS);
+				setDMXValuesIn(net, subnet, universe, values, sName);
+
 			}
 			break;
 

@@ -25,7 +25,6 @@ public:
 	SerialDeviceParameter * portParam;
 	SerialDevice * dmxPort;
 	IntParameter * channelsParam;
-	int dmxChannels = 512;
 
 	//Device info
 	String deviceID;
@@ -36,13 +35,11 @@ public:
 
 	void refreshEnabled() override;
 
-	virtual void changeDMXChannels() {};
-
 	virtual void processIncomingData();
 
 	virtual void initRunLoop() {}
-	virtual void sendDMXValuesInternal() override;
-	virtual void sendDMXValuesSerialInternal() = 0;
+	virtual void sendDMXValuesInternal(DMXUniverse* u) override;
+	virtual void sendDMXValuesSerialInternal(DMXUniverse* u) = 0;
 
 	virtual void onContainerParameterChanged(Parameter * p) override;
 

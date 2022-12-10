@@ -153,6 +153,7 @@
 		0B881AF2739B8F5059F7B142 /* WakeOnLanCommandEditor.h */ /* WakeOnLanCommandEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WakeOnLanCommandEditor.h; path = ../../Source/Module/modules/system/os/commands/ui/WakeOnLanCommandEditor.h; sourceTree = SOURCE_ROOT; };
 		0B970F4F6ED09F8B505B3D31 /* CustomVariablesModuleCommands.h */ /* CustomVariablesModuleCommands.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CustomVariablesModuleCommands.h; path = ../../Source/Module/modules/customvariables/commands/CustomVariablesModuleCommands.h; sourceTree = SOURCE_ROOT; };
 		0BAD0628AAC8156B90AF64F7 /* ModuleRouterValue.cpp */ /* ModuleRouterValue.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ModuleRouterValue.cpp; path = ../../Source/Module/Routing/ModuleRouterValue.cpp; sourceTree = SOURCE_ROOT; };
+		0C30519AACA422F9120F2A5D /* DMXUniverse.h */ /* DMXUniverse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DMXUniverse.h; path = ../../Source/Common/DMX/DMXUniverse.h; sourceTree = SOURCE_ROOT; };
 		0C38530C36FD7305A35DE178 /* MouseModule.h */ /* MouseModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MouseModule.h; path = ../../Source/Module/modules/controller/mouse/MouseModule.h; sourceTree = SOURCE_ROOT; };
 		0C5AF857C59082628C2BDB1A /* streamingScriptTemplate.js */ /* streamingScriptTemplate.js */ = {isa = PBXFileReference; lastKnownFileType = file.js; name = streamingScriptTemplate.js; path = ../../Resources/Templates/Scripts/streamingScriptTemplate.js; sourceTree = SOURCE_ROOT; };
 		0C5BDC490B538FDD806BB14A /* CommonIncludes.cpp */ /* CommonIncludes.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CommonIncludes.cpp; path = ../../Source/Common/CommonIncludes.cpp; sourceTree = SOURCE_ROOT; };
@@ -242,6 +243,7 @@
 		2C8F111514373C5BA8A33B7B /* TCPServerConnectionManager.cpp */ /* TCPServerConnectionManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TCPServerConnectionManager.cpp; path = ../../Source/Module/modules/tcp/tcpserver/TCPServerConnectionManager.cpp; sourceTree = SOURCE_ROOT; };
 		2D274CC0C6F2AAB6FECC9319 /* MappingFilterManager.h */ /* MappingFilterManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MappingFilterManager.h; path = ../../Source/Common/Processor/Mapping/Filter/MappingFilterManager.h; sourceTree = SOURCE_ROOT; };
 		2D5CCA1C4264DD472237CA04 /* UDPModule.cpp */ /* UDPModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = UDPModule.cpp; path = ../../Source/Module/modules/udp/UDPModule.cpp; sourceTree = SOURCE_ROOT; };
+		2D762DBECC415AC1510F6927 /* DMXUniverse.cpp */ /* DMXUniverse.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DMXUniverse.cpp; path = ../../Source/Common/DMX/DMXUniverse.cpp; sourceTree = SOURCE_ROOT; };
 		2DB904F30B9817E2F6723B8D /* ConditionGroup.cpp */ /* ConditionGroup.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ConditionGroup.cpp; path = ../../Source/Common/Processor/Action/Condition/conditions/ConditionGroup/ConditionGroup.cpp; sourceTree = SOURCE_ROOT; };
 		2DDAE65EB5FF79ED1E458E52 /* stripe.png */ /* stripe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = stripe.png; path = ../../Resources/stripe.png; sourceTree = SOURCE_ROOT; };
 		2DDFD2B7235C68F5B77F1852 /* OSModule.h */ /* OSModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OSModule.h; path = ../../Source/Module/modules/system/os/OSModule.h; sourceTree = SOURCE_ROOT; };
@@ -308,6 +310,7 @@
 		3F10206FF9B4E3D590F2539F /* cobs.cpp */ /* cobs.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = cobs.cpp; path = ../../Source/Common/Serial/lib/cobs/cobs.cpp; sourceTree = SOURCE_ROOT; };
 		3F35FA52B76126D0BEC152CC /* KeyboardMacFunctions.h */ /* KeyboardMacFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = KeyboardMacFunctions.h; path = ../../Source/Module/modules/controller/keyboard/KeyboardMacFunctions.h; sourceTree = SOURCE_ROOT; };
 		3F49C5463CB01384FC57BD67 /* WakeOnLanCommandEditor.cpp */ /* WakeOnLanCommandEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = WakeOnLanCommandEditor.cpp; path = ../../Source/Module/modules/system/os/commands/ui/WakeOnLanCommandEditor.cpp; sourceTree = SOURCE_ROOT; };
+		3F89D31C24DB24B6AE4602B2 /* DMXUniverseEditor.h */ /* DMXUniverseEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DMXUniverseEditor.h; path = ../../Source/Common/DMX/ui/DMXUniverseEditor.h; sourceTree = SOURCE_ROOT; };
 		4068BB40DCE6688B3437FB45 /* GPIOCommands.h */ /* GPIOCommands.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GPIOCommands.h; path = ../../Source/Module/modules/gpio/commands/GPIOCommands.h; sourceTree = SOURCE_ROOT; };
 		4117B7EBA8E2519477B13B03 /* StreamDeckManager.cpp */ /* StreamDeckManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = StreamDeckManager.cpp; path = ../../Source/Module/modules/controller/streamdeck/StreamDeckManager.cpp; sourceTree = SOURCE_ROOT; };
 		414020D909CC3A3EE0316795 /* ModuleCommandTesterEditor.h */ /* ModuleCommandTesterEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ModuleCommandTesterEditor.h; path = ../../Source/Module/ui/ModuleCommandTesterEditor.h; sourceTree = SOURCE_ROOT; };
@@ -473,6 +476,7 @@
 		70E432BF3298C3CB1C29AC5D /* ModuleRouterView.h */ /* ModuleRouterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ModuleRouterView.h; path = ../../Source/Module/Routing/ui/ModuleRouterView.h; sourceTree = SOURCE_ROOT; };
 		712B39A79176F387DC023DCF /* MappingUI.cpp */ /* MappingUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MappingUI.cpp; path = ../../Source/Common/Processor/Mapping/ui/MappingUI.cpp; sourceTree = SOURCE_ROOT; };
 		719A771F1A0FFD9A6C5B1447 /* ConversionSourceParameterUI.h */ /* ConversionSourceParameterUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ConversionSourceParameterUI.h; path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConversionSourceParameterUI.h; sourceTree = SOURCE_ROOT; };
+		71CE8E7E74DA030B3224D971 /* DMXUniverseManager.h */ /* DMXUniverseManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DMXUniverseManager.h; path = ../../Source/Common/DMX/DMXUniverseManager.h; sourceTree = SOURCE_ROOT; };
 		72033BE2F3301B810214240C /* PosiStageNetCommand.cpp */ /* PosiStageNetCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PosiStageNetCommand.cpp; path = ../../Source/Module/modules/posistagenet/commands/PosiStageNetCommand.cpp; sourceTree = SOURCE_ROOT; };
 		722557AC1AA50559314AAC74 /* StateMachineView.h */ /* StateMachineView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StateMachineView.h; path = ../../Source/StateMachine/ui/StateMachineView.h; sourceTree = SOURCE_ROOT; };
 		723AC83C92C5656505F6409C /* OSModule.cpp */ /* OSModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = OSModule.cpp; path = ../../Source/Module/modules/system/os/OSModule.cpp; sourceTree = SOURCE_ROOT; };
@@ -523,6 +527,7 @@
 		7FCA3E8E57D8AE1C556395CD /* MQTTCommands.cpp */ /* MQTTCommands.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MQTTCommands.cpp; path = ../../Source/Module/modules/mqtt/commands/MQTTCommands.cpp; sourceTree = SOURCE_ROOT; };
 		7FCAFC7304EC00159AB9C5F2 /* ScriptCallbackCommand.h */ /* ScriptCallbackCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ScriptCallbackCommand.h; path = ../../Source/Module/modules/common/commands/scriptcallback/ScriptCallbackCommand.h; sourceTree = SOURCE_ROOT; };
 		80749B405D075CEECFB28D3B /* MouseModule.cpp */ /* MouseModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MouseModule.cpp; path = ../../Source/Module/modules/controller/mouse/MouseModule.cpp; sourceTree = SOURCE_ROOT; };
+		8254C55ED0760703F9764387 /* DMXUniverseManager.cpp */ /* DMXUniverseManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DMXUniverseManager.cpp; path = ../../Source/Common/DMX/DMXUniverseManager.cpp; sourceTree = SOURCE_ROOT; };
 		826AAFA086B63446290F4909 /* pigpio.h */ /* pigpio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pigpio.h; path = ../../Source/Module/modules/gpio/pigpio/pigpio.h; sourceTree = SOURCE_ROOT; };
 		829270114E6479B154663AFB /* StreamDeckModule.cpp */ /* StreamDeckModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = StreamDeckModule.cpp; path = ../../Source/Module/modules/controller/streamdeck/StreamDeckModule.cpp; sourceTree = SOURCE_ROOT; };
 		830C08E624F7EF32DD46FE2B /* AudioModuleHardwareEditor.h */ /* AudioModuleHardwareEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AudioModuleHardwareEditor.h; path = ../../Source/Module/modules/audio/ui/AudioModuleHardwareEditor.h; sourceTree = SOURCE_ROOT; };
@@ -696,6 +701,7 @@
 		B3F9109E23EBCBBC1AD7FD5F /* CropFilter.h */ /* CropFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CropFilter.h; path = ../../Source/Common/Processor/Mapping/Filter/filters/number/CropFilter.h; sourceTree = SOURCE_ROOT; };
 		B52752D23217AA7EC926EAF6 /* WiimotePairUtil.cpp */ /* WiimotePairUtil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = WiimotePairUtil.cpp; path = ../../Source/Module/modules/controller/wiimote/WiimotePairUtil.cpp; sourceTree = SOURCE_ROOT; };
 		B58F472712F98039790C5BD8 /* TCPClientModule.h */ /* TCPClientModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TCPClientModule.h; path = ../../Source/Module/modules/tcp/tcpclient/TCPClientModule.h; sourceTree = SOURCE_ROOT; };
+		B5B11D7F9881553B1EC59893 /* DMXUniverseEditor.cpp */ /* DMXUniverseEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DMXUniverseEditor.cpp; path = ../../Source/Common/DMX/ui/DMXUniverseEditor.cpp; sourceTree = SOURCE_ROOT; };
 		B5C6C01816DB10267E81F0A4 /* CVGroupManagerUI.cpp */ /* CVGroupManagerUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CVGroupManagerUI.cpp; path = ../../Source/CustomVariables/ui/CVGroupManagerUI.cpp; sourceTree = SOURCE_ROOT; };
 		B63560F060FE73D4403EF4A9 /* CommandTemplateParameter.cpp */ /* CommandTemplateParameter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CommandTemplateParameter.cpp; path = ../../Source/Common/Command/Template/CommandTemplateParameter.cpp; sourceTree = SOURCE_ROOT; };
 		B64022B64377679A44212506 /* LoupedeckShape.h */ /* LoupedeckShape.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LoupedeckShape.h; path = ../../Source/Module/modules/controller/loupedeck/LoupedeckShape.h; sourceTree = SOURCE_ROOT; };
@@ -1433,6 +1439,11 @@
 		2F365699BD14F6406F50C73D /* DMX */ = {
 			isa = PBXGroup;
 			children = (
+				7EDCDF4C497EA522C391AE5E,
+				8254C55ED0760703F9764387,
+				71CE8E7E74DA030B3224D971,
+				2D762DBECC415AC1510F6927,
+				0C30519AACA422F9120F2A5D,
 				672611DCE9EFBBA901CED0BB,
 				4DE022C03AD2CDF75870B6DE,
 				352A68459BA7879D1CFB0A7A,
@@ -2281,6 +2292,15 @@
 				97D760C2761F8966DA9CB2D8,
 			);
 			name = Routing;
+			sourceTree = "<group>";
+		};
+		7EDCDF4C497EA522C391AE5E /* ui */ = {
+			isa = PBXGroup;
+			children = (
+				B5B11D7F9881553B1EC59893,
+				3F89D31C24DB24B6AE4602B2,
+			);
+			name = ui;
 			sourceTree = "<group>";
 		};
 		7FFD5B15FC87DFBCB20D9B26 /* Products */ = {

@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    DMXArtNetDevice.h
-    Created: 10 Apr 2017 12:44:42pm
-    Author:  Ben
+	DMXArtNetDevice.h
+	Created: 10 Apr 2017 12:44:42pm
+	Author:  Ben
 
   ==============================================================================
 */
@@ -13,9 +13,8 @@
 #define DMX_OPCODE 0x5000
 #define DMX_SYNC_OPCODE 0x5200
 #define PROTOCOL_VERSION 14
-#define NUM_CHANNELS 512
 #define DMX_HEADER_LENGTH 18
-#define MAX_PACKET_LENGTH DMX_HEADER_LENGTH+NUM_CHANNELS
+#define MAX_PACKET_LENGTH DMX_HEADER_LENGTH + DMX_NUM_CHANNELS
 
 class DMXArtNetDevice :
 	public DMXDevice,
@@ -28,16 +27,10 @@ public:
 
 	//EnumParameter * networkInterface;
 	IntParameter* localPort;
-	IntParameter* inputNet;
-	IntParameter* inputSubnet;
-	IntParameter* inputUniverse;
 	//StringParameter * nodeName;
 
 	StringParameter* remoteHost;
-	IntParameter * remotePort;
-	IntParameter* outputNet;
-	IntParameter* outputSubnet;
-	IntParameter* outputUniverse;
+	IntParameter* remotePort;
 
 	std::unique_ptr<DatagramSocket> receiver;
 	DatagramSocket sender;
@@ -50,15 +43,15 @@ public:
 
 	void setupReceiver();
 
-	void sendDMXValue(int channel, int value) override;
-	void sendDMXRange(int startChannel, Array<int> values) override;
+	//void sendDMXValue(int channel, int value) override;
+	//void sendDMXRange(int startChannel, Array<int> values) override;
 
-	void sendDMXValuesInternal() override;
+	void sendDMXValuesInternal(DMXUniverse* u) override;
 
-//	void endLoadFile() override;
+	//	void endLoadFile() override;
 
-	void onControllableFeedbackUpdate(ControllableContainer * cc, Controllable * c) override;
-	
+	void onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* c) override;
+
 	void run() override;
 };
 

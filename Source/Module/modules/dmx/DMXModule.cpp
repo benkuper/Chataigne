@@ -9,6 +9,9 @@
   ==============================================================================
 */
 
+#include "Module/ModuleIncludes.h"
+#include "DMXModule.h"
+
 DMXModule::DMXModule() :
 	Module("DMX"),
 	dmxDevice(nullptr)
@@ -35,6 +38,15 @@ DMXModule::DMXModule() :
 	dmxConnected->isSavable = false;
 	connectionFeedbackRef = dmxConnected;
 
+	moduleParams.addChildControllableContainer(&outputUniverseManager);
+	valuesCC.addChildControllableContainer(&inputUniverseManager);
+
+	if (!Engine::mainEngine->isLoadingFile)
+	{
+		inputUniverseManager.addItem();
+		outputUniverseManager.addItem();
+	}
+
 	//valuesCC.userCanAddControllables = true;
 	//valuesCC.customUserCreateControllableFunc = &DMXModule::showMenuAndCreateValue;
 
@@ -43,14 +55,14 @@ DMXModule::DMXModule() :
 	//Script
 	scriptObject.setMethod(sendDMXId, DMXModule::sendDMXFromScript);
 
-	for (int i = 0; i < 512; ++i)
-	{
-		int channel = i + 1;
-		DMXValueParameter* dVal = new DMXValueParameter("Channel " + String(channel), "DMX Value for channel " + String(channel), channel, 0, DMXByteOrder::BIT8);
+	//for (int i = 0; i < 512; ++i)
+	//{
+	//	int channel = i + 1;
+	//	DMXValueParameter* dVal = new DMXValueParameter("Channel " + String(channel), "DMX Value for channel " + String(channel), channel, 0, DMXByteOrder::BIT8);
 
-		valuesCC.addParameter(dVal);
-		channelValues.add(dVal);
-	}
+	//	valuesCC.addParameter(dVal);
+	//	channelValues.add(dVal);
+	//}
 
 
 	thruManager.reset(new ControllableContainer("Pass-through"));
@@ -92,60 +104,83 @@ void DMXModule::setCurrentDMXDevice(DMXDevice* d)
 	dmxModuleListeners.call(&DMXModuleListener::dmxDeviceChanged);
 }
 
-void DMXModule::sendDMXValue(int channel, int value)
+void DMXModule::sendDMXValue(DMXUniverse* u, int channel, uint8 value)
 {
+	if (!enabled->boolValue()) return;
 	if (dmxDevice == nullptr) return;
-	if (logOutgoingData->boolValue()) NLOG(niceName, "Send DMX : " + String(channel) + " > " + String(value));
+	if (u == nullptr) return;
+
+	if (channel <= 0 || channel > DMX_NUM_CHANNELS) return;
+
+	if (logOutgoingData->boolValue()) NLOG(niceName, "Send DMX Channel " << channel << ", Value " << value << " to " << u->toString());
 	outActivityTrigger->trigger();
-	dmxDevice->sendDMXValue(channel, value);
+
+	channel--; //rebase at 0
+
+	u->valueParams[channel]->setValue(value);
 }
 
-void DMXModule::sendDMXValues(int startChannel, Array<int> values)
+void DMXModule::sendDMXRange(DMXUniverse* u, int startChannel, Array<uint8> values)
 {
+	if (!enabled->boolValue()) return;
 	if (dmxDevice == nullptr) return;
-	if (logOutgoingData->boolValue())
+	if (u == nullptr) return;
+
+	if (startChannel <= 0) return;
+
+	if (logOutgoingData->boolValue())NLOG(niceName, "Send DMX Range " << startChannel << " > " << startChannel + values.size() << " to " << u->toString());
+
+	outActivityTrigger->trigger();
+
+	startChannel--; //rebase at 0
+
+
+	for (int i = startChannel; i < startChannel + values.size() && i < DMX_NUM_CHANNELS; i++)
 	{
-		String s = "Send DMX : " + String(startChannel + 1) + ", " + String(values.size()) + " values";
-		int ch = startChannel;
-		for (auto& v : values)
-		{
-			s += "\nChannel " + String(ch) + " : " + String(v);
-			ch++;
-		}
-		NLOG(niceName, s);
+		u->valueParams[i]->setValue(values[i]);
 	}
-
-	outActivityTrigger->trigger();
-
-	dmxDevice->sendDMXRange(startChannel, values);
 }
 
-void DMXModule::send16BitDMXValue(int startChannel, int value, DMXByteOrder byteOrder)
+void DMXModule::send16BitDMXValue(DMXUniverse* u, int channel, int value, DMXByteOrder byteOrder)
 {
+	if (!enabled->boolValue()) return;
 	if (dmxDevice == nullptr) return;
-	if (logOutgoingData->boolValue()) NLOG(niceName, "Send 16-bit DMX : " + String(startChannel + 1) + " > " + String(value));
+	if (u == nullptr) return;
+
+	if (channel <= 0 || channel >= DMX_NUM_CHANNELS) return;
+
+	if (logOutgoingData->boolValue()) NLOG(niceName, "Send 16-bit DMX Channel " << channel << ", Value " << value << " to " << u->toString());
 	outActivityTrigger->trigger();
-	dmxDevice->sendDMXValue(startChannel, byteOrder == MSB ? (value >> 8) & 0xFF : value & 0xFF);
-	dmxDevice->sendDMXValue(startChannel + 1, byteOrder == MSB ? 0xFF : (value >> 8) & 0xFF);
+
+	channel--; //rebase at 0
+
+	u->valueParams[channel]->setValue(byteOrder == MSB ? (value >> 8) & 0xFF : value & 0xFF);
+	u->valueParams[channel + 1]->setValue(byteOrder == MSB ? 0xFF : (value >> 8) & 0xFF);
 }
 
-void DMXModule::send16BitDMXValues(int startChannel, Array<int> values, DMXByteOrder byteOrder)
+void DMXModule::send16BitDMXRange(DMXUniverse* u, int startChannel, Array<int> values, DMXByteOrder byteOrder)
 {
+	if (!enabled->boolValue()) return;
 	if (dmxDevice == nullptr) return;
-	if (logOutgoingData->boolValue()) NLOG(niceName, "Send 16-bit DMX : " + String(startChannel + 1) + " > " + String(values.size()) + " values");
+	if (u == nullptr) return;
+
+	if (startChannel <= 0) return;
+
+	if (logOutgoingData->boolValue()) NLOG(niceName, "Send 16-bit DMX Range " << startChannel << " > " << startChannel + values.size() << " to " << u->toString());
 	outActivityTrigger->trigger();
 
-	Array<int> dmxValues;
-	int numValues = values.size();
-	dmxValues.resize(numValues * 2);
-	for (int i = 0; i < numValues; ++i)
+	startChannel--; //rebase at 0
+
+	for (int i = 0; i < values.size(); ++i)
 	{
+		int index = startChannel + i * 2;
+		if (index >= DMX_NUM_CHANNELS - 1) break;
+
 		int value = values[i];
-		dmxValues.set(i * 2, byteOrder == MSB ? (value >> 8) & 0xFF : value & 0xFF);
-		dmxValues.set(i * 2 + 1, byteOrder == MSB ? 0xFF : (value >> 8) & 0xFF);
-	}
 
-	dmxDevice->sendDMXRange(startChannel, dmxValues);
+		u->valueParams[index]->setValue(byteOrder == MSB ? (value >> 8) & 0xFF : value & 0xFF);
+		u->valueParams[index + 1]->setValue(byteOrder == MSB ? 0xFF : (value >> 8) & 0xFF);
+	}
 }
 
 var DMXModule::sendDMXFromScript(const var::NativeFunctionArgs& args)
@@ -155,21 +190,21 @@ var DMXModule::sendDMXFromScript(const var::NativeFunctionArgs& args)
 
 	if (args.numArguments < 2) return var();
 
-	int startChannel = args.arguments[0];
-	Array<int> values;
-	for (int i = 1; i < args.numArguments; ++i)
-	{
-		if (args.arguments[i].isArray())
-		{
-			for (int j = 0; j < args.arguments[i].size(); j++) values.add(args.arguments[i][j]);
-		}
-		else
-		{
-			values.add(args.arguments[i]);
-		}
-	}
+	//int startChannel = args.arguments[0];
+	//Array<int> values;
+	//for (int i = 1; i < args.numArguments; ++i)
+	//{
+	//	if (args.arguments[i].isArray())
+	//	{
+	//		for (int j = 0; j < args.arguments[i].size(); j++) values.add(args.arguments[i][j]);
+	//	}
+	//	else
+	//	{
+	//		values.add(args.arguments[i]);
+	//	}
+	//}
 
-	m->sendDMXValues(startChannel, values);
+	//m->sendDMXValues(startChannel, values);
 	return var();
 
 }
@@ -250,53 +285,58 @@ void DMXModule::dmxDeviceDisconnected()
 	dmxConnected->setValue(false);
 }
 
-void DMXModule::dmxDataInChanged(int numChannels, uint8* values, const String& sourceName)
+void DMXModule::dmxDataInChanged(int net, int subnet, int universe, Array<uint8> values, const String& sourceName)
 {
 	if (isClearing || !enabled->boolValue()) return;
 	if (logIncomingData->boolValue())
 	{
-		String s = "DMX In : " + String(numChannels) + " channels received";
+		String s = "DMX In received :\nNet : " + String(net) + "\nSubnet : " + String(subnet) + "\nUniverse " + String(universe);
 		if (sourceName.isNotEmpty()) s += " from " + sourceName;
 		NLOG(niceName, s);
 	}
 
 	inActivityTrigger->trigger();
 
+	var data;
+
+	DMXUniverse* u = getUniverse(true, net, subnet, universe);
+	u->updateValues(values);
+
 	if (thruManager != nullptr)
 	{
 		for (auto& c : thruManager->controllables)
 		{
-			;
 			if (TargetParameter* mt = (TargetParameter*)c)
 			{
 				if (!mt->enabled) continue;
 				if (DMXModule* m = (DMXModule*)(mt->targetContainer.get()))
 				{
-					m->sendDMXValues(0, Array<int>(values, numChannels));
+					if (m->dmxDevice != nullptr)
+					{
+						m->dmxDevice->sendDMXValues(u);
+					}
 				}
 			}
 		}
 	}
 
-	var data;
-
-	for (int i = 0; i < numChannels; ++i)
-	{
-		if (DMXValueParameter* vp = channelValues[i])
-		{
-			if (vp->type == DMXByteOrder::BIT8) vp->setValue(values[i]);
-			else if (i < numChannels - 1)
-			{
-				vp->setValueFrom2Channels(values[i], values[i + 1]);
-				i++;
-			}
-
-			data.append(vp->getValue());
-		}
-
-	}
 
 	scriptManager->callFunctionOnAllItems(dmxEventId, Array<var>{data});
+}
+
+DMXUniverse* DMXModule::getUniverse(bool isInput, int net, int subnet, int universe, bool createIfNotThere)
+{
+	DMXUniverseManager* m = isInput ? &inputUniverseManager : &outputUniverseManager;
+	for (auto& u : m->items) if (u->checkParams(net, subnet, universe)) return u;
+
+	if (!createIfNotThere) return nullptr;
+
+	DMXUniverse* u = new DMXUniverse();
+	u->net->setValue(net);
+	u->subnet->setValue(subnet);
+	u->universe->setValue(universe);
+
+	return m->addItem(u);
 }
 
 void DMXModule::createThruControllable(ControllableContainer* cc)
@@ -332,72 +372,71 @@ DMXModule::DMXRouteParams::DMXRouteParams(Module* sourceModule, Controllable* c)
 
 void DMXModule::handleRoutedModuleValue(Controllable* c, RouteParams* p)
 {
+	//if (p == nullptr || c == nullptr) return;
 
-	if (p == nullptr || c == nullptr) return;
+	//if (DMXRouteParams* rp = dynamic_cast<DMXRouteParams*>(p))
+	//{
+	//	Parameter* sp = c->type == Controllable::TRIGGER ? nullptr : dynamic_cast<Parameter*>(c);
 
-	if (DMXRouteParams* rp = dynamic_cast<DMXRouteParams*>(p))
-	{
-		Parameter* sp = c->type == Controllable::TRIGGER ? nullptr : dynamic_cast<Parameter*>(c);
+	//	bool fullRange = rp->fullRange != nullptr ? rp->fullRange->boolValue() : false;
 
-		bool fullRange = rp->fullRange != nullptr ? rp->fullRange->boolValue() : false;
+	//	DMXByteOrder byteOrder = rp->mode16bit != nullptr ? rp->mode16bit->getValueDataAsEnum<DMXByteOrder>() : DMXByteOrder::BIT8;
 
-		DMXByteOrder byteOrder = rp->mode16bit != nullptr ? rp->mode16bit->getValueDataAsEnum<DMXByteOrder>() : DMXByteOrder::BIT8;
+	//	if (sp == nullptr) return;
 
-		if (sp == nullptr) return;
+	//	switch (c->type)
+	//	{
+	//	case Parameter::BOOL:
+	//	case Parameter::INT:
+	//	case Parameter::FLOAT:
+	//	{
+	//		int value = (sp->hasRange() ? (float)sp->getNormalizedValue() : sp->floatValue()) * (fullRange ? (byteOrder == BIT8 ? 255 : 65535) : 1);
 
-		switch (c->type)
-		{
-		case Parameter::BOOL:
-		case Parameter::INT:
-		case Parameter::FLOAT:
-		{
-			int value = (sp->hasRange() ? (float)sp->getNormalizedValue() : sp->floatValue()) * (fullRange ? (byteOrder == BIT8 ? 255 : 65535) : 1);
+	//		if (byteOrder == BIT8) sendDMXValue(rp->channel->intValue(), value);
+	//		else send16BitDMXValue(rp->channel->intValue(), value, byteOrder);
+	//	}
+	//	break;
 
-			if (byteOrder == BIT8) sendDMXValue(rp->channel->intValue(), value);
-			else send16BitDMXValue(rp->channel->intValue(), value, byteOrder);
-		}
-		break;
+	//	case Parameter::POINT2D:
+	//	{
+	//		Point<float> pp = ((Point2DParameter*)sp)->getPoint();
+	//		if (fullRange) pp *= byteOrder != BIT8 ? 65535 : 255;
 
-		case Parameter::POINT2D:
-		{
-			Point<float> pp = ((Point2DParameter*)sp)->getPoint();
-			if (fullRange) pp *= byteOrder != BIT8 ? 65535 : 255;
+	//		Array<int> values;
+	//		values.add((int)pp.x, (int)pp.y);
 
-			Array<int> values;
-			values.add((int)pp.x, (int)pp.y);
+	//		if (byteOrder == BIT8) sendDMXValues(rp->channel->intValue(), values);
+	//		else send16BitDMXValues(rp->channel->intValue(), values, byteOrder);
+	//	}
+	//	break;
 
-			if (byteOrder == BIT8) sendDMXValues(rp->channel->intValue(), values);
-			else send16BitDMXValues(rp->channel->intValue(), values, byteOrder);
-		}
-		break;
+	//	case Parameter::POINT3D:
+	//	{
+	//		Vector3D<float> pp = ((Point3DParameter*)sp)->getVector();
+	//		if (fullRange) pp *= byteOrder != BIT8 ? 65535 : 255;
 
-		case Parameter::POINT3D:
-		{
-			Vector3D<float> pp = ((Point3DParameter*)sp)->getVector();
-			if (fullRange) pp *= byteOrder != BIT8 ? 65535 : 255;
+	//		Array<int> values;
+	//		values.add((int)pp.x, (int)pp.y, (int)pp.z);
 
-			Array<int> values;
-			values.add((int)pp.x, (int)pp.y, (int)pp.z);
+	//		if (byteOrder == BIT8) sendDMXValues(rp->channel->intValue(), values);
+	//		else send16BitDMXValues(rp->channel->intValue(), values, byteOrder);
+	//	}
+	//	break;
 
-			if (byteOrder == BIT8) sendDMXValues(rp->channel->intValue(), values);
-			else send16BitDMXValues(rp->channel->intValue(), values, byteOrder);
-		}
-		break;
+	//	case Parameter::COLOR:
+	//	{
+	//		Colour col = ((ColorParameter*)sp)->getColor();
+	//		Array<int> values;
+	//		values.add(col.getRed(), col.getGreen(), col.getBlue());
+	//		sendDMXValues(rp->channel->intValue(), values);
+	//	}
 
-		case Parameter::COLOR:
-		{
-			Colour col = ((ColorParameter*)sp)->getColor();
-			Array<int> values;
-			values.add(col.getRed(), col.getGreen(), col.getBlue());
-			sendDMXValues(rp->channel->intValue(), values);
-		}
+	//	break;
 
-		break;
-
-		default:
-			break;
-		}
-	}
+	//	default:
+	//		break;
+	//	}
+	//}
 }
 
 DMXModule::DMXModuleRouterController::DMXModuleRouterController(ModuleRouter* router) :
@@ -419,10 +458,4 @@ void DMXModule::DMXModuleRouterController::triggerTriggered(Trigger* t)
 			}
 		}
 	}
-}
-
-ControllableUI* DMXValueParameter::createDefaultUI(Array<Controllable*> controllables)
-{
-	if (controllables.size() == 0) controllables = { this };
-	return new DMXValueParameterUI(Inspectable::getArrayAs<Controllable, DMXValueParameter>(controllables));
 }

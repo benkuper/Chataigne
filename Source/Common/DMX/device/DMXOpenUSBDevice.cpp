@@ -1,19 +1,21 @@
 /*
   ==============================================================================
 
-    DMXOpenUSBDevice.cpp
-    Created: 7 Apr 2017 11:22:57am
-    Author:  Ben
+	DMXOpenUSBDevice.cpp
+	Created: 7 Apr 2017 11:22:57am
+	Author:  Ben
 
   ==============================================================================
 */
 
+#include "Common/CommonIncludes.h"
+
 #if JUCE_LINUX || JUCE_MAC
-	#include <sys/ioctl.h>
+#include <sys/ioctl.h>
 #if JUCE_LINUX
-	#include <asm/termbits.h>
+#include <asm/termbits.h>
 #elif JUCE_MAC
-    #include <IOKit/serial/ioss.h>
+#include <IOKit/serial/ioss.h>
 #endif
 #endif
 
@@ -41,7 +43,7 @@ void DMXOpenUSBDevice::setPortConfig()
 
 #if JUCE_LINUX
 #ifdef TCGETS2
-        
+
 		int fd = dmxPort->port->getHandle();
 		static const int rate = 250000;
 
@@ -64,13 +66,13 @@ void DMXOpenUSBDevice::setPortConfig()
 		}
 #endif
 #elif JUCE_MAC
-    int fd = dmxPort->port->getHandle();
-    static const int rate = 250000;
-    speed_t new_baud = static_cast<speed_t> (rate);
-    if (-1 == ioctl (fd, IOSSIOSPEED, &new_baud, 1)) {
-        DBG("OpenDMX Error in setting baud rate");
-        return;
-    }
+		int fd = dmxPort->port->getHandle();
+		static const int rate = 250000;
+		speed_t new_baud = static_cast<speed_t> (rate);
+		if (-1 == ioctl(fd, IOSSIOSPEED, &new_baud, 1)) {
+			DBG("OpenDMX Error in setting baud rate");
+			return;
+		}
 #endif
 	}
 	catch (serial::IOException e)
@@ -80,14 +82,14 @@ void DMXOpenUSBDevice::setPortConfig()
 
 }
 
-void DMXOpenUSBDevice::sendDMXValuesSerialInternal()
+void DMXOpenUSBDevice::sendDMXValuesSerialInternal(DMXUniverse* u)
 {
 	try
 	{
 		dmxPort->port->setBreak(true);
-	    dmxPort->port->setBreak(false);
-	    dmxPort->port->write(startCode, 1); //start code
-		dmxPort->port->write(dmxDataOut, dmxChannels);
+		dmxPort->port->setBreak(false);
+		dmxPort->port->write(startCode, 1); //start code
+		dmxPort->port->write(u->values, DMX_NUM_CHANNELS);
 	}
 	catch (serial::IOException e)
 	{

@@ -59,6 +59,9 @@
     <Filter Include="Chataigne\Source\Common\Command">
       <UniqueIdentifier>{BE242EEE-600F-3A0A-D733-68EE1CD456DD}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Common\DMX\ui">
+      <UniqueIdentifier>{D93F3299-F41F-DB93-0BBE-A75A8F1DCE40}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Common\DMX\device\sacn">
       <UniqueIdentifier>{50D6BDEE-B73D-9F82-4BF7-31E45BEDE70E}</UniqueIdentifier>
     </Filter>
@@ -1236,6 +1239,15 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Command\CommandFactory.cpp">
       <Filter>Chataigne\Source\Common\Command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\DMX\ui\DMXUniverseEditor.cpp">
+      <Filter>Chataigne\Source\Common\DMX\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\DMX\DMXUniverseManager.cpp">
+      <Filter>Chataigne\Source\Common\DMX</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\DMX\DMXUniverse.cpp">
+      <Filter>Chataigne\Source\Common\DMX</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\DMX\device\sacn\e131.c">
       <Filter>Chataigne\Source\Common\DMX\device\sacn</Filter>
@@ -3788,6 +3800,15 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Command\CommandFactory.h">
       <Filter>Chataigne\Source\Common\Command</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\DMX\ui\DMXUniverseEditor.h">
+      <Filter>Chataigne\Source\Common\DMX\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\DMX\DMXUniverseManager.h">
+      <Filter>Chataigne\Source\Common\DMX</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\DMX\DMXUniverse.h">
+      <Filter>Chataigne\Source\Common\DMX</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\DMX\device\sacn\e131.h">
       <Filter>Chataigne\Source\Common\DMX\device\sacn</Filter>

@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "Common/CommonIncludes.h"
+
 DMXSerialDevice::DMXSerialDevice(const String& name, Type type, bool canReceive) :
 	DMXDevice(name, type, canReceive),
 	dmxPort(nullptr)
@@ -15,8 +17,6 @@ DMXSerialDevice::DMXSerialDevice(const String& name, Type type, bool canReceive)
 	portParam = new SerialDeviceParameter("Port", "USB Port for the DMX device", true);
 	addParameter(portParam);
 	SerialManager::getInstance()->addSerialManagerListener(this);
-	channelsParam = outputCC->addIntParameter("Channel count", "Maximum DMX channel sent", 512, 1, 512);
-	changeDMXChannels();
 }
 
 DMXSerialDevice::~DMXSerialDevice()
@@ -67,7 +67,7 @@ bool DMXSerialDevice::setPortStatus(bool status)
 	return dmxPort->isOpen();
 }
 
-void DMXSerialDevice::refreshEnabled() 
+void DMXSerialDevice::refreshEnabled()
 {
 	setPortStatus(enabled);
 }
@@ -99,7 +99,7 @@ void DMXSerialDevice::processIncomingData()
 	DBG("Incoming data, process function not overriden, doing nothing.");
 }
 
-void DMXSerialDevice::sendDMXValuesInternal()
+void DMXSerialDevice::sendDMXValuesInternal(DMXUniverse* u)
 {
 	if (dmxPort == nullptr) return;
 
@@ -107,7 +107,7 @@ void DMXSerialDevice::sendDMXValuesInternal()
 	{
 		try
 		{
-			sendDMXValuesSerialInternal();
+			sendDMXValuesSerialInternal(u);
 		}
 		catch (std::exception e)
 		{
@@ -131,10 +131,6 @@ void DMXSerialDevice::onContainerParameterChanged(Parameter* p)
 			DBG("Manually set no ghost port");
 			lastOpenedPortID = ""; //forces no ghosting when user chose to manually disable port
 		}
-	}
-	else if (p == channelsParam) {
-		dmxChannels = channelsParam->getValue();
-		changeDMXChannels();
 	}
 }
 
