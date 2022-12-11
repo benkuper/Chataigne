@@ -28,7 +28,6 @@ DMXUniverse::DMXUniverse(bool useParams) :
 		net->hideInEditor = true;
 		subnet->hideInEditor = true;
 		universe->hideInEditor = true;
-		editorCanBeCollapsed = false;
 
 		for (int i = 0; i < DMX_NUM_CHANNELS; i++)
 		{
