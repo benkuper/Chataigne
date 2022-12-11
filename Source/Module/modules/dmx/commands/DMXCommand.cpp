@@ -28,6 +28,7 @@ DMXCommand::DMXCommand(DMXModule* _module, CommandContext context, var params, M
 	dmxUniverse = addTargetParameter("Universe", "The Universe to use, you can create multiple ones in the Module Parameters", &dmxModule->outputUniverseManager);
 	dmxUniverse->targetType = TargetParameter::CONTAINER;
 	dmxUniverse->maxDefaultSearchLevel = 0;
+	dmxUniverse->showParentNameInEditor = false;
 
 	if (dmxModule->outputUniverseManager.items.size() > 0) dmxUniverse->setValueFromTarget(dmxModule->outputUniverseManager.items[0]);
 
@@ -130,7 +131,6 @@ void DMXCommand::triggerInternal(int multiplexIndex)
 
 	switch (dmxAction)
 	{
-
 	case SET_VALUE:
 		dmxModule->sendDMXValue(u, getLinkedValue(channel, multiplexIndex), (uint8)(int)getLinkedValue(value, multiplexIndex));
 		break;

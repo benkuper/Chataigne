@@ -14,6 +14,10 @@ class DMXUniverseManager :
 	public BaseManager<DMXUniverse>
 {
 public:
-	DMXUniverseManager();
+	DMXUniverseManager(bool useParams = false);
 	~DMXUniverseManager();
+
+	bool useParams;
+
+	DMXUniverse* createItem() override;
 };

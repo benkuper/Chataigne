@@ -74,9 +74,10 @@ class DMXUniverse :
 	public BaseItem
 {
 public:
-	DMXUniverse();
+	DMXUniverse(bool useParams = false);
 	~DMXUniverse();
 
+	bool useParams;
 	IntParameter* net;
 	IntParameter* subnet;
 	IntParameter* universe;
@@ -88,12 +89,12 @@ public:
 
 	bool isDirty;
 
-
+	void updateValue(int channel, uint8 value);
 	void updateValues(Array<uint8> values);
 
 	void onContainerParameterChangedInternal(Parameter*) override;
 
-	bool checkParams(int net, int subnet, int universe);
+	bool checkSignature(int net, int subnet, int universe);
 
 	InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables = Array<Inspectable*>()) override;
 

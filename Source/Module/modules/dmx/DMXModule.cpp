@@ -14,11 +14,15 @@
 
 DMXModule::DMXModule() :
 	Module("DMX"),
-	dmxDevice(nullptr)
+	Thread("DMX Send"),
+	dmxDevice(nullptr),
+	inputUniverseManager(true),
+	outputUniverseManager(false)
 {
 	setupIOConfiguration(false, true);
 	valuesCC.editorIsCollapsed = true;
 	canHandleRouteValues = true;
+
 
 	defManager->add(CommandDefinition::createDef(this, "", "Black out", &DMXCommand::create)->addParam("action", DMXCommand::BLACK_OUT));
 	defManager->add(CommandDefinition::createDef(this, "", "Set value", &DMXCommand::create)->addParam("action", DMXCommand::SET_VALUE));
@@ -33,9 +37,15 @@ DMXModule::DMXModule() :
 	dmxType->addOption("Open DMX", DMXDevice::OPENDMX)->addOption("Enttec DMX Pro", DMXDevice::ENTTEC_DMXPRO)->addOption("Enttec DMX MkII", DMXDevice::ENTTEC_MK2)->addOption("Art-Net", DMXDevice::ARTNET)->addOption("sACN/E1.31", DMXDevice::SACN);
 	dmxType->setValueWithKey("Open DMX");
 
+	sendRate = moduleParams.addIntParameter("Send Rate", "The rate at which to send data.", 40, 1, 200);
+	sendOnChangeOnly = moduleParams.addBoolParameter("Send On Change Only", "Only send a universe if one of its channels has changed", true);
+
+	autoAdd = moduleParams.addBoolParameter("Auto Add", "If checked, received universed will automatically be added to the values. Not effective when using 1-universe devices like OpenDMX or Enttec DMXPro", true);
+
 	dmxConnected = moduleParams.addBoolParameter("Connected", "DMX is connected ?", false);
 	dmxConnected->isControllableFeedbackOnly = true;
 	dmxConnected->isSavable = false;
+	dmxConnected->hideInEditor = true;
 	connectionFeedbackRef = dmxConnected;
 
 	moduleParams.addChildControllableContainer(&outputUniverseManager);
@@ -43,7 +53,6 @@ DMXModule::DMXModule() :
 
 	if (!Engine::mainEngine->isLoadingFile)
 	{
-		inputUniverseManager.addItem();
 		outputUniverseManager.addItem();
 	}
 
@@ -79,6 +88,8 @@ void DMXModule::setCurrentDMXDevice(DMXDevice* d)
 {
 	if (dmxDevice.get() == d) return;
 
+	stopThread(1000);
+
 	if (dmxDevice != nullptr)
 	{
 		dmxDevice->removeDMXDeviceListener(this);
@@ -95,9 +106,11 @@ void DMXModule::setCurrentDMXDevice(DMXDevice* d)
 	{
 		dmxDevice->enabled = enabled->boolValue();
 		dmxDevice->addDMXDeviceListener(this);
-		moduleParams.addChildControllableContainer(dmxDevice.get());
+		moduleParams.addChildControllableContainer(dmxDevice.get(), false, 0);
 		setupIOConfiguration(dmxDevice->canReceive && dmxDevice->inputCC->enabled->boolValue(), dmxDevice->outputCC->enabled->boolValue());
 		dmxConnected->setValue(dmxDevice->isConnected);
+
+		startThread();
 	}
 
 
@@ -117,7 +130,7 @@ void DMXModule::sendDMXValue(DMXUniverse* u, int channel, uint8 value)
 
 	channel--; //rebase at 0
 
-	u->valueParams[channel]->setValue(value);
+	u->updateValue(channel, value);
 }
 
 void DMXModule::sendDMXRange(DMXUniverse* u, int startChannel, Array<uint8> values)
@@ -137,7 +150,7 @@ void DMXModule::sendDMXRange(DMXUniverse* u, int startChannel, Array<uint8> valu
 
 	for (int i = startChannel; i < startChannel + values.size() && i < DMX_NUM_CHANNELS; i++)
 	{
-		u->valueParams[i]->setValue(values[i]);
+		u->updateValue(i, values[i]);
 	}
 }
 
@@ -154,8 +167,8 @@ void DMXModule::send16BitDMXValue(DMXUniverse* u, int channel, int value, DMXByt
 
 	channel--; //rebase at 0
 
-	u->valueParams[channel]->setValue(byteOrder == MSB ? (value >> 8) & 0xFF : value & 0xFF);
-	u->valueParams[channel + 1]->setValue(byteOrder == MSB ? 0xFF : (value >> 8) & 0xFF);
+	u->updateValue(channel, byteOrder == MSB ? (value >> 8) & 0xFF : value & 0xFF);
+	u->updateValue(channel + 1, byteOrder == MSB ? value & 0xFF : (value >> 8) & 0xFF);
 }
 
 void DMXModule::send16BitDMXRange(DMXUniverse* u, int startChannel, Array<int> values, DMXByteOrder byteOrder)
@@ -178,8 +191,8 @@ void DMXModule::send16BitDMXRange(DMXUniverse* u, int startChannel, Array<int> v
 
 		int value = values[i];
 
-		u->valueParams[index]->setValue(byteOrder == MSB ? (value >> 8) & 0xFF : value & 0xFF);
-		u->valueParams[index + 1]->setValue(byteOrder == MSB ? 0xFF : (value >> 8) & 0xFF);
+		u->updateValue(index, byteOrder == MSB ? (value >> 8) & 0xFF : value & 0xFF);
+		u->updateValue(index + 1, byteOrder == MSB ? value & 0xFF : (value >> 8) & 0xFF);
 	}
 }
 
@@ -259,6 +272,9 @@ void DMXModule::onContainerParameterChanged(Parameter* p)
 			dmxDevice->enabled = enabled->boolValue();
 			dmxDevice->refreshEnabled();
 		}
+
+		if (enabled->boolValue()) if (dmxDevice != nullptr) startThread();
+		else stopThread(1000);
 	}
 }
 
@@ -297,9 +313,10 @@ void DMXModule::dmxDataInChanged(int net, int subnet, int universe, Array<uint8>
 
 	inActivityTrigger->trigger();
 
-	var data;
 
-	DMXUniverse* u = getUniverse(true, net, subnet, universe);
+	DMXUniverse* u = getUniverse(true, net, subnet, universe, autoAdd->boolValue());
+	if (u == nullptr) return;
+
 	u->updateValues(values);
 
 	if (thruManager != nullptr)
@@ -320,23 +337,61 @@ void DMXModule::dmxDataInChanged(int net, int subnet, int universe, Array<uint8>
 		}
 	}
 
-
-	scriptManager->callFunctionOnAllItems(dmxEventId, Array<var>{data});
+	if (scriptManager->items.size() > 0)
+	{
+		Array<var> args;
+		args.add(net);
+		args.add(subnet);
+		args.add(universe);
+		var data;
+		for (auto& v : values) data.append(v);
+		args.add(data);
+		scriptManager->callFunctionOnAllItems(dmxEventId, args);
+	}
 }
 
 DMXUniverse* DMXModule::getUniverse(bool isInput, int net, int subnet, int universe, bool createIfNotThere)
 {
 	DMXUniverseManager* m = isInput ? &inputUniverseManager : &outputUniverseManager;
-	for (auto& u : m->items) if (u->checkParams(net, subnet, universe)) return u;
+	for (auto& u : m->items) if (u->checkSignature(net, subnet, universe)) return u;
 
 	if (!createIfNotThere) return nullptr;
 
-	DMXUniverse* u = new DMXUniverse();
+	DMXUniverse* u = new DMXUniverse(isInput);
 	u->net->setValue(net);
 	u->subnet->setValue(subnet);
 	u->universe->setValue(universe);
 
 	return m->addItem(u);
+}
+
+void DMXModule::run()
+{
+	double prevTime = Time::getMillisecondCounterHiRes();
+	while (!threadShouldExit())
+	{
+		{
+			GenericScopedLock lock(deviceLock);
+			if (dmxDevice == nullptr) return;
+
+			bool sendOnChange = sendOnChangeOnly->boolValue();
+			for (auto& u : outputUniverseManager.items)
+			{
+				if (sendOnChange && !u->isDirty) continue;
+				dmxDevice->sendDMXValues(u);
+				u->isDirty = false;
+			}
+		}
+
+		double t = Time::getMillisecondCounterHiRes();
+		double diffTime = t - prevTime;
+		double rateMS = 1000.0 / sendRate->intValue();
+		prevTime = t;
+
+		double msToWait = rateMS - diffTime;
+		if (msToWait > 0) wait(msToWait);
+
+	}
 }
 
 void DMXModule::createThruControllable(ControllableContainer* cc)

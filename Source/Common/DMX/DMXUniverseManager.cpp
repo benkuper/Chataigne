@@ -11,11 +11,18 @@
 #include "Common/CommonIncludes.h"
 #include "DMXUniverseManager.h"
 
-DMXUniverseManager::DMXUniverseManager() :
-    BaseManager("Universes")
+DMXUniverseManager::DMXUniverseManager(bool useParams) :
+    BaseManager("Universes"),
+    useParams(useParams)
 {
+    selectItemWhenCreated = false;
 }
 
 DMXUniverseManager::~DMXUniverseManager()
 {
+}
+
+DMXUniverse* DMXUniverseManager::createItem()
+{
+    return new DMXUniverse(useParams);
 }

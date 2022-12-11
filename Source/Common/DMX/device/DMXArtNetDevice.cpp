@@ -106,6 +106,8 @@ void DMXArtNetDevice::sendDMXValuesInternal(DMXUniverse* u)
 	artnetPacket[16] = 2;
 	artnetPacket[17] = 0;
 
+	memcpy(artnetPacket + DMX_HEADER_LENGTH, u->values, DMX_NUM_CHANNELS);
+
 	sender.write(remoteHost->stringValue(), remotePort->intValue(), artnetPacket, 530);
 }
 //void DMXArtNetDevice::endLoadFile()

@@ -10,24 +10,27 @@
 
 #pragma once
 
-
-
-
-
 class DMXModule :
 	public Module,
-	public DMXDevice::DMXDeviceListener
+	public DMXDevice::DMXDeviceListener,
+	public Thread
 {
 public:
 	DMXModule();
 	~DMXModule();
 
-
 	EnumParameter* dmxType;
+	IntParameter* sendRate;
+	BoolParameter* sendOnChangeOnly;
+	BoolParameter* autoAdd;
+
+	SpinLock deviceLock;
 	std::unique_ptr<DMXDevice> dmxDevice;
+
 	BoolParameter* dmxConnected;
 
 	Array<DMXValueParameter*> channelValues;
+
 
 	//Script
 	const Identifier dmxEventId = "dmxEvent";
@@ -63,6 +66,8 @@ public:
 	void dmxDataInChanged(int net, int subnet, int universe, Array<uint8> values, const String& sourceName = "") override;
 
 	DMXUniverse* getUniverse(bool isInput, int net, int subnet, int universe, bool createIfNotThere = true);
+
+	void run() override;
 
 	static void createThruControllable(ControllableContainer* cc);
 
