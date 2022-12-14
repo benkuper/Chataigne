@@ -9,6 +9,8 @@
 */
 
 
+#include "Module/ModuleIncludes.h"
+
 GenericControllableCommand::GenericControllableCommand(Module* _module, CommandContext context, var params, Multiplex* multiplex) :
 	BaseCommand(_module, context, params, multiplex),
 	target(nullptr),
@@ -147,6 +149,7 @@ void GenericControllableCommand::updateValueFromTargetAndComponent()
 	{
 		updateOperatorOptions();
 
+
 		if (!ghostValueData.isVoid())
 		{
 			value->loadJSONData(ghostValueData);
@@ -200,7 +203,7 @@ void GenericControllableCommand::updateOperatorOptions()
 		break;
 	}
 
-	valueOperator->addOption("Random", RANDOM);
+	if (value->type != Controllable::TARGET) valueOperator->addOption("Random", RANDOM);
 
 	if (oldData.isNotEmpty()) valueOperator->setValueWithKey(oldData);
 	else valueOperator->setValueWithData(EQUAL);
@@ -278,24 +281,48 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 				{
 				case EQUAL:
 				{
-					if (EnumParameter* ep = dynamic_cast<EnumParameter*>(p))
+					if (p->type == Controllable::ENUM)
 					{
-						if (ep->enumValues.size() > 0)
-						{
 
-							if (val.isInt() || val.isDouble())
+						if (EnumParameter* ep = dynamic_cast<EnumParameter*>(p))
+						{
+							if (ep->enumValues.size() > 0)
 							{
-								int index = (int)val % ep->enumValues.size();
-								while (index < 0) index += ep->enumValues.size();
-								ep->setValueWithKey((ep->enumValues[index]->key));
-							}
-							else if (val.isString())
-							{
-								StringArray keys = ep->getAllKeys();
-								if (keys.contains(val.toString())) ep->setValueWithKey(val);
+
+								if (val.isInt() || val.isDouble())
+								{
+									int index = (int)val % ep->enumValues.size();
+									while (index < 0) index += ep->enumValues.size();
+									ep->setValueWithKey((ep->enumValues[index]->key));
+								}
+								else if (val.isString())
+								{
+									StringArray keys = ep->getAllKeys();
+									if (keys.contains(val.toString())) ep->setValueWithKey(val);
+									else ep->setValueWithData(val);
+								}
 								else ep->setValueWithData(val);
 							}
-							else ep->setValueWithData(val);
+						}
+					}
+					else if (p->type == Controllable::TARGET)
+					{
+						if (TargetParameter* tp = dynamic_cast<TargetParameter*>(p))
+						{
+							if (tp->targetType == TargetParameter::CONTROLLABLE)
+							{
+								if (Controllable* c = getLinkedTargetAs<Controllable>((TargetParameter*)value.get(), multiplexIndex))
+								{
+									tp->setValueFromTarget(c);
+								}
+							}
+							else
+							{
+								if (ControllableContainer* cc = getLinkedTargetContainerAs<ControllableContainer>((TargetParameter*)value.get(), multiplexIndex))
+								{
+									tp->setValueFromTarget(cc);
+								}
+							}
 						}
 					}
 					else
@@ -502,7 +529,7 @@ void GenericControllableCommand::loadGhostData(var data)
 	ParamLinkContainer::loadJSONDataInternal(data); //force refreshing links
 
 	if (action == SET_VALUE || action == GO_TO_VALUE) updateComponentFromTarget(); //force generate if not yet
-//}
+	//}
 }
 
 bool GenericControllableCommand::checkEnableTargetFilter(Controllable* c)
