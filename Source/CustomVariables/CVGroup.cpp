@@ -205,9 +205,12 @@ void CVGroup::randomizeValues()
 			else if (p->type == Parameter::ENUM)
 			{
 				EnumParameter* ep = (EnumParameter*)p;
-				int index = r.nextInt() % ep->enumValues.size();
-				while (index < 0) index += ep->enumValues.size();
-				ep->setValueWithKey((ep->enumValues[index]->key));
+				if (ep->enumValues.size() > 0)
+				{
+					int index = r.nextInt() % ep->enumValues.size();
+					while (index < 0) index += ep->enumValues.size();
+					ep->setValueWithKey((ep->enumValues[index]->key));
+				}
 			}
 			else if (p->isComplex())
 			{
