@@ -15,11 +15,12 @@ DMXUniverse::DMXUniverse(bool useParams) :
 	useParams(useParams),
 	isDirty(false)
 {
-	editorIsCollapsed = !useParams;
+	editorIsCollapsed = useParams;
 
 	net = addIntParameter("Net", "If appliccable the net for this universe", 0, 0, 15);
 	subnet = addIntParameter("Subnet", "If applicable the subnet for this universe", 0, 0, 15);
 	universe = addIntParameter("Universe", "The universe", 0, 0);
+
 
 	memset(values, 0, DMX_NUM_CHANNELS);
 

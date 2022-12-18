@@ -39,6 +39,7 @@ DMXModule::DMXModule() :
 
 	sendRate = moduleParams.addIntParameter("Send Rate", "The rate at which to send data.", 40, 1, 200);
 	sendOnChangeOnly = moduleParams.addBoolParameter("Send On Change Only", "Only send a universe if one of its channels has changed", true);
+	useMulticast = moduleParams.addBoolParameter("Use Multicast", "Use Multicast on receive and send if applicable with the device type", false);
 
 	autoAdd = moduleParams.addBoolParameter("Auto Add", "If checked, received universed will automatically be added to the values. Not effective when using 1-universe devices like OpenDMX or Enttec DMXPro", true);
 
@@ -78,10 +79,23 @@ DMXModule::DMXModule() :
 	thruManager->userCanAddControllables = true;
 	thruManager->customUserCreateControllableFunc = &DMXModule::createThruControllable;
 	moduleParams.addChildControllableContainer(thruManager.get());
+
+	inputUniverseManager.addBaseManagerListener(this);
+	outputUniverseManager.addBaseManagerListener(this);
 }
 
 DMXModule::~DMXModule()
 {
+}
+
+void DMXModule::itemAdded(DMXUniverse* i)
+{
+	updateDeviceMulticast();
+}
+
+void DMXModule::itemRemoved(DMXUniverse* i)
+{
+	updateDeviceMulticast();
 }
 
 void DMXModule::setCurrentDMXDevice(DMXDevice* d)
@@ -99,7 +113,7 @@ void DMXModule::setCurrentDMXDevice(DMXDevice* d)
 
 	dmxDevice.reset(d);
 
-	dmxConnected->hideInEditor = dmxDevice == nullptr || dmxDevice->type == DMXDevice::ARTNET;
+	//dmxConnected->hideInEditor = dmxDevice == nullptr || dmxDevice->type == DMXDevice::ARTNET;
 	dmxConnected->setValue(false);
 
 	if (dmxDevice != nullptr)
@@ -110,11 +124,37 @@ void DMXModule::setCurrentDMXDevice(DMXDevice* d)
 		setupIOConfiguration(dmxDevice->canReceive && dmxDevice->inputCC->enabled->boolValue(), dmxDevice->outputCC->enabled->boolValue());
 		dmxConnected->setValue(dmxDevice->isConnected);
 
+		useMulticast->setEnabled(dmxDevice->type == DMXDevice::SACN);
+
+		updateDeviceMulticast();
+
 		startThread();
+	}
+	else
+	{
+		useMulticast->setEnabled(false);
 	}
 
 
+
 	dmxModuleListeners.call(&DMXModuleListener::dmxDeviceChanged);
+}
+
+void DMXModule::updateDeviceMulticast()
+{
+	if (isCurrentlyLoadingData) return;
+	if (dmxDevice == nullptr) return;
+
+	Array<DMXUniverse*> inUniv;
+	Array<DMXUniverse*> outUniv;
+
+	if (useMulticast->boolValue())
+	{
+		inUniv = Array<DMXUniverse*>(inputUniverseManager.items.getRawDataPointer(), inputUniverseManager.items.size());
+		outUniv = Array<DMXUniverse*>(outputUniverseManager.items.getRawDataPointer(), outputUniverseManager.items.size());
+	}
+
+	dmxDevice->setupMulticast(inUniv, outUniv);
 }
 
 void DMXModule::sendDMXValue(DMXUniverse* u, int channel, uint8 value)
@@ -262,6 +302,12 @@ void DMXModule::loadJSONDataInternal(var data)
 
 }
 
+void DMXModule::afterLoadJSONDataInternal()
+{
+	Module::afterLoadJSONDataInternal();
+	updateDeviceMulticast();
+}
+
 
 void DMXModule::onContainerParameterChanged(Parameter* p)
 {
@@ -287,6 +333,10 @@ void DMXModule::controllableFeedbackUpdate(ControllableContainer* cc, Controllab
 		if (c == dmxDevice->outputCC->enabled || (dmxDevice->canReceive && (c == dmxDevice->inputCC->enabled)))
 		{
 			setupIOConfiguration(dmxDevice->canReceive && dmxDevice->inputCC->enabled->boolValue(), dmxDevice->outputCC->enabled->boolValue());
+		}
+		else if (c == useMulticast)
+		{
+			updateDeviceMulticast();
 		}
 	}
 }

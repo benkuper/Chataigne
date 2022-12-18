@@ -50,8 +50,14 @@ public:
 	e131_packet_t senderPacket;
 	e131_addr_t senderDest;
 
+	Array<String> multicastIn;
+	Array<String> multicastOut;
+
 	void setupReceiver();
 	void setupSender();
+
+	void setupMulticast(Array<DMXUniverse*> in, Array<DMXUniverse*> out) override;
+
 
 	//void sendDMXValue(int channel, int value) override;
 	//void sendDMXRange(int startChannel, Array<int> values) override;

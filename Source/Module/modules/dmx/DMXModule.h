@@ -13,6 +13,7 @@
 class DMXModule :
 	public Module,
 	public DMXDevice::DMXDeviceListener,
+	public DMXUniverseManager::ManagerListener,
 	public Thread
 {
 public:
@@ -22,6 +23,8 @@ public:
 	EnumParameter* dmxType;
 	IntParameter* sendRate;
 	BoolParameter* sendOnChangeOnly;
+	BoolParameter* useMulticast;
+
 	BoolParameter* autoAdd;
 
 	SpinLock deviceLock;
@@ -41,7 +44,14 @@ public:
 	DMXUniverseManager inputUniverseManager;
 	DMXUniverseManager outputUniverseManager;
 
+
+	void itemAdded(DMXUniverse* i) override;
+	void itemRemoved(DMXUniverse* i) override;
+
+
 	void setCurrentDMXDevice(DMXDevice* d);
+
+	void updateDeviceMulticast();
 
 	void sendDMXValue(DMXUniverse* u, int channel, uint8 value);
 	void sendDMXRange(DMXUniverse* u, int startChannel, Array<uint8> values);
@@ -56,6 +66,7 @@ public:
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
+	void afterLoadJSONDataInternal() override;
 
 	void onContainerParameterChanged(Parameter* p) override;
 	void controllableFeedbackUpdate(ControllableContainer* cc, Controllable* c) override;

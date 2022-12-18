@@ -38,6 +38,7 @@ public:
 	//virtual void sendDMXRange(int net, int subnet, int universe, int startChannel, Array<int> values);
 	virtual void sendDMXValues(DMXUniverse* u);
 	virtual void sendDMXValuesInternal(DMXUniverse* u) = 0;
+	virtual void setupMulticast(Array<DMXUniverse*> multicastIn, Array<DMXUniverse*> multicastOut) {}
 
 	void setDMXValuesIn(int net, int subnet, int universe, Array<uint8> values, const String& sourceName = "");
 
