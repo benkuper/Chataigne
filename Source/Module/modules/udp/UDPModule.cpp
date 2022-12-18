@@ -161,14 +161,11 @@ Array<uint8> UDPModule::readBytes()
 {
 	Array<uint8> result;
 
-	const int maxPacketSize = 8192;
-	uint8 data[maxPacketSize];
-
 	while (true)
 	{
 		String senderAddress = "";
 		int senderPort = 0;
-		int numBytes = receiver->read(data, maxPacketSize, false, senderAddress, senderPort);
+		int numBytes = receiver->read(data, UDP_MAX_PACKET_SIZE, false, senderAddress, senderPort);
 
 		if (numBytes == -1)
 		{

@@ -10,6 +10,7 @@
 
 #pragma once
 
+#define UDP_MAX_PACKET_SIZE 65535
 
 class UDPModule :
 	public NetworkStreamingModule
@@ -24,6 +25,9 @@ public:
 	std::unique_ptr<DatagramSocket> sender;
 	DatagramSocket* proxySender; //if receiver is enabled, then proxy sender is receiver. Allows for feedback
 	BoolParameter* listenToOutputFeedback;
+
+
+	uint8 data[UDP_MAX_PACKET_SIZE];
 
 	virtual void setupReceiver() override;
 	virtual void setupSender() override;
