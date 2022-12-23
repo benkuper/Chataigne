@@ -7,6 +7,7 @@
 
   ==============================================================================
 */
+#include "Module/ModuleIncludes.h"
 
 MetronomeModule::MetronomeModule() :
 	Module(getTypeString()),
@@ -21,6 +22,7 @@ MetronomeModule::MetronomeModule() :
 	onTime = moduleParams.addFloatParameter("ON Time", "Relative amount of time the metronome stays valid (depending on the frequency) when triggered", .5f, 0, 1);
 	random = moduleParams.addFloatParameter("Randomness", "Amount of randomness in each call", 0, 0, 1);
 
+	tapTempoIntervalsMax = moduleParams.addIntParameter("Tap tempo averaging", "How many intervals do you want to use in averaging ? 0 means all",4,1);
 	tapTempo = moduleParams.addTrigger("Tap Tempo", "press me at least twice to set tempo");
 
 	tick = valuesCC.addBoolParameter("Tick", "When the metronome is ticking", false);
@@ -157,7 +159,20 @@ void MetronomeModule::tapTempoPressed()
 {
 	double now = Time::getMillisecondCounterHiRes();
 	double delta = now - TSTapTempoLastPressed;
+	tapTempoHistory.add(now);
 	if (delta < 5000 && delta > 0) { // arbitrary value to avoid very low BPM value on first press
+		delta = 0;
+		int intervals = tapTempoIntervalsMax->getValue();
+		if (intervals > 0) {
+			while (tapTempoHistory.size() > intervals + 1) {
+				tapTempoHistory.remove(0);
+			}
+		}
+		for (int i = 1; i < tapTempoHistory.size(); i++) {
+			delta += tapTempoHistory[i] - tapTempoHistory[i-1];
+		}
+		delta = delta / (double)(tapTempoHistory.size()-1);
+
 		MetroMode m = mode->getValueDataAsEnum<MetroMode>();
 		switch (m)
 		{
@@ -173,6 +188,11 @@ void MetronomeModule::tapTempoPressed()
 			freqTimeBpm->setValue(60000. / delta);
 			break;
 		}
+	}
+	else // first hit in a long serie
+	{
+		tapTempoHistory.clear();
+		tapTempoHistory.add(now);
 	}
 	TSTapTempoLastPressed = now;
 }

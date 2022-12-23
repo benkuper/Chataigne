@@ -29,7 +29,8 @@ public:
 	Trigger * tapTempo;
 	double TSTapTempoLastPressed = 0;
 	Random rnd;
-
+	Array<double> tapTempoHistory;
+	IntParameter* tapTempoIntervalsMax;
 	void updateFreqParam();
 	
 	void onContainerParameterChangedInternal(Parameter* p) override;
