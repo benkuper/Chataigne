@@ -36,7 +36,6 @@ public:
 	FloatParameter * offsetCycles;
 	Array<FloatParameter *> offsetValues;
 
-	
 	FloatParameter * value;
 	
 	//Perlin
@@ -50,6 +49,15 @@ public:
 
 	// custom 
 	Automation * customCurve;
+
+	// tap tempo
+	Trigger* tapTempo;
+	double TSTapTempoLastPressed = 0;
+	Array<double> tapTempoHistory;
+	IntParameter* tapTempoIntervalsMax;
+	IntParameter* tapTempoPerCycle;
+
+	void tapTempoPressed();
 
 	void onContainerParameterChangedInternal(Parameter* p) override;
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
