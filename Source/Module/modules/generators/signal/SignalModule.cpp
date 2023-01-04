@@ -7,6 +7,7 @@
 
   ==============================================================================
 */
+#include "Module/ModuleIncludes.h"
 
 SignalModule::SignalModule() :
 	Module(getTypeString()),
@@ -34,6 +35,10 @@ SignalModule::SignalModule() :
 	resetTrigger = moduleParams.addTrigger("Reset", "This will reset the time");
 
 	customCurve = nullptr;
+
+	tapTempoIntervalsMax = moduleParams.addIntParameter("Tap tempo averaging", "How many intervals do you want to use in averaging ? 0 means all", 4, 1);
+	tapTempoPerCycle = moduleParams.addIntParameter("Tap tempo per cycle", "Type X times to make a cycle", 4, 1);
+	tapTempo = moduleParams.addTrigger("Tap Tempo", "press me at least twice to set tempo");
 
 	value = valuesCC.addFloatParameter("Value", "The signal value", 0, 0, 1);
 
@@ -97,6 +102,10 @@ void SignalModule::onControllableFeedbackUpdateInternal(ControllableContainer* c
 	else if (c == resetTrigger)
 	{
 		progression = 0;
+	}
+	else if (c == tapTempo)
+	{
+		tapTempoPressed();
 	}
 }
 
@@ -218,4 +227,35 @@ float SignalModule::getValueFromProgression(SignalType t, float prog, int offset
 		break;
 	}
 	return val;
+}
+
+
+
+void SignalModule::tapTempoPressed()
+{
+	double now = Time::getMillisecondCounterHiRes();
+	double delta = now - TSTapTempoLastPressed;
+	tapTempoHistory.add(now);
+	if (delta < 5000 && delta > 0) { // arbitrary value to avoid very low BPM value on first press
+		delta = 0;
+		int intervals = tapTempoIntervalsMax->getValue();
+		if (intervals > 0) {
+			while (tapTempoHistory.size() > intervals + 1) {
+				tapTempoHistory.remove(0);
+			}
+		}
+		for (int i = 1; i < tapTempoHistory.size(); i++) {
+			delta += tapTempoHistory[i] - tapTempoHistory[i - 1];
+		}
+		delta = delta / (double)(tapTempoHistory.size() - 1);
+		delta = delta * (float)tapTempoPerCycle->getValue();
+
+		frequency->setValue(1000. / delta);
+	}
+	else // first hit in a long serie
+	{
+		tapTempoHistory.clear();
+		tapTempoHistory.add(now);
+	}
+	TSTapTempoLastPressed = now;
 }
