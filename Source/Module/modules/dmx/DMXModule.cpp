@@ -190,7 +190,7 @@ void DMXModule::sendDMXRange(DMXUniverse* u, int startChannel, Array<uint8> valu
 
 	for (int i = startChannel; i < startChannel + values.size() && i < DMX_NUM_CHANNELS; i++)
 	{
-		u->updateValue(i, values[i]);
+		u->updateValue(i, values[i-startChannel]);
 	}
 }
 
