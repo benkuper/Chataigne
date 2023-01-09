@@ -1895,7 +1895,7 @@
                customPList="&lt;plist&gt;&#10;&lt;dict&gt;&#10;&lt;key&gt;NSAppTransportSecurity&lt;/key&gt;&#10;&#9;&lt;dict&gt;&#10;&#9;&#9;&lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;&#10;&#9;&#9;&lt;true/&gt;&#10;&#9;&lt;/dict&gt;&#10;&lt;/dict&gt;&#10;&lt;/plist&gt;"
                microphonePermissionNeeded="1" extraFrameworks="IOBluetooth, ForceFeedback, IOKit"
                documentExtensions="noisette" extraDefs="JUCE_SUPPORT_CARBON=0&#10;JUCE_COREGRAPHICS_DRAW_ASYNC=1&#10;USE_ABLETONLINK=1&#10;LINK_PLATFORM_MACOSX=1"
-               xcodeValidArchs="x86_64" frameworkSearchPaths="../../External/sdl/lib/osx"
+               xcodeValidArchs="arm64,arm64e,x86_64" frameworkSearchPaths="../../External/sdl/lib/osx"
                embeddedFrameworks="../../External/sdl/lib/osx/SDL2.framework">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" libraryPath="../../External/servus/lib/osx/debug&#10;../../External/joycon/lib/osx"
