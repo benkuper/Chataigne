@@ -45,6 +45,7 @@ public:
 
 	void sequenceCurrentTimeChanged(Sequence* s, float prevTime, bool evaluateSkippedData) override;
 	void sequencePlayStateChanged(Sequence* s) override;
+	void audioSetupChanged() override;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

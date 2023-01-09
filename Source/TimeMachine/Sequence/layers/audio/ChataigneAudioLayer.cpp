@@ -180,6 +180,11 @@ void ChataigneAudioLayer::sequencePlayStateChanged(Sequence* s)
 	}
 }
 
+void ChataigneAudioLayer::audioSetupChanged()
+{
+	updateSelectedOutChannels();
+}
+
 var ChataigneAudioLayer::getJSONData()
 {
 	var data = AudioLayer::getJSONData();
