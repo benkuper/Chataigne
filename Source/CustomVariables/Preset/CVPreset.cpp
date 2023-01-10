@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "CustomVariables/CustomVariablesIncludes.h"
+
 CVPreset::CVPreset(CVGroup * group) :
 	MorphTarget("Preset"),
 	group(group),

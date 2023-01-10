@@ -11,6 +11,7 @@
 
 #pragma once
 
+
 class Morpher :
 	public ControllableContainer,
 	public CVPresetManager::ManagerListener,
@@ -30,6 +31,7 @@ public:
 	FloatParameter * diagramOpacity;
 	BoolParameter * showDebug;
 
+	FloatParameter* safeZone;
 	BoolParameter * useAttraction;
 	IntParameter* attractionUpdateRate;
 	FloatParameter * attractionSpeed;

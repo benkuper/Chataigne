@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "CustomVariables/CustomVariablesIncludes.h"
+
 CVGroup::CVGroup(const String& name) :
 	BaseItem(name),
 	Thread("CV Interpolation"),
@@ -304,7 +306,7 @@ void CVGroup::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Co
 	{
 		ControlMode cm = controlMode->getValueDataAsEnum<ControlMode>();
 		//values.setForceItemsFeedbackOnly(cm != FREE); //tmp comment to find a better way to have feedbackOnly but with range change possible. OR maybe leave it editable is ok ?
-
+		
 		bool useMorpher = cm == VORONOI || cm == GRADIENT_BAND;
 
 		if (useMorpher)
@@ -332,8 +334,8 @@ void CVGroup::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Co
 			pr->weight->setControllableFeedbackOnly(useMorpher);
 		}
 
-		if (cm != FREE) computeValues();
 
+		if (cm != FREE) computeValues();
 
 	}
 

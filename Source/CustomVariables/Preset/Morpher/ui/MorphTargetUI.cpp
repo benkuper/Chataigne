@@ -13,6 +13,9 @@ MorphTargetUI::MorphTargetUI(MorphTarget* mt) :
 {
 	autoDrawContourWhenSelected = false;
 	setSize(50, 50);
+
+	autoHideWhenDragging = false;
+	drawEmptyDragIcon = true;
 }
 
 MorphTargetUI::~MorphTargetUI()

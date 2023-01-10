@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "CustomVariables/CustomVariablesIncludes.h"
+
 #define JC_VORONOI_IMPLEMENTATION
 #include "jc_voronoi.h"
 #include "Morpher.h"
@@ -16,8 +18,8 @@ Morpher::Morpher(CVPresetManager* presetManager) :
 	ControllableContainer("Morpher"),
 	Thread("Morpher"),
 	presetManager(presetManager),
-    mainTarget("Main"),
-    attractionSleepMS(20),
+	mainTarget("Main"),
+	attractionSleepMS(20),
 	blendMode(VORONOI)
 {
 
@@ -43,9 +45,12 @@ Morpher::Morpher(CVPresetManager* presetManager) :
 	bgImagePath = addFileParameter("Background Path", "", "");
 	bgImagePath->fileTypeFilter = "*.jpg; *.jpeg; *.png; *.bmp; *.tiff";
 
-	bgScale = addFloatParameter("Background Scale", "", 500,10,2000);
-	bgOpacity = addFloatParameter("Background Opacity", "", 1,0,1);
+	bgScale = addFloatParameter("Background Scale", "", 500, 10, 2000);
+	bgOpacity = addFloatParameter("Background Opacity", "", 1, 0, 1);
 	diagramOpacity = addFloatParameter("Diagram Opacity", "Opacity of the Voronoi Diagram", .2f, 0, 1);
+
+
+	safeZone = addFloatParameter("Safe Zone", "For 2D Voronoi, this is a zone around preset for which the value will be exactly set to the preset's one", 0, 0, 1);
 
 	useAttraction = addBoolParameter("Use Attraction", "When enabled, you can add attraction factors to targets and the MainTarget will move automatically", false);
 	attractionUpdateRate = addIntParameter("Attraction update rate", "When attraction is enabled, it sets the rate at which the morpher is updating the weights", 50, 1, 200);
@@ -73,7 +78,7 @@ Morpher::~Morpher()
 	presetManager->removeControllableContainerListener(this);
 
 	stopThread(100);
-	
+
 	if (diagram->internal != nullptr && diagram->internal->memctx != nullptr) jcv_diagram_free(diagram.get());
 }
 
@@ -119,7 +124,7 @@ void Morpher::computeZones()
 	}
 
 	if (diagram->internal != nullptr && diagram->internal->memctx != nullptr) jcv_diagram_free(diagram.get());
-	jcv_diagram_generate(points.size(), jPoints.getRawDataPointer() , nullptr, diagram.get());
+	jcv_diagram_generate(points.size(), jPoints.getRawDataPointer(), nullptr, diagram.get());
 
 	computeWeights();
 }
@@ -157,12 +162,14 @@ void Morpher::computeWeights()
 	case VORONOI:
 	{
 		if (diagram->numsites <= 1) break;
+
+		Point<float> mp = mainTarget.viewUIPosition->getPoint();
+
 		for (CVPreset* mt : presetManager->items) mt->weight->setValue(0);
 
 		HashMap<CVPreset*, float> rawWeights;
 		float totalRawWeight = 0;
 
-		Point<float> mp = mainTarget.viewUIPosition->getPoint();
 
 		int index = getSiteIndexForPoint(mp);
 		if (index == -1) break;
@@ -173,9 +180,17 @@ void Morpher::computeWeights()
 
 		//curZoneIndex->setValue(getSiteIndexForPoint(mp));
 
+		float safeZ = safeZone->floatValue();
+
 		//Compute direct site
 		CVPreset* mt = getEnabledTargetAtIndex(s.index);
-		float d = mp.getDistanceFrom(Point<float>(s.p.x, s.p.y));
+		float d = jmax<float>(mp.getDistanceFrom(Point<float>(s.p.x, s.p.y)) - safeZ, 0);
+
+		if (d == 0)
+		{
+			mt->weight->setValue(1);
+			break;
+		}
 
 		float mw = (float)INT32_MAX;
 		if (d != 0) mw = 1.0f / d;
@@ -185,7 +200,6 @@ void Morpher::computeWeights()
 
 
 		//Fill edge distances
-
 		jcv_graphedge* edge = s.edges;
 		Array<jcv_graphedge*> edges;
 
@@ -210,7 +224,7 @@ void Morpher::computeWeights()
 			Line<float> line(Point<float>(edge->pos[0].x, edge->pos[0].y), Point<float>(edge->pos[1].x, edge->pos[1].y));
 			Point<float> np;
 			float distToEdge = line.getDistanceFromPoint(mp, np);
-			float distNeighbourToEdge = np.getDistanceFrom(Point<float>(ns->p.x, ns->p.y));
+			float distNeighbourToEdge = jmax<float>(np.getDistanceFrom(Point<float>(ns->p.x, ns->p.y)) - safeZ, 0);
 
 			edges.add(edge);
 
@@ -239,7 +253,7 @@ void Morpher::computeWeights()
 			{
 				if (i == j) continue;
 
-				if (checkSitesAreNeighbours(edges[i]->neighbor, edges[j]->neighbor)) continue;
+				//if (checkSitesAreNeighbours(edges[i]->neighbor, edges[j]->neighbor)) continue;
 
 				float ed = edgeDists[j];
 				if (ed < minOtherEdgeDist)
@@ -258,8 +272,9 @@ void Morpher::computeWeights()
 			}
 			else
 			{
-				float directDist = mp.getDistanceFrom(Point<float>(neighbourSites[i]->p.x, neighbourSites[i]->p.y)); //if we want to check direct distance instead of path to point
-				w = 1.0f / directDist;
+				float directDist = jmax<float>(mp.getDistanceFrom(Point<float>(neighbourSites[i]->p.x, neighbourSites[i]->p.y)) - safeZ, 0); //if we want to check direct distance instead of path to point
+				if (directDist > 0) w = 1.0f / directDist;
+				else w = (float)INT32_MAX;
 			}
 
 			CVPreset* nmt = getEnabledTargetAtIndex(neighbourSites[i]->index);
@@ -292,7 +307,6 @@ void Morpher::computeWeights()
 	}
 
 	voronoiLock.exit();
-
 	morpherListeners.call(&MorpherListener::weightsUpdated);
 }
 
@@ -316,7 +330,7 @@ void Morpher::itemAdded(CVPreset* cvp)
 
 void Morpher::itemsAdded(Array<CVPreset*> it)
 {
-	for(auto & cvp : it) cvp->addControllableContainerListener(this);
+	for (auto& cvp : it) cvp->addControllableContainerListener(this);
 	computeZones();
 }
 
@@ -339,7 +353,8 @@ void Morpher::onContainerParameterChanged(Parameter* p)
 	{
 		mainTarget.viewUIPosition->setPoint(targetPosition->getPoint());
 		computeWeights();
-	}else if (p == attractionUpdateRate)
+	}
+	else if (p == attractionUpdateRate)
 	{
 		attractionSleepMS = 1000 / attractionUpdateRate->intValue();
 	}
@@ -362,7 +377,7 @@ void Morpher::onControllableFeedbackUpdate(ControllableContainer*, Controllable*
 	{
 		targetPosition->setPoint(mainTarget.viewUIPosition->getPoint());
 	}
-	else if (MorphTarget * cvp = c->getParentAs<MorphTarget>())
+	else if (MorphTarget* cvp = c->getParentAs<MorphTarget>())
 	{
 		if (c == cvp->viewUIPosition || c == cvp->enabled) computeZones();
 	}
