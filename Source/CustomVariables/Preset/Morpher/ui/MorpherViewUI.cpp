@@ -32,12 +32,11 @@ MorpherPanel::~MorpherPanel()
 void MorpherPanel::setGroup(CVGroup* g)
 {
 	if (currentGroup == g) return;
-	if (currentGroup != nullptr)
+	if (currentGroup != nullptr && !currentGroup->isClearing)
 	{
 		currentGroup->removeInspectableListener(this);
 		currentGroup->controlMode->removeAsyncParameterListener(this);
 		currentGroup->removeInspectableListener(this);
-
 	}
 
 	//if (g != nullptr)
