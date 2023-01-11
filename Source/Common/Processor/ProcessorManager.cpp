@@ -47,7 +47,7 @@ void ProcessorManager::addItemsInternal(Array<Processor*> item, var data)
 
 bool ProcessorManager::canAddItemOfType(const String& typeToCheck)
 {
-	return typeToCheck == itemDataType || typeToCheck == "Action" || typeToCheck == "Mapping";
+	return typeToCheck == itemDataType || typeToCheck == "Action" || typeToCheck == "Mapping" || typeToCheck == "Multiplex";
 }
 
 Array<Action*> ProcessorManager::getAllActions(bool includeMultiplexes, bool includeConductors)
