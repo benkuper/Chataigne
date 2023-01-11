@@ -9,7 +9,6 @@
 */
 
 #include "Module/ModuleIncludes.h"
-#include "ui/ChataigneAssetManager.h"
 
 PJLinkModule::PJLinkModule() :
 	StreamingModule(getDefaultTypeString()),
