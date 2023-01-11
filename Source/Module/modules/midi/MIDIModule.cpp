@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "Module/ModuleIncludes.h"
+
 MIDIValueComparator MIDIModule::midiValueComparator;
 
 MIDIModule::MIDIModule(const String& name, bool _useGenericControls) :
@@ -19,6 +21,7 @@ MIDIModule::MIDIModule(const String& name, bool _useGenericControls) :
 	lastClockReceiveTime(0),
 	lastClockReceiveTimeIndex(0),
 	mtcCC("MTC"),
+	infoCC("Infos"),
 	useGenericControls(_useGenericControls)
 {
 	valuesCC.customControllableComparator = &MIDIModule::midiValueComparator;
@@ -73,6 +76,14 @@ MIDIModule::MIDIModule(const String& name, bool _useGenericControls) :
 	valuesCC.userCanAddControllables = true;
 	valuesCC.customUserCreateControllableFunc = &MIDIModule::showMenuAndCreateValue;
 	alwaysShowValues = true;
+
+
+	notePlayed = infoCC.addTrigger("Note Played", "A note has been played");
+	oneNoteOn = infoCC.addBoolParameter("One Note On", "At least one note is playing right now", false);
+	lastChannel = infoCC.addIntParameter("Last Channel", "Last played channel", 1, 1, 16);
+	lastPitch = infoCC.addIntParameter("Last Pitch", "Last played pitch", 0, 0, 127);
+	lastVelocity = infoCC.addIntParameter("Last Velocity", "Last played velocity", 0, 0, 127);
+	valuesCC.addChildControllableContainer(&infoCC);
 
 	bpm = tempoCC.addFloatParameter("BPM", "BPM detected by the incoming MIDI Clock", 0, 0, 999);
 	midiStartTrigger = tempoCC.addTrigger("Start", "Clock Start signal");
@@ -271,6 +282,7 @@ void MIDIModule::updateMIDIDevices()
 		inputDevice->addMIDIInputListener(this);
 		mtcReceiver.reset(new MTCReceiver(inputDevice));
 		mtcReceiver->addMTCListener(this);
+		noteOns.clear();
 	}
 	//}
 
@@ -296,6 +308,13 @@ void MIDIModule::noteOnReceived(const int& channel, const int& pitch, const int&
 
 	if (logIncomingData->boolValue())  NLOG(niceName, "Note On : " << channel << ", " << noteName << " ( pitch : " + String(pitch) + " ), " << velocity);
 
+	lastChannel->setValue(channel);
+	lastPitch->setValue(pitch);
+	lastVelocity->setValue(velocity);
+	oneNoteOn->setValue(true);
+	noteOns.addIfNotAlreadyThere(channel * 128 + pitch);
+	notePlayed->trigger();
+
 	if (useGenericControls) updateValue(channel, noteName, velocity, MIDIValueParameter::NOTE_ON, pitch);
 
 	if (scriptManager->items.size() > 0) scriptManager->callFunctionOnAllItems(noteOnEventId, Array<var>(channel, pitch, velocity));
@@ -305,6 +324,9 @@ void MIDIModule::noteOffReceived(const int& channel, const int& pitch, const int
 {
 	if (!enabled->boolValue() && !manualAddMode) return;
 	inActivityTrigger->trigger();
+
+	noteOns.removeAllInstancesOf(channel * 128 + pitch);
+	if (noteOns.isEmpty()) oneNoteOn->setValue(false);
 
 	String noteName = MIDIManager::getNoteName(pitch, true, octaveShift->intValue());
 
@@ -363,7 +385,7 @@ void MIDIModule::fullFrameTimecodeReceived(const MidiMessage& msg)
 {
 	if (!enabled->boolValue()) return;
 	inActivityTrigger->trigger();
-	
+
 	int hours = 0, minutes = 0, seconds = 0, frames = 0;
 	MidiMessage::SmpteTimecodeType timecodeType;
 	msg.getFullFrameParameters(hours, minutes, seconds, frames, timecodeType);
@@ -411,7 +433,7 @@ void MIDIModule::afterTouchReceived(const int& channel, const int& note, const i
 void MIDIModule::midiMessageReceived(const MidiMessage& msg)
 {
 	if (!enabled->boolValue()) return;
-	
+
 	if (thruManager != nullptr)
 	{
 		for (auto& c : thruManager->controllables)
@@ -773,59 +795,59 @@ void MIDIModule::showMenuAndCreateValue(ControllableContainer* container)
 	m.addItem(6, "Add Program Change");
 
 	m.showMenuAsync(PopupMenu::Options(), [module](int mResult)
-	{
-		if (mResult == 0) return;
-
-		String mType = mResult == 1 ? "Note" : mResult == 3 ? "Pitch Wheel" : mResult == 6 ? "Program Change" : "Control Change";
-
-		AlertWindow* window = new AlertWindow("Add a " + mType, "Configure the parameters for this " + mType, AlertWindow::AlertIconType::NoIcon);
-		window->addTextEditor("channel", "1", "Channel (1-16)");
-
-		if (mResult != 3 && mResult != 4 && mResult != 6)
 		{
-			String mName = mResult == 1 ? "Pitch" : "Number";
-			window->addTextEditor("pitch", "1", mName + "(0-127)");
-		}
+			if (mResult == 0) return;
 
-		window->addButton("OK", 1, KeyPress(KeyPress::returnKey));
-		window->addButton("Cancel", 0, KeyPress(KeyPress::escapeKey));
+			String mType = mResult == 1 ? "Note" : mResult == 3 ? "Pitch Wheel" : mResult == 6 ? "Program Change" : "Control Change";
 
-		window->enterModalState(true, ModalCallbackFunction::create([module, window, mResult](int result)
-		{
-			if (result)
+			AlertWindow* window = new AlertWindow("Add a " + mType, "Configure the parameters for this " + mType, AlertWindow::AlertIconType::NoIcon);
+			window->addTextEditor("channel", "1", "Channel (1-16)");
+
+			if (mResult != 3 && mResult != 4 && mResult != 6)
 			{
-				int channel = jlimit<int>(1, 16, window->getTextEditorContents("channel").getIntValue());
-
-				if (mResult == 3)
-				{
-					module->pitchWheelReceived(channel, 0);
-				}
-				else if (mResult == 4)
-				{
-					module->channelPressureReceived(channel, 0);
-				}
-				else if (mResult == 5)
-				{
-					module->afterTouchReceived(channel, window->getTextEditorContents("pitch").getIntValue(), 0);
-				}
-				else if (mResult == 6)
-				{
-					module->programChangeReceived(channel, 0);
-				}
-				else
-				{
-					int pitch = jlimit<int>(0, 127, window->getTextEditorContents("pitch").getIntValue());
-
-					module->manualAddMode = true;
-					if (mResult == 1) module->noteOnReceived(channel, pitch, 0);
-					else module->controlChangeReceived(channel, pitch, 0);
-					module->manualAddMode = false;
-				}
+				String mName = mResult == 1 ? "Pitch" : "Number";
+				window->addTextEditor("pitch", "1", mName + "(0-127)");
 			}
-		}),
-			true
-			);
-	}
+
+			window->addButton("OK", 1, KeyPress(KeyPress::returnKey));
+			window->addButton("Cancel", 0, KeyPress(KeyPress::escapeKey));
+
+			window->enterModalState(true, ModalCallbackFunction::create([module, window, mResult](int result)
+				{
+					if (result)
+					{
+						int channel = jlimit<int>(1, 16, window->getTextEditorContents("channel").getIntValue());
+
+						if (mResult == 3)
+						{
+							module->pitchWheelReceived(channel, 0);
+						}
+						else if (mResult == 4)
+						{
+							module->channelPressureReceived(channel, 0);
+						}
+						else if (mResult == 5)
+						{
+							module->afterTouchReceived(channel, window->getTextEditorContents("pitch").getIntValue(), 0);
+						}
+						else if (mResult == 6)
+						{
+							module->programChangeReceived(channel, 0);
+						}
+						else
+						{
+							int pitch = jlimit<int>(0, 127, window->getTextEditorContents("pitch").getIntValue());
+
+							module->manualAddMode = true;
+							if (mResult == 1) module->noteOnReceived(channel, pitch, 0);
+							else module->controlChangeReceived(channel, pitch, 0);
+							module->manualAddMode = false;
+						}
+					}
+				}),
+				true
+					);
+		}
 	);
 }
 
