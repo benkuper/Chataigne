@@ -22,6 +22,7 @@
 DMXOpenUSBDevice::DMXOpenUSBDevice() :
 	DMXSerialDevice("OpenDMX", OPENDMX, false)
 {
+	outputCC->hideInEditor = true;
 }
 
 DMXOpenUSBDevice::~DMXOpenUSBDevice()

@@ -108,7 +108,7 @@ InspectableEditor* DMXUniverse::getEditorInternal(bool isRoot, Array<Inspectable
 
 String DMXUniverse::toString() const
 {
-	return "[Net : " + net->stringValue() + ", Subnet" + subnet->stringValue() + ", Universe : " + universe->stringValue() + "]";
+	return "[Net : " + net->stringValue() + ", Subnet : " + subnet->stringValue() + ", Universe : " + universe->stringValue() + "]";
 }
 
 ControllableUI* DMXValueParameter::createDefaultUI(Array<Controllable*> controllables)

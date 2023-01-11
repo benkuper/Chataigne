@@ -190,7 +190,7 @@ void DMXModule::sendDMXRange(DMXUniverse* u, int startChannel, Array<uint8> valu
 
 	for (int i = startChannel; i < startChannel + values.size() && i < DMX_NUM_CHANNELS; i++)
 	{
-		u->updateValue(i, values[i-startChannel]);
+		u->updateValue(i, values[i - startChannel]);
 	}
 }
 
@@ -356,7 +356,7 @@ void DMXModule::dmxDataInChanged(int net, int subnet, int universe, Array<uint8>
 	if (isClearing || !enabled->boolValue()) return;
 	if (logIncomingData->boolValue())
 	{
-		String s = "DMX In received :\nNet : " + String(net) + "\nSubnet : " + String(subnet) + "\nUniverse " + String(universe);
+		String s = "DMX In received :\nNet : " + String(net) + "\nSubnet : " + String(subnet) + "\nUniverse : " + String(universe);
 		if (sourceName.isNotEmpty()) s += " from " + sourceName;
 		NLOG(niceName, s);
 	}
@@ -417,9 +417,9 @@ DMXUniverse* DMXModule::getUniverse(bool isInput, int net, int subnet, int unive
 
 void DMXModule::run()
 {
-	double prevTime = Time::getMillisecondCounterHiRes();
 	while (!threadShouldExit())
 	{
+		double t1 = Time::getMillisecondCounterHiRes();
 		{
 			GenericScopedLock lock(deviceLock);
 			if (dmxDevice == nullptr) return;
@@ -432,11 +432,10 @@ void DMXModule::run()
 				u->isDirty = false;
 			}
 		}
+		double t2 = Time::getMillisecondCounterHiRes();
 
-		double t = Time::getMillisecondCounterHiRes();
-		double diffTime = t - prevTime;
+		double diffTime = t2 - t1;
 		double rateMS = 1000.0 / sendRate->intValue();
-		prevTime = t;
 
 		double msToWait = rateMS - diffTime;
 		if (msToWait > 0) wait(msToWait);
