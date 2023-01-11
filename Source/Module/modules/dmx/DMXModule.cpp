@@ -20,7 +20,9 @@ DMXModule::DMXModule() :
 	outputUniverseManager(false)
 {
 	setupIOConfiguration(false, true);
+
 	valuesCC.editorIsCollapsed = true;
+	includeValuesInSave = false;
 	canHandleRouteValues = true;
 
 
@@ -285,6 +287,7 @@ var DMXModule::getJSONData()
 		}
 	}
 	if (channelTypes.size() > 0) data.getDynamicObject()->setProperty("dmxChannelTypes", channelTypes);
+	data.getDynamicObject()->setProperty(inputUniverseManager.shortName, inputUniverseManager.getJSONData());
 
 	return data;
 }
@@ -300,6 +303,7 @@ void DMXModule::loadJSONDataInternal(var data)
 		channelValues[(int)channelTypes[i].getProperty("channel", 1) - 1]->setType((DMXByteOrder)(int)channelTypes[i].getProperty("type", 0));
 	}
 
+	inputUniverseManager.loadJSONData(data.getProperty(inputUniverseManager.shortName, var()));
 }
 
 void DMXModule::afterLoadJSONDataInternal()
@@ -364,11 +368,6 @@ void DMXModule::dmxDataInChanged(int net, int subnet, int universe, Array<uint8>
 	inActivityTrigger->trigger();
 
 
-	DMXUniverse* u = getUniverse(true, net, subnet, universe, autoAdd->boolValue());
-	if (u == nullptr) return;
-
-	u->updateValues(values);
-
 	if (thruManager != nullptr)
 	{
 		for (auto& c : thruManager->controllables)
@@ -380,12 +379,17 @@ void DMXModule::dmxDataInChanged(int net, int subnet, int universe, Array<uint8>
 				{
 					if (m->dmxDevice != nullptr)
 					{
-						m->dmxDevice->sendDMXValues(u);
+						m->dmxDevice->sendDMXValues(net, subnet, universe, values.getRawDataPointer());
 					}
 				}
 			}
 		}
 	}
+
+	DMXUniverse* u = getUniverse(true, net, subnet, universe, autoAdd->boolValue());
+	if (u == nullptr) return;
+
+	u->updateValues(values);
 
 	if (scriptManager->items.size() > 0)
 	{

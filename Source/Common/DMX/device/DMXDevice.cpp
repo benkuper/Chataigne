@@ -96,10 +96,15 @@ void DMXDevice::setDMXValuesIn(int net, int subnet, int universe, Array<uint8> v
 
 void DMXDevice::sendDMXValues(DMXUniverse* u)
 {
+	sendDMXValues(u->net->intValue(), u->subnet->intValue(), u->universe->intValue(), u->values);
+}
+
+void DMXDevice::sendDMXValues(int net, int subnet, int universe, uint8* values)
+{
 	if (!outputCC->enabled->boolValue()) return;
 
 	ScopedLock lock(dmxLock);
-	sendDMXValuesInternal(u);
+	sendDMXValuesInternal(net, subnet, universe, values);
 }
 
 

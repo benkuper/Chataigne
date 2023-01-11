@@ -99,7 +99,7 @@ void DMXSerialDevice::processIncomingData()
 	DBG("Incoming data, process function not overriden, doing nothing.");
 }
 
-void DMXSerialDevice::sendDMXValuesInternal(DMXUniverse* u)
+void DMXSerialDevice::sendDMXValuesInternal(int net, int subnet, int universe, uint8* values)
 {
 	if (dmxPort == nullptr) return;
 
@@ -107,7 +107,7 @@ void DMXSerialDevice::sendDMXValuesInternal(DMXUniverse* u)
 	{
 		try
 		{
-			sendDMXValuesSerialInternal(u);
+			sendDMXValuesSerialInternal(net, subnet, universe, values);
 		}
 		catch (std::exception e)
 		{

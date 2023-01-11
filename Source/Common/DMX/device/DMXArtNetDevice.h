@@ -46,7 +46,7 @@ public:
 	//void sendDMXValue(int channel, int value) override;
 	//void sendDMXRange(int startChannel, Array<int> values) override;
 
-	void sendDMXValuesInternal(DMXUniverse* u) override;
+	void sendDMXValuesInternal(int net, int subnet, int universe, uint8* values) override;
 
 	//	void endLoadFile() override;
 
