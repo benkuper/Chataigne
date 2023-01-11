@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "Common/Processor/ProcessorIncludes.h"
+
 MultiplexListManager::MultiplexListManager(Multiplex* mp) :
     BaseManager("Lists"),
     multiplex(mp)
