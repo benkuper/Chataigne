@@ -40,7 +40,7 @@ DMXModule::DMXModule() :
 	dmxType->setValueWithKey("Open DMX");
 
 	sendRate = moduleParams.addIntParameter("Send Rate", "The rate at which to send data.", 40, 1, 200);
-	sendOnChangeOnly = moduleParams.addBoolParameter("Send On Change Only", "Only send a universe if one of its channels has changed", true);
+	sendOnChangeOnly = moduleParams.addBoolParameter("Send On Change Only", "Only send a universe if one of its channels has changed", false);
 	useMulticast = moduleParams.addBoolParameter("Use Multicast", "Use Multicast on receive and send if applicable with the device type", false);
 
 	autoAdd = moduleParams.addBoolParameter("Auto Add", "If checked, received universed will automatically be added to the values. Not effective when using 1-universe devices like OpenDMX or Enttec DMXPro", true);
