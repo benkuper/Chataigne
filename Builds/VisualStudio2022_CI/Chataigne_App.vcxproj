@@ -2127,12 +2127,6 @@
     <ClCompile Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_audio_processors.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_audio_processors_ara.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_audio_processors_lv2_libs.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_core.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2826,7 +2820,7 @@
     <ClInclude Include="..\..\JUCE\modules\juce_cryptography\hashing\juce_MD5.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_cryptography\hashing\juce_SHA256.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_cryptography\hashing\juce_Whirlpool.h"/>
-    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_cryptography\juce_cryptography.h"/>
+    <ClInclude Include="..\..\..\JUCE\modules\juce_cryptography\juce_cryptography.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\accessibility\enums\juce_AccessibilityActions.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\accessibility\enums\juce_AccessibilityEvent.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\accessibility\enums\juce_AccessibilityRole.h"/>
@@ -3005,7 +2999,7 @@
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\windows\juce_TooltipWindow.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\windows\juce_TopLevelWindow.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\windows\juce_VBlankAttachement.h"/>
-    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\juce_gui_basics.h"/>
+    <ClInclude Include="..\..\..\JUCE\modules\juce_gui_basics\juce_gui_basics.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_extra\code_editor\juce_CodeDocument.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_extra\code_editor\juce_CodeEditorComponent.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_extra\code_editor\juce_CodeTokeniser.h"/>
@@ -3033,7 +3027,7 @@
     <ClInclude Include="..\..\JUCE\modules\juce_gui_extra\misc\juce_SystemTrayIconComponent.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_extra\misc\juce_WebBrowserComponent.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_extra\native\juce_mac_NSViewFrameWatcher.h"/>
-    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_extra\juce_gui_extra.h"/>
+    <ClInclude Include="..\..\..\JUCE\modules\juce_gui_extra\juce_gui_extra.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\app\CrashHandler.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\app\OrganicApplication.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\app\OrganicMainComponent.h"/>
