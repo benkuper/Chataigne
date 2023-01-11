@@ -9,6 +9,7 @@
 */
 
 #include "Module/ModuleIncludes.h"
+#include "ui/ChataigneAssetManager.h"
 
 PJLinkModule::PJLinkModule() :
 	StreamingModule(getDefaultTypeString()),
@@ -23,6 +24,7 @@ PJLinkModule::PJLinkModule() :
 	valuesCC.customUserCreateControllableFunc = nullptr;
 	setAutoAddAvailable(false);
 
+	scriptManager->scriptTemplate += ChataigneAssetManager::getInstance()->getScriptTemplate("pjlink");
 
 	numClients = moduleParams.addIntParameter("Num Projectors", "Number of projectors to control", 1, 1, 100);
 	autoRequestTime = moduleParams.addIntParameter("Auto Request Timer", "If enabled, this is the number of seconds between auto request, alternating power and shutter status", 5, 1, 100, true);
@@ -54,9 +56,9 @@ PJLinkModule::PJLinkModule() :
 	//customParams.append(o);
 
 	//for (auto& d : defManager->definitions) d->addParam("customParams", customParams);
-	
+
 	defManager->definitions.clear();
-	
+
 	//defManager->add(CommandDefinition::createDef(this, "", "Send string", &SendStreamStringCommand::create, CommandContext::BOTH)->addParam("customParams", customParams)->addParam("hideNLCR",true));
 	//defManager->add(CommandDefinition::createDef(this, "", "Send values as string", &SendStreamStringValuesCommand::create, CommandContext::BOTH)->addParam("customParams", customParams)->addParam("hideNLCR", true));
 
@@ -276,6 +278,7 @@ void PJLinkModule::run()
 
 void PJLinkModule::processClient(PJLinkModule::PJLinkClient* c)
 {
+	if (!enabled->boolValue()) return;
 	if (c == nullptr) return;
 	if (!c->isConnected->boolValue()) return;
 	if (!c->paramsCC.enabled->boolValue()) return;
@@ -300,11 +303,15 @@ void PJLinkModule::processClient(PJLinkModule::PJLinkClient* c)
 }
 void PJLinkModule::processClientLine(PJLinkClient* c, const String& message)
 {
-
 	inActivityTrigger->trigger();
 	if (logIncomingData->boolValue()) NLOG(niceName, "Received : " << message);
 
 	c->lastRequestReplied = true;
+
+	Array<var> args;
+	args.add(c->id);
+	args.add(message);
+	scriptManager->callFunctionOnAllItems(pjLinkDataReceivedId, args);
 
 	if (message.contains("PJLINK"))
 	{
@@ -360,6 +367,8 @@ void PJLinkModule::processClientLine(PJLinkClient* c, const String& message)
 		}
 		c->assigningFromRemote = false;
 	}
+
+
 }
 
 PJLinkModule::PJLinkClient::PJLinkClient(PJLinkModule* m, int id) :

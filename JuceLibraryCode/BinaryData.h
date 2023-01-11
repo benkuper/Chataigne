@@ -164,6 +164,9 @@ namespace BinaryData
     extern const char*   oscScriptTemplate_js;
     const int            oscScriptTemplate_jsSize = 775;
 
+    extern const char*   pjlinkScriptTemplate_js;
+    const int            pjlinkScriptTemplate_jsSize = 371;
+
     extern const char*   streamingScriptTemplate_js;
     const int            streamingScriptTemplate_jsSize = 1051;
 
@@ -234,7 +237,7 @@ namespace BinaryData
     const int            custom_cextSize = 1111;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 75;
+    const int namedResourceListSize = 76;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

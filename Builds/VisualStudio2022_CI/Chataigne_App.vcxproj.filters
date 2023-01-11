@@ -9143,6 +9143,9 @@
     <None Include="..\..\Resources\Templates\Scripts\oscScriptTemplate.js">
       <Filter>Chataigne\Resources\Templates\Scripts</Filter>
     </None>
+    <None Include="..\..\Resources\Templates\Scripts\pjlinkScriptTemplate.js">
+      <Filter>Chataigne\Resources\Templates\Scripts</Filter>
+    </None>
     <None Include="..\..\Resources\Templates\Scripts\streamingScriptTemplate.js">
       <Filter>Chataigne\Resources\Templates\Scripts</Filter>
     </None>

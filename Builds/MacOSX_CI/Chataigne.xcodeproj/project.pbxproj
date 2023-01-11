@@ -855,6 +855,7 @@
 		E2EAF430B045BAA5F0C3CA19 /* DelayFilter.h */ /* DelayFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DelayFilter.h; path = ../../Source/Common/Processor/Mapping/Filter/filters/DelayFilter.h; sourceTree = SOURCE_ROOT; };
 		E3334C7CE4EE2A23F2323183 /* snap.png */ /* snap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = snap.png; path = ../../Resources/snap.png; sourceTree = SOURCE_ROOT; };
 		E38E60FCD973037D93F81F80 /* StreamingCommand.h */ /* StreamingCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StreamingCommand.h; path = ../../Source/Module/modules/common/streaming/commands/StreamingCommand.h; sourceTree = SOURCE_ROOT; };
+		E3AAC75776FE6C81E7AF5425 /* pjlinkScriptTemplate.js */ /* pjlinkScriptTemplate.js */ = {isa = PBXFileReference; lastKnownFileType = file.js; name = pjlinkScriptTemplate.js; path = ../../Resources/Templates/Scripts/pjlinkScriptTemplate.js; sourceTree = SOURCE_ROOT; };
 		E3D27DA7DF3C13FFDA2468FB /* BasicsGuide.cpp */ /* BasicsGuide.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BasicsGuide.cpp; path = ../../Source/Guider/guides/BasicsGuide.cpp; sourceTree = SOURCE_ROOT; };
 		E3D81D58A2F55922C54F1F18 /* MIDI.png */ /* MIDI.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MIDI.png; path = ../../Resources/Modules/MIDI.png; sourceTree = SOURCE_ROOT; };
 		E3DF6C843DEF80BF6E8B26E5 /* AutomationMappingLayerTimeline.h */ /* AutomationMappingLayerTimeline.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AutomationMappingLayerTimeline.h; path = ../../Source/TimeMachine/Sequence/layers/mapping/automation/ui/AutomationMappingLayerTimeline.h; sourceTree = SOURCE_ROOT; };
@@ -2465,6 +2466,7 @@
 				D5FBA39828DF0F3D12B63CFF,
 				20A44377EAC767480769BEA5,
 				1542C0258C8286E5FD5F1206,
+				E3AAC75776FE6C81E7AF5425,
 				0C5AF857C59082628C2BDB1A,
 				6D63D2E0E1F5D5A14FD739C4,
 				10FDEE6F099540F5DC2B246B,
@@ -3831,7 +3833,7 @@
 					"USE_ABLETONLINK=1",
 					"LINK_PLATFORM_MACOSX=1",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.9.14b4",
+					"JUCE_APP_VERSION=1.9.14b5",
 					"JUCE_APP_VERSION_HEX=0x1090e",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -3909,7 +3911,7 @@
 					"USE_ABLETONLINK=1",
 					"LINK_PLATFORM_MACOSX=1",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.9.14b4",
+					"JUCE_APP_VERSION=1.9.14b5",
 					"JUCE_APP_VERSION_HEX=0x1090e",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.14b4"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.14b5"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="VST_LOGGING=0"
@@ -85,6 +85,8 @@
                 file="Resources/Templates/Scripts/moduleScriptTemplate.js"/>
           <FILE id="YGTbdF" name="oscScriptTemplate.js" compile="0" resource="1"
                 file="Resources/Templates/Scripts/oscScriptTemplate.js"/>
+          <FILE id="QwwRq3" name="pjlinkScriptTemplate.js" compile="0" resource="1"
+                file="Resources/Templates/Scripts/pjlinkScriptTemplate.js"/>
           <FILE id="GYfwUG" name="streamingScriptTemplate.js" compile="0" resource="1"
                 file="Resources/Templates/Scripts/streamingScriptTemplate.js"/>
           <FILE id="jx5aVt" name="wsClientScriptTemplate.js" compile="0" resource="1"

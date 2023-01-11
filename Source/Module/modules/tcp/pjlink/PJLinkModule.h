@@ -68,6 +68,8 @@ public:
 	BoolParameter* allProjectorsPoweredOn;
 	BoolParameter* allProjectorsPoweredOff;
 
+	const Identifier pjLinkDataReceivedId = "pjLinkDataReceived";
+
 	bool autoRequestIsPower;
 
 	void updateClientsSetup();
