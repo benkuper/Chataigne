@@ -127,7 +127,7 @@ Chataigne is using a modified version of JUCE. So you first need to compile the 
 
 ### Setting JUCE Global Paths
   
-   ![Don't forget to set the paths  !](http://benjamin.kuperberg.fr/chataigne/user/images/juce_paths.png)
+   ![Don't forget to set the paths  !](http://benjamin.kuperberg.fr/chataigne/user/images/juce_paths.png) 
  
   
 ## Dependencies
