@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "Common/Processor/ProcessorIncludes.h"
+
 MappingFilter::MappingFilter(const String& name, var params, Multiplex* multiplex, bool hasChannelFilter) :
 	BaseItem(name),
 	MultiplexTarget(multiplex),
