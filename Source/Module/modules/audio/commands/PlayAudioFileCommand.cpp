@@ -1,25 +1,29 @@
 /*
   ==============================================================================
 
-    PlayAudioFileCommand.cpp
-    Created: 2 Apr 2019 7:26:18pm
-    Author:  bkupe
+	PlayAudioFileCommand.cpp
+	Created: 2 Apr 2019 7:26:18pm
+	Author:  bkupe
 
   ==============================================================================
 */
 
-PlayAudioFileCommand::PlayAudioFileCommand(AudioModule * _module, CommandContext context, var params, Multiplex * multiplex) :
+#include "Module/ModuleIncludes.h"
+
+PlayAudioFileCommand::PlayAudioFileCommand(AudioModule* _module, CommandContext context, var params, Multiplex* multiplex) :
 	BaseCommand(_module, context, params, multiplex),
 	audioModule(_module),
-    channelRemapAudioSource(&transportSource, false),
-    fileSampleRate(44100),
-    channelsCC("Selected channels"),
+	channelRemapAudioSource(&transportSource, false),
+	fileSampleRate(44100),
+	channelsCC("Selected channels"),
 	numFileChannels(2),
-    numActiveOutputs(2)
+	numActiveOutputs(2)
 {
 	saveAndLoadRecursiveData = true;
 	audioFile = addFileParameter("Audio file", "The Audio file to play");
 	audioFile->fileTypeFilter = "*.wav;*.mp3;*.aiff";
+
+	volume = addFloatParameter("Volume", "A multiplier to apply to the volume of the original file", 1, 0, 5);
 
 	addChildControllableContainer(&channelsCC);
 
@@ -36,7 +40,7 @@ PlayAudioFileCommand::PlayAudioFileCommand(AudioModule * _module, CommandContext
 	for (int i = 0; i < numChannels; ++i)
 	{
 		String channelName = AudioChannelSet::getChannelTypeName(channelSet.getTypeOfChannel(i));
-		BoolParameter * b = channelsCC.addBoolParameter("Channel Out : " + channelName, "If enabled, sends audio from this layer to this channel", false);
+		BoolParameter* b = channelsCC.addBoolParameter("Channel Out : " + channelName, "If enabled, sends audio from this layer to this channel", false);
 		b->setValue(i < 2, false);
 	}
 
@@ -66,18 +70,18 @@ void PlayAudioFileCommand::updateSelectedOutChannels()
 	audioModule->graph.disconnectNode(graphID);
 
 	numActiveOutputs = 0;
-	for (int i = 0; i < channelsCC.controllables.size(); ++i) if (((BoolParameter *)channelsCC.controllables[i])->boolValue()) numActiveOutputs++;
+	for (int i = 0; i < channelsCC.controllables.size(); ++i) if (((BoolParameter*)channelsCC.controllables[i])->boolValue()) numActiveOutputs++;
 
 	currentProcessor->setPlayConfigDetails(0, numActiveOutputs, audioModule->currentSampleRate, audioModule->currentBufferSize);
 	currentProcessor->prepareToPlay(audioModule->currentSampleRate, audioModule->currentBufferSize);
 
 	channelRemapAudioSource.clearAllMappings();
 
-	
+
 	int index = 0;
-	for (int i = 0; i < channelsCC.controllables.size() ; ++i)
+	for (int i = 0; i < channelsCC.controllables.size(); ++i)
 	{
-		if (((BoolParameter *)channelsCC.controllables[i])->boolValue())
+		if (((BoolParameter*)channelsCC.controllables[i])->boolValue())
 		{
 			selectedOutChannels.add(i);
 			audioModule->graph.addConnection({ {AudioProcessorGraph::NodeID(graphID), index }, {AudioProcessorGraph::NodeID(AUDIO_OUTPUT_GRAPH_ID), i } });
@@ -98,7 +102,7 @@ void PlayAudioFileCommand::setAudioFile(File f)
 	readerSource.reset(nullptr);
 	if (!f.exists()) return;
 
-	AudioFormatReader * reader = formatManager.createReaderFor(f);
+	AudioFormatReader* reader = formatManager.createReaderFor(f);
 
 	if (reader != nullptr)
 	{
@@ -112,7 +116,7 @@ void PlayAudioFileCommand::setAudioFile(File f)
 	updateSelectedOutChannels();
 }
 
-void PlayAudioFileCommand::onContainerParameterChanged(Parameter * p)
+void PlayAudioFileCommand::onContainerParameterChanged(Parameter* p)
 {
 	BaseCommand::onContainerParameterChanged(p);
 
@@ -122,10 +126,10 @@ void PlayAudioFileCommand::onContainerParameterChanged(Parameter * p)
 	}
 }
 
-void PlayAudioFileCommand::onControllableFeedbackUpdate(ControllableContainer * cc, Controllable * c)
+void PlayAudioFileCommand::onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* c)
 {
 	BaseCommand::onControllableFeedbackUpdate(cc, c);
-	
+
 	if (cc == &channelsCC)
 	{
 		updateSelectedOutChannels();
@@ -142,7 +146,7 @@ void PlayAudioFileCommand::triggerInternal(int multiplexIndex)
 
 // PROCESSOR
 
-PlayAudioFileCommandProcessor::PlayAudioFileCommandProcessor(PlayAudioFileCommand * _command) :
+PlayAudioFileCommandProcessor::PlayAudioFileCommandProcessor(PlayAudioFileCommand* _command) :
 	command(_command),
 	rmsCount(0),
 	tempRMS(0),
@@ -167,7 +171,7 @@ const String PlayAudioFileCommandProcessor::getName() const
 
 void PlayAudioFileCommandProcessor::prepareToPlay(double sampleRate, int maximumExpectedSamplesPerBlock)
 {
-	if(command != nullptr && command->readerSource.get() != nullptr) command->channelRemapAudioSource.prepareToPlay(maximumExpectedSamplesPerBlock, sampleRate);
+	if (command != nullptr && command->readerSource.get() != nullptr) command->channelRemapAudioSource.prepareToPlay(maximumExpectedSamplesPerBlock, sampleRate);
 }
 
 void PlayAudioFileCommandProcessor::releaseResources()
@@ -175,7 +179,7 @@ void PlayAudioFileCommandProcessor::releaseResources()
 	if (command != nullptr) command->channelRemapAudioSource.releaseResources();
 }
 
-void PlayAudioFileCommandProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer & midiMessages)
+void PlayAudioFileCommandProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer& midiMessages)
 {
 	if (command == nullptr || command->readerSource.get() == nullptr || !command->transportSource.isPlaying())
 	{
@@ -187,8 +191,9 @@ void PlayAudioFileCommandProcessor::processBlock(AudioBuffer<float>& buffer, Mid
 	bufferToFill.buffer = &buffer;
 	bufferToFill.startSample = 0;
 	bufferToFill.numSamples = buffer.getNumSamples();
-	
+
 	command->channelRemapAudioSource.getNextAudioBlock(bufferToFill);
+	bufferToFill.buffer->applyGain(command->volume->floatValue());
 }
 
 double PlayAudioFileCommandProcessor::getTailLengthSeconds() const
@@ -206,7 +211,7 @@ bool PlayAudioFileCommandProcessor::producesMidi() const
 	return false;
 }
 
-AudioProcessorEditor * PlayAudioFileCommandProcessor::createEditor()
+AudioProcessorEditor* PlayAudioFileCommandProcessor::createEditor()
 {
 	return nullptr;
 }
@@ -235,14 +240,14 @@ const String PlayAudioFileCommandProcessor::getProgramName(int index)
 	return String();
 }
 
-void PlayAudioFileCommandProcessor::changeProgramName(int index, const String & newName)
+void PlayAudioFileCommandProcessor::changeProgramName(int index, const String& newName)
 {
 }
 
-void PlayAudioFileCommandProcessor::getStateInformation(juce::MemoryBlock & destData)
+void PlayAudioFileCommandProcessor::getStateInformation(juce::MemoryBlock& destData)
 {
 }
 
-void PlayAudioFileCommandProcessor::setStateInformation(const void * data, int sizeInBytes)
+void PlayAudioFileCommandProcessor::setStateInformation(const void* data, int sizeInBytes)
 {
 }
