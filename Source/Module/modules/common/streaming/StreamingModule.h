@@ -17,7 +17,7 @@ public:
 	StreamingModule(const String& name = "Streaming");
 	virtual ~StreamingModule();
 
-	enum StreamingType { LINES, DIRECT, DATA255, TYPE_JSON, RAW, COBS };
+	enum StreamingType { LINES = 0, DIRECT = 1, DATA255 = 2, RAW = 3, TYPE_JSON = 4, COBS = 5 };
 	enum MessageStructure { LINES_SPACE, LINES_TAB, LINES_COMMA, LINES_COLON, LINES_SEMICOLON, LINES_EQUALS, NO_SEPARATION, RAW_1BYTE, RAW_FLOATS, RAW_COLORS };
 	EnumParameter* streamingType;
 

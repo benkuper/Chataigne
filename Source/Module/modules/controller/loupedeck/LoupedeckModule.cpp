@@ -11,6 +11,8 @@
 #pragma warning(push)
 #pragma warning(disable:4838)
 
+#include "Module/ModuleIncludes.h"
+
 LoupedeckModule::LoupedeckModule() :
 	SerialModule(getDefaultTypeString()),
 	buttonParamsCC("Buttons"),
@@ -26,9 +28,11 @@ LoupedeckModule::LoupedeckModule() :
 
 	portParam->vidFilters.add(0x2ec2);
 
+	streamingType->setValueWithData(RAW);
+	streamingType->hideInEditor = true;
+
 	autoAdd->hideInEditor = true;
 	autoAdd->setValue(false);
-	streamingType->setValueWithData(RAW);
 
 	messageStructure->hideInEditor = true;
 	firstValueIsTheName->hideInEditor = true;
@@ -132,14 +136,7 @@ LoupedeckModule::LoupedeckModule() :
 	touchPosition->setBounds(0, 0, 1, 1);
 	touchPosition->setControllableFeedbackOnly(true);
 
-	streamingType->setValueWithData(RAW);
-	streamingType->hideInEditor = true;
 
-	autoAdd->hideInEditor = true;
-	autoAdd->setValue(false);
-
-	messageStructure->hideInEditor = true;
-	firstValueIsTheName->hideInEditor = true;
 
 	//serverPath->hideInEditor = true;
 	//serverPath->setValue(getLoupedeckServerPath());
@@ -213,7 +210,7 @@ Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==\n\n";
 
 void LoupedeckModule::processDataBytesInternal(Array<uint8> bytes)
 {
-	if (wsMode == HANDSHAKE)
+   	if (wsMode == HANDSHAKE)
 	{
 		String msg = String::createStringFromData((const char*)bytes.getRawDataPointer(), bytes.size());
 		if (msg.contains("\r\n\r\n"))

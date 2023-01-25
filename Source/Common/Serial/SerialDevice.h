@@ -73,7 +73,7 @@ class SerialDevice :
 public:
 	SerialReadThread thread;
 
-	enum PortMode { LINES, DIRECT, DATA255, RAW, JSON, COBS };
+	enum PortMode { LINES = 0, DIRECT = 1, DATA255 = 2, RAW = 3, JSON = 4, COBS = 5};
 
 #if SERIALSUPPORT
 	SerialDevice(Serial *port, SerialDeviceInfo * info, PortMode mode = LINES);
