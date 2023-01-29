@@ -304,6 +304,21 @@ void DMXModule::loadJSONDataInternal(var data)
 	}
 
 	inputUniverseManager.loadJSONData(data.getProperty(inputUniverseManager.shortName, var()));
+
+	if (thruManager != nullptr)
+	{
+		//thruManager->loadJSONData(data.getProperty("thru", var()));
+		for (auto& c : thruManager->controllables)
+		{
+			if (TargetParameter* mt = dynamic_cast<TargetParameter*>(c))
+			{
+				mt->targetType = TargetParameter::CONTAINER;
+				mt->customGetTargetContainerFunc = &ModuleManager::showAndGetModuleOfType<DMXModule>;
+				mt->isRemovableByUser = true;
+				mt->canBeDisabledByUser = true;
+			}
+		}
+	}
 }
 
 void DMXModule::afterLoadJSONDataInternal()
