@@ -8,6 +8,7 @@
   ==============================================================================
 */
 
+#include "Module/ModuleIncludes.h"
 #include "Common/Command/CommandIncludes.h"
 
 Module::Module(const String& name) :

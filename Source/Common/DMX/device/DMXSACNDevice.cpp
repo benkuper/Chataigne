@@ -26,7 +26,7 @@ DMXSACNDevice::DMXSACNDevice() :
 	remotePort = outputCC->addIntParameter("Remote Port", "Local port to receive SACN data", 5568, 0, 65535);
 	//outputUniverse = outputCC->addIntParameter("Universe", "The Universe to send to, from 0 to 15", 1, 1, 64000);
 	priority = outputCC->addIntParameter("Priority", "Priority of the packets to send", 100, 0, 200);
-	setupSender();
+	//setupSender();
 }
 
 DMXSACNDevice::~DMXSACNDevice()
@@ -134,15 +134,15 @@ void DMXSACNDevice::setupMulticast(Array<DMXUniverse*> in, Array<DMXUniverse*> o
 //	DMXDevice::sendDMXRange(startChannel, values);
 //}
 
-void DMXSACNDevice::sendDMXValuesInternal(DMXUniverse* u)
+void DMXSACNDevice::sendDMXValuesInternal(int net, int subnet, int universe, uint8* values)
 {
 	//String ip = sendMulticast->boolValue() ? getMulticastIPForUniverse(outputUniverse->intValue()) : remoteHost->stringValue();
 
 	String ip = remoteHost->stringValue();
 
 	senderPacket.frame.priority = priority->intValue();
-	senderPacket.frame.universe = u->universe->intValue();
-	memcpy(senderPacket.dmp.prop_val + 1, u->values, DMX_NUM_CHANNELS);
+	senderPacket.frame.universe = universe;
+	memcpy(senderPacket.dmp.prop_val + 1, values, DMX_NUM_CHANNELS);
 	int numWritten = sender.write(ip, remotePort->intValue(), &senderPacket, sizeof(e131_packet_t));
 
 	if (numWritten == -1)

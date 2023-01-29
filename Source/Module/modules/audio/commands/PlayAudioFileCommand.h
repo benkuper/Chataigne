@@ -23,6 +23,7 @@ public:
 	AudioModule * audioModule;
 
 	FileParameter * audioFile;
+	FloatParameter* volume;
 	PlayAudioFileCommandProcessor * currentProcessor;
 
 	std::unique_ptr<AudioFormatReaderSource> readerSource;

@@ -20,7 +20,9 @@ DMXModule::DMXModule() :
 	outputUniverseManager(false)
 {
 	setupIOConfiguration(false, true);
+
 	valuesCC.editorIsCollapsed = true;
+	includeValuesInSave = false;
 	canHandleRouteValues = true;
 
 
@@ -38,7 +40,7 @@ DMXModule::DMXModule() :
 	dmxType->setValueWithKey("Open DMX");
 
 	sendRate = moduleParams.addIntParameter("Send Rate", "The rate at which to send data.", 40, 1, 200);
-	sendOnChangeOnly = moduleParams.addBoolParameter("Send On Change Only", "Only send a universe if one of its channels has changed", true);
+	sendOnChangeOnly = moduleParams.addBoolParameter("Send On Change Only", "Only send a universe if one of its channels has changed", false);
 	useMulticast = moduleParams.addBoolParameter("Use Multicast", "Use Multicast on receive and send if applicable with the device type", false);
 
 	autoAdd = moduleParams.addBoolParameter("Auto Add", "If checked, received universed will automatically be added to the values. Not effective when using 1-universe devices like OpenDMX or Enttec DMXPro", true);
@@ -190,7 +192,7 @@ void DMXModule::sendDMXRange(DMXUniverse* u, int startChannel, Array<uint8> valu
 
 	for (int i = startChannel; i < startChannel + values.size() && i < DMX_NUM_CHANNELS; i++)
 	{
-		u->updateValue(i, values[i-startChannel]);
+		u->updateValue(i, values[i - startChannel]);
 	}
 }
 
@@ -285,6 +287,7 @@ var DMXModule::getJSONData()
 		}
 	}
 	if (channelTypes.size() > 0) data.getDynamicObject()->setProperty("dmxChannelTypes", channelTypes);
+	data.getDynamicObject()->setProperty(inputUniverseManager.shortName, inputUniverseManager.getJSONData());
 
 	return data;
 }
@@ -300,6 +303,22 @@ void DMXModule::loadJSONDataInternal(var data)
 		channelValues[(int)channelTypes[i].getProperty("channel", 1) - 1]->setType((DMXByteOrder)(int)channelTypes[i].getProperty("type", 0));
 	}
 
+	inputUniverseManager.loadJSONData(data.getProperty(inputUniverseManager.shortName, var()));
+
+	if (thruManager != nullptr)
+	{
+		//thruManager->loadJSONData(data.getProperty("thru", var()));
+		for (auto& c : thruManager->controllables)
+		{
+			if (TargetParameter* mt = dynamic_cast<TargetParameter*>(c))
+			{
+				mt->targetType = TargetParameter::CONTAINER;
+				mt->customGetTargetContainerFunc = &ModuleManager::showAndGetModuleOfType<DMXModule>;
+				mt->isRemovableByUser = true;
+				mt->canBeDisabledByUser = true;
+			}
+		}
+	}
 }
 
 void DMXModule::afterLoadJSONDataInternal()
@@ -356,18 +375,13 @@ void DMXModule::dmxDataInChanged(int net, int subnet, int universe, Array<uint8>
 	if (isClearing || !enabled->boolValue()) return;
 	if (logIncomingData->boolValue())
 	{
-		String s = "DMX In received :\nNet : " + String(net) + "\nSubnet : " + String(subnet) + "\nUniverse " + String(universe);
+		String s = "DMX In received :\nNet : " + String(net) + "\nSubnet : " + String(subnet) + "\nUniverse : " + String(universe);
 		if (sourceName.isNotEmpty()) s += " from " + sourceName;
 		NLOG(niceName, s);
 	}
 
 	inActivityTrigger->trigger();
 
-
-	DMXUniverse* u = getUniverse(true, net, subnet, universe, autoAdd->boolValue());
-	if (u == nullptr) return;
-
-	u->updateValues(values);
 
 	if (thruManager != nullptr)
 	{
@@ -380,12 +394,17 @@ void DMXModule::dmxDataInChanged(int net, int subnet, int universe, Array<uint8>
 				{
 					if (m->dmxDevice != nullptr)
 					{
-						m->dmxDevice->sendDMXValues(u);
+						m->dmxDevice->sendDMXValues(net, subnet, universe, values.getRawDataPointer());
 					}
 				}
 			}
 		}
 	}
+
+	DMXUniverse* u = getUniverse(true, net, subnet, universe, autoAdd->boolValue());
+	if (u == nullptr) return;
+
+	u->updateValues(values);
 
 	if (scriptManager->items.size() > 0)
 	{
@@ -417,9 +436,9 @@ DMXUniverse* DMXModule::getUniverse(bool isInput, int net, int subnet, int unive
 
 void DMXModule::run()
 {
-	double prevTime = Time::getMillisecondCounterHiRes();
 	while (!threadShouldExit())
 	{
+		double t1 = Time::getMillisecondCounterHiRes();
 		{
 			GenericScopedLock lock(deviceLock);
 			if (dmxDevice == nullptr) return;
@@ -432,11 +451,10 @@ void DMXModule::run()
 				u->isDirty = false;
 			}
 		}
+		double t2 = Time::getMillisecondCounterHiRes();
 
-		double t = Time::getMillisecondCounterHiRes();
-		double diffTime = t - prevTime;
+		double diffTime = t2 - t1;
 		double rateMS = 1000.0 / sendRate->intValue();
-		prevTime = t;
 
 		double msToWait = rateMS - diffTime;
 		if (msToWait > 0) wait(msToWait);

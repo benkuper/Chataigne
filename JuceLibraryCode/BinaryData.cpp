@@ -2199,8 +2199,9 @@ static const unsigned char temp_binary_data_51[] =
 
 const char* oscScriptTemplate_js = (const char*) temp_binary_data_51;
 
-//================== streamingScriptTemplate.js ==================
+//================== pjlinkScriptTemplate.js ==================
 static const unsigned char temp_binary_data_52[] =
+<<<<<<< HEAD
 "/* ********** WEBSOCKET  MODULE SPECIFIC SCRIPTING ********************* */\r\n"
 "/*\r\n"
 "\r\n"
@@ -2228,11 +2229,57 @@ static const unsigned char temp_binary_data_52[] =
 "\t{\r\n"
 "\t\tscript.log(\" > \" + data[i]);\r\n"
 "\t}\r\n"
+=======
+"/* ********** PJLINK  MODULE SPECIFIC SCRIPTING ********************* */\n"
+"\n"
+"\n"
+"// pjLinkDataReceived callback allows you to receive projector's data\n"
+"// id is the number of the projector in the module's projectors list\n"
+"// message is the data received\n"
+"\n"
+"function pjLinkDataReceived(id, message)\n"
+"{\n"
+"    script.log(\"PJLink data received from projector #\" + id + \" : \" + message);\n"
 "}";
 
-const char* streamingScriptTemplate_js = (const char*) temp_binary_data_52;
+const char* pjlinkScriptTemplate_js = (const char*) temp_binary_data_52;
+
+//================== streamingScriptTemplate.js ==================
+static const unsigned char temp_binary_data_53[] =
+"/* ********** WEBSOCKET  MODULE SPECIFIC SCRIPTING ********************* */\n"
+"/*\n"
+"\n"
+"Streaming Modules (i.e. UDP and Serial Module) have specific methods that can be used to handle receiving and sendin data over the connection.\n"
+"With streaming modules, there are 2 ways of sending data : either as a UTF-8 String or as separate bytes\n"
+"\n"
+"local.send(\"This is my message\"); //This will send the string passed in as ASCII characters \n"
+"local.sendBytes(30,210,46,255,10); //This will send all the bytes passed in as they are\n"
+"\n"
+"*/\n"
+"\n"
+"/*\n"
+"You can intercept all the received data from this module with the method dataReceived(data).\n"
+"Depending on the Protocol you chose, the nature of the data passed in this function will be different.\n"
+"*/\n"
+"\n"
+"function dataReceived(data)\n"
+"{\n"
+"\t//If mode is \"Lines\", you can expect data to be a single line String\n"
+"\tscript.log(\"Data received : \" +data);\n"
+"\n"
+"\t//If mode is anything else, you can expect data to be an array of bytes\n"
+"\tscript.log(\"Bytes received : \"+data.length);\n"
+"\tfor(var i=0; i < data.length; i++)\n"
+"\t{\n"
+"\t\tscript.log(\" > \" + data[i]);\n"
+"\t}\n"
+>>>>>>> master
+"}";
+
+const char* streamingScriptTemplate_js = (const char*) temp_binary_data_53;
 
 //================== wsClientScriptTemplate.js ==================
+<<<<<<< HEAD
 static const unsigned char temp_binary_data_53[] =
 "\r\n"
 "\r\n"
@@ -2252,11 +2299,33 @@ static const unsigned char temp_binary_data_53[] =
 "function wsDataReceived(data)\r\n"
 "{\r\n"
 "\tscript.log(\"Websocket data received : \" +data);\r\n"
+=======
+static const unsigned char temp_binary_data_54[] =
+"\n"
+"\n"
+"/* ********** STREAMING MODULE (UDP, TCP, SERIAL, WEBSOCKET) SPECIFIC SCRIPTING ********************* */\n"
+"/*\n"
+"\n"
+"Websoskets modules can be used as standard Streaming Module and use the dataReceived function above, \n"
+"but you can also intercept messages and data directly from the streaming, before it is processed, using specific \n"
+"event callbacks below\n"
+"*/\n"
+"\n"
+"function wsMessageReceived(message)\n"
+"{\n"
+"\tscript.log(\"Websocket data received : \" +message);\n"
+"}\n"
+"\n"
+"function wsDataReceived(data)\n"
+"{\n"
+"\tscript.log(\"Websocket data received : \" +data);\n"
+>>>>>>> master
 "}";
 
-const char* wsClientScriptTemplate_js = (const char*) temp_binary_data_53;
+const char* wsClientScriptTemplate_js = (const char*) temp_binary_data_54;
 
 //================== wsServerScriptTemplate.js ==================
+<<<<<<< HEAD
 static const unsigned char temp_binary_data_54[] =
 "\r\n"
 "\r\n"
@@ -2277,12 +2346,34 @@ static const unsigned char temp_binary_data_54[] =
 "function wsDataReceived(connectionId, data)\r\n"
 "{\r\n"
 "\tscript.log(\"Websocket data received from \"+connectionId+\" : \" +data);\r\n"
+=======
+static const unsigned char temp_binary_data_55[] =
+"\n"
+"\n"
+"/* ********** WEBSOCKET SERVER SPECIFIC SCRIPTING ********************* */\n"
+"/*\n"
+"\n"
+"Websoskets modules can be used as standard Streaming Module and use the dataReceived function above, \n"
+"but you can also intercept messages and data directly from the streaming, before it is processed, using specific \n"
+"event callbacks below.\n"
+"Those callbacks include a \"connectionId\" argument that allows to differentiate the client that sent it.\n"
+"*/\n"
+"\n"
+"function wsMessageReceived(connectionId, message)\n"
+"{\n"
+"\tscript.log(\"Websocket data received from \"+connectionId+\" : \" +message);\n"
+"}\n"
+"\n"
+"function wsDataReceived(connectionId, data)\n"
+"{\n"
+"\tscript.log(\"Websocket data received from \"+connectionId+\" : \" +data);\n"
+>>>>>>> master
 "}";
 
-const char* wsServerScriptTemplate_js = (const char*) temp_binary_data_54;
+const char* wsServerScriptTemplate_js = (const char*) temp_binary_data_55;
 
 //================== about.png ==================
-static const unsigned char temp_binary_data_55[] =
+static const unsigned char temp_binary_data_56[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,3,32,0,0,1,224,8,6,0,0,0,93,7,9,245,0,0,0,9,112,72,89,115,0,0,14,196,0,0,14,196,1,149,43,14,27,0,0,6,233,105,84,88,116,88,77,76,58,99,111,109,46,97,100,111,98,101,46,120,109,112,0,0,0,0,0,60,63,120,112,
 97,99,107,101,116,32,98,101,103,105,110,61,34,239,187,191,34,32,105,100,61,34,87,53,77,48,77,112,67,101,104,105,72,122,114,101,83,122,78,84,99,122,107,99,57,100,34,63,62,32,60,120,58,120,109,112,109,101,116,97,32,120,109,108,110,115,58,120,61,34,97,100,
 111,98,101,58,110,115,58,109,101,116,97,47,34,32,120,58,120,109,112,116,107,61,34,65,100,111,98,101,32,88,77,80,32,67,111,114,101,32,53,46,54,45,99,49,52,50,32,55,57,46,49,54,48,57,50,52,44,32,50,48,49,55,47,48,55,47,49,51,45,48,49,58,48,54,58,51,57,
@@ -2800,10 +2891,10 @@ static const unsigned char temp_binary_data_55[] =
 1,4,0,0,0,0,1,4,0,0,0,0,1,4,0,0,0,0,8,32,0,0,0,0,8,32,0,0,0,0,64,0,1,0,0,0,64,0,1,0,0,0,0,78,2,0,0,0,0,2,8,0,0,0,0,2,8,0,0,0,0,16,64,0,0,0,0,16,64,0,0,0,0,128,0,2,0,0,0,128,0,2,0,0,0,128,0,2,0,0,0,0,4,16,0,0,0,0,4,16,0,0,0,0,32,128,0,0,0,0,32,128,0,0,
 0,0,32,128,0,0,0,0,0,1,4,0,0,0,0,1,4,0,0,0,0,8,32,0,0,0,0,8,32,0,0,0,0,8,32,0,0,0,0,80,19,254,31,186,211,221,255,42,1,230,166,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
 
-const char* about_png = (const char*) temp_binary_data_55;
+const char* about_png = (const char*) temp_binary_data_56;
 
 //================== add.png ==================
-static const unsigned char temp_binary_data_56[] =
+static const unsigned char temp_binary_data_57[] =
 "\x89PNG\r\n"
 "\x1a\n"
 "\0\0\0\rIHDR\0\0\0\x18\0\0\0\x18\x08\x06\0\0\0\xe0w=\xf8\0\0\0\tpHYs\0\0\x0b\x13\0\0\x0b\x13\x01\0\x9a\x9c\x18\0\0\x07\xd0iTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:"
@@ -2833,10 +2924,10 @@ static const unsigned char temp_binary_data_56[] =
 "\xa2/\xcf\x81Ln\x0fv\xc7\x85#\xa2[d\x7f\"\x8d&\x9bi0\xbe,Ex4\x86\xe2\x01\r\xa1\x87""C\xf2""4\xca)\xbd""fS\x7f\xbe\x18u\x9e\xf2y?/\"w\x94\x0fw]\x99""7g\xb5\xbc\x98-mH\x93\xaf\x8a\xd8\x87]\xe2\n"
 ".n\xd2\xec""fO\x17\xdd\xf5/\x04\xae\x89\xca]\xa5\x89\xdck\xd9\xf2?+iWPrc{^\0\0\0\0IEND\xae""B`\x82";
 
-const char* add_png = (const char*) temp_binary_data_56;
+const char* add_png = (const char*) temp_binary_data_57;
 
 //================== connected.png ==================
-static const unsigned char temp_binary_data_57[] =
+static const unsigned char temp_binary_data_58[] =
 "\x89PNG\r\n"
 "\x1a\n"
 "\0\0\0\rIHDR\0\0\0\x18\0\0\0\x18\x08\x06\0\0\0\xe0w=\xf8\0\0\0\tpHYs\0\0\x0b\x13\0\0\x0b\x13\x01\0\x9a\x9c\x18\0\0\n"
@@ -2872,10 +2963,10 @@ static const unsigned char temp_binary_data_57[] =
 "^gK\x87~{\x84\xae\xec\0\x02\x9c\xe7\x1a\xd7|\xb2\xb1\xe9\x8e\x07""2\xdeT\xcf\x85\x9fRq\xa3\t\x04\xb6\xe7\xfc\xbb\xa1\xb1\xfd\x11\xa5\xfc\x8f\x83\x9a\xb9\xb6s\xa4\xbbu\xac\x98[X\xf4\xbd*@\xc5\xccP\xa1\xa1j\xce\xc9\x9bj\x9a;\xf3\x9e\xfb\xf5\x86\xc6\xf6"
 "=\xbf\x8d\xf5\xc9\xe9\xf7@E\x0f.\x16.\xfa_\xc5\x7f\xae\xe8""9sg\xfd;Y\0\0\0\0IEND\xae""B`\x82";
 
-const char* connected_png = (const char*) temp_binary_data_57;
+const char* connected_png = (const char*) temp_binary_data_58;
 
 //================== crash.png ==================
-static const unsigned char temp_binary_data_58[] =
+static const unsigned char temp_binary_data_59[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,3,32,0,0,2,88,8,2,0,0,0,21,20,21,39,0,0,0,9,112,72,89,115,0,0,11,19,0,0,11,19,1,0,154,156,24,0,0,14,87,105,84,88,116,88,77,76,58,99,111,109,46,97,100,111,98,101,46,120,109,112,0,0,0,0,0,60,63,120,112,
 97,99,107,101,116,32,98,101,103,105,110,61,34,239,187,191,34,32,105,100,61,34,87,53,77,48,77,112,67,101,104,105,72,122,114,101,83,122,78,84,99,122,107,99,57,100,34,63,62,32,60,120,58,120,109,112,109,101,116,97,32,120,109,108,110,115,58,120,61,34,97,100,
 111,98,101,58,110,115,58,109,101,116,97,47,34,32,120,58,120,109,112,116,107,61,34,65,100,111,98,101,32,88,77,80,32,67,111,114,101,32,53,46,54,45,99,49,52,56,32,55,57,46,49,54,52,48,51,54,44,32,50,48,49,57,47,48,56,47,49,51,45,48,49,58,48,54,58,53,55,
@@ -3858,10 +3949,10 @@ static const unsigned char temp_binary_data_58[] =
 8,176,0,0,0,0,4,67,128,5,0,0,0,32,24,2,44,0,0,0,0,193,16,96,1,0,0,0,8,134,0,11,0,0,0,64,48,4,88,0,0,0,0,130,33,192,2,0,0,0,16,12,1,22,0,0,0,128,96,8,176,0,0,0,0,4,67,128,5,0,0,0,32,24,2,44,0,0,0,0,193,254,127,17,16,105,90,101,252,216,190,0,0,0,0,73,69,
 78,68,174,66,96,130,0,0 };
 
-const char* crash_png = (const char*) temp_binary_data_58;
+const char* crash_png = (const char*) temp_binary_data_59;
 
 //================== default.chalayout ==================
-static const unsigned char temp_binary_data_59[] =
+static const unsigned char temp_binary_data_60[] =
 "{\r\n"
 "  \"mainLayout\": {\r\n"
 "    \"type\": 1,\r\n"
@@ -3998,10 +4089,10 @@ static const unsigned char temp_binary_data_59[] =
 "  \"windows\": null\r\n"
 "}";
 
-const char* default_chalayout = (const char*) temp_binary_data_59;
+const char* default_chalayout = (const char*) temp_binary_data_60;
 
 //================== disconnected.png ==================
-static const unsigned char temp_binary_data_60[] =
+static const unsigned char temp_binary_data_61[] =
 "\x89PNG\r\n"
 "\x1a\n"
 "\0\0\0\rIHDR\0\0\0\x18\0\0\0\x18\x08\x06\0\0\0\xe0w=\xf8\0\0\0\tpHYs\0\0\x0b\x13\0\0\x0b\x13\x01\0\x9a\x9c\x18\0\0\tUiTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:meta/"
@@ -4034,10 +4125,10 @@ static const unsigned char temp_binary_data_60[] =
 "\xb8@\xb4\xad\xe5|\xf3\x8b{\x7f\x9a\xf8\xe6\xfd\x03""E\xa5\x10J!\xa5\xac$\xf0<\x0f\xdb.o8\xfeL\xb6i\xf2`\xdf\xe3\xd9\xf7\x8fn\xf2\xc6.\xde\x8c'bB\x9a\xe5\x9d\xc1""b\xce\xba""a\xd5\xb9\xc4\xc6\xfb\xfeX\xff\xf8\xf7\x0eY\x8d\xe9\xe1k\xcaJ.\x8aJ\x82\xebu"
 "\xae\xfb_\xc5\x7f\x01\x12\xcf[\x9a\xfb\xa3""bi\0\0\0\0IEND\xae""B`\x82";
 
-const char* disconnected_png = (const char*) temp_binary_data_60;
+const char* disconnected_png = (const char*) temp_binary_data_61;
 
 //================== icon.png ==================
-static const unsigned char temp_binary_data_61[] =
+static const unsigned char temp_binary_data_62[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,1,0,0,0,1,0,8,6,0,0,0,92,114,168,102,0,0,0,9,112,72,89,115,0,0,11,19,0,0,11,19,1,0,154,156,24,0,0,10,79,105,67,67,80,80,104,111,116,111,115,104,111,112,32,73,67,67,32,112,114,111,102,105,108,101,0,0,120,
 218,157,83,103,84,83,233,22,61,247,222,244,66,75,136,128,148,75,111,82,21,8,32,82,66,139,128,20,145,38,42,33,9,16,74,136,33,161,217,21,81,193,17,69,69,4,27,200,160,136,3,142,142,128,140,21,81,44,12,138,10,216,7,228,33,162,142,131,163,136,138,202,251,
 225,123,163,107,214,188,247,230,205,254,181,215,62,231,172,243,157,179,207,7,192,8,12,150,72,51,81,53,128,12,169,66,30,17,224,131,199,196,198,225,228,46,64,129,10,36,112,0,16,8,179,100,33,115,253,35,1,0,248,126,60,60,43,34,192,7,190,0,1,120,211,11,8,
@@ -4606,10 +4697,10 @@ static const unsigned char temp_binary_data_61[] =
 52,26,45,0,26,141,70,11,128,70,163,209,2,160,209,104,180,0,104,52,26,45,0,26,141,70,11,128,70,163,5,64,163,209,104,1,208,104,52,90,0,52,26,141,22,0,141,70,163,5,64,163,209,104,1,208,104,52,187,39,255,63,0,251,9,211,62,187,88,73,220,0,0,0,0,73,69,78,68,
 174,66,96,130,0,0 };
 
-const char* icon_png = (const char*) temp_binary_data_61;
+const char* icon_png = (const char*) temp_binary_data_62;
 
 //================== in.png ==================
-static const unsigned char temp_binary_data_62[] =
+static const unsigned char temp_binary_data_63[] =
 "\x89PNG\r\n"
 "\x1a\n"
 "\0\0\0\rIHDR\0\0\0\x18\0\0\0\x18\x08\x06\0\0\0\xe0w=\xf8\0\0\0\tpHYs\0\0\x0b\x13\0\0\x0b\x13\x01\0\x9a\x9c\x18\0\0\x0b\xaciTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:"
@@ -4636,10 +4727,10 @@ static const unsigned char temp_binary_data_62[] =
 "\xc3oK\xb7v\xda\r4\x13""F\xfb\x8d\xff\x8eo2/\xfa\0p\"\x0b\xd3\xe1\xbc#\x88\xc6\x9a\xff\x95\xf0Q\x9f\xe1\xa3""bG\xf9\xba^\xc2)\x1c_\x95\xb9\x95:\x8a\x8f\x95\x9e\xce\xaa:\xf8\x15\x1f\x88\x99""9\x8d\x9d\n"
 "\xd7oI-\x9c\x13\x9f\xcc\x0fq\xa5<aP\xa1\xb5\xf0\x0e\x9e\x12\x1f\xa1\xa7""1je\xc2\xcc\xe1{\x9c\xc6\x8f\xe5\x9d\xe7Jn\xf7\xdf\x96\x7f\0Q\x10\xb1\xe8\x15`\xe8""7\0\0\0\0IEND\xae""B`\x82";
 
-const char* in_png = (const char*) temp_binary_data_62;
+const char* in_png = (const char*) temp_binary_data_63;
 
 //================== link.png ==================
-static const unsigned char temp_binary_data_63[] =
+static const unsigned char temp_binary_data_64[] =
 "\x89PNG\r\n"
 "\x1a\n"
 "\0\0\0\rIHDR\0\0\0\x14\0\0\0\x14\x08\x06\0\0\0\x8d\x89\x1d\r\0\0\0\tpHYs\0\0\x0b\x13\0\0\x0b\x13\x01\0\x9a\x9c\x18\0\0\x05\x16iTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe"
@@ -4654,10 +4745,10 @@ static const unsigned char temp_binary_data_63[] =
 "l\xe1\0\xd3h\xb4""d\xa7izg%q\xf4#\x89\xa3""4\x89\xa3\xafI\x1cI\xe2h3;\x9fg\xfbN\x12G\xaf\xb2XK~Y\xc9\xbf\xd1\x8bZ\xce=\xa5""9\xdd\x7f\x9a\x83\xb9\xba\r\x14\xef""aY\xc9\x87\xe8\xc7{T\xf0\t?q\x81\xed<Y\x99\x95)\xac""a?\xa7h(\xeb\xd9\x1c\xce\x8a\x04\xed"
 "\xbe\x94\xd7\x98\xcf\xf6_XBT\xa6\xe8""A\xc2\xc7\xda\xd3\xff\xbe:Nx\x03\xb2\x18\x9b\xec\xd1\xbd:(\0\0\0\0IEND\xae""B`\x82";
 
-const char* link_png = (const char*) temp_binary_data_63;
+const char* link_png = (const char*) temp_binary_data_64;
 
 //================== nextcue.png ==================
-static const unsigned char temp_binary_data_64[] =
+static const unsigned char temp_binary_data_65[] =
 "\x89PNG\r\n"
 "\x1a\n"
 "\0\0\0\rIHDR\0\0\0 \0\0\0 \x08\x06\0\0\0szz\xf4\0\0\0\tpHYs\0\0\r\xd7\0\0\r\xd7\x01""B(\x9bx\0\0\x06\xbbiTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:meta/\" x:xmptk=\""
@@ -4682,10 +4773,10 @@ static const unsigned char temp_binary_data_64[] =
 "4\xb4W~3\xd0\xea\xd6""7A\xe5\x82\xcdi\xb8\xb5\xd1\xbeU<\xd4\xb2\xe2""6\0\xd0\x0e-*\xd6\x9b\xe8}\x9f\xd6\x89`\x07\xeeuF]H\xb7oc\xa7\xdb\xcc\xcf""F\x16\xba_\xfe&\x95\xc4KVl\xbf^\xa9%\"\xe8\x86\x98v\x92/\xd7#\xb3\xdc\x12\xfa+S\xd0\x8f\xcb\xefu<V\xfaw\xa7"
 "\xe2q\x80\xff\x06\xe0\x1bS}\xda\xa9YIiq\0\0\0\0IEND\xae""B`\x82";
 
-const char* nextcue_png = (const char*) temp_binary_data_64;
+const char* nextcue_png = (const char*) temp_binary_data_65;
 
 //================== out.png ==================
-static const unsigned char temp_binary_data_65[] =
+static const unsigned char temp_binary_data_66[] =
 "\x89PNG\r\n"
 "\x1a\n"
 "\0\0\0\rIHDR\0\0\0\x18\0\0\0\x18\x08\x06\0\0\0\xe0w=\xf8\0\0\0\tpHYs\0\0\x0b\x13\0\0\x0b\x13\x01\0\x9a\x9c\x18\0\0\x0b\xaciTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:"
@@ -4715,10 +4806,10 @@ static const unsigned char temp_binary_data_65[] =
 "\0\xc0\t\xf8""c\xbf\xa0O\xb5Uk\x8b\xc8\xac\xe9\xd3n\xc0\x1f%\x82\x8d\xc5l\x9f\xba-C\xfe""4\xf7@\x9f\x92\x01G[%\x96!\xc7\xd9U}\xc6\tyj\xb6O\xddn\xec""7\xcd\xc1\x95^\xb5\x08\xe0\xe0\xc8\xa3\xcc\x89\xd0\xa3""7#\x87zC\x97<~L\x9b\x13\x03""2\xe0@\x86\\pk|a"
 "\xde/\x1e""FW\xb3M\xc7I\x9e\xf7\x8bGR\xca\xbc\x9dV\xe6\xb4W\xe1\x92\xa5\xdb\x7f\x06\x96""av\xab\\N\x97\xcc\xf9.e&\xe7\xfd\xe2\xe1\xceN<\xe1_\xc5\xbf\xbe""E\xff\x17\x7f\x03\xa3\xd7\x9d+\x7f\xb5\xf0s\0\0\0\0IEND\xae""B`\x82";
 
-const char* out_png = (const char*) temp_binary_data_65;
+const char* out_png = (const char*) temp_binary_data_66;
 
 //================== play.png ==================
-static const unsigned char temp_binary_data_66[] =
+static const unsigned char temp_binary_data_67[] =
 "\x89PNG\r\n"
 "\x1a\n"
 "\0\0\0\rIHDR\0\0\0 \0\0\0 \x08\x06\0\0\0szz\xf4\0\0\0\tpHYs\0\0\0\xec\0\0\0\xec\x01y(q\xbd\0\0\x05\x1ciTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:meta/\" x:xmptk=\"Ad"
@@ -4735,10 +4826,10 @@ static const unsigned char temp_binary_data_66[] =
 "\xea@]\x82O\x82\xa1\x12\xde;\xc9\xabQ\xd5\x15\xb1""4\x1et\x01\xb0\xa5\xdc\xf7\x81\xc7""D\xed\xa0R\x84\xc1\xca""8\xe0""BO\x80\x85\"\x91_\x8d\x0c`\xb3.q\xa6@\xd1k\x11\x86\x90""6|\x8e\x7f""1\xa0\xe7\xbbG\xa3\x9a:\xf0H\xd6\xd1\\\xf9&hYh\xe3O\xc9\xc6\x91\xfa"
 "\x1f\x93\x1e\xa0\x07\x98""4\xc0O\xfa>\x94|W\xa9(E\0\0\0\0IEND\xae""B`\x82";
 
-const char* play_png = (const char*) temp_binary_data_66;
+const char* play_png = (const char*) temp_binary_data_67;
 
 //================== prevcue.png ==================
-static const unsigned char temp_binary_data_67[] =
+static const unsigned char temp_binary_data_68[] =
 "\x89PNG\r\n"
 "\x1a\n"
 "\0\0\0\rIHDR\0\0\0 \0\0\0 \x08\x06\0\0\0szz\xf4\0\0\0\tpHYs\0\0\r\xd7\0\0\r\xd7\x01""B(\x9bx\0\0\x06\xbbiTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:meta/\" x:xmptk=\""
@@ -4761,10 +4852,10 @@ static const unsigned char temp_binary_data_67[] =
 "\x1b\xe0""0 Z\x82y\xcf""F\xfc\xc1\x84 \xa6\xba\xdeL`\xd3\x95\xee\x9d\x1b\xa3\x96\x86t\x84\x01HRt\xfc=\xeb""D\xe9\xfb\xfd\0\xdb\xaf~\xd9\xb6%j9\x91\xea\x88\xaf)\xc6\xb4\x01\x8c\xaa\xa9$P\xa6\xb6\x04s\x1b\xd0\xfa\xe9\xd5\x17\x0c""3~k=/\t\x94\xa9-\xa1\xbc"
 ":\x1c""a\xbe""D\x17vM7\0\xc4\xd2""8\xd1Y\x96~\xfcSq\xb2S1q*\xe6\x9f\xfe\xd6\xa3\x9dGR\x01_\xbc\"b\xfeg4\x0f\xf0\xdf\x03\xfc\x02\x08\xe3\xfc,\xa1\xf5\xdd\xd8\0\0\0\0IEND\xae""B`\x82";
 
-const char* prevcue_png = (const char*) temp_binary_data_67;
+const char* prevcue_png = (const char*) temp_binary_data_68;
 
 //================== smallstripe.png ==================
-static const unsigned char temp_binary_data_68[] =
+static const unsigned char temp_binary_data_69[] =
 "\x89PNG\r\n"
 "\x1a\n"
 "\0\0\0\rIHDR\0\0\0\x0b\0\0\0\x16\x08\x02\0\0\0\x99\x86\xf1""4\0\0\0\tpHYs\0\0\x0b\x13\0\0\x0b\x13\x01\0\x9a\x9c\x18\0\0\x05\xebiTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adob"
@@ -4782,10 +4873,10 @@ static const unsigned char temp_binary_data_68[] =
 "!6\x9b\x8dm\xdbI\xc6x<62\x80\xc1`\x10\xaf\xe9\x97\x11\x04""A\xb3\xd9""4\xb2\xeb\xba\xcb\xe5\xf2""7\x8f\xf8""0C\x8c\xab\xd3\xe9\x98\x9e\xe2\0>D\xd7u\xf9\x9a\x08\xc0h4\xfa/\0\x80<\x9dN\xc7\xe3\xd1\xfc\xc5R\xa9\xf4g\xcf_\x82\xfd\x89\"\x99\x91\xa5\xe2\0\0"
 "\0\0IEND\xae""B`\x82";
 
-const char* smallstripe_png = (const char*) temp_binary_data_68;
+const char* smallstripe_png = (const char*) temp_binary_data_69;
 
 //================== snap.png ==================
-static const unsigned char temp_binary_data_69[] =
+static const unsigned char temp_binary_data_70[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,32,0,0,0,32,8,6,0,0,0,115,122,122,244,0,0,0,9,112,72,89,115,0,0,11,19,0,0,11,19,1,0,154,156,24,0,0,6,182,105,84,88,116,88,77,76,58,99,111,109,46,97,100,111,98,101,46,120,109,112,0,0,0,0,0,60,63,120,
 112,97,99,107,101,116,32,98,101,103,105,110,61,34,239,187,191,34,32,105,100,61,34,87,53,77,48,77,112,67,101,104,105,72,122,114,101,83,122,78,84,99,122,107,99,57,100,34,63,62,32,60,120,58,120,109,112,109,101,116,97,32,120,109,108,110,115,58,120,61,34,
 97,100,111,98,101,58,110,115,58,109,101,116,97,47,34,32,120,58,120,109,112,116,107,61,34,65,100,111,98,101,32,88,77,80,32,67,111,114,101,32,53,46,54,45,99,49,52,50,32,55,57,46,49,54,48,57,50,52,44,32,50,48,49,55,47,48,55,47,49,51,45,48,49,58,48,54,58,
@@ -4838,10 +4929,10 @@ static const unsigned char temp_binary_data_69[] =
 111,198,135,9,25,33,129,146,15,82,242,115,23,208,169,18,8,24,134,97,68,26,30,173,5,149,163,227,145,125,191,240,126,218,227,55,86,42,97,165,178,177,236,218,253,180,85,142,163,5,65,156,243,5,134,97,102,136,8,31,38,52,179,251,84,117,76,68,94,3,14,139,10,
 228,158,112,37,195,54,4,32,252,139,97,24,198,144,138,52,2,194,70,102,25,113,24,17,106,206,144,55,195,204,248,111,252,19,142,97,179,28,126,185,64,78,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
 
-const char* snap_png = (const char*) temp_binary_data_69;
+const char* snap_png = (const char*) temp_binary_data_70;
 
 //================== stop.png ==================
-static const unsigned char temp_binary_data_70[] =
+static const unsigned char temp_binary_data_71[] =
 "\x89PNG\r\n"
 "\x1a\n"
 "\0\0\0\rIHDR\0\0\0 \0\0\0 \x08\x06\0\0\0szz\xf4\0\0\0\tpHYs\0\0\r\xd7\0\0\r\xd7\x01""B(\x9bx\0\0\x05\x1ciTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:meta/\" x:xmptk=\""
@@ -4860,10 +4951,10 @@ static const unsigned char temp_binary_data_70[] =
 "T\x85\xc0Zk]\xc9*\xc4V\xe1PK\x06\x02\x89\xc0&\xc2\xed\xb2(\xbb\xd5\r\x17\x98\xf2?i. \x11\xed\x02v\xf3>\xdb\x06H\x08Z\xf0l9\xe6'Ku:\x11\x1a\0\x10\x01Pb\x17\xd7\xc3\x89i\x8f]\xd9\t\r\xfa=&\xf1""2\xcb\x9d\x95v\xd0\xb8wim\xef\\\xd4\x13\xe4\xf4\x83\0@\xa3"
 "_\xb3\x11`\xd8\x80\xaf""F0\xdb\x08\xf1\x03\xcb \0\0\0\0IEND\xae""B`\x82";
 
-const char* stop_png = (const char*) temp_binary_data_70;
+const char* stop_png = (const char*) temp_binary_data_71;
 
 //================== stripe.png ==================
-static const unsigned char temp_binary_data_71[] =
+static const unsigned char temp_binary_data_72[] =
 "\x89PNG\r\n"
 "\x1a\n"
 "\0\0\0\rIHDR\0\0\0.\0\0\0\\\x08\x02\0\0\0\x9e""1\x10\xaa\0\0\0\tpHYs\0\0\x0b\x13\0\0\x0b\x13\x01\0\x9a\x9c\x18\0\0\x05\xddiTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:"
@@ -4886,10 +4977,10 @@ static const unsigned char temp_binary_data_71[] =
 ")Z$\xd2\x14""E\x12i\x8a\"\x89(E\x97""D\x94\xa2K\xd2\x9e\xa2N\xd2\x9e\xa2N\xd2\x98""bA\xd2\x98""bA\xd2\x92""bD\xd2\x92""bDR\x9d""bGR\x9d""bGR\x97""bJR\x97""bJR\x91""bMR\x91""bMR\x9a\xe2@R\x9a\xe2@R\x94\xe2""CR\x94\xe2""C\x92Oq#\xc9\xa7\xb8\x91""dR<I2)"
 "\x9e$O)\xce$O)\xce$\xb7)\xfe$\xb7)\xfe$\xe9\x94\x10\x92tJ\x08I\"%\x8a$\x91\x12""ErM\t$\xb9\xa6\x04\x92\x9cRbIN)\xb1$GJ8\xc9\x91\x12N\xf2My\x03\t\xf0\x0b""D\xda\x9b\t\xb2\x19\xe1S\0\0\0\0IEND\xae""B`\x82";
 
-const char* stripe_png = (const char*) temp_binary_data_71;
+const char* stripe_png = (const char*) temp_binary_data_72;
 
 //================== toggle.png ==================
-static const unsigned char temp_binary_data_72[] =
+static const unsigned char temp_binary_data_73[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,24,0,0,0,24,8,6,0,0,0,224,119,61,248,0,0,0,4,115,66,73,84,8,8,8,8,124,8,100,136,0,0,0,9,112,72,89,115,0,0,0,133,0,0,0,133,1,226,236,255,193,0,0,0,25,116,69,88,116,83,111,102,116,119,97,114,101,0,119,
 119,119,46,105,110,107,115,99,97,112,101,46,111,114,103,155,238,60,26,0,0,2,21,73,68,65,84,72,137,197,148,189,107,147,81,20,198,127,231,190,209,84,177,17,29,106,75,211,146,4,151,32,111,22,65,7,113,80,146,10,129,76,233,38,154,110,253,7,68,18,232,16,93,
 90,234,31,160,99,210,65,23,183,218,88,77,68,28,59,105,173,31,80,48,196,152,146,116,49,144,26,252,124,223,235,80,223,144,12,86,242,133,191,233,62,156,123,159,115,134,115,31,193,225,249,123,31,150,149,2,162,32,19,160,13,186,66,44,208,85,208,107,24,174,
@@ -4901,10 +4992,10 @@ static const unsigned char temp_binary_data_72[] =
 250,176,92,67,9,59,219,176,76,149,73,167,74,136,12,62,236,68,102,87,210,201,178,1,240,234,197,211,226,217,139,87,30,104,209,35,32,99,192,49,64,117,105,106,1,21,45,220,215,134,117,53,123,235,230,75,128,223,239,47,177,238,142,58,206,110,0,0,0,0,73,69,78,
 68,174,66,96,130,0,0 };
 
-const char* toggle_png = (const char*) temp_binary_data_72;
+const char* toggle_png = (const char*) temp_binary_data_73;
 
 //================== tray_icon.png ==================
-static const unsigned char temp_binary_data_73[] =
+static const unsigned char temp_binary_data_74[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,32,0,0,0,32,8,6,0,0,0,115,122,122,244,0,0,0,9,112,72,89,115,0,0,11,19,0,0,11,19,1,0,154,156,24,0,0,5,236,105,84,88,116,88,77,76,58,99,111,109,46,97,100,111,98,101,46,120,109,112,0,0,0,0,0,60,63,120,
 112,97,99,107,101,116,32,98,101,103,105,110,61,34,239,187,191,34,32,105,100,61,34,87,53,77,48,77,112,67,101,104,105,72,122,114,101,83,122,78,84,99,122,107,99,57,100,34,63,62,32,60,120,58,120,109,112,109,101,116,97,32,120,109,108,110,115,58,120,61,34,
 97,100,111,98,101,58,110,115,58,109,101,116,97,47,34,32,120,58,120,109,112,116,107,61,34,65,100,111,98,101,32,88,77,80,32,67,111,114,101,32,53,46,54,45,99,49,52,53,32,55,57,46,49,54,51,52,57,57,44,32,50,48,49,56,47,48,56,47,49,51,45,49,54,58,52,48,58,
@@ -4953,9 +5044,10 @@ static const unsigned char temp_binary_data_73[] =
 9,233,44,19,36,245,11,1,7,145,32,158,171,22,52,12,194,81,74,44,26,26,217,139,106,208,41,174,138,72,175,125,161,115,95,68,239,254,25,238,34,122,185,40,210,169,157,222,125,222,114,71,105,197,213,47,197,168,58,232,189,169,191,255,17,141,208,201,133,41,220,
 251,14,122,126,94,106,145,209,158,212,125,63,255,251,127,199,127,0,172,82,169,33,168,103,19,117,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
 
-const char* tray_icon_png = (const char*) temp_binary_data_73;
+const char* tray_icon_png = (const char*) temp_binary_data_74;
 
 //================== custom.cext ==================
+<<<<<<< HEAD
 static const unsigned char temp_binary_data_74[] =
 "/*\r\n"
 "This version is for pigpio version 26+\r\n"
@@ -5011,8 +5103,65 @@ static const unsigned char temp_binary_data_74[] =
 "   return count;\r\n"
 "}\r\n"
 "\r\n";
+=======
+static const unsigned char temp_binary_data_75[] =
+"/*\n"
+"This version is for pigpio version 26+\n"
+"\n"
+"If you want customised functions replace this file with your own\n"
+"definitions for gpioCustom1 and gpioCustom2.\n"
+"*/\n"
+"\n"
+"#include \"pigpio.h\"\n"
+"\n"
+"int gpioCustom1(unsigned arg1, unsigned arg2, char *argx, unsigned count)\n"
+"{\n"
+"   int i;\n"
+"   unsigned max;\n"
+"\n"
+"   DBG(DBG_USER, \"arg1=%d arg2=%d count=%d [%s]\",\n"
+"      arg1, arg2, count, myBuf2Str(count, argx));\n"
+"\n"
+"   CHECK_INITED;\n"
+"\n"
+"   /* for dummy just return max parameter */\n"
+"\n"
+"   if (arg1 > arg2) max = arg1; else max = arg2;\n"
+"\n"
+"   for (i=0; i<count; i++) if (argx[i] > max) max = argx[i];\n"
+"\n"
+"   return max;\n"
+"}\n"
+"\n"
+"\n"
+"int gpioCustom2(unsigned arg1, char *argx, unsigned count,\n"
+"                char *retBuf, unsigned retMax)\n"
+"{\n"
+"   int i, j, t;\n"
+"\n"
+"   DBG(DBG_USER, \"arg1=%d count=%d [%s] retMax=%d\",\n"
+"      arg1, count, myBuf2Str(count, argx), retMax);\n"
+"\n"
+"   CHECK_INITED;\n"
+"\n"
+"   /* for dummy just return argx reversed */\n"
+"\n"
+"   if (count > retMax) count = retMax;\n"
+"\n"
+"   for (i=0, j=count-1; i<=j; i++, j--)\n"
+"   {\n"
+"      /* t used as argx and retBuf may be the same buffer */\n"
+"      t = argx[i];\n"
+"      retBuf[i] = argx[j];\n"
+"      retBuf[j] = t;\n"
+"   }\n"
+"\n"
+"   return count;\n"
+"}\n"
+"\n";
+>>>>>>> master
 
-const char* custom_cext = (const char*) temp_binary_data_74;
+const char* custom_cext = (const char*) temp_binary_data_75;
 
 
 const char* getNamedResource (const char* resourceNameUTF8, int& numBytes);
@@ -5070,6 +5219,7 @@ const char* getNamedResource (const char* resourceNameUTF8, int& numBytes)
         case 0xc88c2f4d:  numBytes = 3542; return WebSocket_Client_png;
         case 0x1a00eec5:  numBytes = 3517; return WebSocket_Server_png;
         case 0x924bc834:  numBytes = 2124; return Wiimote_png;
+<<<<<<< HEAD
         case 0xdd901558:  numBytes = 895; return commandScriptTemplate_js;
         case 0x7fffe188:  numBytes = 5536; return conditionScriptTemplate_js;
         case 0x5c8768cb:  numBytes = 1373; return filterScriptTemplate_js;
@@ -5081,6 +5231,20 @@ const char* getNamedResource (const char* resourceNameUTF8, int& numBytes)
         case 0xb2ba4d21:  numBytes = 1078; return streamingScriptTemplate_js;
         case 0x7e52625c:  numBytes = 546; return wsClientScriptTemplate_js;
         case 0x82c285e4:  numBytes = 694; return wsServerScriptTemplate_js;
+=======
+        case 0xdd901558:  numBytes = 876; return commandScriptTemplate_js;
+        case 0x7fffe188:  numBytes = 5455; return conditionScriptTemplate_js;
+        case 0x5c8768cb:  numBytes = 1343; return filterScriptTemplate_js;
+        case 0xa23dd44c:  numBytes = 5618; return genericScriptTemplate_js;
+        case 0xf15eedbb:  numBytes = 2420; return httpScriptTemplate_js;
+        case 0x01c43842:  numBytes = 1789; return midiScriptTemplate_js;
+        case 0xb21f5457:  numBytes = 1379; return moduleScriptTemplate_js;
+        case 0x83ff2424:  numBytes = 775; return oscScriptTemplate_js;
+        case 0xb0092acf:  numBytes = 371; return pjlinkScriptTemplate_js;
+        case 0xb2ba4d21:  numBytes = 1051; return streamingScriptTemplate_js;
+        case 0x7e52625c:  numBytes = 528; return wsClientScriptTemplate_js;
+        case 0x82c285e4:  numBytes = 675; return wsServerScriptTemplate_js;
+>>>>>>> master
         case 0xb02b7677:  numBytes = 36971; return about_png;
         case 0xbb8f218b:  numBytes = 3269; return add_png;
         case 0xd9f427f3:  numBytes = 3998; return connected_png;
@@ -5162,6 +5326,7 @@ const char* namedResourceList[] =
     "midiScriptTemplate_js",
     "moduleScriptTemplate_js",
     "oscScriptTemplate_js",
+    "pjlinkScriptTemplate_js",
     "streamingScriptTemplate_js",
     "wsClientScriptTemplate_js",
     "wsServerScriptTemplate_js",
@@ -5241,6 +5406,7 @@ const char* originalFilenames[] =
     "midiScriptTemplate.js",
     "moduleScriptTemplate.js",
     "oscScriptTemplate.js",
+    "pjlinkScriptTemplate.js",
     "streamingScriptTemplate.js",
     "wsClientScriptTemplate.js",
     "wsServerScriptTemplate.js",

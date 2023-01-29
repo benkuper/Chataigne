@@ -36,7 +36,8 @@ public:
     void removeMultiplexListener(MultiplexListener* listener) { multiplexListeners.remove(listener); }
 
     ProcessorUI* getUI() override;
-    String getTypeString() const override { return "Multiplex"; };
+    
+    DECLARE_TYPE("Multiplex");
 };
 
 template<class T>
