@@ -8,7 +8,9 @@
   ==============================================================================
 */
 
-const String HTTPModule::requestMethodNames[TYPE_MAX]{ "GET", "POST","PUT", "PATCH", "DELETE"};
+#include "Module/ModuleIncludes.h"
+
+const String HTTPModule::requestMethodNames[TYPE_MAX]{ "GET", "POST","PUT", "PATCH", "DELETE" };
 
 HTTPModule::HTTPModule(const String& name) :
 	Module(name),
@@ -58,7 +60,7 @@ void HTTPModule::sendRequest(StringRef address, RequestMethod method, ResultData
 
 	String urlString = baseAddress->stringValue() + address;
 	URL url = URL(urlString);
-	if(file.existsAsFile())
+	if (file.existsAsFile())
 	{
 		url = url.withFileToUpload(payload, file, MIMETypes::getMIMEType(file.getFileExtension()));
 	}
@@ -72,15 +74,11 @@ void HTTPModule::sendRequest(StringRef address, RequestMethod method, ResultData
 	outActivityTrigger->trigger();
 	if (logOutgoingData->boolValue())  NLOG(niceName, "Send " + requestMethodNames[(int)method] + " Request : " + url.toString(true));
 
-	requests.getLock().enter();
 	requests.add(new Request(url, method, dataType, extraHeaders));
-	requests.getLock().exit();
 }
 
 void HTTPModule::processRequest(Request* request)
 {
-	GenericScopedLock rLock(requests.getLock());
-
 	StringPairArray responseHeaders;
 	int statusCode = 0;
 
@@ -374,13 +372,17 @@ var HTTPModule::uploadFileFromScript(const var::NativeFunctionArgs& args)
 
 void HTTPModule::run()
 {
+
 	while (!threadShouldExit())
 	{
+		OwnedArray<Request> tmpRequests;
 		requests.getLock().enter();
-
-		for (auto& r : requests) processRequest(r);
-		requests.clear();
+		for (auto& r : requests) tmpRequests.add(new Request(*r));
 		requests.getLock().exit();
+
+
+		for (auto& r : tmpRequests) processRequest(r);
+		requests.clear();
 		wait(10);
 	}
 }

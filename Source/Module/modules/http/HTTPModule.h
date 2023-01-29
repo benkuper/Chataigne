@@ -56,6 +56,12 @@ public:
 		{
 		}
 
+		Request(Request& e) :
+			url(e.url), method(e.method), resultDataType(e.resultDataType), extraHeaders(e.extraHeaders)
+		{
+
+		}
+
 		URL url;
 		RequestMethod method;
 		ResultDataType resultDataType;
