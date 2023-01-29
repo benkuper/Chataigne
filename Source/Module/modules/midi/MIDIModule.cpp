@@ -35,7 +35,7 @@ MIDIModule::MIDIModule(const String& name, bool _useGenericControls) :
 		defManager->add(CommandDefinition::createDef(this, "", "Note On", &MIDINoteAndCCCommand::create)->addParam("type", (int)MIDINoteAndCCCommand::NOTE_ON));
 		defManager->add(CommandDefinition::createDef(this, "", "Note Off", &MIDINoteAndCCCommand::create)->addParam("type", (int)MIDINoteAndCCCommand::NOTE_OFF));
 		defManager->add(CommandDefinition::createDef(this, "", "Full Note", &MIDINoteAndCCCommand::create)->addParam("type", (int)MIDINoteAndCCCommand::FULL_NOTE));
-		defManager->add(CommandDefinition::createDef(this, "", "Controller Change", &MIDINoteAndCCCommand::create)->addParam("type", (int)MIDINoteAndCCCommand::CONTROLCHANGE));
+		defManager->add(CommandDefinition::createDef(this, "", "Control Change", &MIDINoteAndCCCommand::create)->addParam("type", (int)MIDINoteAndCCCommand::CONTROLCHANGE));
 		defManager->add(CommandDefinition::createDef(this, "", "Sysex Message", &MIDISysExCommand::create));
 		defManager->add(CommandDefinition::createDef(this, "", "Program Change", &MIDINoteAndCCCommand::create)->addParam("type", (int)MIDINoteAndCCCommand::PROGRAMCHANGE));
 		defManager->add(CommandDefinition::createDef(this, "", "Pitch Wheel", &MIDINoteAndCCCommand::create)->addParam("type", (int)MIDINoteAndCCCommand::PITCH_WHEEL));
