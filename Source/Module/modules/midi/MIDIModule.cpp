@@ -367,7 +367,9 @@ void MIDIModule::sysExReceived(const MidiMessage& msg)
 	inActivityTrigger->trigger();
 
 	Array<uint8> data(msg.getSysExData(), msg.getSysExDataSize());
+	
 
+	
 	if (logIncomingData->boolValue())
 	{
 		String log = "Sysex received, " + String(data.size()) + " bytes";
@@ -378,7 +380,12 @@ void MIDIModule::sysExReceived(const MidiMessage& msg)
 		NLOG(niceName, log);
 	}
 
-	if (scriptManager->items.size() > 0) scriptManager->callFunctionOnAllItems(sysexEventId, Array<var>(data.getRawDataPointer(), data.size()));
+	
+	var sysexData;
+	for(auto &d: data) sysexData.append(d);
+	Array<var> args;
+	args.add(sysexData);
+	scriptManager->callFunctionOnAllItems(sysexEventId, args);
 }
 
 void MIDIModule::fullFrameTimecodeReceived(const MidiMessage& msg)
