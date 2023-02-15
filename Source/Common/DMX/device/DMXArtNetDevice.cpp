@@ -30,6 +30,7 @@ DMXArtNetDevice::DMXArtNetDevice() :
 
 	memset(receiveBuffer, 0, MAX_PACKET_LENGTH);
 	memset(artnetPacket + DMX_HEADER_LENGTH, 0, DMX_NUM_CHANNELS);
+	memset(artPollReplyPacket + DMX_HEADER_LENGTH, 0, DMX_NUM_CHANNELS);
 
 	sender.bindToPort(0);
 
@@ -122,6 +123,54 @@ void DMXArtNetDevice::onControllableFeedbackUpdate(ControllableContainer* cc, Co
 	if (c == inputCC->enabled || c == localPort) setupReceiver();
 }
 
+void DMXArtNetDevice::sendArtPollReply(String ip)
+{
+	artPollReplyPacket[14] = 0X36; //port low
+	artPollReplyPacket[15] = 0X19; // port high
+	artPollReplyPacket[16] = 0; // version H
+	artPollReplyPacket[17] = 1; // version L
+	artPollReplyPacket[18] = 0; // netSwitch
+	artPollReplyPacket[19] = 0; // subSwitch
+	artPollReplyPacket[20] = 0x12; // OEM Hi
+	artPollReplyPacket[21] = 0x12; // OEM
+	artPollReplyPacket[22] = 0; // ubea
+	artPollReplyPacket[23] = 0b11010000; // status 1
+	artPollReplyPacket[24] = 0; // EstaMan lo
+	artPollReplyPacket[25] = 0; // EstaMan HI
+	artPollReplyPacket[26] = 0; // shortname (18)
+	String shortname = "Chataigne";
+	for (int i = 0; i < shortname.length(); i++) {
+		artPollReplyPacket[26 + i] = shortname[i];
+	}
+	String longname = "Chataigne";
+	for (int i = 0; i < longname.length(); i++) {
+		artPollReplyPacket[44 + i] = longname[i];
+	}
+	String status = "Everything is fine";
+	for (int i = 0; i < status.length(); i++) {
+		artPollReplyPacket[108 + i] = status[i];
+	}
+	artPollReplyPacket[172] = 0; // NumPortsHi
+	artPollReplyPacket[173] = 0; // NumPortsLow
+	artPollReplyPacket[174] = 0; // PortTypes1
+	artPollReplyPacket[174] = 0; // PortTypes2
+	artPollReplyPacket[174] = 0; // PortTypes3
+	artPollReplyPacket[174] = 0; // PortTypes4
+	// 172
+	auto ips = IPAddress::getAllAddresses(false);
+	for (int i = 0; i < ips.size(); i++) {
+		//IPAddress::getInterfaceBroadcastAddress();
+		String ip = ips[i].toString();
+		artPollReplyPacket[10] = ips[i].address[0];
+		artPollReplyPacket[11] = ips[i].address[1];
+		artPollReplyPacket[12] = ips[i].address[2];
+		artPollReplyPacket[13] = ips[i].address[3];
+		sender.write(ip, 6454, artPollReplyPacket, 287);
+	}
+
+
+}
+
 void DMXArtNetDevice::run()
 {
 	if (!enabled) return;
@@ -184,6 +233,11 @@ void DMXArtNetDevice::run()
 
 			case DMX_SYNC_OPCODE:
 				DBG("Received Sync opcode, " << bytesRead);
+				break;
+
+			case OPPOLL:
+				DBG("Received ArtPoll");
+				sendArtPollReply(rAddress);
 				break;
 
 			default:
