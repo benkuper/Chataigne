@@ -45,6 +45,12 @@ EmptyModule::EmptyRouteParams::EmptyRouteParams(Module* sourceModule, EmptyModul
 	{
 		sourceAddress = c->niceName;  // on CustomOSCModule, niceName is the actual address
 	}
+	else if (sourceModule->getTypeString() == "CustomVariables")
+	{
+		// On custom variables, c->getControlAddress(&sourceModule->valuesCC) -> "/groupName/varName"
+		// It would probably never match anything on the destination, but "/varName" has a good change to match something.
+		sourceAddress = '/' + c->niceName;
+	}
 	else
 	{
 		sourceAddress = c->getControlAddress(&sourceModule->valuesCC);
