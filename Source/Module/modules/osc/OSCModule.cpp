@@ -166,7 +166,19 @@ void OSCModule::processMessage(const OSCMessage & msg)
 		Array<var> params;
 		params.add(msg.getAddressPattern().toString());
 		var args = var(Array<var>()); //initialize force array
-		for (auto &a : msg) args.append(OSCHelpers::argumentToVar(a));
+		for (auto &a : msg) {
+			if (a.isBlob()) {
+				var arr = var();
+				auto blob = a.getBlob();
+				for (int i = 0; i < blob.getSize(); i++) {
+					arr.append(blob[i]);
+				}
+				args.append(arr);
+			}
+			else {
+				args.append(OSCHelpers::argumentToVar(a));
+			}
+		}
 		params.add(args);
 		params.add(msg.getSenderIPAddress());
 		scriptManager->callFunctionOnAllItems(oscEventId, params);
