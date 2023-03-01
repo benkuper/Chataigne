@@ -28,6 +28,7 @@ public:
 
 	std::unique_ptr<TriggerButtonUI> selectAllTrigger;
 	std::unique_ptr<TriggerButtonUI> deselectAllTrigger;
+	std::unique_ptr<TriggerButtonUI> routeAllTrigger;
 
 	ModuleChooserUI sourceChooser;
 	ModuleChooserUI destChooser;

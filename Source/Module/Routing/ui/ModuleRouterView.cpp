@@ -94,6 +94,7 @@ void ModuleRouterView::resized()
 	selectAllTrigger->setBounds(sr.removeFromLeft(50));
 	sr.removeFromLeft(4);
 	deselectAllTrigger->setBounds(sr);
+	routeAllTrigger->setBounds(sr);
 
 	outParamsLabel.setBounds(outr);
 
@@ -128,6 +129,8 @@ void ModuleRouterView::setRouter(ModuleRouter * router)
 		selectAllTrigger.reset();
 		removeChildComponent(deselectAllTrigger.get());
 		deselectAllTrigger.reset();
+		removeChildComponent(routeAllTrigger.get());
+		routeAllTrigger.reset();
 
 		removeChildComponent(&sourceChooser);
 		removeChildComponent(&destChooser);
@@ -157,8 +160,10 @@ void ModuleRouterView::setRouter(ModuleRouter * router)
 
 		selectAllTrigger.reset(currentRouter->selectAllValues->createButtonUI());
 		deselectAllTrigger.reset(currentRouter->deselectAllValues->createButtonUI());
+		routeAllTrigger.reset(currentRouter->routeAllValues->createButtonUI());
 		addAndMakeVisible(selectAllTrigger.get());
 		addAndMakeVisible(deselectAllTrigger.get());
+		addAndMakeVisible(routeAllTrigger.get());
 
 	} else
 	{
