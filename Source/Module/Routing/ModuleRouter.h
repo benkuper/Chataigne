@@ -32,6 +32,7 @@ public:
 
 	Trigger * selectAllValues;
 	Trigger * deselectAllValues;
+	Trigger * routeAllValues;
 
 	void setSourceModule(Module * m);
 	void setDestModule(Module * m);

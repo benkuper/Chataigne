@@ -20,6 +20,7 @@ ModuleRouter::ModuleRouter() :
 	sourceValues.userCanAddItemsManually = false;
 	selectAllValues = addTrigger("Select All", "Select all values for routing");
 	deselectAllValues = addTrigger("Deselect All", "Deselect all values");
+	routeAllValues = addTrigger("Route All", "Immediately trigger all enabled routes");
 
 	addChildControllableContainer(&sourceValues);
 }
@@ -187,6 +188,16 @@ void ModuleRouter::onContainerTriggerTriggered(Trigger * t)
 		for (auto &sv : sourceValues.items)
 		{
 			sv->enabled->setValue(t == selectAllValues);
+		}
+	}
+	else if (t == routeAllValues)
+	{
+		for (auto& v : sourceValues.items)
+		{
+			if (v->enabled->value)
+			{
+				v->outModule->handleRoutedModuleValue(v->sourceValue, v->routeParams.get());
+			}
 		}
 	}
 }
