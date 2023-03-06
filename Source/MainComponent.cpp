@@ -66,13 +66,71 @@ void MainContentComponent::parameterAddToContextMenu(ControllableUI* ui, PopupMe
 {
 	if (ui->controllable.wasObjectDeleted() || ui->controllable->type == Controllable::TRIGGER || ui->controllable->isControllableFeedbackOnly) return;
 	
-	PopupMenu cvMenu;
-	for (auto& g : CVGroupManager::getInstance()->items)
 	{
-		cvMenu.addItem(g->niceName, [g, ui]() { g->addItemFromParameter((Parameter*)ui->controllable.get()); });
+		PopupMenu cvMenu;
+		for (auto& g : CVGroupManager::getInstance()->items)
+		{
+			cvMenu.addItem(g->niceName, [g, ui]() { g->addItemFromParameter((Parameter*)ui->controllable.get()); });
+		}
+		m->addSubMenu("Add & Link to Custom Variable...", cvMenu);
 	}
+	
+	{
+		Module * genericModule = static_cast<ChataigneEngine*>(Engine::mainEngine)->module.get();
+		CommandDefinition* commandDef = genericModule->defManager->getCommandDefinitionFor("", "Set Parameter Value");
+		static const auto addOutput = [] (MappingLayer* layer, CommandDefinition* commandDef, Controllable* target)
+		{
+			MappingOutput* output = layer->mapping->om.createItem();
+			output->setCommand(commandDef);
+			GenericControllableCommand* command = dynamic_cast<GenericControllableCommand*>(output->command.get());
+			if (command)
+			{
+				command->target->setValueFromTarget(target);
+			}
+			layer->mapping->om.addItem(output);
+		};
 
-	m->addSubMenu("Add & Link to Custom Variable...", cvMenu);
+		PopupMenu seqMenu;
+		for (auto& sequence : ChataigneSequenceManager::getInstance()->items)
+		{
+			PopupMenu layerMenu;
+			for (auto& layer : sequence->layerManager->items)
+			{
+				MappingLayer* mappingLayer = dynamic_cast<MappingLayer*>(layer);
+				if (mappingLayer)
+				{
+					layerMenu.addItem(layer->niceName, [commandDef, mappingLayer, ui]
+						{
+							addOutput(mappingLayer, commandDef, ui->controllable);
+						});
+				}
+			}
+
+			if (layerMenu.getNumItems() > 0) layerMenu.addSeparator();
+			layerMenu.addItem("Create new Mapping", [commandDef, sequence, ui]
+				{
+					Controllable* controllable = ui->controllable;
+					Mapping1DLayer* mappingLayer = Mapping1DLayer::create(sequence, {});
+					mappingLayer->setNiceName(controllable->niceName);
+					if (Parameter* parameter = dynamic_cast<Parameter*>(controllable))
+					{
+						if (parameter->hasRange() && 
+							(dynamic_cast<FloatParameter*>(controllable) || dynamic_cast<IntParameter*>(controllable))
+							)
+						{
+							const Point<float> range{ parameter->minimumValue, parameter->maximumValue };
+							mappingLayer->automation->valueRange->setPoint(range);
+							mappingLayer->automation->viewValueRange->setPoint(range);
+						}
+					}
+					sequence->layerManager->addItem(mappingLayer);
+					addOutput(mappingLayer, commandDef, controllable);
+				});
+
+			seqMenu.addSubMenu(sequence->niceName, layerMenu);
+		}
+		m->addSubMenu("Add & Link to Sequence...", seqMenu);
+	}
 }
 
 bool MainContentComponent::parameterHandleContextMenuResult(ControllableUI* ui, int result)
