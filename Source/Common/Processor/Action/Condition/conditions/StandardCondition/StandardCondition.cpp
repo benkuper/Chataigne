@@ -109,8 +109,6 @@ void StandardCondition::updateSourceFromTarget()
 
 		if (sourceControllable != nullptr)
 		{
-			DBG("Add Parameter Listener");
-
 			if (sourceControllable->type == Controllable::TRIGGER) ((Trigger*)sourceControllable.get())->addTriggerListener(this);
 			else ((Parameter*)sourceControllable.get())->addParameterListener(this);
 		}
