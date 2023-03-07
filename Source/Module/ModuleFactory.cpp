@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "Module/ModuleIncludes.h"
+
 ModuleFactory::ModuleFactory() {
 
 	defs.add(new ModuleDefinition("Protocol", "OSC", &CustomOSCModule::create));
@@ -25,6 +27,7 @@ ModuleFactory::ModuleFactory() {
 	defs.add(new ModuleDefinition("Protocol", "PJLink", &PJLinkModule::create));
 	defs.add(new ModuleDefinition("Protocol", "PosiStageNet", &PosiStageNetModule::create));
 	defs.add(new ModuleDefinition("Protocol", "Ableton Link", &AbletonLinkModule::create));
+	defs.add(new ModuleDefinition("Protocol", "Bluetooth LE", &BLEModule::create));
 
 
 	defs.add(new ModuleDefinition("Hardware", "Sound Card", &AudioModule::create));

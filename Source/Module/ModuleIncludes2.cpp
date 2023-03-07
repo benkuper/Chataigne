@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    ModuleIncludes2.cpp
-    Created: 10 Mar 2021 12:02:16pm
-    Author:  bkupe
+	ModuleIncludes2.cpp
+	Created: 10 Mar 2021 12:02:16pm
+	Author:  bkupe
 
   ==============================================================================
 */
@@ -51,6 +51,8 @@
 #include "modules/osc/resolume/commands/ResolumeClipCommand.cpp"
 #include "modules/osc/resolume/commands/ResolumeFXCommand.cpp"
 #include "modules/osc/resolume/commands/ui/ResolumeBaseCommandEditor.cpp"
+
+#include "modules/ble/BLEModule.cpp"
 
 #include "modules/osc/ui/OSCOutputEditor.cpp"
 #include "modules/oscquery/MadMapperModule.cpp"

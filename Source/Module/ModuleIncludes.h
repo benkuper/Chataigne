@@ -167,6 +167,7 @@
 #include "modules/sequence/SequenceModule.h"
 
 #include "modules/serial/SerialModule.h"
+#include "modules/ble/BLEModule.h"
 
 #include "modules/controller/loupedeck/LoupedeckShape.h"
 #include "modules/controller/loupedeck/LoupedeckShapeManager.h"
@@ -211,5 +212,6 @@
 
 #include "modules/tcp/tcpserver/ui/TCPServerModuleUI.h"
 #include "modules/websocket/ui/WebSocketServerModuleUI.h"
+
 
 

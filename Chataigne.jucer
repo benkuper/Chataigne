@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.14b8"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.14b9"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="VST_LOGGING=0"
               splashScreenColour="Dark" cppLanguageStandard="17" companyCopyright="Ben Kuper"
-              headerPath="../../Source&#10;../../External/wiiuse&#10;../../External/serial/include&#10;../../External/asio&#10;../../External/asiodriver&#10;../../External/kinect/include&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/ois/include&#10;../../External/sdl/include&#10;../../External/hidapi/include&#10;../../External/abletonlink/include&#10;../../External/libusb/include/libusb-1.0&#10;../../External/mosquitto/include&#10;../../External/posistagenet/include"
+              headerPath="../../Source&#10;../../External/wiiuse&#10;../../External/serial/include&#10;../../External/asio&#10;../../External/asiodriver&#10;../../External/kinect/include&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/ois/include&#10;../../External/sdl/include&#10;../../External/hidapi/include&#10;../../External/abletonlink/include&#10;../../External/libusb/include/libusb-1.0&#10;../../External/mosquitto/include&#10;../../External/posistagenet/include&#10;../../External/simpleble/include"
               projectLineFeed="&#10;" jucerFormatVersion="1">
   <MAINGROUP id="EDDVhd" name="Chataigne">
     <GROUP id="{E61F6705-4C4B-3F04-F742-20CC91F590E4}" name="Resources">
@@ -144,6 +144,16 @@
               file="Source/Analytics/MatomoAnalytics.h"/>
       </GROUP>
       <GROUP id="{6C7DFFF7-D47E-97B5-FE74-27F24C7A349F}" name="Common">
+        <GROUP id="{7EA63998-1B48-26A4-FBAD-A9E3C0A981D3}" name="BLE">
+          <FILE id="SUr3In" name="BLEDevice.cpp" compile="0" resource="0" file="Source/Common/BLE/BLEDevice.cpp"/>
+          <FILE id="lvTRDP" name="BLEDevice.h" compile="0" resource="0" file="Source/Common/BLE/BLEDevice.h"/>
+          <FILE id="zJ8Jki" name="BLEDeviceParameter.cpp" compile="0" resource="0"
+                file="Source/Common/BLE/BLEDeviceParameter.cpp"/>
+          <FILE id="o0rBaW" name="BLEDeviceParameter.h" compile="0" resource="0"
+                file="Source/Common/BLE/BLEDeviceParameter.h"/>
+          <FILE id="h98GMN" name="BLEManager.cpp" compile="0" resource="0" file="Source/Common/BLE/BLEManager.cpp"/>
+          <FILE id="X1axjk" name="BLEManager.h" compile="0" resource="0" file="Source/Common/BLE/BLEManager.h"/>
+        </GROUP>
         <GROUP id="{25490D35-196D-13BC-97A7-C9D25C5EFE69}" name="LTC">
           <FILE id="fGYvA9" name="config.h" compile="0" resource="0" file="Source/Common/LTC/config.h"/>
           <FILE id="K9qNOo" name="decoder.c" compile="0" resource="0" file="Source/Common/LTC/decoder.c"/>
@@ -813,6 +823,10 @@
                 file="Source/Module/Community/CommunityModuleManager.h"/>
         </GROUP>
         <GROUP id="{6A9D374B-2C22-DB11-15C8-CA446252E36A}" name="modules">
+          <GROUP id="{9869286D-9A94-BF35-ED53-0CA9DBB44D30}" name="ble">
+            <FILE id="pZ9Fbt" name="BLEModule.cpp" compile="0" resource="0" file="Source/Module/modules/ble/BLEModule.cpp"/>
+            <FILE id="oGUcMe" name="BLEModule.h" compile="0" resource="0" file="Source/Module/modules/ble/BLEModule.h"/>
+          </GROUP>
           <GROUP id="{E298306C-543C-DE2E-3496-38F8BF29875A}" name="mqtt">
             <GROUP id="{E29FE9F5-4BE2-1ED2-5306-217AD1096986}" name="commands">
               <FILE id="zcTrWs" name="MQTTCommands.cpp" compile="0" resource="0"
@@ -1728,13 +1742,13 @@
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>
-    <VS2022 targetFolder="Builds/VisualStudio2022" extraDefs="USE_KINECT=1&#10;USE_ABLETONLINK=1&#10;LINK_PLATFORM_WINDOWS=1"
-            extraLinkerFlags="/HEAP:0x200000,0x10000" externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib&#10;JoyShockLibrary.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib&#10;iphlpapi.lib&#10;hid.lib&#10;hidapi_static.lib&#10;mosquitto.lib&#10;mosquittopp.lib"
+    <VS2022 targetFolder="Builds/VisualStudio2022" extraDefs="USE_KINECT=1&#10;USE_ABLETONLINK=1&#10;LINK_PLATFORM_WINDOWS=1&#10;BLE_SUPPORT=1"
+            extraLinkerFlags="/HEAP:0x200000,0x10000" externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib&#10;JoyShockLibrary.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib&#10;iphlpapi.lib&#10;hid.lib&#10;hidapi_static.lib&#10;mosquitto.lib&#10;mosquittopp.lib&#10;simpleble.lib"
             smallIcon="nVz6Li" bigIcon="nVz6Li" extraCompilerFlags="/bigobj">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib/win&#10;../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/hidapi/lib/win/x64&#10;../../External/mosquitto/lib/win"
+        <CONFIGURATION isDebug="1" name="Debug" libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib/win&#10;../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/hidapi/lib/win/x64&#10;../../External/mosquitto/lib/win&#10;../../External/simpleble/lib/win/debug"
                        binaryPath="Binaries/Debug"/>
-        <CONFIGURATION isDebug="0" name="Release" binaryPath="Binaries" libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib/win&#10;../../External/servus/lib/win/x64/release&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/hidapi/lib/win/x64&#10;../../External/mosquitto/lib/win"
+        <CONFIGURATION isDebug="0" name="Release" binaryPath="Binaries" libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib/win&#10;../../External/servus/lib/win/x64/release&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/hidapi/lib/win/x64&#10;../../External/mosquitto/lib/win&#10;../../External/simpleble/lib/win/release"
                        alwaysGenerateDebugSymbols="1" debugInformationFormat="ProgramDatabase"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
@@ -1828,7 +1842,7 @@
         <MODULEPATH id="juce_cryptography" path="JUCE/modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
-    <VS2022 targetFolder="Builds/VisualStudio2022_CI" extraDefs="USE_KINECT=1&#10;USE_ABLETONLINK=1&#10;LINK_PLATFORM_WINDOWS=1"
+    <VS2022 targetFolder="Builds/VisualStudio2022_CI" extraDefs="USE_KINECT=1&#10;USE_ABLETONLINK=1&#10;LINK_PLATFORM_WINDOWS=1&#10;BLE_SUPPORT=1"
             extraCompilerFlags="/Zm1000 /bigobj" extraLinkerFlags="/HEAP:0x400000,0x10000"
             externalLibraries="Setupapi.lib&#10;hid.lib&#10;Kinect20.lib&#10;JoyShockLibrary.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib&#10;iphlpapi.lib&#10;hid.lib&#10;hidapi_static.lib&#10;mosquitto.lib&#10;mosquittopp.lib"
             smallIcon="nVz6Li" bigIcon="nVz6Li">
@@ -1860,7 +1874,7 @@
         <MODULEPATH id="juce_timeline" path="Modules"/>
       </MODULEPATHS>
     </VS2022>
-    <VS2022 targetFolder="Builds/VisualStudio2022_Win7CI" extraDefs="USE_KINECT=0&#10;USE_ABLETONLINK=0"
+    <VS2022 targetFolder="Builds/VisualStudio2022_Win7CI" extraDefs="USE_KINECT=0&#10;USE_ABLETONLINK=0&#10;BLE_SUPPORT=1"
             extraCompilerFlags="/Zm1000 /bigobj" extraLinkerFlags="/HEAP:0x400000,0x10000"
             externalLibraries="Setupapi.lib&#10;hid.lib&#10;JoyShockLibrary.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib&#10;iphlpapi.lib&#10;hid.lib&#10;hidapi_static.lib&#10;mosquitto.lib&#10;mosquittopp.lib"
             smallIcon="nVz6Li" bigIcon="nVz6Li">

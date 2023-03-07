@@ -44,3 +44,9 @@
 
 #include "InputSystem/InputSystemManager.cpp"
 #include "InputSystem/InputDeviceHelpers.cpp"
+
+#if BLE_SUPPORT
+#include "BLE/BLEDevice.cpp"
+#include "BLE/BLEManager.cpp"
+#include "BLE/BLEDeviceParameter.cpp"
+#endif

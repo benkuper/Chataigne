@@ -8,6 +8,9 @@
  ==============================================================================
  */
 
+#include "MainIncludes.h"
+#include "Common/CommonIncludes.h"
+
 ControllableContainer* getAppSettings();
 
 ChataigneEngine::ChataigneEngine() :
@@ -42,6 +45,7 @@ ChataigneEngine::ChataigneEngine() :
 	addChildControllableContainer(CVGroupManager::getInstance());
 
 	MIDIManager::getInstance(); //Trigger constructor, declare settings
+	BLEManager::getInstance(); //should be here ?
 
 	CommunityModuleManager::getInstance(); //Trigger constructor, declare settings
 	
@@ -77,6 +81,7 @@ ChataigneEngine::~ChataigneEngine()
 
 	MIDIManager::deleteInstance();
 	DMXManager::deleteInstance();
+	BLEManager::deleteInstance();
 	SerialManager::deleteInstance();
 	WiimoteManager::deleteInstance();
 
@@ -88,6 +93,7 @@ ChataigneEngine::~ChataigneEngine()
 	CVGroupManager::deleteInstance();
 
 	Guider::deleteInstance();
+
 }
 
 

@@ -23,6 +23,9 @@
     <Filter Include="Chataigne\Source\Analytics">
       <UniqueIdentifier>{BFFB54F9-F042-7395-56B9-D0358B5F6ED9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Common\BLE">
+      <UniqueIdentifier>{31057B66-59D5-3FE4-C446-D12488975085}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Common\LTC">
       <UniqueIdentifier>{67CD336B-D640-6479-56B1-A064D3DCFB41}</UniqueIdentifier>
     </Filter>
@@ -238,6 +241,9 @@
     </Filter>
     <Filter Include="Chataigne\Source\Module\Community">
       <UniqueIdentifier>{6CEFF08B-E267-C21D-34E5-C8EAE64F596A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\ble">
+      <UniqueIdentifier>{EBDE0361-A545-39AC-83F0-D9E9F522F7A2}</UniqueIdentifier>
     </Filter>
     <Filter Include="Chataigne\Source\Module\modules\mqtt\commands">
       <UniqueIdentifier>{4DE12FF1-245E-9F00-3BFD-48206F57D466}</UniqueIdentifier>
@@ -1153,6 +1159,15 @@
     <ClCompile Include="..\..\Source\Analytics\MatomoAnalytics.cpp">
       <Filter>Chataigne\Source\Analytics</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Common\BLE\BLEDevice.cpp">
+      <Filter>Chataigne\Source\Common\BLE</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\BLE\BLEDeviceParameter.cpp">
+      <Filter>Chataigne\Source\Common\BLE</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\BLE\BLEManager.cpp">
+      <Filter>Chataigne\Source\Common\BLE</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\LTC\decoder.c">
       <Filter>Chataigne\Source\Common\LTC</Filter>
     </ClCompile>
@@ -1611,6 +1626,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\Community\CommunityModuleManager.cpp">
       <Filter>Chataigne\Source\Module\Community</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\ble\BLEModule.cpp">
+      <Filter>Chataigne\Source\Module\modules\ble</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\mqtt\commands\MQTTCommands.cpp">
       <Filter>Chataigne\Source\Module\modules\mqtt\commands</Filter>
@@ -3699,6 +3717,15 @@
     <ClInclude Include="..\..\Source\Analytics\MatomoAnalytics.h">
       <Filter>Chataigne\Source\Analytics</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Common\BLE\BLEDevice.h">
+      <Filter>Chataigne\Source\Common\BLE</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\BLE\BLEDeviceParameter.h">
+      <Filter>Chataigne\Source\Common\BLE</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\BLE\BLEManager.h">
+      <Filter>Chataigne\Source\Common\BLE</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Common\LTC\config.h">
       <Filter>Chataigne\Source\Common\LTC</Filter>
     </ClInclude>
@@ -4157,6 +4184,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\Community\CommunityModuleManager.h">
       <Filter>Chataigne\Source\Module\Community</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\ble\BLEModule.h">
+      <Filter>Chataigne\Source\Module\modules\ble</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\mqtt\commands\MQTTCommands.h">
       <Filter>Chataigne\Source\Module\modules\mqtt\commands</Filter>
