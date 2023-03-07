@@ -45,8 +45,9 @@ ChataigneEngine::ChataigneEngine() :
 	addChildControllableContainer(CVGroupManager::getInstance());
 
 	MIDIManager::getInstance(); //Trigger constructor, declare settings
+#if BLE_SUPPORT
 	BLEManager::getInstance(); //should be here ?
-
+#endif
 	CommunityModuleManager::getInstance(); //Trigger constructor, declare settings
 	
 	ZeroconfManager::getInstance()->addSearcher("OSC", "_osc._udp.");
@@ -81,7 +82,9 @@ ChataigneEngine::~ChataigneEngine()
 
 	MIDIManager::deleteInstance();
 	DMXManager::deleteInstance();
+#if BLE_SUPPORT
 	BLEManager::deleteInstance();
+#endif
 	SerialManager::deleteInstance();
 	WiimoteManager::deleteInstance();
 

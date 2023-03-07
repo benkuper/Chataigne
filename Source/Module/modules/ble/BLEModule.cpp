@@ -10,6 +10,8 @@
 
 #include "Module/ModuleIncludes.h"
 
+#if BLE_SUPPORT
+
 BLEModule::BLEModule(const String& name) :
 	StreamingModule(name),
 	device(nullptr)
@@ -214,3 +216,5 @@ void BLEModule::setupModuleFromJSONData(var data)
 
 	StreamingModule::setupModuleFromJSONData(data);
 }
+
+#endif

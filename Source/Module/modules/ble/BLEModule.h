@@ -9,6 +9,7 @@
 */
 
 #pragma once
+#if BLE_SUPPORT
 
 class BLEModule :
 	public StreamingModule,
@@ -80,3 +81,5 @@ public:
 	virtual String getDefaultTypeString() const override { return "Bluetooth LE"; }
 
 };
+
+#endif
