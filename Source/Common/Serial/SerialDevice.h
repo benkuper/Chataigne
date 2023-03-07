@@ -54,7 +54,6 @@ public:
 	virtual ~SerialDeviceInfo() {}
 
 	String deviceID; //This is what we will use to identify the device uniquely, the way it's set depends on the OS
-
 	String port;
 	String description;
 	String uniqueDescription;

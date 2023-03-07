@@ -69,6 +69,9 @@ bool SerialModule::setPortStatus(bool status)
 		if (port->isOpen()) port->close();
 	}
 
+	bool result = false;
+	if (port == nullptr) return result;
+
 	isConnected->setValue(port->isOpen());
 	return port->isOpen();
 }
