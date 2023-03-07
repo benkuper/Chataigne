@@ -57,8 +57,7 @@ AudioModule::AudioModule(const String& name) :
 	moduleParams.addChildControllableContainer(&ltcParamsCC);
 	ltcFPS = ltcParamsCC.addEnumParameter("FPS", "The framerate to use to decode LTC");
 	ltcFPS->addOption("24", 24)->addOption("25", 25)->addOption("30", 30);
-	ltcFPS->defaultValue = 30;
-	ltcFPS->resetValue();
+	ltcFPS->setDefaultValue(30);
 	curLTCFPS = ltcFPS->getValueData();
 
 	ltcChannel = ltcParamsCC.addIntParameter("LTC Channel", "Enable and select the channel you want to use to decode LTC", 1, 1, 64);
