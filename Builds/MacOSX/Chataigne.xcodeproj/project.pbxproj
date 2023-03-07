@@ -74,6 +74,7 @@
 		C602EDD2320D46D71CF78955 /* RecentFilesMenuTemplate.nib */ = {isa = PBXBuildFile; fileRef = CFF11961CD6D0DFF4EB302A4; };
 		C6EDEE52606D81949D455AF7 /* SDL2.framework */ = {isa = PBXBuildFile; fileRef = A330B89FF4A3660791C566A1; settings = { ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C8E81ADA56D6A25E4AD7C918 /* QuartzCore.framework */ = {isa = PBXBuildFile; fileRef = 64731A5930462AB9DB5DDE0D; };
+		C949C1C9D8B0825FC3C6E97D /* Security.framework */ = {isa = PBXBuildFile; fileRef = 8CDCEB4DC37C0C926A7AA482; };
 		CCD9A22929C0C3B17DBDECFC /* BinaryData.cpp */ = {isa = PBXBuildFile; fileRef = 8E161399DEC1EED4622B6EE6; };
 		CD1179FB5FFCDF7733DE6D99 /* io.c */ = {isa = PBXBuildFile; fileRef = 66FB3CD683B9EE7A37CC2C5D; };
 		CEF52996937104AFE201FA08 /* include_juce_audio_processors.mm */ = {isa = PBXBuildFile; fileRef = 14E5D0E29E9A6BEAD9C32A03; };
@@ -562,6 +563,7 @@
 		8C3C85E4F7C6FB804CBD9F59 /* CommunityModuleInfoEditor.cpp */ /* CommunityModuleInfoEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CommunityModuleInfoEditor.cpp; path = ../../Source/Module/Community/ui/CommunityModuleInfoEditor.cpp; sourceTree = SOURCE_ROOT; };
 		8C49B305FD4D86D068A653A7 /* WiimotePairUtil.h */ /* WiimotePairUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WiimotePairUtil.h; path = ../../Source/Module/modules/controller/wiimote/WiimotePairUtil.h; sourceTree = SOURCE_ROOT; };
 		8C62E42B39C66796F42E60AA /* ConditionManagerEditor.h */ /* ConditionManagerEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ConditionManagerEditor.h; path = ../../Source/Common/Processor/Action/Condition/ui/ConditionManagerEditor.h; sourceTree = SOURCE_ROOT; };
+		8CDCEB4DC37C0C926A7AA482 /* Security.framework */ /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		8D12442FA5A06DC1B43331FF /* SequenceModule.h */ /* SequenceModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SequenceModule.h; path = ../../Source/Module/modules/sequence/SequenceModule.h; sourceTree = SOURCE_ROOT; };
 		8D2519CFCC320AA3F66BFB7D /* ScriptCondition.h */ /* ScriptCondition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ScriptCondition.h; path = ../../Source/Common/Processor/Action/Condition/conditions/ScriptCondition/ScriptCondition.h; sourceTree = SOURCE_ROOT; };
 		8D3AFD7B0479583F5D50856C /* GenericAppCommand.cpp */ /* GenericAppCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = GenericAppCommand.cpp; path = ../../Source/Module/modules/generic/commands/GenericAppCommand.cpp; sourceTree = SOURCE_ROOT; };
@@ -975,6 +977,7 @@
 				D553CB88C72C0B51E97A4676,
 				382ACC3B858F0CF59BEA300D,
 				C8E81ADA56D6A25E4AD7C918,
+				C949C1C9D8B0825FC3C6E97D,
 				FFBC11E7EE94DC34D717AD69,
 				C6EDEE52606D81949D455AF7,
 			);
@@ -2196,6 +2199,7 @@
 				7335A92ACDE20B14F02ADA97,
 				ACEC0AB4D367F7C1DA170CD9,
 				64731A5930462AB9DB5DDE0D,
+				8CDCEB4DC37C0C926A7AA482,
 				F36349200785EF7B0D1E7329,
 				A330B89FF4A3660791C566A1,
 			);
