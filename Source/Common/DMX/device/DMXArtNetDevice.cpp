@@ -223,6 +223,7 @@ void DMXArtNetDevice::run()
 
 				int dmxDataLength = receiveBuffer[17] | receiveBuffer[16] << 8;
 				jassert(dmxDataLength == DMX_NUM_CHANNELS);
+				if (dmxDataLength > DMX_NUM_CHANNELS) LOGWARNING("Receiving more DMX data than expected : " << dmxDataLength << " bytes (should be " << DMX_NUM_CHANNELS << ")");
 
 				String sName = rAddress + ":" + String(rPort);
 				Array<uint8> values = Array<uint8>(receiveBuffer + DMX_HEADER_LENGTH, DMX_NUM_CHANNELS);
