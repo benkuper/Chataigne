@@ -21,6 +21,7 @@ public:
 	PJLinkModule();
 	~PJLinkModule();
 
+	String convertError(String numError);
 	class PJLinkClient :
 		public Thread
 	{
@@ -36,6 +37,7 @@ public:
 		EnablingControllableContainer paramsCC;
 		ControllableContainer valuesCC;
 
+	ControllableContainer infosCC;
 		StringParameter* remoteHost;
 		IntParameter* remotePort;
 		BoolParameter* isConnected;
@@ -45,6 +47,25 @@ public:
 		EnumParameter* powerStatus;
 		BoolParameter* shutterVideoStatus;
 		BoolParameter* shutterAudioStatus;
+		Trigger* updateInfo;
+		EnumParameter* inputStatus;
+		StringParameter* inputResolutionInfo;
+		Trigger* updateInput;
+		StringParameter* resolutionRecommendedInfo;
+		StringParameter* brendInfo;
+		StringParameter* productNameInfo;
+		StringParameter* displayNameInfo;
+		StringParameter* softVerInfo;
+		StringParameter* lampHourInfo;
+		StringParameter* filterUsageInfo;
+		StringParameter* lampModelInfo;
+		StringParameter* filterModelInfo;
+		StringParameter* fanErrorInfo;
+		StringParameter* lampErrorInfo;
+		StringParameter* temperatureErrorInfo;
+		StringParameter* coverErrorInfo;
+		StringParameter* filterErrorInfo;
+		StringParameter* otherErrorInfo;							  
 
 		float timeAtConnect;
 		bool assigningFromRemote;
@@ -93,6 +114,13 @@ public:
 	void processClient(PJLinkClient* c);
 	void processClientLine(PJLinkClient* c, const String& message);
 
+	void requestInfos();
+	void requestInputName(int id);
+
+	StringArray inputListVp;
+	StringArray chooseInput;
+	int numInput, idVpInput;
+	int indexInput=0;
 	static PJLinkModule * create() { return new PJLinkModule(); }
 	virtual String getDefaultTypeString() const override { return "PJLink"; }
 
