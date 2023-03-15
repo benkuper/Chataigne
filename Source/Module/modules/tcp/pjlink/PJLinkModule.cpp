@@ -397,9 +397,10 @@ void PJLinkModule::processClientLine(PJLinkClient* c, const String& message)
 			if (logIncomingData->boolValue())
 			{
 				NLOG(niceName, " > Project power command accepted !");
- 
+
 				sendMessageToClient("%1INPT ?", c->id);
 				sendMessageToClient("%2IRES ?", c->id);
+			}
 		}
 	}
 	else if (message.contains("%1AVMT="))
