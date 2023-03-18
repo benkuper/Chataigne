@@ -8,10 +8,13 @@
   ==============================================================================
 */
 
+#include "Module/ModuleIncludes.h"
+
 UDPModule::UDPModule(const String& name, bool canHaveInput, bool canHaveOutput, int defaultLocalPort, int defaultRemotePort) :
 	NetworkStreamingModule(name, canHaveInput, canHaveOutput, defaultLocalPort, defaultRemotePort)
 {
 	multicastMode = moduleParams.addBoolParameter("Multicast Mode", "If check, instead of binding and connecting, it will try to join a multicast network.", false);
+
 	scriptObject.setMethod("sendTo", &UDPModule::sendMessageToFromScript);
 	scriptObject.setMethod("sendBytesTo", &UDPModule::sendBytesToFromScript);
 
@@ -56,6 +59,7 @@ void UDPModule::setupReceiver()
 
 		if (multicastMode->boolValue())
 		{
+			NLOG(niceName, "UDP Multicast mode, using Ouput's Remote Host to join multicast : " << remoteHost->stringValue());
 			receiver->joinMulticast(remoteHost->stringValue());
 		}
 
