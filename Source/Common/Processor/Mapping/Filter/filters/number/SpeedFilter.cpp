@@ -8,12 +8,17 @@
   ==============================================================================
 */
 
+#include "Common/Processor/ProcessorIncludes.h"
+
 SpeedFilter::SpeedFilter(var params, Multiplex* multiplex) :
 	TimeFilter(getTypeString(), params, multiplex)
 {
 	autoSetRange = false;
 	processOnSameValue = true;
 	filterTypeFilters.add(Controllable::FLOAT, Controllable::INT, Controllable::POINT2D, Controllable::POINT3D);
+
+	smoothing = filterParams.addIntParameter("Smoothing", "Number of values to use for smoothing", 10, 1);
+
 }
 
 SpeedFilter::~SpeedFilter()
@@ -50,7 +55,7 @@ Parameter* SpeedFilter::setupSingleParameterInternal(Parameter* source, int mult
 	if (source->isComplex()) for (int i = 0; i < source->value.size(); i++) v.append(0);
 	else v = 0;
 
-	for (int i = 0; i < smoothCount; i++) s.append(v);
+	for (int i = 0; i < smoothing->intValue(); i++) s.append(v);
 	speedMap.set(source, s);
 
 	prevValueMap.set(source, source->getValue());
@@ -87,6 +92,7 @@ MappingFilter::ProcessResult SpeedFilter::processSingleParameterTimeInternal(Par
 	sMap.remove(0);
 	sMap.append(speed);
 
+	int smoothCount = smoothing->intValue();
 	var smoothSpeed;
 	if (speed.isArray())
 	{
@@ -107,4 +113,16 @@ MappingFilter::ProcessResult SpeedFilter::processSingleParameterTimeInternal(Par
 	speedMap.set(source, sMap);
 
 	return CHANGED;
+}
+
+void SpeedFilter::filterParamChanged(Parameter* p)
+{
+	TimeFilter::filterParamChanged(p);
+	if (p == smoothing)
+	{
+		if (!isCurrentlyLoadingData) setupParametersInternal(-1, false);
+
+		mappingFilterListeners.call(&FilterListener::filteredParamsChanged, this);
+		filterAsyncNotifier.addMessage(new FilterEvent(FilterEvent::FILTER_REBUILT, this));
+	}
 }
