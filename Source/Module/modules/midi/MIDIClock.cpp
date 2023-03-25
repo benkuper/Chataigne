@@ -73,5 +73,7 @@ void MIDIClockSender::run()
 		wait(waitInterval);
 	}
 
+	if (Engine::mainEngine->isClearing || device == nullptr)  return;
+	
 	device->sendMessageNow(MidiMessage::midiStop());
 }
