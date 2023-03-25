@@ -83,7 +83,10 @@ public:
 	Trigger* midiStartTrigger;
 	Trigger* midiStopTrigger;
 	Trigger* midiContinueTrigger;
+
 	FloatParameter* bpm;
+	BoolParameter* sendClock;
+	MIDIClockSender outClock;
 	double lastClockReceiveTime;
 	double clockDeltaTimes[24];
 	int lastClockReceiveTimeIndex;

@@ -86,9 +86,11 @@ MIDIModule::MIDIModule(const String& name, bool _useGenericControls) :
 	valuesCC.addChildControllableContainer(&infoCC);
 
 	bpm = tempoCC.addFloatParameter("BPM", "BPM detected by the incoming MIDI Clock", 0, 0, 999);
+	sendClock = tempoCC.addBoolParameter("Send Clock", "If checked, send MIDI Clock to the output. If not, receiving incoming MIDI Clock", false);
 	midiStartTrigger = tempoCC.addTrigger("Start", "Clock Start signal");
 	midiStopTrigger = tempoCC.addTrigger("Stop", "Clock Stop signal");
 	midiContinueTrigger = tempoCC.addTrigger("Continue", "Clock Continue signal");
+
 	for (int i = 0; i < 24; i++) clockDeltaTimes[i] = 0;
 	valuesCC.addChildControllableContainer(&tempoCC);
 
@@ -262,6 +264,35 @@ void MIDIModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc,
 			}
 		}
 	}
+	else if (c == sendClock)
+	{
+		outClock.stop();
+
+		if (sendClock->boolValue())
+		{
+			if(outputDevice != nullptr) outClock.setOutDevice(outputDevice->device.get());
+			outClock.setBPM(bpm->floatValue());
+			outClock.start();
+		}
+	}
+
+	if (sendClock->boolValue())
+	{
+		if (c == bpm) outClock.setBPM(bpm->floatValue());
+		else if (c == midiStartTrigger)
+		{
+			outClock.stop();
+			outClock.start();
+		}
+		else if (c == midiStopTrigger)
+		{
+			outClock.stop();
+		}
+		else if (c == midiContinueTrigger)
+		{
+			outClock.start();
+		}
+	}
 }
 
 void MIDIModule::updateMIDIDevices()
@@ -289,10 +320,20 @@ void MIDIModule::updateMIDIDevices()
 	MIDIOutputDevice* newOutput = midiParam->outputDevice;
 	//if (outputDevice != newOutput)
 	//{
-	if (outputDevice != nullptr) outputDevice->close();
+	if (outputDevice != nullptr)
+	{
+		if (sendClock->boolValue()) outClock.setOutDevice(nullptr);
+		outputDevice->close();
+	}
+
 	outputDevice = newOutput;
-	if (outputDevice != nullptr) outputDevice->open();
-	//} 
+
+	if (outputDevice != nullptr)
+	{
+		outputDevice->open();
+		if (sendClock->boolValue()) outClock.setOutDevice(outputDevice->device.get());
+	} 
+
 
 	setupIOConfiguration(inputDevice != nullptr || valuesCC.controllables.size() > 0, outputDevice != nullptr);
 
@@ -367,9 +408,9 @@ void MIDIModule::sysExReceived(const MidiMessage& msg)
 	inActivityTrigger->trigger();
 
 	Array<uint8> data(msg.getSysExData(), msg.getSysExDataSize());
-	
 
-	
+
+
 	if (logIncomingData->boolValue())
 	{
 		String log = "Sysex received, " + String(data.size()) + " bytes";
@@ -380,9 +421,9 @@ void MIDIModule::sysExReceived(const MidiMessage& msg)
 		NLOG(niceName, log);
 	}
 
-	
+
 	var sysexData;
-	for(auto &d: data) sysexData.append(d);
+	for (auto& d : data) sysexData.append(d);
 	Array<var> args;
 	args.add(sysexData);
 	scriptManager->callFunctionOnAllItems(sysexEventId, args);

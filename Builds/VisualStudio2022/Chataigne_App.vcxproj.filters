@@ -1873,6 +1873,9 @@
     <ClCompile Include="..\..\Source\Module\modules\midi\commands\MIDICommands.cpp">
       <Filter>Chataigne\Source\Module\modules\midi\commands</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\midi\MIDIClock.cpp">
+      <Filter>Chataigne\Source\Module\modules\midi</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\midi\MIDIModule.cpp">
       <Filter>Chataigne\Source\Module\modules\midi</Filter>
     </ClCompile>
@@ -4511,6 +4514,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\midi\commands\MIDICommands.h">
       <Filter>Chataigne\Source\Module\modules\midi\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\midi\MIDIClock.h">
+      <Filter>Chataigne\Source\Module\modules\midi</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\midi\MIDIModule.h">
       <Filter>Chataigne\Source\Module\modules\midi</Filter>

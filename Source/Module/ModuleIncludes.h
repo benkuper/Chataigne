@@ -122,6 +122,7 @@
 #include "modules/http/HTTPModule.h"
 #include "modules/http/commands/HTTPCommand.h"
 
+#include "modules/midi/MIDIClock.h"
 #include "modules/midi/MIDIModule.h"
 #include "modules/midi/commands/MIDICommands.h"
 

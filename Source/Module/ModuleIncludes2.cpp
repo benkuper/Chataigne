@@ -30,6 +30,7 @@
 #include "modules/gpio/commands/GPIOCommands.cpp"
 #include "modules/http/HTTPModule.cpp"
 #include "modules/http/commands/HTTPCommand.cpp"
+#include "modules/midi/MIDIClock.cpp"
 #include "modules/midi/MIDIModule.cpp"
 #include "modules/midi/commands/MIDICommands.cpp"
 #include "modules/multiplex/MultiplexModule.cpp"

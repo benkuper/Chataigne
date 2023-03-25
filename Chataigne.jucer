@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.14b11"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.14b12"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="VST_LOGGING=0"
@@ -1176,6 +1176,8 @@
                     file="Source/Module/modules/midi/commands/MIDICommands.cpp"/>
               <FILE id="XXXL2t" name="MIDICommands.h" compile="0" resource="0" file="Source/Module/modules/midi/commands/MIDICommands.h"/>
             </GROUP>
+            <FILE id="Z0yEW8" name="MIDIClock.cpp" compile="0" resource="0" file="Source/Module/modules/midi/MIDIClock.cpp"/>
+            <FILE id="Km8mxj" name="MIDIClock.h" compile="0" resource="0" file="Source/Module/modules/midi/MIDIClock.h"/>
             <FILE id="GmYxyc" name="MIDIModule.cpp" compile="0" resource="0" file="Source/Module/modules/midi/MIDIModule.cpp"/>
             <FILE id="dCkFW4" name="MIDIModule.h" compile="0" resource="0" file="Source/Module/modules/midi/MIDIModule.h"/>
           </GROUP>

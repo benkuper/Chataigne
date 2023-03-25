@@ -278,6 +278,7 @@
 		3449F147311F84BA64933833 /* MilluminModule.cpp */ /* MilluminModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MilluminModule.cpp; path = ../../Source/Module/modules/osc/millumin/MilluminModule.cpp; sourceTree = SOURCE_ROOT; };
 		347CD5FFBBB2212B7CC1C9EA /* StandardConditionEditor.cpp */ /* StandardConditionEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = StandardConditionEditor.cpp; path = ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/ui/StandardConditionEditor.cpp; sourceTree = SOURCE_ROOT; };
 		3485482C7A1B5DD51D9D80CD /* Mapping2DLayerPanel.h */ /* Mapping2DLayerPanel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Mapping2DLayerPanel.h; path = ../../Source/TimeMachine/Sequence/layers/mapping/automation/2d/ui/Mapping2DLayerPanel.h; sourceTree = SOURCE_ROOT; };
+		34D5E944A0D8994D129C1D13 /* MIDIClock.cpp */ /* MIDIClock.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MIDIClock.cpp; path = ../../Source/Module/modules/midi/MIDIClock.cpp; sourceTree = SOURCE_ROOT; };
 		34DFE3A582DAFF805F97E141 /* GenericScriptCommand.h */ /* GenericScriptCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GenericScriptCommand.h; path = ../../Source/Module/modules/generic/commands/GenericScriptCommand.h; sourceTree = SOURCE_ROOT; };
 		352A68459BA7879D1CFB0A7A /* DMXManager.h */ /* DMXManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DMXManager.h; path = ../../Source/Common/DMX/DMXManager.h; sourceTree = SOURCE_ROOT; };
 		35509A411A3E24FE92D2FFAE /* WatchoutCommand.cpp */ /* WatchoutCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = WatchoutCommand.cpp; path = ../../Source/Module/modules/tcp/tcpclient/watchout/commands/WatchoutCommand.cpp; sourceTree = SOURCE_ROOT; };
@@ -303,6 +304,7 @@
 		3B99BE9C316E5F04AC3CD1DB /* SequenceModule.cpp */ /* SequenceModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SequenceModule.cpp; path = ../../Source/Module/modules/sequence/SequenceModule.cpp; sourceTree = SOURCE_ROOT; };
 		3BCA5602F300DFF8655A02F1 /* MappingUI.h */ /* MappingUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MappingUI.h; path = ../../Source/Common/Processor/Mapping/ui/MappingUI.h; sourceTree = SOURCE_ROOT; };
 		3C63E853040397CF2731DCD6 /* CustomOSCCommand.h */ /* CustomOSCCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CustomOSCCommand.h; path = ../../Source/Module/modules/common/commands/osc/CustomOSCCommand.h; sourceTree = SOURCE_ROOT; };
+		3CAA10231894C6C1E198420F /* MIDIClock.h */ /* MIDIClock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MIDIClock.h; path = ../../Source/Module/modules/midi/MIDIClock.h; sourceTree = SOURCE_ROOT; };
 		3D416A20B2A08146BAEDB7DD /* StreamDeckXL.h */ /* StreamDeckXL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StreamDeckXL.h; path = ../../Source/Module/modules/controller/streamdeck/models/StreamDeckXL.h; sourceTree = SOURCE_ROOT; };
 		3D79C9F6BD87A9B257C9AE04 /* StateCommand.h */ /* StateCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StateCommand.h; path = ../../Source/Module/modules/state/commands/StateCommand.h; sourceTree = SOURCE_ROOT; };
 		3D87FC637754F40BAD81BCE1 /* BLEManager.cpp */ /* BLEManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BLEManager.cpp; path = ../../Source/Common/BLE/BLEManager.cpp; sourceTree = SOURCE_ROOT; };
@@ -1839,6 +1841,8 @@
 			isa = PBXGroup;
 			children = (
 				89FC8BBB5BD20C2CE5BF4067,
+				34D5E944A0D8994D129C1D13,
+				3CAA10231894C6C1E198420F,
 				0189433D1F58B3EFCB328C09,
 				D90842DA76257F12F36E8DB1,
 			);
@@ -3869,7 +3873,7 @@
 					"USE_ABLETONLINK=1",
 					"LINK_PLATFORM_MACOSX=1",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.9.14b11",
+					"JUCE_APP_VERSION=1.9.14b12",
 					"JUCE_APP_VERSION_HEX=0x1090e",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -3948,7 +3952,7 @@
 					"USE_ABLETONLINK=1",
 					"LINK_PLATFORM_MACOSX=1",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.9.14b11",
+					"JUCE_APP_VERSION=1.9.14b12",
 					"JUCE_APP_VERSION_HEX=0x1090e",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
