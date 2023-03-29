@@ -27,7 +27,22 @@ public:
 	ControllableContainer leftValues;
 	ControllableContainer rightValues;
 
+    // JoyCon usually jitters +/-0.02. When learning inputs the controller jitter is really cumbersome.
+	const float jitterThreshold = 0.03;
+
 	//Left controller
+
+	float lastLeftAccelX = 0.0;
+	float lastLeftAccelY = 0.0;
+	float lastLeftAccelZ = 0.0;
+
+	float lastLeftOrientationX = 0.0;
+	float lastLeftOrientationY = 0.0;
+	float lastLeftOrientationZ = 0.0;
+
+	float lastLeftAxisX = 0.0;
+	float lastLeftAxisY = 0.0;
+
 	Point3DParameter* leftAccel;
 	Point3DParameter* leftOrientation;
 	Point2DParameter * leftAxis;
@@ -44,6 +59,17 @@ public:
 	BoolParameter *  minus;
 
 	//Right controller
+	float lastRightAccelX = 0.0;
+	float lastRightAccelY = 0.0;
+	float lastRightAccelZ = 0.0;
+
+	float lastRightOrientationX = 0.0;
+	float lastRightOrientationY = 0.0;
+	float lastRightOrientationZ = 0.0;
+
+	float lastRightAxisX = 0.0;
+	float lastRightAxisY = 0.0;
+
 	Point3DParameter* rightAccel;
 	Point3DParameter * rightOrientation;
 	Point2DParameter * rightAxis;

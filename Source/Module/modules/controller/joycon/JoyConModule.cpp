@@ -115,10 +115,40 @@ void JoyConModule::updateController(int controller)
 		leftSL->setValue((state.buttons >> 18) & 1);
 		leftSR->setValue((state.buttons >> 19) & 1);
 
-		leftAccel->setVector(motion.accelX, motion.accelY, motion.accelZ);
-		leftOrientation->setVector(motion.gravX, motion.gravY, motion.gravZ);
+		float tmpX = abs(lastLeftAccelX - motion.accelX);
+		float tmpY = abs(lastLeftAccelY - motion.accelY);
+		float tmpZ = abs(lastLeftAccelZ - motion.accelZ);
 
-		leftAxis->setPoint(state.stickLX, state.stickLY);
+		if (tmpX > jitterThreshold || tmpY > jitterThreshold || tmpZ > jitterThreshold) {
+			lastLeftAccelX = motion.accelX;
+			lastLeftAccelY = motion.accelY;
+			lastLeftAccelZ = motion.accelZ;
+
+			leftAccel->setVector(motion.accelX, motion.accelY, motion.accelZ);
+		}
+
+		tmpX = abs(lastLeftOrientationX - motion.gravX);
+		tmpY = abs(lastLeftOrientationY - motion.gravY);
+		tmpZ = abs(lastLeftOrientationZ - motion.gravZ);
+
+		if (tmpX > jitterThreshold || tmpY > jitterThreshold || tmpZ > jitterThreshold) {
+			lastLeftOrientationX = motion.gravX;
+			lastLeftOrientationY = motion.gravY;
+			lastLeftOrientationZ = motion.gravZ;
+
+			leftOrientation->setVector(motion.gravX, motion.gravY, motion.gravZ);
+		}
+
+		tmpX = abs(lastLeftAxisX - state.stickLX);
+		tmpY = abs(lastLeftAxisY - state.stickLY);
+
+		if (tmpX > jitterThreshold || tmpY > jitterThreshold) {
+			lastLeftAxisX = state.stickLX;
+			lastLeftAxisY = state.stickLY;
+
+			leftAxis->setPoint(state.stickLX, state.stickLY);
+		}
+		
 	} else if (type == 2)
 	{
 		plus->setValue((state.buttons >> 4) & 1);
@@ -136,10 +166,39 @@ void JoyConModule::updateController(int controller)
 		rightSL->setValue((state.buttons >> 18) & 1);
 		rightSR->setValue((state.buttons >> 19) & 1);
 
-		rightAccel->setVector(motion.accelX, motion.accelY, motion.accelZ);
-		rightOrientation->setVector(motion.gravX, motion.gravY, motion.gravZ);
+		float tmpX = abs(lastRightAccelX - motion.accelX);
+		float tmpY = abs(lastRightAccelY - motion.accelY);
+		float tmpZ = abs(lastRightAccelZ - motion.accelZ);
 
-		rightAxis->setPoint(state.stickRX, state.stickRY);
+		if (tmpX > jitterThreshold || tmpY > jitterThreshold || tmpZ > jitterThreshold) {
+			lastRightAccelX = motion.accelX;
+			lastRightAccelY = motion.accelY;
+			lastRightAccelZ = motion.accelZ;
+
+			leftAccel->setVector(motion.accelX, motion.accelY, motion.accelZ);
+		}
+
+		tmpX = abs(lastRightOrientationX - motion.gravX);
+		tmpY = abs(lastRightOrientationY - motion.gravY);
+		tmpZ = abs(lastRightOrientationZ - motion.gravZ);
+
+		if (tmpX > jitterThreshold || tmpY > jitterThreshold || tmpZ > jitterThreshold) {
+			lastRightOrientationX = motion.gravX;
+			lastRightOrientationY = motion.gravY;
+			lastRightOrientationZ = motion.gravZ;
+
+			rightOrientation->setVector(motion.gravX, motion.gravY, motion.gravZ);
+		}
+
+		tmpX = abs(lastRightAxisX - state.stickLX);
+		tmpY = abs(lastRightAxisY - state.stickLY);
+
+		if (tmpX > jitterThreshold || tmpY > jitterThreshold) {
+			lastRightAxisX = state.stickLX;
+			lastRightAxisY = state.stickLY;
+
+			rightAxis->setPoint(state.stickLX, state.stickLY);
+		}
 	}
 }
 
