@@ -105,6 +105,7 @@ void GenericOSCQueryModule::sendOSCForControllable(Controllable* c)
 {
 	if (!enabled->boolValue()) return;
 	if (noFeedbackList.contains(c)) return;
+	if (isUpdatingStructure) return;
 
 	String s = c->getControlAddress(&valuesCC);
 	try
@@ -236,6 +237,8 @@ void GenericOSCQueryModule::updateTreeFromData(var data)
 
 	updateContainerFromData(&valuesCC, data);
 
+	isUpdatingStructure = false;
+
 	if (keepValuesOnSync->boolValue())
 	{
 		NamedValueSet nvs = vData.getDynamicObject()->getProperties();
@@ -268,7 +271,6 @@ void GenericOSCQueryModule::updateTreeFromData(var data)
 	}
 
 	treeData = data;
-	isUpdatingStructure = false;
 }
 
 void GenericOSCQueryModule::updateContainerFromData(ControllableContainer* cc, var data)
