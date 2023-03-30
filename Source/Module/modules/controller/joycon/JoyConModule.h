@@ -21,14 +21,20 @@ public:
 	~JoyConModule();
 
 	Trigger* reconnectControllers;
+
+	BoolParameter* useJitterThreshold;
+	FloatParameter* jitterThreshold;
+
 	Array<int> controllers;
 	SpinLock controllerLock;
 
 	ControllableContainer leftValues;
 	ControllableContainer rightValues;
 
-    // JoyCon usually jitters +/-0.02. When learning inputs the controller jitter is really cumbersome.
-	const float jitterThreshold = 0.03;
+	// Temp deltas for jitter suppression
+	float tmpDeltaX;
+	float tmpDeltaY;
+	float tmpDeltaZ;
 
 	//Left controller
 
