@@ -92,6 +92,19 @@ jobs:
     # if: false # tmp disable
     name: OSX
     runs-on: macos-latest
+    
+    strategy:
+      matrix:
+        include:
+        - arch: x86_64
+          suffix: intel
+          config: Release
+
+        - arch: arm64
+          suffix: silicon
+          config: ReleaseSilicon
+        
+      fail-fast: false
 
     steps:
       - name: Checkout repo
@@ -110,7 +123,7 @@ jobs:
         id: set_variables
         uses: ./.github/actions/set-suffix
         with:
-          os: 'osx'
+          os: 'osx-${{ matrix.suffix }}'
 
       - name: Download Packages 
         run: |
@@ -120,13 +133,14 @@ jobs:
           hdiutil detach "/Volumes/Packages ${{ env.PackagesVersion }}/"
 
       - name: Build
-        uses: sersoft-gmbh/xcodebuild-action@v1.3
+        uses: sersoft-gmbh/xcodebuild-action@v2.0.1
         with:
           project: Builds/MacOSX_CI/${{ env.ProjectName }}.xcodeproj
           destination: platform=macOS
           jobs: 2
           action: build
-          configuration: Release
+          arch: ${{ matrix.arch }}
+          configuration: ${{ matrix.config }}
           use-xcpretty: true
 
       - name: Create Package
