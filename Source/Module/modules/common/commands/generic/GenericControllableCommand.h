@@ -39,6 +39,9 @@ public:
 	FloatParameter* time;
 	std::unique_ptr<Automation> automation;
 
+	bool isUpdatingContent; //to avoid sending stuff when just updating target or component
+
+
 	virtual void updateComponentFromTarget();
 	virtual void updateValueFromTargetAndComponent();
 

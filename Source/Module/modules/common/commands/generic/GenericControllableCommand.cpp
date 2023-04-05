@@ -18,7 +18,8 @@ GenericControllableCommand::GenericControllableCommand(Module* _module, CommandC
 	componentOperator(nullptr),
 	loop(nullptr),
 	value(nullptr),
-	time(nullptr)
+	time(nullptr),
+	isUpdatingContent(false)
 {
 	saveAndLoadRecursiveData = true;
 
@@ -78,6 +79,9 @@ void GenericControllableCommand::updateComponentFromTarget()
 {
 	if (componentOperator == nullptr) return;
 
+	bool curUpdating = isUpdatingContent;
+	isUpdatingContent = true;
+
 	var val = componentOperator->getValueData();
 	componentOperator->clearOptions();
 	componentOperator->addOption("All", -1);
@@ -107,10 +111,16 @@ void GenericControllableCommand::updateComponentFromTarget()
 	else if (!ghostComponent.isVoid()) componentOperator->setValueWithKey(ghostComponent);
 
 	updateValueFromTargetAndComponent();
+
+	isUpdatingContent = curUpdating;
+
 }
 
 void GenericControllableCommand::updateValueFromTargetAndComponent()
 {
+	bool curUpdating = isUpdatingContent;
+	isUpdatingContent = true;
+
 	if (value != nullptr && !value.wasObjectDeleted())
 	{
 		if (ghostValueData.isVoid())
@@ -122,7 +132,11 @@ void GenericControllableCommand::updateValueFromTargetAndComponent()
 	}
 
 	value = nullptr;
-	if (target == nullptr) return;
+	if (target == nullptr)
+	{
+		isUpdatingContent = curUpdating;
+		return;
+	}
 
 	Parameter* cTarget = dynamic_cast<Parameter*>(getControllableFromTarget());
 
@@ -162,6 +176,8 @@ void GenericControllableCommand::updateValueFromTargetAndComponent()
 
 		ghostValueData = var();
 	}
+
+	isUpdatingContent = curUpdating;
 }
 
 
@@ -173,6 +189,9 @@ Controllable* GenericControllableCommand::getControllableFromTarget()
 
 void GenericControllableCommand::updateOperatorOptions()
 {
+	bool curUpdating = isUpdatingContent;
+	isUpdatingContent = true;
+
 	String oldData = ghostOperator.isVoid() ? valueOperator->getValueKey() : ghostOperator.toString();
 
 	valueOperator->clearOptions();
@@ -219,6 +238,8 @@ void GenericControllableCommand::updateOperatorOptions()
 		bool loopEnabled = o == ADD || o == SUBTRACT || o == NEXT_ENUM || o == PREV_ENUM;
 		loop->hideInEditor = !loopEnabled;
 	}
+
+	isUpdatingContent = curUpdating;
 }
 
 void GenericControllableCommand::onContainerParameterChanged(Parameter* p)
@@ -251,7 +272,8 @@ void GenericControllableCommand::onContainerParameterChanged(Parameter* p)
 void GenericControllableCommand::triggerInternal(int multiplexIndex)
 {
 	if (isCurrentlyLoadingData) return;
-
+	if (isUpdatingContent) return;
+	
 	Controllable* c = getTargetControllableAtIndex(multiplexIndex);
 	if (c == nullptr) return;
 
@@ -513,6 +535,8 @@ void GenericControllableCommand::loadGhostData(var data)
 {
 	//if (value == nullptr)
 	//{
+
+
 	var paramsData = data.getProperty("parameters", var());
 	for (int i = 0; i < paramsData.size(); i++)
 	{
@@ -533,6 +557,7 @@ void GenericControllableCommand::loadGhostData(var data)
 
 	if (action == SET_VALUE || action == GO_TO_VALUE) updateComponentFromTarget(); //force generate if not yet
 	//}
+
 }
 
 bool GenericControllableCommand::checkEnableTargetFilter(Controllable* c)
