@@ -107,7 +107,7 @@ public:
 
 	void endLoadFile() override;
 
-	void timerCallback();
+	void timerCallback() override;
 
 	// Inherited via Thread
 	virtual void run() override;

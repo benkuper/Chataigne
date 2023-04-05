@@ -24,7 +24,7 @@ public:
 	const Identifier setValueId = "setValue";
 	const Identifier triggerId = "trigger";
 
-	virtual void updateMappingInputValue(var value, int multiplexIndex);
+	virtual void updateMappingInputValue(var value, int multiplexIndex) override;
 	virtual void setInputNamesFromParams(Array<WeakReference<Parameter>> outParams) override;
 
 	void setValueInternal(var value, int multiplexIndex) override;

@@ -141,7 +141,7 @@ namespace BinaryData
     const int            Wiimote_pngSize = 2124;
 
     extern const char*   commandScriptTemplate_js;
-    const int            commandScriptTemplate_jsSize = 876;
+    const int            commandScriptTemplate_jsSize = 875;
 
     extern const char*   conditionScriptTemplate_js;
     const int            conditionScriptTemplate_jsSize = 5455;

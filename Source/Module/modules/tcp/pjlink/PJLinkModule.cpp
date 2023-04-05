@@ -546,7 +546,7 @@ void PJLinkModule::processClientLine(PJLinkClient* c, const String& message)
 
 			for (int i = 0; i < ls.size() - 1; i += 2)
 			{
-				lhs += " lamp " + i+1;
+				lhs += " lamp " + String(i+1);
 				lhs += " = " + ls[i];
 
 				if (!(i == nbVp - 2)) lhs += ", ";
@@ -668,10 +668,10 @@ PJLinkModule::PJLinkClient::PJLinkClient(PJLinkModule* m, int id) :
 	pjlinkModule(m),
 	id(id),
 	passBytes(0),
-	assigningFromRemote(false),
 	paramsCC("Projector " + String(id)),
 	valuesCC("Projector " + String(id)),
-	infosCC("Informations")
+	infosCC("Informations"),
+    assigningFromRemote(false)
 {
 	valuesCC.addChildControllableContainer(&infosCC);												  
 

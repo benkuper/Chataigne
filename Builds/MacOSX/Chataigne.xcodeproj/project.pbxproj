@@ -269,7 +269,6 @@
 		3217E99161A613C57EACAB97 /* NumberComparators.cpp */ /* NumberComparators.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NumberComparators.cpp; path = ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/Comparator/comparators/NumberComparators.cpp; sourceTree = SOURCE_ROOT; };
 		3284BC58968CCABCFCEDABCF /* WebSocket Client.png */ /* WebSocket Client.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "WebSocket Client.png"; path = "../../Resources/Modules/WebSocket Client.png"; sourceTree = SOURCE_ROOT; };
 		329DC76E50833986ACFD72D2 /* MultiplexIndexConditionEditor.h */ /* MultiplexIndexConditionEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MultiplexIndexConditionEditor.h; path = ../../Source/Common/Processor/Action/Condition/conditions/MultiplexIndex/ui/MultiplexIndexConditionEditor.h; sourceTree = SOURCE_ROOT; };
-		32C9F3B10334451C423488F7 /* juce_gui_basics */ /* juce_gui_basics */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_gui_basics; path = "~/JUCE/modules/juce_gui_basics"; sourceTree = "<absolute>"; };
 		331643DFCB261592E0B722B9 /* icon.png */ /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = ../../Resources/icon.png; sourceTree = SOURCE_ROOT; };
 		334608D7C30F294FB4AFA0DD /* PlayAudioFileCommand.cpp */ /* PlayAudioFileCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PlayAudioFileCommand.cpp; path = ../../Source/Module/modules/audio/commands/PlayAudioFileCommand.cpp; sourceTree = SOURCE_ROOT; };
 		33698FA29E16C5EF3535B38B /* ModuleManagerUI.cpp */ /* ModuleManagerUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ModuleManagerUI.cpp; path = ../../Source/Module/ui/ModuleManagerUI.cpp; sourceTree = SOURCE_ROOT; };
@@ -395,7 +394,6 @@
 		54DCAE1A042E1A631A2B3D2D /* WebSocketServerModule.h */ /* WebSocketServerModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WebSocketServerModule.h; path = ../../Source/Module/modules/websocket/WebSocketServerModule.h; sourceTree = SOURCE_ROOT; };
 		55061C5BEAC3CA82CAED15A2 /* CommandTemplate.cpp */ /* CommandTemplate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CommandTemplate.cpp; path = ../../Source/Common/Command/Template/CommandTemplate.cpp; sourceTree = SOURCE_ROOT; };
 		55137897DDA67599E742298A /* CustomValuesCommandArgumentManager.h */ /* CustomValuesCommandArgumentManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CustomValuesCommandArgumentManager.h; path = ../../Source/Common/Command/CustomValues/CustomValuesCommandArgumentManager.h; sourceTree = SOURCE_ROOT; };
-		551CE20C88E53A262028FEBA /* juce_gui_extra */ /* juce_gui_extra */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_gui_extra; path = "~/JUCE/modules/juce_gui_extra"; sourceTree = "<absolute>"; };
 		551FD83435B424DA6DDE4ACA /* CustomValuesCommandArgumentEditor.h */ /* CustomValuesCommandArgumentEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CustomValuesCommandArgumentEditor.h; path = ../../Source/Common/Command/CustomValues/ui/CustomValuesCommandArgumentEditor.h; sourceTree = SOURCE_ROOT; };
 		559E44E0FE4589B5870942EE /* ConditionManagerEditor.cpp */ /* ConditionManagerEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ConditionManagerEditor.cpp; path = ../../Source/Common/Processor/Action/Condition/ui/ConditionManagerEditor.cpp; sourceTree = SOURCE_ROOT; };
 		55E5E4547FF6CFC7E6F7C586 /* ChataigneSequence.cpp */ /* ChataigneSequence.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ChataigneSequence.cpp; path = ../../Source/TimeMachine/Sequence/ChataigneSequence.cpp; sourceTree = SOURCE_ROOT; };
@@ -420,6 +418,7 @@
 		5DA0E15C8037F3E9BD9F306C /* command.h */ /* command.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = command.h; path = ../../Source/Module/modules/gpio/pigpio/command.h; sourceTree = SOURCE_ROOT; };
 		5DACFADA47B796E8671A31A1 /* FFTAnalyzer.cpp */ /* FFTAnalyzer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FFTAnalyzer.cpp; path = ../../Source/Module/modules/audio/analysis/FFTAnalyzer.cpp; sourceTree = SOURCE_ROOT; };
 		5DB923BEF56F893D6C04B857 /* ConditionManagerListener.h */ /* ConditionManagerListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ConditionManagerListener.h; path = ../../Source/Common/Processor/Action/Condition/ConditionManagerListener.h; sourceTree = SOURCE_ROOT; };
+		5E3D94E0826192C0061E8395 /* juce_gui_basics */ /* juce_gui_basics */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_gui_basics; path = /Users/Thor/Documents/Dev/JUCE/modules/juce_gui_basics; sourceTree = "<absolute>"; };
 		5E64FD363DAEBC97B49C0E98 /* DLight.png */ /* DLight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DLight.png; path = ../../Resources/Modules/DLight.png; sourceTree = SOURCE_ROOT; };
 		5FA54638369A3C34CEB7FE3C /* default.chalayout */ /* default.chalayout */ = {isa = PBXFileReference; lastKnownFileType = file.chalayout; name = default.chalayout; path = ../../Resources/default.chalayout; sourceTree = SOURCE_ROOT; };
 		5FAFCDEFF94F762D189E98EF /* LoupedeckShapeManager.cpp */ /* LoupedeckShapeManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LoupedeckShapeManager.cpp; path = ../../Source/Module/modules/controller/loupedeck/LoupedeckShapeManager.cpp; sourceTree = SOURCE_ROOT; };
@@ -602,6 +601,7 @@
 		960087F9A23AE3C81E1156E0 /* CommandFactory.cpp */ /* CommandFactory.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CommandFactory.cpp; path = ../../Source/Common/Command/CommandFactory.cpp; sourceTree = SOURCE_ROOT; };
 		962762E51A968A3E21612F7C /* LiveOSCCommandBase.cpp */ /* LiveOSCCommandBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LiveOSCCommandBase.cpp; path = ../../Source/Module/modules/osc/live/commands/LiveOSCCommandBase.cpp; sourceTree = SOURCE_ROOT; };
 		96C67112CFFB67F8A15A2AF9 /* AbletonLinkModule.h */ /* AbletonLinkModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AbletonLinkModule.h; path = ../../Source/Module/modules/abletonlink/AbletonLinkModule.h; sourceTree = SOURCE_ROOT; };
+		96FA48EA281479C01E2EF9C5 /* juce_gui_extra */ /* juce_gui_extra */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_gui_extra; path = /Users/Thor/Documents/Dev/JUCE/modules/juce_gui_extra; sourceTree = "<absolute>"; };
 		970F02CA013889643A0D5E46 /* OSCCommand.h */ /* OSCCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OSCCommand.h; path = ../../Source/Module/modules/common/commands/osc/OSCCommand.h; sourceTree = SOURCE_ROOT; };
 		97BB724F64701AA63B90C1E0 /* GamepadModule.cpp */ /* GamepadModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = GamepadModule.cpp; path = ../../Source/Module/modules/controller/gamepad/GamepadModule.cpp; sourceTree = SOURCE_ROOT; };
 		97D760C2761F8966DA9CB2D8 /* ModuleRouterValue.h */ /* ModuleRouterValue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ModuleRouterValue.h; path = ../../Source/Module/Routing/ModuleRouterValue.h; sourceTree = SOURCE_ROOT; };
@@ -693,6 +693,7 @@
 		AD67363271F6148023CB67C8 /* SerialModule.h */ /* SerialModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SerialModule.h; path = ../../Source/Module/modules/serial/SerialModule.h; sourceTree = SOURCE_ROOT; };
 		AE434F9AEE0B3A6F07363076 /* ActivationCondition.h */ /* ActivationCondition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ActivationCondition.h; path = ../../Source/Common/Processor/Action/Condition/conditions/ActivationCondition/ActivationCondition.h; sourceTree = SOURCE_ROOT; };
 		AE5E1271E6FEE99A8E7B23C4 /* SendStreamStringCommand.cpp */ /* SendStreamStringCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SendStreamStringCommand.cpp; path = ../../Source/Module/modules/common/streaming/commands/SendStreamStringCommand.cpp; sourceTree = SOURCE_ROOT; };
+		AE847AAF2676933A2FDAE390 /* juce_cryptography */ /* juce_cryptography */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_cryptography; path = /Users/Thor/Documents/Dev/JUCE/modules/juce_cryptography; sourceTree = "<absolute>"; };
 		AF52F768B78BA08E716F431A /* PowerpointModule.h */ /* PowerpointModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PowerpointModule.h; path = ../../Source/Module/modules/osc/powerpoint/PowerpointModule.h; sourceTree = SOURCE_ROOT; };
 		AF7FA2B06071451BD3532954 /* ConsequenceManagerEditor.cpp */ /* ConsequenceManagerEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ConsequenceManagerEditor.cpp; path = ../../Source/Common/Processor/Action/Consequence/ui/ConsequenceManagerEditor.cpp; sourceTree = SOURCE_ROOT; };
 		AFA63ADA9DF83E578D4FC7E0 /* Mapping1DLayer.h */ /* Mapping1DLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Mapping1DLayer.h; path = ../../Source/TimeMachine/Sequence/layers/mapping/automation/1d/Mapping1DLayer.h; sourceTree = SOURCE_ROOT; };
@@ -855,7 +856,6 @@
 		DED3D890C1FB7ED5D8C2F365 /* BLEDevice.h */ /* BLEDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BLEDevice.h; path = ../../Source/Common/BLE/BLEDevice.h; sourceTree = SOURCE_ROOT; };
 		DF7E4C10AE96476C8D27E827 /* PowerPoint.png */ /* PowerPoint.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PowerPoint.png; path = ../../Resources/Modules/PowerPoint.png; sourceTree = SOURCE_ROOT; };
 		E001D75A29B5AF290246E897 /* ActivationCondition.cpp */ /* ActivationCondition.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ActivationCondition.cpp; path = ../../Source/Common/Processor/Action/Condition/conditions/ActivationCondition/ActivationCondition.cpp; sourceTree = SOURCE_ROOT; };
-		E02828640DADD827542B8456 /* juce_cryptography */ /* juce_cryptography */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_cryptography; path = "~/JUCE/modules/juce_cryptography"; sourceTree = "<absolute>"; };
 		E08D835A5E1D91FDDEA88D11 /* WindowsHooker.cpp */ /* WindowsHooker.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = WindowsHooker.cpp; path = ../../Source/Module/modules/controller/keyboard/WindowsHooker.cpp; sourceTree = SOURCE_ROOT; };
 		E0DAA85E4ED4F51B9EFB98B8 /* Morpher.cpp */ /* Morpher.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Morpher.cpp; path = ../../Source/CustomVariables/Preset/Morpher/Morpher.cpp; sourceTree = SOURCE_ROOT; };
 		E19D6C3FD6EB1EF65F6461E2 /* TCP Server.png */ /* TCP Server.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TCP Server.png"; path = "../../Resources/Modules/TCP Server.png"; sourceTree = SOURCE_ROOT; };
@@ -2861,9 +2861,9 @@
 		BB9E045D62346673C5E1636E /* JUCE Modules */ = {
 			isa = PBXGroup;
 			children = (
-				E02828640DADD827542B8456,
-				32C9F3B10334451C423488F7,
-				551CE20C88E53A262028FEBA,
+				AE847AAF2676933A2FDAE390,
+				5E3D94E0826192C0061E8395,
+				96FA48EA281479C01E2EF9C5,
 				8E3E93C35A0A71C64796898E,
 				B13DE335EC494723D3988D40,
 				6B49F91B2A3C9EC69F04FB2D,
@@ -3756,6 +3756,101 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		20A8C5A48ED1E7E2247619AB /* ReleaseSilicon */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = NO;
+				GCC_C_LANGUAGE_STANDARD = c11;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = YES;
+				GCC_WARN_MISSING_PARENTHESES = YES;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = YES;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PRODUCT_NAME = "Chataigne";
+				SDKROOT = macosx;
+				WARNING_CFLAGS = "-Wreorder";
+				ZERO_LINK = NO;
+			};
+			name = ReleaseSilicon;
+		};
+		55039F479C478FFF24FBF518 /* DebugSilicon */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = NO;
+				GCC_C_LANGUAGE_STANDARD = c11;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = YES;
+				GCC_WARN_MISSING_PARENTHESES = YES;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = YES;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "Chataigne";
+				SDKROOT = macosx;
+				WARNING_CFLAGS = "-Wreorder";
+				ZERO_LINK = NO;
+			};
+			name = DebugSilicon;
+		};
 		6FCF7C24C8368E66D219862A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -3802,6 +3897,165 @@
 				ZERO_LINK = NO;
 			};
 			name = Release;
+		};
+		7F3C50EEDE244C1B5E26112A /* DebugSilicon */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_LINK_OBJC_RUNTIME = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/build/$(CONFIGURATION)";
+				COPY_PHASE_STRIP = NO;
+				EXCLUDED_ARCHS = "i386 arm64e";
+				FRAMEWORK_SEARCH_PATHS = ("$(SRCROOT)/../../External/sdl/lib/osx", "$(inherited)");
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"_DEBUG=1",
+					"DEBUG=1",
+					"VST_LOGGING=0",
+					"JUCE_SUPPORT_CARBON=0",
+					"JUCE_COREGRAPHICS_DRAW_ASYNC=1",
+					"USE_ABLETONLINK=1",
+					"LINK_PLATFORM_MACOSX=1",
+					"JUCER_XCODE_MAC_F6D2F4CF=1",
+					"JUCE_APP_VERSION=1.9.14b12",
+					"JUCE_APP_VERSION_HEX=0x1090e",
+					"JucePlugin_Build_VST=0",
+					"JucePlugin_Build_VST3=0",
+					"JucePlugin_Build_AU=0",
+					"JucePlugin_Build_AUv3=0",
+					"JucePlugin_Build_AAX=0",
+					"JucePlugin_Build_Standalone=0",
+					"JucePlugin_Build_Unity=0",
+					"JucePlugin_Build_LV2=0",
+				);
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../../JuceLibraryCode",
+					"/Users/Thor/Documents/Dev/JUCE/modules",
+					"$(SRCROOT)/../../Modules",
+					"$(SRCROOT)/../../Source",
+					"$(SRCROOT)/../../External/wiiuse",
+					"$(SRCROOT)/../../External/serial/include",
+					"$(SRCROOT)/../../External/asio",
+					"$(SRCROOT)/../../External/asiodriver",
+					"$(SRCROOT)/../../External/kinect/include",
+					"$(SRCROOT)/../../External/joycon/include",
+					"$(SRCROOT)/../../External/servus/include",
+					"$(SRCROOT)/../../External/dnssd/include",
+					"$(SRCROOT)/../../External/ois/include",
+					"$(SRCROOT)/../../External/sdl/include",
+					"$(SRCROOT)/../../External/hidapi/include",
+					"$(SRCROOT)/../../External/abletonlink/include",
+					"$(SRCROOT)/../../External/libusb/include/libusb-1.0",
+					"$(SRCROOT)/../../External/mosquitto/include",
+					"$(SRCROOT)/../../External/posistagenet/include",
+					"$(SRCROOT)/../../External/simpleble/include",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = Info-App.plist;
+				INFOPLIST_PREPROCESS = NO;
+				INSTALL_PATH = "$(HOME)/Applications";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"../../External/servus/lib/silicon/debug\"",
+					"\"../../External/joycon/lib/silicon\"",
+					"\"../../Modules/juce_simpleweb/libs/MacOSX\"",
+					"\"../../Modules/juce_simpleweb/libs/MacOSX/${CURRENT_ARCH}\"",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode /Users/Thor/Documents/Dev/JUCE/modules $(SRCROOT)/../../Modules $(SRCROOT)/../../Source $(SRCROOT)/../../External/wiiuse $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/asio $(SRCROOT)/../../External/asiodriver $(SRCROOT)/../../External/kinect/include $(SRCROOT)/../../External/joycon/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../External/dnssd/include $(SRCROOT)/../../External/ois/include $(SRCROOT)/../../External/sdl/include $(SRCROOT)/../../External/hidapi/include $(SRCROOT)/../../External/abletonlink/include $(SRCROOT)/../../External/libusb/include/libusb-1.0 $(SRCROOT)/../../External/mosquitto/include $(SRCROOT)/../../External/posistagenet/include $(SRCROOT)/../../External/simpleble/include";
+				OTHER_LDFLAGS = "-lServus -lhidapi -lJoyShockLibrary -lssl -lcrypto -lz -weak_framework Metal -weak_framework MetalKit";
+				PRODUCT_BUNDLE_IDENTIFIER = benkuper.Chataigne;
+				PRODUCT_NAME = "Chataigne";
+				USE_HEADERMAP = NO;
+				VALIDATE_WORKSPACE_SKIPPED_SDK_FRAMEWORKS = OpenGL;
+				VALID_ARCHS = "arm64 x86_64";
+			};
+			name = DebugSilicon;
+		};
+		88314D01A007669275B0FC54 /* ReleaseSilicon */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_LINK_OBJC_RUNTIME = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/build/$(CONFIGURATION)";
+				DEAD_CODE_STRIPPING = YES;
+				EXCLUDED_ARCHS = "i386 arm64e";
+				FRAMEWORK_SEARCH_PATHS = ("$(SRCROOT)/../../External/sdl/lib/osx", "$(inherited)");
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"_NDEBUG=1",
+					"NDEBUG=1",
+					"VST_LOGGING=0",
+					"JUCE_SUPPORT_CARBON=0",
+					"JUCE_COREGRAPHICS_DRAW_ASYNC=1",
+					"USE_ABLETONLINK=1",
+					"LINK_PLATFORM_MACOSX=1",
+					"JUCER_XCODE_MAC_F6D2F4CF=1",
+					"JUCE_APP_VERSION=1.9.14b12",
+					"JUCE_APP_VERSION_HEX=0x1090e",
+					"JucePlugin_Build_VST=0",
+					"JucePlugin_Build_VST3=0",
+					"JucePlugin_Build_AU=0",
+					"JucePlugin_Build_AUv3=0",
+					"JucePlugin_Build_AAX=0",
+					"JucePlugin_Build_Standalone=0",
+					"JucePlugin_Build_Unity=0",
+					"JucePlugin_Build_LV2=0",
+				);
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../../JuceLibraryCode",
+					"/Users/Thor/Documents/Dev/JUCE/modules",
+					"$(SRCROOT)/../../Modules",
+					"$(SRCROOT)/../../Source",
+					"$(SRCROOT)/../../External/wiiuse",
+					"$(SRCROOT)/../../External/serial/include",
+					"$(SRCROOT)/../../External/asio",
+					"$(SRCROOT)/../../External/asiodriver",
+					"$(SRCROOT)/../../External/kinect/include",
+					"$(SRCROOT)/../../External/joycon/include",
+					"$(SRCROOT)/../../External/servus/include",
+					"$(SRCROOT)/../../External/dnssd/include",
+					"$(SRCROOT)/../../External/ois/include",
+					"$(SRCROOT)/../../External/sdl/include",
+					"$(SRCROOT)/../../External/hidapi/include",
+					"$(SRCROOT)/../../External/abletonlink/include",
+					"$(SRCROOT)/../../External/libusb/include/libusb-1.0",
+					"$(SRCROOT)/../../External/mosquitto/include",
+					"$(SRCROOT)/../../External/posistagenet/include",
+					"$(SRCROOT)/../../External/simpleble/include",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = Info-App.plist;
+				INFOPLIST_PREPROCESS = NO;
+				INSTALL_PATH = "$(HOME)/Applications";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"../../External/servus/lib/silicon/release\"",
+					"\"../../External/joycon/lib/silicon\"",
+					"\"../../Modules/juce_simpleweb/libs/MacOSX\"",
+					"\"../../Modules/juce_simpleweb/libs/MacOSX/${CURRENT_ARCH}\"",
+				);
+				LLVM_LTO = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode /Users/Thor/Documents/Dev/JUCE/modules $(SRCROOT)/../../Modules $(SRCROOT)/../../Source $(SRCROOT)/../../External/wiiuse $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/asio $(SRCROOT)/../../External/asiodriver $(SRCROOT)/../../External/kinect/include $(SRCROOT)/../../External/joycon/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../External/dnssd/include $(SRCROOT)/../../External/ois/include $(SRCROOT)/../../External/sdl/include $(SRCROOT)/../../External/hidapi/include $(SRCROOT)/../../External/abletonlink/include $(SRCROOT)/../../External/libusb/include/libusb-1.0 $(SRCROOT)/../../External/mosquitto/include $(SRCROOT)/../../External/posistagenet/include $(SRCROOT)/../../External/simpleble/include";
+				OTHER_LDFLAGS = "-lServus -lhidapi -lJoyShockLibrary -lssl -lcrypto -lz -weak_framework Metal -weak_framework MetalKit";
+				PRODUCT_BUNDLE_IDENTIFIER = benkuper.Chataigne;
+				PRODUCT_NAME = "Chataigne";
+				USE_HEADERMAP = NO;
+				VALIDATE_WORKSPACE_SKIPPED_SDK_FRAMEWORKS = OpenGL;
+				VALID_ARCHS = "arm64 x86_64";
+			};
+			name = ReleaseSilicon;
 		};
 		CF7691989E5C2BC122F151FD /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -3860,7 +4114,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/build/$(CONFIGURATION)";
 				COPY_PHASE_STRIP = NO;
-				EXCLUDED_ARCHS = "i386 arm64 arm64e";
+				EXCLUDED_ARCHS = "i386 arm64e";
 				FRAMEWORK_SEARCH_PATHS = ("$(SRCROOT)/../../External/sdl/lib/osx", "$(inherited)");
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -3887,7 +4141,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../../JuceLibraryCode",
-					"$(HOME)/JUCE/modules",
+					"/Users/Thor/Documents/Dev/JUCE/modules",
 					"$(SRCROOT)/../../Modules",
 					"$(SRCROOT)/../../Source",
 					"$(SRCROOT)/../../External/wiiuse",
@@ -3915,19 +4169,18 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"../../External/servus/lib/osx/debug\"",
-					"\"../../External/libartnet/lib/osx\"",
 					"\"../../External/joycon/lib/osx\"",
 					"\"../../Modules/juce_simpleweb/libs/MacOSX\"",
 					"\"../../Modules/juce_simpleweb/libs/MacOSX/${CURRENT_ARCH}\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(HOME)/JUCE/modules $(SRCROOT)/../../Modules $(SRCROOT)/../../Source $(SRCROOT)/../../External/wiiuse $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/asio $(SRCROOT)/../../External/asiodriver $(SRCROOT)/../../External/kinect/include $(SRCROOT)/../../External/joycon/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../External/dnssd/include $(SRCROOT)/../../External/ois/include $(SRCROOT)/../../External/sdl/include $(SRCROOT)/../../External/hidapi/include $(SRCROOT)/../../External/abletonlink/include $(SRCROOT)/../../External/libusb/include/libusb-1.0 $(SRCROOT)/../../External/mosquitto/include $(SRCROOT)/../../External/posistagenet/include $(SRCROOT)/../../External/simpleble/include";
-				OTHER_LDFLAGS = "-lServus -lhidapi -lJoyShockLibrary -lssl -lcrypto -weak_framework Metal -weak_framework MetalKit";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode /Users/Thor/Documents/Dev/JUCE/modules $(SRCROOT)/../../Modules $(SRCROOT)/../../Source $(SRCROOT)/../../External/wiiuse $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/asio $(SRCROOT)/../../External/asiodriver $(SRCROOT)/../../External/kinect/include $(SRCROOT)/../../External/joycon/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../External/dnssd/include $(SRCROOT)/../../External/ois/include $(SRCROOT)/../../External/sdl/include $(SRCROOT)/../../External/hidapi/include $(SRCROOT)/../../External/abletonlink/include $(SRCROOT)/../../External/libusb/include/libusb-1.0 $(SRCROOT)/../../External/mosquitto/include $(SRCROOT)/../../External/posistagenet/include $(SRCROOT)/../../External/simpleble/include";
+				OTHER_LDFLAGS = "-lServus -lhidapi -lJoyShockLibrary -lssl -lcrypto -lz -weak_framework Metal -weak_framework MetalKit";
 				PRODUCT_BUNDLE_IDENTIFIER = benkuper.Chataigne;
 				PRODUCT_NAME = "Chataigne";
 				USE_HEADERMAP = NO;
 				VALIDATE_WORKSPACE_SKIPPED_SDK_FRAMEWORKS = OpenGL;
-				VALID_ARCHS = "x86_64";
+				VALID_ARCHS = "arm64 x86_64";
 			};
 			name = Debug;
 		};
@@ -3940,7 +4193,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/build/$(CONFIGURATION)";
 				DEAD_CODE_STRIPPING = YES;
-				EXCLUDED_ARCHS = "i386 arm64 arm64e";
+				EXCLUDED_ARCHS = "i386 arm64e";
 				FRAMEWORK_SEARCH_PATHS = ("$(SRCROOT)/../../External/sdl/lib/osx", "$(inherited)");
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_OPTIMIZATION_LEVEL = 3;
@@ -3967,7 +4220,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../../JuceLibraryCode",
-					"$(HOME)/JUCE/modules",
+					"/Users/Thor/Documents/Dev/JUCE/modules",
 					"$(SRCROOT)/../../Modules",
 					"$(SRCROOT)/../../Source",
 					"$(SRCROOT)/../../External/wiiuse",
@@ -3995,20 +4248,19 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"../../External/servus/lib/osx/release\"",
-					"\"../../External/libartnet/lib/osx\"",
 					"\"../../External/joycon/lib/osx\"",
 					"\"../../Modules/juce_simpleweb/libs/MacOSX\"",
 					"\"../../Modules/juce_simpleweb/libs/MacOSX/${CURRENT_ARCH}\"",
 				);
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(HOME)/JUCE/modules $(SRCROOT)/../../Modules $(SRCROOT)/../../Source $(SRCROOT)/../../External/wiiuse $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/asio $(SRCROOT)/../../External/asiodriver $(SRCROOT)/../../External/kinect/include $(SRCROOT)/../../External/joycon/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../External/dnssd/include $(SRCROOT)/../../External/ois/include $(SRCROOT)/../../External/sdl/include $(SRCROOT)/../../External/hidapi/include $(SRCROOT)/../../External/abletonlink/include $(SRCROOT)/../../External/libusb/include/libusb-1.0 $(SRCROOT)/../../External/mosquitto/include $(SRCROOT)/../../External/posistagenet/include $(SRCROOT)/../../External/simpleble/include";
-				OTHER_LDFLAGS = "-lServus -lhidapi -lJoyShockLibrary -lssl -lcrypto -weak_framework Metal -weak_framework MetalKit";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode /Users/Thor/Documents/Dev/JUCE/modules $(SRCROOT)/../../Modules $(SRCROOT)/../../Source $(SRCROOT)/../../External/wiiuse $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/asio $(SRCROOT)/../../External/asiodriver $(SRCROOT)/../../External/kinect/include $(SRCROOT)/../../External/joycon/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../External/dnssd/include $(SRCROOT)/../../External/ois/include $(SRCROOT)/../../External/sdl/include $(SRCROOT)/../../External/hidapi/include $(SRCROOT)/../../External/abletonlink/include $(SRCROOT)/../../External/libusb/include/libusb-1.0 $(SRCROOT)/../../External/mosquitto/include $(SRCROOT)/../../External/posistagenet/include $(SRCROOT)/../../External/simpleble/include";
+				OTHER_LDFLAGS = "-lServus -lhidapi -lJoyShockLibrary -lssl -lcrypto -lz -weak_framework Metal -weak_framework MetalKit";
 				PRODUCT_BUNDLE_IDENTIFIER = benkuper.Chataigne;
 				PRODUCT_NAME = "Chataigne";
 				USE_HEADERMAP = NO;
 				VALIDATE_WORKSPACE_SKIPPED_SDK_FRAMEWORKS = OpenGL;
-				VALID_ARCHS = "x86_64";
+				VALID_ARCHS = "arm64 x86_64";
 			};
 			name = Release;
 		};
@@ -4018,6 +4270,8 @@
 		3B0D3344B40620C12AA6A54C = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
+				20A8C5A48ED1E7E2247619AB,
+				55039F479C478FFF24FBF518,
 				6FCF7C24C8368E66D219862A,
 				CF7691989E5C2BC122F151FD,
 			);
@@ -4029,6 +4283,8 @@
 			buildConfigurations = (
 				D4D56509A9AFA8EF19844BC6,
 				E045C481EC242ED399656803,
+				7F3C50EEDE244C1B5E26112A,
+				88314D01A007669275B0FC54,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

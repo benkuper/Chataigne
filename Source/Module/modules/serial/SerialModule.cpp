@@ -207,6 +207,8 @@ void SerialModule::serialDataReceived(const var& data)
 		}
 		break;
 
+        default:
+            break;
 	}
 }
 

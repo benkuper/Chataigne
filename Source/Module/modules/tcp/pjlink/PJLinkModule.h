@@ -107,7 +107,7 @@ public:
 
 	void sendMessageToClient(const String& message, int id = -1);
 
-	bool isReadyToSend() { return true; }
+    bool isReadyToSend() override { return true; };
 
 	void timerCallback() override;
 	void run() override;

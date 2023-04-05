@@ -338,7 +338,10 @@ void DMXModule::onContainerParameterChanged(Parameter* p)
 			dmxDevice->refreshEnabled();
 		}
 
-		if (enabled->boolValue()) if (dmxDevice != nullptr) startThread();
+		if (enabled->boolValue())
+        {
+            if (dmxDevice != nullptr) startThread();
+        }
 		else stopThread(1000);
 	}
 }
