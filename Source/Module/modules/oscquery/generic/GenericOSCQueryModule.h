@@ -40,7 +40,8 @@ class GenericOSCQueryModule :
 	public IOSCSenderModule,
 	public SimpleWebSocketClientBase::Listener,
 	public Thread,
-	public Timer
+	public Timer,
+	public EngineListener
 {
 public:
 	GenericOSCQueryModule(const String& name = "OSCQuery", int defaultRemotePort = 5678);
@@ -103,6 +104,8 @@ public:
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 	void afterLoadJSONDataInternal() override;
+
+	void endLoadFile() override;
 
 	void timerCallback();
 

@@ -62,11 +62,15 @@ GenericOSCQueryModule::GenericOSCQueryModule(const String& name, int defaultRemo
 
 	sender.connect("0.0.0.0", 0);
 
+	if (Engine::mainEngine->isLoadingFile) Engine::mainEngine->addEngineListener(this);
+
 	startTimer(5000);
 }
 
 GenericOSCQueryModule::~GenericOSCQueryModule()
 {
+	if (Engine::mainEngine != nullptr) Engine::mainEngine->removeEngineListener(this);
+
 	if (wsClient != nullptr) wsClient->stop();
 	stopThread(2000);
 	valuesCC.clear();
@@ -104,8 +108,10 @@ void GenericOSCQueryModule::sendOSC(const OSCMessage& m)
 void GenericOSCQueryModule::sendOSCForControllable(Controllable* c)
 {
 	if (!enabled->boolValue()) return;
-	if (noFeedbackList.contains(c)) return;
 	if (isUpdatingStructure) return;
+	if (isCurrentlyLoadingData) return; 
+	if (noFeedbackList.contains(c)) return;
+	
 
 	String s = c->getControlAddress(&valuesCC);
 	try
@@ -183,7 +189,7 @@ OSCArgument GenericOSCQueryModule::varToArgument(const var& v)
 
 void GenericOSCQueryModule::syncData()
 {
-	if (isCurrentlyLoadingData) return;
+	if (isCurrentlyLoadingData || Engine::mainEngine->isLoadingFile) return;
 
 	startThread();
 }
@@ -655,6 +661,12 @@ void GenericOSCQueryModule::loadJSONDataInternal(var data)
 void GenericOSCQueryModule::afterLoadJSONDataInternal()
 {
 	Module::afterLoadJSONDataInternal();
+	syncData();
+}
+
+void GenericOSCQueryModule::endLoadFile()
+{
+	Engine::mainEngine->removeEngineListener(this);
 	syncData();
 }
 
