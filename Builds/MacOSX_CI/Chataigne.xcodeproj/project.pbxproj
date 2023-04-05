@@ -3859,7 +3859,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/../../Release";
 				DEAD_CODE_STRIPPING = YES;
-				EXCLUDED_ARCHS = "i386 arm64";
+				EXCLUDED_ARCHS = "i386 arm64e";
 				FRAMEWORK_SEARCH_PATHS = ("$(SRCROOT)/../../External/sdl/lib/osx", "$(inherited)");
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_OPTIMIZATION_LEVEL = 3;
@@ -3926,7 +3926,7 @@
 				PRODUCT_NAME = "Chataigne";
 				USE_HEADERMAP = NO;
 				VALIDATE_WORKSPACE_SKIPPED_SDK_FRAMEWORKS = OpenGL;
-				VALID_ARCHS = "arm64e x86_64";
+				VALID_ARCHS = "arm64 x86_64";
 			};
 			name = ReleaseSilicon;
 		};
@@ -3939,7 +3939,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/../../Release";
 				DEAD_CODE_STRIPPING = YES;
-				EXCLUDED_ARCHS = "i386 arm64";
+				EXCLUDED_ARCHS = "i386 arm64e";
 				FRAMEWORK_SEARCH_PATHS = ("$(SRCROOT)/../../External/sdl/lib/osx", "$(inherited)");
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_OPTIMIZATION_LEVEL = 3;
@@ -4006,7 +4006,7 @@
 				PRODUCT_NAME = "Chataigne";
 				USE_HEADERMAP = NO;
 				VALIDATE_WORKSPACE_SKIPPED_SDK_FRAMEWORKS = OpenGL;
-				VALID_ARCHS = "arm64e x86_64";
+				VALID_ARCHS = "arm64 x86_64";
 			};
 			name = Release;
 		};
