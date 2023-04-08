@@ -1,4 +1,3 @@
-#include "Conductor.h"
 /*
   ==============================================================================
 
@@ -8,6 +7,9 @@
 
   ==============================================================================
 */
+
+#include "Common/Processor/ProcessorIncludes.h"
+
 
 Conductor::Conductor(var params, Multiplex* multiplex) :
 	Action(getTypeString(), params, multiplex, true, true, true),
@@ -195,7 +197,7 @@ void Conductor::onContainerTriggerTriggered(Trigger* t)
 	{
 		if (currentCue != nullptr)
 		{
-			if (Sequence* s = dynamic_cast<Sequence*>(currentCue->linkedSequence->targetContainer.get()))
+			if (Sequence* s = dynamic_cast<Sequence*>(currentCue->linkedSequenceParam->targetContainer.get()))
 			{
 				if (t == stopLinkedSequence) s->stopTrigger->trigger();
 				else if (t == toggleLinkedSequence) s->togglePlayTrigger->trigger();

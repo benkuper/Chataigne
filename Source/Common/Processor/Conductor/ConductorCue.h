@@ -11,7 +11,8 @@
 #pragma once
 
 class ConductorCue :
-    public Action
+    public Action,
+    public Sequence::SequenceListener
 {
 public:
     ConductorCue(var params = var(), Multiplex * multliplex = nullptr);
@@ -22,14 +23,24 @@ public:
     int index;
 
     ControllableContainer seqCC;
-    TargetParameter* linkedSequence;
+    TargetParameter* linkedSequenceParam;
+    Sequence* linkedSequence;
     BoolParameter* autoStart;
     BoolParameter* forceStartFrom0;
     BoolParameter* autoStop;
+    BoolParameter* autoNext;
+
+    void clearItem() override;
+
+    void setLinkedSequence(Sequence* s);
 
     void setIsCurrent(bool value);
     void setIsNext(bool value);
     void setIndex(int value);
+
+    void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
+
+    void sequenceFinished(Sequence* s) override;
 
     ProcessorUI* getUI() override;
 
