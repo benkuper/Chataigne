@@ -28,6 +28,7 @@ public:
 
 	void setValueInternal(var &value) override;
 
+	void setVIDPIDFilters(Array<int> vidFilters, Array<int> pidFilters);
 	void updatePortList();
 
 	// Inherited via SerialManagerListener

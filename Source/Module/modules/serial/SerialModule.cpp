@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "Module/ModuleIncludes.h"
+
 SerialModule::SerialModule(const String& name) :
 	StreamingModule(name),
 	port(nullptr)
@@ -207,8 +209,8 @@ void SerialModule::serialDataReceived(const var& data)
 		}
 		break;
 
-        default:
-            break;
+	default:
+		break;
 	}
 }
 
@@ -227,16 +229,19 @@ void SerialModule::loadJSONDataInternal(var data)
 
 void SerialModule::setupModuleFromJSONData(var data)
 {
+	Array<int> vidFilters;
+	Array<int> pidFilters;
+
 	if (data.hasProperty("vidFilter"))
 	{
 		var vidFilter = data.getProperty("vidFilter", "");
 		if (vidFilter.isArray())
 		{
-			for (int i = 0; i < vidFilter.size(); i++) portParam->vidFilters.add(vidFilter[i].toString().getHexValue32());
+			for (int i = 0; i < vidFilter.size(); i++) vidFilters.add(vidFilter[i].toString().getHexValue32());
 		}
 		else if (vidFilter.toString().isNotEmpty())
 		{
-			portParam->vidFilters.add(vidFilter.toString().getHexValue32());
+			vidFilters.add(vidFilter.toString().getHexValue32());
 		}
 	}
 
@@ -245,13 +250,15 @@ void SerialModule::setupModuleFromJSONData(var data)
 		var pidFilter = data.getProperty("pidFilter", "");
 		if (pidFilter.isArray())
 		{
-			for (int i = 0; i < pidFilter.size(); i++) portParam->pidFilters.add(pidFilter[i].toString().getHexValue32());
+			for (int i = 0; i < pidFilter.size(); i++) pidFilters.add(pidFilter[i].toString().getHexValue32());
 		}
 		else if (pidFilter.toString().isNotEmpty())
 		{
-			portParam->pidFilters.add(pidFilter.toString().getHexValue32());
+			pidFilters.add(pidFilter.toString().getHexValue32());
 		}
 	}
+
+	portParam->setVIDPIDFilters(vidFilters, pidFilters);
 
 	StreamingModule::setupModuleFromJSONData(data);
 }

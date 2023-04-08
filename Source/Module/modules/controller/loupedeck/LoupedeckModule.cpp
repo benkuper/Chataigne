@@ -26,7 +26,7 @@ LoupedeckModule::LoupedeckModule() :
 {
 	//baudRate->setValue(9600);
 
-	portParam->vidFilters.add(0x2ec2);
+	portParam->setVIDPIDFilters({ 0x2ec2 }, {});
 
 	streamingType->setValueWithData(RAW);
 	streamingType->hideInEditor = true;
@@ -193,24 +193,24 @@ void LoupedeckModule::setupPortInternal()
 void LoupedeckModule::portOpenedInternal()
 {
 	//Timer::callAfterDelay(100, [this]() {
-		wsMode = WSMode::HANDSHAKE;
+	wsMode = WSMode::HANDSHAKE;
 
-		//in case loupedeck was already in websocket mode
-		Array<uint8_t> closeBytes{ 0x88, 0x80, 0x00, 0x00, 0x00, 0x00 };
-		sendBytes(closeBytes);
+	//in case loupedeck was already in websocket mode
+	Array<uint8_t> closeBytes{ 0x88, 0x80, 0x00, 0x00, 0x00, 0x00 };
+	sendBytes(closeBytes);
 
-		String req = "GET /index.html HTTP/1.1\n\
+	String req = "GET /index.html HTTP/1.1\n\
 Connection: Upgrade\n\
 Upgrade: websocket\n\
 Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==\n\n";
 
-		this->sendMessage(req);
+	this->sendMessage(req);
 	//});
 }
 
 void LoupedeckModule::processDataBytesInternal(Array<uint8> bytes)
 {
-   	if (wsMode == HANDSHAKE)
+	if (wsMode == HANDSHAKE)
 	{
 		String msg = String::createStringFromData((const char*)bytes.getRawDataPointer(), bytes.size());
 		if (msg.contains("\r\n\r\n"))
@@ -308,7 +308,7 @@ void LoupedeckModule::processTouchData(Array<uint8_t> data)
 
 		touchPadMap.set(touchID, pad);
 		posOnTouchMap.set(touchID, curPos);
-		if(pad >= 0) padsTouchPositions[pad]->setPoint(0, 0);
+		if (pad >= 0) padsTouchPositions[pad]->setPoint(0, 0);
 	}
 
 

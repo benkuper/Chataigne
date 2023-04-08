@@ -8,6 +8,9 @@
   ==============================================================================
 */
 
+#include "Common/CommonIncludes.h"
+
+
 SerialDeviceParameter::SerialDeviceParameter(const String& name, const String& description, bool enabled) :
 	EnumParameter(name, description, enabled),
 	currentDevice(nullptr),
@@ -34,6 +37,13 @@ void SerialDeviceParameter::setValueInternal(var& v)
 	if (data.isVoid()) currentDevice = nullptr;
 	else currentDevice = SerialManager::getInstance()->getPort(data.getProperty("deviceID", "").toString(), data.getProperty("port", "").toString(), true, openBaudRate);
 	//DBG("current device from setValueInternal : " << (int)currentDevice);
+}
+
+void SerialDeviceParameter::setVIDPIDFilters(Array<int> vidFilters, Array<int> pidFilters)
+{
+	this->vidFilters = vidFilters;
+	this->pidFilters = pidFilters;
+	updatePortList();
 }
 
 void SerialDeviceParameter::updatePortList()
