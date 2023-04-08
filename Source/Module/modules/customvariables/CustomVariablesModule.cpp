@@ -272,7 +272,7 @@ void GenericControllableManagerLinkedContainer::onContainerParameterChanged(Para
 	ControllableContainer::onContainerParameterChanged(p);
 	if (!keepValuesInSync) return;
 	if (changingParams.contains(p)) return;
-	
+
 	if (Parameter* tp = getSourceForParameter(p))
 	{
 		changingParams.add(tp);
@@ -290,7 +290,8 @@ void GenericControllableManagerLinkedContainer::onExternalParameterValueChanged(
 	if (Parameter* tp = getParameterForSource(p))
 	{
 		changingParams.add(tp);
-		tp->setValue(p->getValue());
+		if (p->type == Parameter::ENUM) ((EnumParameter*)tp)->setValueWithKey(((EnumParameter*)p)->getValueKey());
+		else tp->setValue(p->getValue());
 		changingParams.removeAllInstancesOf(tp);
 	}
 }
