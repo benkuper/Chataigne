@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    CustomOSCCommand.h
-    Created: 3 Nov 2016 12:41:23pm
-    Author:  bkupe
+	CustomOSCCommand.h
+	Created: 3 Nov 2016 12:41:23pm
+	Author:  bkupe
 
   ==============================================================================
 */
@@ -16,7 +16,7 @@ class CustomOSCCommand :
 public:
 	CustomOSCCommand(IOSCSenderModule* module, CommandContext context, var params, Multiplex* multiplex = nullptr);
 	~CustomOSCCommand();
-	
+
 	var lastValue;
 
 	std::unique_ptr<CustomValuesCommandArgumentManager> wildcardsContainer;
@@ -28,7 +28,9 @@ public:
 
 	void updateWildcardsMap(const String& address);
 
-	virtual void onContainerParameterChanged(Parameter * p) override;
+	virtual void onContainerParameterChanged(Parameter* p) override;
+
+	void itemAdded(CustomValuesCommandArgument* i) override;
 
 	void updateMappingInputValue(var value, int multiplexIndex) override;
 	void setInputNamesFromParams(Array<WeakReference<Parameter>> outParams) override;
@@ -36,7 +38,7 @@ public:
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
-	static CustomOSCCommand * create(ControllableContainer * cc, CommandContext context, var params, Multiplex * multiplex) { return new CustomOSCCommand(dynamic_cast<IOSCSenderModule*>(cc), context, params, multiplex); }
+	static CustomOSCCommand* create(ControllableContainer* cc, CommandContext context, var params, Multiplex* multiplex) { return new CustomOSCCommand(dynamic_cast<IOSCSenderModule*>(cc), context, params, multiplex); }
 
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CustomOSCCommand)

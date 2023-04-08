@@ -128,17 +128,28 @@ void CustomOSCCommand::onContainerParameterChanged(Parameter* p)
 			{
 				wildcardsContainer.reset(new CustomValuesCommandArgumentManager("Address Wildcards", context == MAPPING, linkedTemplate != nullptr, multiplex));
 				addChildControllableContainer(wildcardsContainer.get());
+				wildcardsContainer->addBaseManagerListener(this);
 			}
 		}
 		else
 		{
 			if (wildcardsContainer != nullptr)
 			{
-				removeChildControllableContainer(wildcardsContainer.get());
+				wildcardsContainer->removeBaseManagerListener(this);
+				removeChildControllableContainer(wildcardsContainer.get());;
 				wildcardsContainer.reset();
 			}
 		}
+
+		if (!isCurrentlyLoadingData) commandListeners.call(&CommandListener::commandContentChanged);
 	}
+}
+
+void CustomOSCCommand::itemAdded(CustomValuesCommandArgument* i)
+{
+	OSCCommand::itemAdded(i);
+	if (isCurrentlyLoadingData) return;
+	if(i->parentContainer == wildcardsContainer.get()) commandListeners.call(&CommandListener::commandContentChanged);
 }
 
 void CustomOSCCommand::updateMappingInputValue(var value, int multiplexIndex)

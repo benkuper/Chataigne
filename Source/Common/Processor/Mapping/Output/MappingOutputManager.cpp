@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "Common/Processor/ProcessorIncludes.h"
+
 MappingOutputManager::MappingOutputManager(Multiplex * multiplex) :
 	BaseManager<MappingOutput>("Outputs"),
 	MultiplexTarget(multiplex),
@@ -113,11 +115,16 @@ void MappingOutputManager::removeItemInternal(MappingOutput * o)
 
 void MappingOutputManager::commandChanged(BaseCommandHandler * h)
 {
-	for (int i = 0; i < getMultiplexCount(); i++) updateOutputValue(dynamic_cast<MappingOutput *>(h), i);
+	for (auto& o : items) o->updateCommandOutParams();
+	for (int i = 0; i < getMultiplexCount(); i++)
+	{
+		updateOutputValue(dynamic_cast<MappingOutput *>(h), i);
+	}
 }
 
 void MappingOutputManager::commandUpdated(BaseCommandHandler * h)
 {
+	for (auto& o : items) o->updateCommandOutParams();
 	for (int i = 0; i < getMultiplexCount(); i++) updateOutputValue(dynamic_cast<MappingOutput *>(h), i);
 }
 

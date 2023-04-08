@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "Module/ModuleIncludes.h"
+
 OSCCommand::OSCCommand(IOSCSenderModule* _module, CommandContext context, var params, Multiplex * multiplex) :
 	BaseCommand(dynamic_cast<Module*>(_module), context, params, multiplex),
 	oscModule(_module),

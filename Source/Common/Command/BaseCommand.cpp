@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "Common/Command/CommandIncludes.h"
+
 BaseCommand::BaseCommand(Module* _module, CommandContext _context, var _params, Multiplex* multiplex) :
 	ParamLinkContainer("Command", multiplex),
 	context(_context),

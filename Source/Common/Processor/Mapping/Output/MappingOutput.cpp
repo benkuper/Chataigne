@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "Common/Processor/ProcessorIncludes.h"
+
 MappingOutput::MappingOutput(Multiplex * multiplex) :
 	BaseCommandHandler("MappingOutput",CommandContext::MAPPING, nullptr, multiplex),
 	forceDisabled(false)
