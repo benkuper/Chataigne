@@ -52,8 +52,12 @@ void SerialDeviceParameter::updatePortList()
 	if (SerialManager::getInstance()->portInfos.size() > 0) addOption("Not connected or disconnected", var(), false);
 	for (auto& p : SerialManager::getInstance()->portInfos)
 	{
+
+#if JUCE_MAC && TARGET_CPU_ARM64 // no filter for M1 because it returns vid/pid 0x0 for all devices
+#else 0
 		if (!vidFilters.isEmpty() && !vidFilters.contains(p->vid)) continue;
 		if (!pidFilters.isEmpty() && !pidFilters.contains(p->pid)) continue;
+#endif
 
 		var v(new DynamicObject());
 		//DBG("Add option : " << p->port << ":" << p->hardwareID);
