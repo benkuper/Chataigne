@@ -438,7 +438,7 @@ void OSModule::PingThread::run()
 #if JUCE_WINDOWS
 			bool success = result.contains("Received = 1");
 #else
-			bool success = !result.contains(" 0.0% packet loss");
+			bool success = result.contains(" 0.0% packet loss");
 #endif
 
 			if (osModule->logOutgoingData->boolValue())
