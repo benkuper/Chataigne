@@ -25,7 +25,7 @@ runs:
         if [[ $GITHUB_REF == *"refs/tags/"* ]]
         then
           echo "Found Tag : ${GITHUB_REF#refs/tags/}"
-          echo "suffix=${{ inputs.os }}-${ GITHUB_REF#refs/tags/ }" >> $GITHUB_OUTPUT
+          echo "suffix=${{ inputs.os }}-${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
           echo "config=Release" >> $GITHUB_OUTPUT
           echo "dep=release" >> $GITHUB_OUTPUT
         else
