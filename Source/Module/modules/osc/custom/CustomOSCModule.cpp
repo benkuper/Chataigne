@@ -383,25 +383,7 @@ void CustomOSCModule::onControllableFeedbackUpdateInternal(ControllableContainer
 
 				OSCMessage m(cAddress);
 				if (c->type == Controllable::TRIGGER) sendOSC(m);
-				else
-				{
-					Parameter* p = static_cast<Parameter*>(c);
-					if (p != nullptr)
-					{
-						if (c->type == Controllable::COLOR) m.addArgument(OSCHelpers::varToColorArgument(p->value));
-						else if (p->value.isArray())
-						{
-							if (Array<var>* arr = p->value.getArray())
-							{
-								for (auto& aa : *arr) m.addArgument(OSCHelpers::varToArgument(aa));
-							}
-						}
-						else
-						{
-							m.addArgument(OSCHelpers::varToArgument(p->value));
-						}
-					}
-				}
+				else OSCHelpers::addArgumentsForParameter(m, (Parameter*)c, getBoolMode(), getColorMode());
 
 				sendOSC(m);
 			}

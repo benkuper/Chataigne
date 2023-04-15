@@ -124,12 +124,12 @@ void GenericOSCQueryModule::sendOSCForControllable(Controllable* c)
 			{
 				for (int i = 0; i < p->value.size(); ++i)
 				{
-					m.addArgument(OSCHelpers::varToArgument(p->value[i]));
+					m.addArgument(OSCHelpers::varToArgument(p->value[i], getBoolMode()));
 				}
 			}
 			else
 			{
-				m.addArgument(OSCHelpers::varToArgument(p->value));
+				m.addArgument(OSCHelpers::varToArgument(p->value, getBoolMode()));
 			}
 		}
 		sendOSC(m);

@@ -1,16 +1,16 @@
 /*
   ==============================================================================
 
-    OSCCommand.cpp
-    Created: 3 Nov 2016 10:47:46am
-    Author:  bkupe
+	OSCCommand.cpp
+	Created: 3 Nov 2016 10:47:46am
+	Author:  bkupe
 
   ==============================================================================
 */
 
 #include "Module/ModuleIncludes.h"
 
-OSCCommand::OSCCommand(IOSCSenderModule* _module, CommandContext context, var params, Multiplex * multiplex) :
+OSCCommand::OSCCommand(IOSCSenderModule* _module, CommandContext context, var params, Multiplex* multiplex) :
 	BaseCommand(dynamic_cast<Module*>(_module), context, params, multiplex),
 	oscModule(_module),
 	argumentsContainer("Arguments", multiplex)
@@ -44,11 +44,11 @@ String OSCCommand::getTargetAddress(int multiplexIndex)
 	if (targetAddress.containsChar('['))
 	{
 		//rebuild by replacing [..] with parameters
-		for (auto & c : controllables)
+		for (auto& c : controllables)
 		{
 			if (c->type != Controllable::TRIGGER && c != address)
 			{
-				Parameter * p = static_cast<Parameter *>(c);
+				Parameter* p = static_cast<Parameter*>(c);
 				if (p == nullptr) continue;
 
 				targetAddress = targetAddress.replace("[" + p->shortName + "]", getLinkedValue(p, multiplexIndex).toString());
@@ -58,7 +58,7 @@ String OSCCommand::getTargetAddress(int multiplexIndex)
 
 	String result = getTargetAddressInternal(targetAddress, multiplexIndex);
 	if (result.isEmpty()) return getLinkedValue(address, multiplexIndex).toString();
-	
+
 	return result;
 }
 
@@ -69,9 +69,9 @@ void OSCCommand::buildArgsAndParamsFromData(var data)
 		if (data.getProperty("args", var()).isArray())
 		{
 			Array<var>* argsArray = data.getProperty("args", var()).getArray();
-			for (auto & a : *argsArray)
+			for (auto& a : *argsArray)
 			{
-				Parameter * p = static_cast<Parameter *>(ControllableFactory::createControllable(a.getProperty("type", "")));
+				Parameter* p = static_cast<Parameter*>(ControllableFactory::createControllable(a.getProperty("type", "")));
 				if (p == nullptr) continue;
 				p->saveValueOnly = false;
 				p->loadJSONData(a);
@@ -81,8 +81,8 @@ void OSCCommand::buildArgsAndParamsFromData(var data)
 				if (p->type == Controllable::ENUM && a.hasProperty("options"))
 				{
 					EnumParameter* ep = (EnumParameter*)p;
-					NamedValueSet optionsData = a.getProperty("options",var()).getDynamicObject()->getProperties();
-					for (auto &o : optionsData) ep->addOption(o.name.toString(), o.value);
+					NamedValueSet optionsData = a.getProperty("options", var()).getDynamicObject()->getProperties();
+					for (auto& o : optionsData) ep->addOption(o.name.toString(), o.value);
 				}
 			}
 		}
@@ -92,12 +92,12 @@ void OSCCommand::buildArgsAndParamsFromData(var data)
 
 	argumentsContainer.hideInEditor = data.getProperty("hideArgs", argumentsContainer.hideInEditor);
 
-	if (data.getDynamicObject()->hasProperty("params") && data.getProperty("params",var()).isArray())
+	if (data.getDynamicObject()->hasProperty("params") && data.getProperty("params", var()).isArray())
 	{
 		Array<var>* argsArray = data.getProperty("params", var()).getArray();
-		for (auto & a : *argsArray)
+		for (auto& a : *argsArray)
 		{
-			Parameter * p = static_cast<Parameter *>(ControllableFactory::createControllable(a.getProperty("type", "")));
+			Parameter* p = static_cast<Parameter*>(ControllableFactory::createControllable(a.getProperty("type", "")));
 			if (p == nullptr) continue;
 			p->saveValueOnly = false;
 			p->loadJSONData(a);
@@ -127,11 +127,11 @@ void OSCCommand::controllableAdded(Controllable* c)
 	}
 }
 
-void OSCCommand::onContainerParameterChanged(Parameter * p)
+void OSCCommand::onContainerParameterChanged(Parameter* p)
 {
 	if (p != address && rebuildAddressOnParamChanged)
 	{
-		 rebuildAddress();
+		rebuildAddress();
 	}
 }
 
@@ -152,8 +152,8 @@ void OSCCommand::triggerInternal(int multiplexIndex)
 	if (oscModule == nullptr) return;
 
 	BaseCommand::triggerInternal(multiplexIndex);
-	String addrString = getTargetAddress(multiplexIndex) ; //forces iteratives to reevalute the address
-	
+	String addrString = getTargetAddress(multiplexIndex); //forces iteratives to reevalute the address
+
 	try
 	{
 		OSCMessage m(addrString);
@@ -166,38 +166,9 @@ void OSCCommand::triggerInternal(int multiplexIndex)
 			if (p == nullptr) continue;
 
 			var val = argumentsContainer.getLinkedValue(p, multiplexIndex);
-
-			switch (p->type)
-			{
-			case Controllable::BOOL: m.addInt32(val ? 1 : 0); break;
-			case Controllable::INT: m.addInt32(val); break;
-			case Controllable::FLOAT: m.addFloat32(val); break;
-			case Controllable::STRING: m.addString(val); break;
-
-			case Controllable::COLOR:
-			{
-				Colour c = Colour::fromFloatRGBA(val[0], val[1], val[2], val[3]);
-				m.addColour(OSCHelpers::getOSCColour(c));
-			}
-			break;
-
-			case Controllable::ENUM:
-				m.addArgument(OSCHelpers::varToArgument(((EnumParameter*)a)->getValueData()));
-				break;
-
-			default:
-				if (val.isArray())
-				{
-					for (int i = 0; i < val.size(); i++)
-					{
-						m.addFloat32(val[i]);
-					}
-				}
-				break;
-			}
+			OSCHelpers::addArgumentsForParameter(m, p, oscModule->getBoolMode(), oscModule->getColorMode(), val);
+			oscModule->sendOSC(m);
 		}
-
-		oscModule->sendOSC(m);
 	}
 	catch (OSCFormatError& e)
 	{

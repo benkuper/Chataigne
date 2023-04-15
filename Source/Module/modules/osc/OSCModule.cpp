@@ -10,19 +10,19 @@
 
 #include "Module/ModuleIncludes.h"
 
-OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemotePort, bool canHaveInput, bool canHaveOutput) :
+OSCModule::OSCModule(const String& name, int defaultLocalPort, int defaultRemotePort, bool canHaveInput, bool canHaveOutput) :
 	Module(name),
 	Thread("OSCZeroconf"),
 	localPort(nullptr),
-    defaultRemotePort(defaultRemotePort),
-    servus("_osc._udp"),
+	defaultRemotePort(defaultRemotePort),
+	servus("_osc._udp"),
 	receiveCC(nullptr)
 {
-	
+
 	setupIOConfiguration(canHaveInput, canHaveOutput);
 	canHandleRouteValues = canHaveOutput;
 
-	
+
 	//Receive
 	if (canHaveInput)
 	{
@@ -36,12 +36,13 @@ OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemot
 		receiver.registerFormatErrorHandler(&OSCHelpers::logOSCFormatError);
 		receiver.addListener(this);
 
-		if(!Engine::mainEngine->isLoadingFile) setupReceiver();
+		if (!Engine::mainEngine->isLoadingFile) setupReceiver();
 
 		thruManager.reset(new ControllableContainer("Pass-through"));
 		thruManager->userCanAddControllables = true;
 		thruManager->customUserCreateControllableFunc = &OSCModule::createThruControllable;
-	} else
+	}
+	else
 	{
 		if (receiveCC != nullptr) moduleParams.removeChildControllableContainer(receiveCC.get());
 		receiveCC = nullptr;
@@ -56,7 +57,8 @@ OSCModule::OSCModule(const String & name, int defaultLocalPort, int defaultRemot
 		moduleParams.addChildControllableContainer(outputManager.get());
 
 		outputManager->setCanBeDisabled(true);
-	} else
+	}
+	else
 	{
 		if (outputManager != nullptr) removeChildControllableContainer(outputManager.get());
 		outputManager = nullptr;
@@ -107,7 +109,7 @@ void OSCModule::setupReceiver()
 	if (result)
 	{
 		NLOG(niceName, "Now receiving on port : " + localPort->stringValue());
-		if(!isThreadRunning() && !Engine::mainEngine->isLoadingFile) startThread();
+		if (!isThreadRunning() && !Engine::mainEngine->isLoadingFile) startThread();
 
 		Array<IPAddress> ad;
 
@@ -122,22 +124,23 @@ void OSCModule::setupReceiver()
 
 			NLOG(niceName, s);
 		}
-	
+
 		localPort->clearWarning();
-	} else
+	}
+	else
 	{
 		NLOGERROR(niceName, "Error binding port " + localPort->stringValue());
 		localPort->setWarningMessage("Error binding port " + localPort->stringValue());
 	}
-	
+
 }
 
-void OSCModule::processMessage(const OSCMessage & msg)
+void OSCModule::processMessage(const OSCMessage& msg)
 {
 	if (logIncomingData->boolValue())
 	{
 		String s = "";
-		for (auto &a : msg) s += String(" ") + OSCHelpers::getStringArg(a);
+		for (auto& a : msg) s += String(" ") + OSCHelpers::getStringArg(a);
 		NLOG(niceName, msg.getAddressPattern().toString() << " :" << s);
 	}
 
@@ -149,7 +152,7 @@ void OSCModule::processMessage(const OSCMessage & msg)
 		{
 			if (TargetParameter* mt = (TargetParameter*)c)
 			{
-				if(!mt->enabled) continue;
+				if (!mt->enabled) continue;
 				if (OSCModule* m = (OSCModule*)(mt->targetContainer.get()))
 				{
 					m->sendOSC(msg);
@@ -166,7 +169,7 @@ void OSCModule::processMessage(const OSCMessage & msg)
 		Array<var> params;
 		params.add(msg.getAddressPattern().toString());
 		var args = var(Array<var>()); //initialize force array
-		for (auto &a : msg) {
+		for (auto& a : msg) {
 			if (a.isBlob()) {
 				var arr = var();
 				auto blob = a.getBlob();
@@ -201,7 +204,7 @@ void OSCModule::setupModuleFromJSONData(var data)
 	}
 	if (outputManager != nullptr)
 	{
-		if(!outputManager->enabled->isOverriden) outputManager->enabled->setValue(hasOutput);
+		if (!outputManager->enabled->isOverriden) outputManager->enabled->setValue(hasOutput);
 		outputManager->hideInEditor = !hasOutput;
 	}
 }
@@ -229,7 +232,7 @@ void OSCModule::sendOSC(const OSCMessage& msg)
 	sendOSC(msg, "");
 }
 
-void OSCModule::sendOSC(const OSCMessage & msg, String ip, int port)
+void OSCModule::sendOSC(const OSCMessage& msg, String ip, int port)
 {
 	if (isClearing || outputManager == nullptr) return;
 	if (!enabled->boolValue()) return;
@@ -239,7 +242,7 @@ void OSCModule::sendOSC(const OSCMessage & msg, String ip, int port)
 	if (logOutgoingData->boolValue())
 	{
 		NLOG(niceName, "Send OSC : " << msg.getAddressPattern().toString());
-		for (auto &a : msg)
+		for (auto& a : msg)
 		{
 			LOG(OSCHelpers::getStringArg(a));
 		}
@@ -275,22 +278,24 @@ void OSCModule::setupZeroConf()
 
 		//DBG("ADVERTISE");
 		servus.announce(portToAdvertise, ("Chataigne - " + nameToAdvertise).toStdString());
-		
+
 		if (nameToAdvertise != niceName || localPort->intValue() != portToAdvertise || !hasInput)
 		{
 			//DBG("Name or port changed during advertise, readvertising");
 		}
 	}
-	
-	NLOG(niceName,"Zeroconf service created : " << nameToAdvertise << ":" << portToAdvertise);
+
+	NLOG(niceName, "Zeroconf service created : " << nameToAdvertise << ":" << portToAdvertise);
 }
 
-var OSCModule::sendOSCFromScript(const var::NativeFunctionArgs & a)
+var OSCModule::sendOSCFromScript(const var::NativeFunctionArgs& a)
 {
-	OSCModule * m = getObjectFromJS<OSCModule>(a);
+	OSCModule* m = getObjectFromJS<OSCModule>(a);
 	if (!m->enabled->boolValue()) return var();
 
 	if (!checkNumArgs(m->niceName, a, 1)) return var();
+
+	OSCHelpers::BoolMode bm = m->getBoolMode();
 
 	try
 	{
@@ -300,8 +305,8 @@ var OSCModule::sendOSCFromScript(const var::NativeFunctionArgs & a)
 		{
 			if (a.arguments[i].isArray())
 			{
-				Array<var> * arr = a.arguments[i].getArray();
-				for (auto &aa : *arr) msg.addArgument(OSCHelpers::varToArgument(aa));
+				Array<var>* arr = a.arguments[i].getArray();
+				for (auto& aa : *arr) msg.addArgument(OSCHelpers::varToArgument(aa, bm));
 			}
 			else if (a.arguments[i].isObject())
 			{
@@ -309,7 +314,7 @@ var OSCModule::sendOSCFromScript(const var::NativeFunctionArgs & a)
 				if (type.isNotEmpty())
 				{
 					var val = a.arguments[i].getProperty("value", 0);
-					if (type == "bool") msg.addInt32(val);
+					if (type == "bool") msg.addBool(val);
 					else if (type == "float") msg.addFloat32(val);
 					else if (type == "int") msg.addInt32(val);
 					else if (type == "color") msg.addArgument(OSCHelpers::varToColorArgument(val));
@@ -318,17 +323,17 @@ var OSCModule::sendOSCFromScript(const var::NativeFunctionArgs & a)
 			}
 			else
 			{
-				msg.addArgument(OSCHelpers::varToArgument(a.arguments[i]));
+				msg.addArgument(OSCHelpers::varToArgument(a.arguments[i], bm));
 			}
 		}
 
 		m->sendOSC(msg);
 	}
-	catch (OSCFormatError &e)
+	catch (OSCFormatError& e)
 	{
 		NLOGERROR(m->niceName, "Error sending message : " << e.description);
 	}
-	
+
 
 	return var();
 }
@@ -339,6 +344,8 @@ var OSCModule::sendOSCToFromScript(const var::NativeFunctionArgs& a)
 	if (!m->enabled->boolValue()) return var();
 	if (!checkNumArgs(m->niceName, a, 3)) return var();
 
+	OSCHelpers::BoolMode bm = m->getBoolMode();
+
 	try
 	{
 		OSCMessage msg(a.arguments[2].toString());
@@ -348,17 +355,17 @@ var OSCModule::sendOSCToFromScript(const var::NativeFunctionArgs& a)
 			if (a.arguments[i].isArray())
 			{
 				Array<var>* arr = a.arguments[i].getArray();
-				for (auto& aa : *arr) msg.addArgument(OSCHelpers::varToArgument(aa));
+				for (auto& aa : *arr) msg.addArgument(OSCHelpers::varToArgument(aa, bm));
 			}
 			else
 			{
-				msg.addArgument(OSCHelpers::varToArgument(a.arguments[i]));
+				msg.addArgument(OSCHelpers::varToArgument(a.arguments[i], bm));
 			}
 		}
 
 		m->sendOSC(msg, a.arguments[0], a.arguments[1]);
 	}
-	catch (OSCFormatError & e)
+	catch (OSCFormatError& e)
 	{
 		NLOGERROR(m->niceName, "Error sending message : " << e.description);
 	}
@@ -367,7 +374,7 @@ var OSCModule::sendOSCToFromScript(const var::NativeFunctionArgs& a)
 	return var();
 }
 
-var OSCModule::matchOSCAddrFromScript(const var::NativeFunctionArgs & a)
+var OSCModule::matchOSCAddrFromScript(const var::NativeFunctionArgs& a)
 {
 	OSCModule* m = getObjectFromJS<OSCModule>(a);
 	if (!checkNumArgs(m->niceName, a, 2)) return var();
@@ -379,16 +386,16 @@ var OSCModule::matchOSCAddrFromScript(const var::NativeFunctionArgs & a)
 
 		return pattern.matches(address);
 	}
-	catch (OSCFormatError &e)
+	catch (OSCFormatError& e)
 	{
 		NLOGERROR(m->niceName, "match() function called with incorrect parameters: " << e.description);
 	}
-	
+
 
 	return var();
 }
 
-var OSCModule::registerOSCCallbackFromScript(const var::NativeFunctionArgs & a)
+var OSCModule::registerOSCCallbackFromScript(const var::NativeFunctionArgs& a)
 {
 	OSCModule* m = getObjectFromJS<OSCModule>(a);
 	if (!checkNumArgs(m->niceName, a, 2)) return var();
@@ -410,7 +417,7 @@ var OSCModule::registerOSCCallbackFromScript(const var::NativeFunctionArgs & a)
 
 		m->scriptCallbacks.add(std::make_tuple(pattern, callbackName));
 	}
-	catch (OSCFormatError &e)
+	catch (OSCFormatError& e)
 	{
 		NLOGERROR(m->niceName, "register() function: invalid pattern: " << e.description);
 	}
@@ -420,7 +427,7 @@ var OSCModule::registerOSCCallbackFromScript(const var::NativeFunctionArgs & a)
 
 void OSCModule::createThruControllable(ControllableContainer* cc)
 {
-	TargetParameter* p = new TargetParameter("Output module", "Target module to send the raw data to","");
+	TargetParameter* p = new TargetParameter("Output module", "Target module to send the raw data to", "");
 	p->targetType = TargetParameter::CONTAINER;
 	p->customGetTargetContainerFunc = &ModuleManager::showAndGetModuleOfType<OSCModule>;
 	p->isRemovableByUser = true;
@@ -447,7 +454,7 @@ void OSCModule::loadJSONDataInternal(var data)
 	{
 		for (auto& c : thruManager->controllables)
 		{
-			if (TargetParameter* mt = dynamic_cast<TargetParameter *>(c))
+			if (TargetParameter* mt = dynamic_cast<TargetParameter*>(c))
 			{
 				mt->targetType = TargetParameter::CONTAINER;
 				mt->customGetTargetContainerFunc = &ModuleManager::showAndGetModuleOfType<OSCModule>;
@@ -458,7 +465,7 @@ void OSCModule::loadJSONDataInternal(var data)
 	}
 
 	setupReceiver();
-	if(!isThreadRunning()) startThread();
+	if (!isThreadRunning()) startThread();
 }
 
 void OSCModule::afterLoadJSONDataInternal()
@@ -471,9 +478,10 @@ void OSCModule::afterLoadJSONDataInternal()
 }
 
 
-void OSCModule::handleRoutedModuleValue(Controllable * c, RouteParams * p)
+void OSCModule::handleRoutedModuleValue(Controllable* c, RouteParams* p)
 {
 	if (c == nullptr || p == nullptr) return;
+
 
 	if (OSCRouteParams* op = dynamic_cast<OSCRouteParams*>(p))
 	{
@@ -491,10 +499,10 @@ void OSCModule::handleRoutedModuleValue(Controllable * c, RouteParams * p)
 				}
 				else
 				{
-					if (!v.isArray())  m.addArgument(OSCHelpers::varToArgument(v));
+					if (!v.isArray())  m.addArgument(OSCHelpers::varToArgument(v, getBoolMode()));
 					else
 					{
-						for (int i = 0; i < v.size(); ++i) m.addArgument(OSCHelpers::varToArgument(v[i]));
+						for (int i = 0; i < v.size(); ++i) m.addArgument(OSCHelpers::varToArgument(v[i], getBoolMode()));
 					}
 				}
 
@@ -515,19 +523,19 @@ String OSCModule::getAddressForRoutedValue(Controllable*, OSCRouteParams* op)
 	return op->address->stringValue();
 }
 
-void OSCModule::onContainerParameterChangedInternal(Parameter * p)
+void OSCModule::onContainerParameterChangedInternal(Parameter* p)
 {
-	Module::onContainerParameterChangedInternal(p);	
+	Module::onContainerParameterChangedInternal(p);
 }
 
 void OSCModule::onContainerNiceNameChanged()
 {
 	Module::onContainerNiceNameChanged();
 	if (Engine::mainEngine->isLoadingFile || Engine::mainEngine->isClearing) return;
-	if(!isThreadRunning()) startThread();
+	if (!isThreadRunning()) startThread();
 }
 
-void OSCModule::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
+void OSCModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
 {
 	Module::onControllableFeedbackUpdateInternal(cc, c);
 
@@ -535,16 +543,17 @@ void OSCModule::onControllableFeedbackUpdateInternal(ControllableContainer * cc,
 	{
 		bool rv = receiveCC != nullptr ? receiveCC->enabled->boolValue() : false;
 		bool sv = outputManager->enabled->boolValue();
-		for(auto &o : outputManager->items) o->setForceDisabled(!sv);
+		for (auto& o : outputManager->items) o->setForceDisabled(!sv);
 		setupIOConfiguration(rv, sv);
 
-	}else if (receiveCC != nullptr && c == receiveCC->enabled)
+	}
+	else if (receiveCC != nullptr && c == receiveCC->enabled)
 	{
 		bool rv = receiveCC->enabled->boolValue();
 		bool sv = outputManager != nullptr ? outputManager->enabled->boolValue() : false;
-		setupIOConfiguration(rv,sv);
+		setupIOConfiguration(rv, sv);
 		localPort->setEnabled(rv);
-		if(!isCurrentlyLoadingData) setupReceiver();
+		if (!isCurrentlyLoadingData) setupReceiver();
 
 	}
 	else if (c == localPort)
@@ -567,16 +576,16 @@ void OSCModule::onControllableFeedbackUpdateInternal(ControllableContainer * cc,
 	}
 }
 
-void OSCModule::oscMessageReceived(const OSCMessage & message)
+void OSCModule::oscMessageReceived(const OSCMessage& message)
 {
 	if (!enabled->boolValue()) return;
 	processMessage(message);
 }
 
-void OSCModule::oscBundleReceived(const OSCBundle & bundle)
+void OSCModule::oscBundleReceived(const OSCBundle& bundle)
 {
 	if (!enabled->boolValue()) return;
-	for (auto &m : bundle)
+	for (auto& m : bundle)
 	{
 		processMessage(m.getMessage());
 	}
@@ -587,7 +596,7 @@ void OSCModule::run()
 	setupZeroConf();
 }
 
-OSCModule::OSCRouteParams::OSCRouteParams(Module * sourceModule, Controllable * c) 
+OSCModule::OSCRouteParams::OSCRouteParams(Module* sourceModule, Controllable* c)
 {
 	bool sourceIsGenericOSC = sourceModule->getTypeString() == "OSC";
 
@@ -597,25 +606,26 @@ OSCModule::OSCRouteParams::OSCRouteParams(Module * sourceModule, Controllable * 
 	{
 		tAddress = c->shortName;
 
-		ControllableContainer * cc = c->parentContainer;
+		ControllableContainer* cc = c->parentContainer;
 		while (cc != nullptr)
 		{
 			if (cc->shortName != "values")
 			{
 				tAddress = cc->shortName + "/" + tAddress;
 			}
-			Module * m = dynamic_cast<Module *>(cc);
+			Module* m = dynamic_cast<Module*>(cc);
 			if (m != nullptr) break;
 
 			cc = cc->parentContainer;
 		}
-	} else
+	}
+	else
 	{
 		tAddress = c->niceName; //on CustomOSCModule, niceName is the actual address
 	}
 
 	if (!tAddress.startsWithChar('/')) tAddress = "/" + tAddress;
-	
+
 	address = addStringParameter("Address", "Route Address", tAddress);
 }
 
@@ -653,16 +663,16 @@ void OSCOutput::setForceDisabled(bool value)
 	setupSender();
 }
 
-void OSCOutput::onContainerParameterChangedInternal(Parameter * p)
+void OSCOutput::onContainerParameterChangedInternal(Parameter* p)
 {
 	if (p == remoteHost || p == remotePort || p == useLocal)
 	{
-		if(!Engine::mainEngine->isLoadingFile) setupSender();
+		if (!Engine::mainEngine->isLoadingFile) setupSender();
 		if (p == useLocal) remoteHost->setEnabled(!useLocal->boolValue());
 	}
 	else if (p == enabled)
 	{
-		if(!Engine::mainEngine->isLoadingFile) setupSender();
+		if (!Engine::mainEngine->isLoadingFile) setupSender();
 	}
 	else if (p == listenToOutputFeedback)
 	{
@@ -670,7 +680,7 @@ void OSCOutput::onContainerParameterChangedInternal(Parameter * p)
 	}
 }
 
-InspectableEditor * OSCOutput::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
+InspectableEditor* OSCOutput::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
 {
 	return new OSCOutputEditor(this, isRoot);
 }
@@ -691,8 +701,8 @@ void OSCOutput::setupSender()
 	senderIsConnected = false;
 	sender.disconnect();
 	socket.reset();
-	
-	if(receiver != nullptr) receiver->disconnect();
+
+	if (receiver != nullptr) receiver->disconnect();
 	receiver.reset();
 
 	if (!enabled->boolValue() || forceDisabled || Engine::mainEngine->isClearing) return;
@@ -704,7 +714,7 @@ void OSCOutput::setupSender()
 	senderIsConnected = sender.connectToSocket(*socket, targetHost, remotePort->intValue());
 
 	if (senderIsConnected)
-	{ 
+	{
 		if (listenToOutputFeedback->boolValue())
 		{
 			receiver.reset(new OSCReceiver());
@@ -722,10 +732,10 @@ void OSCOutput::setupSender()
 	}
 }
 
-void OSCOutput::sendOSC(const OSCMessage & m)
+void OSCOutput::sendOSC(const OSCMessage& m)
 {
 	if (!enabled->boolValue() || forceDisabled || !senderIsConnected) return;
-	
+
 	{
 		const ScopedLock sl(queueLock);
 		messageQueue.push(std::make_unique<OSCMessage>(m));
@@ -748,13 +758,13 @@ void OSCOutput::run()
 				messageQueue.pop();
 			}
 		}
-		
+
 		if (msgToSend)
 			sender.send(*msgToSend);
 		else
 			wait(1000); // notify() is called when a message is added to the queue
 	}
-	
+
 	// Clear queue
 	const ScopedLock sl(queueLock);
 	while (!messageQueue.empty())
