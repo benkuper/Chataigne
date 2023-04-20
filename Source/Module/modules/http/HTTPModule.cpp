@@ -39,12 +39,12 @@ HTTPModule::HTTPModule(const String& name) :
 	defManager->add(CommandDefinition::createDef(this, "", "Request with payload", &HTTPCommand::create, CommandContext::BOTH)->addParam("contentType", HTTPCommand::PLAIN));
 	defManager->add(CommandDefinition::createDef(this, "", "Upload file", &HTTPCommand::create, CommandContext::BOTH)->addParam("contentType", HTTPCommand::FILE));
 
-	scriptObject.setMethod(sendGETId, HTTPModule::sendGETFromScript);
-	scriptObject.setMethod(sendPOSTId, HTTPModule::sendPOSTFromScript);
-	scriptObject.setMethod(sendPUTId, HTTPModule::sendPUTFromScript);
-	scriptObject.setMethod(sendPATCHId, HTTPModule::sendPATCHFromScript);
-	scriptObject.setMethod(sendDELETEId, HTTPModule::sendDELETEFromScript);
-	scriptObject.setMethod(uploadFileId, HTTPModule::uploadFileFromScript);
+	scriptObject.getDynamicObject()->setMethod(sendGETId, HTTPModule::sendGETFromScript);
+	scriptObject.getDynamicObject()->setMethod(sendPOSTId, HTTPModule::sendPOSTFromScript);
+	scriptObject.getDynamicObject()->setMethod(sendPUTId, HTTPModule::sendPUTFromScript);
+	scriptObject.getDynamicObject()->setMethod(sendPATCHId, HTTPModule::sendPATCHFromScript);
+	scriptObject.getDynamicObject()->setMethod(sendDELETEId, HTTPModule::sendDELETEFromScript);
+	scriptObject.getDynamicObject()->setMethod(uploadFileId, HTTPModule::uploadFileFromScript);
 	scriptManager->scriptTemplate += ChataigneAssetManager::getInstance()->getScriptTemplate("http");
 
 	startThread();

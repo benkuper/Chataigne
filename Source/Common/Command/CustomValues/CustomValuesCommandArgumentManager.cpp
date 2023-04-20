@@ -21,7 +21,7 @@ CustomValuesCommandArgumentManager::CustomValuesCommandArgumentManager(const Str
 	selectItemWhenCreated = false;
 	editorCanBeCollapsed = false;
 
-	scriptObject.setMethod("addItem", &CustomValuesCommandArgumentManager::addItemWithTypeFromScript);
+	scriptObject.getDynamicObject()->setMethod("addItem", &CustomValuesCommandArgumentManager::addItemWithTypeFromScript);
 }
 
 CustomValuesCommandArgumentManager::~CustomValuesCommandArgumentManager()

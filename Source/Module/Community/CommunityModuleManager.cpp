@@ -28,8 +28,6 @@ void CommunityModuleManager::run()
 {
 	wait(500);
 
-	DBG("Started loading community modules");
-
 	var data = getJSONDataForURL(URL("https://benjamin.kuperberg.fr/chataigne/releases/modules.json"));
 	
 	if (threadShouldExit()) return;

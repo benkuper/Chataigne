@@ -65,7 +65,7 @@ DMXModule::DMXModule() :
 	setCurrentDMXDevice(DMXDevice::create((DMXDevice::Type)(int)dmxType->getValueData()));
 
 	//Script
-	scriptObject.setMethod(sendDMXId, DMXModule::sendDMXFromScript);
+	scriptObject.getDynamicObject()->setMethod(sendDMXId, DMXModule::sendDMXFromScript);
 
 	//for (int i = 0; i < 512; ++i)
 	//{

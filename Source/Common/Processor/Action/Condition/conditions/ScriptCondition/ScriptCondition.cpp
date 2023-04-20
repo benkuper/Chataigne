@@ -14,7 +14,7 @@ ScriptCondition::ScriptCondition(var params,Multiplex * processor) :
 	Condition(ScriptCondition::getTypeStringStatic(), params, processor),
 	script(this,false)
 {
-	scriptObject.setMethod("setValid", ScriptCondition::setValidFromScript);
+	scriptObject.getDynamicObject()->setMethod("setValid", ScriptCondition::setValidFromScript);
 	addChildControllableContainer(&script);
 	script.userCanRemove = false;
 	

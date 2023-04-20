@@ -15,8 +15,8 @@ UDPModule::UDPModule(const String& name, bool canHaveInput, bool canHaveOutput, 
 {
 	multicastMode = moduleParams.addBoolParameter("Multicast Mode", "If check, instead of binding and connecting, it will try to join a multicast network.", false);
 
-	scriptObject.setMethod("sendTo", &UDPModule::sendMessageToFromScript);
-	scriptObject.setMethod("sendBytesTo", &UDPModule::sendBytesToFromScript);
+	scriptObject.getDynamicObject()->setMethod("sendTo", &UDPModule::sendMessageToFromScript);
+	scriptObject.getDynamicObject()->setMethod("sendBytesTo", &UDPModule::sendBytesToFromScript);
 
 	listenToOutputFeedback = sendCC->addBoolParameter("Listen to Feedback", "If checked, this will listen to the (randomly set) bound port of this sender. This is useful when some softwares automatically detect incoming host and port to send back messages.", false);
 

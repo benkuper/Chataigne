@@ -70,10 +70,10 @@ OSCModule::OSCModule(const String& name, int defaultLocalPort, int defaultRemote
 	}
 
 	//Script
-	scriptObject.setMethod("send", OSCModule::sendOSCFromScript);
-	scriptObject.setMethod("sendTo", OSCModule::sendOSCToFromScript);
-	scriptObject.setMethod("match", OSCModule::matchOSCAddrFromScript);
-	scriptObject.setMethod("register", OSCModule::registerOSCCallbackFromScript);
+	scriptObject.getDynamicObject()->setMethod("send", OSCModule::sendOSCFromScript);
+	scriptObject.getDynamicObject()->setMethod("sendTo", OSCModule::sendOSCToFromScript);
+	scriptObject.getDynamicObject()->setMethod("match", OSCModule::matchOSCAddrFromScript);
+	scriptObject.getDynamicObject()->setMethod("register", OSCModule::registerOSCCallbackFromScript);
 
 	scriptManager->scriptTemplate += ChataigneAssetManager::getInstance()->getScriptTemplate("osc");
 
