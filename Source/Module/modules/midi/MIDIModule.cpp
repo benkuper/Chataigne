@@ -60,16 +60,16 @@ MIDIModule::MIDIModule(const String& name, bool _useGenericControls) :
 
 
 	//Script
-	scriptObject.setMethod(sendNoteOnId, &MIDIModule::sendNoteOnFromScript);
-	scriptObject.setMethod(sendNoteOffId, &MIDIModule::sendNoteOffFromScript);
-	scriptObject.setMethod(sendCCId, &MIDIModule::sendCCFromScript);
-	scriptObject.setMethod(sendSysexId, &MIDIModule::sendSysexFromScript);
-	scriptObject.setMethod(sendProgramChangeId, &MIDIModule::sendProgramChangeFromScript);
-	scriptObject.setMethod(sendPitchWheelId, &MIDIModule::sendPitchWheelFromScript);
-	scriptObject.setMethod(sendChannelPressureId, &MIDIModule::sendChannelPressureFromScript);
-	scriptObject.setMethod(sendAfterTouchId, &MIDIModule::sendAfterTouchFromScript);
-	scriptObject.setMethod(sendMachineControlCommandId, &MIDIModule::sendMidiMachineControlCommandFromScript);
-	scriptObject.setMethod(sendMachineControlGotoId, &MIDIModule::sendMidiMachineControlGotoFromScript);
+	scriptObject.getDynamicObject()->setMethod(sendNoteOnId, &MIDIModule::sendNoteOnFromScript);
+	scriptObject.getDynamicObject()->setMethod(sendNoteOffId, &MIDIModule::sendNoteOffFromScript);
+	scriptObject.getDynamicObject()->setMethod(sendCCId, &MIDIModule::sendCCFromScript);
+	scriptObject.getDynamicObject()->setMethod(sendSysexId, &MIDIModule::sendSysexFromScript);
+	scriptObject.getDynamicObject()->setMethod(sendProgramChangeId, &MIDIModule::sendProgramChangeFromScript);
+	scriptObject.getDynamicObject()->setMethod(sendPitchWheelId, &MIDIModule::sendPitchWheelFromScript);
+	scriptObject.getDynamicObject()->setMethod(sendChannelPressureId, &MIDIModule::sendChannelPressureFromScript);
+	scriptObject.getDynamicObject()->setMethod(sendAfterTouchId, &MIDIModule::sendAfterTouchFromScript);
+	scriptObject.getDynamicObject()->setMethod(sendMachineControlCommandId, &MIDIModule::sendMidiMachineControlCommandFromScript);
+	scriptObject.getDynamicObject()->setMethod(sendMachineControlGotoId, &MIDIModule::sendMidiMachineControlGotoFromScript);
 
 	scriptManager->scriptTemplate += ChataigneAssetManager::getInstance()->getScriptTemplate("midi");
 

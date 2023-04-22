@@ -81,11 +81,11 @@ OSModule::OSModule() :
 	defManager->add(CommandDefinition::createDef(this, "Process", "Kill App", &OSExecCommand::create, CommandContext::BOTH)->addParam("type", OSExecCommand::KILL_APP));
 	defManager->add(CommandDefinition::createDef(this, "Window", "Set Window Parameters", &OSWindowCommand::create, CommandContext::BOTH));
 
-	scriptObject.setMethod(launchAppId, &OSModule::launchFileFromScript);
-	scriptObject.setMethod(launchCommandId, &OSModule::launchCommandFromScript);
-	scriptObject.setMethod(launchProcessId, &OSModule::launchProcessFromScript);
-	scriptObject.setMethod(getRunningProcessesId, &OSModule::getRunningProcessesFromScript);
-	scriptObject.setMethod(isProcessRunningId, &OSModule::isProcessRunningFromScript);
+	scriptObject.getDynamicObject()->setMethod(launchAppId, &OSModule::launchFileFromScript);
+	scriptObject.getDynamicObject()->setMethod(launchCommandId, &OSModule::launchCommandFromScript);
+	scriptObject.getDynamicObject()->setMethod(launchProcessId, &OSModule::launchProcessFromScript);
+	scriptObject.getDynamicObject()->setMethod(getRunningProcessesId, &OSModule::getRunningProcessesFromScript);
+	scriptObject.getDynamicObject()->setMethod(isProcessRunningId, &OSModule::isProcessRunningFromScript);
 
 
 	startTimer(OS_IP_TIMER, 5000);

@@ -49,12 +49,23 @@ ChataigneEngine::ChataigneEngine() :
 	BLEManager::getInstance(); //should be here ?
 #endif
 	CommunityModuleManager::getInstance(); //Trigger constructor, declare settings
-	
+
 	ZeroconfManager::getInstance()->addSearcher("OSC", "_osc._udp.");
 	ZeroconfManager::getInstance()->addSearcher("OSCQuery", "_oscjson._tcp.");
 	ZeroconfManager::getInstance()->addSearcher("Workstation", "_workstation._tcp.");
 
 	//DashboardItemFactory::getInstance()->defs.add(DashboardItemFactory::Definition::createDef("", &CVVariablesDashboardItem::getTypeStringStatic(), &CVVariablesDashboardItem::create));
+
+	var tVar2 = new DynamicObject();
+	var tVar = new DynamicObject();
+	tVar.getDynamicObject()->setProperty("name", "Original");
+	tVar2.getDynamicObject()->setProperty("v", tVar);
+	DBG("V > " << tVar2.getProperty("v", var()).getProperty("name", var()).toString());
+	tVar = new DynamicObject();
+	tVar2.getDynamicObject()->setProperty("v", tVar);
+	DBG("V After > " << tVar2.getProperty("v", var()).getProperty("name", var()).toString());
+
+
 
 
 	getAppSettings()->addChildControllableContainer(&defaultBehaviors);
@@ -228,7 +239,7 @@ void ChataigneEngine::exportSelection()
 		{
 			File f = fc.getResult();
 			delete& fc;
-			if (f == File()) return; 
+			if (f == File()) return;
 			f.replaceWithText(s);
 		}
 	);

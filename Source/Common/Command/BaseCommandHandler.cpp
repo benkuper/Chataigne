@@ -27,7 +27,7 @@ BaseCommandHandler::BaseCommandHandler(const String& name, CommandContext _conte
 	trigger->hideInEditor = true;
 	//}
 
-	scriptObject.setMethod("setCommand", &BaseCommandHandler::setCommandFromScript);
+	scriptObject.getDynamicObject()->setMethod("setCommand", &BaseCommandHandler::setCommandFromScript);
 }
 
 BaseCommandHandler::~BaseCommandHandler()

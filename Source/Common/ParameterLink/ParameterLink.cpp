@@ -428,7 +428,7 @@ ParamLinkContainer::ParamLinkContainer(const String& name, Multiplex* multiplex)
 	canLinkToMapping(true),
 	ghostData(new DynamicObject())
 {
-	scriptObject.setMethod("linkParamToMappingIndex", &ParamLinkContainer::linkParamToMappingIndexFromScript);
+	scriptObject.getDynamicObject()->setMethod("linkParamToMappingIndex", &ParamLinkContainer::linkParamToMappingIndexFromScript);
 }
 
 ParamLinkContainer::~ParamLinkContainer()
