@@ -1,38 +1,40 @@
 /*
   ==============================================================================
 
-    CustomValuesCommandArgument.cpp
-    Created: 22 Feb 2017 8:51:30am
-    Author:  Ben
+	CustomValuesCommandArgument.cpp
+	Created: 22 Feb 2017 8:51:30am
+	Author:  Ben
 
   ==============================================================================
 */
+
+#include "Common/Command/CommandIncludes.h"
 
 CustomValuesCommandArgument::CustomValuesCommandArgument(const String& name, Parameter* _p, bool _mappingEnabled, bool templateMode, Multiplex* multiplex, bool enablePrecison) :
 	BaseItem(name, false),
 	MultiplexTarget(multiplex),
 	param(_p),
 	editable(nullptr),
-    sendPrecision(nullptr),
-    mappingEnabled(_mappingEnabled),
+	sendPrecision(nullptr),
+	mappingEnabled(_mappingEnabled),
 	templateMode(templateMode),
-    enablePrecison(enablePrecison),
-    linkedTemplate(nullptr)
+	enablePrecison(enablePrecison),
+	linkedTemplate(nullptr)
 {
 	editorCanBeCollapsed = false;
 
 	isSelectable = false;
-	
+
 	jassert(param != nullptr);
 	param->isSavable = false; // save manually
 	addControllable(param);
 
-	if(templateMode) param->isCustomizableByUser = true;
-	
+	if (templateMode) param->isCustomizableByUser = true;
+
 	param->forceSaveValue = true;
 	param->saveValueOnly = !templateMode;
 	param->forceSaveRange = true;
-	
+
 	if (templateMode)
 	{
 		editable = addBoolParameter("Editable", "If unchecked, this parameter will not be editable when instantiating this template command", true);
@@ -42,7 +44,7 @@ CustomValuesCommandArgument::CustomValuesCommandArgument(const String& name, Par
 	if (enablePrecison && param->type == Controllable::INT)
 	{
 		sendPrecision = addEnumParameter("Precision", "Type of int sent to the device, determine the number of bytes sent for this variable", true);
-		sendPrecision->addOption("4 bytes (Int32)", IntType:: INT32)->addOption("2 bytes (Int16)", IntType::INT16)->addOption("1 byte", IntType::BYTE);
+		sendPrecision->addOption("4 bytes (Int32)", IntType::INT32)->addOption("2 bytes (Int16)", IntType::INT16)->addOption("1 byte", IntType::BYTE);
 		//sendPrecision->addOption("uInt32", IntType::UINT32)->addOption("uInt16", IntType::UINT16)->addOption("Char (signed Byte)", IntType::CHAR);
 		sendPrecision->hideInEditor = true;
 	}
@@ -67,7 +69,7 @@ var CustomValuesCommandArgument::getJSONData()
 {
 	var data = BaseItem::getJSONData();
 	data.getDynamicObject()->setProperty("param", param->getJSONData());
-	if(paramLink != nullptr) data.getDynamicObject()->setProperty("paramLink", paramLink->getJSONData());
+	if (paramLink != nullptr) data.getDynamicObject()->setProperty("paramLink", paramLink->getJSONData());
 	return data;
 }
 
@@ -75,16 +77,16 @@ void CustomValuesCommandArgument::loadJSONDataInternal(var data)
 {
 	BaseItem::loadJSONDataInternal(data);
 	param->loadJSONData(data.getProperty("param", var()));
-	if(paramLink != nullptr) paramLink->loadJSONData(data.getProperty("paramLink", var()));
+	if (paramLink != nullptr) paramLink->loadJSONData(data.getProperty("paramLink", var()));
 
 }
 
-void CustomValuesCommandArgument::linkToTemplate(CustomValuesCommandArgument * t)
+void CustomValuesCommandArgument::linkToTemplate(CustomValuesCommandArgument* t)
 {
 	if (linkedTemplate != nullptr && !linkedTemplateRef.wasObjectDeleted())
 	{
-		linkedTemplate->param->removeParameterListener(this);
-		linkedTemplate->editable->removeParameterListener(this);
+		if (linkedTemplate->param != nullptr) linkedTemplate->param->removeParameterListener(this);
+		if (linkedTemplate->editable != nullptr) linkedTemplate->editable->removeParameterListener(this);
 		if (linkedTemplate->sendPrecision != nullptr) linkedTemplate->sendPrecision->removeParameterListener(this);
 		linkedTemplate = nullptr;
 	}
@@ -95,10 +97,14 @@ void CustomValuesCommandArgument::linkToTemplate(CustomValuesCommandArgument * t
 
 	if (!noTemplate)
 	{
-		linkedTemplate->param->addParameterListener(this);
-		linkedTemplate->editable->addParameterListener(this);
-		if (linkedTemplate->sendPrecision != nullptr) linkedTemplate->sendPrecision->addParameterListener(this);
-		if (!templateMode) updateParameterFromTemplate();
+		if (linkedTemplate != nullptr)
+		{
+			linkedTemplate->param->addParameterListener(this);
+			linkedTemplate->editable->addParameterListener(this);
+			if (linkedTemplate->sendPrecision != nullptr) linkedTemplate->sendPrecision->addParameterListener(this);
+			if (!templateMode) updateParameterFromTemplate();
+		}
+
 	}
 
 	if (param != nullptr)
@@ -113,12 +119,11 @@ void CustomValuesCommandArgument::linkToTemplate(CustomValuesCommandArgument * t
 		sendPrecision->isCustomizableByUser = noTemplate;
 	}
 
+
 	canBeReorderedInEditor = noTemplate;
 	userCanRemove = noTemplate;
 	userCanDuplicate = noTemplate;
 	nameCanBeChangedByUser = noTemplate;
-
-
 }
 
 void CustomValuesCommandArgument::updateParameterFromTemplate()
@@ -127,24 +132,24 @@ void CustomValuesCommandArgument::updateParameterFromTemplate()
 	{
 		bool editEnabled = !linkedTemplate->editable->boolValue();
 		param->setControllableFeedbackOnly(editEnabled);
-		if(linkedTemplate->param->hasRange()) param->setRange(linkedTemplate->param->minimumValue, linkedTemplate->param->maximumValue);
+		if (linkedTemplate->param->hasRange()) param->setRange(linkedTemplate->param->minimumValue, linkedTemplate->param->maximumValue);
 
 		if (paramLink != nullptr && linkedTemplate->paramLink != nullptr) paramLink->loadJSONData(linkedTemplate->paramLink->getJSONData());
 
 		//if (useForMapping != nullptr && linkedTemplate->useForMapping != nullptr && !useForMapping->isOverriden) useForMapping->setValue(linkedTemplate->useForMapping->boolValue());
-		
+
 		param->defaultValue = linkedTemplate->param->value;
 
 		if (param->isControllableFeedbackOnly || !param->isOverriden)
 		{
 			if (param->type == Controllable::ENUM)
 			{
-				EnumParameter * lep = (EnumParameter *)linkedTemplate->param;
-				EnumParameter * ep = (EnumParameter *)param;
+				EnumParameter* lep = (EnumParameter*)linkedTemplate->param;
+				EnumParameter* ep = (EnumParameter*)param;
 				ep->clearOptions();
-				for (auto &ev : lep->enumValues) ep->addOption(ev->key, ev->value);
+				for (auto& ev : lep->enumValues) ep->addOption(ev->key, ev->value);
 			}
-			
+
 			param->resetValue();
 		}
 
@@ -159,7 +164,7 @@ void CustomValuesCommandArgument::updateParameterFromTemplate()
 	}
 }
 
-void CustomValuesCommandArgument::onExternalParameterValueChanged(Parameter * p)
+void CustomValuesCommandArgument::onExternalParameterValueChanged(Parameter* p)
 {
 	if (p->parentContainer == linkedTemplate) updateParameterFromTemplate();
 }
@@ -181,7 +186,7 @@ String CustomValuesCommandArgument::getTypeString() const
 }
 
 
-InspectableEditor * CustomValuesCommandArgument::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
+InspectableEditor* CustomValuesCommandArgument::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
 {
 	return new CustomValuesCommandArgumentEditor(this, isRoot);
 }
