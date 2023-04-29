@@ -1,23 +1,25 @@
 /*
   ==============================================================================
 
-    GamepadModule.cpp
-    Created: 26 Dec 2016 4:56:31pm
-    Author:  Ben
+	GamepadModule.cpp
+	Created: 26 Dec 2016 4:56:31pm
+	Author:  Ben
 
   ==============================================================================
 */
 
-GamepadModule::GamepadModule(const String & name) :
+#include "Module/ModuleIncludes.h"
+
+GamepadModule::GamepadModule(const String& name) :
 	Module(name),
 	gamepad(nullptr),
 	axesCC("Axes"),
 	buttonsCC("Buttons"),
-    calibCC("Calibration")
+	calibCC("Calibration")
 {
 	setupIOConfiguration(true, false);
 	includeValuesInSave = true;
-	
+
 	gamepadParam = new GamepadParameter("Device", "The Gamepad to connect to");
 	moduleParams.addParameter(gamepadParam);
 
@@ -32,7 +34,7 @@ GamepadModule::GamepadModule(const String & name) :
 
 	for (int i = 0; i < SDL_CONTROLLER_BUTTON_MAX; ++i)
 	{
-		BoolParameter * bp = buttonsCC.addBoolParameter(Gamepad::getButtonName(i), "", false);
+		BoolParameter* bp = buttonsCC.addBoolParameter(Gamepad::getButtonName(i), "", false);
 		bp->isControllableFeedbackOnly = true;
 	}
 
@@ -47,28 +49,30 @@ GamepadModule::GamepadModule(const String & name) :
 GamepadModule::~GamepadModule()
 {
 	gamepadParam->setGamepad(nullptr);
-	if(InputSystemManager::getInstanceWithoutCreating() != nullptr) InputSystemManager::getInstance()->removeInputManagerListener(this);
+	if (InputSystemManager::getInstanceWithoutCreating() != nullptr) InputSystemManager::getInstance()->removeInputManagerListener(this);
 }
 
 void GamepadModule::setGamepad(Gamepad* g)
 {
 	if (gamepad == g) return;
-	if (gamepad != nullptr) gamepad->removeGamepadListener(this);
+	if (!gamepadRef.wasObjectDeleted() && gamepad != nullptr) gamepad->removeGamepadListener(this);
 
 	gamepad = g;
+	gamepadRef = g;
 
 	if (gamepad != nullptr) gamepad->addGamepadListener(this);
 }
 
-void GamepadModule::gamepadAdded(Gamepad * g)
+void GamepadModule::gamepadAdded(Gamepad* g)
 {
 	String gName = String(SDL_GameControllerName(g->gamepad));
 	if (gName == gamepadParam->ghostName) gamepadParam->setGamepad(g);
 }
 
 
-void GamepadModule::gamepadRemoved(Gamepad * g)
+void GamepadModule::gamepadRemoved(Gamepad* g)
 {
+	if (g == gamepad) gamepadParam->setGamepad(nullptr);
 }
 
 void GamepadModule::gamepadValuesUpdated(Array<float> axes, Array<bool> buttons)

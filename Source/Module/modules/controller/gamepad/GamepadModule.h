@@ -21,6 +21,7 @@ public:
 
 	GamepadParameter * gamepadParam;
 	Gamepad* gamepad;
+	WeakReference<Gamepad> gamepadRef;
 
 	ControllableContainer axesCC;
 	ControllableContainer buttonsCC;
