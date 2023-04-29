@@ -109,7 +109,7 @@ void MorpherPanel::inspectablesSelectionChanged()
 
 void MorpherPanel::inspectableDestroyed(Inspectable* i)
 {
-	if (i == currentGroup || i == currentGroup->morpher.get()) setGroup(nullptr);
+	if (currentGroup != nullptr && (i == currentGroup || i == currentGroup->morpher.get())) setGroup(nullptr);
 	if (currentMorpherUI != nullptr && i == currentMorpherUI->morpher) setMorpher(nullptr);
 }
 
