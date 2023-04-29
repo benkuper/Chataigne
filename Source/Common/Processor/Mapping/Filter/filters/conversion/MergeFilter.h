@@ -17,7 +17,7 @@ public:
 	MergeFilter(var params, Multiplex* multiplex);
 	~MergeFilter();
 
-	enum Operator {MIN, MAX, AVERAGE, SUM, MULTIPLY };
+	enum Operator {MIN, MAX, AVERAGE, SUM, MULTIPLY, DISTANCE, DIFF };
 	EnumParameter* op;
 
 	void setupParametersInternal(int multiplexIndex, bool rangeOnly) override;

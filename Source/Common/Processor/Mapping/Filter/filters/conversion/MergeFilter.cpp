@@ -8,12 +8,14 @@
   ==============================================================================
 */
 
+#include "Common/Processor/ProcessorIncludes.h"
+
 MergeFilter::MergeFilter(var params, Multiplex* multiplex) :
 	MappingFilter(getTypeString(), params, multiplex)
 {
 	autoSetRange = false;
 	op = filterParams.addEnumParameter("Operator", "Operator to merge the input values to");
-	op->addOption("Min", MIN)->addOption("Max", MAX)->addOption("Average", AVERAGE)->addOption("Sum", SUM)->addOption("Multiply",MULTIPLY);
+	op->addOption("Min", MIN)->addOption("Max", MAX)->addOption("Average", AVERAGE)->addOption("Sum", SUM)->addOption("Multiply", MULTIPLY)->addOption("Distance", DISTANCE)->addOption("Difference", DIFF);
 
 	filterTypeFilters.add(Controllable::FLOAT, Controllable::INT, Controllable::BOOL, Controllable::COLOR, Controllable::POINT2D, Controllable::POINT3D);
 }
@@ -54,41 +56,96 @@ MappingFilter::ProcessResult MergeFilter::processInternal(Array<Parameter*> inpu
 	Parameter* fp = filteredParameters[multiplexIndex]->getUnchecked(0);
 
 	Operator o = op->getValueDataAsEnum<Operator>();
-	if(!fp->isComplex())
+	if (!fp->isComplex())
 	{
 
-		float val = o == MIN ? (float)INT32_MAX : (o == MULTIPLY ? 1 : 0);
+		float val = 0;
 
-		for (auto& i : inputs)
+		if (o == MIN) val = (float)INT32_MAX;
+		else if (o == MULTIPLY) val = 1;
+		else if (o == MAX) val = (float)INT32_MIN;
+		else if (o == DIFF || o == DISTANCE) val = inputs[0]->floatValue();
+
+		float minVal = (float)INT32_MAX;
+		float maxVal = (float)INT32_MIN;
+
+		for (int i = 0; i < inputs.size(); i++)
 		{
-			if (o == AVERAGE || o == SUM) val += i->floatValue();
-			else if (o == MULTIPLY) val *= i->floatValue();
-			else val = o == MIN ? jmin(val, i->floatValue()) : jmax(val, i->floatValue());
+			if (i == 0 && o == DIFF) continue;
+
+			switch (o)
+			{
+			case AVERAGE:
+			case SUM: val += inputs[i]->floatValue(); break;
+			case MULTIPLY: val *= inputs[i]->floatValue(); break;
+			case MIN: val = jmin(val, inputs[i]->floatValue()); break;
+			case MAX: val = jmax(val, inputs[i]->floatValue()); break;
+			case DIFF: val -= inputs[i]->floatValue(); break;
+			case DISTANCE:
+				minVal = jmin(minVal, inputs[i]->floatValue());
+				maxVal = jmax(maxVal, inputs[i]->floatValue());
+				break;
+			}
 		}
+
 		if (o == AVERAGE) val /= inputs.size();
+		else if (o == DISTANCE) val = maxVal - minVal;
 
 		if (fp->checkValueIsTheSame(fp->value, val)) return UNCHANGED;
 		fp->setValue(val);
 	}
 	else
 	{
-		
-		var vals;
-		for (int i = 0; i < fp->value.size(); i++) vals.append(o == MIN ? (float)INT32_MAX : (o == MULTIPLY? 1 : 0));
 
-		for (auto& i : inputs)
+		var vals;
+		var minVals;
+		var maxVals;
+		for (int i = 0; i < fp->value.size(); i++)
 		{
-			for (int j = 0; j < i->value.size() && j < vals.size(); j++)
+			minVals.append((float)INT32_MIN);
+			maxVals.append((float)INT32_MAX);
+
+			if (o == MIN) vals.append((float)INT32_MAX);
+			else if (o == MULTIPLY) vals.append(1);
+			else if (o == MAX) vals.append((float)INT32_MIN);
+			else if (o == DIFF || o == DISTANCE) vals.append(inputs[0]->value[0]);
+		}
+
+		for (int i = 0; i < inputs.size(); i++)
+		{
+			if (i == 0 && o == DIFF) continue;
+
+			Parameter* in = inputs[i];
+			for (int j = 0; j < in->value.size() && j < vals.size(); j++)
 			{
-				float iVal = i->value[j];
-				if (o == AVERAGE || o == SUM) vals[j] = (float)vals[j] + iVal;
-				else if( o == MULTIPLY) vals[j] = (float)vals[j] * iVal;
-				else vals[j] = o == MIN ? jmin((float)vals[j], iVal) : jmax((float)vals[j], iVal);
+				if (i == 0 && (o == DIFF || o == DISTANCE)) continue;
+
+				float vj = vals[j];
+				float ij = in->value[j];
+
+				switch (o)
+				{
+				case AVERAGE:
+				case SUM: vals[j] = vj + ij; break;
+				case MULTIPLY: vals[j] = ij; break;
+				case MIN: vals[j] = jmin<float>(vj, ij); break;
+				case MAX: vals[j] = jmax<float>(vj, ij); break;
+				case DIFF: vals[j] = vj - ij; break;
+				case DISTANCE:
+					minVals[j] = jmin<float>(minVals[j], ij);
+					maxVals[j] = jmax<float>(maxVals[j], ij);
+					break;
+				}
 			}
 		}
-		if (o == AVERAGE)
+
+		if (o == AVERAGE || o == DISTANCE)
 		{
-			for (int i = 0; i < vals.size(); i++) vals[i] = (float)vals[i] / inputs.size();
+			for (int i = 0; i < vals.size(); i++)
+			{
+				if (o == AVERAGE) vals[i] = (float)vals[i] / inputs.size();
+				else if (o == DISTANCE) vals[i] = (float)maxVals[i] - (float)minVals[i];
+			}
 		}
 
 		if (fp->checkValueIsTheSame(fp->value, vals)) return UNCHANGED;

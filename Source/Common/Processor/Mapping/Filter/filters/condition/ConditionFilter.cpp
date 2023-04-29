@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "Common/Processor/ProcessorIncludes.h"
+
 ConditionFilter::ConditionFilter(var params, Multiplex* multiplex) :
     MappingFilter(getTypeString(), params, multiplex),
     cdm(multiplex)
