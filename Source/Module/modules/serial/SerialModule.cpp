@@ -94,10 +94,13 @@ void SerialModule::setCurrentPort(SerialDevice* _port)
 
 	if (port != nullptr)
 	{
-		port->addSerialDeviceListener(this);
 		setPortStatus(true);
-		lastOpenedPortID = port->info->deviceID;
-		portOpenedInternal();
+		if (port != nullptr)
+		{
+			port->addSerialDeviceListener(this);
+			lastOpenedPortID = port->info->deviceID;
+			portOpenedInternal();
+		}
 	}
 
 	serialModuleListeners.call(&SerialModuleListener::currentPortChanged);

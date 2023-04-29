@@ -49,7 +49,8 @@ bool DMXSerialDevice::setPortStatus(bool status)
 		{
 			NLOGERROR(niceName, "Could not open port : " << dmxPort->info->port);
 			dmxDeviceListeners.call(&DMXDeviceListener::dmxDeviceDisconnected);
-			dmxPort = nullptr; //Avoid crash if SerialPort is busy
+			//dmxPort = nullptr; //Avoid crash if SerialPort is busy
+			//return false;
 		}
 		else
 		{
@@ -62,6 +63,8 @@ bool DMXSerialDevice::setPortStatus(bool status)
 		NLOG(niceName, "Port disconnected : " << dmxPort->info->port);
 		if (dmxPort->isOpen()) dmxPort->close();
 	}
+
+	if (dmxPort == nullptr) return false;
 
 	setConnected(dmxPort->isOpen());
 	return dmxPort->isOpen();
