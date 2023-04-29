@@ -31,6 +31,7 @@ public:
 	BoolParameter* sendMode;
 
 	std::unique_ptr<DatagramSocket> udp;
+	SpinLock udpLock;
 	
 	SpinLock trackerLock;
 
