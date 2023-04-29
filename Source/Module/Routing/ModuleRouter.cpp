@@ -194,7 +194,7 @@ void ModuleRouter::onContainerTriggerTriggered(Trigger * t)
 	{
 		for (auto& v : sourceValues.items)
 		{
-			if (v->enabled->value)
+			if (v->enabled->value && v->outModule != nullptr)
 			{
 				v->outModule->handleRoutedModuleValue(v->sourceValue, v->routeParams.get());
 			}
