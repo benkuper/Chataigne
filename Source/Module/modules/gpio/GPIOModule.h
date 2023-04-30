@@ -14,8 +14,10 @@
 //#define __arm__
 
 #ifndef GPIO_SUPPPORT
+#if JUCE_LINUX
 #if defined(__arm__) || defined(__aarch64__)
 #define GPIO_SUPPORT
+#endif
 #endif
 #endif
 
