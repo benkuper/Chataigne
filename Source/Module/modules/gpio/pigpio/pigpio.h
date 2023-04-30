@@ -24,7 +24,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 For more information, please refer to <http://unlicense.org/>
 */
 
-#ifdef __arm__
+#if defined(__arm__) || defined(__aarch64__)
 
 #ifndef PIGPIO_H
 #define PIGPIO_H

@@ -30,7 +30,7 @@ This version is for pigpio version 70+
 */
 
 #pragma warning(disable:4206)
-#ifdef __arm__
+#if defined(__arm__) || defined(__aarch64__)
 
 #include <stdio.h>
 #include <string.h>

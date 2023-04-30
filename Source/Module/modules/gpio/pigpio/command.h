@@ -29,7 +29,7 @@ For more information, please refer to <http://unlicense.org/>
 This version is for pigpio version 70+
 */
 
-#ifdef __arm__
+#if defined(__arm__) || defined(__aarch64__)
 
 #ifndef COMMAND_H
 #define COMMAND_H

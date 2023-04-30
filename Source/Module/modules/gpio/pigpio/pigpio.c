@@ -30,7 +30,7 @@ For more information, please refer to <http://unlicense.org/>
 /* include ------------------------------------------------------- */
 
 #pragma warning(disable:4206)
-#ifdef __arm__
+#if defined(__arm__) || defined(__aarch64__)
 
 #define _GNU_SOURCE
 

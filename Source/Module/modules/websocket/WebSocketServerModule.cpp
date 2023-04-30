@@ -52,7 +52,7 @@ void WebSocketServerModule::setupServer()
 #if JUCE_MAC
         File k = File::getSpecialLocation(File::currentApplicationFile).getChildFile("Contents/Resources/server.key");
         File c = File::getSpecialLocation(File::currentApplicationFile).getChildFile("Contents/Resources/server.crt");
-#elif defined __arm__
+#elif JUCE_LINUX && (defined(__arm__) || defined(__aarch64__))
 		File k = File::getSpecialLocation(File::currentApplicationFile).getParentDirectory().getChildFile("usr/bin/server.key");
 		File c = File::getSpecialLocation(File::currentApplicationFile).getParentDirectory().getChildFile("usr/bin/server.crt");
 #else	
