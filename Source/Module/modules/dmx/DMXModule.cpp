@@ -477,12 +477,19 @@ void DMXModule::createThruControllable(ControllableContainer* cc)
 }
 
 
-DMXModule::DMXRouteParams::DMXRouteParams(Module* sourceModule, Controllable* c) :
+DMXModule::DMXRouteParams::DMXRouteParams(Module* sourceModule, Controllable* c, DMXUniverseManager& outputUniverseManager) :
 	mode16bit(nullptr),
 	fullRange(nullptr),
-	channel(nullptr)
+	channel(nullptr),
+    dmxUniverse(nullptr)
 {
 	channel = addIntParameter("Channel", "The Channel", 1, 1, 512);
+    
+    dmxUniverse = addTargetParameter("Universe", "The Universe to use, you can create multiple ones in the Module Parameters", &outputUniverseManager);
+    dmxUniverse->targetType = TargetParameter::CONTAINER;
+    dmxUniverse->maxDefaultSearchLevel = 0;
+    dmxUniverse->showParentNameInEditor = false;
+    
 
 	if (c->type == Controllable::FLOAT || c->type == Controllable::BOOL || c->type == Controllable::INT || c->type == Controllable::POINT2D || c->type == Controllable::POINT3D)
 	{
@@ -498,77 +505,81 @@ DMXModule::DMXRouteParams::DMXRouteParams(Module* sourceModule, Controllable* c)
 
 void DMXModule::handleRoutedModuleValue(Controllable* c, RouteParams* p)
 {
-	//if (p == nullptr || c == nullptr) return;
+	if (p == nullptr || c == nullptr) return;
 
-	//if (DMXRouteParams* rp = dynamic_cast<DMXRouteParams*>(p))
-	//{
-	//	Parameter* sp = c->type == Controllable::TRIGGER ? nullptr : dynamic_cast<Parameter*>(c);
+	if (DMXRouteParams* rp = dynamic_cast<DMXRouteParams*>(p))
+	{
+        DMXUniverse* u = dynamic_cast<DMXUniverse*>(rp->dmxUniverse->targetContainer.get());
+        
+		Parameter* sp = c->type == Controllable::TRIGGER ? nullptr : dynamic_cast<Parameter*>(c);
 
-	//	bool fullRange = rp->fullRange != nullptr ? rp->fullRange->boolValue() : false;
+		bool fullRange = rp->fullRange != nullptr ? rp->fullRange->boolValue() : false;
 
-	//	DMXByteOrder byteOrder = rp->mode16bit != nullptr ? rp->mode16bit->getValueDataAsEnum<DMXByteOrder>() : DMXByteOrder::BIT8;
+		DMXByteOrder byteOrder = rp->mode16bit != nullptr ? rp->mode16bit->getValueDataAsEnum<DMXByteOrder>() : DMXByteOrder::BIT8;
 
-	//	if (sp == nullptr) return;
+		if (sp == nullptr) return;
 
-	//	switch (c->type)
-	//	{
-	//	case Parameter::BOOL:
-	//	case Parameter::INT:
-	//	case Parameter::FLOAT:
-	//	{
-	//		int value = (sp->hasRange() ? (float)sp->getNormalizedValue() : sp->floatValue()) * (fullRange ? (byteOrder == BIT8 ? 255 : 65535) : 1);
+		switch (c->type)
+		{
+		case Parameter::BOOL:
+		case Parameter::INT:
+		case Parameter::FLOAT:
+		{
+			int value = (sp->hasRange() ? (float)sp->getNormalizedValue() : sp->floatValue()) * (fullRange ? (byteOrder == BIT8 ? 255 : 65535) : 1);
 
-	//		if (byteOrder == BIT8) sendDMXValue(rp->channel->intValue(), value);
-	//		else send16BitDMXValue(rp->channel->intValue(), value, byteOrder);
-	//	}
-	//	break;
+			if (byteOrder == BIT8) sendDMXValue(u, rp->channel->intValue(), value);
+			else send16BitDMXValue(u, rp->channel->intValue(), value, byteOrder);
+		}
+		break;
 
-	//	case Parameter::POINT2D:
-	//	{
-	//		Point<float> pp = ((Point2DParameter*)sp)->getPoint();
-	//		if (fullRange) pp *= byteOrder != BIT8 ? 65535 : 255;
+		/*case Parameter::POINT2D:
+		{
+			Point<float> pp = ((Point2DParameter*)sp)->getPoint();
+			if (fullRange) pp *= byteOrder != BIT8 ? 65535 : 255;
 
-	//		Array<int> values;
-	//		values.add((int)pp.x, (int)pp.y);
+			Array<int> values;
+			values.add((int)pp.x, (int)pp.y);
 
-	//		if (byteOrder == BIT8) sendDMXValues(rp->channel->intValue(), values);
-	//		else send16BitDMXValues(rp->channel->intValue(), values, byteOrder);
-	//	}
-	//	break;
+			if (byteOrder == BIT8) sendDMXValues(u, rp->channel->intValue(), values);
+			else send16BitDMXValues(u, rp->channel->intValue(), values, byteOrder);
+		}
+		break;
 
-	//	case Parameter::POINT3D:
-	//	{
-	//		Vector3D<float> pp = ((Point3DParameter*)sp)->getVector();
-	//		if (fullRange) pp *= byteOrder != BIT8 ? 65535 : 255;
+		case Parameter::POINT3D:
+		{
+			Vector3D<float> pp = ((Point3DParameter*)sp)->getVector();
+			if (fullRange) pp *= byteOrder != BIT8 ? 65535 : 255;
 
-	//		Array<int> values;
-	//		values.add((int)pp.x, (int)pp.y, (int)pp.z);
+			Array<int> values;
+			values.add((int)pp.x, (int)pp.y, (int)pp.z);
 
-	//		if (byteOrder == BIT8) sendDMXValues(rp->channel->intValue(), values);
-	//		else send16BitDMXValues(rp->channel->intValue(), values, byteOrder);
-	//	}
-	//	break;
+			if (byteOrder == BIT8) sendDMXValues(u, rp->channel->intValue(), values);
+			else send16BitDMXValues(u, rp->channel->intValue(), values, byteOrder);
+		}
+		break;
 
-	//	case Parameter::COLOR:
-	//	{
-	//		Colour col = ((ColorParameter*)sp)->getColor();
-	//		Array<int> values;
-	//		values.add(col.getRed(), col.getGreen(), col.getBlue());
-	//		sendDMXValues(rp->channel->intValue(), values);
-	//	}
+		case Parameter::COLOR:
+		{
+			Colour col = ((ColorParameter*)sp)->getColor();
+			Array<int> values;
+			values.add(col.getRed(), col.getGreen(), col.getBlue());
+			sendDMXValues(u, rp->channel->intValue(), values);
+		}
 
-	//	break;
+		break;*/
 
-	//	default:
-	//		break;
-	//	}
-	//}
+		default:
+			break;
+		}
+	}
 }
 
 DMXModule::DMXModuleRouterController::DMXModuleRouterController(ModuleRouter* router) :
 	ModuleRouterController(router)
 {
 	autoSetChannels = addTrigger("Auto-set channels", "Auto set channels");
+    
+    autoSetUniverse = addTrigger("Auto-set universes", "Set the first universe of the DMX Module to all");
 }
 
 void DMXModule::DMXModuleRouterController::triggerTriggered(Trigger* t)
@@ -584,4 +595,16 @@ void DMXModule::DMXModuleRouterController::triggerTriggered(Trigger* t)
 			}
 		}
 	}
+    
+    if (t == autoSetUniverse)
+    {
+        for (auto& mrv : router->sourceValues.items)
+        {
+            if (DMXRouteParams* dp = dynamic_cast<DMXRouteParams*>(mrv->routeParams.get()))
+            {
+                DMXUniverseManager* universeManager = dynamic_cast<DMXUniverseManager*>(dp->dmxUniverse->rootContainer.get());
+                if (universeManager->items.size() > 0) dp->dmxUniverse->setValueFromTarget(universeManager->items[0]);
+            }
+        }
+    }
 }
