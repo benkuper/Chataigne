@@ -17,6 +17,7 @@
 #if defined(__arm__) || defined(__aarch64__)
 #define GPIO_SUPPORT
 #endif
+#endif
 
 
 #ifdef GPIO_SUPPORT
