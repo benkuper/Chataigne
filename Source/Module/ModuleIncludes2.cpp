@@ -26,14 +26,6 @@
 #include "modules/common/commands/osc/OSCCommand.cpp"
 #include "modules/common/commands/osc/CustomOSCCommand.cpp"
 
-#if JUCE_LINUX && ((defined(__arm__) || defined(__aarch64__)))
-extern "C"
-{
-#include "modules/gpio/pigpio/pigpio.c"
-#include "modules/gpio/pigpio/command.c"
-}
-#endif
-
 #include "modules/gpio/GPIOModule.cpp"
 
 #include "modules/gpio/commands/GPIOCommands.cpp"

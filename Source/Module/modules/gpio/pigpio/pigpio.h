@@ -24,10 +24,9 @@ OTHER DEALINGS IN THE SOFTWARE.
 For more information, please refer to <http://unlicense.org/>
 */
 
-#if defined(__arm__) || defined(__aarch64__)
+#if USE_GPIO
 
-#ifndef PIGPIO_H
-#define PIGPIO_H
+#pragma once
 
 #include <stdint.h>
 #include <pthread.h>
@@ -6576,9 +6575,5 @@ after this command is issued.
 #define PI_DEFAULT_CFG_INTERNALS           0
 
 /*DEF_E*/
-
-#endif
-
-
 
 #endif

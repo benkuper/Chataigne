@@ -959,12 +959,8 @@
     <ClCompile Include="..\..\Source\Module\modules\gpio\commands\GPIOCommands.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\gpio\pigpio\command.c">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\gpio\pigpio\pigpio.c">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\gpio\pigpio\command.c"/>
+    <ClCompile Include="..\..\Source\Module\modules\gpio\pigpio\pigpio.c"/>
     <ClCompile Include="..\..\Source\Module\modules\gpio\GPIOModule.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>

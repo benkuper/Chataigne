@@ -29,10 +29,8 @@ For more information, please refer to <http://unlicense.org/>
 
 /* include ------------------------------------------------------- */
 
-#include "JuceHeader.h"
-
 #pragma warning(disable:4206)
-#if JUCE_LINUX && (defined(__arm__) || defined(__aarch64__))
+#if USE_GPIO
 
 #define _GNU_SOURCE
 

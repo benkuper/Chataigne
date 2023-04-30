@@ -1432,9 +1432,9 @@
               <FILE id="LoBh0H" name="GPIOCommands.h" compile="0" resource="0" file="Source/Module/modules/gpio/commands/GPIOCommands.h"/>
             </GROUP>
             <GROUP id="{7B5E3E04-8EDE-0C67-646E-0C0431F577F3}" name="pigpio">
-              <FILE id="bsQNw1" name="command.c" compile="0" resource="0" file="Source/Module/modules/gpio/pigpio/command.c"/>
+              <FILE id="bsQNw1" name="command.c" compile="1" resource="0" file="Source/Module/modules/gpio/pigpio/command.c"/>
               <FILE id="o02GiJ" name="command.h" compile="0" resource="0" file="Source/Module/modules/gpio/pigpio/command.h"/>
-              <FILE id="LsucgL" name="pigpio.c" compile="0" resource="0" file="Source/Module/modules/gpio/pigpio/pigpio.c"/>
+              <FILE id="LsucgL" name="pigpio.c" compile="1" resource="0" file="Source/Module/modules/gpio/pigpio/pigpio.c"/>
               <FILE id="cJkWSq" name="pigpio.h" compile="0" resource="0" file="Source/Module/modules/gpio/pigpio/pigpio.h"/>
             </GROUP>
             <FILE id="r5gPbq" name="GPIOModule.cpp" compile="0" resource="0" file="Source/Module/modules/gpio/GPIOModule.cpp"/>
@@ -1951,7 +1951,8 @@
     <LINUX_MAKE targetFolder="Builds/Raspberry" smallIcon="nVz6Li" bigIcon="nVz6Li"
                 extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;&#10;-Wl,--as-needed"
                 externalLibraries="bluetooth&#10;Servus&#10;curl&#10;SDL2&#10;usb-1.0&#10;hidapi-hidraw&#10;pthread&#10;JoyShockLibrary&#10;atomic"
-                extraDefs="USE_ABLETONLINK=1&#10;LINK_PLATFORM_LINUX=1" extraCompilerFlags="-Wno-multichar">
+                extraDefs="USE_ABLETONLINK=1&#10;LINK_PLATFORM_LINUX=1&#10;USE_GPIO=1"
+                extraCompilerFlags="-Wno-multichar">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" headerPath="/usr/include/freetype2" libraryPath="../../External/servus/lib/raspberry&#10;../../External/sdl/lib/raspberry&#10;../../External/joycon/lib/raspberry&#10;/usr/lib/arm-linux-gnueabihf"
                        linuxArchitecture="-march=armv8-a" optimisation="3" isDebug="1"/>
@@ -1980,7 +1981,7 @@
         <MODULEPATH id="juce_cryptography" path="JUCE/modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
-    <LINUX_MAKE targetFolder="Builds/Raspberry64" extraDefs="USE_ABLETONLINK=1&#10;LINK_PLATFORM_LINUX=1"
+    <LINUX_MAKE targetFolder="Builds/Raspberry64" extraDefs="USE_ABLETONLINK=1&#10;LINK_PLATFORM_LINUX=1&#10;USE_GPIO=1"
                 extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;&#10;-Wl,--as-needed"
                 externalLibraries="bluetooth&#10;Servus&#10;curl&#10;SDL2&#10;usb-1.0&#10;hidapi-hidraw&#10;pthread&#10;JoyShockLibrary&#10;atomic"
                 smallIcon="nVz6Li" bigIcon="nVz6Li" extraCompilerFlags="-Wno-multichar">

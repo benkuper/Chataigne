@@ -29,7 +29,7 @@ For more information, please refer to <http://unlicense.org/>
 This version is for pigpio version 70+
 */
 
-#if defined(__arm__) || defined(__aarch64__)
+#if USE_GPIO
 
 #ifndef COMMAND_H
 #define COMMAND_H
@@ -126,4 +126,4 @@ char *cmdStr(void);
 
 
 
-#endif //__arm__
+#endif //USE_GPIO
