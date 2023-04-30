@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    GPIOModule.h
-    Created: 21 Jul 2020 2:56:50pm
-    Author:  bkupe
+	GPIOModule.h
+	Created: 21 Jul 2020 2:56:50pm
+	Author:  bkupe
 
   ==============================================================================
 */
@@ -13,8 +13,13 @@
 //tmp
 //#define __arm__
 
-#ifdef __arm__
+#ifndef GPIO_SUPPPORT
+#if defined(__arm__) || defined(__aarch64__)
 #define GPIO_SUPPORT
+#endif
+
+
+#ifdef GPIO_SUPPORT
 #include "pigpio/pigpio.h"
 #define GPIO_MAX_PINS PI_MAX_USER_GPIO
 #else
@@ -22,29 +27,29 @@
 #endif
 
 class GPIOModule :
-    public Module,
-    public Thread
+	public Module,
+	public Thread
 {
 public:
-    GPIOModule();
-    virtual ~GPIOModule();
+	GPIOModule();
+	virtual ~GPIOModule();
 
-    enum GPIOMode { OUTPUT = 0, INPUT = 1, ALT0 = 4, ALT1 = 5, ALT2 = 6, ALT3 = 7, ALT4 = 3, ALT5 = 2, GPIO_MODE_MAX = 8};
+	enum GPIOMode { OUTPUT = 0, INPUT = 1, ALT0 = 4, ALT1 = 5, ALT2 = 6, ALT3 = 7, ALT4 = 3, ALT5 = 2, GPIO_MODE_MAX = 8 };
 
 
-    ControllableContainer gpioModes;
-    Array<EnumParameter*> gpioModeParams;
+	ControllableContainer gpioModes;
+	Array<EnumParameter*> gpioModeParams;
 
-    Array<Parameter*> gpioInputParams;
+	Array<Parameter*> gpioInputParams;
 
-    void setDigitalValue(int pin, bool value);
-    void setPWMValue(int pin, float value);
+	void setDigitalValue(int pin, bool value);
+	void setPWMValue(int pin, float value);
 
-    void onContainerParameterChanged(Parameter* p) override;
+	void onContainerParameterChanged(Parameter* p) override;
 
-    void run() override;
+	void run() override;
 
-    String getDefaultTypeString() const override { return "GPIO"; }
+	String getDefaultTypeString() const override { return "GPIO"; }
 
-    static GPIOModule* create() { return new GPIOModule(); }
+	static GPIOModule* create() { return new GPIOModule(); }
 };
