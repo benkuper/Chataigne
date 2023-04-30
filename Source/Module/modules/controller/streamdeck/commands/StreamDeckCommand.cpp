@@ -64,15 +64,15 @@ void StreamDeckCommand::triggerInternal(int multiplexIndex)
 	switch (action)
 	{
 	case SET_COLOR:
-		streamDeckModule->setColor(r, c, Colour::fromFloatRGBA(val[0], val[1], val[2], val[3]));
+		if(val.size() >= 4) streamDeckModule->setColor(r, c, Colour::fromFloatRGBA(val[0], val[1], val[2], val[3]));
 		break;
 
 	case SET_IMAGE:
 		streamDeckModule->setImage(r, c, val);
 		break;
 
-	case SET_ALL_COLOR:
-		streamDeckModule->setAllColor(Colour::fromFloatRGBA(val[0], val[1], val[2], val[3]));
+	case SET_ALL_COLOR:if(val.size() >= 4) 
+		if (val.size() >= 4) streamDeckModule->setAllColor(Colour::fromFloatRGBA(val[0], val[1], val[2], val[3]));
 		break;
 
 	case SET_BRIGHTNESS:
