@@ -86,16 +86,19 @@ public:
 		public RouteParams
 	{
 	public:
-		DMXRouteParams(Module* sourceModule, Controllable* c);
+		DMXRouteParams(Module* sourceModule, Controllable* c, DMXUniverseManager& outputUniverseManager);
 		~DMXRouteParams() {}
 
 		EnumParameter* mode16bit;
 		BoolParameter* fullRange;
 		IntParameter* channel;
+        TargetParameter* dmxUniverse;
 
 	};
 
-	virtual RouteParams* createRouteParamsForSourceValue(Module* sourceModule, Controllable* c, int /*index*/) override { return new DMXRouteParams(sourceModule, c); }
+	virtual RouteParams* createRouteParamsForSourceValue(Module* sourceModule, Controllable* c, int /*index*/) override {
+        return new DMXRouteParams(sourceModule, c, outputUniverseManager);
+    }
 	virtual void handleRoutedModuleValue(Controllable* c, RouteParams* p) override;
 
 
@@ -106,6 +109,7 @@ public:
 		DMXModuleRouterController(ModuleRouter* router);
 
 		Trigger* autoSetChannels;
+        Trigger* autoSetUniverse;
 
 		void triggerTriggered(Trigger* t) override;
 	};
