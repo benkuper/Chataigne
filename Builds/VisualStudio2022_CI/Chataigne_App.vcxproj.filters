@@ -9344,9 +9344,6 @@
     <None Include="..\..\Resources\tray_icon.png">
       <Filter>Chataigne\Resources</Filter>
     </None>
-    <None Include="..\..\Source\Module\modules\gpio\pigpio\custom.cext">
-      <Filter>Chataigne\Source\Module\modules\gpio\pigpio</Filter>
-    </None>
     <None Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\ReadMe.txt">
       <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
     </None>

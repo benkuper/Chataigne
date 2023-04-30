@@ -4971,65 +4971,6 @@ static const unsigned char temp_binary_data_74[] =
 
 const char* tray_icon_png = (const char*) temp_binary_data_74;
 
-//================== custom.cext ==================
-static const unsigned char temp_binary_data_75[] =
-"/*\n"
-"This version is for pigpio version 26+\n"
-"\n"
-"If you want customised functions replace this file with your own\n"
-"definitions for gpioCustom1 and gpioCustom2.\n"
-"*/\n"
-"\n"
-"#include \"pigpio.h\"\n"
-"\n"
-"int gpioCustom1(unsigned arg1, unsigned arg2, char *argx, unsigned count)\n"
-"{\n"
-"   int i;\n"
-"   unsigned max;\n"
-"\n"
-"   DBG(DBG_USER, \"arg1=%d arg2=%d count=%d [%s]\",\n"
-"      arg1, arg2, count, myBuf2Str(count, argx));\n"
-"\n"
-"   CHECK_INITED;\n"
-"\n"
-"   /* for dummy just return max parameter */\n"
-"\n"
-"   if (arg1 > arg2) max = arg1; else max = arg2;\n"
-"\n"
-"   for (i=0; i<count; i++) if (argx[i] > max) max = argx[i];\n"
-"\n"
-"   return max;\n"
-"}\n"
-"\n"
-"\n"
-"int gpioCustom2(unsigned arg1, char *argx, unsigned count,\n"
-"                char *retBuf, unsigned retMax)\n"
-"{\n"
-"   int i, j, t;\n"
-"\n"
-"   DBG(DBG_USER, \"arg1=%d count=%d [%s] retMax=%d\",\n"
-"      arg1, count, myBuf2Str(count, argx), retMax);\n"
-"\n"
-"   CHECK_INITED;\n"
-"\n"
-"   /* for dummy just return argx reversed */\n"
-"\n"
-"   if (count > retMax) count = retMax;\n"
-"\n"
-"   for (i=0, j=count-1; i<=j; i++, j--)\n"
-"   {\n"
-"      /* t used as argx and retBuf may be the same buffer */\n"
-"      t = argx[i];\n"
-"      retBuf[i] = argx[j];\n"
-"      retBuf[j] = t;\n"
-"   }\n"
-"\n"
-"   return count;\n"
-"}\n"
-"\n";
-
-const char* custom_cext = (const char*) temp_binary_data_75;
-
 
 const char* getNamedResource (const char* resourceNameUTF8, int& numBytes);
 const char* getNamedResource (const char* resourceNameUTF8, int& numBytes)
@@ -5117,7 +5058,6 @@ const char* getNamedResource (const char* resourceNameUTF8, int& numBytes)
         case 0xa58f5337:  numBytes = 2043; return stripe_png;
         case 0xcd35d2be:  numBytes = 664; return toggle_png;
         case 0x3b47344c:  numBytes = 3363; return tray_icon_png;
-        case 0x960536ec:  numBytes = 1111; return custom_cext;
         default: break;
     }
 
@@ -5201,8 +5141,7 @@ const char* namedResourceList[] =
     "stop_png",
     "stripe_png",
     "toggle_png",
-    "tray_icon_png",
-    "custom_cext"
+    "tray_icon_png"
 };
 
 const char* originalFilenames[] =
@@ -5281,8 +5220,7 @@ const char* originalFilenames[] =
     "stop.png",
     "stripe.png",
     "toggle.png",
-    "tray_icon.png",
-    "custom.cext"
+    "tray_icon.png"
 };
 
 const char* getNamedResourceOriginalFilename (const char* resourceNameUTF8);

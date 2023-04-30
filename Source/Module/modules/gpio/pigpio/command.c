@@ -29,10 +29,8 @@ For more information, please refer to <http://unlicense.org/>
 This version is for pigpio version 70+
 */
 
-#include "JuceHeader.h"
-
 #pragma warning(disable:4206)
-#if JUCE_LINUX && (defined(__arm__) || defined(__aarch64__))
+#if (defined(__arm__) || defined(__aarch64__))
 
 #include <stdio.h>
 #include <string.h>
