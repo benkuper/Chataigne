@@ -12,7 +12,7 @@
 
 ChataigneTimeTrigger::ChataigneTimeTrigger(StringRef name) :
 	TimeTrigger(name)
-{
+{ 
 	csm.reset(new ConsequenceManager());
 	addChildControllableContainer(csm.get());
 }

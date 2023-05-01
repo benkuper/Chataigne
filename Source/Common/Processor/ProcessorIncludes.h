@@ -29,6 +29,7 @@
 #include "Action/Condition/conditions/ActivationCondition/ActivationCondition.h"
 #include "Action/Condition/conditions/ConditionGroup/ConditionGroup.h"
 #include "Action/Condition/conditions/ScriptCondition/ScriptCondition.h"
+#include "Action/Condition/conditions/ManualCondition/ManualCondition.h"
 
 #include "Action/Condition/conditions/StandardCondition/Comparator/BaseComparator.h"
 

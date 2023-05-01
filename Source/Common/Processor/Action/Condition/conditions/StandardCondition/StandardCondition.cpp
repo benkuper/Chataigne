@@ -9,7 +9,7 @@
 */
 
 #include "Module/ModuleIncludes.h"
-#include "JuceHeader.h"
+#include "Common/Processor/ProcessorIncludes.h"
 
 StandardCondition::StandardCondition(var params, Multiplex* processor) :
 	Condition(getTypeStringStatic(params.getProperty("listMode", false)), params, processor),

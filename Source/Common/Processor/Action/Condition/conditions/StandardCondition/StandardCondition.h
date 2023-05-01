@@ -71,4 +71,3 @@ public:
 	String getTypeString() const override { return getTypeStringStatic(multiplexListMode); }
 	static String getTypeStringStatic(bool listMode) { return listMode ? "From Multiplex List" : "From Input Value"; }
 };
-

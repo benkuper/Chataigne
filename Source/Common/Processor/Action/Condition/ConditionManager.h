@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    ConditionManager.h
-    Created: 28 Oct 2016 8:07:18pm
-    Author:  bkupe
+	ConditionManager.h
+	Created: 28 Oct 2016 8:07:18pm
+	Author:  bkupe
 
   ==============================================================================
 */
@@ -21,8 +21,8 @@ public:
 	~ConditionManager();
 
 	Factory<Condition> factory;
-	BaseFactoryDefinition<Condition> * activateDef;
-	BaseFactoryDefinition<Condition> * deactivateDef;
+	BaseFactoryDefinition<Condition>* activateDef;
+	BaseFactoryDefinition<Condition>* deactivateDef;
 
 	enum ConditionOperator { AND, OR, SEQUENTIAL };
 	EnumParameter* conditionOperator;

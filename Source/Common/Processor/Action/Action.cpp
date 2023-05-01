@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "Common/Processor/ProcessorIncludes.h"
+
 Action::Action(var params, Multiplex* it) :
 	Action("Action", params, it, true, true)
 {
@@ -20,6 +22,7 @@ Action::Action(const String& name, var params, Multiplex* multiplex, bool hasCon
 	forceNoOffConsequences(false),
 	hasOffConsequences(false),
 	triggerOn(nullptr),
+	triggerOff(nullptr),
 	triggerPreview(nullptr),
 	forceChecking(false),
 	actionAsyncNotifier(10)
@@ -60,7 +63,7 @@ Action::~Action()
 void Action::updateConditionRoles()
 {
 	if (Engine::mainEngine->isClearing) return;
-	
+
 	if (cdm != nullptr && !cdm->hasActivationDefinitions()) return;
 
 	actionRoles.clear();
@@ -78,12 +81,12 @@ void Action::updateConditionRoles()
 
 	setHasOffConsequences(!forceNoOffConsequences && !actionRoles.contains(DEACTIVATE));
 
-	
+
 	if (!itemColor->isOverriden)
 	{
 		bool isA = actionRoles.contains(Action::ACTIVATE);
 		bool isD = actionRoles.contains(Action::DEACTIVATE);
-		
+
 		if (isA && isD) itemColor->setDefaultValue(Colours::orange.darker(1));
 		else if (isA) itemColor->setDefaultValue(GREEN_COLOR.darker(1));
 		else if (isD) itemColor->setDefaultValue(Colours::orange.darker(1));
@@ -106,12 +109,18 @@ void Action::setHasOffConsequences(bool value)
 	{
 		if (csmOff == nullptr)
 		{
+			removeControllable(triggerOff);
+			triggerOff = nullptr;
 			csmOff.reset(new ConsequenceManager("Consequences : FALSE", multiplex));
 			addChildControllableContainer(csmOff.get());
 		}
 	}
 	else
 	{
+		triggerOff = addTrigger("Trigger Off", "This will trigger as if the conditions have been invalidated, and trigger all the Consequences:FALSE");
+		triggerOff->hideInEditor = true;
+		controllables.move(controllables.indexOf(triggerOff), controllables.indexOf(triggerOn) + 1);
+
 		removeChildControllableContainer(csmOff.get());
 		csmOff = nullptr;
 	}
@@ -120,9 +129,12 @@ void Action::setHasOffConsequences(bool value)
 void Action::updateDisables(bool force)
 {
 	Processor::updateDisables();
-	if (cdm != nullptr) cdm->setForceDisabled(forceDisabled || !enabled->boolValue(), force);
-	csmOn->setForceDisabled(forceDisabled || !enabled->boolValue(), force);
-	if (hasOffConsequences) csmOff->setForceDisabled(forceDisabled || !enabled->boolValue(), force);
+
+	bool en = enabled->boolValue() && !forceDisabled;
+	if (triggerOn != nullptr) triggerOn->setEnabled(en);
+	if (cdm != nullptr) cdm->setForceDisabled(!en, force);
+	csmOn->setForceDisabled(!en, force);
+	if (hasOffConsequences) csmOff->setForceDisabled(!en, force);
 }
 
 void Action::forceCheck(bool triggerIfChanged)
@@ -182,11 +194,12 @@ void Action::onContainerTriggerTriggered(Trigger* t)
 {
 	Processor::onContainerTriggerTriggered(t);
 
-	if (t == triggerOn)
+
+	if (t == triggerOn || t == triggerOff)
 	{
 		if (enabled->boolValue())
 		{
-			for (int i = 0; i < getMultiplexCount(); i++) triggerConsequences(true, i);
+			for (int i = 0; i < getMultiplexCount(); i++) triggerConsequences(t == triggerOn, i);
 		}
 	}
 	else if (t == triggerPreview)
@@ -205,7 +218,7 @@ void Action::onContainerParameterChangedInternal(Parameter* p)
 
 	if (p == enabled)
 	{
-		if (triggerOn != nullptr) triggerOn->setEnabled(enabled->boolValue());
+		updateDisables();
 
 		actionListeners.call(&Action::ActionListener::actionEnableChanged, this);
 		actionAsyncNotifier.addMessage(new ActionEvent(ActionEvent::ENABLED_CHANGED, this));

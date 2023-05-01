@@ -20,8 +20,6 @@ public:
 	enum Type { ON_ACTIVATE, ON_DEACTIVATE };
 	Type type;
 
-	void onContainerParameterChangedInternal(Parameter * p) override;
-
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 

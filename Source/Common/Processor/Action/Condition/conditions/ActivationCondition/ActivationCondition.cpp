@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "Common/Processor/ProcessorIncludes.h"
+
 ActivationCondition::ActivationCondition(var params, Multiplex* multiplex) :
 	Condition(getTypeStringStatic((Type)(int)params.getProperty("type",ON_ACTIVATE)), params, multiplex),
 	type((Type)(int)params.getProperty("type", ON_ACTIVATE))
@@ -16,16 +18,6 @@ ActivationCondition::ActivationCondition(var params, Multiplex* multiplex) :
 
 ActivationCondition::~ActivationCondition()
 {
-}
-
-void ActivationCondition::onContainerParameterChangedInternal(Parameter * p)
-{
-	Condition::onContainerParameterChangedInternal(p);
-	if (p == enabled)
-	{
-	//	isValid->setValue(enabled->boolValue() && !forceDisabled);
-	}
-
 }
 
 var ActivationCondition::getJSONData()

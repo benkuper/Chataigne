@@ -19,6 +19,8 @@ public:
 	ConsequenceManager(const String& name = "Consequences", Multiplex* multiplex = nullptr);
 	~ConsequenceManager();
 
+	Trigger* triggerPreview;
+
 	FloatParameter* delay;
 	FloatParameter* stagger;
 	BoolParameter* killDelaysOnTrigger;
@@ -27,6 +29,7 @@ public:
 	Factory<BaseItem> factory;
 
 	bool forceDisabled;
+
 
 	void triggerAll(int multiplexIndex = 0);
 	void cancelDelayedConsequences();
@@ -59,6 +62,8 @@ public:
 	void launcherTriggered(StaggerLauncher* launcher);
 	void launcherFinished(StaggerLauncher* launcher);
 
+	void multiplexPreviewIndexChanged() override;
+
 	InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables = Array<Inspectable*>()) override;
 
 	class ConsequenceManagerListener
@@ -74,6 +79,8 @@ public:
 	ListenerList<ConsequenceManagerListener> consequenceManagerListeners;
 	void addConsequenceManagerListener(ConsequenceManagerListener* newListener) { consequenceManagerListeners.add(newListener); }
 	void removeConsequenceManagerListener(ConsequenceManagerListener* listener) { consequenceManagerListeners.remove(listener); }
+
+	DECLARE_ASYNC_EVENT(ConsequenceManager, ConsequenceManager, csm, ENUM_LIST(MULTIPLEX_PREVIEW_CHANGED));
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ConsequenceManager)
 

@@ -86,6 +86,9 @@
     <Filter Include="Chataigne\Source\Common\Processor\Conductor">
       <UniqueIdentifier>{AB762D6B-82AF-347D-2084-E878BCF86F1B}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Common\Processor\Action\Condition\conditions\ManualCondition">
+      <UniqueIdentifier>{C8F93EF0-902A-3E7F-516F-80AFB0B681B2}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Common\Processor\Action\Condition\conditions\MultiplexIndex\ui">
       <UniqueIdentifier>{1C737E39-22F7-B143-5A23-507BFB460A65}</UniqueIdentifier>
     </Filter>
@@ -1320,6 +1323,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Conductor\ConductorCue.cpp">
       <Filter>Chataigne\Source\Common\Processor\Conductor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\ManualCondition\ManualCondition.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Action\Condition\conditions\ManualCondition</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\conditions\MultiplexIndex\ui\MultiplexIndexConditionEditor.cpp">
       <Filter>Chataigne\Source\Common\Processor\Action\Condition\conditions\MultiplexIndex\ui</Filter>
@@ -3926,6 +3932,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Conductor\ConductorCue.h">
       <Filter>Chataigne\Source\Common\Processor\Conductor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\conditions\ManualCondition\ManualCondition.h">
+      <Filter>Chataigne\Source\Common\Processor\Action\Condition\conditions\ManualCondition</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Action\Condition\conditions\MultiplexIndex\ui\MultiplexIndexConditionEditor.h">
       <Filter>Chataigne\Source\Common\Processor\Action\Condition\conditions\MultiplexIndex\ui</Filter>

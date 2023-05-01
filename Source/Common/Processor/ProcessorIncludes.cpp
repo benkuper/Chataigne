@@ -27,6 +27,8 @@
 #include "Action/Condition/conditions/ActivationCondition/ActivationCondition.cpp"
 #include "Action/Condition/conditions/ConditionGroup/ConditionGroup.cpp"
 #include "Action/Condition/conditions/ScriptCondition/ScriptCondition.cpp"
+#include "Action/Condition/conditions/ManualCondition/ManualCondition.cpp"
+
 #include "Action/Condition/conditions/StandardCondition/Comparator/BaseComparator.cpp"
 #include "Action/Condition/conditions/StandardCondition/Comparator/comparators/BoolComparators.cpp"
 #include "Action/Condition/conditions/StandardCondition/Comparator/comparators/EnumComparator.cpp"
@@ -41,6 +43,7 @@
 
 #include "Action/Condition/conditions/MultiplexIndex/MultiplexIndexCondition.cpp"
 #include "Action/Condition/conditions/MultiplexIndex/ui/MultiplexIndexConditionEditor.cpp"
+
 
 #include "Action/Condition/ui/ConditionEditor.cpp"
 #include "Action/Condition/ui/ConditionManagerEditor.cpp"

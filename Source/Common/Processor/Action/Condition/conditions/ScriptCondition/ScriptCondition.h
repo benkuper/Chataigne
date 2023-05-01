@@ -26,7 +26,6 @@ public:
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
-	String getTypeString() const override { return ScriptCondition::getTypeStringStatic(); }
-	static String getTypeStringStatic() { return "Script"; }
+	DECLARE_TYPE("Script");
 };
 

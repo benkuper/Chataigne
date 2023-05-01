@@ -14,7 +14,8 @@ ConsequenceManager::ConsequenceManager(const String& name, Multiplex* multiplex)
 	BaseManager<BaseItem>(name),
 	MultiplexTarget(multiplex),
 	killDelaysOnTrigger(nullptr),
-	forceDisabled(false)
+	forceDisabled(false),
+	csmNotifier(5)
 {
 	canBeDisabled = false;
 	canBeCopiedAndPasted = true;
@@ -25,6 +26,9 @@ ConsequenceManager::ConsequenceManager(const String& name, Multiplex* multiplex)
 	factory.defs.add(MultiplexTargetDefinition<BaseItem>::createDef<ConsequenceGroup>("", "Group", multiplex));
 
 	managerFactory = &factory;
+
+	triggerPreview = addTrigger("Trigger", "Trigger all the consequences. Triggers at the previewed index if multiplexed");
+	triggerPreview->hideInEditor = true;
 
 	delay = addFloatParameter("Delay", "Delay the triggering of the commands", 0, 0);
 	delay->defaultUI = FloatParameter::TIME;
@@ -42,6 +46,8 @@ ConsequenceManager::~ConsequenceManager()
 {
 
 }
+
+
 
 
 void ConsequenceManager::triggerAll(int multiplexIndex)
@@ -84,7 +90,10 @@ void ConsequenceManager::setForceDisabled(bool value, bool force)
 void ConsequenceManager::onContainerTriggerTriggered(Trigger* t)
 {
 	if (forceDisabled) return;
+
 	//for manual trigger eventually
+	if (t == triggerPreview) triggerAll(getPreviewIndex());
+
 	BaseManager::onContainerTriggerTriggered(t);
 }
 
@@ -130,7 +139,7 @@ void ConsequenceManager::launcherTriggered(StaggerLauncher* launcher)
 {
 	if (staggerLaunchers.size() == 0 || items.size() == 0) return;
 	if (launcher != staggerLaunchers.getLast()) return;
-	staggerProgression->setValue((launcher->triggerIndex + 1)*1.0f / items.size());
+	staggerProgression->setValue((launcher->triggerIndex + 1) * 1.0f / items.size());
 }
 
 void ConsequenceManager::launcherFinished(StaggerLauncher* launcher)
@@ -200,4 +209,9 @@ void ConsequenceManager::StaggerLauncher::run()
 	}
 
 	csm->launcherFinished(this);
+}
+
+void ConsequenceManager::multiplexPreviewIndexChanged()
+{
+	csmNotifier.addMessage(new ConsequenceManagerEvent(ConsequenceManagerEvent::MULTIPLEX_PREVIEW_CHANGED, this));
 }

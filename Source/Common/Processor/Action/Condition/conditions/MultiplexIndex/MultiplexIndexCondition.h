@@ -30,6 +30,5 @@ public:
 
 	InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables = Array<Inspectable*>()) override;
 
-	String getTypeString() const override { return MultiplexIndexCondition::getTypeStringStatic(); }
-	static String getTypeStringStatic() { return "Multiplex Index"; }
+	DECLARE_TYPE("Multiplex Index");
 };

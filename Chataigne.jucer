@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.15b3"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.15b4"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="VST_LOGGING=0"
@@ -377,6 +377,12 @@
           <GROUP id="{797800DA-0DCB-1B89-AF24-83A7716BB83C}" name="Action">
             <GROUP id="{769E1555-7F3A-B046-7FF9-5B14A6197BBD}" name="Condition">
               <GROUP id="{D6ADE71C-FE26-85F8-193D-108C1D0EF059}" name="conditions">
+                <GROUP id="{E7CA5019-0280-ADF0-0187-915CB0708C00}" name="ManualCondition">
+                  <FILE id="jpWUnS" name="ManualCondition.cpp" compile="0" resource="0"
+                        file="Source/Common/Processor/Action/Condition/conditions/ManualCondition/ManualCondition.cpp"/>
+                  <FILE id="SCLGUT" name="ManualCondition.h" compile="0" resource="0"
+                        file="Source/Common/Processor/Action/Condition/conditions/ManualCondition/ManualCondition.h"/>
+                </GROUP>
                 <GROUP id="{3401077A-E12F-45BD-4F18-E9CD6465CC4C}" name="MultiplexIndex">
                   <GROUP id="{44EC7EF1-A107-592C-74A7-755346BCEC7E}" name="ui">
                     <FILE id="DzS0R2" name="MultiplexIndexConditionEditor.cpp" compile="0"

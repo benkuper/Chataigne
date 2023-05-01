@@ -33,7 +33,6 @@ ConditionManager::ConditionManager(Multiplex* multiplex) :
 
 	sequentialConditionIndices.resize(getMultiplexCount());
 
-	managerFactory = &factory;
 	factory.defs.add(MultiplexTargetDefinition<Condition>::createDef<StandardCondition>("", StandardCondition::getTypeStringStatic(false), multiplex));
 	if (isMultiplexed())
 	{
@@ -43,6 +42,9 @@ ConditionManager::ConditionManager(Multiplex* multiplex) :
 
 	factory.defs.add(MultiplexTargetDefinition<Condition>::createDef<ConditionGroup>("", ConditionGroup::getTypeStringStatic(), multiplex));
 	factory.defs.add(MultiplexTargetDefinition<Condition>::createDef<ScriptCondition>("", ScriptCondition::getTypeStringStatic(), multiplex));
+	factory.defs.add(MultiplexTargetDefinition<Condition>::createDef<ManualCondition>("", ManualCondition::getTypeStringStatic(), multiplex));
+
+	managerFactory = &factory;
 
 	validationTime = addFloatParameter("Validation Time", "If greater than 0, the conditions will be validated only if they remain valid for this amount of time, when coming from an invalid state", 0, 0, (float)INT32_MAX);
 	validationTime->defaultUI = FloatParameter::TIME;
