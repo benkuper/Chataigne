@@ -34,7 +34,7 @@ public:
 	ModuleFactory();
 	~ModuleFactory();
 
-	void buildPopupMenu() override;
+	void buildPopupMenu(int startOffset = 0) override;
 	Module * createFromMenuResult(int result) override;
 
 	ModuleDefinition* getDefinitionForType(const String& moduleType);

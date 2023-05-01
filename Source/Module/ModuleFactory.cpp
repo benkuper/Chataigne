@@ -177,7 +177,7 @@ File ModuleFactory::getFolderForCustomModule(StringRef moduleName) const
 	return customModulesDefMap[moduleName]->moduleFolder;
 }
 
-void ModuleFactory::buildPopupMenu()
+void ModuleFactory::buildPopupMenu(int startOffset)
 {
 	MessageManagerLock mmLock;
 
@@ -190,7 +190,7 @@ void ModuleFactory::buildPopupMenu()
 	for (auto& d : defs)
 	{
 		ModuleDefinition* md = static_cast<ModuleDefinition*>(d);
-		int itemID = defs.indexOf(d) + 1;//start at 1 for menu
+		int itemID = defs.indexOf(d) + 1 + startOffset;//start at 1 for menu
 
 		if (md->menuPath.isEmpty())
 		{
