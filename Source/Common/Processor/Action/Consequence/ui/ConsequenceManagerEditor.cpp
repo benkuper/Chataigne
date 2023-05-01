@@ -26,7 +26,7 @@ ConsequenceManagerEditor::ConsequenceManagerEditor(ConsequenceManager* csm, Comm
 
 ConsequenceManagerEditor::~ConsequenceManagerEditor()
 {
-	if(!inspectable.wasObjectDeleted()) csm->removeAsyncManagerListener(this);
+	if (!inspectable.wasObjectDeleted()) csm->removeAsyncManagerListener(this);
 }
 
 void ConsequenceManagerEditor::resizedInternalHeader(Rectangle<int>& r)
@@ -66,7 +66,7 @@ void ConsequenceManagerEditor::newMessage(const ConsequenceManager::ConsequenceM
 {
 	switch (e.type)
 	{
-	case e.MULTIPLEX_PREVIEW_CHANGED:
+	case ConsequenceManager::ConsequenceManagerEvent::MULTIPLEX_PREVIEW_CHANGED:
 		if (csm->isMultiplexed()) triggerUI->customLabel = "Trigger (" + String(csm->getPreviewIndex() + 1) + ")";
 		break;
 	}
