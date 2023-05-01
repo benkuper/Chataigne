@@ -194,3 +194,7 @@ Choose your angel weapon :
 [![Click click click !](http://benjamin.kuperberg.fr/chataigne/user/images/github_sponsors.png)](https://github.com/sponsors/benkuper)
 
 <a href="https://www.patreon.com/bePatron?u=23293310"><img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" width="140"></a>
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=benkuper/Chataigne&type=Date)](https://star-history.com/#benkuper/Chataigne&Date)
