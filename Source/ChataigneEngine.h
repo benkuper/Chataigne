@@ -25,7 +25,6 @@ public:
 
 	//Global Settings
 	ControllableContainer defaultBehaviors;
-
 	
 	void clearInternal() override;
 

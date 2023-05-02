@@ -1359,6 +1359,10 @@
                 <FILE id="KRSW2s" name="WakeOnLanCommand.h" compile="0" resource="0"
                       file="Source/Module/modules/system/os/commands/WakeOnLanCommand.h"/>
               </GROUP>
+              <GROUP id="{07434E0D-39C5-CD30-A0FD-8A01952D0413}" name="lib">
+                <FILE id="ArzTNl" name="cpumem_monitor.h" compile="0" resource="0"
+                      file="Source/Module/modules/system/os/lib/cpumem_monitor.h"/>
+              </GROUP>
               <FILE id="vKtN5d" name="OSModule.cpp" compile="0" resource="0" file="Source/Module/modules/system/os/OSModule.cpp"/>
               <FILE id="jz2p8w" name="OSModule.h" compile="0" resource="0" file="Source/Module/modules/system/os/OSModule.h"/>
             </GROUP>

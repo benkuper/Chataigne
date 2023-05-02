@@ -9,35 +9,33 @@
 */
 
 #include "Module/ModuleIncludes.h"
+#include "lib/cpumem_monitor.h"
 
 #if JUCE_WINDOWS
 #include <TlHelp32.h>
 #endif
 
+float OSModule::timeAtProcessStart = Time::getMillisecondCounter() / 1000.0f;
 
 OSModule::OSModule() :
 	Module(getDefaultTypeString()),
 	Thread("OS-ChildProcess"),
+	osInfoCC("OS Infos"),
+	networkInfoCC("Network Infos"),
 	appControlNamesCC("App Control"),
 	appControlStatusCC("App Control"),
 	pingIPsCC("Ping IPs"),
 	pingStatusCC("Ping Status"),
-	pingThread(this)
+	pingThread(this),
+	usageIndex(0)
 {
 	includeValuesInSave = true;
 
-	osType = valuesCC.addEnumParameter("OS Type", "Type of OS");
-	osType->addOption("Windows", OS_WIN)->addOption("MacOS", OS_MAC)->addOption("Linux", OS_LINUX);
-#if JUCE_WINDOWS
-	osType->setValueWithData(OS_WIN);
-#elif JUCE_MAC
-	osType->setValueWithData(OS_MAC);
-#elif JUCE_LINUX
-	osType->setValueWithData(OS_LINUX);
-#endif
+
 
 	//moduleParams.hideInEditor = true;
 
+	//Params
 	listIPs = moduleParams.addTrigger("List IPs", "List all IPs of all network interfaces");
 	pingFrequency = moduleParams.addIntParameter("Ping Frequency", "Time between each ping routine, in seconds.", 5);
 
@@ -49,26 +47,52 @@ OSModule::OSModule() :
 	pingIPsCC.customUserCreateControllableFunc = std::bind(&OSModule::pingIPsCreateControllable, this, std::placeholders::_1);
 	moduleParams.addChildControllableContainer(&pingIPsCC);
 
-	valuesCC.addChildControllableContainer(&appControlStatusCC);
-	valuesCC.addChildControllableContainer(&pingStatusCC);
 
-	osName = valuesCC.addStringParameter("OS Name", "Name of the OS", SystemStats::getOperatingSystemName());
+	//Values
+	osType = valuesCC.addEnumParameter("OS Type", "Type of OS");
+	osType->addOption("Windows", OS_WIN)->addOption("MacOS", OS_MAC)->addOption("Linux", OS_LINUX);
 
-	ips = valuesCC.addStringParameter("IP", "IP that has been detected than most probable to be a LAN IP", NetworkHelpers::getLocalIP());
+#if JUCE_WINDOWS
+	osType->setValueWithData(OS_WIN);
+#elif JUCE_MAC
+	osType->setValueWithData(OS_MAC);
+#elif JUCE_LINUX
+	osType->setValueWithData(OS_LINUX);
+#endif
+
+	osName = osInfoCC.addStringParameter("OS Name", "Name of the OS", SystemStats::getOperatingSystemName());
+	terminateTrigger = valuesCC.addTrigger("Terminate", "This will be triggered when the program is about to terminate.");
+	crashedTrigger = valuesCC.addTrigger("Crashed", "This will be triggered when the program has crashed, just before killing itself like a sad puppy.");
+
+	osUpTime = osInfoCC.addFloatParameter("System Up Time", "Time since the system has been started, in seconds", 0, 0);
+	osUpTime->defaultUI = FloatParameter::TIME;
+	osCPUUsage = osInfoCC.addFloatParameter("CPU Usage", "Total CPU Usage from 0 to 1", 0, 0, 1);
+	osMemoryUsage = osInfoCC.addFloatParameter("Memory Usage", "Total Memory Usage from 0 to 1", 0, 0, 1);
+
+	processUpTime = osInfoCC.addFloatParameter("Process Up Time", "Time since the system this app has started, in seconds", 0, 0);
+	processUpTime->defaultUI = FloatParameter::TIME;
+	osCPUProcessUsage = osInfoCC.addFloatParameter("CPU Process Usage", "CPU Usage of this process from 0 to 1", 0, 0, 1);
+	osMemoryProcessUsage = osInfoCC.addFloatParameter("Memory Process Usage", "Memory Usage of this process from 0 to 1", 0, 0, 1);
+
+	osInfoCC.addChildControllableContainer(&appControlStatusCC);
+	valuesCC.addChildControllableContainer(&osInfoCC);
+
+	ips = networkInfoCC.addStringParameter("IP", "IP that has been detected than most probable to be a LAN IP", NetworkHelpers::getLocalIP());
+	networkInfoCC.addChildControllableContainer(&pingStatusCC);
+	valuesCC.addChildControllableContainer(&networkInfoCC);
 
 	Array<MACAddress> macList = MACAddress::getAllAddresses();
 	String macs = "";
 	for (int i = 0; i < macList.size(); i++) macs += (i > 0 ? "\n" : "") + macList[i].toString().replace("-", ":").toUpperCase();
 
-	mac = valuesCC.addStringParameter("MAC", "Mac address of the IP", macs);
+	mac = networkInfoCC.addStringParameter("MAC", "Mac address of the IP", macs);
 	mac->multiline = true;
 
-	terminateTrigger = valuesCC.addTrigger("Terminate", "This will be triggered when the program is about to terminate.");
-	crashedTrigger = valuesCC.addTrigger("Crashed", "This will be triggered when the program has crashed, just before killing itself like a sad puppy.");
 
-	for (auto& c : valuesCC.controllables) c->isControllableFeedbackOnly = true;
+	Array<WeakReference<Controllable>> cont = valuesCC.getAllControllables(true);
+	for (auto& c : cont) c->isControllableFeedbackOnly = true;
 
-	setupIOConfiguration(false, true);
+	setupIOConfiguration(true, true);
 
 	defManager->add(CommandDefinition::createDef(this, "Power", "Shutdown", &OSPowerCommand::create, CommandContext::ACTION)->addParam("type", OSPowerCommand::SHUTDOWN));
 	defManager->add(CommandDefinition::createDef(this, "Power", "Reboot", &OSPowerCommand::create, CommandContext::ACTION)->addParam("type", OSPowerCommand::REBOOT));
@@ -87,15 +111,16 @@ OSModule::OSModule() :
 	scriptObject.getDynamicObject()->setMethod(getRunningProcessesId, &OSModule::getRunningProcessesFromScript);
 	scriptObject.getDynamicObject()->setMethod(isProcessRunningId, &OSModule::isProcessRunningFromScript);
 
-
 	startTimer(OS_IP_TIMER, 5000);
 	startTimer(OS_APP_TIMER, 1000);
+	startTimer(OS_CPUMEM_TIMER, 500);
 }
 
 OSModule::~OSModule()
 {
 	stopTimer(OS_IP_TIMER);
 	stopTimer(OS_APP_TIMER);
+	stopTimer(OS_CPUMEM_TIMER);
 	stopThread(100);
 	pingThread.stopThread(1000);
 }
@@ -357,14 +382,46 @@ StringArray OSModule::getRunningProcesses()
 #endif
 
 	return result;
-}
+	}
 
 void OSModule::timerCallback(int timerID)
 {
+	inActivityTrigger->trigger();
 	switch (timerID)
 	{
 	case OS_IP_TIMER: updateIps(); break;
 	case OS_APP_TIMER: checkAppControl(); break;
+	case OS_CPUMEM_TIMER:
+	{
+		osUpTime->setValue((int)(Time::getMillisecondCounter() / 1000.0f));
+		processUpTime->setValue((int)(osUpTime->floatValue() - timeAtProcessStart));
+		cpuUsage[usageIndex] = cpuMemMonitor.getCPUUsage();
+		memoryUsage[usageIndex] = cpuMemMonitor.getMemoryUsage();
+		usageIndex = (usageIndex + 1) % 4;
+
+		float maxCPUTotal = 0;
+		float maxCPUProcess = 0;
+		float maxMemTotal = 0;
+		float maxMemProcess = 0;
+		for (int i = 0; i < 4; i++)
+		{
+			maxCPUTotal = jmax<float>(maxCPUTotal, cpuUsage[i].TotalUse / 10.0f);
+			maxCPUProcess = jmax<float>(maxCPUProcess, cpuUsage[i].ProcessUse / 10.0f);
+			maxMemTotal = jmax<float>(maxMemTotal, memoryUsage[i].PhysicalTotalUsed);
+			maxMemProcess = jmax<float>(maxMemProcess, memoryUsage[i].PhysicalProcessUsed);
+		}
+
+		osCPUUsage->setValue(maxCPUTotal);
+		osCPUProcessUsage->setValue(maxCPUProcess);
+		osMemoryUsage->setValue(maxMemTotal / memoryUsage[0].PhysicalTotalAvailable);
+		osMemoryProcessUsage->setValue(maxMemProcess / memoryUsage[0].PhysicalTotalAvailable);
+
+		if (logIncomingData->boolValue())
+		{
+			LOG("CPU Usage :" << (int)(osCPUUsage->floatValue() * 100) << "%, Memory Usage : " << (int)(osMemoryUsage->floatValue() * 100) << "%");
+		}
+	}
+	break;
 	}
 }
 

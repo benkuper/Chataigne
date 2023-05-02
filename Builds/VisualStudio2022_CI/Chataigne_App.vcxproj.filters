@@ -488,6 +488,9 @@
     <Filter Include="Chataigne\Source\Module\modules\system\os\commands">
       <UniqueIdentifier>{C9364ECA-DA0A-7F9C-AE19-64688DEC85FC}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\system\os\lib">
+      <UniqueIdentifier>{6BB82F4F-5CFA-2C1A-9090-007941A5128E}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Module\modules\system\os">
       <UniqueIdentifier>{BC45410B-85D4-17BC-835B-D170782EC043}</UniqueIdentifier>
     </Filter>
@@ -4541,6 +4544,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\system\os\commands\WakeOnLanCommand.h">
       <Filter>Chataigne\Source\Module\modules\system\os\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\system\os\lib\cpumem_monitor.h">
+      <Filter>Chataigne\Source\Module\modules\system\os\lib</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\system\os\OSModule.h">
       <Filter>Chataigne\Source\Module\modules\system\os</Filter>

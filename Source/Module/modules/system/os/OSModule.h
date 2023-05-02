@@ -12,6 +12,7 @@
 
 #define OS_IP_TIMER 1
 #define OS_APP_TIMER 2
+#define OS_CPUMEM_TIMER 3
 
 class OSModule :
 	public Module,
@@ -27,12 +28,22 @@ public:
 	Trigger* listIPs;
 	IntParameter* pingFrequency; // in seconds
 
-	EnumParameter* osType;
-	StringParameter* osName;
-	StringParameter* ips;
-	StringParameter* mac;
 	Trigger* terminateTrigger;
 	Trigger* crashedTrigger;
+
+	ControllableContainer osInfoCC;
+	EnumParameter* osType;
+	StringParameter* osName;
+	FloatParameter* osCPUProcessUsage;
+	FloatParameter* osCPUUsage;
+	FloatParameter* osMemoryProcessUsage;
+	FloatParameter* osMemoryUsage;
+	FloatParameter* osUpTime;
+	FloatParameter* processUpTime;
+
+	ControllableContainer networkInfoCC;
+	StringParameter* ips;
+	StringParameter* mac;
 
 	ControllableContainer appControlNamesCC;
 	ControllableContainer appControlStatusCC;
@@ -41,8 +52,14 @@ public:
 
 	//Ping
 	OwnedArray<ChildProcess> pingProcesses;
-
 	var statusAndIpGhostData;
+
+	SL::NET::CPUMemMonitor cpuMemMonitor;
+	SL::NET::CPUUse cpuUsage[4];
+	SL::NET::MemoryUse memoryUsage[4];
+	int usageIndex;
+
+	static float timeAtProcessStart;
 
 	//Script
 	const Identifier launchAppId = "launchApp";

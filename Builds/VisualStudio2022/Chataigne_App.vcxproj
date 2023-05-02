@@ -2786,6 +2786,7 @@
     <ClInclude Include="..\..\Source\Module\modules\system\os\commands\OSPowerCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\system\os\commands\OSWindowCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\system\os\commands\WakeOnLanCommand.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\system\os\lib\cpumem_monitor.h"/>
     <ClInclude Include="..\..\Source\Module\modules\system\os\OSModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\system\time\TimeModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\http\commands\HTTPCommand.h"/>
