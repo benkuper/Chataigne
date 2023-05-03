@@ -28,6 +28,8 @@ PosiStageNetModule::PosiStageNetModule() :
 
 	connectionFeedbackRef = isConnected;
 
+	defManager->add(CommandDefinition::createDef(this, "", "Set Position", &PosiStageNetCommand::create, CommandContext::BOTH)->addParam("action", PosiStageNetCommand::SET_POSITION));
+
 	setupSlots();
 	setupMulticast();
 }
@@ -66,7 +68,7 @@ void PosiStageNetModule::setupSlots()
 void PosiStageNetModule::setupMulticast()
 {
 	GenericScopedLock lock(udpLock);
-	
+
 	if (udp != nullptr) udp.reset();
 
 	stopThread(1000);
@@ -113,8 +115,8 @@ void PosiStageNetModule::setupMulticast()
 
 void PosiStageNetModule::setPositionAt(int slotID, Vector3D<float> pos)
 {
-	if (slotID <= 0 || slotID > slotValues.size()) return;
-	SlotValue* s = slotValues[slotID - 1];
+	if (slotID < 0 || slotID >= slotValues.size() - 1) return;
+	SlotValue* s = slotValues[slotID];
 	s->position->setVector(pos);
 }
 

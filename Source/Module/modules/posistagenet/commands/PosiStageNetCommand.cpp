@@ -1,33 +1,39 @@
 /*
   ==============================================================================
 
-    PosiStageNetCommand.cpp
-    Created: 17 May 2022 12:04:47am
-    Author:  bkupe
+	PosiStageNetCommand.cpp
+	Created: 17 May 2022 12:04:47am
+	Author:  bkupe
 
   ==============================================================================
 */
 
-#include "PosiStageNetCommand.h"
+#include "Module/ModuleIncludes.h"
 
-
-MQTTCommand::MQTTCommand(MQTTClientModule* _module, CommandContext context, var params, Multiplex* multiplex) :
+PosiStageNetCommand::PosiStageNetCommand(PosiStageNetModule* _module, CommandContext context, var params, Multiplex* multiplex) :
 	BaseCommand(_module, context, params, multiplex),
-	mqttModule(_module),
-	payload(nullptr)
+	psnModule(_module)
 {
+	action = (Action)(int)params.getProperty("action", SET_POSITION); 
 
-	topic = addStringParameter("Topic", "Topic to send to", "");
-	payload = addStringParameter("Payload", "This data to send", "");
-	payload->multiline = true;
+	slot = addIntParameter("Slot", "", 0, 0, 127);
+	position = addPoint3DParameter("Position", "Position to send");
+	linkParamToMappingIndex(position, 0);
 }
 
-MQTTCommand::~MQTTCommand()
+PosiStageNetCommand::~PosiStageNetCommand()
 {
 }
 
 
-void MQTTCommand::triggerInternal(int multiplexIndex)
+void PosiStageNetCommand::triggerInternal(int multiplexIndex)
 {
-	mqttModule->publishMessage(getLinkedValue(topic, multiplexIndex), getLinkedValue(payload, multiplexIndex));
+	Vector3D<float> p;
+	var v = getLinkedValue(position, multiplexIndex);
+	if (v.size() >= 3) p = Vector3D<float>(v[0], v[1], v[2]);
+
+	if (action == SET_POSITION)
+	{
+		psnModule->setPositionAt(getLinkedValue(slot, multiplexIndex), p);
+	}
 }

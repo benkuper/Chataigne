@@ -20,6 +20,7 @@ public:
 	PosiStageNetModule* psnModule;
 
 	enum Action { SET_POSITION };
+	Action action;
 
 	IntParameter* slot;
 	Point3DParameter* position;
