@@ -1,19 +1,27 @@
 /*
   ==============================================================================
 
-    MappingInputManager.cpp
-    Created: 1 Mar 2020 3:10:06pm
-    Author:  bkupe
+	MappingInputManager.cpp
+	Created: 1 Mar 2020 3:10:06pm
+	Author:  bkupe
 
   ==============================================================================
 */
 
-MappingInputManager::MappingInputManager(Multiplex * multiplex) :
+#include "Common/Processor/ProcessorIncludes.h"
+
+MappingInputManager::MappingInputManager(Multiplex* multiplex) :
 	BaseManager("Inputs"),
 	MultiplexTarget(multiplex)
 {
-	factory.defs.add(MultiplexTargetDefinition<MappingInput>::createDef<MappingInput>("", MappingInput::getTypeStringStatic(false), multiplex));
-	if (isMultiplexed()) factory.defs.add(MultiplexTargetDefinition<MappingInput>::createDef<MappingInput>("", MappingInput::getTypeStringStatic(true), multiplex)->addParam("listMode", true));
+	factory.defs.add(MultiplexTargetDefinition<MappingInput>::createDef<StandardMappingInput>("", StandardMappingInput::getTypeStringStatic(false), multiplex));
+
+	if (isMultiplexed()) factory.defs.add(MultiplexTargetDefinition<MappingInput>::createDef<StandardMappingInput>("", StandardMappingInput::getTypeStringStatic(true), multiplex)->addParam("listMode", true));
+
+	//Manual
+	Array<String> manualTypes{ FloatParameter::getTypeStringStatic(), IntParameter::getTypeStringStatic(), BoolParameter::getTypeStringStatic(), Point2DParameter::getTypeStringStatic(), Point3DParameter::getTypeStringStatic() };
+
+	for (auto& m : manualTypes) factory.defs.add(MultiplexTargetDefinition<MappingInput>::createDef<ManualMappingInput>("Manual", ManualMappingInput::getTypeStringStatic(m), multiplex)->addParam("paramType", m));
 
 	managerFactory = &factory;
 
@@ -30,14 +38,15 @@ void MappingInputManager::lockInput(Array<Parameter*> input)
 	for (auto& i : input)
 	{
 		if (i == nullptr)  continue;
-		MappingInput* mi = addItem(nullptr, var(), false);
+		StandardMappingInput* mi = new StandardMappingInput();
+		addItem(mi, var(), false);
 		mi->lockInput(i);
 	}
 }
 
-Array<Parameter *> MappingInputManager::getInputReferences(int multiplexIndex)
+Array<Parameter*> MappingInputManager::getInputReferences(int multiplexIndex)
 {
-	Array<Parameter *> result;
+	Array<Parameter*> result;
 	for (auto& i : items)
 	{
 		Parameter* ref = i->getInputAt(multiplexIndex);

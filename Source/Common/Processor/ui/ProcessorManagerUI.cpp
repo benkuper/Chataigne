@@ -122,7 +122,8 @@ void ProcessorManagerUI::itemDropped(const SourceDetails& details)
 						if (mapp != nullptr)
 						{
 							Controllable* target = mappingInputMenu->getControllableForResult(result);
-							MappingInput* mi = mapp->im.addItem();
+							StandardMappingInput* mi = new StandardMappingInput();
+							mapp->im.addItem(mi);
 							mi->inputTarget->setValueFromTarget(target);
 						}
 					}
@@ -180,7 +181,7 @@ void ProcessorManagerUI::addItemFromMenu(Processor* item, bool isFromAddButton, 
 	}
 	else if (Mapping* m = dynamic_cast<Mapping*>(item))
 	{
-		m->im.addItem(m->im.factory.create(MappingInput::getTypeStringStatic(m->isMultiplexed()))); //add one input by default if done through UI
+		m->im.addItem(m->im.factory.create(StandardMappingInput::getTypeStringStatic(m->isMultiplexed()))); //add one input by default if done through UI
 	}
 }
 

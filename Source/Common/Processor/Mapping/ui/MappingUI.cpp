@@ -108,7 +108,8 @@ void MappingUI::itemDropped(const SourceDetails& details)
 				if (isInput)
 				{
 					Controllable* target = mappingInputMenu.getControllableForResult(result);
-					MappingInput* mi = mapping->im.addItem();
+					StandardMappingInput* mi = new StandardMappingInput();
+					mapping->im.addItem(mi);
 					mi->inputTarget->setValueFromTarget(target);
 				}
 				else //command

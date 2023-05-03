@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "Common/Processor/ProcessorIncludes.h"
+
 Mapping::Mapping(var params, Multiplex* multiplex, bool canBeDisabled) :
 	Processor("Mapping", canBeDisabled),
 	MultiplexTarget(multiplex),

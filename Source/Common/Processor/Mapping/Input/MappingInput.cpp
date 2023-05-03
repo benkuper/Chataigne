@@ -9,53 +9,27 @@
 */
 
 #include "Module/ModuleIncludes.h"
-#include "MappingInput.h"
+#include "Common/Processor/ProcessorIncludes.h"
 
-MappingInput::MappingInput(var params, Multiplex * processor) :
-	BaseItem(getTypeStringStatic(params.getProperty("listMode", false)), false, false),
+
+MappingInput::MappingInput(const String& name, var params, Multiplex* processor) :
+	BaseItem(name, false, false),
 	MultiplexTarget(processor),
-	multiplexListMode(params.getProperty("listMode", false)),
 	inputReference(nullptr),
-	list(nullptr),
 	mappingInputAsyncNotifier(10)
 {
 	canBeCopiedAndPasted = true;
-
 	nameCanBeChangedByUser = false;
-
-	if (multiplexListMode)
-	{
-		inputTarget = addTargetParameter("Input List", "Multiplex list to be the input");
-		inputTarget->targetType = TargetParameter::CONTAINER;
-		inputTarget->setRootContainer(&multiplex->listManager);
-
-		std::function<void(ControllableContainer* startFromCC, std::function<void(ControllableContainer*)>)> getListFunc = std::bind(&Multiplex::showAndGetList, multiplex, std::placeholders::_1, std::placeholders::_2);
-		inputTarget->customGetTargetContainerFunc = getListFunc;
-		inputTarget->showParentNameInEditor = false;
-	}
-	else
-	{
-		inputTarget = addTargetParameter("Input Value", "Parameter to be the input");
-		inputTarget->excludeTypesFilter.add(Trigger::getTypeStringStatic());
-
-		inputTarget->customGetTargetFunc = &ModuleManager::getInstance()->showAllValuesAndGetControllable;
-		inputTarget->customGetControllableLabelFunc = &Module::getTargetLabelForValueControllable;
-		inputTarget->customCheckAssignOnNextChangeFunc = &ModuleManager::checkControllableIsAValue;
-	}
 }
-
-
 
 MappingInput::~MappingInput()
 {
 	clear();
-	if(list != nullptr) list->removeListListener(this);
 }
 
-void MappingInput::lockInput(Parameter* input)
+void MappingInput::clear()
 {
-	setInput(input);
-	if (input != nullptr) inputTarget->setEnabled(false);
+	setInput(nullptr);
 }
 
 void MappingInput::setInput(Parameter* _input)
@@ -82,7 +56,71 @@ void MappingInput::setInput(Parameter* _input)
 	mappingInputAsyncNotifier.addMessage(new MappingInputEvent(MappingInputEvent::INPUT_REFERENCE_CHANGED, this));
 }
 
-void MappingInput::setList(BaseMultiplexList* newList)
+
+Parameter* MappingInput::getInputAt(int multiplexIndex)
+{
+	return inputReference.get();
+}
+
+void MappingInput::parameterRangeChanged(Parameter* p)
+{
+	ControllableContainer::parameterRangeChanged(p);
+	mappinginputListeners.call(&MappingInput::Listener::inputParameterRangeChanged, this);
+}
+
+void MappingInput::onExternalParameterValueChanged(Parameter* p)
+{
+	if (p == inputReference)
+	{
+		mappinginputListeners.call(&MappingInput::Listener::inputParameterValueChanged, this, -1);
+		mappingInputAsyncNotifier.addMessage(new MappingInputEvent(MappingInputEvent::PARAMETER_VALUE_CHANGED, this, -1));
+	}
+}
+
+// STANDARD
+
+StandardMappingInput::StandardMappingInput(var params, Multiplex* processor) :
+	MappingInput(getTypeStringStatic(params.getProperty("listMode", false)), params, processor),
+	multiplexListMode(params.getProperty("listMode", false)),
+	list(nullptr)
+{
+
+	if (multiplexListMode)
+	{
+		inputTarget = addTargetParameter("Input List", "Multiplex list to be the input");
+		inputTarget->targetType = TargetParameter::CONTAINER;
+		inputTarget->setRootContainer(&multiplex->listManager);
+
+		std::function<void(ControllableContainer* startFromCC, std::function<void(ControllableContainer*)>)> getListFunc = std::bind(&Multiplex::showAndGetList, multiplex, std::placeholders::_1, std::placeholders::_2);
+		inputTarget->customGetTargetContainerFunc = getListFunc;
+		inputTarget->showParentNameInEditor = false;
+	}
+	else
+	{
+		inputTarget = addTargetParameter("Input Value", "Parameter to be the input");
+		inputTarget->excludeTypesFilter.add(Trigger::getTypeStringStatic());
+
+		inputTarget->customGetTargetFunc = &ModuleManager::getInstance()->showAllValuesAndGetControllable;
+		inputTarget->customGetControllableLabelFunc = &Module::getTargetLabelForValueControllable;
+		inputTarget->customCheckAssignOnNextChangeFunc = &ModuleManager::checkControllableIsAValue;
+	}
+}
+
+
+
+StandardMappingInput::~StandardMappingInput()
+{
+	if (list != nullptr) list->removeListListener(this);
+}
+
+void StandardMappingInput::lockInput(Parameter* input)
+{
+	setInput(input);
+	if (input != nullptr) inputTarget->setEnabled(false);
+}
+
+
+void StandardMappingInput::setList(BaseMultiplexList* newList)
 {
 	if (newList == list) return;
 
@@ -98,65 +136,83 @@ void MappingInput::setList(BaseMultiplexList* newList)
 		list->addListListener(this);
 	}
 
-	mappinginputListeners.call(&MappingInput::Listener::inputReferenceChanged, this);
+	mappinginputListeners.call(&StandardMappingInput::Listener::inputReferenceChanged, this);
 	mappingInputAsyncNotifier.addMessage(new MappingInputEvent(MappingInputEvent::INPUT_REFERENCE_CHANGED, this));
 }
 
-void MappingInput::onContainerParameterChangedInternal(Parameter* p)
+Parameter* StandardMappingInput::getInputAt(int multiplexIndex)
+{
+	if (!multiplexListMode) return MappingInput::getInputAt(multiplexIndex);
+	return dynamic_cast<Parameter*>(list != nullptr ? list->getTargetControllableAt(multiplexIndex) : nullptr);
+}
+
+
+void StandardMappingInput::onContainerParameterChangedInternal(Parameter* p)
 {
 	BaseItem::onContainerParameterChangedInternal(p);
 
 	if (p == inputTarget && inputTarget->enabled)
 	{
 		if (!multiplexListMode) setInput(inputTarget->target.wasObjectDeleted() ? nullptr : dynamic_cast<Parameter*>(inputTarget->target.get()));
-		else setList((BaseMultiplexList * )inputTarget->targetContainer.get());
+		else setList((BaseMultiplexList*)inputTarget->targetContainer.get());
 	}
 }
 
-void MappingInput::onExternalParameterValueChanged(Parameter* p)
+void StandardMappingInput::onExternalParameterValueChanged(Parameter* p)
 {
-	if (p == inputReference && !multiplexListMode)
-	{
-		mappinginputListeners.call(&MappingInput::Listener::inputParameterValueChanged, this, -1);
-		mappingInputAsyncNotifier.addMessage(new MappingInputEvent(MappingInputEvent::PARAMETER_VALUE_CHANGED, this, -1));
-	}
+	if (p == inputReference && multiplexListMode) return; // only call external if not in list mode
+	MappingInput::onExternalParameterValueChanged(p);
 }
 
-void MappingInput::listReferenceUpdated()
+void StandardMappingInput::listReferenceUpdated()
 {
-	mappinginputListeners.call(&MappingInput::Listener::inputReferenceChanged, this);
+	mappinginputListeners.call(&StandardMappingInput::Listener::inputReferenceChanged, this);
 	mappingInputAsyncNotifier.addMessage(new MappingInputEvent(MappingInputEvent::INPUT_REFERENCE_CHANGED, this));
 }
 
-void MappingInput::listItemUpdated(int multiplexIndex)
+void StandardMappingInput::listItemUpdated(int multiplexIndex)
 {
-	mappinginputListeners.call(&MappingInput::Listener::inputParameterValueChanged, this, multiplexIndex);
+	mappinginputListeners.call(&StandardMappingInput::Listener::inputParameterValueChanged, this, multiplexIndex);
 	mappingInputAsyncNotifier.addMessage(new MappingInputEvent(MappingInputEvent::PARAMETER_VALUE_CHANGED, this, multiplexIndex));
 }
 
-Parameter* MappingInput::getInputAt(int multiplexIndex)
-{
-	if (!multiplexListMode) return inputReference.get();
-	return dynamic_cast<Parameter*>(list != nullptr ? list->getTargetControllableAt(multiplexIndex) : nullptr);
-}
 
-void MappingInput::parameterRangeChanged(Parameter* p)
-{
-	ControllableContainer::parameterRangeChanged(p);
-	mappinginputListeners.call(&MappingInput::Listener::inputParameterRangeChanged, this);
-}
 
-void MappingInput::multiplexPreviewIndexChanged()
+void StandardMappingInput::multiplexPreviewIndexChanged()
 {
 	mappingInputAsyncNotifier.addMessage(new MappingInputEvent(MappingInputEvent::INPUT_PREVIEW_CHANGED, this, getPreviewIndex()));
 }
 
-void MappingInput::clear()
-{
-	setInput(nullptr);
-}
-
-InspectableEditor* MappingInput::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
+InspectableEditor* StandardMappingInput::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
 {
 	return new MappingInputEditor(this, isRoot);
+}
+
+
+// MANUAL
+
+
+ManualMappingInput::ManualMappingInput(var params, Multiplex* multiplex) :
+	MappingInput(getTypeStringStatic(params.getProperty("paramType", "").toString()), params, multiplex)
+{
+	manualParam = (Parameter*)ControllableFactory::createControllable(params.getProperty("paramType", ""));
+	manualParam->isCustomizableByUser = true;
+	addParameter(manualParam);
+	setInput(manualParam);
+}
+
+ManualMappingInput::~ManualMappingInput()
+{
+}
+
+void ManualMappingInput::onContainerParameterChangedInternal(Parameter* p)
+{
+	if (p == manualParam) onExternalParameterValueChanged(p);
+	MappingInput::onContainerParameterChangedInternal(p);
+}
+
+void ManualMappingInput::parameterRangeChanged(Parameter* p)
+{
+	if (p == manualParam) onExternalParameterRangeChanged(p);
+	MappingInput::parameterRangeChanged(p);
 }

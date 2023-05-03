@@ -12,40 +12,21 @@
 
 class MappingInput :
 	public BaseItem,
-	public MultiplexTarget,
-	public MultiplexListListener
+	public MultiplexTarget
 {
 public:
-	MappingInput(var params = var(), Multiplex* multiplex = nullptr);
-	~MappingInput();
+	MappingInput(const String& name = "Input", var params = var(), Multiplex* multiplex = nullptr);
+	virtual ~MappingInput();
 
-	bool multiplexListMode;
-
-	TargetParameter* inputTarget;
 	WeakReference<Parameter> inputReference;
-	BaseMultiplexList* list;
 
-	void lockInput(Parameter* input);
-	void setInput(Parameter* input);
+	virtual void clear() override;
+	virtual void setInput(Parameter* input);
 
-	void setList(BaseMultiplexList* newList);
+	virtual Parameter* getInputAt(int multiplexIndex);
 
-	void onContainerParameterChangedInternal(Parameter* p) override;
-	void onExternalParameterValueChanged(Parameter* p) override;
-
-	void listReferenceUpdated() override;
-	void listItemUpdated(int multiplexIndex) override;
-
-
-	Parameter* getInputAt(int multiplexIndex);
-
-	void parameterRangeChanged(Parameter* p) override;
-
-	void multiplexPreviewIndexChanged() override;
-
-	void clear() override;
-
-	InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables = Array<Inspectable*>()) override;
+	virtual void onExternalParameterValueChanged(Parameter* p) override;
+	virtual void parameterRangeChanged(Parameter* p) override;
 
 	class  Listener
 	{
@@ -77,7 +58,56 @@ public:
 	void addAsyncMappingInputListener(AsyncListener* newListener) { mappingInputAsyncNotifier.addListener(newListener); }
 	void addAsyncCoalescedMappingInputListener(AsyncListener* newListener) { mappingInputAsyncNotifier.addAsyncCoalescedListener(newListener); }
 	void removeAsyncMappingInputListener(AsyncListener* listener) { mappingInputAsyncNotifier.removeListener(listener); }
+};
+
+
+
+class StandardMappingInput :
+	public MappingInput,
+	public MultiplexListListener
+{
+public:
+	StandardMappingInput(var params = var(), Multiplex* multiplex = nullptr);
+	~StandardMappingInput();
+
+	bool multiplexListMode;
+
+	TargetParameter* inputTarget;
+	BaseMultiplexList* list;
+
+	void lockInput(Parameter* input);
+
+	void setList(BaseMultiplexList* newList);
+
+	virtual Parameter* getInputAt(int multiplexIndex) override;
+
+	void onContainerParameterChangedInternal(Parameter* p) override;
+	virtual void onExternalParameterValueChanged(Parameter* p) override;
+
+	void listReferenceUpdated() override;
+	void listItemUpdated(int multiplexIndex) override;
+
+	void multiplexPreviewIndexChanged() override;
+
+	InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables = Array<Inspectable*>()) override;
 
 	String getTypeString() const override { return getTypeStringStatic(multiplexListMode); }
 	static String getTypeStringStatic(bool listMode) { return "Input " + String(listMode ? "List" : "Value"); }
+};
+
+
+class ManualMappingInput :
+	public MappingInput
+{
+public:
+	ManualMappingInput(var params = var(), Multiplex* multiplex = nullptr);
+	~ManualMappingInput();
+
+	Parameter* manualParam;
+
+	void onContainerParameterChangedInternal(Parameter* p) override;
+	void parameterRangeChanged(Parameter* p) override;
+
+	String getTypeString() const override { return getTypeStringStatic(manualParam->getTypeString()); }
+	static String getTypeStringStatic(const String& type) { return "Input " + type; }
 };
