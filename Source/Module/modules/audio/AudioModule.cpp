@@ -386,43 +386,7 @@ void AudioModule::audioDeviceIOCallbackWithContext(const float* const* inputChan
 			}
 		}
 
-		//Analysis
-		analyzerManager.process(inputChannelData[0], numSamples);
 
-		if (ltcParamsCC.enabled->boolValue())
-		{
-			int channel = ltcChannel->intValue() - 1;
-			if (channel >= 0 && channel < numInputChannels)
-			{
-				ltc_decoder_write_float(ltcDecoder.get(), (float*)inputChannelData[channel], numSamples, 0);
-
-				bool hasLTC = false;
-				LTCFrameExt frame;
-				while (ltc_decoder_read(ltcDecoder.get(), &frame))
-				{
-					SMPTETimecode stime;
-					ltc_frame_to_time(&stime, &frame.ltc, 1);
-
-					float time = stime.days * 3600 * 24 + stime.hours * 3600 + stime.mins * 60 + stime.secs + stime.frame * 1.0f / curLTCFPS;
-					ltcTime->setValue(time);
-					hasLTC = true;
-				}
-
-				if (!hasLTC)
-				{
-					if (ltcPlaying->boolValue())
-					{
-						ltcFrameDropCount++;
-						if (ltcFrameDropCount >= 10) ltcPlaying->setValue(hasLTC);
-					}
-				}
-				else
-				{
-					ltcFrameDropCount = 0;
-					ltcPlaying->setValue(true);
-				}
-			}
-		}
 
 		//Monitor
 		if (monitorParams.enabled->boolValue())
@@ -432,6 +396,44 @@ void AudioModule::audioDeviceIOCallbackWithContext(const float* const* inputChan
 				int outputIndex = selectedMonitorOutChannels[j];
 				if (outputIndex >= numOutputChannels) continue;
 				FloatVectorOperations::addWithMultiply(outputChannelData[outputIndex], inputChannelData[i], monitorVolume->floatValue() * channelVolume, numSamples);
+			}
+		}
+	}
+
+	//Analysis
+	analyzerManager.process(inputChannelData[0], numSamples);
+
+	if (ltcParamsCC.enabled->boolValue())
+	{
+		int channel = ltcChannel->intValue() - 1;
+		if (channel >= 0 && channel < numInputChannels)
+		{
+			ltc_decoder_write_float(ltcDecoder.get(), (float*)inputChannelData[channel], numSamples, 0);
+
+			bool hasLTC = false;
+			LTCFrameExt frame;
+			while (ltc_decoder_read(ltcDecoder.get(), &frame))
+			{
+				SMPTETimecode stime;
+				ltc_frame_to_time(&stime, &frame.ltc, 1);
+
+				float time = stime.days * 3600 * 24 + stime.hours * 3600 + stime.mins * 60 + stime.secs + stime.frame * 1.0f / curLTCFPS;
+				ltcTime->setValue(time);
+				hasLTC = true;
+			}
+
+			if (!hasLTC)
+			{
+				if (ltcPlaying->boolValue())
+				{
+					ltcFrameDropCount++;
+					if (ltcFrameDropCount >= 10) ltcPlaying->setValue(hasLTC);
+				}
+			}
+			else
+			{
+				ltcFrameDropCount = 0;
+				ltcPlaying->setValue(true);
 			}
 		}
 	}

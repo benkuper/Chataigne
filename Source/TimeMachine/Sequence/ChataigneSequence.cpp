@@ -350,7 +350,11 @@ void ChataigneSequence::onExternalParameterValueChanged(Parameter* p)
 			if (ltcAudioModule->ltcPlaying->boolValue())
 			{
 				double time = ltcAudioModule->ltcTime->floatValue() + (syncOffset->floatValue() * (reverseOffset->boolValue() ? -1 : 1));
-				if (time >= 0 && time < totalTime->floatValue()) playTrigger->trigger();
+				if (time >= 0 && time < totalTime->floatValue())
+				{
+					setCurrentTime(time, true, true);
+					playTrigger->trigger();
+				}
 			}
 			else
 			{
@@ -361,10 +365,7 @@ void ChataigneSequence::onExternalParameterValueChanged(Parameter* p)
 		{
 			double time = ltcAudioModule->ltcTime->floatValue() + (syncOffset->floatValue() * (reverseOffset->boolValue() ? -1 : 1));
 			double diff = fabs(currentTime->floatValue() - time);
-			bool isJump = diff > 1;
-			bool seekMode = isJump || !ltcAudioModule->ltcPlaying->boolValue();
-			if (!isPlaying->boolValue() && time >= 0 && time < totalTime->floatValue()) playTrigger->trigger();
-			setCurrentTime(time, isJump, seekMode);
+			if(diff > 1) setCurrentTime(time, true, true);
 		}
 	}
 }
