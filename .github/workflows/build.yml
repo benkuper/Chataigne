@@ -167,11 +167,6 @@ jobs:
     container: debian/eol:stretch
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v2
-        with:
-          submodules: 'recursive'
-
       - name: Installing dependencies
         id: install_deps
         #shell: bash {0} # Opt out of fail-fast behavior (necessary to ignore fetch errors)
@@ -184,6 +179,11 @@ jobs:
           cd ${{ github.workspace }}
           wget "https://github.com/AppImage/AppImageKit/releases/download/13/appimagetool-x86_64.AppImage"
           chmod a+x appimagetool-x86_64.AppImage
+
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
           
       - name: Checkout JUCE
         uses: actions/checkout@v2
