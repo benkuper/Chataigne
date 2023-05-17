@@ -164,6 +164,7 @@ jobs:
 
     name: Linux
     runs-on: ubuntu-22.04
+    container: debian/eol:stretch
 
     steps:
       - name: Checkout repo
@@ -214,12 +215,9 @@ jobs:
       #     SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
 
       - name: Build
-        uses: kohlerdominik/docker-run-action@v1
-        with:
-          image: quay.io/pypa/manylinux2014_x86_64
-          run: |
-            cd ${{ github.workspace }}/Builds/LinuxMakefile
-            make -j2 CONFIG=Release
+        run: |
+          cd ${{ github.workspace }}/Builds/LinuxMakefile
+          make -j2 CONFIG=Release
 
       - name: Create AppImage
         id: create_package
