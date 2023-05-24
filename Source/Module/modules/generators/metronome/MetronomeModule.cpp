@@ -24,6 +24,7 @@ MetronomeModule::MetronomeModule() :
 
 	tapTempoIntervalsMax = moduleParams.addIntParameter("Tap tempo averaging", "How many intervals do you want to use in averaging ? 0 means all",4,1);
 	tapTempo = moduleParams.addTrigger("Tap Tempo", "press me at least twice to set tempo");
+	resetTime = moduleParams.addTrigger("Rest Time", "Reset the metronome time");
 
 	tick = valuesCC.addBoolParameter("Tick", "When the metronome is ticking", false);
 
@@ -95,6 +96,11 @@ void MetronomeModule::onControllableFeedbackUpdateInternal(ControllableContainer
 	else if (c == tapTempo)
 	{
 		tapTempoPressed();
+	}
+	else if (c == resetTime)
+	{
+		stopThread(20);
+		startThread();
 	}
 }
 
