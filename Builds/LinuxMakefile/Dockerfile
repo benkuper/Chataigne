@@ -5,4 +5,30 @@ FROM debian/eol:stretch
 RUN echo "deb http://archive.debian.org/debian/ stretch main contrib non-free\ndeb http://archive.debian.org/debian/ stretch-backports main contrib non-free\ndeb http://archive.debian.org/debian-security/ stretch/updates main contrib non-free" > /etc/apt/sources.list && apt-get update
 
 # Install build dependencies and tools
-RUN apt-get install -qyf wget curl libcurl3-gnutls libfreetype6-dev libx11-dev libxinerama-dev libxrandr-dev libxcursor-dev libxcomposite-dev mesa-common-dev libasound2-dev freeglut3-dev libcurl4-gnutls-dev libasound2-dev libjack-dev libbluetooth-dev libgtk-3-dev libwebkit2gtk-4.0-dev libsdl2-dev libfuse2 libfuse2 libusb-1.0-0-dev libhidapi-dev ladspa-sdk libssl-dev
+RUN apt-get install -qyf \
+        wget \
+        curl \
+        libcurl3-gnutls \
+        libfreetype6-dev \
+        libx11-dev \
+        libxinerama-dev \
+        libxrandr-dev \
+        libxcursor-dev \
+        libxcomposite-dev \
+        mesa-common-dev \
+        libasound2-dev \
+        freeglut3-dev \
+        libcurl4-gnutls-dev \
+        libasound2-dev \
+        libjack-dev \
+        libbluetooth-dev \
+        libgtk-3-dev \
+        libwebkit2gtk-4.0-dev \
+        libsdl2-dev \
+        libfuse2 \
+        libusb-1.0-0-dev \
+        libhidapi-dev \
+        ladspa-sdk
+
+# Github actions/Checkout@v2 requires git >=2.18 for proper operation
+RUN apt-get -t stretch-backports install git -y
