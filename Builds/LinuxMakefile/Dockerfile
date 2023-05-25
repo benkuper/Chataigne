@@ -33,6 +33,6 @@ RUN apt-get install -qyf \
 # Github actions/Checkout@v2 requires git >=2.18 for proper operation
 RUN apt-get -t stretch-backports install git -y
 
-# Install gcc 8 from buster (Chataigne requires C++17)
+# Install g++ 8 from buster (Chataigne requires C++17)
 RUN echo "deb http://deb.debian.org/debian/ buster main contrib non-free\n" > /etc/apt/sources.list && apt-get update
-RUN apt-get -t buster install gcc -y
+RUN apt-get -t buster install g++ -y
