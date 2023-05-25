@@ -226,7 +226,7 @@ jobs:
 
           PKGNAME=${{ env.ProjectName }}-linux-${{ steps.set_variables.outputs.suffix }}.AppImage
           echo "pkg-name=$PKGNAME" >> $GITHUB_OUTPUT
-          $GITHUB_WORKSPACE/appimagetool-x86_64.AppImage ${{ env.ProjectName }}.AppDir $PKGNAME
+          $GITHUB_WORKSPACE/appimagetool-x86_64.AppImage --appimage-extract-and-run ${{ env.ProjectName }}.AppDir $PKGNAME
         working-directory: ./Builds/LinuxMakefile
 
       - name: Upload
