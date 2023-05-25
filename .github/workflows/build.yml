@@ -192,7 +192,7 @@ jobs:
           # Most dependencies are already installed in the Docker image. Uncomment the following lines if you need more
           # apt-get update && apt-get install ...
 
-          cd ${{ github.workspace }}
+          cd $GITHUB_WORKSPACE
           wget "https://github.com/AppImage/AppImageKit/releases/download/13/appimagetool-x86_64.AppImage"
           chmod a+x appimagetool-x86_64.AppImage
 
@@ -214,7 +214,7 @@ jobs:
 
       - name: Build
         run: |
-          cd ${{ github.workspace }}/Builds/LinuxMakefile
+          cd $GITHUB_WORKSPACE/Builds/LinuxMakefile
           make -j2 CONFIG=Release
 
       - name: Create AppImage
@@ -225,7 +225,7 @@ jobs:
 
           PKGNAME=${{ env.ProjectName }}-linux-${{ steps.set_variables.outputs.suffix }}.AppImage
           echo "pkg-name=$PKGNAME" >> $GITHUB_OUTPUT
-          ${{ github.workspace }}/appimagetool-x86_64.AppImage ${{ env.ProjectName }}.AppDir $PKGNAME
+          $GITHUB_WORKSPACE/appimagetool-x86_64.AppImage ${{ env.ProjectName }}.AppDir $PKGNAME
         working-directory: ./Builds/LinuxMakefile
 
       - name: Upload
