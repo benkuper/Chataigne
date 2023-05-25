@@ -164,27 +164,13 @@ jobs:
 
     name: Linux
     runs-on: ubuntu-22.04
-    container: debian/eol:stretch
 
     steps:
-      - name: Installing dependencies
-        id: install_deps
-        #shell: bash {0} # Opt out of fail-fast behavior (necessary to ignore fetch errors)
-        run: |
-          apt-get update
-          echo "Installing JUCE lib dependencies and extra tools"
-          apt-get install -qyf git libcurl3-gnutls libfreetype6-dev libx11-dev libxinerama-dev libxrandr-dev libxcursor-dev libxcomposite-dev mesa-common-dev libasound2-dev freeglut3-dev libcurl4-gnutls-dev libasound2-dev libjack-dev libbluetooth-dev libgtk-3-dev libwebkit2gtk-4.0-dev libsdl2-dev libfuse2 libfuse2 libusb-1.0-0-dev libhidapi-dev ladspa-sdk libssl-dev
-          apt-get install -qy curl
-
-          cd ${{ github.workspace }}
-          wget "https://github.com/AppImage/AppImageKit/releases/download/13/appimagetool-x86_64.AppImage"
-          chmod a+x appimagetool-x86_64.AppImage
-
       - name: Checkout repo
         uses: actions/checkout@v2
         with:
           submodules: 'recursive'
-          
+
       - name: Checkout JUCE
         uses: actions/checkout@v2
         with:
@@ -197,6 +183,19 @@ jobs:
         uses: ./.github/actions/set-suffix
         with:
           os: 'x64'
+
+      - name: Installing dependencies
+        id: install_deps
+        #shell: bash {0} # Opt out of fail-fast behavior (necessary to ignore fetch errors)
+        run: |
+          sudo apt-get update
+          echo "Installing JUCE lib dependencies and extra tools"
+          sudo apt-get install -qyf libcurl3-gnutls libfreetype6-dev libx11-dev libxinerama-dev libxrandr-dev libxcursor-dev libxcomposite-dev mesa-common-dev libasound2-dev freeglut3-dev libcurl4-gnutls-dev libasound2-dev libjack-dev libbluetooth-dev libgtk-3-dev libwebkit2gtk-4.0-dev libsdl2-dev libfuse2 libfuse2 libusb-1.0-0-dev libhidapi-dev ladspa-sdk libssl-dev
+          sudo apt-get install -qy curl
+
+          cd ${{ github.workspace }}
+          wget "https://github.com/AppImage/AppImageKit/releases/download/13/appimagetool-x86_64.AppImage"
+          chmod a+x appimagetool-x86_64.AppImage
 
       # - name: Start SSH via ngrok
       #   uses: P3TERX/ssh2actions@main
