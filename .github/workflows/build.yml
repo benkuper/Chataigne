@@ -215,6 +215,7 @@ jobs:
       - name: Build
         run: |
           cd $GITHUB_WORKSPACE/Builds/LinuxMakefile
+          gcc --version
           make -j2 CONFIG=Release
 
       - name: Create AppImage
