@@ -164,6 +164,7 @@ jobs:
 
     name: Linux
     runs-on: ubuntu-22.04
+    container: tommagnier/chataigne-linux-x64-build
 
     steps:
       - name: Checkout repo
@@ -188,12 +189,10 @@ jobs:
         id: install_deps
         #shell: bash {0} # Opt out of fail-fast behavior (necessary to ignore fetch errors)
         run: |
-          sudo apt-get update
-          echo "Installing JUCE lib dependencies and extra tools"
-          sudo apt-get install -qyf libcurl3-gnutls libfreetype6-dev libx11-dev libxinerama-dev libxrandr-dev libxcursor-dev libxcomposite-dev mesa-common-dev libasound2-dev freeglut3-dev libcurl4-gnutls-dev libasound2-dev libjack-dev libbluetooth-dev libgtk-3-dev libwebkit2gtk-4.0-dev libsdl2-dev libfuse2 libfuse2 libusb-1.0-0-dev libhidapi-dev ladspa-sdk libssl-dev
-          sudo apt-get install -qy curl
+          # Most dependencies are already installed in the Docker image. Uncomment the following lines if you need more
+          # apt-get update && apt-get install ...
 
-          cd ${{ github.workspace }}
+          cd $GITHUB_WORKSPACE
           wget "https://github.com/AppImage/AppImageKit/releases/download/13/appimagetool-x86_64.AppImage"
           chmod a+x appimagetool-x86_64.AppImage
 
@@ -215,7 +214,8 @@ jobs:
 
       - name: Build
         run: |
-          cd ${{ github.workspace }}/Builds/LinuxMakefile
+          cd $GITHUB_WORKSPACE/Builds/LinuxMakefile
+          gcc --version
           make -j2 CONFIG=Release
 
       - name: Create AppImage
@@ -226,7 +226,7 @@ jobs:
 
           PKGNAME=${{ env.ProjectName }}-linux-${{ steps.set_variables.outputs.suffix }}.AppImage
           echo "pkg-name=$PKGNAME" >> $GITHUB_OUTPUT
-          ${{ github.workspace }}/appimagetool-x86_64.AppImage ${{ env.ProjectName }}.AppDir $PKGNAME
+          $GITHUB_WORKSPACE/appimagetool-x86_64.AppImage --appimage-extract-and-run ${{ env.ProjectName }}.AppDir $PKGNAME
         working-directory: ./Builds/LinuxMakefile
 
       - name: Upload
