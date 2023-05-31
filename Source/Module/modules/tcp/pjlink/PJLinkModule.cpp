@@ -9,6 +9,7 @@
 */
 
 #include "Module/ModuleIncludes.h"
+#include "PJLinkModule.h"
 
 PJLinkModule::PJLinkModule() :
 	StreamingModule(getDefaultTypeString()),
@@ -26,12 +27,14 @@ PJLinkModule::PJLinkModule() :
 	scriptManager->scriptTemplate += ChataigneAssetManager::getInstance()->getScriptTemplate("pjlink");
 
 	numClients = moduleParams.addIntParameter("Num Projectors", "Number of projectors to control", 1, 1, 100);
+	//numClients->alwaysNotify = true;
+	//numClients->forceSaveValue = true;
+
 	autoRequestTime = moduleParams.addIntParameter("Auto Request Timer", "If enabled, this is the number of seconds between auto request, alternating power and shutter status", 5, 1, 100, true);
 	autoRequestTime->canBeDisabledByUser = true;
 
 	allProjectorsPoweredOn = valuesCC.addBoolParameter("All Powered On", "Are all projectors powered on ?", false);
 	allProjectorsPoweredOff = valuesCC.addBoolParameter("All Powered Off", "Are all projectors powered off ?", false);
-
 
 	moduleParams.addChildControllableContainer(&clientsParamsCC);
 	valuesCC.addChildControllableContainer(&clientsValuesCC);
@@ -90,6 +93,15 @@ void PJLinkModule::updateClientsSetup()
 		addClient();
 	}
 
+	if (isCurrentlyLoadingData)
+	{
+
+		for (int i = 0; i < clients.size(); i++)
+		{
+			if (ghostClientNames.size() > i) clients[i]->paramsCC.setNiceName(ghostClientNames[i]);
+		}
+	}
+
 	updateAllPoweredStatuses();
 }
 
@@ -98,7 +110,14 @@ PJLinkModule::PJLinkClient* PJLinkModule::addClient()
 	PJLinkClient* c = new PJLinkClient(this, clients.size() + 1);
 	clientsParamsCC.addChildControllableContainer(&c->paramsCC);
 	clientsValuesCC.addChildControllableContainer(&c->valuesCC);
+
+	if (isCurrentlyLoadingData && ghostClientNames.size() > clients.size())
+	{
+		c->paramsCC.setNiceName(ghostClientNames[clients.size()]);
+	}
+
 	clients.add(c);
+
 	return c;
 }
 
@@ -143,13 +162,13 @@ void PJLinkModule::onControllableFeedbackUpdateInternal(ControllableContainer* c
 			if (c == client->inputStatus)
 			{
 				StringArray chooseInput(client->inputStatus->getValue());
-				if (!(chooseInput[0] == "-1")&&!(chooseInput[0]==""))
+				if (!(chooseInput[0] == "-1") && !(chooseInput[0] == ""))
 				{
-						String messageToSendInput = "%1INPT ";
-						messageToSendInput.append(chooseInput[0], 20);
+					String messageToSendInput = "%1INPT ";
+					messageToSendInput.append(chooseInput[0], 20);
 
-						sendMessageToClient(messageToSendInput, client->id);
-						sendMessageToClient("%2IRES ?", client->id);
+					sendMessageToClient(messageToSendInput, client->id);
+					sendMessageToClient("%2IRES ?", client->id);
 				}
 			}
 
@@ -160,7 +179,7 @@ void PJLinkModule::onControllableFeedbackUpdateInternal(ControllableContainer* c
 				sendMessageToClient("%2IRES ?", client->id);
 			}
 
-			if (c == client->updateInfo) requestInfos();				   
+			if (c == client->updateInfo) requestInfos();
 		}
 	}
 	else if (cc == &moduleParams)
@@ -452,7 +471,7 @@ void PJLinkModule::processClientLine(PJLinkClient* c, const String& message)
 		else
 		{
 			c->displayNameInfo->setValue(message.substring(7));
-			NLOG(niceName," > Received display name of projector " << c->id);
+			NLOG(niceName, " > Received display name of projector " << c->id);
 		}
 	}
 	else if (message.contains("%2IRES="))    // Input resolution
@@ -463,7 +482,7 @@ void PJLinkModule::processClientLine(PJLinkClient* c, const String& message)
 		{
 			c->inputResolutionInfo->setValue(message.substring(7));
 
-			NLOG(niceName," > Received input resolution of projector " << c->id);
+			NLOG(niceName, " > Received input resolution of projector " << c->id);
 		}
 	}
 	else if (message.contains("%2RRES="))    // Recommended resolution
@@ -474,7 +493,7 @@ void PJLinkModule::processClientLine(PJLinkClient* c, const String& message)
 		{
 			c->resolutionRecommendedInfo->setValue(message.substring(7));
 
-			NLOG(niceName ," > Received recommmended reolution of projector " << c->id);
+			NLOG(niceName, " > Received recommmended reolution of projector " << c->id);
 		}
 	}
 	else if (message.contains("%2RLMP="))    // Lamp model
@@ -485,13 +504,13 @@ void PJLinkModule::processClientLine(PJLinkClient* c, const String& message)
 		{
 			c->lampModelInfo->setValue("No information");
 
-			NLOG(niceName ," > Received empty lamp model of projector " << c->id);
+			NLOG(niceName, " > Received empty lamp model of projector " << c->id);
 		}
 		else
 		{
 			c->lampModelInfo->setValue(message.substring(7));
 
-			NLOG(niceName ," > Received lamp model of projector " << c->id);
+			NLOG(niceName, " > Received lamp model of projector " << c->id);
 		}
 	}
 	else if (message.contains("%2FILT="))    // Filter time
@@ -503,7 +522,7 @@ void PJLinkModule::processClientLine(PJLinkClient* c, const String& message)
 		{
 			c->filterUsageInfo->setValue(message.substring(7) + " hours");
 
-			NLOG(niceName ," > Received filter time of projector " << c->id);
+			NLOG(niceName, " > Received filter time of projector " << c->id);
 		}
 	}
 	else if (message.contains("%2RFIL="))    // Filter number
@@ -515,7 +534,7 @@ void PJLinkModule::processClientLine(PJLinkClient* c, const String& message)
 		{
 			c->filterModelInfo->setValue(message.substring(7));
 
-			NLOG(niceName ," > Received filter number of projector " << c->id);
+			NLOG(niceName, " > Received filter number of projector " << c->id);
 		}
 	}
 	else if (message.contains("%2SVER="))    // firmware version
@@ -527,7 +546,7 @@ void PJLinkModule::processClientLine(PJLinkClient* c, const String& message)
 		{
 			c->softVerInfo->setValue(message.substring(7));
 
-			NLOG(niceName ," > Received firmware version of projector " << c->id);
+			NLOG(niceName, " > Received firmware version of projector " << c->id);
 		}
 	}
 	else if (message.contains("%1LAMP="))    // Lamp hours
@@ -546,15 +565,15 @@ void PJLinkModule::processClientLine(PJLinkClient* c, const String& message)
 
 			for (int i = 0; i < ls.size() - 1; i += 2)
 			{
-				lhs += " lamp " + String(i+1);
+				lhs += " lamp " + String(i + 1);
 				lhs += " = " + ls[i];
 
 				if (!(i == nbVp - 2)) lhs += ", ";
 			}
-															
+
 			c->lampHourInfo->setValue(lhs);
 
-			NLOG(niceName ," > Received lamp hours of projector " << c->id);
+			NLOG(niceName, " > Received lamp hours of projector " << c->id);
 		}
 	}
 
@@ -563,41 +582,43 @@ void PJLinkModule::processClientLine(PJLinkClient* c, const String& message)
 		c->inputStatus->clearOptions();
 		c->inputStatus->addOption("Not set", -1);
 
-		if (message.substring(7)=="ERR3") NLOGERROR(niceName, " Error while receiving the input list : Unavailable time for any reason ");
-		else if (message.substring(7)=="ERR4") NLOGERROR(niceName, " Error while receiving the input list : Projector/Display failure ");
+		if (message.substring(7) == "ERR3") NLOGERROR(niceName, " Error while receiving the input list : Unavailable time for any reason ");
+		else if (message.substring(7) == "ERR4") NLOGERROR(niceName, " Error while receiving the input list : Projector/Display failure ");
 		else if (!(message.substring(7) == ""))
 		{
 			inputListVp.clear();
 			inputListVp.addTokens(message.substring(message.indexOfIgnoreCase("=") + 1), " ");
-			
-			int i(0);				
-																								
-			for (i = 0; i < (inputListVp.size()); i += 1)									
-			{																					
-				sendMessageToClient("%2INNM ?" + inputListVp[i],c->id);
-			}																							
 
-			NLOG(niceName ," > Received input list of projector " << c->id);
-			
+			int i(0);
+
+			for (i = 0; i < (inputListVp.size()); i += 1)
+			{
+				sendMessageToClient("%2INNM ?" + inputListVp[i], c->id);
+			}
+
+			NLOG(niceName, " > Received input list of projector " << c->id);
+
 			requestInputName(c->id);
 		}
 	}
 	else if (message.contains("%2INNM="))    //  input name
 	{
 		if (message.substring(7) == "ERR2") NLOGERROR(niceName, " Error while receiving input name : Out of parameter");
-		else if (message.substring(7) == "ERR3") 
+		else if (message.substring(7) == "ERR3")
 		{
 			NLOGERROR(niceName, " Error while receiving input name : Unvailable time");
-		
+
 		}
 		else if (message.substring(7) == "ERR4") NLOGERROR(niceName, " Error while receiving input name : Projector/display failure");
 		else
 
-		{c->inputStatus->addOption(message.substring(7), inputListVp[indexInput]);}
+		{
+			c->inputStatus->addOption(message.substring(7), inputListVp[indexInput]);
+		}
 
-		
 
-		NLOG(niceName ," > Received input name of projector " << c->id);
+
+		NLOG(niceName, " > Received input name of projector " << c->id);
 
 		indexInput += 1;
 
@@ -609,7 +630,7 @@ void PJLinkModule::processClientLine(PJLinkClient* c, const String& message)
 		if (message.substring(7) == "ERR2")
 		{
 			NLOGERROR(niceName, " Error nonexistent input source ");
-			c->inputStatus->setValueWithKey("-1");			
+			c->inputStatus->setValueWithKey("-1");
 		}
 		else if (message.substring(7) == "ERR3")
 		{
@@ -624,14 +645,14 @@ void PJLinkModule::processClientLine(PJLinkClient* c, const String& message)
 		else
 		{
 			c->inputStatus->setValueWithData(message.substring(7));
-			NLOG(niceName ," > Received input of projector " << c->id);
+			NLOG(niceName, " > Received input of projector " << c->id);
 		}
 	}
 
 	else if (message.contains("%1ERST="))	//	errors	
 	{
-		if (message.substring(7) == "ERR3")	{NLOGERROR(niceName, " Error while receiving errors : Unvailable time");}
-		else if (message.substring(7) == "ERR4") {NLOGERROR(niceName, " Error while receiving errors : Projector/display failure");}
+		if (message.substring(7) == "ERR3") { NLOGERROR(niceName, " Error while receiving errors : Unvailable time"); }
+		else if (message.substring(7) == "ERR4") { NLOGERROR(niceName, " Error while receiving errors : Projector/display failure"); }
 		else if (!(message.substring(7) == ""))
 		{
 			c->fanErrorInfo->setValue(PJLinkModule::convertError(message.substring(7, 8)));
@@ -641,7 +662,7 @@ void PJLinkModule::processClientLine(PJLinkClient* c, const String& message)
 			c->filterErrorInfo->setValue(PJLinkModule::convertError(message.substring(11, 12)));
 			c->otherErrorInfo->setValue(PJLinkModule::convertError(message.substring(12, 13)));
 
-			NLOG(niceName ," > Received error of projector " << c->id);
+			NLOG(niceName, " > Received error of projector " << c->id);
 		}
 	}
 }
@@ -649,19 +670,39 @@ void PJLinkModule::processClientLine(PJLinkClient* c, const String& message)
 String PJLinkModule::convertError(String numError)
 {
 	std::string stringError;
-	
-		if (numError == "0"){stringError = "No error or no error detecting function";}
-		else if (numError == "1"){stringError = "**** Warning ****";}
-		else if(numError == "2"){stringError = "**** Error ****";}
+
+	if (numError == "0") { stringError = "No error or no error detecting function"; }
+	else if (numError == "1") { stringError = "**** Warning ****"; }
+	else if (numError == "2") { stringError = "**** Error ****"; }
 
 	return stringError;
 }
 
 void PJLinkModule::requestInputName(int id)
-	{
+{
 	if (indexInput <= inputListVp.size() - 1) sendMessageToClient("%2INNM ?" + inputListVp[indexInput], idVpInput);
-	if (indexInput == inputListVp.size()) sendMessageToClient("%1INPT ?",id);
-	}
+	if (indexInput == inputListVp.size()) sendMessageToClient("%1INPT ?", id);
+}
+
+var PJLinkModule::getJSONData()
+{
+	var data = StreamingModule::getJSONData();
+
+	var clientNames;
+	for (auto& c : clients) clientNames.append(c->paramsCC.niceName);
+	data.getDynamicObject()->setProperty("clientNames", clientNames);
+	return data;
+}
+
+void PJLinkModule::loadJSONDataInternal(var data)
+{
+	ghostClientNames = data.getProperty("clientNames", var());
+	updateClientsSetup();
+	//while (clients.size() > 0) removeClient(clients[0]);
+	
+	StreamingModule::loadJSONDataInternal(data);
+	ghostClientNames = var();
+}
 
 PJLinkModule::PJLinkClient::PJLinkClient(PJLinkModule* m, int id) :
 	Thread("PJLink Client " + String(id)),
@@ -671,9 +712,13 @@ PJLinkModule::PJLinkClient::PJLinkClient(PJLinkModule* m, int id) :
 	paramsCC("Projector " + String(id)),
 	valuesCC("Projector " + String(id)),
 	infosCC("Informations"),
-    assigningFromRemote(false)
+	assigningFromRemote(false)
 {
-	valuesCC.addChildControllableContainer(&infosCC);												  
+	paramsCC.nameCanBeChangedByUser = true;
+	paramsCC.addControllableContainerListener(this);
+
+	valuesCC.addChildControllableContainer(&infosCC);
+
 
 	std::function<InspectableEditor* (bool, Array<ControllableContainer*>)> func = [&](bool, Array<ControllableContainer*>) { return new PJLinkClientParamContainerEditor(this); };
 	paramsCC.customGetEditorFunc = func;
@@ -691,14 +736,14 @@ PJLinkModule::PJLinkClient::PJLinkClient(PJLinkModule* m, int id) :
 
 	shutterVideoStatus = valuesCC.addBoolParameter("Shutter Video Status", "Is the projector's shutter on", false);
 	shutterAudioStatus = valuesCC.addBoolParameter("Shutter Audio Status", "Is the projector's shutter on", false);
-	
+
 	inputStatus = valuesCC.addEnumParameter("Input", "Input selected");												// input list and the selected one
 	inputStatus->addOption("Not set", -1);
 	inputResolutionInfo = valuesCC.addStringParameter("Input resolution", "Resolution of the signal", "");			// input resolution
 	inputResolutionInfo->setControllableFeedbackOnly(true);
 	updateInput = valuesCC.addTrigger("Update input resolution", "to update the input resolution");		// update input resolution
 
-//  Informations
+	//  Informations
 	updateInfo = infosCC.addTrigger("Update informations", "update informations");
 	brendInfo = infosCC.addStringParameter("Brend", "Brend of the projector", "");									// brend name
 	brendInfo->setControllableFeedbackOnly(true);
@@ -710,7 +755,7 @@ PJLinkModule::PJLinkClient::PJLinkClient(PJLinkModule* m, int id) :
 	resolutionRecommendedInfo->setControllableFeedbackOnly(true);
 	softVerInfo = infosCC.addStringParameter("Firmware", "firmware version", "");									// firmware version
 	softVerInfo->setControllableFeedbackOnly(true);
-	lampHourInfo = infosCC.addStringParameter("Lamp(s) hours","total hours of lamp(s) operation","");										// lamp hours
+	lampHourInfo = infosCC.addStringParameter("Lamp(s) hours", "total hours of lamp(s) operation", "");										// lamp hours
 	lampHourInfo->setControllableFeedbackOnly(true);
 	lampModelInfo = infosCC.addStringParameter("Lamp model", "Lamp replacement model number", "");					// Lamp replacement model number
 	lampModelInfo->setControllableFeedbackOnly(true);
@@ -718,18 +763,18 @@ PJLinkModule::PJLinkClient::PJLinkClient(PJLinkModule* m, int id) :
 	filterUsageInfo->setControllableFeedbackOnly(true);
 	filterModelInfo = infosCC.addStringParameter("Filter Model", "Filter replacement model number", "");			// Filter replacement model number
 	filterModelInfo->setControllableFeedbackOnly(true);
-	fanErrorInfo = infosCC.addStringParameter("Fan error", "Fan error","");											// Fan Error
+	fanErrorInfo = infosCC.addStringParameter("Fan error", "Fan error", "");											// Fan Error
 	fanErrorInfo->setControllableFeedbackOnly(true);
 	lampErrorInfo = infosCC.addStringParameter("Lamp error", "Lamp error", "");										// Lamp error
 	lampErrorInfo->setControllableFeedbackOnly(true);
 	temperatureErrorInfo = infosCC.addStringParameter("Temperature error", "Temperature error", "");				// Temperature error
 	temperatureErrorInfo->setControllableFeedbackOnly(true);
-	coverErrorInfo=infosCC.addStringParameter("Cover error", "Cover error", "");									// Cover error
+	coverErrorInfo = infosCC.addStringParameter("Cover error", "Cover error", "");									// Cover error
 	coverErrorInfo->setControllableFeedbackOnly(true);
 	filterErrorInfo = infosCC.addStringParameter("Filter error", "Filter error", "");								// Filter error
 	filterErrorInfo->setControllableFeedbackOnly(true);
 	otherErrorInfo = infosCC.addStringParameter("Other error", "Other error", "");									// Other error
-	otherErrorInfo->setControllableFeedbackOnly(true);												   
+	otherErrorInfo->setControllableFeedbackOnly(true);
 }
 
 PJLinkModule::PJLinkClient::~PJLinkClient()
@@ -767,4 +812,12 @@ void PJLinkModule::PJLinkClient::run()
 	paramsCC.clearWarning();
 
 	if (pjlinkModule->logOutgoingData->boolValue()) LOG("Connected to projector " << (id) << " (" << remoteHost->stringValue() << ":" << remotePort->intValue() << ")");
+}
+
+void PJLinkModule::PJLinkClient::controllableContainerNameChanged(ControllableContainer* cc)
+{
+	if (cc == &paramsCC)
+	{
+		valuesCC.setNiceName(paramsCC.niceName);
+	}
 }
