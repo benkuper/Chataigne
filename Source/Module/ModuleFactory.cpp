@@ -75,16 +75,16 @@ ModuleFactory::~ModuleFactory()
 
 void ModuleFactory::addCustomModules(bool log)
 {
-	File modulesFolder = getCustomModulesFolder();
-	modulesFolder.createDirectory();
-	addCustomModulesInFolder(modulesFolder, false, log);
-
 	File f = Engine::mainEngine->getFile();
 	if (f.existsAsFile())
 	{
 		File mf = Engine::mainEngine->getFile().getParentDirectory().getChildFile("modules");
 		if (mf.isDirectory()) addCustomModulesInFolder(mf, true, log);
 	}
+
+	File modulesFolder = getCustomModulesFolder();
+	modulesFolder.createDirectory();
+	addCustomModulesInFolder(modulesFolder, false, log);
 }
 
 void ModuleFactory::addCustomModulesInFolder(File folder, bool isLocal, bool log)
@@ -113,6 +113,12 @@ void ModuleFactory::addCustomModulesInFolder(File folder, bool isLocal, bool log
 		String moduleName = moduleData.getProperty("name", "");
 		String moduleType = moduleData.getProperty("type", "");
 		String moduleMenuPath = moduleData.getProperty("path", "");
+
+		if (customModulesDefMap.contains(moduleName))
+		{
+			LOGWARNING("Custom Module with name " << moduleName << " already found, skipping");
+			continue;
+		}
 
 		if (moduleName.isNotEmpty() && moduleType.isNotEmpty())
 		{
