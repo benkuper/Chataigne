@@ -200,7 +200,8 @@ void ConsequenceManager::StaggerLauncher::run()
 			bi = csm->items[triggerIndex];
 		}
 
-		if (bi == nullptr) break;;
+
+		if (threadShouldExit() || bi == nullptr) break;
 		if (Consequence* c = dynamic_cast<Consequence*>(bi)) c->triggerCommand(multiplexIndex);
 		else if (ConsequenceGroup* g = dynamic_cast<ConsequenceGroup*>(bi)) if (g->enabled->boolValue()) g->csm.triggerAll(multiplexIndex);
 
@@ -208,7 +209,7 @@ void ConsequenceManager::StaggerLauncher::run()
 		triggerIndex++;
 	}
 
-	csm->launcherFinished(this);
+	if (!threadShouldExit()) csm->launcherFinished(this);
 }
 
 void ConsequenceManager::multiplexPreviewIndexChanged()
