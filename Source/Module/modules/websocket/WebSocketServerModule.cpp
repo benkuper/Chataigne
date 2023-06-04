@@ -105,6 +105,10 @@ void WebSocketServerModule::sendMessageInternal(const String& message, var param
 			for (int i = 0; i < list.size(); i++) excludes.add(list[i].toString());
 			server->sendExclude(message, excludes);
 		}
+		else
+		{
+			server->send(message);
+		}
 	}
 	else
 	{
@@ -128,6 +132,10 @@ void WebSocketServerModule::sendBytesInternal(Array<uint8> data, var params)
 			StringArray excludes;
 			for (int i = 0; i < list.size(); i++) excludes.add(list[i].toString());
 			server->sendExclude(b, excludes);
+		}
+		else
+		{
+			server->send((const char*)data.getRawDataPointer(), data.size());
 		}
 	}
 	else
