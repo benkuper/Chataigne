@@ -956,24 +956,6 @@
     <Filter Include="JUCE Modules\juce_organicui">
       <UniqueIdentifier>{5F63D43A-3BA8-5209-9971-62F87C2979FE}</UniqueIdentifier>
     </Filter>
-    <Filter Include="JUCE Modules\juce_sharedtexture\frameworks\Syphon.framework\Syphon.framework\Versions\A\Headers">
-      <UniqueIdentifier>{DC4C0024-2807-BEE5-0F9E-43E4F23234BE}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="JUCE Modules\juce_sharedtexture\frameworks\Syphon.framework\Syphon.framework\Versions\A">
-      <UniqueIdentifier>{25AA1EE9-9D53-07D1-8703-5D4181B6FEF2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="JUCE Modules\juce_sharedtexture\frameworks\Syphon.framework\Syphon.framework\Versions">
-      <UniqueIdentifier>{3A2B4E99-EA71-CA21-DCAE-2F07EBB10AC7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="JUCE Modules\juce_sharedtexture\frameworks\Syphon.framework\Syphon.framework">
-      <UniqueIdentifier>{2025C891-8A30-0261-E8F8-B02B2AD0B65D}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="JUCE Modules\juce_sharedtexture\frameworks\Syphon.framework">
-      <UniqueIdentifier>{498C237B-A6B0-F0D5-3870-3130B199318D}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="JUCE Modules\juce_sharedtexture\frameworks">
-      <UniqueIdentifier>{FF21A217-9F0D-ACE5-FC0C-84154C43A73D}</UniqueIdentifier>
-    </Filter>
     <Filter Include="JUCE Modules\juce_sharedtexture">
       <UniqueIdentifier>{F95E7C0F-5663-3942-16BD-5DA277CCDFAA}</UniqueIdentifier>
     </Filter>
@@ -6128,48 +6110,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\juce_organicui.h">
       <Filter>JUCE Modules\juce_organicui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Modules\juce_sharedtexture\frameworks\Syphon.framework\Syphon.framework\Versions\A\Headers\Syphon.h">
-      <Filter>JUCE Modules\juce_sharedtexture\frameworks\Syphon.framework\Syphon.framework\Versions\A\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Modules\juce_sharedtexture\frameworks\Syphon.framework\Syphon.framework\Versions\A\Headers\SyphonClient.h">
-      <Filter>JUCE Modules\juce_sharedtexture\frameworks\Syphon.framework\Syphon.framework\Versions\A\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Modules\juce_sharedtexture\frameworks\Syphon.framework\Syphon.framework\Versions\A\Headers\SyphonClientBase.h">
-      <Filter>JUCE Modules\juce_sharedtexture\frameworks\Syphon.framework\Syphon.framework\Versions\A\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Modules\juce_sharedtexture\frameworks\Syphon.framework\Syphon.framework\Versions\A\Headers\SyphonImage.h">
-      <Filter>JUCE Modules\juce_sharedtexture\frameworks\Syphon.framework\Syphon.framework\Versions\A\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Modules\juce_sharedtexture\frameworks\Syphon.framework\Syphon.framework\Versions\A\Headers\SyphonImageBase.h">
-      <Filter>JUCE Modules\juce_sharedtexture\frameworks\Syphon.framework\Syphon.framework\Versions\A\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Modules\juce_sharedtexture\frameworks\Syphon.framework\Syphon.framework\Versions\A\Headers\SyphonMetalClient.h">
-      <Filter>JUCE Modules\juce_sharedtexture\frameworks\Syphon.framework\Syphon.framework\Versions\A\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Modules\juce_sharedtexture\frameworks\Syphon.framework\Syphon.framework\Versions\A\Headers\SyphonMetalServer.h">
-      <Filter>JUCE Modules\juce_sharedtexture\frameworks\Syphon.framework\Syphon.framework\Versions\A\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Modules\juce_sharedtexture\frameworks\Syphon.framework\Syphon.framework\Versions\A\Headers\SyphonOpenGLClient.h">
-      <Filter>JUCE Modules\juce_sharedtexture\frameworks\Syphon.framework\Syphon.framework\Versions\A\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Modules\juce_sharedtexture\frameworks\Syphon.framework\Syphon.framework\Versions\A\Headers\SyphonOpenGLImage.h">
-      <Filter>JUCE Modules\juce_sharedtexture\frameworks\Syphon.framework\Syphon.framework\Versions\A\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Modules\juce_sharedtexture\frameworks\Syphon.framework\Syphon.framework\Versions\A\Headers\SyphonOpenGLServer.h">
-      <Filter>JUCE Modules\juce_sharedtexture\frameworks\Syphon.framework\Syphon.framework\Versions\A\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Modules\juce_sharedtexture\frameworks\Syphon.framework\Syphon.framework\Versions\A\Headers\SyphonServer.h">
-      <Filter>JUCE Modules\juce_sharedtexture\frameworks\Syphon.framework\Syphon.framework\Versions\A\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Modules\juce_sharedtexture\frameworks\Syphon.framework\Syphon.framework\Versions\A\Headers\SyphonServerBase.h">
-      <Filter>JUCE Modules\juce_sharedtexture\frameworks\Syphon.framework\Syphon.framework\Versions\A\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Modules\juce_sharedtexture\frameworks\Syphon.framework\Syphon.framework\Versions\A\Headers\SyphonServerDirectory.h">
-      <Filter>JUCE Modules\juce_sharedtexture\frameworks\Syphon.framework\Syphon.framework\Versions\A\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Modules\juce_sharedtexture\frameworks\Syphon.framework\Syphon.framework\Versions\A\Headers\SyphonSubclassing.h">
-      <Filter>JUCE Modules\juce_sharedtexture\frameworks\Syphon.framework\Syphon.framework\Versions\A\Headers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_sharedtexture\SharedTexture.h">
       <Filter>JUCE Modules\juce_sharedtexture</Filter>
