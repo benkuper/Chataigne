@@ -156,16 +156,22 @@ void DMXArtNetDevice::sendArtPollReply(String ip)
 	artPollReplyPacket[174] = 0; // PortTypes2
 	artPollReplyPacket[174] = 0; // PortTypes3
 	artPollReplyPacket[174] = 0; // PortTypes4
-	// 172
+
+	StringArray receiveAdress = StringArray::fromTokens(ip, ".", "");
+
 	auto ips = IPAddress::getAllAddresses(false);
 	for (int i = 0; i < ips.size(); i++) {
-		//IPAddress::getInterfaceBroadcastAddress();
-		String ip = ips[i].toString();
-		artPollReplyPacket[10] = ips[i].address[0];
-		artPollReplyPacket[11] = ips[i].address[1];
-		artPollReplyPacket[12] = ips[i].address[2];
-		artPollReplyPacket[13] = ips[i].address[3];
-		sender.write(ip, 6454, artPollReplyPacket, 287);
+		String ip2 = ips[i].toString();
+		StringArray sendAddress = StringArray::fromTokens(ip2, ".", "");
+		if (sendAddress[0] == receiveAdress[0]) {
+			artPollReplyPacket[10] = ips[i].address[0];
+			artPollReplyPacket[11] = ips[i].address[1];
+			artPollReplyPacket[12] = ips[i].address[2];
+			artPollReplyPacket[13] = ips[i].address[3];
+			DatagramSocket tempSender = new DatagramSocket(true);
+			tempSender.bindToPort(0, ip2);
+			tempSender.write("255.255.255.255", 6454, artPollReplyPacket, 287);
+		}
 	}
 
 
