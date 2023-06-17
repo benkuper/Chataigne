@@ -84,7 +84,7 @@ void HTTPModule::processRequest(Request* request)
 
 	std::unique_ptr<InputStream> stream(request->url.createInputStream(
 		URL::InputStreamOptions(request->method == METHOD_POST ? URL::ParameterHandling::inPostData : URL::ParameterHandling::inAddress)
-		.withConnectionTimeoutMs(2000)
+		.withConnectionTimeoutMs(20000)
 		.withExtraHeaders(request->extraHeaders)
 		.withResponseHeaders(&responseHeaders)
 		.withStatusCode(&statusCode)
