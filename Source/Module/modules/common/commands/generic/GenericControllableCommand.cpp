@@ -466,10 +466,7 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 								else targetValue = isInt ? r.nextInt() : r.nextFloat();
 							}
 
-							if ((int)targetValue == p->intValue())
-							{
-								LOGWARNING("here");
-							}
+
 						}
 						else
 						{
