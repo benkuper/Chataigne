@@ -29,6 +29,7 @@ public:
 	EnumParameter* valueOperator;
 	EnumParameter* componentOperator;
 	BoolParameter* loop;
+	BoolParameter* randomAlwaysUnique;
 
 	WeakReference<Parameter> value;
 	var dataToLoad;

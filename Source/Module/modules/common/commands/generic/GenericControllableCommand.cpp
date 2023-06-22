@@ -17,6 +17,7 @@ GenericControllableCommand::GenericControllableCommand(Module* _module, CommandC
 	valueOperator(nullptr),
 	componentOperator(nullptr),
 	loop(nullptr),
+	randomAlwaysUnique(nullptr),
 	value(nullptr),
 	time(nullptr),
 	isUpdatingContent(false)
@@ -41,6 +42,9 @@ GenericControllableCommand::GenericControllableCommand(Module* _module, CommandC
 		valueOperator = addEnumParameter("Operator", "The operator to apply. If you simply want to set the value, leave at the = option.", false);
 		loop = addBoolParameter("Loop", "If applicable, this will allow going from max val to min val and vice-versa.", false);
 		loop->hideInEditor = true;
+
+		randomAlwaysUnique = addBoolParameter("Random Always Unique", "If in random mode, this will ensure that the value is always different from the previous one.", false);
+		randomAlwaysUnique->hideInEditor = true;
 
 		if (action == GO_TO_VALUE)
 		{
@@ -229,15 +233,18 @@ void GenericControllableCommand::updateOperatorOptions()
 
 	valueOperator->setEnabled(valueOperator->getAllKeys().size() >= 1);
 
+	Operator o = valueOperator->getValueDataAsEnum<Operator>();
 	if (value != nullptr)
 	{
-		Operator o = valueOperator->getValueDataAsEnum<Operator>();
 		bool shouldHideValue = o == INVERSE || o == NEXT_ENUM || o == PREV_ENUM || o == RANDOM;
 		value->hideInEditor = shouldHideValue;
 
 		bool loopEnabled = o == ADD || o == SUBTRACT || o == NEXT_ENUM || o == PREV_ENUM;
 		loop->hideInEditor = !loopEnabled;
+
 	}
+
+	randomAlwaysUnique->hideInEditor = o != RANDOM;
 
 	isUpdatingContent = curUpdating;
 }
@@ -264,7 +271,11 @@ void GenericControllableCommand::onContainerParameterChanged(Parameter* p)
 			bool curHideLoop = loop->hideInEditor;
 			loop->hideInEditor = !(o == ADD || o == SUBTRACT || o == NEXT_ENUM || o == PREV_ENUM);
 
-			if (curHide != value->hideInEditor || curHideLoop != loop->hideInEditor) queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
+			bool curHideRandom = randomAlwaysUnique->hideInEditor;
+			randomAlwaysUnique->hideInEditor = o != RANDOM;
+
+			if (curHide != value->hideInEditor || curHideLoop != loop->hideInEditor || curHideRandom != randomAlwaysUnique->hideInEditor) queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
+
 		}
 	}
 }
@@ -273,7 +284,7 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 {
 	if (isCurrentlyLoadingData) return;
 	if (isUpdatingContent) return;
-	
+
 	Controllable* c = getTargetControllableAtIndex(multiplexIndex);
 	if (c == nullptr) return;
 
@@ -440,11 +451,31 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 				case RANDOM:
 				{
 					Random r;
-					if (p->type == Parameter::BOOL) p->setValue(r.nextBool());
+					if (p->type == Parameter::BOOL) p->setValue(randomAlwaysUnique->boolValue() ? !p->boolValue() : r.nextBool());
 					else if (p->type == Parameter::FLOAT || p->type == Parameter::INT)
 					{
-						if (p->hasRange()) targetValue = jmap<float>(r.nextFloat(), p->minimumValue, p->type == Parameter::INT ? (float)p->maximumValue + 1 : (float)p->maximumValue);
-						else targetValue = p->type == Parameter::INT ? r.nextInt() : r.nextFloat();
+						bool isInt = p->type == Parameter::INT;
+
+						if (randomAlwaysUnique->boolValue() && p->minimumValue != p->maximumValue)
+						{
+							targetValue = isInt ? p->intValue() : p->floatValue();
+
+							while ((isInt && (int)targetValue == p->intValue()) || (float)targetValue == p->floatValue())
+							{
+								if (p->hasRange()) targetValue = jmap<float>(r.nextFloat(), p->minimumValue, isInt ? (float)p->maximumValue + 1 : (float)p->maximumValue);
+								else targetValue = isInt ? r.nextInt() : r.nextFloat();
+							}
+
+							if ((int)targetValue == p->intValue())
+							{
+								LOGWARNING("here");
+							}
+						}
+						else
+						{
+							if (p->hasRange()) targetValue = jmap<float>(r.nextFloat(), p->minimumValue, isInt ? (float)p->maximumValue + 1 : (float)p->maximumValue);
+							else targetValue = p->type == Parameter::INT ? r.nextInt() : r.nextFloat();
+						}
 					}
 					else if (p->type == Parameter::COLOR)
 					{
@@ -453,12 +484,28 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 					else if (p->type == Parameter::ENUM)
 					{
 						EnumParameter* ep = (EnumParameter*)p;
-						if(ep->enumValues.size() > 0)
-					    {
-						    int index = r.nextInt() % ep->enumValues.size();
-						    while (index < 0) index += ep->enumValues.size();
-						    ep->setValueWithKey((ep->enumValues[index]->key));
-					    }
+						if (ep->enumValues.size() > 0)
+						{
+							if (randomAlwaysUnique->boolValue() && ep->enumValues.size() > 1)
+							{
+								String key = ep->getValueKey();
+								while (key == ep->getValueKey())
+								{
+									int index = r.nextInt() % ep->enumValues.size();
+									while (index < 0) index += ep->enumValues.size();
+									key = ep->enumValues[index]->key;
+								}
+
+								ep->setValueWithKey(key);
+							}
+							else
+							{
+								int index = r.nextInt() % ep->enumValues.size();
+								while (index < 0) index += ep->enumValues.size();
+								ep->setValueWithKey((ep->enumValues[index]->key));
+							}
+
+						}
 					}
 					else if (p->isComplex())
 					{
@@ -466,7 +513,7 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 						for (int i = 0; i < p->value.size(); i++)
 						{
 							float vv = p->value[i];
-							if (compOp == i || compOp == -1) vv = jmap<float>(r.nextFloat(), p->minimumValue[i], p->maximumValue[i]);
+							if (compOp == i || compOp == -1) vv = p->hasRange() ? jmap<float>(r.nextFloat(), p->minimumValue[i], p->maximumValue[i]) : r.nextFloat();
 							v.append(vv);
 						}
 						targetValue = v;
