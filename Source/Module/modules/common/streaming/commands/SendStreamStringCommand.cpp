@@ -118,21 +118,31 @@ void SendStreamStringCommand::triggerInternal(int multiplexIndex)
 		StringArray hexValues;
 		hexValues.addTokens(valString, " ");
 		Array<uint8> values;
-		for (auto& v : hexValues)
-		{
-			if (v.startsWithChar('%'))
-			{
-				int index = v.substring(1).getIntValue() - 1;
-				if (index >= 0 && index < mappedValues.size()) values.add(mappedValues[index]);
-				else values.add(0);
-			}
-			else
-			{
-				values.add(v.getHexValue32());
-			}
-		}
 
-		streamingModule->sendBytes(values, getCustomParams(multiplexIndex));
+		if (hexValues.size() == 1 && valString.length() % 2 == 0) //no spaces, even number of characters, separate 2 by 2
+		{
+			for (int i = 0; i < valString.length(); i += 2) values.add(valString.substring(i, i + 2).getHexValue32());
+			streamingModule->sendBytes(values, getCustomParams(multiplexIndex));
+
+		}
+		else
+		{
+			for (auto& v : hexValues)
+			{
+				if (v.startsWithChar('%'))
+				{
+					int index = v.substring(1).getIntValue() - 1;
+					if (index >= 0 && index < mappedValues.size()) values.add(mappedValues[index]);
+					else values.add(0);
+				}
+				else
+				{
+					values.add(v.getHexValue32());
+				}
+			}
+
+			streamingModule->sendBytes(values, getCustomParams(multiplexIndex));
+		}
 	}
 	break;
 
