@@ -21,6 +21,7 @@ public:
 	enum ResultDataType { RAW, JSON, XML, DEFAULT };
 	
 	StringParameter * baseAddress;
+  IntParameter* timeout;
 	BoolParameter* autoAdd;
 	EnumParameter* protocol;
 
