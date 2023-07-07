@@ -21,6 +21,7 @@ HTTPModule::HTTPModule(const String& name) :
 
 	baseAddress = moduleParams.addStringParameter("Base Address", "The base adress to prepend to command addresses", "https://rickandmortyapi.com/api/");
 	autoAdd = moduleParams.addBoolParameter("Auto add", "If checked, will try to add values depending on received data and expected data type", true);
+  timeout = moduleParams.addIntParameter("Timeout", "The number of ms before giving up on a request", 2000);
 	protocol = moduleParams.addEnumParameter("Protocol", "The type of content to expect when receiving data");
 	protocol->addOption("Raw", RAW)->addOption("JSON", JSON)->addOption("XML", XML);
 
@@ -84,7 +85,7 @@ void HTTPModule::processRequest(Request* request)
 
 	std::unique_ptr<InputStream> stream(request->url.createInputStream(
 		URL::InputStreamOptions(request->method == METHOD_POST ? URL::ParameterHandling::inPostData : URL::ParameterHandling::inAddress)
-		.withConnectionTimeoutMs(20000)
+		.withConnectionTimeoutMs(timeout->intValue())
 		.withExtraHeaders(request->extraHeaders)
 		.withResponseHeaders(&responseHeaders)
 		.withStatusCode(&statusCode)
