@@ -16,7 +16,7 @@ DMXManager::DMXManager() :
 	Thread("ArtNetRead")
 {
 	artNetUDP.bindToPort(3333);
-	startTimer(1000);
+	//startTimer(1000);
 	startThread();
 }
 
@@ -39,7 +39,7 @@ void DMXManager::sendArtNetPollRequest(int type)
 
 void DMXManager::timerCallback()
 {
-	checkForArtNetDevices();
+	//checkForArtNetDevices();
 }
 
 void DMXManager::run()
