@@ -71,7 +71,7 @@ MappingFilter::ProcessResult MergeFilter::processInternal(Array<Parameter*> inpu
 
 		for (int i = 0; i < inputs.size(); i++)
 		{
-			if (i == 0 && o == DIFF) continue;
+			if (i == 0 && (o == DIFF || o == DISTANCE)) continue;
 
 			switch (o)
 			{
@@ -105,29 +105,30 @@ MappingFilter::ProcessResult MergeFilter::processInternal(Array<Parameter*> inpu
 			minVals.append((float)INT32_MIN);
 			maxVals.append((float)INT32_MAX);
 
-			if (o == MIN) vals.append((float)INT32_MAX);
+			if (o == SUM || o == AVERAGE) vals.append(0);
+			else if (o == MIN) vals.append((float)INT32_MAX);
 			else if (o == MULTIPLY) vals.append(1);
 			else if (o == MAX) vals.append((float)INT32_MIN);
-			else if (o == DIFF || o == DISTANCE) vals.append(inputs[0]->value[0]);
+			else if (o == DIFF || o == DISTANCE) vals.append(inputs[0]->value[i]);
 		}
 
 		for (int i = 0; i < inputs.size(); i++)
 		{
-			if (i == 0 && o == DIFF) continue;
+			if (i == 0 && (o == DIFF || o == DISTANCE)) continue;
 
 			Parameter* in = inputs[i];
 			for (int j = 0; j < in->value.size() && j < vals.size(); j++)
 			{
-				if (i == 0 && (o == DIFF || o == DISTANCE)) continue;
+				//if (i == 0 && (o == DIFF || o == DISTANCE)) continue;
 
-				float vj = vals[j];
+				float vj = vals[j].clone();
 				float ij = in->value[j];
 
 				switch (o)
 				{
 				case AVERAGE:
 				case SUM: vals[j] = vj + ij; break;
-				case MULTIPLY: vals[j] = ij; break;
+				case MULTIPLY: vals[j] = vj * ij; break;
 				case MIN: vals[j] = jmin<float>(vj, ij); break;
 				case MAX: vals[j] = jmax<float>(vj, ij); break;
 				case DIFF: vals[j] = vj - ij; break;
