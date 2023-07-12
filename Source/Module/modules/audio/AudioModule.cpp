@@ -401,39 +401,42 @@ void AudioModule::audioDeviceIOCallbackWithContext(const float* const* inputChan
 	}
 
 	//Analysis
-	analyzerManager.process(inputChannelData[0], numSamples);
-
-	if (ltcParamsCC.enabled->boolValue())
+	if (numInputChannels > 0)
 	{
-		int channel = ltcChannel->intValue() - 1;
-		if (channel >= 0 && channel < numInputChannels)
+		analyzerManager.process(inputChannelData[0], numSamples);
+
+		if (ltcParamsCC.enabled->boolValue())
 		{
-			ltc_decoder_write_float(ltcDecoder.get(), (float*)inputChannelData[channel], numSamples, 0);
-
-			bool hasLTC = false;
-			LTCFrameExt frame;
-			while (ltc_decoder_read(ltcDecoder.get(), &frame))
+			int channel = ltcChannel->intValue() - 1;
+			if (channel >= 0 && channel < numInputChannels)
 			{
-				SMPTETimecode stime;
-				ltc_frame_to_time(&stime, &frame.ltc, 1);
+				ltc_decoder_write_float(ltcDecoder.get(), (float*)inputChannelData[channel], numSamples, 0);
 
-				float time = stime.days * 3600 * 24 + stime.hours * 3600 + stime.mins * 60 + stime.secs + stime.frame * 1.0f / curLTCFPS;
-				ltcTime->setValue(time);
-				hasLTC = true;
-			}
-
-			if (!hasLTC)
-			{
-				if (ltcPlaying->boolValue())
+				bool hasLTC = false;
+				LTCFrameExt frame;
+				while (ltc_decoder_read(ltcDecoder.get(), &frame))
 				{
-					ltcFrameDropCount++;
-					if (ltcFrameDropCount >= 10) ltcPlaying->setValue(hasLTC);
+					SMPTETimecode stime;
+					ltc_frame_to_time(&stime, &frame.ltc, 1);
+
+					float time = stime.days * 3600 * 24 + stime.hours * 3600 + stime.mins * 60 + stime.secs + stime.frame * 1.0f / curLTCFPS;
+					ltcTime->setValue(time);
+					hasLTC = true;
 				}
-			}
-			else
-			{
-				ltcFrameDropCount = 0;
-				ltcPlaying->setValue(true);
+
+				if (!hasLTC)
+				{
+					if (ltcPlaying->boolValue())
+					{
+						ltcFrameDropCount++;
+						if (ltcFrameDropCount >= 10) ltcPlaying->setValue(hasLTC);
+					}
+				}
+				else
+				{
+					ltcFrameDropCount = 0;
+					ltcPlaying->setValue(true);
+				}
 			}
 		}
 	}
