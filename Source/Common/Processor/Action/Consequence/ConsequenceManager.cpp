@@ -73,6 +73,7 @@ void ConsequenceManager::triggerAll(int multiplexIndex)
 
 void ConsequenceManager::cancelDelayedConsequences()
 {
+	for (auto& launcher : staggerLaunchers) launcher->stopThread(100);
 	staggerLaunchers.clear();
 }
 
@@ -146,6 +147,7 @@ void ConsequenceManager::launcherFinished(StaggerLauncher* launcher)
 {
 	MessageManager::getInstance()->callAsync([=]()
 		{
+			launcher->stopThread(100);
 			staggerLaunchers.removeObject(launcher);
 		}
 	);
@@ -166,7 +168,12 @@ ConsequenceManager::StaggerLauncher::StaggerLauncher(ConsequenceManager* csm, in
 
 ConsequenceManager::StaggerLauncher::~StaggerLauncher()
 {
-	stopThread(100);
+	if (isThreadRunning())
+	{
+		MessageManager::callAsync([this] {
+			stopThread(100);
+			});
+	}
 }
 
 void ConsequenceManager::StaggerLauncher::run()
@@ -179,7 +186,7 @@ void ConsequenceManager::StaggerLauncher::run()
 
 	uint32 curTime = timeAtRun;
 
-	while (triggerIndex < csm->items.size())
+	while (!threadShouldExit() && triggerIndex < csm->items.size())
 	{
 		uint32 nextTriggerTime = timeAtRun + d + s * triggerIndex;
 		while (nextTriggerTime > curTime)
@@ -202,6 +209,7 @@ void ConsequenceManager::StaggerLauncher::run()
 
 
 		if (threadShouldExit() || bi == nullptr) break;
+
 		if (Consequence* c = dynamic_cast<Consequence*>(bi)) c->triggerCommand(multiplexIndex);
 		else if (ConsequenceGroup* g = dynamic_cast<ConsequenceGroup*>(bi)) if (g->enabled->boolValue()) g->csm.triggerAll(multiplexIndex);
 
