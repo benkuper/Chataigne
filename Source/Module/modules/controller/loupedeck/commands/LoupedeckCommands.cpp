@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "Module/ModuleIncludes.h"
+
 LoupedeckCommand::LoupedeckCommand(LoupedeckModule* _module, CommandContext context, var params, Multiplex* multiplex) :
 	BaseCommand(_module, context, params, multiplex),
 	loupedeckModule(_module),
@@ -127,8 +129,8 @@ LoupedeckCommand::LoupedeckCommand(LoupedeckModule* _module, CommandContext cont
 	case SET_AUTO_REFRESH:
 		valueParam = addBoolParameter("Value", "If checked, this will force refreshing on every change. Otherwise this will not...", false);
 		break;
-        default:
-            break;
+	default:
+		break;
 
 	}
 
@@ -149,13 +151,13 @@ LoupedeckCommand::~LoupedeckCommand()
 
 void LoupedeckCommand::triggerInternal(int multiplexIndex)
 {
-	int r = row != nullptr ? (int)getLinkedValue(row, multiplexIndex) - 1 : 0;
-	int c = column != nullptr ? (int)getLinkedValue(column, multiplexIndex) - 1 : 0;
+	int r = row != nullptr ? jmax((int)getLinkedValue(row, multiplexIndex) - 1, 0) : 0;
+	int c = column != nullptr ? jmax((int)getLinkedValue(column, multiplexIndex) - 1, 0) : 0;
 
 	int index = screenTarget == PADS ? r * 4 + c : screenTarget == BUTTONS ? c + 1 : (int)screenTarget;
 
 	var val;
-	if(valueParam != nullptr) val = getLinkedValue(valueParam, multiplexIndex);
+	if (valueParam != nullptr) val = getLinkedValue(valueParam, multiplexIndex);
 
 	switch (action)
 	{
@@ -194,7 +196,7 @@ void LoupedeckCommand::triggerInternal(int multiplexIndex)
 				loupedeckModule->padColors[i]->setColor(col);
 				loupedeckModule->updatePadContent(i, false);
 			}
-			if(loupedeckModule->autoRefresh->boolValue()) loupedeckModule->refreshScreen(2);
+			if (loupedeckModule->autoRefresh->boolValue()) loupedeckModule->refreshScreen(2);
 
 		}
 		else if (screenTarget == LEFT_SLIDER || screenTarget == RIGHT_SLIDER)

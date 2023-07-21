@@ -1,12 +1,14 @@
 /*
   ==============================================================================
 
-    StreamDeckCommand.cpp
-    Created: 23 Nov 2019 5:21:43pm
-    Author:  bkupe
+	StreamDeckCommand.cpp
+	Created: 23 Nov 2019 5:21:43pm
+	Author:  bkupe
 
   ==============================================================================
 */
+
+#include "Module/ModuleIncludes.h"
 
 StreamDeckCommand::StreamDeckCommand(StreamDeckModule* _module, CommandContext context, var params, Multiplex* multiplex) :
 	BaseCommand(_module, context, params, multiplex),
@@ -42,8 +44,8 @@ StreamDeckCommand::StreamDeckCommand(StreamDeckModule* _module, CommandContext c
 	case SET_BRIGHTNESS:
 		valueParam = addFloatParameter("Brightness", "The brightness to set to", .5f, 0, 1);
 		break;
-        default:
-            break;
+	default:
+		break;
 	}
 
 	linkParamToMappingIndex(valueParam, 0);
@@ -56,22 +58,22 @@ StreamDeckCommand::~StreamDeckCommand()
 
 void StreamDeckCommand::triggerInternal(int multiplexIndex)
 {
-	int r = row != nullptr ? row->intValue()-1 : 0;
-	int c = column != nullptr ? column->intValue()-1 : 0;
+	int r = row != nullptr ? jmax((int)getLinkedValue(row, multiplexIndex) - 1, 0) : 0;
+	int c = column != nullptr ? jmax((int)getLinkedValue(column, multiplexIndex) - 1, 0) : 0;
 
 	var val = getLinkedValue(valueParam, multiplexIndex);
 
 	switch (action)
 	{
 	case SET_COLOR:
-		if(val.size() >= 4) streamDeckModule->setColor(r, c, Colour::fromFloatRGBA(val[0], val[1], val[2], val[3]));
+		if (val.size() >= 4) streamDeckModule->setColor(r, c, Colour::fromFloatRGBA(val[0], val[1], val[2], val[3]));
 		break;
 
 	case SET_IMAGE:
 		streamDeckModule->setImage(r, c, val);
 		break;
 
-	case SET_ALL_COLOR:if(val.size() >= 4) 
+	case SET_ALL_COLOR:if (val.size() >= 4)
 		if (val.size() >= 4) streamDeckModule->setAllColor(Colour::fromFloatRGBA(val[0], val[1], val[2], val[3]));
 		break;
 
