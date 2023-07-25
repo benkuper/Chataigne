@@ -282,11 +282,13 @@ void Mapping::updateContinuousProcess()
 
 void Mapping::setForceDisabled(bool value, bool force)
 {
+	bool changed = value != forceDisabled;
+
 	Processor::setForceDisabled(value, force);
 
-	if ((value != forceDisabled) || force)
+	if (changed || force)
 	{
-		if (value && sendOnActivate->boolValue()) for (int i = 0; i < getMultiplexCount(); i++) om.updateOutputValues(i);
+		if (!forceDisabled && sendOnActivate->boolValue()) for (int i = 0; i < getMultiplexCount(); i++) om.updateOutputValues(i);
 	}
 
 	updateContinuousProcess();
