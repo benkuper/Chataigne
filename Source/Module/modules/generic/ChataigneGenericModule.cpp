@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "Module/ModuleIncludes.h"
+
 ChataigneGenericModule::ChataigneGenericModule() :
 	Module("Generic")
 {
@@ -18,6 +20,7 @@ ChataigneGenericModule::ChataigneGenericModule() :
 	
 	defManager->add(CommandDefinition::createDef(this, "", "Log a message", &ChataigneLogCommand::create)->addParam("type", ChataigneLogCommand::MESSAGE));
 	defManager->add(CommandDefinition::createDef(this, "", "Log a value", &ChataigneLogCommand::create)->addParam("type", ChataigneLogCommand::VALUE));
+	defManager->add(CommandDefinition::createDef(this, "", "Clear Logs", &ChataigneLogCommand::create)->addParam("type", ChataigneLogCommand::CLEAR));
 	defManager->add(CommandDefinition::createDef(this, "", "Script", &GenericScriptCommand::create));
 	defManager->add(CommandDefinition::createDef(this, "", "Select Dashboard", &ChataigneDashboardCommand::create)->addParam("type", ChataigneDashboardCommand::SELECT_DASHBOARD));
 	defManager->add(CommandDefinition::createDef(this, "", "Select Dashboard Index", &ChataigneDashboardCommand::create)->addParam("type", ChataigneDashboardCommand::SELECT_DASHBOARD_INDEX));

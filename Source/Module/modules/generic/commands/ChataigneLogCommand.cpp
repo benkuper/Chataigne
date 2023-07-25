@@ -8,16 +8,23 @@
   ==============================================================================
 */
 
+#include "Module/ModuleIncludes.h"
+
 ChataigneLogCommand::ChataigneLogCommand(ChataigneGenericModule* _module, CommandContext context, var params, Multiplex* multiplex) :
 	BaseCommand(_module, context, params, multiplex),
+	logType(nullptr),
+	message(nullptr),
 	value(nullptr)
 {
 	type = (Type)(int)(params.getProperty("type", MESSAGE));
 
-	logType = addEnumParameter("Log Type", "The Type of log");
-	logType->addOption("Info", INFO)->addOption("Warning", WARNING)->addOption("Error", ERROR);
-
-	message = addStringParameter("Message", "The message to log", type == VALUE ? "My value is" : "Wubba Lubba Dub Dub");
+	
+	if (type == MESSAGE || type == VALUE)
+	{
+		logType = addEnumParameter("Log Type", "The Type of log");
+		logType->addOption("Info", INFO)->addOption("Warning", WARNING)->addOption("Error", ERROR);
+		message = addStringParameter("Message", "The message to log", type == VALUE ? "My value is" : "Wubba Lubba Dub Dub");
+	}
 
 	if (type == VALUE)
 	{
@@ -37,12 +44,21 @@ ChataigneLogCommand::~ChataigneLogCommand()
 
 void ChataigneLogCommand::triggerInternal(int multiplexIndex)
 {
-	LogType lt = logType->getValueDataAsEnum<LogType>();
+	LogType lt;
+	if(logType != nullptr) lt = logType->getValueDataAsEnum<LogType>();
 
-	String msg = getLinkedValue(message, multiplexIndex);
+	String msg;
+	if(message != nullptr) msg = getLinkedValue(message, multiplexIndex);
 
 	switch (type)
 	{
+	case CLEAR:
+		if (CustomLoggerUI* cui = ShapeShifterManager::getInstance()->getContentForType<CustomLoggerUI>())
+		{
+			cui->clearLogger();
+		}
+		break;
+
 	case MESSAGE:
 		switch (lt)
 		{

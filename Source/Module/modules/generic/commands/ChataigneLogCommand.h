@@ -17,7 +17,7 @@ public:
 	ChataigneLogCommand(ChataigneGenericModule * _module, CommandContext context, var params, Multiplex* multiplex = nullptr);
 	~ChataigneLogCommand();
 
-	enum Type { MESSAGE, VALUE };
+	enum Type { MESSAGE, VALUE, CLEAR };
 	Type type;
 
 	enum LogType { INFO, WARNING, ERROR };
