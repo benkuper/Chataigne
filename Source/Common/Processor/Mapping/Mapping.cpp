@@ -288,7 +288,11 @@ void Mapping::setForceDisabled(bool value, bool force)
 
 	if (changed || force)
 	{
-		if (!forceDisabled && sendOnActivate->boolValue()) for (int i = 0; i < getMultiplexCount(); i++) om.updateOutputValues(i);
+		if (!forceDisabled && sendOnActivate->boolValue())
+		{
+			process();
+			//for (int i = 0; i < getMultiplexCount(); i++) om.updateOutputValues(i);
+		}
 	}
 
 	updateContinuousProcess();
@@ -373,7 +377,8 @@ void Mapping::onContainerParameterChangedInternal(Parameter* p)
 	{
 		if (enabled->boolValue() && !forceDisabled)
 		{
-			for (int i = 0; i < getMultiplexCount(); i++) om.updateOutputValues(i);
+			process();
+			//for (int i = 0; i < getMultiplexCount(); i++) om.updateOutputValues(i);
 		}
 		updateContinuousProcess();
 	}
