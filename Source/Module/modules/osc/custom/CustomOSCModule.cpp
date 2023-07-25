@@ -31,6 +31,7 @@ CustomOSCModule::CustomOSCModule() :
 
 	valuesCC.userCanAddControllables = true;
 	valuesCC.customUserCreateControllableFunc = &CustomOSCModule::showMenuAndCreateValue;
+
 }
 
 OSCHelpers::ColorMode CustomOSCModule::getColorMode()

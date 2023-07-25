@@ -645,7 +645,7 @@ OSCOutput::OSCOutput() :
 	remoteHost = addStringParameter("Remote Host", "Remote Host to send to.", "127.0.0.1");
 	remoteHost->autoTrim = true;
 	remoteHost->setEnabled(!useLocal->boolValue());
-	remotePort = addIntParameter("Remote port", "Port on which the remote host is listening to", 9000, 1024, 65535);
+	remotePort = addIntParameter("Remote port", "Port on which the remote host is listening to", 9000, 1, 65535);
 	listenToOutputFeedback = addBoolParameter("Listen to Feedback", "If checked, this will listen to the (randomly set) bound port of this sender. This is useful when some softwares automatically detect incoming host and port to send back messages.", false);
 
 	if (!Engine::mainEngine->isLoadingFile) setupSender();
