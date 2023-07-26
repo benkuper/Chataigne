@@ -50,6 +50,8 @@ MIDIModule::MIDIModule(const String& name, bool _useGenericControls) :
 
 	octaveShift = moduleParams.addIntParameter("Octave Shift", "This allows to adjust to other software's conventions when converting Pitch to Note name. Because MIDI sucks.", 0, -5, 5);
 
+	usePitchForNoteNames = moduleParams.addBoolParameter("Use Pitch For Note Names", "If checked, the note names will be displayed as pitch values instead of note names", false);
+
 	midiParam = new MIDIDeviceParameter("Devices");
 	moduleParams.addParameter(midiParam);
 
@@ -345,7 +347,7 @@ void MIDIModule::noteOnReceived(const int& channel, const int& pitch, const int&
 	if (!enabled->boolValue() && !manualAddMode) return;
 	inActivityTrigger->trigger();
 
-	String noteName = MIDIManager::getNoteName(pitch, true, octaveShift->intValue());
+	String noteName = usePitchForNoteNames->boolValue() ? "Pitch " + String(pitch) : MIDIManager::getNoteName(pitch, true, octaveShift->intValue());
 
 	if (logIncomingData->boolValue())  NLOG(niceName, "Note On : " << channel << ", " << noteName << " ( pitch : " + String(pitch) + " ), " << velocity);
 
@@ -369,7 +371,7 @@ void MIDIModule::noteOffReceived(const int& channel, const int& pitch, const int
 	noteOns.removeAllInstancesOf(channel * 128 + pitch);
 	if (noteOns.isEmpty()) oneNoteOn->setValue(false);
 
-	String noteName = MIDIManager::getNoteName(pitch, true, octaveShift->intValue());
+	String noteName = usePitchForNoteNames->boolValue() ? "Pitch " + String(pitch) : MIDIManager::getNoteName(pitch, true, octaveShift->intValue());
 
 	if (logIncomingData->boolValue()) NLOG(niceName, "Note Off : " << channel << ", " << noteName << " ( pitch : " + String(pitch) + " ), " << velocity);
 
@@ -473,7 +475,7 @@ void MIDIModule::afterTouchReceived(const int& channel, const int& note, const i
 	inActivityTrigger->trigger();
 	if (logIncomingData->boolValue()) NLOG(niceName, "After Touch, channel : " << channel << ", note : " << note << ", value : " << value);
 
-	if (useGenericControls) updateValue(channel, "AfterTouch " + MIDIManager::getNoteName(note), value, MIDIValueParameter::AFTER_TOUCH, note);
+	if (useGenericControls) updateValue(channel, "AfterTouch " + (usePitchForNoteNames->boolValue() ? "Pitch " + String(note) : MIDIManager::getNoteName(note)), value, MIDIValueParameter::AFTER_TOUCH, note);
 
 	if (scriptManager->items.size() > 0) scriptManager->callFunctionOnAllItems(afterTouchId, Array<var>(channel, note, value));
 }
@@ -916,16 +918,16 @@ void MIDIModule::loadJSONDataInternal(var data)
 	Module::loadJSONDataInternal(data);
 
 	Array<WeakReference<ControllableContainer>> valueContainers = valuesCC.getAllContainers(true);
-	
+
 	for (auto& c : valueContainers)
 	{
-		if(c == &tempoCC || c == &infoCC) continue;
+		if (c == &tempoCC || c == &infoCC) continue;
 		c->customControllableComparator = &midiValueComparator;
 		c->sortControllables();
 	}
 
 	valuesCC.sortControllables();
-	
+
 	setupIOConfiguration(inputDevice != nullptr || valuesCC.controllables.size() > 0, outputDevice != nullptr);
 
 	if (thruManager != nullptr)

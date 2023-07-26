@@ -73,6 +73,7 @@ public:
 	BoolParameter* autoFeedback;
 	BoolParameter* useHierarchy;
 	IntParameter* octaveShift;
+	BoolParameter* usePitchForNoteNames;
 
 	bool manualAddMode; //to allow manual add override
 
