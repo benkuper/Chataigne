@@ -44,7 +44,7 @@ ChataigneLogCommand::~ChataigneLogCommand()
 
 void ChataigneLogCommand::triggerInternal(int multiplexIndex)
 {
-	LogType lt;
+	LogType lt = LogType::INFO;
 	if(logType != nullptr) lt = logType->getValueDataAsEnum<LogType>();
 
 	String msg;
