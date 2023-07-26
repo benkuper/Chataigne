@@ -270,7 +270,7 @@ void MIDIModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc,
 
 		if (sendClock->boolValue())
 		{
-			if(outputDevice != nullptr) outClock.setOutDevice(outputDevice->device.get());
+			if (outputDevice != nullptr) outClock.setOutDevice(outputDevice->device.get());
 			outClock.setBPM(bpm->floatValue());
 			outClock.start();
 		}
@@ -332,7 +332,7 @@ void MIDIModule::updateMIDIDevices()
 	{
 		outputDevice->open();
 		if (sendClock->boolValue()) outClock.setOutDevice(outputDevice->device.get());
-	} 
+	}
 
 
 	setupIOConfiguration(inputDevice != nullptr || valuesCC.controllables.size() > 0, outputDevice != nullptr);
@@ -766,6 +766,7 @@ void MIDIModule::updateValue(const int& channel, const String& n, const int& val
 			channelContainer = new ControllableContainer("Channel " + String(channel));
 			channelContainer->saveAndLoadRecursiveData = true;
 			channelContainer->isRemovableByUser = true;
+			channelContainer->customControllableComparator = &midiValueComparator;
 			valuesCC.addChildControllableContainer(channelContainer, true);
 		}
 
@@ -894,7 +895,7 @@ void MIDIModule::showMenuAndCreateValue(ControllableContainer* container)
 					}
 				}),
 				true
-					);
+			);
 		}
 	);
 }
@@ -913,7 +914,18 @@ void MIDIModule::createThruControllable(ControllableContainer* cc)
 void MIDIModule::loadJSONDataInternal(var data)
 {
 	Module::loadJSONDataInternal(data);
+
+	Array<WeakReference<ControllableContainer>> valueContainers = valuesCC.getAllContainers(true);
+	
+	for (auto& c : valueContainers)
+	{
+		if(c == &tempoCC || c == &infoCC) continue;
+		c->customControllableComparator = &midiValueComparator;
+		c->sortControllables();
+	}
+
 	valuesCC.sortControllables();
+	
 	setupIOConfiguration(inputDevice != nullptr || valuesCC.controllables.size() > 0, outputDevice != nullptr);
 
 	if (thruManager != nullptr)
