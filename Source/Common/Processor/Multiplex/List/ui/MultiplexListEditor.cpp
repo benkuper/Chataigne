@@ -301,9 +301,9 @@ void InputValueListEditor::showRangeMenuAndFillFromControllables(Array<WeakRefer
 	AlertWindow* nameWindow = new AlertWindow("Set the assignation range", "Set the start and end index to use to assign", AlertWindow::AlertIconType::NoIcon, this);
 
 
-	nameWindow->addTextEditor("cOffset", "Source Offset");
-	nameWindow->addTextEditor("start", "Start Index");
-	nameWindow->addTextEditor("end", "End Index");
+	nameWindow->addTextEditor("cOffset", "0", "Source Offset");
+	nameWindow->addTextEditor("start", "1", "Start Index");
+	nameWindow->addTextEditor("end", String(cList.size()), "End Index");
 
 	nameWindow->addButton("OK", 1, KeyPress(KeyPress::returnKey));
 	nameWindow->addButton("Cancel", 0, KeyPress(KeyPress::escapeKey));
@@ -314,15 +314,15 @@ void InputValueListEditor::showRangeMenuAndFillFromControllables(Array<WeakRefer
 			{
 				String cOffsetS = nameWindow->getTextEditorContents("cOffset");
 				String startS = nameWindow->getTextEditorContents("start");
-				String endS = nameWindow->getTextEditorContents("start");
+				String endS = nameWindow->getTextEditorContents("end");
 				int cOffset = cOffsetS.isNotEmpty() ? cOffsetS.getIntValue() : 0;
-				int start = startS.isNotEmpty() ? jlimit(1, baseList->listSize, startS.getIntValue()) : 1;
+				int start = startS.isNotEmpty() ? jlimit(1, baseList->listSize, startS.getIntValue()) - 1 : 0;
 				int end = endS.isNotEmpty() ? jlimit(start, baseList->listSize, endS.getIntValue()) : baseList->listSize;
 
 
-				for (int i = start - 1; i < end && i < cList.size(); i++)
+				for (int i = start; i < end && i < cList.size(); i++)
 				{
-					int cIndex = i - (start-1) + cOffset;
+					int cIndex = i - start + cOffset;
 					if (cIndex >= cList.size()) break;
 
 					((TargetParameter*)baseList->list[i])->setValueFromTarget(cList[cIndex]);
@@ -367,9 +367,9 @@ void BaseMultiplexListEditor::ExpressionComponentWindow::resized()
 	instructions.setBounds(r.removeFromTop(60).reduced(8));
 
 	Rectangle<int> ir = r.removeFromTop(30).reduced(8);
-	startUI.setBounds(ir.removeFromLeft(100));
-	ir.removeFromLeft(16);
-	endUI.setBounds(ir.removeFromLeft(100));
+	startUI.setBounds(ir.removeFromLeft(150));
+	ir.removeFromLeft(20);
+	endUI.setBounds(ir.removeFromLeft(150));
 
 	editor.setBounds(r.removeFromTop(100));
 	assignBT.setBounds(r.removeFromTop(40).reduced(2));
