@@ -24,7 +24,7 @@ public:
 
 	void buttonClicked(Button* b) override;
 
-	virtual void addItemsToFillMenu(PopupMenu &p) {}
+	virtual void addItemsToFillMenu(PopupMenu& p) {}
 	virtual void handleFillMenuResult(int result) {}
 
 	class ExpressionComponentWindow :
@@ -41,6 +41,11 @@ public:
 		TextEditor editor;
 		TextButton assignBT;
 		TextButton closeBT;
+
+		IntParameter startIndex;
+		IntParameter endIndex;
+		IntStepperUI startUI;
+		IntStepperUI endUI;
 
 		void resized() override;
 
@@ -141,8 +146,10 @@ public:
 
 	InputValueMultiplexList* list;
 
-	void addItemsToFillMenu(PopupMenu &p) override;
+	void addItemsToFillMenu(PopupMenu& p) override;
 	void handleFillMenuResult(int result) override;
+
+	void showRangeMenuAndFillFromControllables(Array<WeakReference<Controllable>> controllables);
 };
 
 

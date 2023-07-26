@@ -242,79 +242,114 @@ void InputValueListEditor::handleFillMenuResult(int result)
 	{
 
 	case 3:
-	case 4:
 	{
 		ControllableContainer* cc = nullptr;
-		if (result == 2)
+		PopupMenu cp;
+		int offset = 0;
+		Array<Module*> modules = ModuleManager::getInstance()->getModuleList();
+		OwnedArray<ContainerChooserPopupMenu>* choosers = new OwnedArray<ContainerChooserPopupMenu>();
+		for (auto& m : modules)
 		{
-			PopupMenu cp;
-			int offset = 0;
-			Array<Module*> modules = ModuleManager::getInstance()->getModuleList();
-			OwnedArray<ContainerChooserPopupMenu>* choosers = new OwnedArray<ContainerChooserPopupMenu>();
-			for (auto& m : modules)
-			{
-				ContainerChooserPopupMenu* chooser = new ContainerChooserPopupMenu(&m->valuesCC, offset, -1, nullptr, StringArray(), StringArray(), true);
-				choosers->add(chooser);
-				cp.addSubMenu(m->niceName, *chooser);
-				offset += 100000;
-			}
-
-			cp.showMenuAsync(PopupMenu::Options(), [this, choosers](int ccResult)
-				{
-					if (ccResult > 0)
-					{
-						int chooserIndex = (int)floor(ccResult / 100000.0f);
-						ControllableContainer* cc = (*choosers)[chooserIndex]->getContainerForResult(ccResult);
-						Array<WeakReference<Controllable>> cList = cc->getAllControllables();
-						for (int i = 0; i < baseList->listSize && i < cList.size(); i++)
-						{
-							((TargetParameter*)baseList->list[i])->setValueFromTarget(cList[i]);
-						}
-					}
-
-					delete choosers;
-				}
-			);
-
-			if (cc != nullptr)
-			{
-
-			}
+			ContainerChooserPopupMenu* chooser = new ContainerChooserPopupMenu(&m->valuesCC, offset, -1, nullptr, StringArray(), StringArray(), true);
+			choosers->add(chooser);
+			cp.addSubMenu(m->niceName, *chooser);
+			offset += 100000;
 		}
-		else
+
+		cp.showMenuAsync(PopupMenu::Options(), [this, choosers](int ccResult)
+			{
+				if (ccResult > 0)
+				{
+					int chooserIndex = (int)floor(ccResult / 100000.0f);
+					ControllableContainer* cc = (*choosers)[chooserIndex]->getContainerForResult(ccResult);
+					Array<WeakReference<Controllable>> cList = cc->getAllControllables();
+					showRangeMenuAndFillFromControllables(cList);
+				}
+
+				delete choosers;
+			}
+		);
+
+		if (cc != nullptr)
 		{
-			ContainerChooserPopupMenu* chooser = new ContainerChooserPopupMenu(Engine::mainEngine, 0, -1, nullptr, StringArray(), StringArray(), true);
-			chooser->showAndGetContainer([this, chooser](ControllableContainer* cc)
-				{
-					if (cc != nullptr)
-					{
-						Array<WeakReference<Controllable>> cList = cc->getAllControllables();
-						for (int i = 0; i < baseList->listSize && i < cList.size(); i++)
-						{
-							((TargetParameter*)baseList->list[i])->setValueFromTarget(cList[i]);
-						}
-					}
 
-					delete chooser;
-
-				}
-			);
 		}
+	}
+	break;
+
+	case 4:
+	{
+		ContainerChooserPopupMenu* chooser = new ContainerChooserPopupMenu(Engine::mainEngine, 0, -1, nullptr, StringArray(), StringArray(), true);
+		chooser->showAndGetContainer([this, chooser](ControllableContainer* cc)
+			{
+				if (cc != nullptr)
+				{
+					Array<WeakReference<Controllable>> cList = cc->getAllControllables();
+					showRangeMenuAndFillFromControllables(cList);
+				}
+
+				delete chooser;
+			}
+		);
 	}
 	break;
 	}
 }
 
+void InputValueListEditor::showRangeMenuAndFillFromControllables(Array<WeakReference<Controllable>> cList)
+{
+	AlertWindow* nameWindow = new AlertWindow("Set the assignation range", "Set the start and end index to use to assign", AlertWindow::AlertIconType::NoIcon, this);
+
+
+	nameWindow->addTextEditor("cOffset", "Source Offset");
+	nameWindow->addTextEditor("start", "Start Index");
+	nameWindow->addTextEditor("end", "End Index");
+
+	nameWindow->addButton("OK", 1, KeyPress(KeyPress::returnKey));
+	nameWindow->addButton("Cancel", 0, KeyPress(KeyPress::escapeKey));
+
+	nameWindow->enterModalState(true, ModalCallbackFunction::create([this, cList, nameWindow](int result)
+		{
+			if (result)
+			{
+				String cOffsetS = nameWindow->getTextEditorContents("cOffset");
+				String startS = nameWindow->getTextEditorContents("start");
+				String endS = nameWindow->getTextEditorContents("start");
+				int cOffset = cOffsetS.isNotEmpty() ? cOffsetS.getIntValue() : 0;
+				int start = startS.isNotEmpty() ? jlimit(1, baseList->listSize, startS.getIntValue()) : 1;
+				int end = endS.isNotEmpty() ? jlimit(start, baseList->listSize, endS.getIntValue()) : baseList->listSize;
+
+
+				for (int i = start - 1; i < end && i < cList.size(); i++)
+				{
+					int cIndex = i - (start-1) + cOffset;
+					if (cIndex >= cList.size()) break;
+
+					((TargetParameter*)baseList->list[i])->setValueFromTarget(cList[cIndex]);
+				}
+			}
+		}),
+		true
+	);
+}
+
 
 BaseMultiplexListEditor::ExpressionComponentWindow::ExpressionComponentWindow(BaseMultiplexList* list) :
 	list(list),
-	assignBT("Assign")
+	assignBT("Assign"),
+	startIndex("Start", "Index at which to start the expression evaluation", 1, 1, list->listSize),
+	endIndex("End", "Index at which to stop the expression evaluation (inclusive)", list->listSize, 1, list->listSize),
+	startUI(&startIndex),
+	endUI(&endIndex)
 {
-	instructions.setText("This expression will be used to fill each item in this list. You can use wildcards {index} and {index0} to replace with index of the item that is processed.", dontSendNotification);
+	instructions.setText("This expression will be used to fill each item in this list. You can use wildcards {index} and {index0} to replace with index of the item that is processed. You can also modify the start and end index for narrowing down the evaluation.", dontSendNotification);
 
 	addAndMakeVisible(&instructions);
 	addAndMakeVisible(&editor);
 	addAndMakeVisible(&assignBT);
+	addAndMakeVisible(&startUI);
+	addAndMakeVisible(&endUI);
+
 	assignBT.addListener(this);
 	//addAndMakeVisible(&closeBT);
 
@@ -323,13 +358,19 @@ BaseMultiplexListEditor::ExpressionComponentWindow::ExpressionComponentWindow(Ba
 	editor.setColour(editor.textColourId, TEXT_COLOR);
 	editor.setMultiLine(true);
 
-	setSize(600, 300);
+	setSize(600, 330);
 }
 
 void BaseMultiplexListEditor::ExpressionComponentWindow::resized()
 {
 	Rectangle<int> r = getLocalBounds().reduced(2);
 	instructions.setBounds(r.removeFromTop(60).reduced(8));
+
+	Rectangle<int> ir = r.removeFromTop(30).reduced(8);
+	startUI.setBounds(ir.removeFromLeft(100));
+	ir.removeFromLeft(16);
+	endUI.setBounds(ir.removeFromLeft(100));
+
 	editor.setBounds(r.removeFromTop(100));
 	assignBT.setBounds(r.removeFromTop(40).reduced(2));
 }
@@ -338,7 +379,7 @@ void BaseMultiplexListEditor::ExpressionComponentWindow::buttonClicked(Button* b
 {
 	if (b == &assignBT)
 	{
-		list->fillFromExpression(editor.getText());
+		list->fillFromExpression(editor.getText(), startIndex.intValue(), endIndex.intValue());
 	}
 }
 

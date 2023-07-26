@@ -31,7 +31,7 @@ public:
 
 	virtual void updateControllablesSetup();
 
-	void fillFromExpression(const String& s);
+	void fillFromExpression(const String& s, int start, int end);
 	
 	virtual Controllable* createListControllable();
 

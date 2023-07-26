@@ -50,9 +50,9 @@ void BaseMultiplexList::updateControllablesSetup()
 	}
 }
 
-void BaseMultiplexList::fillFromExpression(const String& s)
+void BaseMultiplexList::fillFromExpression(const String& s, int start, int end)
 {
-	for (int i = 0; i < listSize; i++)
+	for (int i = jmax(start - 1, 0); i < end; i++)
 	{
 		String exp = s.replace("{index}", String(i + 1)).replace("{index0}", String(i));
 
