@@ -10,7 +10,7 @@
 
 #include "Module/ModuleIncludes.h"
 #include "CustomVariables/CustomVariablesIncludes.h"
-#include "MultiplexList.h"
+#include "Common/Processor/ProcessorIncludes.h"
 
 BaseMultiplexList::BaseMultiplexList(const String& name, var params) :
 	BaseItem(name, false),
@@ -47,6 +47,43 @@ void BaseMultiplexList::updateControllablesSetup()
 		c->setNiceName("#" + String(list.size() + 1));
 		list.add(c);
 		addControllable(c);
+	}
+}
+
+void BaseMultiplexList::fillFromExpression(const String& s)
+{
+	for (int i = 0; i < listSize; i++)
+	{
+		String exp = s.replace("{index}", String(i + 1)).replace("{index0}", String(i));
+
+		LOG("Exp(#" << (i + 1) << ") : " << exp);
+
+		ScriptExpression e;
+		e.setExpression(exp);
+		if (e.state == ScriptExpression::EXPRESSION_LOADED)
+		{
+			e.evaluate();
+			LOG(" > " << e.currentValue.toString());
+
+			if (list[i]->type == Controllable::TARGET)
+			{
+				if (!e.currentValue.isString() || e.currentValue.toString().isEmpty())
+				{
+					((TargetParameter*)list[i])->resetValue();
+				}
+				else if (e.currentValue.toString() != "{value}")
+				{
+					((TargetParameter*)list[i])->setValue(e.currentValue.toString());
+				}
+			}
+			else
+			{
+				if (!e.currentValue.isVoid())
+				{
+					if (list[i]->type != Controllable::TRIGGER) ((Parameter*)list[i])->setValue(e.currentValue);
+				}
+			}
+		}
 	}
 }
 
@@ -165,24 +202,7 @@ void InputValueMultiplexList::onExternalTriggerTriggered(Trigger* t)
 	notifyItemUpdated(inputControllables.indexOf(t));
 }
 
-void InputValueMultiplexList::fillFromExpression(const String& s)
-{
-	for (int i = 0; i < listSize; i++)
-	{
-		String exp = s.replace("{index}", String(i + 1)).replace("{index0}", String(i));
 
-		LOG("Exp(#" << (i + 1) << ") : " << exp);
-
-		ScriptExpression e;
-		e.setExpression(exp);
-		if (e.state == ScriptExpression::EXPRESSION_LOADED)
-		{
-			e.evaluate();
-			LOG(" > " << e.currentValue.toString());
-			((TargetParameter*)list[i])->setValue(e.currentValue.toString());
-		}
-	}
-}
 
 InspectableEditor* InputValueMultiplexList::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
 {

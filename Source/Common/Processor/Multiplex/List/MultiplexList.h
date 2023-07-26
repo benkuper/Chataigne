@@ -31,6 +31,8 @@ public:
 
 	virtual void updateControllablesSetup();
 
+	void fillFromExpression(const String& s);
+	
 	virtual Controllable* createListControllable();
 
 	virtual var getJSONData() override;
@@ -58,12 +60,9 @@ public:
 	MultiplexList(const String& name, var params = var()) : BaseMultiplexList(name, params) {}
 	~MultiplexList() {}
 
-	void onContainerParameterChangedInternal(Parameter* p) override
-	{
-		int index = list.indexOf(p);
-		if (index != -1) listListeners.call(&MultiplexListListener::listItemUpdated, index);
-		BaseMultiplexList::onContainerParameterChangedInternal(p);
-	}
+	void onContainerParameterChangedInternal(Parameter* p) override;
+
+
 
 	void parameterRangeChanged(Parameter* p) override { notifyItemUpdated(list.indexOf(p)); }
 	void onContainerTriggerTriggered(Trigger* t) override { notifyItemUpdated(list.indexOf(t)); }
@@ -114,7 +113,6 @@ public:
 	void onExternalParameterValueChanged(Parameter* p) override;
 	void onExternalTriggerTriggered(Trigger* t) override;
 
-	void fillFromExpression(const String& s);
 
 	virtual Controllable* getTargetControllableAt(int multiplexIndex) override { return inputControllables[multiplexIndex]; }
 
@@ -150,6 +148,14 @@ public:
 	String getTypeString() const override { return getTypeStringStatic(); }
 	static String getTypeStringStatic() { return "Custom Variable Presets"; }
 };
+
+template<class T>
+void MultiplexList<T>::onContainerParameterChangedInternal(Parameter* p)
+{
+	int index = list.indexOf(p);
+	if (index != -1) listListeners.call(&MultiplexListListener::listItemUpdated, index);
+	BaseMultiplexList::onContainerParameterChangedInternal(p);
+}
 
 template<class T>
 InspectableEditor* MultiplexList<T>::getEditorInternal(bool isRoot, Array<Inspectable*> inspectable)

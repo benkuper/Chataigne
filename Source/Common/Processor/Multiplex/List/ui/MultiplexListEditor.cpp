@@ -8,8 +8,86 @@
   ==============================================================================
 */
 
+#include "Common/Processor/ProcessorIncludes.h"
+
+
+BaseMultiplexListEditor::BaseMultiplexListEditor(BaseMultiplexList* list, bool isRoot) :
+	BaseItemEditor(list, isRoot),
+	baseList(list),
+	fillBT("Fill...")
+{
+	if (MultiplexList<Trigger>* mt = dynamic_cast<MultiplexList<Trigger>*>(list))
+	{
+		//no fill bt
+	}
+	else
+	{
+		fillBT.addListener(this);
+		addAndMakeVisible(&fillBT);
+	}
+}
+
+BaseMultiplexListEditor::~BaseMultiplexListEditor()
+{
+}
+
+
+
+void BaseMultiplexListEditor::resizedInternalHeaderItemInternal(Rectangle<int>& r)
+{
+	fillBT.setBounds(r.removeFromRight(100).reduced(1));
+}
+
+void BaseMultiplexListEditor::buttonClicked(Button* b)
+{
+	if (b == &fillBT)
+	{
+		PopupMenu p;
+		p.addItem(1, "From Expression");
+		p.addItem(2, "From First Element");
+
+		addItemsToFillMenu(p);
+
+		p.showMenuAsync(PopupMenu::Options(), [this](int result)
+			{
+				switch (result)
+				{
+				case 1:
+				{
+					expressionWindow.reset(new ExpressionComponentWindow(baseList));
+					DialogWindow::LaunchOptions dw;
+					dw.content.set(expressionWindow.get(), false);
+					dw.dialogTitle = "Fill from expression";
+					dw.escapeKeyTriggersCloseButton = true;
+					dw.dialogBackgroundColour = BG_COLOR;
+					dw.launchAsync();
+				}
+				break;
+
+
+
+				case 2:
+				{
+					for (auto& c : baseList->list) ((Parameter*)c)->setValue(((Parameter*)baseList->list[0])->value);
+				}
+				break;
+
+				default:
+					handleFillMenuResult(result);
+					break;
+				}
+			}
+		);
+	}
+
+	BaseItemEditor::buttonClicked(b);
+
+}
+
+
+
 EnumMultiplexListEditor::EnumMultiplexListEditor(EnumMultiplexList* eList, bool isRoot) :
-	BaseItemEditor(eList, isRoot),
+	BaseMultiplexListEditor(eList, isRoot),
 	eList(eList),
 	optionsBT("Set Options", "Set the available options for this list")
 {
@@ -36,7 +114,7 @@ void EnumMultiplexListEditor::showOptionsWindow()
 void EnumMultiplexListEditor::buttonClicked(Button* b)
 {
 	if (b == &optionsBT) showOptionsWindow();
-	else BaseItemEditor::buttonClicked(b);
+	else BaseMultiplexListEditor::buttonClicked(b);
 }
 
 
@@ -123,7 +201,7 @@ void EnumMultiplexListEditor::EnumListOptionManager::EnumOptionUI::resized()
 }
 
 CVPresetMultiplexListEditor::CVPresetMultiplexListEditor(CVPresetMultiplexList* eList, bool isRoot) :
-	BaseItemEditor(eList, isRoot)
+	BaseMultiplexListEditor(eList, isRoot)
 {
 	cvTargetUI.reset(eList->cvTarget->createTargetUI());
 	addAndMakeVisible(cvTargetUI.get());
@@ -142,12 +220,9 @@ void CVPresetMultiplexListEditor::resizedInternalHeaderItemInternal(Rectangle<in
 //Input values list
 
 InputValueListEditor::InputValueListEditor(InputValueMultiplexList* eList, bool isRoot) :
-	BaseItemEditor(eList, isRoot),
-	fillBT("Fill..."),
+	BaseMultiplexListEditor(eList, isRoot),
 	list(eList)
 {
-	fillBT.addListener(this);
-	addAndMakeVisible(&fillBT);
 }
 
 InputValueListEditor::~InputValueListEditor()
@@ -155,114 +230,83 @@ InputValueListEditor::~InputValueListEditor()
 
 }
 
-void InputValueListEditor::resizedInternalHeaderItemInternal(Rectangle<int>& r)
+void InputValueListEditor::addItemsToFillMenu(PopupMenu& p)
 {
-	fillBT.setBounds(r.removeFromRight(100).reduced(1));
+	p.addItem(3, "From Input Values");
+	p.addItem(4, "From Container");
 }
 
-void InputValueListEditor::buttonClicked(Button* b)
+void InputValueListEditor::handleFillMenuResult(int result)
 {
-	if (b == &fillBT)
+	switch (result)
 	{
-		PopupMenu p;
-		p.addItem(1, "From Expression");
-		p.addItem(2, "From Input Values");
-		p.addItem(3, "From Container");
-		p.addItem(4, "From First Element");
 
-		p.showMenuAsync(PopupMenu::Options(), [this](int result)
+	case 3:
+	case 4:
+	{
+		ControllableContainer* cc = nullptr;
+		if (result == 2)
+		{
+			PopupMenu cp;
+			int offset = 0;
+			Array<Module*> modules = ModuleManager::getInstance()->getModuleList();
+			OwnedArray<ContainerChooserPopupMenu>* choosers = new OwnedArray<ContainerChooserPopupMenu>();
+			for (auto& m : modules)
 			{
-				switch (result)
-				{
-				case 1:
-				{
-					expressionWindow.reset(new ExpressionComponentWindow(list));
-					DialogWindow::LaunchOptions dw;
-					dw.content.set(expressionWindow.get(), false);
-					dw.dialogTitle = "Fill from expression";
-					dw.escapeKeyTriggersCloseButton = true;
-					dw.dialogBackgroundColour = BG_COLOR;
-					dw.launchAsync();
-				}
-				break;
-
-				case 2:
-				case 3:
-				{
-					ControllableContainer* cc = nullptr;
-					if (result == 2)
-					{
-						PopupMenu cp;
-						int offset = 0;
-						Array<Module*> modules = ModuleManager::getInstance()->getModuleList();
-						OwnedArray<ContainerChooserPopupMenu>* choosers = new OwnedArray<ContainerChooserPopupMenu>();
-						for (auto& m : modules)
-						{
-							ContainerChooserPopupMenu* chooser = new ContainerChooserPopupMenu(&m->valuesCC, offset, -1, nullptr, StringArray(), StringArray(), true);
-							choosers->add(chooser);
-							cp.addSubMenu(m->niceName, *chooser);
-							offset += 100000;
-						}
-
-						cp.showMenuAsync(PopupMenu::Options(), [this, choosers](int ccResult)
-							{
-								if (ccResult > 0)
-								{
-									int chooserIndex = (int)floor(ccResult / 100000.0f);
-									ControllableContainer* cc = (*choosers)[chooserIndex]->getContainerForResult(ccResult);
-									Array<WeakReference<Controllable>> cList = cc->getAllControllables();
-									for (int i = 0; i < list->listSize && i < cList.size(); i++)
-									{
-										((TargetParameter*)list->list[i])->setValueFromTarget(cList[i]);
-									}
-								}
-
-								delete choosers;
-							}
-						);
-
-						if (cc != nullptr)
-						{
-
-						}
-					}
-					else
-					{
-						ContainerChooserPopupMenu* chooser = new ContainerChooserPopupMenu(Engine::mainEngine, 0, -1, nullptr, StringArray(), StringArray(), true);
-						chooser->showAndGetContainer([this, chooser](ControllableContainer* cc)
-							{
-								if (cc != nullptr)
-								{
-									Array<WeakReference<Controllable>> cList = cc->getAllControllables();
-									for (int i = 0; i < list->listSize && i < cList.size(); i++)
-									{
-										((TargetParameter*)list->list[i])->setValueFromTarget(cList[i]);
-									}
-								}
-
-								delete chooser;
-
-							}
-						);
-					}
-				}
-				break;
-
-				case 4:
-				{
-					for (auto& c : list->list) ((Parameter*)c)->setValue(((Parameter*)list->list[0])->value);
-				}
-				break;
-				}
+				ContainerChooserPopupMenu* chooser = new ContainerChooserPopupMenu(&m->valuesCC, offset, -1, nullptr, StringArray(), StringArray(), true);
+				choosers->add(chooser);
+				cp.addSubMenu(m->niceName, *chooser);
+				offset += 100000;
 			}
-		);
+
+			cp.showMenuAsync(PopupMenu::Options(), [this, choosers](int ccResult)
+				{
+					if (ccResult > 0)
+					{
+						int chooserIndex = (int)floor(ccResult / 100000.0f);
+						ControllableContainer* cc = (*choosers)[chooserIndex]->getContainerForResult(ccResult);
+						Array<WeakReference<Controllable>> cList = cc->getAllControllables();
+						for (int i = 0; i < baseList->listSize && i < cList.size(); i++)
+						{
+							((TargetParameter*)baseList->list[i])->setValueFromTarget(cList[i]);
+						}
+					}
+
+					delete choosers;
+				}
+			);
+
+			if (cc != nullptr)
+			{
+
+			}
+		}
+		else
+		{
+			ContainerChooserPopupMenu* chooser = new ContainerChooserPopupMenu(Engine::mainEngine, 0, -1, nullptr, StringArray(), StringArray(), true);
+			chooser->showAndGetContainer([this, chooser](ControllableContainer* cc)
+				{
+					if (cc != nullptr)
+					{
+						Array<WeakReference<Controllable>> cList = cc->getAllControllables();
+						for (int i = 0; i < baseList->listSize && i < cList.size(); i++)
+						{
+							((TargetParameter*)baseList->list[i])->setValueFromTarget(cList[i]);
+						}
+					}
+
+					delete chooser;
+
+				}
+			);
+		}
 	}
-
-	BaseItemEditor::buttonClicked(b);
-
+	break;
+	}
 }
 
-InputValueListEditor::ExpressionComponentWindow::ExpressionComponentWindow(InputValueMultiplexList* list) :
+
+BaseMultiplexListEditor::ExpressionComponentWindow::ExpressionComponentWindow(BaseMultiplexList* list) :
 	list(list),
 	assignBT("Assign")
 {
@@ -282,7 +326,7 @@ InputValueListEditor::ExpressionComponentWindow::ExpressionComponentWindow(Input
 	setSize(600, 300);
 }
 
-void InputValueListEditor::ExpressionComponentWindow::resized()
+void BaseMultiplexListEditor::ExpressionComponentWindow::resized()
 {
 	Rectangle<int> r = getLocalBounds().reduced(2);
 	instructions.setBounds(r.removeFromTop(60).reduced(8));
@@ -290,7 +334,7 @@ void InputValueListEditor::ExpressionComponentWindow::resized()
 	assignBT.setBounds(r.removeFromTop(40).reduced(2));
 }
 
-void InputValueListEditor::ExpressionComponentWindow::buttonClicked(Button* b)
+void BaseMultiplexListEditor::ExpressionComponentWindow::buttonClicked(Button* b)
 {
 	if (b == &assignBT)
 	{
@@ -299,16 +343,15 @@ void InputValueListEditor::ExpressionComponentWindow::buttonClicked(Button* b)
 }
 
 NumberListEditor::NumberListEditor(MultiplexList<FloatParameter>* list, bool isRoot) :
-	BaseItemEditor(list, isRoot),
+	BaseMultiplexListEditor(list, isRoot),
 	floatList(list),
 	intList(nullptr)
 {
-
 }
 
 
 NumberListEditor::NumberListEditor(MultiplexList<IntParameter>* list, bool isRoot) :
-	BaseItemEditor(list, isRoot),
+	BaseMultiplexListEditor(list, isRoot),
 	floatList(nullptr),
 	intList(list)
 {
@@ -467,5 +510,5 @@ void NumberListEditor::showEditRangeWindow()
 			}
 		}),
 		true
-			);
+	);
 }
