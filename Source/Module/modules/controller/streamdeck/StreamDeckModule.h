@@ -38,6 +38,8 @@ public:
 	BoolParameter* highlightPressedButtons;
 
 	FloatParameter* brightness;
+	IntParameter* textSize;
+
 	ControllableContainer colorsCC;
 	OwnedArray<Array<ColorParameter*>> colors;
 	ControllableContainer imagesCC;

@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    StreamDeck.h
-    Created: 23 Nov 2019 2:48:28am
-    Author:  bkupe
+	StreamDeck.h
+	Created: 23 Nov 2019 2:48:28am
+	Author:  bkupe
 
   ==============================================================================
 */
@@ -21,7 +21,7 @@ class StreamDeck :
 public:
 	enum Model { MINI, STANDARD_V1, STANDARD_V2, XL };
 
-	StreamDeck(hid_device * device, String serialNumber, Model model, int numColumns, int numRows, bool invertX, int iconSize, int keyDataOffset);
+	StreamDeck(hid_device* device, String serialNumber, Model model, int numColumns, int numRows, bool invertX, int iconSize, int keyDataOffset);
 	virtual ~StreamDeck();
 
 	Model model;
@@ -50,14 +50,14 @@ public:
 	void setBrightness(float brightness);
 	virtual void setBrightnessInternal(float brightness) {}
 
-	virtual void setColor(int row, int column, Colour color, bool highlight, const String& overlayText = "");
-	virtual void setImage(int row, int column, Image image, bool highlight, const String& overlayText = "");
-	virtual void setImage(int row, int column, Image image, Colour tint, bool highlight, const String &overlayText = "");
+	virtual void setColor(int row, int column, Colour color, bool highlight, const String& overlayText = "", int textSize = 10);
+	virtual void setImage(int row, int column, Image image, bool highlight, const String& overlayText = "", int textSize = 10);
+	virtual void setImage(int row, int column, Image image, Colour tint, bool highlight, const String& overlayText = "", int textSize = 10);
 	virtual void getFirmwareVersion() {}
 
 	int getIconBytes() const { return iconSize * iconSize * 3; }
 
-	virtual void sendButtonImageData(int row, int column, Image &img);
+	virtual void sendButtonImageData(int row, int column, Image& img);
 	virtual void writeImageDataHeader(MemoryOutputStream& stream, int keyIndex, int partIndex, bool isLast, int bodyLength) {}
 	virtual void writeImageData(MemoryOutputStream& stream, Image& img);
 
@@ -78,5 +78,5 @@ public:
 	void addStreamDeckListener(StreamDeckListener* newListener) { deviceListeners.add(newListener); }
 	void removeStreamDeckListener(StreamDeckListener* listener) { deviceListeners.remove(listener); }
 
-	
+
 };
