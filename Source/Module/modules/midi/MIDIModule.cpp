@@ -904,7 +904,7 @@ void MIDIModule::showMenuAndCreateValue(ControllableContainer* container)
 
 void MIDIModule::createThruControllable(ControllableContainer* cc)
 {
-	TargetParameter* p = new TargetParameter("Output module", "Target module to send the raw data to", "");
+	TargetParameter* p = new TargetParameter(cc->getUniqueNameInContainer("Output module 1"), "Target module to send the raw data to", "");
 	p->targetType = TargetParameter::CONTAINER;
 	p->customGetTargetContainerFunc = &ModuleManager::showAndGetModuleOfType<MIDIModule>;
 	p->isRemovableByUser = true;

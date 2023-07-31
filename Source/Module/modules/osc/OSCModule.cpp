@@ -427,7 +427,7 @@ var OSCModule::registerOSCCallbackFromScript(const var::NativeFunctionArgs& a)
 
 void OSCModule::createThruControllable(ControllableContainer* cc)
 {
-	TargetParameter* p = new TargetParameter("Output module", "Target module to send the raw data to", "");
+	TargetParameter* p = new TargetParameter(cc->getUniqueNameInContainer("Output Module 1"), "Target module to send the raw data to", "");
 	p->targetType = TargetParameter::CONTAINER;
 	p->customGetTargetContainerFunc = &ModuleManager::showAndGetModuleOfType<OSCModule>;
 	p->isRemovableByUser = true;
