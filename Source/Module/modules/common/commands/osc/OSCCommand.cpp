@@ -167,8 +167,9 @@ void OSCCommand::triggerInternal(int multiplexIndex)
 
 			var val = argumentsContainer.getLinkedValue(p, multiplexIndex);
 			OSCHelpers::addArgumentsForParameter(m, p, oscModule->getBoolMode(), oscModule->getColorMode(), val);
-			oscModule->sendOSC(m);
 		}
+
+		oscModule->sendOSC(m);
 	}
 	catch (OSCFormatError& e)
 	{
