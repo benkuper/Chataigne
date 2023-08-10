@@ -351,14 +351,17 @@ void MIDIModule::noteOnReceived(const int& channel, const int& pitch, const int&
 
 	if (logIncomingData->boolValue())  NLOG(niceName, "Note On : " << channel << ", " << noteName << " ( pitch : " + String(pitch) + " ), " << velocity);
 
+	
+	noteOns.addIfNotAlreadyThere(channel * 128 + pitch);
+
+	if (useGenericControls) updateValue(channel, noteName, velocity, MIDIValueParameter::NOTE_ON, pitch);
+
+	//moved after updateValue so "learn" will work on actual notes and CC, not on "last*" parameters.
 	lastChannel->setValue(channel);
 	lastPitch->setValue(pitch);
 	lastVelocity->setValue(velocity);
 	oneNoteOn->setValue(true);
-	noteOns.addIfNotAlreadyThere(channel * 128 + pitch);
 	notePlayed->trigger();
-
-	if (useGenericControls) updateValue(channel, noteName, velocity, MIDIValueParameter::NOTE_ON, pitch);
 
 	if (scriptManager->items.size() > 0) scriptManager->callFunctionOnAllItems(noteOnEventId, Array<var>(channel, pitch, velocity));
 }
