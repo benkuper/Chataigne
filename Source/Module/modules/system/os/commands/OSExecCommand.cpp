@@ -8,10 +8,13 @@
   ==============================================================================
 */
 
+#include "Module/ModuleIncludes.h"
+
 #if JUCE_WINDOWS
 #include <windows.h>
 #include <Tlhelp32.h>
 #endif
+
 
 OSExecCommand::OSExecCommand(OSModule* _module, CommandContext context, var params, Multiplex* multiplex) :
 	BaseCommand(_module, context, params, multiplex),
@@ -68,20 +71,20 @@ void OSExecCommand::triggerInternal(int multiplexIndex)
 	case LAUNCH_APP:
 	case OPEN_FILE:
 	{
-		osModule->launchFile(((FileParameter*)target)->getFile(), launchOptions->stringValue());
+		osModule->launchFile(((FileParameter*)target)->getFile(), getLinkedValue(launchOptions, multiplexIndex).toString());
 	}
 	break;
 
 	case KILL_APP:
 	{
-		osModule->killProcess(target->stringValue(), killMode->boolValue());
+		osModule->killProcess(getLinkedValue(target, multiplexIndex).toString(), (bool)getLinkedValue(killMode, multiplexIndex));
 	}
 	break;
 
 	case LAUNCH_COMMAND:
 	{
-		String command = target->stringValue().replace("\n", " && ");
-		osModule->launchCommand(command, silentMode->boolValue());
+		String command = getLinkedValue(target, multiplexIndex).toString().replace("\n", " && ");
+		osModule->launchCommand(command, getLinkedValue(silentMode, multiplexIndex));
 	}
 	break;
 
