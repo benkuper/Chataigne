@@ -168,7 +168,8 @@ ConsequenceManager::StaggerLauncher::StaggerLauncher(ConsequenceManager* csm, in
 
 ConsequenceManager::StaggerLauncher::~StaggerLauncher()
 {
-	if (isThreadRunning())
+	if (Engine::mainEngine->isClearing) stopThread(1000);
+	else if (isThreadRunning())
 	{
 		MessageManager::callAsync([this] {
 			stopThread(100);
