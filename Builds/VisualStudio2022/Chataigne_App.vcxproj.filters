@@ -2392,6 +2392,9 @@
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\keyboard\juce_ModifierKeys.cpp">
       <Filter>JUCE Modules\juce_gui_basics\keyboard</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\layout\juce_BorderedComponentBoundsConstrainer.cpp">
+      <Filter>JUCE Modules\juce_gui_basics\layout</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\layout\juce_ComponentAnimator.cpp">
       <Filter>JUCE Modules\juce_gui_basics\layout</Filter>
     </ClCompile>
@@ -2611,6 +2614,24 @@
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\native\juce_Windowing_windows.cpp">
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\native\juce_WindowsHooks_windows.cpp">
+      <Filter>JUCE Modules\juce_gui_basics\native</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\native\juce_WindowUtils_android.cpp">
+      <Filter>JUCE Modules\juce_gui_basics\native</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\native\juce_WindowUtils_ios.mm">
+      <Filter>JUCE Modules\juce_gui_basics\native</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\native\juce_WindowUtils_linux.cpp">
+      <Filter>JUCE Modules\juce_gui_basics\native</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\native\juce_WindowUtils_mac.mm">
+      <Filter>JUCE Modules\juce_gui_basics\native</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\native\juce_WindowUtils_windows.cpp">
+      <Filter>JUCE Modules\juce_gui_basics\native</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\native\juce_XSymbols_linux.cpp">
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClCompile>
@@ -2737,7 +2758,7 @@
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\windows\juce_TopLevelWindow.cpp">
       <Filter>JUCE Modules\juce_gui_basics\windows</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\windows\juce_VBlankAttachement.cpp">
+    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\windows\juce_VBlankAttachment.cpp">
       <Filter>JUCE Modules\juce_gui_basics\windows</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\juce_gui_basics.cpp">
@@ -5061,6 +5082,9 @@
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\layout\juce_AnimatedPositionBehaviours.h">
       <Filter>JUCE Modules\juce_gui_basics\layout</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\layout\juce_BorderedComponentBoundsConstrainer.h">
+      <Filter>JUCE Modules\juce_gui_basics\layout</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\layout\juce_ComponentAnimator.h">
       <Filter>JUCE Modules\juce_gui_basics\layout</Filter>
     </ClInclude>
@@ -5280,6 +5304,9 @@
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\native\juce_ScopedWindowAssociation_linux.h">
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\native\juce_WindowsHooks_windows.h">
+      <Filter>JUCE Modules\juce_gui_basics\native</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\native\juce_XSymbols_linux.h">
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClInclude>
@@ -5409,7 +5436,10 @@
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\windows\juce_TopLevelWindow.h">
       <Filter>JUCE Modules\juce_gui_basics\windows</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\windows\juce_VBlankAttachement.h">
+    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\windows\juce_VBlankAttachment.h">
+      <Filter>JUCE Modules\juce_gui_basics\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\windows\juce_WindowUtils.h">
       <Filter>JUCE Modules\juce_gui_basics\windows</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\juce_gui_basics.h">
