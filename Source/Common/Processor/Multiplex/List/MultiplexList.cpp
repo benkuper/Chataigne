@@ -143,10 +143,10 @@ void InputValueMultiplexList::updateControllablesSetup()
 		Controllable* c = list[index];
 		list.removeAllInstancesOf(c);
 		removeControllable(c);
-		if (Controllable* c = inputControllables[index])
+		if (Controllable* ic = inputControllables[index])
 		{
-			if (c->type == c->TRIGGER) ((Trigger*)c)->removeTriggerListener(this);
-			else((Parameter*)c)->removeParameterListener(this);
+			if (ic->type == ic->TRIGGER) ((Trigger*)ic)->removeTriggerListener(this);
+			else((Parameter*)ic)->removeParameterListener(this);
 		}
 	}
 
@@ -169,8 +169,23 @@ void InputValueMultiplexList::onContainerParameterChangedInternal(Parameter* p)
 	{
 		if (Controllable* c = inputControllables[index])
 		{
-			if (c->type == c->TRIGGER) ((Trigger*)c)->removeTriggerListener(this);
-			else((Parameter*)c)->removeParameterListener(this);
+			//check if another item is referencing the same to avoid removing listener if there is one
+			bool found = false;
+			for (int i = 0; i < list.size(); i++)
+			{
+				if (i == index) continue;
+				if (inputControllables[i] == c)
+				{
+					found = true;
+					break;
+				}
+			}
+
+			if (!found)
+			{
+				if (c->type == c->TRIGGER) ((Trigger*)c)->removeTriggerListener(this);
+				else((Parameter*)c)->removeParameterListener(this);
+			}
 		}
 
 		inputControllables.set(index, nullptr);
@@ -180,10 +195,10 @@ void InputValueMultiplexList::onContainerParameterChangedInternal(Parameter* p)
 			if (c->type == c->TRIGGER) ((Trigger*)c)->addTriggerListener(this);
 			else((Parameter*)c)->addParameterListener(this);
 			inputControllables.set(index, c);
-
-			listListeners.call(&MultiplexListListener::listReferenceUpdated);
-			notifyItemUpdated(index);
 		}
+
+		listListeners.call(&MultiplexListListener::listReferenceUpdated);
+		notifyItemUpdated(index);
 	}
 }
 
