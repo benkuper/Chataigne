@@ -1311,9 +1311,6 @@
     <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\keyboard\juce_ModifierKeys.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\layout\juce_BorderedComponentBoundsConstrainer.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\layout\juce_ComponentAnimator.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1494,18 +1491,6 @@
     <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_Windowing_windows.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_WindowsHooks_windows.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_WindowUtils_android.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_WindowUtils_linux.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_WindowUtils_windows.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_XSymbols_linux.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1632,7 +1617,7 @@
     <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\windows\juce_TopLevelWindow.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\windows\juce_VBlankAttachment.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\windows\juce_VBlankAttachement.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\juce_gui_basics.cpp">
@@ -2973,7 +2958,6 @@
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\keyboard\juce_TextInputTarget.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\layout\juce_AnimatedPosition.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\layout\juce_AnimatedPositionBehaviours.h"/>
-    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\layout\juce_BorderedComponentBoundsConstrainer.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\layout\juce_ComponentAnimator.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\layout\juce_ComponentBoundsConstrainer.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\layout\juce_ComponentBuilder.h"/>
@@ -3047,7 +3031,6 @@
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\juce_ScopedDPIAwarenessDisabler.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\juce_ScopedThreadDPIAwarenessSetter_windows.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\juce_ScopedWindowAssociation_linux.h"/>
-    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\juce_WindowsHooks_windows.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\juce_XSymbols_linux.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\juce_XWindowSystem_linux.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\positioning\juce_MarkerList.h"/>
@@ -3091,8 +3074,7 @@
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\windows\juce_ThreadWithProgressWindow.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\windows\juce_TooltipWindow.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\windows\juce_TopLevelWindow.h"/>
-    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\windows\juce_VBlankAttachment.h"/>
-    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\windows\juce_WindowUtils.h"/>
+    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\windows\juce_VBlankAttachement.h"/>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\juce_gui_basics.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_extra\code_editor\juce_CodeDocument.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_extra\code_editor\juce_CodeEditorComponent.h"/>
