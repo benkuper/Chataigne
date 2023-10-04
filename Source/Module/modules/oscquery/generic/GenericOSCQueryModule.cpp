@@ -51,6 +51,10 @@ GenericOSCQueryModule::GenericOSCQueryModule(const String& name, int defaultRemo
 	remoteOSCPort->canBeDisabledByUser = true;
 	remoteOSCPort->setEnabled(false);
 
+	remoteWSPort = sendCC->addIntParameter("Custom Websocket Port", "If enabled, this will override the port to send Websocket to, default is sending to the OSCQuery port", defaultRemotePort, 1, 65535);
+	remoteWSPort->canBeDisabledByUser = true;
+	remoteWSPort->setEnabled(false);
+
 	//Script
 	scriptObject.getDynamicObject()->setMethod("send", GenericOSCQueryModule::sendOSCFromScript);
 
@@ -87,7 +91,9 @@ void GenericOSCQueryModule::setupWSClient()
 	wsClient.reset(new SimpleWebSocketClient());
 	wsClient->addWebSocketListener(this);
 
-	wsClient->start(remoteHost->stringValue() + ":" + remotePort->stringValue() + "/");
+	String wsPort = remoteWSPort->enabled ? remoteWSPort->stringValue() : remoteHost->stringValue();
+	String host = useLocal->boolValue() ? "127.0.0.1" : remotePort->stringValue();
+	wsClient->start(wsPort + ":" + host + "/");
 }
 
 void GenericOSCQueryModule::sendOSC(const OSCMessage& m)
@@ -102,16 +108,17 @@ void GenericOSCQueryModule::sendOSC(const OSCMessage& m)
 
 	outActivityTrigger->trigger();
 
-	sender.sendToIPAddress(remoteHost->stringValue(), remoteOSCPort->enabled ? remoteOSCPort->intValue() : remotePort->intValue(), m);
+	String host = useLocal->boolValue() ? "127.0.0.1" : remotePort->stringValue();
+	sender.sendToIPAddress(host, remoteOSCPort->enabled ? remoteOSCPort->intValue() : remotePort->intValue(), m);
 }
 
 void GenericOSCQueryModule::sendOSCForControllable(Controllable* c)
 {
 	if (!enabled->boolValue()) return;
 	if (isUpdatingStructure) return;
-	if (isCurrentlyLoadingData) return; 
+	if (isCurrentlyLoadingData) return;
 	if (noFeedbackList.contains(c)) return;
-	
+
 
 	String s = c->getControlAddress(&valuesCC);
 	try
@@ -743,17 +750,22 @@ void GenericOSCQueryModule::requestHostInfo()
 			}
 
 
+			//String oscIP = data.getProperty("OSC_IP", remoteHost->stringValue());
 			int oscPort = data.getProperty("OSC_PORT", remotePort->intValue());
-			if (oscPort != remotePort->intValue())
-			{
-				NLOG(niceName, "OSC_PORT is different from remotePort, setting custom OSC Port to " << oscPort);
-				remoteOSCPort->setEnabled(true);
-				remoteOSCPort->setValue(oscPort);
-			}
+			remoteOSCPort->setEnabled(oscPort != remotePort->intValue());
+			remoteOSCPort->setValue(oscPort);
+			if (oscPort != remotePort->intValue()) NLOG(niceName, "OSC_PORT is different from OSCQuery port, setting custom OSC port to " << oscPort);
+
+			int wsPort = data.getProperty("WS_PORT", remotePort->intValue());
+			remoteWSPort->setEnabled(wsPort != remotePort->intValue());
+			remoteWSPort->setValue(wsPort);
+			if (wsPort != remotePort->intValue()) NLOG(niceName, "WS_PORT is different from OSCQuery port, setting custom Websocket port to " << wsPort);
+
 
 			hasListenExtension = data.getProperty("EXTENSIONS", var()).getProperty("LISTEN", false);
-			NLOG(niceName, "Server has LISTEN extension, setting up websocket");
 			requestStructure();
+
+			if (hasListenExtension) NLOG(niceName, "Server has LISTEN extension, setting up websocket");
 			setupWSClient();
 		}
 

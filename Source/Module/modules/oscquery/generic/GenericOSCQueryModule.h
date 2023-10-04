@@ -64,6 +64,7 @@ public:
 	StringParameter* remoteHost;
 	IntParameter* remotePort;
 	IntParameter* remoteOSCPort;
+	IntParameter* remoteWSPort;
 
 	OSCSender sender;
 	std::unique_ptr<SimpleWebSocketClientBase> wsClient;
