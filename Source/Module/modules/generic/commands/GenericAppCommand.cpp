@@ -52,7 +52,16 @@ void GenericAppCommand::triggerInternal(int multiplexIndex)
 	break;
 
 	case SAVE_SESSION:
-		if (Engine::mainEngine->getFile().exists()) Engine::mainEngine->saveDocument(Engine::mainEngine->getFile());
+		if (Engine::mainEngine->getFile().exists())
+		{
+			juce::Result r = Engine::mainEngine->saveDocument(Engine::mainEngine->getFile());
+			if (r.ok()) LOG("Session saved");
+			else if (r.failed()) LOGERROR("Session save error : " << r.getErrorMessage());
+		}
+		else
+		{
+			LOGWARNING("Please save first manually to use the save session command");
+		}
 		break;
 
 	case CLOSE_APP:
