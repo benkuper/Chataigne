@@ -248,7 +248,7 @@ void OSModule::updatePingStatusValues()
 
 	for (auto& c : pingIPsCC.controllables)
 	{
-		String s = ((StringParameter*)c)->stringValue();
+		String s = ((StringParameter*)c)->niceName;
 		BoolParameter* b = pingStatusCC.addBoolParameter(s.isNotEmpty() ? s : "[noip]", "Status for this IP", false);
 		b->saveValueOnly = false;
 	}
@@ -282,6 +282,16 @@ var OSModule::isProcessRunningFromScript(const var::NativeFunctionArgs& args)
 	if (!checkNumArgs(m->niceName, args, 1)) return var();
 
 	return m->isProcessRunning(args.arguments[0].toString());
+}
+
+void OSModule::childStructureChanged(ControllableContainer* c)
+{
+	Module::childStructureChanged(c);
+
+	if(!isCurrentlyLoadingData && c == &moduleParams)
+	{
+		updatePingStatusValues(); //could be better filtered to avoid other structure than Ping IPs to trigger
+	}
 }
 
 void OSModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
@@ -345,6 +355,7 @@ void OSModule::appControlCreateControllable(ControllableContainer* c)
 void OSModule::pingIPsCreateControllable(ControllableContainer* c)
 {
 	StringParameter* sp = c->addStringParameter("IP 1", "IP to ping", "");
+	sp->userCanChangeName = true;
 	sp->saveValueOnly = false;
 	sp->isRemovableByUser = true;
 
@@ -382,7 +393,7 @@ StringArray OSModule::getRunningProcesses()
 #endif
 
 	return result;
-	}
+}
 
 void OSModule::timerCallback(int timerID)
 {
@@ -457,6 +468,12 @@ void OSModule::afterLoadJSONDataInternal()
 {
 	Module::afterLoadJSONDataInternal();
 	updateAppControlValues();
+	for (auto& c : pingIPsCC.controllables)
+	{
+		c->userCanChangeName = true;
+		c->saveValueOnly = false;
+	}
+
 	updatePingStatusValues();
 }
 
@@ -471,14 +488,14 @@ void OSModule::PingThread::run()
 		Array<WeakReference<Parameter>> statusParams = osModule->pingStatusCC.getAllParameters();
 
 		if (ipParams.isEmpty()) return;
-
+		//
 		for (int i = 0; i < ipParams.size(); i++)
 		{
 			if (threadShouldExit() || moduleRef.wasObjectDeleted()) return;
 			if (ipParams[i].wasObjectDeleted() || statusParams[i].wasObjectDeleted()) continue;
 			String ip = ipParams[i]->stringValue();
 			if (ip.isEmpty()) continue;
-
+			//
 			if (osModule->logOutgoingData->boolValue()) NLOG(osModule->niceName, "Pinging " + ipParams[i]->stringValue() + " ...");
 
 			ChildProcess process;
@@ -492,8 +509,13 @@ void OSModule::PingThread::run()
 
 			String result = process.readAllProcessOutput();
 
+			if (osModule->logIncomingData->boolValue())
+			{
+				NLOG(osModule->niceName, "Ping result :\n" + result);
+			}
+
 #if JUCE_WINDOWS
-			bool success = result.contains("Received = 1");
+			bool success = result.contains("TTL") && (result.contains("Received = 1") || result.contains("(0% ") || result.contains(" 0%)"));
 #else
 			bool success = result.contains(" 0.0% packet loss");
 #endif

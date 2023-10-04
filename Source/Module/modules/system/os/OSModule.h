@@ -47,6 +47,7 @@ public:
 
 	ControllableContainer appControlNamesCC;
 	ControllableContainer appControlStatusCC;
+
 	ControllableContainer pingIPsCC;
 	ControllableContainer pingStatusCC;
 
@@ -101,6 +102,7 @@ public:
 	void appControlCreateControllable(ControllableContainer* c);
 	void pingIPsCreateControllable(ControllableContainer* c);
 
+	void childStructureChanged(ControllableContainer* c) override;
 	void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
 
 	static var launchFileFromScript(const var::NativeFunctionArgs& args);
