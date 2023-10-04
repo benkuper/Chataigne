@@ -93,7 +93,11 @@ void GenericOSCQueryModule::setupWSClient()
 
 	String wsPort = remoteWSPort->enabled ? remoteWSPort->stringValue() : remoteHost->stringValue();
 	String host = useLocal->boolValue() ? "127.0.0.1" : remotePort->stringValue();
-	wsClient->start(wsPort + ":" + host + "/");
+
+	String url = host + ":" + wsPort + "/";
+
+	if (wsPort != remoteHost->stringValue()) LOG("Connecting to custom WS Port : " + url + "...");
+	wsClient->start(url);
 }
 
 void GenericOSCQueryModule::sendOSC(const OSCMessage& m)
