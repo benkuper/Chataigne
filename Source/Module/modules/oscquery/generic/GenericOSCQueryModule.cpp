@@ -518,12 +518,12 @@ void GenericOSCQueryModule::updateAllListens()
 	{
 		if (GenericOSCQueryValueContainer* gcc = dynamic_cast<GenericOSCQueryValueContainer*>(cc.get()))
 		{
-			updateListenToContainer(gcc);
+			updateListenToContainer(gcc, true);
 		}
 	}
 }
 
-void GenericOSCQueryModule::updateListenToContainer(GenericOSCQueryValueContainer* gcc)
+void GenericOSCQueryModule::updateListenToContainer(GenericOSCQueryValueContainer* gcc, bool onlySendIfListen)
 {
 	if (!enabled->boolValue() || !hasListenExtension || isCurrentlyLoadingData || isUpdatingStructure) return;
 	if (wsClient == nullptr || !wsClient->isConnected)
@@ -532,7 +532,8 @@ void GenericOSCQueryModule::updateListenToContainer(GenericOSCQueryValueContaine
 		return;
 	}
 
-	DBG("Add listen for " << gcc->niceName);
+	if (onlySendIfListen && !gcc->enableListen->boolValue()) return;
+
 	String command = gcc->enableListen->boolValue() ? "LISTEN" : "IGNORE";
 	Array<WeakReference<Controllable>> params = gcc->getAllControllables();
 

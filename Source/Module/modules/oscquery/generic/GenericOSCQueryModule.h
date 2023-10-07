@@ -91,7 +91,7 @@ public:
 	virtual void createOrUpdateControllableFromData(ControllableContainer* parentCC, Controllable* c, StringRef name, var data);
 
 	void updateAllListens();
-	void updateListenToContainer(GenericOSCQueryValueContainer* gcc);
+	void updateListenToContainer(GenericOSCQueryValueContainer* gcc, bool onlySendIfListen = false);
 
 	virtual void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
 
