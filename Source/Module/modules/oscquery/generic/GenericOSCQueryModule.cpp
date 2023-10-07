@@ -91,8 +91,8 @@ void GenericOSCQueryModule::setupWSClient()
 	wsClient.reset(new SimpleWebSocketClient());
 	wsClient->addWebSocketListener(this);
 
-	String wsPort = remoteWSPort->enabled ? remoteWSPort->stringValue() : remoteHost->stringValue();
-	String host = useLocal->boolValue() ? "127.0.0.1" : remotePort->stringValue();
+	String host = useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue();
+	String wsPort = remoteWSPort->enabled ? remoteWSPort->stringValue() : remotePort->stringValue();
 
 	String url = host + ":" + wsPort + "/";
 
@@ -112,8 +112,9 @@ void GenericOSCQueryModule::sendOSC(const OSCMessage& m)
 
 	outActivityTrigger->trigger();
 
-	String host = useLocal->boolValue() ? "127.0.0.1" : remotePort->stringValue();
-	sender.sendToIPAddress(host, remoteOSCPort->enabled ? remoteOSCPort->intValue() : remotePort->intValue(), m);
+	String host = useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue();
+	int port = remoteOSCPort->enabled ? remoteOSCPort->intValue() : remotePort->intValue();
+	sender.sendToIPAddress(host, port, m);
 }
 
 void GenericOSCQueryModule::sendOSCForControllable(Controllable* c)

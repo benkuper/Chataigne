@@ -287,7 +287,7 @@ void ChataigneSequence::onContainerParameterChangedInternal(Parameter* p)
 			if (isPlaying->boolValue()) mtcSender->start(time);
 			else mtcSender->pause(false);
 		}
-		else if (p == syncOffset)
+		else if (p == syncOffset || p == reverseOffset)
 		{
 			mtcSender->setPosition(time, true);
 		}
