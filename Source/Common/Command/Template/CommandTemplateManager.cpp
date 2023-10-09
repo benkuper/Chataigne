@@ -1,14 +1,16 @@
 /*
   ==============================================================================
 
-    CommandTemplateManager.cpp
-    Created: 31 May 2018 11:29:27am
-    Author:  Ben
+	CommandTemplateManager.cpp
+	Created: 31 May 2018 11:29:27am
+	Author:  Ben
 
   ==============================================================================
 */
 
-CommandTemplateManager::CommandTemplateManager(Module * module) :
+#include "Common/CommonIncludes.h"
+
+CommandTemplateManager::CommandTemplateManager(Module* module) :
 	BaseManager("Templates"),
 	module(module)
 {
@@ -22,23 +24,30 @@ CommandTemplateManager::~CommandTemplateManager()
 {
 }
 
-void CommandTemplateManager::addItemInternal(CommandTemplate * item, var)
+void CommandTemplateManager::addItemInternal(CommandTemplate* item, var)
 {
 	defManager->add(CommandDefinition::createDef(module, menuName, item->niceName, &BaseCommand::create)->addParam("template", item->shortName), items.indexOf(item));
 	item->addCommandTemplateListener(this);
 }
 
-void CommandTemplateManager::removeItemInternal(CommandTemplate * item)
+void CommandTemplateManager::removeItemInternal(CommandTemplate* item)
 {
-	CommandDefinition * d = defManager->getCommandDefinitionFor(menuName, item->niceName); 
+	CommandDefinition* d = defManager->getCommandDefinitionFor(menuName, item->niceName);
 	defManager->remove(d);
 	item->removeCommandTemplateListener(this);
 }
 
-CommandTemplate * CommandTemplateManager::addItemFromData(var data, bool addToUndo)
+CommandTemplate* CommandTemplateManager::addItemFromData(var data, bool addToUndo)
 {
-	CommandTemplate * ct = new CommandTemplate(module, data);
+	CommandTemplate* ct = new CommandTemplate(module, data);
 	return addItem(ct, data, addToUndo);
+}
+
+Array<CommandTemplate*> CommandTemplateManager::addItemsFromData(var data, bool addToUndo)
+{
+	Array<CommandTemplate*> itemsToAdd;
+	for (int i = 0; i < data.size(); i++) itemsToAdd.add(new CommandTemplate(module, data[i]));
+	return addItems(itemsToAdd, data, addToUndo);
 }
 
 void CommandTemplateManager::setupDefinitionsFromModule()
@@ -55,7 +64,7 @@ void CommandTemplateManager::setupDefinitionsFromModule()
 void CommandTemplateManager::setItemIndex(CommandTemplate* t, int newIndex, bool addToUndo)
 {
 	BaseManager::setItemIndex(t, newIndex, true);
-	if(!addToUndo) reorderDefinitions();
+	if (!addToUndo) reorderDefinitions();
 }
 
 void CommandTemplateManager::reorderItems()
@@ -75,7 +84,7 @@ void CommandTemplateManager::reorderDefinitions()
 }
 
 
-void CommandTemplateManager::templateNameChanged(CommandTemplate * ct)
+void CommandTemplateManager::templateNameChanged(CommandTemplate* ct)
 {
 	if (isCurrentlyLoadingData || Engine::mainEngine->isLoadingFile || Engine::mainEngine->isClearing) return;
 

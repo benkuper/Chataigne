@@ -31,7 +31,8 @@ public:
 	void addItemInternal(CommandTemplate * item, var data) override;
 	void removeItemInternal(CommandTemplate * item) override;
 
-	CommandTemplate * addItemFromData(var data, bool addToUndo = true) override;
+	CommandTemplate* addItemFromData(var data, bool addToUndo = true) override;
+	Array<CommandTemplate*> addItemsFromData(var data, bool addToUndo = true) override;
 
 	void setupDefinitionsFromModule();
 

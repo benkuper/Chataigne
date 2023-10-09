@@ -7,6 +7,7 @@
 
   ==============================================================================
 */
+#include "StateMachine/StateMachineIncludes.h"
 
 StateMachineView::StateMachineView(const String &contentName, StateManager * _manager) :
 	BaseManagerShapeShifterViewUI(contentName, _manager),
@@ -171,7 +172,7 @@ void StateMachineView::finishCreateTransition(StateViewUI * destUI)
 
 	if (transitionCreationSourceUI != nullptr && destUI != nullptr && destUI != transitionCreationSourceUI)
 	{
-		manager->stm.addItem(transitionCreationSourceUI->item, destUI->item);
+		manager->stm.addItem(manager->stm.createItem(transitionCreationSourceUI->item, destUI->item));
 	}
 
 	for (auto &sui : itemsUI)
