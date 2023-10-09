@@ -32,7 +32,7 @@ public:
 	virtual void updateControllablesSetup();
 
 	void fillFromExpression(const String& s, int start, int end);
-	
+
 	virtual Controllable* createListControllable();
 
 	virtual var getJSONData() override;
@@ -103,6 +103,7 @@ public:
 	InputValueMultiplexList(var params = var());
 	~InputValueMultiplexList();
 
+	HashMap<Controllable*, Array<int>> controllableIndexMap;
 	Array<WeakReference<Controllable>> inputControllables;
 
 	void updateControllablesSetup() override;

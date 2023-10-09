@@ -143,12 +143,25 @@ void InputValueMultiplexList::updateControllablesSetup()
 		Controllable* c = list[index];
 		list.removeAllInstancesOf(c);
 		removeControllable(c);
+
 		if (Controllable* ic = inputControllables[index])
 		{
-			if (ic->type == ic->TRIGGER) ((Trigger*)ic)->removeTriggerListener(this);
-			else((Parameter*)ic)->removeParameterListener(this);
+			if (controllableIndexMap.contains(ic))
+			{
+				controllableIndexMap.getReference(ic).removeAllInstancesOf(index);
+				if (controllableIndexMap.getReference(ic).isEmpty()) controllableIndexMap.remove(ic);
+			}
+
+			if (!controllableIndexMap.contains(ic))
+			{
+				if (ic->type == ic->TRIGGER) ((Trigger*)ic)->removeTriggerListener(this);
+				else((Parameter*)ic)->removeParameterListener(this);
+			}
 		}
+
+		inputControllables.removeLast();
 	}
+
 
 	while (list.size() < listSize)
 	{
@@ -159,6 +172,7 @@ void InputValueMultiplexList::updateControllablesSetup()
 
 		list.add(tp);
 		inputControllables.add(nullptr);
+
 	}
 }
 
@@ -167,24 +181,20 @@ void InputValueMultiplexList::onContainerParameterChangedInternal(Parameter* p)
 	int index = list.indexOf(p);
 	if (index != -1)
 	{
-		if (Controllable* c = inputControllables[index])
+		//Find previous input controllable and remove the map and listener if needed
+		if (Controllable* ic = inputControllables[index])
 		{
-			//check if another item is referencing the same to avoid removing listener if there is one
-			bool found = false;
-			for (int i = 0; i < list.size(); i++)
+			if (controllableIndexMap.contains(ic))
 			{
-				if (i == index) continue;
-				if (inputControllables[i] == c)
-				{
-					found = true;
-					break;
-				}
+				controllableIndexMap.getReference(ic).removeAllInstancesOf(index);
+				if (controllableIndexMap.getReference(ic).isEmpty()) controllableIndexMap.remove(ic);
 			}
 
-			if (!found)
+
+			if (!controllableIndexMap.contains(ic))
 			{
-				if (c->type == c->TRIGGER) ((Trigger*)c)->removeTriggerListener(this);
-				else((Parameter*)c)->removeParameterListener(this);
+				if (ic->type == ic->TRIGGER) ((Trigger*)ic)->removeTriggerListener(this);
+				else((Parameter*)ic)->removeParameterListener(this);
 			}
 		}
 
@@ -192,9 +202,14 @@ void InputValueMultiplexList::onContainerParameterChangedInternal(Parameter* p)
 
 		if (Controllable* c = ((TargetParameter*)p)->target)
 		{
+
 			if (c->type == c->TRIGGER) ((Trigger*)c)->addTriggerListener(this);
 			else((Parameter*)c)->addParameterListener(this);
 			inputControllables.set(index, c);
+
+			if (!controllableIndexMap.contains(c)) controllableIndexMap.set(c, Array<int>(index));
+			else controllableIndexMap.getReference(c).add(index);
+
 		}
 
 		listListeners.call(&MultiplexListListener::listReferenceUpdated);
@@ -209,12 +224,15 @@ void InputValueMultiplexList::onExternalParameterRangeChanged(Parameter* p)
 
 void InputValueMultiplexList::onExternalParameterValueChanged(Parameter* p)
 {
-	notifyItemUpdated(inputControllables.indexOf(p));
+	jassert(controllableIndexMap.contains(p));
+	for (auto& i : controllableIndexMap[p]) notifyItemUpdated(i);
+	//notifyItemUpdated(inputControllables.indexOf(p));
 }
 
 void InputValueMultiplexList::onExternalTriggerTriggered(Trigger* t)
 {
-	notifyItemUpdated(inputControllables.indexOf(t));
+	jassert(controllableIndexMap.contains(t));
+	for (auto& i : controllableIndexMap[t]) notifyItemUpdated(i);
 }
 
 
