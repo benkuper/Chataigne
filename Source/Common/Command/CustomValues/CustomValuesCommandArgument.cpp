@@ -153,7 +153,7 @@ void CustomValuesCommandArgument::updateParameterFromTemplate()
 			param->resetValue();
 		}
 
-		if (sendPrecision != nullptr)
+		if (sendPrecision != nullptr && linkedTemplate->sendPrecision != nullptr)
 		{
 			sendPrecision->setControllableFeedbackOnly(true);
 			EnumParameter* lesP = linkedTemplate->sendPrecision;
