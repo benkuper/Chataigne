@@ -41,10 +41,11 @@ public:
 	void removeItemInternal(CustomValuesCommandArgument* i) override;
 	void removeItemsInternal(Array<CustomValuesCommandArgument*> items) override;
 
-	CustomValuesCommandArgument* addItemWithParam(Parameter* p, var data = var(), bool fromUndoableAction = false);
-	CustomValuesCommandArgument* addItemFromType(Parameter::Type type, var data = var(), bool fromUndoableAction = false);
+	CustomValuesCommandArgument* createItemWithParam(Parameter* p, var data = var());
+	CustomValuesCommandArgument* createItemFromType(Parameter::Type type, var data = var());
 	Parameter* createParameterFromType(Parameter::Type type, var data = var(), int index = 0);
 	CustomValuesCommandArgument* addItemFromData(var data, bool fromUndoableAction = false) override;
+	Array<CustomValuesCommandArgument*> addItemsFromData(var data, bool fromUndoableAction = false) override;
 
 
 	static var addItemWithTypeFromScript(const var::NativeFunctionArgs& a); // will override the "addItem" method from BaseManager

@@ -30,13 +30,13 @@ void CustomValuesCommandArgumentManagerEditor::handleMenuSelectedID(int id)
 {
 	switch (id)
 	{
-	case 1: aManager->addItemFromType(Parameter::INT); break;
-	case 2:	aManager->addItemFromType(Parameter::FLOAT); break;
-	case 3:	aManager->addItemFromType(Parameter::STRING); break;
-	case 4:	aManager->addItemFromType(Parameter::BOOL); break;
-	case 5:	aManager->addItemFromType(Parameter::COLOR); break;
-	case 6: aManager->addItemFromType(Parameter::POINT2D); break;
-	case 7: aManager->addItemFromType(Parameter::POINT3D); break;
+	case 1: aManager->addItem(aManager->createtemFromType(Parameter::INT)); break;
+	case 2:	aManager->addItem(aManager->createItemFromType(Parameter::FLOAT)); break;
+	case 3:	aManager->addItem(aManager->createItemFromType(Parameter::STRING)); break;
+	case 4:	aManager->addItem(aManager->createItemFromType(Parameter::BOOL)); break;
+	case 5:	aManager->addItem(aManager->createItemFromType(Parameter::COLOR)); break;
+	case 6: aManager->addItem(aManager->createItemFromType(Parameter::POINT2D)); break;
+	case 7: aManager->addItem(aManager->createItemFromType(Parameter::POINT3D)); break;
 	}
 }
 
@@ -44,7 +44,7 @@ void CustomValuesCommandArgumentManagerEditor::showMenuAndAddItem(bool)
 {
 	if (aManager->allowedTypes.size() == 1)
 	{
-		aManager->addItemFromType(aManager->allowedTypes[0]);
+		aManager->addItem(aManager->createItemFromType(aManager->allowedTypes[0]));
 		return;
 	}
 

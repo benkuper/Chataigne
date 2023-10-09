@@ -9,7 +9,7 @@
 */
 
 #include "Common/Processor/ProcessorIncludes.h"
-#include "CustomValuesCommandArgumentManager.h"
+#include "Common/Command/CommandIncludes.h"
 
 CustomValuesCommandArgumentManager::CustomValuesCommandArgumentManager(const String& name, bool _mappingEnabled, bool templateMode, Multiplex* multiplex) :
 	BaseManager(name),
@@ -142,21 +142,18 @@ void CustomValuesCommandArgumentManager::removeItemsInternal(Array<CustomValuesC
 }
 
 
-CustomValuesCommandArgument* CustomValuesCommandArgumentManager::addItemWithParam(Parameter* p, var data, bool fromUndoableAction)
+CustomValuesCommandArgument* CustomValuesCommandArgumentManager::createItemWithParam(Parameter* p, var data)
 {
 	CustomValuesCommandArgument* a = new CustomValuesCommandArgument("#" + String(items.size() + 1), p, mappingEnabled, templateMode, multiplex, enablePrecison);
-	//a->addArgumentListener(this);
-	addItem(a, data, fromUndoableAction);
-
 	return a;
 }
 
-CustomValuesCommandArgument* CustomValuesCommandArgumentManager::addItemFromType(Parameter::Type type, var data, bool fromUndoableAction)
+CustomValuesCommandArgument* CustomValuesCommandArgumentManager::createItemFromType(Parameter::Type type, var data)
 {
 	Parameter* p = createParameterFromType(type, data, items.size());
 	if (p == nullptr) return nullptr;
 
-	return addItemWithParam(p, data, fromUndoableAction);
+	return createItemWithParam(p, data);
 }
 
 Parameter* CustomValuesCommandArgumentManager::createParameterFromType(Parameter::Type type, var data, int index)
@@ -202,10 +199,12 @@ Parameter* CustomValuesCommandArgumentManager::createParameterFromType(Parameter
 	return p;
 }
 
-CustomValuesCommandArgument* CustomValuesCommandArgumentManager::addItemFromData(var data, bool fromUndoableAction)
+CustomValuesCommandArgument* CustomValuesCommandArgumentManager::addItemFromData(var data, bool addToUndo)
 {
+
 	Controllable::Type t = (Controllable::Type)Controllable::typeNames.indexOf(data.getProperty("type", ""));
-	return addItemFromType(t, data, fromUndoableAction);
+	CustomValuesCommandArgument* item = createItemFromType(t, data);
+	return addItem(item);
 
 	/*if (s.isEmpty()) return nullptr;
 
@@ -220,6 +219,19 @@ CustomValuesCommandArgument* CustomValuesCommandArgumentManager::addItemFromData
 	*/
 }
 
+Array<CustomValuesCommandArgument*> CustomValuesCommandArgumentManager::addItemsFromData(var data, bool addToUndo)
+{
+	Array<CustomValuesCommandArgument*> itemsToAdd;
+	for (int i = 0; i < data.size(); i++)
+	{
+		Controllable::Type t = (Controllable::Type)Controllable::typeNames.indexOf(data.getProperty("type", ""));
+		CustomValuesCommandArgument* item = createItemFromType(t, data);
+		itemsToAdd.add(item);
+	}
+
+	return addItems(itemsToAdd, data, addToUndo);
+}
+
 var CustomValuesCommandArgumentManager::addItemWithTypeFromScript(const var::NativeFunctionArgs& a)
 {
 
@@ -228,8 +240,12 @@ var CustomValuesCommandArgumentManager::addItemWithTypeFromScript(const var::Nat
 	if (m == nullptr) return var();
 	if (!checkNumArgs("Arguments", a, 1)) return var();
 
-	CustomValuesCommandArgument* arg = m->addItemFromType((Parameter::Type)Parameter::typeNames.indexOf(a.arguments[0].toString()));
-	if (arg != nullptr) return arg->getScriptObject();
+	CustomValuesCommandArgument* arg = m->createItemFromType((Parameter::Type)Parameter::typeNames.indexOf(a.arguments[0].toString()));
+	if (arg != nullptr)
+	{
+		m->addItem(arg);
+		return arg->getScriptObject();
+	}
 
 	return var();
 }
