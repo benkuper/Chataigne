@@ -22,7 +22,7 @@ public:
 
 	void updateSequentialUI();
 
-	void itemAddedAsync(Condition *) override;
+	void itemAddedAsync(Condition*) override;
 	void itemRemovedAsync(Condition *) override;
 
 	void resetAndBuild() override;

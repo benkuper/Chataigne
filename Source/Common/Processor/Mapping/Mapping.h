@@ -64,7 +64,9 @@ public:
 	void afterLoadJSONDataInternal() override;
 
 	void itemAdded(MappingInput*) override;
+	void itemsAdded(Array<MappingInput*>) override;
 	void itemRemoved(MappingInput*) override;
+	void itemsRemoved(Array<MappingInput*>) override;
 	void itemsReordered() override; //MappingInput
 
 	void inputReferenceChanged(MappingInput*) override;

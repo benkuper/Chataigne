@@ -86,6 +86,7 @@ public:
 	virtual void setupModuleFromJSONData(var data) override;
 
 	void itemAdded(OSCOutput* output) override;
+	void itemsAdded(Array<OSCOutput*> outputs) override;
 
 	//SEND
 	virtual void setupSenders();

@@ -61,7 +61,9 @@ public:
 	void conditionManagerValidationChanged(ConditionManager*, int multiplexIndex, bool dispatchOnChangeOnly) override;
 
 	void itemAdded(Condition*) override;
+	void itemsAdded(Array<Condition*> items) override;
 	void itemRemoved(Condition*) override;
+	void itemsRemoved(Array<Condition*> items) override;
 
 	virtual void highlightLinkedInspectables(bool value) override;
 

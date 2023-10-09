@@ -27,7 +27,9 @@ public:
 	void clearItem() override;
 
 	void itemAdded(ConvertedParameter*) override;
+	void itemsAdded(Array<ConvertedParameter*> items) override;
 	void itemRemoved(ConvertedParameter*) override;
+	void itemsRemoved(Array<ConvertedParameter*> items) override;
 	void itemsReordered() override;
 
 	void reorderFilterParameters();

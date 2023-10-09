@@ -140,6 +140,53 @@ void ChataigneSequence::targetAudioModuleChanged(ChataigneAudioLayer* layer)
 
 void ChataigneSequence::itemAdded(SequenceLayer* layer)
 {
+	checkForNewAudioLayer(layer, true);
+}
+
+void ChataigneSequence::itemsAdded(Array<SequenceLayer*> layers)
+{
+	int showMenu = true;
+	for (auto& l : layers)
+	{
+		checkForNewAudioLayer(l, showMenu);
+		showMenu = false;
+	}
+}
+
+void ChataigneSequence::itemRemoved(SequenceLayer* layer)
+{
+	ChataigneAudioLayer* a = dynamic_cast<ChataigneAudioLayer*>(layer);
+	if (a != nullptr)
+	{
+		a->removeAudioLayerListener(this);
+		if (masterAudioLayer == a)
+		{
+			masterAudioLayer = nullptr;
+			updateTargetAudioLayer(a);
+		}
+	}
+}
+
+void ChataigneSequence::itemsRemoved(Array<SequenceLayer*> layers)
+{
+	for (auto& layer : layers)
+	{
+		ChataigneAudioLayer* a = dynamic_cast<ChataigneAudioLayer*>(layer);
+		if (a != nullptr)
+		{
+			a->removeAudioLayerListener(this);
+			if (masterAudioLayer == a)
+			{
+				masterAudioLayer = nullptr;
+				updateTargetAudioLayer(a);
+			}
+		}
+	}
+}
+
+
+void ChataigneSequence::checkForNewAudioLayer(SequenceLayer* layer, bool showMenuIfNoAudioModule)
+{
 	ChataigneAudioLayer* audioLayer = dynamic_cast<ChataigneAudioLayer*>(layer);
 	if (audioLayer != nullptr)
 	{
@@ -158,7 +205,7 @@ void ChataigneSequence::itemAdded(SequenceLayer* layer)
 				}
 			}
 
-			if (audioLayer->audioModule == nullptr)
+			if (audioLayer->audioModule == nullptr && showMenuIfNoAudioModule)
 			{
 				AlertWindow::showAsync(
 					MessageBoxOptions().withIconType(AlertWindow::WarningIcon)
@@ -187,19 +234,6 @@ void ChataigneSequence::itemAdded(SequenceLayer* layer)
 	}
 }
 
-void ChataigneSequence::itemRemoved(SequenceLayer* layer)
-{
-	ChataigneAudioLayer* a = dynamic_cast<ChataigneAudioLayer*>(layer);
-	if (a != nullptr)
-	{
-		a->removeAudioLayerListener(this);
-		if (masterAudioLayer == a)
-		{
-			masterAudioLayer = nullptr;
-			updateTargetAudioLayer(a);
-		}
-	}
-}
 
 
 bool ChataigneSequence::timeIsDrivenByAudio()
@@ -365,7 +399,7 @@ void ChataigneSequence::onExternalParameterValueChanged(Parameter* p)
 		{
 			double time = ltcAudioModule->ltcTime->floatValue() + (syncOffset->floatValue() * (reverseOffset->boolValue() ? -1 : 1));
 			double diff = fabs(currentTime->floatValue() - time);
-			if(diff > 1) setCurrentTime(time, true, true);
+			if (diff > 1) setCurrentTime(time, true, true);
 		}
 	}
 }

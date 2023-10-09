@@ -31,6 +31,7 @@ public:
 	virtual void onContainerParameterChanged(Parameter* p) override;
 
 	void itemAdded(CustomValuesCommandArgument* i) override;
+	void itemsAdded(Array<CustomValuesCommandArgument*> items) override;
 
 	void updateMappingInputValue(var value, int multiplexIndex) override;
 	void setInputNamesFromParams(Array<WeakReference<Parameter>> outParams) override;

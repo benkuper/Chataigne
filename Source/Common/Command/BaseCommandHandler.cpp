@@ -81,7 +81,7 @@ void BaseCommandHandler::setCommand(CommandDefinition* commandDef)
 	{
 		addChildControllableContainer(command.get());
 
-		if(!prevCommandData.isVoid()) command->loadPreviousCommandData(prevCommandData); //keep as much as similar parameter possible
+		if (!prevCommandData.isVoid()) command->loadPreviousCommandData(prevCommandData); //keep as much as similar parameter possible
 		else if (!ghostCommandData.isVoid()) command->loadJSONData(ghostCommandData);
 		//else if (!isCurrentlyLoadingData) setNiceName(commandDef->commandType);
 
@@ -225,12 +225,40 @@ void BaseCommandHandler::itemAdded(Module* m)
 	}
 }
 
+void BaseCommandHandler::itemsAdded(Array<Module*> modules)
+{
+	for (auto& m : modules)
+	{
+		if (command == nullptr && m->shortName == ghostModuleName)
+		{
+			setCommand(m->getCommandDefinitionFor(ghostCommandMenuPath, ghostCommandName));
+			return;
+		}
+	}
+}
+
 void BaseCommandHandler::itemAdded(CommandTemplate* t)
 {
 	if (command == nullptr && ghostCommandMenuPath == "Templates" && t->niceName == ghostCommandName)
 	{
 		Module* m = ModuleManager::getInstance()->getItemWithName(ghostModuleName);
 		if (m != nullptr) setCommand(m->getCommandDefinitionFor(ghostCommandMenuPath, ghostCommandName));
+	}
+}
+
+void BaseCommandHandler::itemsAdded(Array<CommandTemplate*> templates)
+{
+	for (auto& t : templates)
+	{
+		if (command == nullptr && ghostCommandMenuPath == "Templates" && t->niceName == ghostCommandName)
+		{
+			Module* m = ModuleManager::getInstance()->getItemWithName(ghostModuleName);
+			if (m != nullptr)
+			{
+				setCommand(m->getCommandDefinitionFor(ghostCommandMenuPath, ghostCommandName));
+				return;
+			}
+		}
 	}
 }
 

@@ -57,7 +57,9 @@ public:
 	virtual void inspectableDestroyed(Inspectable*) override;
 
 	void itemAdded(Module* m) override;
+	void itemsAdded(Array<Module*> modules) override;
 	void itemAdded(CommandTemplate* t) override;
+	void itemsAdded(Array<CommandTemplate*> templates) override;
 
 
 	static var setCommandFromScript(const var::NativeFunctionArgs& a);

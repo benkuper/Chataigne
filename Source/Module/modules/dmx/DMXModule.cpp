@@ -95,7 +95,17 @@ void DMXModule::itemAdded(DMXUniverse* i)
 	updateDeviceMulticast();
 }
 
+void DMXModule::itemsAdded(Array<DMXUniverse*> items)
+{
+	updateDeviceMulticast();
+}
+
 void DMXModule::itemRemoved(DMXUniverse* i)
+{
+	updateDeviceMulticast();
+}
+
+void DMXModule::itemsRemoved(Array<DMXUniverse*> items)
 {
 	updateDeviceMulticast();
 }

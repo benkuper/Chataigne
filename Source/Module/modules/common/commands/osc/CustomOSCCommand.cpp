@@ -149,7 +149,22 @@ void CustomOSCCommand::itemAdded(CustomValuesCommandArgument* i)
 {
 	OSCCommand::itemAdded(i);
 	if (isCurrentlyLoadingData) return;
-	if(i->parentContainer == wildcardsContainer.get()) commandListeners.call(&CommandListener::commandContentChanged);
+	if (i->parentContainer == wildcardsContainer.get()) commandListeners.call(&CommandListener::commandContentChanged);
+}
+
+void CustomOSCCommand::itemsAdded(Array<CustomValuesCommandArgument*> items)
+{
+	OSCCommand::itemsAdded(items);
+
+	if (isCurrentlyLoadingData) return;
+	for (auto& i : items)
+	{
+		if (i->parentContainer == wildcardsContainer.get())
+		{
+			commandListeners.call(&CommandListener::commandContentChanged);
+			break;
+		}
+	}
 }
 
 void CustomOSCCommand::updateMappingInputValue(var value, int multiplexIndex)

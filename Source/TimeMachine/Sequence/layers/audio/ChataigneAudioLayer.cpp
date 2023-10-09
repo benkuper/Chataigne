@@ -74,11 +74,37 @@ void ChataigneAudioLayer::itemAdded(Module* m)
 	if (audioModule == nullptr && am != nullptr) setAudioModule(am);
 }
 
+void ChataigneAudioLayer::itemsAdded(Array<Module*> modules)
+{
+	if (audioModule != nullptr) return;
+	for (auto& m : modules)
+	{
+		AudioModule* am = dynamic_cast<AudioModule*>(m);
+		if (am != nullptr)
+		{
+			setAudioModule(am);
+			break;
+		}
+	}
+}
+
 void ChataigneAudioLayer::itemRemoved(Module* m)
 {
 	if (audioModule == m)
 	{
 		setAudioModule(nullptr);
+	}
+}
+
+void ChataigneAudioLayer::itemsRemoved(Array<Module*> modules)
+{
+	for (auto& m : modules)
+	{
+		if (audioModule == m)
+		{
+			setAudioModule(nullptr);
+			break;
+		}
 	}
 }
 

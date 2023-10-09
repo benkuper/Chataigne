@@ -36,8 +36,10 @@ public:
 	void setAudioModule(AudioModule * newModule);
 	AudioLayerProcessor* createAudioLayerProcessor() override;
 
-	void itemAdded(Module * m) override;
-	void itemRemoved(Module * m) override;
+	void itemAdded(Module* m) override;
+	void itemsAdded(Array<Module*> modules) override;
+	void itemRemoved(Module* m) override;
+	void itemsRemoved(Array<Module*> modules) override;
 
 	virtual float getVolumeFactor() override;
 	void exportRMS(bool toNewMappingLayer, bool toClipboard, bool dataOnly = false);

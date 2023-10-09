@@ -461,9 +461,19 @@ void AudioModule::itemAdded(FFTAnalyzer* item)
 	fftCC.addParameter(item->value);
 }
 
+void AudioModule::itemsAdded(Array<FFTAnalyzer*> items)
+{
+	for(auto & item : items) fftCC.addParameter(item->value);
+}
+
 void AudioModule::itemRemoved(FFTAnalyzer* item)
 {
 	fftCC.removeControllable(item->value);
+}
+
+void AudioModule::itemsRemoved(Array<FFTAnalyzer*> items)
+{
+	for(auto & item : items) fftCC.removeControllable(item->value);
 }
 
 

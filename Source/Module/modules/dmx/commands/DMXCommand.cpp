@@ -213,3 +213,9 @@ void DMXCommand::itemAdded(CustomValuesCommandArgument* a)
 	BaseCommand::itemAdded(a);
 	a->param->setRange(0, 255);
 }
+
+void DMXCommand::itemsAdded(Array<CustomValuesCommandArgument*> items)
+{
+	BaseCommand::itemsAdded(items);
+	for (auto& a : items) a->param->setRange(0, 255);
+}

@@ -8,7 +8,9 @@
   ==============================================================================
 */
 
-ConversionFilter::ConversionFilter(var params, Multiplex * multiplex) :
+#include "Common/Processor/ProcessorIncludes.h"
+
+ConversionFilter::ConversionFilter(var params, Multiplex* multiplex) :
 	MappingFilter(getTypeString(), params, multiplex),
 	conversionFilterAsyncNotifier(10)
 {
@@ -20,7 +22,7 @@ ConversionFilter::ConversionFilter(var params, Multiplex * multiplex) :
 	while (filteredParameters.size() < getMultiplexCount()) filteredParameters.add(new OwnedArray<Parameter>());
 }
 
-ConversionFilter::~ConversionFilter() 
+ConversionFilter::~ConversionFilter()
 {
 	clearItem();
 }
@@ -42,20 +44,39 @@ void ConversionFilter::itemAdded(ConvertedParameter* cp)
 		p->setControllableFeedbackOnly(true);
 		p->isSavable = false;
 
-		filteredParameters[i]->add(p); 
+		filteredParameters[i]->add(p);
 	}
-	
+
+	reorderFilterParameters();
+}
+
+void ConversionFilter::itemsAdded(Array<ConvertedParameter*> items)
+{
+	for (auto& cp : items)
+	{
+		for (int i = 0; i < filteredParameters.size(); i++)
+		{
+			Parameter* p = ControllableFactory::createParameterFrom(cp->defaultParam, false, true);
+			p->setNiceName("Out " + p->getTypeString());
+			cp->setOutParamReference(p, i);
+			p->setControllableFeedbackOnly(true);
+			p->isSavable = false;
+
+			filteredParameters[i]->add(p);
+		}
+	}
+
 	reorderFilterParameters();
 }
 
 
 void ConversionFilter::itemRemoved(ConvertedParameter* cp)
 {
-	for (int i=0;i<filteredParameters.size();i++)
+	for (int i = 0; i < filteredParameters.size(); i++)
 	{
 		filteredParameters[i]->removeObject(cp->outParamReferences[i]);
 	}
-	
+
 	Array<ConversionParamValueLink*> linksToRemove;
 	{
 		GenericScopedLock lock(links.getLock());
@@ -72,6 +93,35 @@ void ConversionFilter::itemRemoved(ConvertedParameter* cp)
 
 	conversionFilterAsyncNotifier.addMessage(new ConversionFilterEvent(ConversionFilterEvent::LINKS_UPDATED));
 
+	reorderFilterParameters();
+}
+
+void ConversionFilter::itemsRemoved(Array<ConvertedParameter*> items)
+{
+	for (auto& cp : items)
+	{
+
+		for (int i = 0; i < filteredParameters.size(); i++)
+		{
+			filteredParameters[i]->removeObject(cp->outParamReferences[i]);
+		}
+
+		Array<ConversionParamValueLink*> linksToRemove;
+		{
+			GenericScopedLock lock(links.getLock());
+			for (auto& link : links)
+			{
+				if (link->out == cp) linksToRemove.add(link);
+			}
+		}
+
+		for (auto& link : linksToRemove)
+		{
+			links.removeObject(link);
+		}
+	}
+
+	conversionFilterAsyncNotifier.addMessage(new ConversionFilterEvent(ConversionFilterEvent::LINKS_UPDATED));
 	reorderFilterParameters();
 }
 
@@ -166,7 +216,7 @@ void ConversionFilter::setupParametersInternal(int multiplexIndex, bool rangeOnl
 	}
 }
 
-MappingFilter::ProcessResult ConversionFilter::processInternal(Array<Parameter *> inputs, int multiplexIndex)
+MappingFilter::ProcessResult ConversionFilter::processInternal(Array<Parameter*> inputs, int multiplexIndex)
 {
 	GenericScopedLock lock(links.getLock());
 
@@ -196,7 +246,7 @@ var ConversionFilter::getJSONData()
 {
 	var data = MappingFilter::getJSONData();
 	data.getDynamicObject()->setProperty(cpm.shortName, cpm.getJSONData());
-	
+
 	var linkData;
 	for (auto& link : links)
 	{

@@ -52,7 +52,11 @@ public:
 	void targetAudioModuleChanged(ChataigneAudioLayer* layer) override;
 
 	void itemAdded(SequenceLayer* layer) override;
+	void itemsAdded(Array<SequenceLayer*> layers) override;
 	void itemRemoved(SequenceLayer* layer) override;
+	void itemsRemoved(Array<SequenceLayer*> layers) override;
+
+	void checkForNewAudioLayer(SequenceLayer* layer, bool showMenuIfNoAudioModule = true);
 	
     virtual bool timeIsDrivenByAudio() override;
 

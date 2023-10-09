@@ -51,7 +51,9 @@ public:
 	UndoableAction* syncValue(ParameterPreset* preset, bool onlyReturnUndoAction = false);
 
 	void itemAdded(GenericControllableItem*) override;
+	void itemsAdded(Array<GenericControllableItem*> items) override;
 	void itemRemoved(GenericControllableItem*) override;
+	void itemsRemoved(Array<GenericControllableItem*> items) override;
 	void itemsReordered() override;
 
 	void parameterValueChanged(Parameter*) override;

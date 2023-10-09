@@ -37,7 +37,9 @@ public:
 	void rebuildFromTemplate(bool clearData);
 
 	void addItemInternal(CustomValuesCommandArgument* item, var data) override;
+	void addItemsInternal(Array<CustomValuesCommandArgument*> items, var data) override;
 	void removeItemInternal(CustomValuesCommandArgument* i) override;
+	void removeItemsInternal(Array<CustomValuesCommandArgument*> items) override;
 
 	CustomValuesCommandArgument* addItemWithParam(Parameter* p, var data = var(), bool fromUndoableAction = false);
 	CustomValuesCommandArgument* addItemFromType(Parameter::Type type, var data = var(), bool fromUndoableAction = false);
@@ -53,7 +55,9 @@ public:
 
 
 	void itemAdded(CustomValuesCommandArgument* i) override; //FROM TEMPLATE
+	void itemsAdded(Array<CustomValuesCommandArgument*> items) override; //FROM TEMPLATE
 	void itemRemoved(CustomValuesCommandArgument* i) override; //FROM TEMPLATE
+	void itemsRemoved(Array<CustomValuesCommandArgument*> items) override; //FROM TEMPLATE
 	void loadJSONDataInternal(var data) override;
 
 

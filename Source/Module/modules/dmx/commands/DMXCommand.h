@@ -42,6 +42,7 @@ public:
 	void loadJSONDataInternal(var data) override;
 
 	void itemAdded(CustomValuesCommandArgument* a) override;
+	void itemsAdded(Array<CustomValuesCommandArgument*> items) override;
 
 	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex) { return new DMXCommand((DMXModule *)module, context, params, multiplex); }
 

@@ -46,7 +46,9 @@ public:
 
 
 	void itemAdded(DMXUniverse* i) override;
+	void itemsAdded(Array<DMXUniverse*> items) override;
 	void itemRemoved(DMXUniverse* i) override;
+	void itemsRemoved(Array<DMXUniverse*> items) override;
 
 
 	void setCurrentDMXDevice(DMXDevice* d);

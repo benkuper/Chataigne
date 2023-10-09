@@ -10,10 +10,10 @@
 
 #include "CustomVariables/CustomVariablesIncludes.h"
 
-CVPreset::CVPreset(CVGroup * group) :
+CVPreset::CVPreset(CVGroup* group) :
 	MorphTarget("Preset"),
 	group(group),
-	values("Values",&group->values,false)
+	values("Values", &group->values, false)
 {
 	jassert(group != nullptr);
 
@@ -35,9 +35,9 @@ CVPreset::CVPreset(CVGroup * group) :
 	CVGroup::ControlMode cm = group->controlMode->getValueDataAsEnum<CVGroup::ControlMode>();
 
 	weight->setControllableFeedbackOnly(cm == CVGroup::FREE || cm == CVGroup::VORONOI || cm == CVGroup::GRADIENT_BAND);
-	
+
 	addChildControllableContainer(&values);
-	
+
 }
 
 CVPreset::~CVPreset()
@@ -54,7 +54,7 @@ var CVPreset::getJSONData()
 void CVPreset::loadJSONDataInternal(var data)
 {
 	MorphTarget::loadJSONDataInternal(data);
-	values.loadJSONData(data.getProperty(values.shortName, var()),true);
+	values.loadJSONData(data.getProperty(values.shortName, var()), true);
 }
 
 var CVPreset::getValuesAsJSON()
@@ -89,15 +89,15 @@ void CVPreset::onContainerTriggerTriggered(Trigger* t)
 	else if (t == updateTrigger) values.syncValues(true);
 }
 
-InspectableEditor * CVPreset::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
+InspectableEditor* CVPreset::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
 {
 	return new CVPresetEditor(this, isRoot);
 }
 
-PresetParameterContainer::PresetParameterContainer(const String &name, GenericControllableManager * manager, bool keepValuesInSync) :
+PresetParameterContainer::PresetParameterContainer(const String& name, GenericControllableManager* manager, bool keepValuesInSync) :
 	ControllableContainer(name),
-    manager(manager),
-    keepValuesInSync(keepValuesInSync),
+	manager(manager),
+	keepValuesInSync(keepValuesInSync),
 	linkedComparator(manager)
 {
 	saveAndLoadRecursiveData = true;
@@ -110,7 +110,7 @@ PresetParameterContainer::~PresetParameterContainer()
 {
 	manager->removeBaseManagerListener(this);
 
-	HashMap<ParameterPreset *, Parameter *>::Iterator i(linkMap);
+	HashMap<ParameterPreset*, Parameter*>::Iterator i(linkMap);
 	while (i.next())
 	{
 		i.getValue()->removeControllableListener(this);
@@ -122,7 +122,7 @@ PresetParameterContainer::~PresetParameterContainer()
 
 void PresetParameterContainer::resetAndBuildValues(bool syncValues)
 {
-	HashMap<ParameterPreset *, Parameter *>::Iterator i(linkMap);
+	HashMap<ParameterPreset*, Parameter*>::Iterator i(linkMap);
 	while (i.next())
 	{
 		i.getValue()->removeControllableListener(this);
@@ -132,9 +132,9 @@ void PresetParameterContainer::resetAndBuildValues(bool syncValues)
 	clear();
 	linkMap.clear();
 
-	for (auto &gci : manager->items)
+	for (auto& gci : manager->items)
 	{
-		addValueFromItem(dynamic_cast<Parameter *>(gci->controllable));
+		addValueFromItem(dynamic_cast<Parameter*>(gci->controllable));
 	}
 }
 
@@ -157,7 +157,7 @@ void PresetParameterContainer::syncItem(ParameterPreset* preset, bool syncValueA
 {
 	Parameter* p = preset->parameter;
 	Parameter* source = linkMap[preset];
-	
+
 	preset->setNiceName(source->niceName);
 	p->setNiceName(source->niceName);
 
@@ -177,14 +177,14 @@ void PresetParameterContainer::syncItem(ParameterPreset* preset, bool syncValueA
 	}
 
 	if (syncValueAfter) syncValue(preset);
-	
+
 }
 
 void PresetParameterContainer::syncItems(bool syncValues)
 {
 	for (auto& cc : controllableContainers)
 	{
-		if (ParameterPreset* pp = dynamic_cast<ParameterPreset *>(cc.get())) syncItem(pp, syncValues);
+		if (ParameterPreset* pp = dynamic_cast<ParameterPreset*>(cc.get())) syncItem(pp, syncValues);
 	}
 }
 
@@ -208,7 +208,7 @@ UndoableAction* PresetParameterContainer::syncValue(ParameterPreset* preset, boo
 	Parameter* source = linkMap[preset];
 
 	if (onlyReturnUndoAction) return p->setUndoableValue(p->value, source->value, true);
-	
+
 	p->setValue(source->value);
 	return nullptr;
 }
@@ -217,6 +217,15 @@ void PresetParameterContainer::itemAdded(GenericControllableItem* gci)
 {
 	if (gci->controllable->type == Controllable::TRIGGER) return;
 	addValueFromItem(dynamic_cast<Parameter*>(gci->controllable));
+}
+
+void PresetParameterContainer::itemsAdded(Array<GenericControllableItem*> items)
+{
+	for (auto& gci : items)
+	{
+		if (gci->controllable->type == Controllable::TRIGGER) continue;
+		addValueFromItem(dynamic_cast<Parameter*>(gci->controllable));
+	}
 }
 
 void PresetParameterContainer::itemRemoved(GenericControllableItem* gci)
@@ -232,6 +241,24 @@ void PresetParameterContainer::itemRemoved(GenericControllableItem* gci)
 		removeChildControllableContainer(pp);
 	}
 }
+
+void PresetParameterContainer::itemsRemoved(Array<GenericControllableItem*> items)
+{
+	for (auto& gci : items)
+	{
+		if (gci->controllable->type == Controllable::TRIGGER) continue;
+		ParameterPreset* pp = dynamic_cast<ParameterPreset*>(getControllableContainerByName(gci->niceName, true));
+		if (pp != nullptr)
+		{
+			linkMap[pp]->removeControllableListener(this);
+			linkMap[pp]->removeParameterListener(this);
+			linkMap.remove(pp);
+
+			removeChildControllableContainer(pp);
+		}
+	}
+}
+
 
 void PresetParameterContainer::itemsReordered()
 {
@@ -267,20 +294,20 @@ void PresetParameterContainer::controllableNameChanged(Controllable* sourceC)
 	syncItem(pp, keepValuesInSync);
 }
 
-ParameterPreset * PresetParameterContainer::getParameterPresetForSource(Parameter * p)
+ParameterPreset* PresetParameterContainer::getParameterPresetForSource(Parameter* p)
 {
-	HashMap<ParameterPreset *, Parameter *>::Iterator i(linkMap);
+	HashMap<ParameterPreset*, Parameter*>::Iterator i(linkMap);
 	while (i.next()) if (p == i.getValue()) return i.getKey();
 	return nullptr;
 }
 
 void PresetParameterContainer::loadJSONData(var data, bool createIfNotThere)
 {
-	resetAndBuildValues();	
+	resetAndBuildValues();
 	ControllableContainer::loadJSONData(data, createIfNotThere);
 }
 
-ParameterPreset::ParameterPreset(Parameter * p) :
+ParameterPreset::ParameterPreset(Parameter* p) :
 	ControllableContainer(p->niceName),
 	parameter(p)
 {

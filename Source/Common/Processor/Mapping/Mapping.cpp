@@ -338,11 +338,30 @@ void Mapping::itemAdded(MappingInput* item)
 	if (item->inputReference != nullptr) updateMappingChain();
 }
 
+void Mapping::itemsAdded(Array<MappingInput*> items)
+{
+	for (auto& item : items)
+	{
+		item->addMappingInputListener(this);
+	}
+	updateMappingChain();
+}
+
 void Mapping::itemRemoved(MappingInput* item)
 {
 	item->removeMappingInputListener(this);
 	updateMappingChain();
 }
+
+void Mapping::itemsRemoved(Array<MappingInput*> items)
+{
+	for (auto& item : items)
+	{
+		item->removeMappingInputListener(this);
+	}
+	updateMappingChain();
+}
+
 
 void Mapping::itemsReordered()
 {

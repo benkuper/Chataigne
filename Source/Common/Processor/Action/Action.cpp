@@ -9,6 +9,7 @@
 */
 
 #include "Common/Processor/ProcessorIncludes.h"
+#include "Action.h"
 
 Action::Action(var params, Multiplex* it) :
 	Action("Action", params, it, true, true)
@@ -273,10 +274,27 @@ void Action::itemAdded(Condition* c)
 	if (sc != nullptr) sc->sourceTarget->warningResolveInspectable = this;
 }
 
+void Action::itemsAdded(Array<Condition*> items)
+{
+	updateConditionRoles();
+
+	for (auto& c : items)
+	{
+		StandardCondition* sc = dynamic_cast<StandardCondition*>(c);
+		if (sc != nullptr) sc->sourceTarget->warningResolveInspectable = this;
+	}
+}
+
 void Action::itemRemoved(Condition*)
 {
 	updateConditionRoles();
 }
+
+void Action::itemsRemoved(Array<Condition*> items)
+{
+	updateConditionRoles();
+}
+
 
 void Action::highlightLinkedInspectables(bool value)
 {
