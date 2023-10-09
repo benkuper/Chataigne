@@ -30,7 +30,7 @@ void CustomValuesCommandArgumentManagerEditor::handleMenuSelectedID(int id)
 {
 	switch (id)
 	{
-	case 1: aManager->addItem(aManager->createtemFromType(Parameter::INT)); break;
+	case 1: aManager->addItem(aManager->createItemFromType(Parameter::INT)); break;
 	case 2:	aManager->addItem(aManager->createItemFromType(Parameter::FLOAT)); break;
 	case 3:	aManager->addItem(aManager->createItemFromType(Parameter::STRING)); break;
 	case 4:	aManager->addItem(aManager->createItemFromType(Parameter::BOOL)); break;

@@ -142,25 +142,25 @@ void CustomValuesCommandArgumentManager::removeItemsInternal(Array<CustomValuesC
 }
 
 
-CustomValuesCommandArgument* CustomValuesCommandArgumentManager::createItemWithParam(Parameter* p, var data)
+CustomValuesCommandArgument* CustomValuesCommandArgumentManager::createItemWithParam(Parameter* p)
 {
 	CustomValuesCommandArgument* a = new CustomValuesCommandArgument("#" + String(items.size() + 1), p, mappingEnabled, templateMode, multiplex, enablePrecison);
 	return a;
 }
 
-CustomValuesCommandArgument* CustomValuesCommandArgumentManager::createItemFromType(Parameter::Type type, var data)
+CustomValuesCommandArgument* CustomValuesCommandArgumentManager::createItemFromType(Parameter::Type type)
 {
-	Parameter* p = createParameterFromType(type, data, items.size());
+	Parameter* p = createParameterFromType(type);
 	if (p == nullptr) return nullptr;
 
-	return createItemWithParam(p, data);
+	return createItemWithParam(p);
 }
 
-Parameter* CustomValuesCommandArgumentManager::createParameterFromType(Parameter::Type type, var data, int index)
+Parameter* CustomValuesCommandArgumentManager::createParameterFromType(Parameter::Type type)
 {
-	if (!linkedTemplateManagerRef.wasObjectDeleted() && linkedTemplateManager != nullptr) return linkedTemplateManager->createParameterFromType(type, data, index);
+	if (!linkedTemplateManagerRef.wasObjectDeleted() && linkedTemplateManager != nullptr) return linkedTemplateManager->createParameterFromType(type);
 
-	String id = String(index + 1);
+	String id = String(items.size() + 1);
 
 	Parameter* p = nullptr;
 
@@ -194,7 +194,7 @@ Parameter* CustomValuesCommandArgumentManager::createParameterFromType(Parameter
 
 	if (p != nullptr) p->isCustomizableByUser = true;
 
-	if (createParamCallbackFunc != nullptr) createParamCallbackFunc(p, data);
+	if (createParamCallbackFunc != nullptr) createParamCallbackFunc(p);
 
 	return p;
 }
@@ -203,7 +203,7 @@ CustomValuesCommandArgument* CustomValuesCommandArgumentManager::addItemFromData
 {
 
 	Controllable::Type t = (Controllable::Type)Controllable::typeNames.indexOf(data.getProperty("type", ""));
-	CustomValuesCommandArgument* item = createItemFromType(t, data);
+	CustomValuesCommandArgument* item = createItemFromType(t);
 	return addItem(item);
 
 	/*if (s.isEmpty()) return nullptr;
@@ -224,8 +224,8 @@ Array<CustomValuesCommandArgument*> CustomValuesCommandArgumentManager::addItems
 	Array<CustomValuesCommandArgument*> itemsToAdd;
 	for (int i = 0; i < data.size(); i++)
 	{
-		Controllable::Type t = (Controllable::Type)Controllable::typeNames.indexOf(data.getProperty("type", ""));
-		CustomValuesCommandArgument* item = createItemFromType(t, data);
+		Controllable::Type t = (Controllable::Type)Controllable::typeNames.indexOf(data[i].getProperty("type", ""));
+		CustomValuesCommandArgument* item = createItemFromType(t);
 		itemsToAdd.add(item);
 	}
 

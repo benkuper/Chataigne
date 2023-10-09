@@ -14,7 +14,7 @@ SendStreamRawDataCommand::SendStreamRawDataCommand(StreamingModule* _module, Com
 	SendStreamValuesCommand(_module, context, params, multiplex)
 {
 	customValuesManager->allowedTypes.add(Controllable::INT);
-	customValuesManager->createParamCallbackFunc = std::bind(&SendStreamRawDataCommand::customValueCreated, this, std::placeholders::_1, std::placeholders::_2);
+	customValuesManager->createParamCallbackFunc = std::bind(&SendStreamRawDataCommand::customValueCreated, this, std::placeholders::_1);
 	customValuesManager->enablePrecison = false;
 }
 
@@ -31,7 +31,7 @@ void SendStreamRawDataCommand::triggerInternal(int multiplexIndex)
 	streamingModule->sendBytes(data, getCustomParams(multiplexIndex));
 }
 
-void SendStreamRawDataCommand::customValueCreated(Parameter * p, var data)
+void SendStreamRawDataCommand::customValueCreated(Parameter * p)
 {
 	if (IntParameter* ip = dynamic_cast<IntParameter*>(p))
 	{

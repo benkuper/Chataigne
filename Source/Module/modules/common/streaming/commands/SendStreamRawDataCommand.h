@@ -19,7 +19,7 @@ public:
 
 	void triggerInternal(int multiplexIndex) override;
 
-	void customValueCreated(Parameter * p, var data);
+	void customValueCreated(Parameter * p);
 
 	static SendStreamRawDataCommand * create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex) { return new SendStreamRawDataCommand((StreamingModule *)module, context, params, multiplex); }
 };

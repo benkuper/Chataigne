@@ -29,7 +29,7 @@ public:
 	CustomValuesCommandArgumentManager* linkedTemplateManager;
 	WeakReference<Inspectable> linkedTemplateManagerRef;
 
-	std::function<void(Parameter*, var)> createParamCallbackFunc;
+	std::function<void(Parameter*)> createParamCallbackFunc;
 
 	StringArray inputNames;
 
@@ -41,9 +41,9 @@ public:
 	void removeItemInternal(CustomValuesCommandArgument* i) override;
 	void removeItemsInternal(Array<CustomValuesCommandArgument*> items) override;
 
-	CustomValuesCommandArgument* createItemWithParam(Parameter* p, var data = var());
-	CustomValuesCommandArgument* createItemFromType(Parameter::Type type, var data = var());
-	Parameter* createParameterFromType(Parameter::Type type, var data = var(), int index = 0);
+	CustomValuesCommandArgument* createItemWithParam(Parameter* p);
+	CustomValuesCommandArgument* createItemFromType(Parameter::Type type);
+	Parameter* createParameterFromType(Parameter::Type type);
 	CustomValuesCommandArgument* addItemFromData(var data, bool fromUndoableAction = false) override;
 	Array<CustomValuesCommandArgument*> addItemsFromData(var data, bool fromUndoableAction = false) override;
 
