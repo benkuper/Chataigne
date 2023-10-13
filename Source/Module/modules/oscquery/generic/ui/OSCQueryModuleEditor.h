@@ -10,18 +10,6 @@
 
 #pragma once
 
-class GenericOSCQueryValueContainerEditor :
-	public GenericControllableContainerEditor
-{
-public:
-	GenericOSCQueryValueContainerEditor(GenericOSCQueryValueContainer* cc, bool isRoot);
-	~GenericOSCQueryValueContainerEditor();
-
-	std::unique_ptr<BoolToggleUI> enableListenUI;
-	std::unique_ptr<BoolToggleUI> syncUI;
-
-	void resizedInternalHeader(Rectangle<int>& r) override;
-};
 
 class OSCQueryModuleOutputEditor :
 	public EnablingControllableContainerEditor

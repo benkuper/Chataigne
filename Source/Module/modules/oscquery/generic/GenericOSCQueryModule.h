@@ -10,18 +10,7 @@
 
 #pragma once
 
-class GenericOSCQueryValueContainer :
-	public ControllableContainer
-{
-public:
-	GenericOSCQueryValueContainer(const String& name);
-	~GenericOSCQueryValueContainer();
 
-	BoolParameter* enableListen;
-	BoolParameter* syncContent;
-
-	InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables = Array<Inspectable*>()) override;
-};
 
 class GenericOSCQueryModule;
 class OSCQueryOutput :
@@ -87,11 +76,9 @@ public:
 
 	virtual void syncData();
 	virtual void updateTreeFromData(var data);
-	virtual void updateContainerFromData(ControllableContainer* cc, var data);
-	virtual void createOrUpdateControllableFromData(ControllableContainer* parentCC, Controllable* c, StringRef name, var data);
 
 	void updateAllListens();
-	void updateListenToContainer(GenericOSCQueryValueContainer* gcc, bool onlySendIfListen = false);
+	void updateListenToContainer(OSCQueryHelpers::OSCQueryValueContainer* gcc, bool onlySendIfListen = false);
 
 	virtual void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
 
