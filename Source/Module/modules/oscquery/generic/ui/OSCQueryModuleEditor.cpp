@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "Module/ModuleIncludes.h"
+
 OSCQueryModuleOutputEditor::OSCQueryModuleOutputEditor(OSCQueryOutput* output, bool isRoot) :
 	EnablingControllableContainerEditor(output, isRoot),
 	zeroconfMenu("Auto detect")
@@ -33,9 +35,20 @@ void OSCQueryModuleOutputEditor::showMenuAndSetupOutput()
 			if (service != nullptr)
 			{
 				GenericOSCQueryModule* o = ((OSCQueryOutput*)container.get())->module;
+				bool isSame = o->useLocal->boolValue() == service->isLocal
+					&& o->remoteHost->stringValue() == service->getIP()
+					&& o->remotePort->intValue() == service->port;
+
+				if (isSame)
+				{
+					o->syncTrigger->trigger();
+					return;
+				}
+
 				o->useLocal->setValue(service->isLocal);
 				o->remoteHost->setValue(service->getIP());
 				o->remotePort->setValue(service->port);
+
 			}
 		}
 	);
