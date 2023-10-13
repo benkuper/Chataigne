@@ -108,9 +108,9 @@ void SerialDevice::open(int baud)
 	{
 		if (baud != -1) port->setBaudrate(baud);
 		if (!port->isOpen())  port->open();
-		port->setDTR();
-		port->setRTS();
-
+		//in juce_serial, this is exposed. next step is switch to juce_serial
+		//port->setDTR();
+		//port->setRTS();
 
 		if (!thread.isThreadRunning())
 		{
