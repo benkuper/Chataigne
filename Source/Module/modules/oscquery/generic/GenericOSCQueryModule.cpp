@@ -323,7 +323,7 @@ void GenericOSCQueryModule::updateListenToContainer(OSCQueryHelpers::OSCQueryVal
 
 	for (auto& p : params)
 	{
-		if (p == gcc->enableListen) continue;
+		if (p == gcc->enableListen || p == gcc->syncContent) continue;
 		String addr = p->getControlAddress(&valuesCC);
 		o.getDynamicObject()->setProperty("DATA", addr);
 		wsClient->send(JSON::toString(o, true));
