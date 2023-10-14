@@ -38,6 +38,7 @@ public:
 	//Script
 	const Identifier dmxEventId = "dmxEvent";
 	const Identifier sendDMXId = "send";
+	const Identifier sendDMXUniverseId = "sendUniverse";
 
 	std::unique_ptr<ControllableContainer> thruManager;
 
@@ -63,6 +64,7 @@ public:
 
 	//Script
 	static var sendDMXFromScript(const var::NativeFunctionArgs& args);
+	static var sendDMXUniverseFromScript(const var::NativeFunctionArgs& args);
 
 	virtual void clearItem() override;
 
