@@ -30,6 +30,7 @@ public:
 	void mouseDown(const MouseEvent &e) override;
 	void paintOverChildren(Graphics& g) override;
 	void moduleIOConfigurationChanged() override;
+	void updateConnectionFeedbackRef();
 	void controllableFeedbackUpdateInternal(Controllable* c) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ModuleUI)

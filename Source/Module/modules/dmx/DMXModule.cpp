@@ -10,7 +10,6 @@
 */
 
 #include "Module/ModuleIncludes.h"
-#include "DMXModule.h"
 
 DMXModule::DMXModule() :
 	Module("DMX"),
@@ -19,12 +18,12 @@ DMXModule::DMXModule() :
 	inputUniverseManager(true),
 	outputUniverseManager(false)
 {
+	outputUniverseManager.setNiceName("Output Universes");
 	setupIOConfiguration(false, true);
 
 	valuesCC.editorIsCollapsed = true;
 	includeValuesInSave = false;
 	canHandleRouteValues = true;
-
 
 	defManager->add(CommandDefinition::createDef(this, "", "Black out", &DMXCommand::create)->addParam("action", DMXCommand::BLACK_OUT));
 	defManager->add(CommandDefinition::createDef(this, "", "Set value", &DMXCommand::create)->addParam("action", DMXCommand::SET_VALUE));
@@ -45,11 +44,7 @@ DMXModule::DMXModule() :
 
 	autoAdd = moduleParams.addBoolParameter("Auto Add", "If checked, received universed will automatically be added to the values. Not effective when using 1-universe devices like OpenDMX or Enttec DMXPro", true);
 
-	dmxConnected = moduleParams.addBoolParameter("Connected", "DMX is connected ?", false);
-	dmxConnected->isControllableFeedbackOnly = true;
-	dmxConnected->isSavable = false;
-	dmxConnected->hideInEditor = true;
-	connectionFeedbackRef = dmxConnected;
+
 
 	moduleParams.addChildControllableContainer(&outputUniverseManager);
 	valuesCC.addChildControllableContainer(&inputUniverseManager);
@@ -91,22 +86,22 @@ DMXModule::~DMXModule()
 {
 }
 
-void DMXModule::itemAdded(DMXUniverse* i)
+void DMXModule::itemAdded(DMXUniverseItem* i)
 {
 	updateDeviceMulticast();
 }
 
-void DMXModule::itemsAdded(Array<DMXUniverse*> items)
+void DMXModule::itemsAdded(Array<DMXUniverseItem*> items)
 {
 	updateDeviceMulticast();
 }
 
-void DMXModule::itemRemoved(DMXUniverse* i)
+void DMXModule::itemRemoved(DMXUniverseItem* i)
 {
 	updateDeviceMulticast();
 }
 
-void DMXModule::itemsRemoved(Array<DMXUniverse*> items)
+void DMXModule::itemsRemoved(Array<DMXUniverseItem*> items)
 {
 	updateDeviceMulticast();
 }
@@ -122,32 +117,32 @@ void DMXModule::setCurrentDMXDevice(DMXDevice* d)
 		dmxDevice->removeDMXDeviceListener(this);
 		dmxDevice->clearDevice();
 		moduleParams.removeChildControllableContainer(dmxDevice.get());
+		connectionFeedbackRef = nullptr;
 	}
 
 	dmxDevice.reset(d);
 
-	//dmxConnected->hideInEditor = dmxDevice == nullptr || dmxDevice->type == DMXDevice::ARTNET;
-	dmxConnected->setValue(false);
-
 	if (dmxDevice != nullptr)
 	{
-		dmxDevice->enabled = enabled->boolValue();
+		dmxDevice->setEnabled(enabled->boolValue());
 		dmxDevice->addDMXDeviceListener(this);
 		moduleParams.addChildControllableContainer(dmxDevice.get(), false, 0);
+		connectionFeedbackRef = dmxDevice->isConnected;
 		setupIOConfiguration(dmxDevice->canReceive && dmxDevice->inputCC->enabled->boolValue(), dmxDevice->outputCC->enabled->boolValue());
-		dmxConnected->setValue(dmxDevice->isConnected);
 
 		useMulticast->setEnabled(dmxDevice->type == DMXDevice::SACN);
 
 		updateDeviceMulticast();
+		inputUniverseManager.setFirstUniverse(dmxDevice->getFirstUniverse());
+		outputUniverseManager.setFirstUniverse(dmxDevice->getFirstUniverse());
 
-		startThread();
+
+		if (!isCurrentlyLoadingData) startThread();
 	}
 	else
 	{
 		useMulticast->setEnabled(false);
 	}
-
 
 
 	dmxModuleListeners.call(&DMXModuleListener::dmxDeviceChanged);
@@ -271,7 +266,7 @@ var DMXModule::sendDMXFromScript(const var::NativeFunctionArgs& args)
 	}
 
 	DMXUniverse* u = m->getUniverse(false, 0, 0, 0, false);
-	if(u != nullptr) m->sendDMXRange(u, startChannel, values);
+	if (u != nullptr) m->sendDMXRange(u, startChannel, values);
 
 	return var();
 
@@ -303,7 +298,7 @@ var DMXModule::sendDMXUniverseFromScript(const var::NativeFunctionArgs& args)
 	}
 
 	DMXUniverse* u = m->getUniverse(false, net, subnet, universe, false);
-	if(u != nullptr) m->sendDMXRange(u, startChannel, values);
+	if (u != nullptr) m->sendDMXRange(u, startChannel, values);
 
 	return var();
 }
@@ -369,6 +364,7 @@ void DMXModule::afterLoadJSONDataInternal()
 {
 	Module::afterLoadJSONDataInternal();
 	updateDeviceMulticast();
+	if (dmxDevice != nullptr) startThread();
 }
 
 
@@ -378,13 +374,12 @@ void DMXModule::onContainerParameterChanged(Parameter* p)
 	if (p == enabled)
 	{
 		if (dmxDevice != nullptr) {
-			dmxDevice->enabled = enabled->boolValue();
-			dmxDevice->refreshEnabled();
+			dmxDevice->setEnabled(enabled->boolValue());
 		}
 
 		if (enabled->boolValue())
 		{
-			if (dmxDevice != nullptr) startThread();
+			if (dmxDevice != nullptr && !isCurrentlyLoadingData) startThread();
 		}
 		else stopThread(1000);
 	}
@@ -399,6 +394,7 @@ void DMXModule::controllableFeedbackUpdate(ControllableContainer* cc, Controllab
 		if (c == dmxDevice->outputCC->enabled || (dmxDevice->canReceive && (c == dmxDevice->inputCC->enabled)))
 		{
 			setupIOConfiguration(dmxDevice->canReceive && dmxDevice->inputCC->enabled->boolValue(), dmxDevice->outputCC->enabled->boolValue());
+
 		}
 		else if (c == useMulticast)
 		{
@@ -407,17 +403,12 @@ void DMXModule::controllableFeedbackUpdate(ControllableContainer* cc, Controllab
 	}
 }
 
-void DMXModule::dmxDeviceConnected()
+void DMXModule::dmxDeviceSetupChanged(DMXDevice*)
 {
-	dmxConnected->setValue(true);
-}
+	connectionFeedbackRef = dmxDevice->isConnected;
 
-void DMXModule::dmxDeviceDisconnected()
-{
-	dmxConnected->setValue(false);
 }
-
-void DMXModule::dmxDataInChanged(int net, int subnet, int universe, Array<uint8> values, const String& sourceName)
+void DMXModule::dmxDataInChanged(DMXDevice*, int net, int subnet, int universe, Array<uint8> values, const String& sourceName)
 {
 	if (isClearing || !enabled->boolValue()) return;
 	if (logIncomingData->boolValue())
@@ -473,10 +464,10 @@ DMXUniverse* DMXModule::getUniverse(bool isInput, int net, int subnet, int unive
 
 	if (!createIfNotThere) return nullptr;
 
-	DMXUniverse* u = new DMXUniverse(isInput);
-	u->net->setValue(net);
-	u->subnet->setValue(subnet);
-	u->universe->setValue(universe);
+	DMXUniverseItem* u = new DMXUniverseItem(isInput);
+	u->netParam->setValue(net);
+	u->subnetParam->setValue(subnet);
+	u->universeParam->setValue(universe);
 
 	return m->addItem(u);
 }

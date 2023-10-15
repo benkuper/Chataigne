@@ -62,18 +62,6 @@
     <Filter Include="Chataigne\Source\Common\Command">
       <UniqueIdentifier>{BE242EEE-600F-3A0A-D733-68EE1CD456DD}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Chataigne\Source\Common\DMX\ui">
-      <UniqueIdentifier>{D93F3299-F41F-DB93-0BBE-A75A8F1DCE40}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Common\DMX\device\sacn">
-      <UniqueIdentifier>{50D6BDEE-B73D-9F82-4BF7-31E45BEDE70E}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Common\DMX\device">
-      <UniqueIdentifier>{685DA80D-0562-85D5-6788-5A1BCC716520}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Common\DMX">
-      <UniqueIdentifier>{4AF4C7E8-39F1-FA1E-A7FA-273A466A92A0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Chataigne\Source\Common\MIDI\ui">
       <UniqueIdentifier>{F6B98A91-6345-303A-F1D1-5E729029153B}</UniqueIdentifier>
     </Filter>
@@ -199,24 +187,6 @@
     </Filter>
     <Filter Include="Chataigne\Source\Common\Processor">
       <UniqueIdentifier>{2BB73FFD-EC8D-AB3B-1E1F-789D44D8B6D8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Common\Serial\lib\cobs">
-      <UniqueIdentifier>{8CBD8DCC-4CE8-1725-5228-6AB83A4B8D3B}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Common\Serial\lib\serial\impl\list_ports">
-      <UniqueIdentifier>{99CE8BBA-CF1E-9C40-B67B-4AD7298928C8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Common\Serial\lib\serial\impl">
-      <UniqueIdentifier>{0AB5D821-DC8E-BE76-6757-A32909B9D557}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Common\Serial\lib\serial">
-      <UniqueIdentifier>{B88694B9-8BF8-A7DF-093E-EB3775677D1F}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Common\Serial\lib">
-      <UniqueIdentifier>{E59C87FD-14A3-5B76-A35D-373962152AAA}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Chataigne\Source\Common\Serial">
-      <UniqueIdentifier>{24467F9B-329E-55F1-762F-053881729CC1}</UniqueIdentifier>
     </Filter>
     <Filter Include="Chataigne\Source\Common">
       <UniqueIdentifier>{89F7165B-D034-6848-834E-0E1C945C6DFD}</UniqueIdentifier>
@@ -659,6 +629,18 @@
     <Filter Include="JUCE Modules\juce_cryptography">
       <UniqueIdentifier>{21E7FA61-9E0A-4BA1-04B7-AF47AFA9CB8B}</UniqueIdentifier>
     </Filter>
+    <Filter Include="JUCE Modules\juce_dmx\device\sacn">
+      <UniqueIdentifier>{BBCC8BFE-A1CF-392C-ACF8-296FDF088AD6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_dmx\device">
+      <UniqueIdentifier>{5B720AB7-12B7-8186-6D26-23721CF9BBC0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_dmx\ui">
+      <UniqueIdentifier>{CD2BB947-081D-2322-1C6E-203DE1DD6125}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_dmx">
+      <UniqueIdentifier>{57A6A05F-DE74-4178-4A8D-D5D913D09935}</UniqueIdentifier>
+    </Filter>
     <Filter Include="JUCE Modules\juce_gui_basics\accessibility\enums">
       <UniqueIdentifier>{46AE69B8-AD58-4381-6CDE-25C8D75B01D2}</UniqueIdentifier>
     </Filter>
@@ -955,6 +937,30 @@
     </Filter>
     <Filter Include="JUCE Modules\juce_organicui">
       <UniqueIdentifier>{5F63D43A-3BA8-5209-9971-62F87C2979FE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_serial\lib\cobs">
+      <UniqueIdentifier>{CE6CF780-1FE0-E48A-B51A-BA74A57ED94E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_serial\lib\serial\impl\list_ports">
+      <UniqueIdentifier>{9D3CEEDA-BB79-917C-CFEC-4C228E90F06B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_serial\lib\serial\impl">
+      <UniqueIdentifier>{D05DFFE3-DD87-EFBC-1A6A-06D586D17AB9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_serial\lib\serial">
+      <UniqueIdentifier>{D5CD609E-3189-A51F-070A-EAD29BEF283E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_serial\lib">
+      <UniqueIdentifier>{ADF453F6-00B2-BAE7-8935-F83C8E18A09B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_serial\serial\impl">
+      <UniqueIdentifier>{825009AC-139E-F28F-2FC4-DDE75F64FA4F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_serial\serial">
+      <UniqueIdentifier>{914032AE-27E8-B564-8123-F362B66A0627}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_serial">
+      <UniqueIdentifier>{7DFE9F75-2E32-F3C9-4C9C-BAEB72C44967}</UniqueIdentifier>
     </Filter>
     <Filter Include="JUCE Modules\juce_sharedtexture">
       <UniqueIdentifier>{F95E7C0F-5663-3942-16BD-5DA277CCDFAA}</UniqueIdentifier>
@@ -1261,39 +1267,6 @@
     <ClCompile Include="..\..\Source\Common\Command\CommandFactory.cpp">
       <Filter>Chataigne\Source\Common\Command</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Common\DMX\ui\DMXUniverseEditor.cpp">
-      <Filter>Chataigne\Source\Common\DMX\ui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Common\DMX\DMXUniverseManager.cpp">
-      <Filter>Chataigne\Source\Common\DMX</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Common\DMX\DMXUniverse.cpp">
-      <Filter>Chataigne\Source\Common\DMX</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Common\DMX\device\sacn\e131.c">
-      <Filter>Chataigne\Source\Common\DMX\device\sacn</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Common\DMX\device\DMXArtNetDevice.cpp">
-      <Filter>Chataigne\Source\Common\DMX\device</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Common\DMX\device\DMXDevice.cpp">
-      <Filter>Chataigne\Source\Common\DMX\device</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Common\DMX\device\DMXEnttecProDevice.cpp">
-      <Filter>Chataigne\Source\Common\DMX\device</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Common\DMX\device\DMXOpenUSBDevice.cpp">
-      <Filter>Chataigne\Source\Common\DMX\device</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Common\DMX\device\DMXSACNDevice.cpp">
-      <Filter>Chataigne\Source\Common\DMX\device</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Common\DMX\device\DMXSerialDevice.cpp">
-      <Filter>Chataigne\Source\Common\DMX\device</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Common\DMX\DMXManager.cpp">
-      <Filter>Chataigne\Source\Common\DMX</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Common\MIDI\ui\MIDIDeviceChooser.cpp">
       <Filter>Chataigne\Source\Common\MIDI\ui</Filter>
     </ClCompile>
@@ -1557,36 +1530,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\ProcessorManager.cpp">
       <Filter>Chataigne\Source\Common\Processor</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Common\Serial\lib\cobs\cobs.cpp">
-      <Filter>Chataigne\Source\Common\Serial\lib\cobs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Common\Serial\lib\serial\serial.cc">
-      <Filter>Chataigne\Source\Common\Serial\lib\serial</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Common\Serial\lib\serial\impl\list_ports\list_ports_linux.cc">
-      <Filter>Chataigne\Source\Common\Serial\lib\serial\impl\list_ports</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Common\Serial\lib\serial\impl\list_ports\list_ports_osx.cc">
-      <Filter>Chataigne\Source\Common\Serial\lib\serial\impl\list_ports</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Common\Serial\lib\serial\impl\list_ports\list_ports_win.cc">
-      <Filter>Chataigne\Source\Common\Serial\lib\serial\impl\list_ports</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Common\Serial\lib\serial\impl\unix.cc">
-      <Filter>Chataigne\Source\Common\Serial\lib\serial\impl</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Common\Serial\lib\serial\impl\win.cc">
-      <Filter>Chataigne\Source\Common\Serial\lib\serial\impl</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Common\Serial\SerialDevice.cpp">
-      <Filter>Chataigne\Source\Common\Serial</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Common\Serial\SerialDeviceParameter.cpp">
-      <Filter>Chataigne\Source\Common\Serial</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Common\Serial\SerialManager.cpp">
-      <Filter>Chataigne\Source\Common\Serial</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\CustomVariables\Preset\Morpher\ui\CVPresetMorphUI.cpp">
       <Filter>Chataigne\Source\CustomVariables\Preset\Morpher\ui</Filter>
@@ -2253,6 +2196,42 @@
     </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_cryptography\juce_cryptography.mm">
       <Filter>JUCE Modules\juce_cryptography</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_dmx\device\sacn\e131.c">
+      <Filter>JUCE Modules\juce_dmx\device\sacn</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_dmx\device\DMXArtNetDevice.cpp">
+      <Filter>JUCE Modules\juce_dmx\device</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_dmx\device\DMXDevice.cpp">
+      <Filter>JUCE Modules\juce_dmx\device</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_dmx\device\DMXEnttecProDevice.cpp">
+      <Filter>JUCE Modules\juce_dmx\device</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_dmx\device\DMXOpenUSBDevice.cpp">
+      <Filter>JUCE Modules\juce_dmx\device</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_dmx\device\DMXSACNDevice.cpp">
+      <Filter>JUCE Modules\juce_dmx\device</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_dmx\device\DMXSerialDevice.cpp">
+      <Filter>JUCE Modules\juce_dmx\device</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_dmx\ui\DMXUniverseEditor.cpp">
+      <Filter>JUCE Modules\juce_dmx\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_dmx\DMXManager.cpp">
+      <Filter>JUCE Modules\juce_dmx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_dmx\DMXUniverse.cpp">
+      <Filter>JUCE Modules\juce_dmx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_dmx\DMXUniverseManager.cpp">
+      <Filter>JUCE Modules\juce_dmx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_dmx\juce_dmx.cpp">
+      <Filter>JUCE Modules\juce_dmx</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\accessibility\juce_AccessibilityHandler.cpp">
       <Filter>JUCE Modules\juce_gui_basics\accessibility</Filter>
@@ -3481,6 +3460,36 @@
     <ClCompile Include="..\..\Modules\juce_organicui\juce_organicui4.cpp">
       <Filter>JUCE Modules\juce_organicui</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_serial\lib\cobs\cobs.cpp">
+      <Filter>JUCE Modules\juce_serial\lib\cobs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_serial\lib\serial\impl\list_ports\list_ports_linux.cc">
+      <Filter>JUCE Modules\juce_serial\lib\serial\impl\list_ports</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_serial\lib\serial\impl\list_ports\list_ports_win.cc">
+      <Filter>JUCE Modules\juce_serial\lib\serial\impl\list_ports</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_serial\lib\serial\impl\unix.cc">
+      <Filter>JUCE Modules\juce_serial\lib\serial\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_serial\lib\serial\impl\win.cc">
+      <Filter>JUCE Modules\juce_serial\lib\serial\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_serial\lib\serial\serial.cc">
+      <Filter>JUCE Modules\juce_serial\lib\serial</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_serial\juce_serial.cpp">
+      <Filter>JUCE Modules\juce_serial</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_serial\SerialDevice.cpp">
+      <Filter>JUCE Modules\juce_serial</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_serial\SerialDeviceParameter.cpp">
+      <Filter>JUCE Modules\juce_serial</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_serial\SerialManager.cpp">
+      <Filter>JUCE Modules\juce_serial</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_sharedtexture\juce_sharedtexture.cpp">
       <Filter>JUCE Modules\juce_sharedtexture</Filter>
     </ClCompile>
@@ -3697,6 +3706,9 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_data_structures.cpp">
       <Filter>JUCE Library Code</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\include_juce_dmx.cpp">
+      <Filter>JUCE Library Code</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_dsp.cpp">
       <Filter>JUCE Library Code</Filter>
     </ClCompile>
@@ -3731,6 +3743,9 @@
       <Filter>JUCE Library Code</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_osc.cpp">
+      <Filter>JUCE Library Code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\include_juce_serial.cpp">
       <Filter>JUCE Library Code</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_sharedtexture.cpp">
@@ -3869,39 +3884,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Command\CommandFactory.h">
       <Filter>Chataigne\Source\Common\Command</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common\DMX\ui\DMXUniverseEditor.h">
-      <Filter>Chataigne\Source\Common\DMX\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common\DMX\DMXUniverseManager.h">
-      <Filter>Chataigne\Source\Common\DMX</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common\DMX\DMXUniverse.h">
-      <Filter>Chataigne\Source\Common\DMX</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common\DMX\device\sacn\e131.h">
-      <Filter>Chataigne\Source\Common\DMX\device\sacn</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common\DMX\device\DMXArtNetDevice.h">
-      <Filter>Chataigne\Source\Common\DMX\device</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common\DMX\device\DMXDevice.h">
-      <Filter>Chataigne\Source\Common\DMX\device</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common\DMX\device\DMXEnttecProDevice.h">
-      <Filter>Chataigne\Source\Common\DMX\device</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common\DMX\device\DMXOpenUSBDevice.h">
-      <Filter>Chataigne\Source\Common\DMX\device</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common\DMX\device\DMXSACNDevice.h">
-      <Filter>Chataigne\Source\Common\DMX\device</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common\DMX\device\DMXSerialDevice.h">
-      <Filter>Chataigne\Source\Common\DMX\device</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common\DMX\DMXManager.h">
-      <Filter>Chataigne\Source\Common\DMX</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\MIDI\ui\MIDIDeviceChooser.h">
       <Filter>Chataigne\Source\Common\MIDI\ui</Filter>
@@ -4172,18 +4154,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\ProcessorManager.h">
       <Filter>Chataigne\Source\Common\Processor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common\Serial\lib\cobs\cobs.h">
-      <Filter>Chataigne\Source\Common\Serial\lib\cobs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common\Serial\SerialDevice.h">
-      <Filter>Chataigne\Source\Common\Serial</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common\Serial\SerialDeviceParameter.h">
-      <Filter>Chataigne\Source\Common\Serial</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common\Serial\SerialManager.h">
-      <Filter>Chataigne\Source\Common\Serial</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\CustomVariables\Preset\Morpher\ui\CVPresetMorphUI.h">
       <Filter>Chataigne\Source\CustomVariables\Preset\Morpher\ui</Filter>
@@ -4814,6 +4784,42 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_cryptography\juce_cryptography.h">
       <Filter>JUCE Modules\juce_cryptography</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_dmx\device\sacn\e131.h">
+      <Filter>JUCE Modules\juce_dmx\device\sacn</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_dmx\device\DMXArtNetDevice.h">
+      <Filter>JUCE Modules\juce_dmx\device</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_dmx\device\DMXDevice.h">
+      <Filter>JUCE Modules\juce_dmx\device</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_dmx\device\DMXEnttecProDevice.h">
+      <Filter>JUCE Modules\juce_dmx\device</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_dmx\device\DMXOpenUSBDevice.h">
+      <Filter>JUCE Modules\juce_dmx\device</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_dmx\device\DMXSACNDevice.h">
+      <Filter>JUCE Modules\juce_dmx\device</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_dmx\device\DMXSerialDevice.h">
+      <Filter>JUCE Modules\juce_dmx\device</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_dmx\ui\DMXUniverseEditor.h">
+      <Filter>JUCE Modules\juce_dmx\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_dmx\DMXManager.h">
+      <Filter>JUCE Modules\juce_dmx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_dmx\DMXUniverse.h">
+      <Filter>JUCE Modules\juce_dmx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_dmx\DMXUniverseManager.h">
+      <Filter>JUCE Modules\juce_dmx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_dmx\juce_dmx.h">
+      <Filter>JUCE Modules\juce_dmx</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\accessibility\enums\juce_AccessibilityActions.h">
       <Filter>JUCE Modules\juce_gui_basics\accessibility\enums</Filter>
@@ -6110,6 +6116,33 @@
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\juce_organicui.h">
       <Filter>JUCE Modules\juce_organicui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_serial\lib\cobs\cobs.h">
+      <Filter>JUCE Modules\juce_serial\lib\cobs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_serial\serial\impl\unix.h">
+      <Filter>JUCE Modules\juce_serial\serial\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_serial\serial\impl\win.h">
+      <Filter>JUCE Modules\juce_serial\serial\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_serial\serial\serial.h">
+      <Filter>JUCE Modules\juce_serial\serial</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_serial\serial\v8stdint.h">
+      <Filter>JUCE Modules\juce_serial\serial</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_serial\SerialDevice.h">
+      <Filter>JUCE Modules\juce_serial</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_serial\SerialDeviceParameter.h">
+      <Filter>JUCE Modules\juce_serial</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_serial\SerialManager.h">
+      <Filter>JUCE Modules\juce_serial</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_serial\juce_serial.h">
+      <Filter>JUCE Modules\juce_serial</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_sharedtexture\SharedTexture.h">
       <Filter>JUCE Modules\juce_sharedtexture</Filter>
@@ -9359,11 +9392,17 @@
     <None Include="..\..\Resources\tray_icon.png">
       <Filter>Chataigne\Resources</Filter>
     </None>
+    <None Include="..\..\Modules\juce_dmx\README.md">
+      <Filter>JUCE Modules\juce_dmx</Filter>
+    </None>
     <None Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\ReadMe.txt">
       <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
     </None>
     <None Include="..\..\Modules\juce_organicui\README.md">
       <Filter>JUCE Modules\juce_organicui</Filter>
+    </None>
+    <None Include="..\..\Modules\juce_serial\README.md">
+      <Filter>JUCE Modules\juce_serial</Filter>
     </None>
     <None Include="..\..\Modules\juce_sharedtexture\README.md">
       <Filter>JUCE Modules\juce_sharedtexture</Filter>
