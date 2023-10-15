@@ -1,14 +1,17 @@
 /*
   ==============================================================================
 
-    ModuleUI.cpp
-    Created: 8 Dec 2016 2:36:51pm
-    Author:  Ben
+	ModuleUI.cpp
+	Created: 8 Dec 2016 2:36:51pm
+	Author:  Ben
 
   ==============================================================================
 */
 
-ModuleUI::ModuleUI(Module * module) :
+#include "Module/ModuleIncludes.h"
+#include "UI/ChataigneAssetManager.h"
+
+ModuleUI::ModuleUI(Module* module) :
 	BaseItemUI<Module>(module)
 {
 	headerHeight = 20;
@@ -25,12 +28,7 @@ ModuleUI::ModuleUI(Module * module) :
 	addAndMakeVisible(outActivityUI.get());
 	outActivityUI->setVisible(module->hasOutput);
 
-	if (module->connectionFeedbackRef != nullptr)
-	{
-		connectionFeedbackUI.reset(module->connectionFeedbackRef->createToggle(ChataigneAssetManager::getInstance()->getConnectedImage(), ChataigneAssetManager::getInstance()->getDisconnectedImage()));
-		addAndMakeVisible(connectionFeedbackUI.get());
-	}
-
+	updateConnectionFeedbackRef();
 
 	Image iconImg;
 
@@ -45,8 +43,8 @@ ModuleUI::ModuleUI(Module * module) :
 		if (iconData != nullptr) iconImg = ImageCache::getFromMemory(iconData, numBytes);
 	}
 
-	
-	if(iconImg.isValid())
+
+	if (iconImg.isValid())
 	{
 		iconUI.setImage(iconImg);
 		addAndMakeVisible(iconUI);
@@ -101,7 +99,23 @@ void ModuleUI::moduleIOConfigurationChanged()
 {
 	inActivityUI->setVisible(item->hasInput);
 	outActivityUI->setVisible(item->hasOutput);
+	updateConnectionFeedbackRef();
 	repaint();
+}
+
+void ModuleUI::updateConnectionFeedbackRef()
+{
+	if (connectionFeedbackUI != nullptr && connectionFeedbackUI->controllable == item->connectionFeedbackRef) return;
+
+	removeChildComponent(connectionFeedbackUI.get());
+	connectionFeedbackUI.reset();
+
+	if (item->connectionFeedbackRef == nullptr) return;
+
+	connectionFeedbackUI.reset(item->connectionFeedbackRef->createToggle(ChataigneAssetManager::getInstance()->getConnectedImage(), ChataigneAssetManager::getInstance()->getDisconnectedImage()));
+	addAndMakeVisible(connectionFeedbackUI.get());
+
+	resized();
 }
 
 void ModuleUI::controllableFeedbackUpdateInternal(Controllable* c)

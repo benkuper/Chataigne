@@ -26,22 +26,6 @@ using namespace SimpleBLE;
 
 #endif
 
-#include "Serial/lib/cobs/cobs.h"
-#include "Serial/SerialDevice.h"
-#include "Serial/SerialManager.h"
-#include "Serial/SerialDeviceParameter.h"
-
-#include "DMX/DMXManager.h"
-#include "DMX/DMXUniverse.h"
-#include "DMX/DMXUniverseManager.h"
-#include "DMX/device/DMXDevice.h"
-#include "DMX/device/DMXSerialDevice.h"
-#include "DMX/device/DMXArtNetDevice.h"
-#include "DMX/device/DMXEnttecProDevice.h"
-#include "DMX/device/DMXOpenUSBDevice.h"
-#include "DMX/device/DMXSACNDevice.h"
-
-#include "DMX/ui/DMXUniverseEditor.h"
 
 #include "MIDI/MIDIDevice.h"
 #include "MIDI/MIDIManager.h"

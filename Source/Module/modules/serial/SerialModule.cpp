@@ -16,8 +16,12 @@ SerialModule::SerialModule(const String& name) :
 {
 	portParam = new SerialDeviceParameter("Port", "Serial Port to connect", true);
 	moduleParams.addParameter(portParam);
-	baudRate = moduleParams.addIntParameter("Baud Rate", "The connection speed. Common values are 9600, 57600, 115200", 115200, 9600, 1000000);
-	portParam->openBaudRate = baudRate->intValue();
+	baudRate = moduleParams.addIntParameter("Baud Rate", "The connection speed. Common values are 9600, 57600, 115200", 115200, 9600);
+	dtr = moduleParams.addBoolParameter("DTR", "Data Terminal Ready", false);
+	rts = moduleParams.addBoolParameter("RTS", "Request To Send", false);
+	portParam->setBaudrate(baudRate->intValue());
+	portParam->setDTR(dtr->boolValue());
+	portParam->setDTR(rts->boolValue());
 
 	isConnected = moduleParams.addBoolParameter("Is Connected", "This is checked if a serial port is connected.", false);
 	isConnected->setControllableFeedbackOnly(true);
@@ -126,13 +130,16 @@ void SerialModule::onControllableFeedbackUpdateInternal(ControllableContainer* c
 
 	if (c == baudRate)
 	{
-		portParam->openBaudRate = baudRate->intValue();
-		if (port != nullptr && port->isOpen())
-		{
-			SerialDevice* d = portParam->getDevice();
-			if (d != nullptr) d->setBaudRate(portParam->openBaudRate);
-		}
+		portParam->setBaudrate(baudRate->intValue());
 
+	}
+	else if (c == dtr)
+	{
+		portParam->setDTR(dtr->boolValue());
+	}
+	else if (c == rts)
+	{
+		portParam->setRTS(rts->boolValue());
 	}
 	if (c == portParam)
 	{
@@ -189,7 +196,7 @@ void SerialModule::portRemoved(SerialDevice*)
 	setCurrentPort(nullptr);
 }
 
-void SerialModule::serialDataReceived(const var& data)
+void SerialModule::serialDataReceived(SerialDevice*, const var& data)
 {
 	switch (port->mode)
 	{

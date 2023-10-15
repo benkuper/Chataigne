@@ -10,3 +10,9 @@
 [submodule "Modules/juce_sharedtexture"]
 	path = Modules/juce_sharedtexture
 	url = https://github.com/benkuper/juce_sharedtexture
+[submodule "Modules/juce_serial"]
+	path = Modules/juce_serial
+	url = https://github.com/benkuper/juce_serial
+[submodule "Modules/juce_dmx"]
+	path = Modules/juce_dmx
+	url = https://github.com/benkuper/juce_dmx

@@ -26,6 +26,8 @@ public:
 
 	SerialDeviceParameter* portParam;
 	IntParameter* baudRate;
+	BoolParameter* dtr;
+	BoolParameter* rts;
 	SerialDevice* port;
 	BoolParameter* isConnected;
 
@@ -48,7 +50,7 @@ public:
 	virtual void portOpened(SerialDevice *) override;
 	virtual void portClosed(SerialDevice *) override;
 	virtual void portRemoved(SerialDevice *) override;
-	virtual void serialDataReceived(const var& data) override;
+	virtual void serialDataReceived(SerialDevice*, const var& data) override;
 
 	virtual var getJSONData() override;
 	virtual void loadJSONDataInternal(var data) override;

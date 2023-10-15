@@ -30,8 +30,6 @@ public:
 	SpinLock deviceLock;
 	std::unique_ptr<DMXDevice> dmxDevice;
 
-	BoolParameter* dmxConnected;
-
 	Array<DMXValueParameter*> channelValues;
 
 
@@ -46,10 +44,10 @@ public:
 	DMXUniverseManager outputUniverseManager;
 
 
-	void itemAdded(DMXUniverse* i) override;
-	void itemsAdded(Array<DMXUniverse*> items) override;
-	void itemRemoved(DMXUniverse* i) override;
-	void itemsRemoved(Array<DMXUniverse*> items) override;
+	void itemAdded(DMXUniverseItem* i) override;
+	void itemsAdded(Array<DMXUniverseItem*> items) override;
+	void itemRemoved(DMXUniverseItem* i) override;
+	void itemsRemoved(Array<DMXUniverseItem*> items) override;
 
 
 	void setCurrentDMXDevice(DMXDevice* d);
@@ -75,10 +73,9 @@ public:
 	void onContainerParameterChanged(Parameter* p) override;
 	void controllableFeedbackUpdate(ControllableContainer* cc, Controllable* c) override;
 
-	void dmxDeviceConnected() override;
-	void dmxDeviceDisconnected() override;
+	void dmxDeviceSetupChanged(DMXDevice*) override;
 
-	void dmxDataInChanged(int net, int subnet, int universe, Array<uint8> values, const String& sourceName = "") override;
+	void dmxDataInChanged(DMXDevice*, int net, int subnet, int universe, Array<uint8> values, const String& sourceName = "") override;
 
 	DMXUniverse* getUniverse(bool isInput, int net, int subnet, int universe, bool createIfNotThere = true);
 
