@@ -17,7 +17,7 @@ SequenceCommand::SequenceCommand(SequenceModule* _module, CommandContext context
 {
 	actionType = (ActionType)(int)params.getProperty("type", PLAY_SEQUENCE);
 
-	if (actionType != STOP_ALL_SEQUENCES && actionType != PLAY_MULTI_SEQUENCES && actionType != PLAY_SEQUENCE_AT)
+	if (actionType != STOP_ALL_SEQUENCES && actionType != PLAY_MULTI_SEQUENCES && actionType != PLAY_SEQUENCE_AT && actionType != SET_EDITING_SEQUENCE_AT)
 	{
 		target = addTargetParameter("Target", "Target for the command");
 		target->targetType = TargetParameter::CONTAINER;
@@ -35,7 +35,7 @@ SequenceCommand::SequenceCommand(SequenceModule* _module, CommandContext context
 		loopMulti = addBoolParameter("Loop", "If enabled, this will go back to the min index", false);
 	}
 
-	if (actionType == PLAY_SEQUENCE_AT)
+	if (actionType == PLAY_SEQUENCE_AT || actionType == SET_EDITING_SEQUENCE_AT)
 	{
 		currentSequenceIndex = addIntParameter("Sequence Index", "This is the index of the sequence that will play on trigger", 0, 0);
 	}
@@ -123,14 +123,31 @@ void SequenceCommand::triggerInternal(int multiplexIndex)
 	break;
 
 	case PLAY_SEQUENCE_AT:
+	case SET_EDITING_SEQUENCE_AT:
 	{
 		int index = getLinkedValue(currentSequenceIndex, multiplexIndex);
 		if (index >= 0 && index < ChataigneSequenceManager::getInstance()->items.size())
 		{
 			if (Sequence* s = ChataigneSequenceManager::getInstance()->items[index])
 			{
-				if ((int)getLinkedValue(playFromStart, multiplexIndex)) s->stopTrigger->trigger();
-				s->playTrigger->trigger();
+				if (actionType == SET_EDITING_SEQUENCE_AT)
+				{
+					if (Sequence* s = getLinkedTargetContainerAs<Sequence>(target, multiplexIndex))
+					{
+						if (ShapeShifterManager* sm = ShapeShifterManager::getInstanceWithoutCreating())
+						{
+							if (TimeMachineView* se = sm->getContentForType<TimeMachineView>())
+							{
+								se->setSequence(s);
+							}
+						}
+					}
+				}
+				else if (actionType == PLAY_SEQUENCE_AT)
+				{
+					if ((int)getLinkedValue(playFromStart, multiplexIndex)) s->stopTrigger->trigger();
+					s->playTrigger->trigger();
+				}
 			}
 		}
 	}
