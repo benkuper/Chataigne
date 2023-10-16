@@ -23,9 +23,10 @@ public:
 		var val;
 	};
 
-	HashMap<Parameter*, Array<TimeValue>> paramTimeValueMap;
+	HashMap<WeakReference<Parameter>, Array<TimeValue>> paramTimeValueMap;
 	FloatParameter* delay;
 
+	void multiplexCountChanged() override;
 	void setupParametersInternal(int multiplexIndex, bool rangeOnly) override;
 	Parameter* setupSingleParameterInternal(Parameter* source, int multiplexIndex, bool rangeOnly) override;
 	ProcessResult processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;

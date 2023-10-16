@@ -27,7 +27,7 @@ DampingFilter::~DampingFilter()
 
 void DampingFilter::setupParametersInternal(int multiplexIndex, bool rangeOnly)
 {
-	if(!rangeOnly) previousSpeedsMap.clear();
+	if(!rangeOnly && multiplexIndex == 0) previousSpeedsMap.clear(); //only multiplex 0 should clear the map when setting up sources
 	TimeFilter::setupParametersInternal(multiplexIndex, rangeOnly);
 }
 

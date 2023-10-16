@@ -8,6 +8,9 @@
   ==============================================================================
 */
 
+#include "Common/Processor/ProcessorIncludes.h"
+
+
 DelayFilter::DelayFilter(var params, Multiplex* multiplex) :
 	MappingFilter(getTypeString(), params, multiplex, true)
 {
@@ -21,9 +24,15 @@ DelayFilter::~DelayFilter()
 
 }
 
+void DelayFilter::multiplexCountChanged()
+{
+	MappingFilter::multiplexCountChanged();
+	paramTimeValueMap.clear();
+}
+
 void DelayFilter::setupParametersInternal(int multiplexIndex, bool rangeOnly)
 {
-	if (!rangeOnly) paramTimeValueMap.clear();
+	if (!rangeOnly && multiplexIndex == 0) paramTimeValueMap.clear(); // only multiplex 0 should clear the map when setting up sources
 	MappingFilter::setupParametersInternal(multiplexIndex, rangeOnly);
 }
 
@@ -32,7 +41,7 @@ Parameter* DelayFilter::setupSingleParameterInternal(Parameter* source, int mult
 	if (!rangeOnly)
 	{
 		var tmpVal = var(source->getValue()); //shoud maybe copy the values or is it enough ?
-		paramTimeValueMap.set(source, Array<TimeValue>({ Time::getMillisecondCounterHiRes() / 1000.0, tmpVal}));
+		paramTimeValueMap.set(source, Array<TimeValue>({ Time::getMillisecondCounterHiRes() / 1000.0, tmpVal }));
 	}
 
 	return MappingFilter::setupSingleParameterInternal(source, multiplexIndex, rangeOnly);
@@ -41,23 +50,24 @@ Parameter* DelayFilter::setupSingleParameterInternal(Parameter* source, int mult
 MappingFilter::ProcessResult  DelayFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
 {
 	if (!paramTimeValueMap.contains(source)) return UNCHANGED;
-	Array<TimeValue> *values = &paramTimeValueMap.getReference(source);
+	Array<TimeValue>* values = &paramTimeValueMap.getReference(source);
 
 	double t = Time::getMillisecondCounterHiRes() / 1000.0;
 
 	var val = source->getValue();
+	DBG(multiplexIndex << " : " << val.toString() << " <> " << out->stringValue());
 
 	if (values->size() > 0)
 	{
 		TimeValue tv = values->getUnchecked(values->size() - 1);
 		if (tv.val != val) values->add({ t + delay->floatValue(), val });
 	}
-	else if(!out->checkValueIsTheSame(val, out->getValue()))
+	else if (!out->checkValueIsTheSame(val, out->getValue()))
 	{
-		values->add({ t + delay->floatValue(), val });
+		values->add({ t + (float)filterParams.getLinkedValue(delay, multiplexIndex), val });
 	}
 
-	
+
 	bool hasChanged = false;
 	while (values->size() > 0)
 	{
@@ -84,10 +94,12 @@ void DelayFilter::filterParamChanged(Parameter* p)
 {
 	if (p == delay)
 	{
-		HashMap<Parameter*, Array<TimeValue>>::Iterator it(paramTimeValueMap);
+		HashMap<WeakReference<Parameter>, Array<TimeValue>>::Iterator it(paramTimeValueMap);
 		while (it.next())
 		{
-			Parameter* p = it.getKey();
+			WeakReference<Parameter> p = it.getKey();
+			if (p.wasObjectDeleted()) continue;
+
 			Array<TimeValue>* a = &paramTimeValueMap.getReference(p);
 			a->clear();
 			a->add({ Time::getMillisecondCounterHiRes() / 1000.0, it.getKey()->getValue() });
