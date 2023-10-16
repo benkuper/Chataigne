@@ -15,6 +15,8 @@ SerialModule::SerialModule(const String& name) :
 	port(nullptr)
 {
 	portParam = new SerialDeviceParameter("Port", "Serial Port to connect", true);
+	portParam->openOnSet = false;
+
 	moduleParams.addParameter(portParam);
 	baudRate = moduleParams.addIntParameter("Baud Rate", "The connection speed. Common values are 9600, 57600, 115200", 115200, 9600);
 	dtr = moduleParams.addBoolParameter("DTR", "Data Terminal Ready", false);
