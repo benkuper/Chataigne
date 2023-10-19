@@ -14,7 +14,7 @@ CustomOSCCommand::CustomOSCCommand(IOSCSenderModule* module, CommandContext cont
 	OSCCommand(module, context, params, multiplex),
 	addressHasWildcards(false)
 {
-	autoLoadPreviousCommandData = true;
+	//autoLoadPreviousCommandData = true;
 
 	address->setControllableFeedbackOnly(false);
 	address->isSavable = true;
