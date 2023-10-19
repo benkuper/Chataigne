@@ -24,7 +24,7 @@ MultiplexListManager::MultiplexListManager(Multiplex* mp) :
     factory.defs.add(Factory<BaseMultiplexList>::Definition::createDef<MultiplexList<ColorParameter>>("Custom", ColorParameter::getTypeStringStatic()));
     factory.defs.add(Factory<BaseMultiplexList>::Definition::createDef<MultiplexList<Point2DParameter>>("Custom", Point2DParameter::getTypeStringStatic()));
     factory.defs.add(Factory<BaseMultiplexList>::Definition::createDef<MultiplexList<Point3DParameter>>("Custom", Point3DParameter::getTypeStringStatic()));
-    factory.defs.add(Factory<BaseMultiplexList>::Definition::createDef<MultiplexList<TargetParameter>>("Custom", TargetParameter::getTypeStringStatic()));
+    factory.defs.add(Factory<BaseMultiplexList>::Definition::createDef<TargetMultiplexList>("Custom", TargetParameter::getTypeStringStatic()));
     factory.defs.add(Factory<BaseMultiplexList>::Definition::createDef<EnumMultiplexList>("Custom", EnumParameter::getTypeStringStatic()));
     factory.defs.add(Factory<BaseMultiplexList>::Definition::createDef<MultiplexList<FileParameter>>("Custom", FileParameter::getTypeStringStatic()));
 

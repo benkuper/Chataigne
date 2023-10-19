@@ -96,6 +96,29 @@ public:
 	String getTypeString() const override { return EnumParameter::getTypeStringStatic(); }
 };
 
+class TargetMultiplexList :
+	public MultiplexList<TargetParameter>
+{
+public:
+	TargetMultiplexList(var params = var());
+	~TargetMultiplexList();
+
+	bool containerMode;
+
+	void setContainerMode(bool value);
+
+	void updateControllablesSetup() override;
+
+	void controllableAdded(Controllable* c) override;
+
+	var getJSONData() override;
+	void loadJSONDataMultiplexInternal(var data) override;
+
+	InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables = Array<Inspectable*>()) override;
+
+	String getTypeString() const override { return TargetParameter::getTypeStringStatic(); }
+};
+
 class InputValueMultiplexList :
 	public BaseMultiplexList
 {

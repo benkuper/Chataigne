@@ -125,6 +125,19 @@ public:
 	};
 };
 
+
+class TargetMultiplexListEditor :
+	public BaseMultiplexListEditor
+{
+public:
+	TargetMultiplexListEditor(TargetMultiplexList* list, bool isRoot);
+	~TargetMultiplexListEditor();
+
+	TargetMultiplexList* targetList;
+
+	virtual void addPopupMenuItems(PopupMenu*) override;
+};
+
 class CVPresetMultiplexListEditor :
 	public BaseMultiplexListEditor
 {

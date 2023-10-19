@@ -316,6 +316,59 @@ void EnumMultiplexList::loadJSONDataMultiplexInternal(var data)
 }
 
 
+TargetMultiplexList::TargetMultiplexList(var params) :
+	MultiplexList(TargetParameter::getTypeStringStatic() + " List"),
+	containerMode(false)
+{
+}
+
+TargetMultiplexList::~TargetMultiplexList()
+{
+}
+
+
+void TargetMultiplexList::setContainerMode(bool value)
+{
+	containerMode = value;
+	updateControllablesSetup();
+}
+
+
+void TargetMultiplexList::updateControllablesSetup()
+{
+	BaseMultiplexList::updateControllablesSetup();
+
+	for (auto& c : list)
+	{
+		TargetParameter* ep = (TargetParameter*)c;
+		ep->targetType = containerMode ? TargetParameter::CONTAINER : TargetParameter::CONTROLLABLE;
+	}
+}
+
+void TargetMultiplexList::controllableAdded(Controllable* c)
+{
+	((TargetParameter*)c)->targetType = containerMode ? TargetParameter::CONTAINER : TargetParameter::CONTROLLABLE;
+	MultiplexList::controllableAdded(c);
+}
+
+InspectableEditor* TargetMultiplexList::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
+{
+	return new TargetMultiplexListEditor(this, isRoot);
+}
+
+var TargetMultiplexList::getJSONData()
+{
+	var data = MultiplexList::getJSONData();
+	data.getDynamicObject()->setProperty("containerMode", containerMode);
+	return data;
+}
+
+void TargetMultiplexList::loadJSONDataMultiplexInternal(var data)
+{
+	setContainerMode((bool)data.getProperty("containerMode", containerMode));
+}
+
+
 CVPresetMultiplexList::CVPresetMultiplexList(var params) :
 	MultiplexList(getTypeStringStatic(), params)
 {

@@ -9,6 +9,7 @@
 */
 
 #include "Common/Processor/ProcessorIncludes.h"
+#include "MultiplexListEditor.h"
 
 
 BaseMultiplexListEditor::BaseMultiplexListEditor(BaseMultiplexList* list, bool isRoot) :
@@ -552,4 +553,19 @@ void NumberListEditor::showEditRangeWindow()
 		}),
 		true
 	);
+}
+
+TargetMultiplexListEditor::TargetMultiplexListEditor(TargetMultiplexList* list, bool isRoot) :
+	BaseMultiplexListEditor(list, isRoot),
+	targetList(list)
+{
+}
+
+TargetMultiplexListEditor::~TargetMultiplexListEditor()
+{
+}
+
+void TargetMultiplexListEditor::addPopupMenuItems(PopupMenu* p)
+{
+	p->addItem("Container Mode", true, targetList->containerMode, [&]() { targetList->setContainerMode(!targetList->containerMode); });
 }
