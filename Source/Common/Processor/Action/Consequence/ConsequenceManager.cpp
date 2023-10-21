@@ -187,7 +187,14 @@ void ConsequenceManager::StaggerLauncher::run()
 
 	uint32 curTime = timeAtRun;
 
-	while (!threadShouldExit() && triggerIndex < csm->items.size())
+	Array<BaseItem*> consequencesToLaunch;
+	for (auto& bi : csm->items)
+	{
+		if(!bi->enabled->boolValue()) continue;
+		consequencesToLaunch.add(bi);
+	}
+
+	while (!threadShouldExit() && triggerIndex < consequencesToLaunch.size())
 	{
 		uint32 nextTriggerTime = timeAtRun + d + s * triggerIndex;
 		while (nextTriggerTime > curTime)
@@ -198,13 +205,13 @@ void ConsequenceManager::StaggerLauncher::run()
 			nextTriggerTime = timeAtRun + d + s * triggerIndex;
 		}
 
-		if (triggerIndex >= csm->items.size()) break;
-		BaseItem* bi = csm->items[triggerIndex];
+		if (triggerIndex >= consequencesToLaunch.size()) break;
+		BaseItem* bi = consequencesToLaunch[triggerIndex];
 
 		while (bi != nullptr && !bi->enabled->boolValue())
 		{
 			triggerIndex++;
-			if (triggerIndex >= csm->items.size()) break;
+			if (triggerIndex >= consequencesToLaunch.size()) break;
 			bi = csm->items[triggerIndex];
 		}
 
