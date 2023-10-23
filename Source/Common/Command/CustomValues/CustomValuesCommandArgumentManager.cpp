@@ -67,7 +67,11 @@ void CustomValuesCommandArgumentManager::rebuildFromTemplate(bool clearItems)
 		if (i == nullptr) continue;
 
 		CustomValuesCommandArgument* a = nullptr;
-		if (clearItems) a = addItemFromData(i->getJSONData());
+		if (clearItems)
+		{
+			a = addItemFromData(i->getJSONData());
+			a->setNiceName(i->niceName);
+		}
 		else a = items[linkedTemplateManager->items.indexOf(i)];
 
 		jassert(a != nullptr);
