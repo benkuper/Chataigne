@@ -14,12 +14,17 @@ ChataigneSequence::ChataigneSequence() :
 	Sequence(),
 	masterAudioModule(nullptr),
 	masterAudioLayer(nullptr),
-	ltcAudioModule(nullptr)
+	ltcAudioModule(nullptr),
+	mtcFPS(nullptr)
 {
-	midiSyncDevice = new MIDIDeviceParameter("Sync Devices");
+	midiSyncDevice = new MIDIDeviceParameter("Sync Devices", "MIDI Devices to send and/or receive MTC to sync the sequence with external systems.");
 	midiSyncDevice->canBeDisabledByUser = true;
 	midiSyncDevice->enabled = false;
 	addParameter(midiSyncDevice);
+
+	mtcFPS = addEnumParameter("MTC Framerate", "The framerate at which the MTC is sent");
+	mtcFPS->addOption("30", MidiMessage::fps30)->addOption("30 drop", MidiMessage::fps30drop)->addOption("25", MidiMessage::fps25)->addOption("24", MidiMessage::fps24);
+
 
 	ltcModuleTarget = addTargetParameter("LTC Sync Module", "Choose an Audio Module to use as LTC Sync for this sequence", ModuleManager::getInstance(), false);
 	ltcModuleTarget->canBeDisabledByUser = true;
@@ -267,6 +272,7 @@ void ChataigneSequence::setupMidiSyncDevices()
 	{
 		mtcSender.reset(new MTCSender(midiSyncDevice->outputDevice));
 		mtcSender->setSpeedFactor(playSpeed->floatValue());
+		if (mtcFPS != nullptr) mtcSender->setFPS(mtcFPS->getValueDataAsEnum<MidiMessage::SmpteTimecodeType>());
 	}
 	//	}
 
@@ -330,6 +336,10 @@ void ChataigneSequence::onContainerParameterChangedInternal(Parameter* p)
 	if (p == midiSyncDevice)
 	{
 		setupMidiSyncDevices();
+	}
+	else if (p == mtcFPS)
+	{
+		if (mtcSender != nullptr) mtcSender->setFPS(mtcFPS->getValueDataAsEnum<MidiMessage::SmpteTimecodeType>());
 	}
 
 	if (p == ltcModuleTarget)

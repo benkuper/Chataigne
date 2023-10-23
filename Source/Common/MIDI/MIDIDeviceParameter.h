@@ -17,7 +17,7 @@ class MIDIDeviceParameter :
 	public MIDIManager::Listener
 {
 public:
-	MIDIDeviceParameter(const String &name);
+	MIDIDeviceParameter(const String &name, const String& description = "MIDI Devices to connect to");
 	~MIDIDeviceParameter();
 
 	MIDIInputDevice * inputDevice;
