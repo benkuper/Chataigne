@@ -38,18 +38,27 @@ ActionUI::ActionUI(Action* _action, bool showMiniModeBT) :
 
 	if (action->csmOn != nullptr && action->csmOn->staggerProgression != nullptr)
 	{
+		action->csmOn->addAsyncConsequenceManagerListener(this);
 		staggerUI.reset(action->csmOn->staggerProgression->createSlider());
 		staggerUI->customFGColor = Colours::lightpink;
 		staggerUI->useCustomFGColor = true;
 		staggerUI->showValue = false;
 		addChildComponent(staggerUI.get());
-		staggerUI->setVisible(action->csmOn->stagger->floatValue() > 0);
+		updateStaggerUI();
 	}
 }
 
 ActionUI::~ActionUI()
 {
-	if (!inspectable.wasObjectDeleted()) action->removeAsyncActionListener(this);
+	if (!inspectable.wasObjectDeleted())
+	{
+		action->removeAsyncActionListener(this);
+		if (action->csmOn)
+		{
+			action->csmOn->removeAsyncConsequenceManagerListener(this);
+		}
+	}
+
 	if (ActionUITimers* t = ActionUITimers::getInstanceWithoutCreating()) t->unregisterAction(this);
 }
 
@@ -70,12 +79,7 @@ void ActionUI::controllableFeedbackUpdateInternal(Controllable* c)
 	ProcessorUI::controllableFeedbackUpdateInternal(c);
 	if (action->csmOn != nullptr && c == action->csmOn->stagger && staggerUI != nullptr)
 	{
-		bool v = action->csmOn->stagger->floatValue() > 0;
-		if (staggerUI->isVisible() != v)
-		{
-			staggerUI->setVisible(v);
-			resized();
-		}
+		updateStaggerUI();
 	}
 
 	if (action->cdm != nullptr && c == action->cdm->validationTime && progressionUI != nullptr)
@@ -86,6 +90,16 @@ void ActionUI::controllableFeedbackUpdateInternal(Controllable* c)
 			progressionUI->setVisible(v);
 			resized();
 		}
+	}
+}
+
+void ActionUI::updateStaggerUI()
+{
+	bool v = action->csmOn->stagger->floatValue() > 0 && action->csmOn->items.size() > 1;
+	if (staggerUI->isVisible() != v)
+	{
+		staggerUI->setVisible(v);
+		resized();
 	}
 }
 
@@ -124,15 +138,15 @@ void ActionUI::itemDropped(const SourceDetails& details)
 
 
 	std::function<void(CommandDefinition* def, bool, bool)> createFunc = [this](CommandDefinition* def, bool isInput, bool isConsequenceTrue)
-	{
-		if (!isInput && def != nullptr)
 		{
-			Consequence* c = new Consequence(var(), action->multiplex);
-			if (isConsequenceTrue) action->csmOn->addItem(c);
-			else action->csmOff->addItem(c);
-			c->setCommand(def);
-		}
-	};
+			if (!isInput && def != nullptr)
+			{
+				Consequence* c = new Consequence(var(), action->multiplex);
+				if (isConsequenceTrue) action->csmOn->addItem(c);
+				else action->csmOff->addItem(c);
+				c->setCommand(def);
+			}
+		};
 
 	if (dataType == "Module")
 	{
@@ -236,6 +250,14 @@ void ActionUI::newMessage(const Action::ActionEvent& e)
 		}
 		break;
 
+	}
+}
+
+void ActionUI::newMessage(const ConsequenceManager::ConsequenceManagerEvent& e)
+{
+	if (e.type == ConsequenceManager::ConsequenceManagerEvent::STAGGER_CHANGED)
+	{
+		updateStaggerUI();
 	}
 }
 

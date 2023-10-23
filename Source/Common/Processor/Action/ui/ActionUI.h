@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    ActionUI.h
-    Created: 28 Oct 2016 8:05:24pm
-    Author:  bkupe
+	ActionUI.h
+	Created: 28 Oct 2016 8:05:24pm
+	Author:  bkupe
 
   ==============================================================================
 */
@@ -12,10 +12,11 @@
 
 class ActionUI :
 	public ProcessorUI,
-	public Action::AsyncListener
+	public Action::AsyncListener,
+	public ConsequenceManager::AsyncListener
 {
 public:
-	ActionUI(Action *, bool showMiniModeBT = false);
+	ActionUI(Action*, bool showMiniModeBT = false);
 	virtual ~ActionUI();
 
 	Action* action;
@@ -24,16 +25,19 @@ public:
 	std::unique_ptr<FloatSliderUI> staggerUI;
 	bool shouldRepaint;
 
-	virtual void paint(Graphics &g) override;
+	virtual void paint(Graphics& g) override;
 
-	void controllableFeedbackUpdateInternal(Controllable * c) override;
+	void controllableFeedbackUpdateInternal(Controllable* c) override;
 
-	virtual void resizedInternalHeader(Rectangle<int> &r) override;
-	virtual void paintOverChildren(Graphics &g) override;
+	void updateStaggerUI();
 
-	virtual void itemDropped(const SourceDetails &details) override;
+	virtual void resizedInternalHeader(Rectangle<int>& r) override;
+	virtual void paintOverChildren(Graphics& g) override;
 
-	void newMessage(const Action::ActionEvent &e) override;
+	virtual void itemDropped(const SourceDetails& details) override;
+
+	void newMessage(const Action::ActionEvent& e) override;
+	void newMessage(const ConsequenceManager::ConsequenceManagerEvent& e) override;
 
 	void handlePaintTimer();
 

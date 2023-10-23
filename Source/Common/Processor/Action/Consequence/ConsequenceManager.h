@@ -35,12 +35,17 @@ public:
 	void cancelDelayedConsequences();
 
 	void setForceDisabled(bool value, bool force = false);
+	
+	void updateKillDelayTrigger();
 
 	void onContainerTriggerTriggered(Trigger*) override;
 	void onContainerParameterChanged(Parameter* p) override;
 
+
 	void addItemInternal(BaseItem*, var data) override;
+	void addItemsInternal(Array<BaseItem*>, var data) override;
 	void removeItemInternal(BaseItem*) override;
+	void removeItemsInternal(Array<BaseItem*>) override;
 
 	class StaggerLauncher :
 		public Thread
@@ -80,7 +85,7 @@ public:
 	void addConsequenceManagerListener(ConsequenceManagerListener* newListener) { consequenceManagerListeners.add(newListener); }
 	void removeConsequenceManagerListener(ConsequenceManagerListener* listener) { consequenceManagerListeners.remove(listener); }
 
-	DECLARE_ASYNC_EVENT(ConsequenceManager, ConsequenceManager, csm, ENUM_LIST(MULTIPLEX_PREVIEW_CHANGED));
+	DECLARE_ASYNC_EVENT(ConsequenceManager, ConsequenceManager, csm, ENUM_LIST(MULTIPLEX_PREVIEW_CHANGED, STAGGER_CHANGED));
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ConsequenceManager)
 

@@ -88,6 +88,24 @@ void ConsequenceManager::setForceDisabled(bool value, bool force)
 	}
 }
 
+void ConsequenceManager::updateKillDelayTrigger()
+{
+	bool showKill = items.size() > 1 && (delay->floatValue() > 0 || stagger->floatValue() > 0);
+	if (showKill)
+	{
+		if (killDelaysOnTrigger == nullptr) killDelaysOnTrigger = addBoolParameter("Cancel delays on Trigger", "If checked, this will ensure that when triggering, all previous delayed consequences are cancelled", false);
+	}
+	else
+	{
+		if (killDelaysOnTrigger != nullptr)
+		{
+			removeControllable(killDelaysOnTrigger);
+			killDelaysOnTrigger = nullptr;
+		}
+	}
+
+}
+
 void ConsequenceManager::onContainerTriggerTriggered(Trigger* t)
 {
 	if (forceDisabled) return;
@@ -103,19 +121,7 @@ void ConsequenceManager::onContainerParameterChanged(Parameter* p)
 	BaseManager::onContainerParameterChanged(p);
 	if (p == delay || p == stagger)
 	{
-		bool showKill = delay->floatValue() > 0 || stagger->floatValue() > 0;
-		if (showKill)
-		{
-			if (killDelaysOnTrigger == nullptr) killDelaysOnTrigger = addBoolParameter("Cancel delays on Trigger", "If checked, this will ensure that when triggering, all previous delayed consequences are cancelled", false);
-		}
-		else
-		{
-			if (killDelaysOnTrigger)
-			{
-				removeControllable(killDelaysOnTrigger);
-				killDelaysOnTrigger = nullptr;
-			}
-		}
+		updateKillDelayTrigger();
 	}
 }
 
@@ -127,6 +133,23 @@ void ConsequenceManager::addItemInternal(BaseItem* bi, var data)
 	//triggerAll->hideInEditor = items.size() == 0;
 	delay->hideInEditor = items.size() == 0;
 	stagger->hideInEditor = items.size() < 2;
+	if (!isClearing) csmNotifier.addMessage(new ConsequenceManagerEvent(ConsequenceManagerEvent::STAGGER_CHANGED, this));
+	updateKillDelayTrigger();
+}
+
+void ConsequenceManager::addItemsInternal(Array<BaseItem*> items, var data)
+{
+	for (auto& bi : items)
+	{
+		if (Consequence* c = dynamic_cast<Consequence*>(bi)) c->forceDisabled = forceDisabled;
+		else if (ConsequenceGroup* g = dynamic_cast<ConsequenceGroup*>(bi)) g->csm.setForceDisabled(forceDisabled);
+	}
+
+	//triggerAll->hideInEditor = items.size() == 0;
+	delay->hideInEditor = items.size() == 0;
+	stagger->hideInEditor = items.size() < 2;
+	if (!isClearing) csmNotifier.addMessage(new ConsequenceManagerEvent(ConsequenceManagerEvent::STAGGER_CHANGED, this));
+	updateKillDelayTrigger();
 }
 
 void ConsequenceManager::removeItemInternal(BaseItem*)
@@ -134,6 +157,16 @@ void ConsequenceManager::removeItemInternal(BaseItem*)
 	//triggerAll->hideInEditor = items.size() == 0;
 	delay->hideInEditor = items.size() == 0;
 	stagger->hideInEditor = items.size() < 2;
+	if (!isClearing) csmNotifier.addMessage(new ConsequenceManagerEvent(ConsequenceManagerEvent::STAGGER_CHANGED, this));
+	updateKillDelayTrigger();
+}
+
+void ConsequenceManager::removeItemsInternal(Array<BaseItem*>)
+{
+	delay->hideInEditor = items.size() == 0;
+	stagger->hideInEditor = items.size() < 2;
+	if (!isClearing) csmNotifier.addMessage(new ConsequenceManagerEvent(ConsequenceManagerEvent::STAGGER_CHANGED, this));
+	updateKillDelayTrigger();
 }
 
 void ConsequenceManager::launcherTriggered(StaggerLauncher* launcher)
@@ -190,7 +223,7 @@ void ConsequenceManager::StaggerLauncher::run()
 	Array<BaseItem*> consequencesToLaunch;
 	for (auto& bi : csm->items)
 	{
-		if(!bi->enabled->boolValue()) continue;
+		if (!bi->enabled->boolValue()) continue;
 		consequencesToLaunch.add(bi);
 	}
 
