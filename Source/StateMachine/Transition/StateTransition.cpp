@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "StateMachine/StateMachineIncludes.h"
+
 StateTransition::StateTransition(State * source, State * dest) :
 	Action("transition"),//String(source->niceName << "_" << dest->niceName)),
 	sourceState(source),
@@ -30,8 +32,8 @@ void StateTransition::clearItem()
 {
 	BaseItem::clearItem();
 
-	if (!sourceState.wasObjectDeleted()) sourceState->outTransitions.removeAllInstancesOf(this);
-	if (!destState.wasObjectDeleted()) destState->inTransitions.removeAllInstancesOf(this);
+	if (sourceState != nullptr && !sourceState.wasObjectDeleted()) sourceState->outTransitions.removeAllInstancesOf(this);
+	if (destState != nullptr && !destState.wasObjectDeleted()) destState->inTransitions.removeAllInstancesOf(this);
 }
 
 var StateTransition::getJSONData()

@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "StateMachine/StateMachineIncludes.h"
+
 juce_ImplementSingleton(StateManager)
 
 StateManager::StateManager() :
@@ -26,6 +28,8 @@ StateManager::StateManager() :
 
 	addChildControllableContainer(&commentManager);
 	Engine::mainEngine->addEngineListener(this);
+
+	scriptObject.getDynamicObject()->setMethod("addTransition", &StateManager::addTransitionFromScript);
 
 	setHasGridOptions(true);
 }
@@ -122,28 +126,42 @@ void StateManager::checkStartActivationOverlap(State* s, Array<State*> statesToA
 	else if (forceActiveStates.size() > 0) forceActiveStates[0]->clearWarning();
 }
 
-void StateManager::itemAdded(StateTransition* s)
+void StateManager::itemAdded(StateTransition* t)
 {
 	if (!Engine::mainEngine->isLoadingFile)
 	{
-		if (s->sourceState->active->boolValue()) setStateActive(s->sourceState);
-		else if (s->destState->active->boolValue()) setStateActive(s->destState);
+		if (t->sourceState == nullptr || t->destState == nullptr)
+		{
+			LOGWARNING("StateTransition added with nullptr source or dest state");
+			return;
+		}
 
-		checkStartActivationOverlap(s->sourceState);
+		if (t->sourceState->active->boolValue()) setStateActive(t->sourceState);
+		else if (t->destState->active->boolValue()) setStateActive(t->destState);
+
+		checkStartActivationOverlap(t->sourceState);
 	}
 }
 
-void StateManager::itemsAdded(Array<StateTransition*> states)
+void StateManager::itemsAdded(Array<StateTransition*> transitions)
 {
 	if (!Engine::mainEngine->isLoadingFile)
 	{
-		for (auto& s : states)
+		for (auto& t : transitions)
 		{
-			if (s->sourceState->active->boolValue()) setStateActive(s->sourceState);
-			else if (s->destState->active->boolValue()) setStateActive(s->destState);
+			if (t->sourceState == nullptr || t->destState == nullptr)
+			{
+				LOGWARNING("StateTransition added with nullptr source or dest state");
+				continue;
+			}
 
-			checkStartActivationOverlap(s->sourceState);
+			if (t->sourceState->active->boolValue()) setStateActive(t->sourceState);
+			else if (t->destState->active->boolValue()) setStateActive(t->destState);
+
+			checkStartActivationOverlap(t->sourceState);
+
 		}
+
 	}
 }
 
@@ -380,6 +398,24 @@ Array<State*> StateManager::getLinkedStates(State* s, Array<State*>* statesToAvo
 	}
 
 	return result;
+}
+
+var StateManager::addTransitionFromScript(const var::NativeFunctionArgs& a)
+{
+	if (a.numArguments != 2) return var();
+
+	StateManager* sm = StateManager::getInstance();
+	State* source = sm->getItemWithName(a.arguments[0].toString(), true);
+	State* dest = sm->getItemWithName(a.arguments[1].toString(), true);
+
+	if (source == nullptr || dest == nullptr) return var();
+
+	if(StateTransition* t = sm->stm.getItemForSourceAndDest(source, dest)) return t->scriptObject;
+	
+	StateTransition* t = new StateTransition(source, dest);
+	sm->stm.addItem(t);
+
+	return t->scriptObject;
 }
 
 

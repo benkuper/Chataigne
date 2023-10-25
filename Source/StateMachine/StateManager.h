@@ -67,6 +67,8 @@ public:
 
 	Array<State *> getLinkedStates(State * s, Array<State *> * statesToAvoid = nullptr);
 
+	static var addTransitionFromScript(const var::NativeFunctionArgs& a);
+
 	var getJSONData() override;
 	void loadJSONDataManagerInternal(var data) override;
 

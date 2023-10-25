@@ -21,10 +21,12 @@ public:
 
 	StateManager * sm;
 
+
 	StateTransition* addItemFromData(var data, bool addToUndo = true) override;
 	Array<StateTransition*> addItemsFromData(var data, bool addToUndo = true) override;
 	StateTransition* createItemFromData(var data);
 	StateTransition * createItem(State * source, State * dest);
+	StateTransition* createItem() override; //override to avoid 
 
 	Array<State *> getAllStatesLinkedTo(State * state);
 	Array<UndoableAction *> getRemoveAllLinkedTransitionsAction(State * linkedState);

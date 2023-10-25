@@ -9,6 +9,7 @@
 */
 
 #include "StateMachine/StateMachineIncludes.h"
+#include "StateTransitionManager.h"
 
 StateTransitionManager::StateTransitionManager(StateManager* _sm) :
 	BaseManager("Transitions"),
@@ -52,6 +53,13 @@ StateTransition* StateTransitionManager::createItem(State* source, State* dest)
 {
 	if (getItemForSourceAndDest(source, dest) != nullptr) return nullptr;
 	return new StateTransition(source, dest);
+}
+
+StateTransition* StateTransitionManager::createItem()
+{
+	if (isCurrentlyLoadingData) return new StateTransition(); //allow creation of empty items during loading
+	
+	return nullptr;
 }
 
 Array<State*> StateTransitionManager::getAllStatesLinkedTo(State* state)

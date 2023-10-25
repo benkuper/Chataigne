@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "StateMachine/StateMachineIncludes.h"
+
 
 StateViewUI::StateViewUI(State * state) :
 	BaseItemUI(state, Direction::ALL, true),
