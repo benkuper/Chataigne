@@ -51,12 +51,14 @@
 		8670FDE2A6F8AE20A18D48AD /* os_mac_interface.m */ = {isa = PBXBuildFile; fileRef = B7037B1303B113B3EB738DE2; };
 		8E4BF978DC12E47F3F886891 /* GuiderIncludes.cpp */ = {isa = PBXBuildFile; fileRef = A186172EC33A3E8B18084A46; };
 		9162BCE79A7FD1E0C8EE0B42 /* dynamics.c */ = {isa = PBXBuildFile; fileRef = C95C470933856CCB6E5E6CC4; };
+		929BBF2871F7A7823334D2DE /* MetalKit.framework */ = {isa = PBXBuildFile; fileRef = 3048D13EBD9A691F911639FA; settings = { ATTRIBUTES = (Weak, ); }; };
 		92BE03372C8379806DD57A5E /* ForceFeedback.framework */ = {isa = PBXBuildFile; fileRef = B2AE5AB8212F91ACEEB0E80E; };
 		93ECA58744F8B5DD181D35F4 /* BaseCommandHandlerEditor.cpp */ = {isa = PBXBuildFile; fileRef = CDE9EF9B0E1277DC6C2D8577; };
 		971F1FB7CB12C74DE5E71C42 /* include_juce_organicui2b.cpp */ = {isa = PBXBuildFile; fileRef = 36244C4F19953080AD5DF2B8; };
 		99364CB2F07F832FAF875831 /* MainIncludes.cpp */ = {isa = PBXBuildFile; fileRef = AB4452A5CA9C7F08A0217A4F; };
 		9A70BB0E51767661AD48D0AF /* ModuleIncludes2.cpp */ = {isa = PBXBuildFile; fileRef = C8FA3E7EC300454C0F1480FA; };
 		9B5065AA8C19C8DF58253515 /* LinkableParameterEditor.cpp */ = {isa = PBXBuildFile; fileRef = 24B8EBDE4FCE8C5E4A4A84F5; };
+		9C6824E069B89E451D0CCBE0 /* App */ = {isa = PBXBuildFile; fileRef = A0289FDC9D545699419EAF1F; settings = { ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A01121FD77059F1E4D8C2F72 /* ProcessorIncludes2.cpp */ = {isa = PBXBuildFile; fileRef = 13D0FC5619BE282325760A65; };
 		A0AE74451296342E42C034F4 /* App */ = {isa = PBXBuildFile; fileRef = F6C3EA407EDC7084F2C44936; };
 		A13C813B7B915C202AE05F52 /* include_juce_organicui3.cpp */ = {isa = PBXBuildFile; fileRef = CD28AA5204CAAB7963FC2387; };
@@ -83,6 +85,7 @@
 		DE8BE67185C7EF8133B2DAD3 /* include_juce_audio_processors_ara.cpp */ = {isa = PBXBuildFile; fileRef = A4AAE625E3A138990E5B2D15; };
 		E0AA64D538AA9C2130C98D5C /* CommonIncludes.cpp */ = {isa = PBXBuildFile; fileRef = 0C5BDC490B538FDD806BB14A; };
 		E1DDA4FC164C8A6BB5F78E3D /* ModuleIncludes.cpp */ = {isa = PBXBuildFile; fileRef = BBC2FE8F1F37EFC9262168E3; };
+		E3C637EEBA5139218230D444 /* Metal.framework */ = {isa = PBXBuildFile; fileRef = 41CE19EEF9A1E234AE534E47; settings = { ATTRIBUTES = (Weak, ); }; };
 		E6279834EBEDBB31676923B4 /* IOBluetooth.framework */ = {isa = PBXBuildFile; fileRef = F71AEFD7622D0B0B810D246E; };
 		E7E26B688401C505E1ABD1F1 /* Accelerate.framework */ = {isa = PBXBuildFile; fileRef = DA1455ABA352149A51F70529; };
 		E850833D3B7F572FADCA4515 /* os_mac.c */ = {isa = PBXBuildFile; fileRef = 675E937850BD8296F6B752ED; };
@@ -102,6 +105,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C6EDEE52606D81949D455AF7,
+				9C6824E069B89E451D0CCBE0,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -249,6 +253,7 @@
 		2FAC44CBAAC99F2D1B182674 /* MappingOutputManager.cpp */ /* MappingOutputManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MappingOutputManager.cpp; path = ../../Source/Common/Processor/Mapping/Output/MappingOutputManager.cpp; sourceTree = SOURCE_ROOT; };
 		2FD6364DFC1971E33C9290FF /* PJLinkCommand.cpp */ /* PJLinkCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PJLinkCommand.cpp; path = ../../Source/Module/modules/tcp/pjlink/commands/PJLinkCommand.cpp; sourceTree = SOURCE_ROOT; };
 		3003594D522C89372E5FEB57 /* ConversionConnector.h */ /* ConversionConnector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ConversionConnector.h; path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConversionConnector.h; sourceTree = SOURCE_ROOT; };
+		3048D13EBD9A691F911639FA /* MetalKit.framework */ /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
 		306C379FA8EDF09052FE046B /* MIDIDeviceParameterUI.h */ /* MIDIDeviceParameterUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MIDIDeviceParameterUI.h; path = ../../Source/Common/MIDI/ui/MIDIDeviceParameterUI.h; sourceTree = SOURCE_ROOT; };
 		310E26AB137BF1DFD19D2067 /* StateTransitionManagerUI.h */ /* StateTransitionManagerUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StateTransitionManagerUI.h; path = ../../Source/StateMachine/Transition/ui/StateTransitionManagerUI.h; sourceTree = SOURCE_ROOT; };
 		311382B52CFDBF659BE49702 /* MultiplexCommands.h */ /* MultiplexCommands.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MultiplexCommands.h; path = ../../Source/Module/modules/multiplex/commands/MultiplexCommands.h; sourceTree = SOURCE_ROOT; };
@@ -306,6 +311,7 @@
 		414020D909CC3A3EE0316795 /* ModuleCommandTesterEditor.h */ /* ModuleCommandTesterEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ModuleCommandTesterEditor.h; path = ../../Source/Module/ui/ModuleCommandTesterEditor.h; sourceTree = SOURCE_ROOT; };
 		4168AD487726AA2CD3E83EEB /* ResolumeClipCommand.h */ /* ResolumeClipCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ResolumeClipCommand.h; path = ../../Source/Module/modules/osc/resolume/commands/ResolumeClipCommand.h; sourceTree = SOURCE_ROOT; };
 		4175BEDB9C6134A844603CC1 /* BasicsGuide.h */ /* BasicsGuide.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BasicsGuide.h; path = ../../Source/Guider/guides/BasicsGuide.h; sourceTree = SOURCE_ROOT; };
+		41CE19EEF9A1E234AE534E47 /* Metal.framework */ /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		427351EDE8E9909FC1886C8A /* MIDIDeviceParameterUI.cpp */ /* MIDIDeviceParameterUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MIDIDeviceParameterUI.cpp; path = ../../Source/Common/MIDI/ui/MIDIDeviceParameterUI.cpp; sourceTree = SOURCE_ROOT; };
 		42A66F57942726F75E885E4A /* StateCommand.cpp */ /* StateCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = StateCommand.cpp; path = ../../Source/Module/modules/state/commands/StateCommand.cpp; sourceTree = SOURCE_ROOT; };
 		432EEB89D43DED4F54A7CCAD /* ModuleRouter.cpp */ /* ModuleRouter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ModuleRouter.cpp; path = ../../Source/Module/Routing/ModuleRouter.cpp; sourceTree = SOURCE_ROOT; };
@@ -560,6 +566,7 @@
 		8F80D77F9012D15293997784 /* InverseFilter.cpp */ /* InverseFilter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = InverseFilter.cpp; path = ../../Source/Common/Processor/Mapping/Filter/filters/number/InverseFilter.cpp; sourceTree = SOURCE_ROOT; };
 		8FAD87B31AD05BA50DCD5868 /* PlayAudioFileCommand.h */ /* PlayAudioFileCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PlayAudioFileCommand.h; path = ../../Source/Module/modules/audio/commands/PlayAudioFileCommand.h; sourceTree = SOURCE_ROOT; };
 		8FBAA01D9631C91237391BF6 /* PitchDetector.h */ /* PitchDetector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PitchDetector.h; path = ../../Source/Module/modules/audio/libs/pitch/PitchDetector.h; sourceTree = SOURCE_ROOT; };
+		8FF56470E4C0AD6162F88221 /* juce_core */ /* juce_core */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_core; path = ../../JUCE/modules/juce_core; sourceTree = SOURCE_ROOT; };
 		903CDCB0E4926FADC367A3D0 /* StateModule.h */ /* StateModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StateModule.h; path = ../../Source/Module/modules/state/StateModule.h; sourceTree = SOURCE_ROOT; };
 		90580D87459A72831017387A /* OSCQueryModuleEditor.cpp */ /* OSCQueryModuleEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = OSCQueryModuleEditor.cpp; path = ../../Source/Module/modules/oscquery/generic/ui/OSCQueryModuleEditor.cpp; sourceTree = SOURCE_ROOT; };
 		90BB7E4DA8885328DB33049C /* SendStreamValuesCommand.h */ /* SendStreamValuesCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SendStreamValuesCommand.h; path = ../../Source/Module/modules/common/streaming/commands/SendStreamValuesCommand.h; sourceTree = SOURCE_ROOT; };
@@ -607,6 +614,7 @@
 		9FA5201B24DEF339459A4BFA /* ProcessorUI.h */ /* ProcessorUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ProcessorUI.h; path = ../../Source/Common/Processor/ui/ProcessorUI.h; sourceTree = SOURCE_ROOT; };
 		9FE6F22D2711DA748CC6C847 /* StreamDeckMini.h */ /* StreamDeckMini.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StreamDeckMini.h; path = ../../Source/Module/modules/controller/streamdeck/models/StreamDeckMini.h; sourceTree = SOURCE_ROOT; };
 		9FEA5A35D7C8519B991DB281 /* Mapping2DLayer.cpp */ /* Mapping2DLayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Mapping2DLayer.cpp; path = ../../Source/TimeMachine/Sequence/layers/mapping/automation/2d/Mapping2DLayer.cpp; sourceTree = SOURCE_ROOT; };
+		A0289FDC9D545699419EAF1F /* App */ /*  */ = {isa = PBXFileReference; lastKnownFileType = file; name = ""; path = ""; sourceTree = "<group>"; };
 		A07AB46E1CB4B4698F148FC8 /* MIDIManager.cpp */ /* MIDIManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MIDIManager.cpp; path = ../../Source/Common/MIDI/MIDIManager.cpp; sourceTree = SOURCE_ROOT; };
 		A122E7A4BAB0E37356E13E0F /* ModuleCommandTester.h */ /* ModuleCommandTester.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ModuleCommandTester.h; path = ../../Source/Module/ModuleCommandTester.h; sourceTree = SOURCE_ROOT; };
 		A166E3006BBC663DDF05DE54 /* include_juce_graphics.mm */ /* include_juce_graphics.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_graphics.mm; path = ../../JuceLibraryCode/include_juce_graphics.mm; sourceTree = SOURCE_ROOT; };
@@ -747,6 +755,7 @@
 		C95C470933856CCB6E5E6CC4 /* dynamics.c */ /* dynamics.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = dynamics.c; path = ../../Source/Module/modules/controller/wiimote/lib/wiiuse/dynamics.c; sourceTree = SOURCE_ROOT; };
 		CA392D20C778B856781D7F42 /* MappingLayer.h */ /* MappingLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MappingLayer.h; path = ../../Source/TimeMachine/Sequence/layers/mapping/MappingLayer.h; sourceTree = SOURCE_ROOT; };
 		CA8F251CB9D56B2AEDDFA0D1 /* ltc.h */ /* ltc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ltc.h; path = ../../Source/Common/LTC/ltc.h; sourceTree = SOURCE_ROOT; };
+		CB36ABB009A450FC4A7CD451 /* juce_osc */ /* juce_osc */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_osc; path = ../../JUCE/modules/juce_osc; sourceTree = SOURCE_ROOT; };
 		CBB3A02D0C384DE3EE983267 /* ChataigneAudioLayerListener.h */ /* ChataigneAudioLayerListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ChataigneAudioLayerListener.h; path = ../../Source/TimeMachine/Sequence/layers/audio/ChataigneAudioLayerListener.h; sourceTree = SOURCE_ROOT; };
 		CC32A694BE65152C463DA1F0 /* MorphTargetUI.h */ /* MorphTargetUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MorphTargetUI.h; path = ../../Source/CustomVariables/Preset/Morpher/ui/MorphTargetUI.h; sourceTree = SOURCE_ROOT; };
 		CC389765208788865C6C6995 /* StandardConditionEditor.h */ /* StandardConditionEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StandardConditionEditor.h; path = ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/ui/StandardConditionEditor.h; sourceTree = SOURCE_ROOT; };
@@ -946,7 +955,10 @@
 				C8E81ADA56D6A25E4AD7C918,
 				C949C1C9D8B0825FC3C6E97D,
 				FFBC11E7EE94DC34D717AD69,
+				E3C637EEBA5139218230D444,
+				929BBF2871F7A7823334D2DE,
 				C6EDEE52606D81949D455AF7,
+				9C6824E069B89E451D0CCBE0,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2108,7 +2120,10 @@
 				64731A5930462AB9DB5DDE0D,
 				8CDCEB4DC37C0C926A7AA482,
 				F36349200785EF7B0D1E7329,
+				41CE19EEF9A1E234AE534E47,
+				3048D13EBD9A691F911639FA,
 				A330B89FF4A3660791C566A1,
+				A0289FDC9D545699419EAF1F,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -2744,11 +2759,13 @@
 		BB9E045D62346673C5E1636E /* JUCE Modules */ = {
 			isa = PBXGroup;
 			children = (
+				8FF56470E4C0AD6162F88221,
 				78E8421875B7E2181F55685B,
 				8CE35DBB1F5287A5AFF59CFE,
 				51284E8F9AF87C3AD6831BB7,
 				D48D65004FEAD7A32DA1A25D,
 				8E3E93C35A0A71C64796898E,
+				CB36ABB009A450FC4A7CD451,
 				F07766745824AB0C93C84DC2,
 				B13DE335EC494723D3988D40,
 				6B49F91B2A3C9EC69F04FB2D,
@@ -3488,6 +3505,7 @@
 		CFE62146BE7CC7A0837B591F = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1340;
 				ORGANIZATIONNAME = "Ben Kuper";
 				TargetAttributes = {
@@ -3788,7 +3806,7 @@
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../Modules $(SRCROOT)/../../Source $(SRCROOT)/../../External/wiiuse $(SRCROOT)/../../External/asio $(SRCROOT)/../../External/asiodriver $(SRCROOT)/../../External/kinect/include $(SRCROOT)/../../External/joycon/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../External/dnssd/include $(SRCROOT)/../../External/ois/include $(SRCROOT)/../../External/sdl/include $(SRCROOT)/../../External/hidapi/include $(SRCROOT)/../../External/abletonlink/include $(SRCROOT)/../../External/libusb/include/libusb-1.0 $(SRCROOT)/../../External/mosquitto/include $(SRCROOT)/../../External/posistagenet/include $(SRCROOT)/../../External/simpleble/include";
-				OTHER_LDFLAGS = "-lServus -lhidapi -lJoyShockLibrary -lserial -lssl -lcrypto -lz -weak_framework Metal -weak_framework MetalKit";
+				OTHER_LDFLAGS = "-lServus -lhidapi -lJoyShockLibrary -lserial -lssl -lcrypto -lz";
 				PRODUCT_BUNDLE_IDENTIFIER = benkuper.Chataigne;
 				PRODUCT_NAME = "Chataigne";
 				USE_HEADERMAP = NO;
@@ -3869,7 +3887,7 @@
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../Modules $(SRCROOT)/../../Source $(SRCROOT)/../../External/wiiuse $(SRCROOT)/../../External/asio $(SRCROOT)/../../External/asiodriver $(SRCROOT)/../../External/kinect/include $(SRCROOT)/../../External/joycon/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../External/dnssd/include $(SRCROOT)/../../External/ois/include $(SRCROOT)/../../External/sdl/include $(SRCROOT)/../../External/hidapi/include $(SRCROOT)/../../External/abletonlink/include $(SRCROOT)/../../External/libusb/include/libusb-1.0 $(SRCROOT)/../../External/mosquitto/include $(SRCROOT)/../../External/posistagenet/include $(SRCROOT)/../../External/simpleble/include";
-				OTHER_LDFLAGS = "-lServus -lhidapi -lJoyShockLibrary -lserial -lssl -lcrypto -lz -weak_framework Metal -weak_framework MetalKit";
+				OTHER_LDFLAGS = "-lServus -lhidapi -lJoyShockLibrary -lserial -lssl -lcrypto -lz";
 				PRODUCT_BUNDLE_IDENTIFIER = benkuper.Chataigne;
 				PRODUCT_NAME = "Chataigne";
 				USE_HEADERMAP = NO;

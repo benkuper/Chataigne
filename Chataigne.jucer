@@ -1970,7 +1970,7 @@
     <MODULE id="juce_audio_formats" showAllCode="0" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_audio_processors" showAllCode="0" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_audio_utils" showAllCode="0" useLocalCopy="0" useGlobalPath="0"/>
-    <MODULE id="juce_core" showAllCode="0" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_cryptography" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_data_structures" showAllCode="0" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_dmx" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
@@ -1981,7 +1981,7 @@
     <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_opengl" showAllCode="0" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_organicui" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
-    <MODULE id="juce_osc" showAllCode="0" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_osc" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_serial" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_sharedtexture" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_simpleweb" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
