@@ -508,6 +508,8 @@ void OSModule::PingThread::run()
 			process.start(command);
 
 			String result = process.readAllProcessOutput();
+   
+   process.kill();
 
 			if (osModule->logIncomingData->boolValue())
 			{
