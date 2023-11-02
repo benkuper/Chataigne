@@ -58,7 +58,6 @@
 		99364CB2F07F832FAF875831 /* MainIncludes.cpp */ = {isa = PBXBuildFile; fileRef = AB4452A5CA9C7F08A0217A4F; };
 		9A70BB0E51767661AD48D0AF /* ModuleIncludes2.cpp */ = {isa = PBXBuildFile; fileRef = C8FA3E7EC300454C0F1480FA; };
 		9B5065AA8C19C8DF58253515 /* LinkableParameterEditor.cpp */ = {isa = PBXBuildFile; fileRef = 24B8EBDE4FCE8C5E4A4A84F5; };
-		9C6824E069B89E451D0CCBE0 /* App */ = {isa = PBXBuildFile; fileRef = A0289FDC9D545699419EAF1F; settings = { ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A01121FD77059F1E4D8C2F72 /* ProcessorIncludes2.cpp */ = {isa = PBXBuildFile; fileRef = 13D0FC5619BE282325760A65; };
 		A0AE74451296342E42C034F4 /* App */ = {isa = PBXBuildFile; fileRef = F6C3EA407EDC7084F2C44936; };
 		A13C813B7B915C202AE05F52 /* include_juce_organicui3.cpp */ = {isa = PBXBuildFile; fileRef = CD28AA5204CAAB7963FC2387; };
@@ -105,7 +104,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C6EDEE52606D81949D455AF7,
-				9C6824E069B89E451D0CCBE0,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -614,7 +612,6 @@
 		9FA5201B24DEF339459A4BFA /* ProcessorUI.h */ /* ProcessorUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ProcessorUI.h; path = ../../Source/Common/Processor/ui/ProcessorUI.h; sourceTree = SOURCE_ROOT; };
 		9FE6F22D2711DA748CC6C847 /* StreamDeckMini.h */ /* StreamDeckMini.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StreamDeckMini.h; path = ../../Source/Module/modules/controller/streamdeck/models/StreamDeckMini.h; sourceTree = SOURCE_ROOT; };
 		9FEA5A35D7C8519B991DB281 /* Mapping2DLayer.cpp */ /* Mapping2DLayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Mapping2DLayer.cpp; path = ../../Source/TimeMachine/Sequence/layers/mapping/automation/2d/Mapping2DLayer.cpp; sourceTree = SOURCE_ROOT; };
-		A0289FDC9D545699419EAF1F /* App */ /*  */ = {isa = PBXFileReference; lastKnownFileType = file; name = ""; path = ""; sourceTree = "<group>"; };
 		A07AB46E1CB4B4698F148FC8 /* MIDIManager.cpp */ /* MIDIManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MIDIManager.cpp; path = ../../Source/Common/MIDI/MIDIManager.cpp; sourceTree = SOURCE_ROOT; };
 		A122E7A4BAB0E37356E13E0F /* ModuleCommandTester.h */ /* ModuleCommandTester.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ModuleCommandTester.h; path = ../../Source/Module/ModuleCommandTester.h; sourceTree = SOURCE_ROOT; };
 		A166E3006BBC663DDF05DE54 /* include_juce_graphics.mm */ /* include_juce_graphics.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_graphics.mm; path = ../../JuceLibraryCode/include_juce_graphics.mm; sourceTree = SOURCE_ROOT; };
@@ -958,7 +955,6 @@
 				E3C637EEBA5139218230D444,
 				929BBF2871F7A7823334D2DE,
 				C6EDEE52606D81949D455AF7,
-				9C6824E069B89E451D0CCBE0,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2123,7 +2119,6 @@
 				41CE19EEF9A1E234AE534E47,
 				3048D13EBD9A691F911639FA,
 				A330B89FF4A3660791C566A1,
-				A0289FDC9D545699419EAF1F,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -3662,6 +3657,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = NO;
@@ -3709,6 +3705,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = NO;
@@ -3740,6 +3737,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_LINK_OBJC_RUNTIME = NO;
+				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/../../Release";
 				DEAD_CODE_STRIPPING = YES;
@@ -3821,6 +3819,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_LINK_OBJC_RUNTIME = NO;
+				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/../../Release";
 				DEAD_CODE_STRIPPING = YES;
