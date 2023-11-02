@@ -29,8 +29,13 @@ Mapping::Mapping(var params, Multiplex* multiplex, bool canBeDisabled) :
 	type = MAPPING;
 
 	updateRate = mappingParams.addIntParameter("Update rate", "This is the update rate at which the mapping is processing. This is used only when continuous filters like Smooth and Damping are presents", 50, 1, 500, false);
+
+	forceContinuousProcess = mappingParams.addBoolParameter("Force Continuous Process", "This will force the mapping to process continuously, even if no continuous filters are present", false);
+
 	sendOnInputChangeOnly = mappingParams.addBoolParameter("Send On Input Change Only", "This decides whether the Mapping Outputs are always triggered when a filter changes, or only when an input has changed.", false);
 	sendOnOutputChangeOnly = mappingParams.addBoolParameter("Send On Output Change Only", "This decides whether the Mapping Outputs are always triggered on source change, or only when a value's filtered output has changed.", false);
+	sendOnOutputChangeOnly->forceSaveValue = true;
+
 	sendAfterLoad = mappingParams.addBoolParameter("Send After Load", "This will force sending values once after loading", false);
 	sendOnActivate = mappingParams.addBoolParameter("Send on Activate", "This will force sending values once each time the mapping is activated", false);
 
@@ -93,7 +98,7 @@ void Mapping::lockInputTo(Array<Parameter*> lockParams)
 void Mapping::checkFiltersNeedContinuousProcess()
 {
 	bool need = false;
-	if (processMode == TIMER) need = true;
+	if (processMode == TIMER || forceContinuousProcess->boolValue()) need = true;
 
 	if (!need)
 	{
@@ -110,7 +115,7 @@ void Mapping::checkFiltersNeedContinuousProcess()
 	}
 
 	updateRate->setEnabled(need);
-	if (!sendOnOutputChangeOnly->isOverriden) sendOnOutputChangeOnly->setDefaultValue(updateRate->enabled);
+	if (!sendOnOutputChangeOnly->isOverriden && !isCurrentlyLoadingData) sendOnOutputChangeOnly->setDefaultValue(updateRate->enabled);
 }
 
 void Mapping::updateMappingChain(MappingFilter* afterThisFilter, bool processAfter, bool rangeOnly, bool afterProcessSendOutput)
@@ -321,7 +326,13 @@ void Mapping::loadJSONDataInternal(var data)
 
 void Mapping::afterLoadJSONDataInternal()
 {
+	//force here sendOutputOnchangeOnly overriden to avoid auto set after load, i'm sure there is a better way to do this
+	
+	bool prevOverriden = sendOnOutputChangeOnly->isOverriden;
+	sendOnOutputChangeOnly->isOverriden = true;
 	updateMappingChain(nullptr, false);
+	sendOnOutputChangeOnly->isOverriden = prevOverriden;
+
 	if (sendAfterLoad->boolValue())
 	{
 		if ((enabled != nullptr && enabled->boolValue()) && !forceDisabled)
@@ -399,6 +410,16 @@ void Mapping::onContainerParameterChangedInternal(Parameter* p)
 			process();
 			//for (int i = 0; i < getMultiplexCount(); i++) om.updateOutputValues(i);
 		}
+		updateContinuousProcess();
+	}
+}
+
+void Mapping::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
+{
+	Processor::onControllableFeedbackUpdateInternal(cc, c);
+	if (c == forceContinuousProcess)
+	{
+		checkFiltersNeedContinuousProcess();
 		updateContinuousProcess();
 	}
 }
