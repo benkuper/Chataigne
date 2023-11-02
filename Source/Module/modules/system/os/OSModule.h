@@ -103,6 +103,7 @@ public:
 	void pingIPsCreateControllable(ControllableContainer* c);
 
 	void childStructureChanged(ControllableContainer* c) override;
+    void onContainerParameterChangedInternal(Parameter* p) override;
 	void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
 
 	static var launchFileFromScript(const var::NativeFunctionArgs& args);

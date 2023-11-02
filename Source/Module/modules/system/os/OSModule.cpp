@@ -37,7 +37,7 @@ OSModule::OSModule() :
 
 	//Params
 	listIPs = moduleParams.addTrigger("List IPs", "List all IPs of all network interfaces");
-	pingFrequency = moduleParams.addIntParameter("Ping Frequency", "Time between each ping routine, in seconds.", 5);
+	pingFrequency = moduleParams.addIntParameter("Ping Interval", "Time between each ping routine, in seconds.", 5);
 
 	appControlNamesCC.userCanAddControllables = true;
 	appControlNamesCC.customUserCreateControllableFunc = std::bind(&OSModule::appControlCreateControllable, this, std::placeholders::_1);
@@ -122,7 +122,7 @@ OSModule::~OSModule()
 	stopTimer(OS_APP_TIMER);
 	stopTimer(OS_CPUMEM_TIMER);
 	stopThread(100);
-	pingThread.stopThread(1000);
+	pingThread.stopThread(2000);
 }
 
 void OSModule::updateIps()
@@ -242,7 +242,7 @@ void OSModule::updateAppControlValues()
 
 void OSModule::updatePingStatusValues()
 {
-	pingThread.stopThread(1000);
+	pingThread.stopThread(2000);
 	var data = pingStatusCC.getJSONData();
 	pingStatusCC.clear();
 
@@ -259,9 +259,8 @@ void OSModule::updatePingStatusValues()
 		if (BoolParameter* p = dynamic_cast<BoolParameter*>(c)) p->setValue(false);
 	}
 
-	if (pingIPsCC.controllables.size() > 0) pingThread.startThread();
+	if (enabled->boolValue() && pingIPsCC.controllables.size() > 0) pingThread.startThread();
 }
-
 
 var OSModule::launchProcessFromScript(const var::NativeFunctionArgs& args)
 {
@@ -292,6 +291,16 @@ void OSModule::childStructureChanged(ControllableContainer* c)
 	{
 		updatePingStatusValues(); //could be better filtered to avoid other structure than Ping IPs to trigger
 	}
+}
+
+void OSModule::onContainerParameterChangedInternal(Parameter* p)
+{
+    Module::onContainerParameterChangedInternal(p);
+    if(p == enabled)
+    {
+        if(!enabled->boolValue())  pingThread.stopThread(2000);
+        else if (pingIPsCC.controllables.size() > 0) pingThread.startThread();
+    }
 }
 
 void OSModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
@@ -483,7 +492,8 @@ void OSModule::PingThread::run()
 	while (!threadShouldExit() && !moduleRef.wasObjectDeleted())
 	{
 		wait(osModule->pingFrequency->intValue() * 1000);
-
+        if(threadShouldExit()) return;
+        
 		Array<WeakReference<Parameter>> ipParams = osModule->pingIPsCC.getAllParameters();
 		Array<WeakReference<Parameter>> statusParams = osModule->pingStatusCC.getAllParameters();
 
@@ -509,8 +519,10 @@ void OSModule::PingThread::run()
 
 			String result = process.readAllProcessOutput();
    
-   process.kill();
-
+            process.kill();
+            
+            if(threadShouldExit()) return;
+            
 			if (osModule->logIncomingData->boolValue())
 			{
 				NLOG(osModule->niceName, "Ping result :\n" + result);

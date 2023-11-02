@@ -1762,7 +1762,7 @@ static const unsigned char temp_binary_data_44[] =
 "function setValue(values, multiplexIndex) {\n"
 "    script.log(\"Set values :\");\n"
 "    for (var i = 0; i < values.length; i++) {\n"
-"        script.log(\" > \" + values[i]);\r\n"
+"        script.log(\" > \" + values[i]);\n"
 "    }\n"
 "}\n"
 "\n"
@@ -5027,7 +5027,7 @@ const char* getNamedResource (const char* resourceNameUTF8, int& numBytes)
         case 0xc88c2f4d:  numBytes = 3542; return WebSocket_Client_png;
         case 0x1a00eec5:  numBytes = 3517; return WebSocket_Server_png;
         case 0x924bc834:  numBytes = 2124; return Wiimote_png;
-        case 0xdd901558:  numBytes = 876; return commandScriptTemplate_js;
+        case 0xdd901558:  numBytes = 875; return commandScriptTemplate_js;
         case 0x7fffe188:  numBytes = 5455; return conditionScriptTemplate_js;
         case 0x5c8768cb:  numBytes = 1343; return filterScriptTemplate_js;
         case 0xa23dd44c:  numBytes = 5618; return genericScriptTemplate_js;
