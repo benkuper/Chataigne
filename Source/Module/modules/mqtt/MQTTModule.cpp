@@ -59,9 +59,7 @@ MQTTClientModule::MQTTClientModule(const String& name, bool canHaveInput, bool c
 
 MQTTClientModule::~MQTTClientModule()
 {
-	loop_stop();
-	disconnect();
-	stopThread(1000);
+	stopClient();
 }
 
 void MQTTClientModule::clearItem()
@@ -82,9 +80,7 @@ void MQTTClientModule::onContainerParameterChangedInternal(Parameter* p)
 		if (enabled->boolValue()) startThread();
 		else
 		{
-			loop_stop();
-			disconnect();
-			stopThread(1000);
+			stopClient();
 		}
 	}
 }
@@ -97,9 +93,7 @@ void MQTTClientModule::onControllableFeedbackUpdateInternal(ControllableContaine
 	{
 		if (c == host || c == port || c == keepAlive || c == authenticationCC.enabled || c == username || c == pass /* || c == useTLS*/)
 		{
-			loop_stop();
-			disconnect();
-			stopThread(1000);
+			stopClient();
 			if (enabled->boolValue()) startThread();
 		}
 
@@ -147,7 +141,7 @@ void MQTTClientModule::publishMessage(const String& topic, const String& message
 		NLOGWARNING(niceName, "Not connected, not sending");
 		return;
 	}
-	
+
 	int result = publish(NULL, topic.toStdString().c_str(), message.length(), message.toStdString().c_str(), 2);
 
 	if (logOutgoingData->boolValue())
@@ -286,6 +280,15 @@ void MQTTClientModule::run()
 	isConnected->setValue(false);
 	disconnect();
 #endif
+}
+
+void MQTTClientModule::stopClient()
+{
+#if JUCE_WINDOWS
+	loop_stop();
+	disconnect();
+#endif
+	stopThread(1000);
 }
 
 #if JUCE_WINDOWS
