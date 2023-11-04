@@ -72,6 +72,8 @@ public:
 
 	void run() override;
 
+	void stopClient();
+
 	//mosquitto
 #if JUCE_WINDOWS
 	void on_connect(int rc) override;
