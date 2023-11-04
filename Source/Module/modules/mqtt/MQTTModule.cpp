@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "Module/ModuleIncludes.h"
+
 MQTTClientModule::MQTTClientModule(const String& name, bool canHaveInput, bool canHaveOutput) :
 	Module(name),
 	Thread("MQTT"),
@@ -20,6 +22,7 @@ MQTTClientModule::MQTTClientModule(const String& name, bool canHaveInput, bool c
 
 #if JUCE_WINDOWS
 	mosqpp::lib_init();
+	threaded_set(true);
 #else
 	NLOGWARNING(niceName, "MQTT is only supported on windows right now.");
 #endif
@@ -56,6 +59,8 @@ MQTTClientModule::MQTTClientModule(const String& name, bool canHaveInput, bool c
 
 MQTTClientModule::~MQTTClientModule()
 {
+	loop_stop();
+	disconnect();
 	stopThread(1000);
 }
 
@@ -75,7 +80,12 @@ void MQTTClientModule::onContainerParameterChangedInternal(Parameter* p)
 	if (p == enabled)
 	{
 		if (enabled->boolValue()) startThread();
-		else stopThread(1000);
+		else
+		{
+			loop_stop();
+			disconnect();
+			stopThread(1000);
+		}
 	}
 }
 
@@ -87,6 +97,8 @@ void MQTTClientModule::onControllableFeedbackUpdateInternal(ControllableContaine
 	{
 		if (c == host || c == port || c == keepAlive || c == authenticationCC.enabled || c == username || c == pass /* || c == useTLS*/)
 		{
+			loop_stop();
+			disconnect();
 			stopThread(1000);
 			if (enabled->boolValue()) startThread();
 		}
@@ -135,7 +147,7 @@ void MQTTClientModule::publishMessage(const String& topic, const String& message
 		NLOGWARNING(niceName, "Not connected, not sending");
 		return;
 	}
-
+	
 	int result = publish(NULL, topic.toStdString().c_str(), message.length(), message.toStdString().c_str(), 2);
 
 	if (logOutgoingData->boolValue())
@@ -239,6 +251,7 @@ void MQTTClientModule::run()
 	if (result == 0)
 	{
 		NLOG(niceName, "Connected");
+		isConnected->setValue(true);
 	}
 	else
 	{
@@ -247,18 +260,28 @@ void MQTTClientModule::run()
 	}
 
 
+	loop_forever();
+
 
 	while (!threadShouldExit())
 	{
-		int rc = loop();
-		if (rc)
-		{
-			//LOG("Disconnected, reconnect");
-			reconnect();
-			//LOG("Reconnection : " << rr);
-		}
-		//wait(2);
+		//int rc = -1;
+
+		//{
+		//	rc = loop();
+		//}
+
+		//if (rc)
+		//{
+		//	LOG("Disconnected, reconnect");
+		//	int rr = reconnect();
+		//	LOG("Reconnection : " << rr);
+		//}
+
+		wait(2);
 	}
+
+	loop_stop();
 
 	isConnected->setValue(false);
 	disconnect();
@@ -288,7 +311,7 @@ void MQTTClientModule::on_connect(int rc)
 
 void MQTTClientModule::on_disconnect(int rc)
 {
-	if(rc != 14) LOG("MQTT Disconnected : " << rc); //14 is loop disconnection, autoreconnect
+	if (rc != 14) LOG("MQTT Disconnected : " << rc); //14 is loop disconnection, autoreconnect
 	isConnected->setValue(false);
 	if (rc != 0) reconnect();
 }

@@ -45,6 +45,15 @@ public:
 	Array<int> topicMap;
 	ControllableContainer topicsCC;
 
+
+	struct MQTTMessage
+	{
+		String topic;
+		String message;
+	};
+
+	Array<MQTTMessage, CriticalSection> messagesToSend;
+
 	const Identifier dataEventId = "dataEvent";
 
 	void clearItem() override;
