@@ -596,6 +596,7 @@
 		9966740636DADE2FEF173085 /* QLabWorkspaceCommand.cpp */ /* QLabWorkspaceCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = QLabWorkspaceCommand.cpp; path = ../../Source/Module/modules/osc/qlab/commands/QLabWorkspaceCommand.cpp; sourceTree = SOURCE_ROOT; };
 		9A67BA2570C4D67ECE35F809 /* OSCModule.h */ /* OSCModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OSCModule.h; path = ../../Source/Module/modules/osc/OSCModule.h; sourceTree = SOURCE_ROOT; };
 		9B0FE7E968406A8B38CDC2E8 /* ConversionParamValueLink.cpp */ /* ConversionParamValueLink.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ConversionParamValueLink.cpp; path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ConversionParamValueLink.cpp; sourceTree = SOURCE_ROOT; };
+		9B97DE7FB7E74CA03826F93F /* MQTTModuleUI.h */ /* MQTTModuleUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MQTTModuleUI.h; path = ../../Source/Module/modules/mqtt/ui/MQTTModuleUI.h; sourceTree = SOURCE_ROOT; };
 		9B9EF54FC5099D0ECC284685 /* encoder.h */ /* encoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = encoder.h; path = ../../Source/Common/LTC/encoder.h; sourceTree = SOURCE_ROOT; };
 		9BF05C0D475358E71512E9B7 /* MappingFilter.cpp */ /* MappingFilter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MappingFilter.cpp; path = ../../Source/Common/Processor/Mapping/Filter/MappingFilter.cpp; sourceTree = SOURCE_ROOT; };
 		9BFF764C5DF46CA5BD239D50 /* CommandTemplateParameterEditor.h */ /* CommandTemplateParameterEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CommandTemplateParameterEditor.h; path = ../../Source/Common/Command/Template/ui/CommandTemplateParameterEditor.h; sourceTree = SOURCE_ROOT; };
@@ -623,6 +624,7 @@
 		A31E5A4F4FE61056FEA565BD /* CustomVariablesModule.h */ /* CustomVariablesModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CustomVariablesModule.h; path = ../../Source/Module/modules/customvariables/CustomVariablesModule.h; sourceTree = SOURCE_ROOT; };
 		A330B89FF4A3660791C566A1 /* SDL2.framework */ /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../External/sdl/lib/osx/SDL2.framework; sourceTree = "<group>"; };
 		A344ECDA05A5372A32341886 /* include_juce_simpleweb.cpp */ /* include_juce_simpleweb.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_juce_simpleweb.cpp; path = ../../JuceLibraryCode/include_juce_simpleweb.cpp; sourceTree = SOURCE_ROOT; };
+		A367A00DF3B01DE05FA12AFA /* MQTTModuleUI.cpp */ /* MQTTModuleUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MQTTModuleUI.cpp; path = ../../Source/Module/modules/mqtt/ui/MQTTModuleUI.cpp; sourceTree = SOURCE_ROOT; };
 		A375FF401D9AB143A47EC093 /* include_juce_audio_formats.mm */ /* include_juce_audio_formats.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_audio_formats.mm; path = ../../JuceLibraryCode/include_juce_audio_formats.mm; sourceTree = SOURCE_ROOT; };
 		A3A75BA91D31B2C71CCA4CBD /* DLightModule.cpp */ /* DLightModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DLightModule.cpp; path = ../../Source/Module/modules/osc/dlight/DLightModule.cpp; sourceTree = SOURCE_ROOT; };
 		A3BEB8CF6471FD37FEFED3F9 /* OSCQueryModuleEditor.h */ /* OSCQueryModuleEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OSCQueryModuleEditor.h; path = ../../Source/Module/modules/oscquery/generic/ui/OSCQueryModuleEditor.h; sourceTree = SOURCE_ROOT; };
@@ -1702,6 +1704,7 @@
 		47519A5D31E1742B967E06A5 /* mqtt */ = {
 			isa = PBXGroup;
 			children = (
+				B02659AE6311D75CF7E97319,
 				84D350153B5DE2C0E9C0E415,
 				4BA7F1A7C277D8A5EC1FB968,
 				74C4116DBE0820ADF3C139A2,
@@ -2666,6 +2669,15 @@
 			children = (
 				062D0D43531255FFF58B5230,
 				8784735343A06617FB1D7D64,
+			);
+			name = ui;
+			sourceTree = "<group>";
+		};
+		B02659AE6311D75CF7E97319 /* ui */ = {
+			isa = PBXGroup;
+			children = (
+				A367A00DF3B01DE05FA12AFA,
+				9B97DE7FB7E74CA03826F93F,
 			);
 			name = ui;
 			sourceTree = "<group>";
@@ -3754,7 +3766,7 @@
 					"USE_ABLETONLINK=1",
 					"LINK_PLATFORM_MACOSX=1",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.9.17b9",
+					"JUCE_APP_VERSION=1.9.17b10",
 					"JUCE_APP_VERSION_HEX=0x10911",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -3836,7 +3848,7 @@
 					"USE_ABLETONLINK=1",
 					"LINK_PLATFORM_MACOSX=1",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.9.17b9",
+					"JUCE_APP_VERSION=1.9.17b10",
 					"JUCE_APP_VERSION_HEX=0x10911",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",

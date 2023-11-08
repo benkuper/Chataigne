@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.17b9"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.17b10"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="VST_LOGGING=0"
@@ -758,6 +758,11 @@
             <FILE id="oGUcMe" name="BLEModule.h" compile="0" resource="0" file="Source/Module/modules/ble/BLEModule.h"/>
           </GROUP>
           <GROUP id="{E298306C-543C-DE2E-3496-38F8BF29875A}" name="mqtt">
+            <GROUP id="{965A8202-897A-6BE7-5A96-46472CE861F0}" name="ui">
+              <FILE id="BHoh8m" name="MQTTModuleUI.cpp" compile="0" resource="0"
+                    file="Source/Module/modules/mqtt/ui/MQTTModuleUI.cpp"/>
+              <FILE id="nj8FTG" name="MQTTModuleUI.h" compile="0" resource="0" file="Source/Module/modules/mqtt/ui/MQTTModuleUI.h"/>
+            </GROUP>
             <GROUP id="{E29FE9F5-4BE2-1ED2-5306-217AD1096986}" name="commands">
               <FILE id="zcTrWs" name="MQTTCommands.cpp" compile="0" resource="0"
                     file="Source/Module/modules/mqtt/commands/MQTTCommands.cpp"/>

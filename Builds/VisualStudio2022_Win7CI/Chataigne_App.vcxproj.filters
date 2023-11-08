@@ -218,6 +218,9 @@
     <Filter Include="Chataigne\Source\Module\modules\ble">
       <UniqueIdentifier>{EBDE0361-A545-39AC-83F0-D9E9F522F7A2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\mqtt\ui">
+      <UniqueIdentifier>{B9AD9CBB-E9E9-0030-6C7D-7523C9E9B6E0}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Module\modules\mqtt\commands">
       <UniqueIdentifier>{4DE12FF1-245E-9F00-3BFD-48206F57D466}</UniqueIdentifier>
     </Filter>
@@ -1650,6 +1653,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\ble\BLEModule.cpp">
       <Filter>Chataigne\Source\Module\modules\ble</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\mqtt\ui\MQTTModuleUI.cpp">
+      <Filter>Chataigne\Source\Module\modules\mqtt\ui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\mqtt\commands\MQTTCommands.cpp">
       <Filter>Chataigne\Source\Module\modules\mqtt\commands</Filter>
@@ -4698,6 +4704,9 @@
     <ClInclude Include="..\..\Source\Module\modules\ble\BLEModule.h">
       <Filter>Chataigne\Source\Module\modules\ble</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\mqtt\ui\MQTTModuleUI.h">
+      <Filter>Chataigne\Source\Module\modules\mqtt\ui</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\mqtt\commands\MQTTCommands.h">
       <Filter>Chataigne\Source\Module\modules\mqtt\commands</Filter>
     </ClInclude>
@@ -5718,7 +5727,7 @@
     <ClInclude Include="..\..\JUCE\modules\juce_core\zip\juce_ZipFile.h">
       <Filter>JUCE Modules\juce_core\zip</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\JUCE\modules\juce_core\juce_core.h">
+    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_core\juce_core.h">
       <Filter>JUCE Modules\juce_core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_cryptography\encryption\juce_BlowFish.h">
@@ -5739,7 +5748,7 @@
     <ClInclude Include="..\..\JUCE\modules\juce_cryptography\hashing\juce_Whirlpool.h">
       <Filter>JUCE Modules\juce_cryptography\hashing</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\JUCE\modules\juce_cryptography\juce_cryptography.h">
+    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_cryptography\juce_cryptography.h">
       <Filter>JUCE Modules\juce_cryptography</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_dmx\device\sacn\e131.h">
@@ -6384,7 +6393,7 @@
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\windows\juce_WindowUtils.h">
       <Filter>JUCE Modules\juce_gui_basics\windows</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\JUCE\modules\juce_gui_basics\juce_gui_basics.h">
+    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\juce_gui_basics.h">
       <Filter>JUCE Modules\juce_gui_basics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_extra\code_editor\juce_CodeDocument.h">
@@ -6468,7 +6477,7 @@
     <ClInclude Include="..\..\JUCE\modules\juce_gui_extra\native\juce_NSViewFrameWatcher_mac.h">
       <Filter>JUCE Modules\juce_gui_extra\native</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\JUCE\modules\juce_gui_extra\juce_gui_extra.h">
+    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_extra\juce_gui_extra.h">
       <Filter>JUCE Modules\juce_gui_extra</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\app\CrashHandler.h">
@@ -7107,7 +7116,7 @@
     <ClInclude Include="..\..\JUCE\modules\juce_osc\osc\juce_OSCTypes.h">
       <Filter>JUCE Modules\juce_osc\osc</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\JUCE\modules\juce_osc\juce_osc.h">
+    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_osc\juce_osc.h">
       <Filter>JUCE Modules\juce_osc</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_serial\lib\cobs\cobs.h">
