@@ -145,7 +145,9 @@ void MQTTClientModule::itemRemoved(MQTTTopic* item)
 {
 	if (isCurrentlyLoadingData) return;
 
+#if JUCE_WINDOWS
 	unsubscribe(&item->mid, item->topic->stringValue().toStdString().c_str());
+#endif
 	updateTopicSubs();
 }
 
@@ -153,7 +155,9 @@ void MQTTClientModule::itemsRemoved(Array<MQTTTopic*> items)
 {
 	if (isCurrentlyLoadingData) return;
 
+#if JUCE_WINDOWS
 	for (auto& item : items) unsubscribe(&item->mid, item->topic->stringValue().toStdString().c_str());
+#endif
 	updateTopicSubs();
 }
 
