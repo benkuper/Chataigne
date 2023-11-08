@@ -35,6 +35,7 @@ ChataigneEngine::ChataigneEngine() :
 	breakingChangesVersions.add("1.8.1b4");
 	breakingChangesVersions.add("1.9.7b20");
 	breakingChangesVersions.add("1.9.14b8");
+	breakingChangesVersions.add("1.9.17b10");
 
 	//init here
 	Engine::mainEngine = this;

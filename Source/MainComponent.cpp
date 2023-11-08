@@ -6,6 +6,9 @@
   ==============================================================================
 */
 
+#include "MainIncludes.h"
+#include "Module/ModuleIncludes.h"
+
 using namespace std::placeholders;
 
 String getAppVersion();
@@ -53,7 +56,6 @@ void MainContentComponent::init()
 
 	ParameterUI::customAddToContextMenuFunc = MainContentComponent::parameterAddToContextMenu;
 	ParameterUI::handleCustomContextMenuResultFunc = MainContentComponent::parameterHandleContextMenuResult;
-
 }
 
 SequenceManagerUI* MainContentComponent::createSequenceManagerUI(const String& name)
