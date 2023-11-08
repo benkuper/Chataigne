@@ -132,6 +132,8 @@ public:
 	std::unique_ptr<PitchDetector> pitchDetector;
 	std::unique_ptr<LTCDecoder> ltcDecoder;
 
+	void initSetup();
+
 	virtual void updateAudioSetup();
 	void updateSelectedMonitorChannels();
 

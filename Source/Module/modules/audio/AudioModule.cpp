@@ -87,6 +87,37 @@ AudioModule::AudioModule(const String& name) :
 	ltcTime->defaultUI = FloatParameter::TIME;
 
 
+	addChildControllableContainer(&hs);
+	controllableContainers.move(controllableContainers.indexOf(&hs), controllableContainers.indexOf(&valuesCC));
+
+	for (auto& c : valuesCC.controllables) c->setControllableFeedbackOnly(true);
+
+	defManager->add(CommandDefinition::createDef(this, "", "Play audio file", &PlayAudioFileCommand::create));
+
+	ltcDecoder.reset(ltc_decoder_create(1920, 32));
+
+	initSetup();
+}
+
+AudioModule::~AudioModule()
+{
+	graph.clear();
+
+	am.removeAudioCallback(&player);
+	player.setProcessor(nullptr);
+
+	am.removeAudioCallback(this);
+	am.removeChangeListener(this);
+}
+
+void AudioModule::initSetup()
+{
+	if (Thread::getCurrentThreadId() != MessageManager::getInstance()->getCurrentMessageThread())
+	{
+		MessageManager::callAsync([this]() { initSetup(); });
+		return;
+	}
+
 	//AUDIO
 	am.addAudioCallback(this);
 	am.addChangeListener(this);
@@ -122,25 +153,6 @@ AudioModule::AudioModule(const String& name) :
 
 	player.setProcessor(&graph);
 
-	addChildControllableContainer(&hs);
-	controllableContainers.move(controllableContainers.indexOf(&hs), controllableContainers.indexOf(&valuesCC));
-
-	for (auto& c : valuesCC.controllables) c->setControllableFeedbackOnly(true);
-
-	defManager->add(CommandDefinition::createDef(this, "", "Play audio file", &PlayAudioFileCommand::create));
-
-	ltcDecoder.reset(ltc_decoder_create(1920, 32));
-}
-
-AudioModule::~AudioModule()
-{
-	graph.clear();
-
-	am.removeAudioCallback(&player);
-	player.setProcessor(nullptr);
-
-	am.removeAudioCallback(this);
-	am.removeChangeListener(this);
 }
 
 void AudioModule::updateAudioSetup()
@@ -463,7 +475,7 @@ void AudioModule::itemAdded(FFTAnalyzer* item)
 
 void AudioModule::itemsAdded(Array<FFTAnalyzer*> items)
 {
-	for(auto & item : items) fftCC.addParameter(item->value);
+	for (auto& item : items) fftCC.addParameter(item->value);
 }
 
 void AudioModule::itemRemoved(FFTAnalyzer* item)
@@ -473,7 +485,7 @@ void AudioModule::itemRemoved(FFTAnalyzer* item)
 
 void AudioModule::itemsRemoved(Array<FFTAnalyzer*> items)
 {
-	for(auto & item : items) fftCC.removeControllable(item->value);
+	for (auto& item : items) fftCC.removeControllable(item->value);
 }
 
 
