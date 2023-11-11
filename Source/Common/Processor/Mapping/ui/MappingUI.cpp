@@ -63,8 +63,11 @@ void MappingUI::updateOutputParamUI()
 			if (outs.size() > 0 && outs[0] != nullptr)
 			{
 				outputParamUI.reset(outs[0]->createDefaultUI());
-				outputParamUI->showLabel = false;
-				addAndMakeVisible(outputParamUI.get());
+				if (outputParamUI != nullptr)
+				{
+					outputParamUI->showLabel = false;
+					addAndMakeVisible(outputParamUI.get());
+				}
 			}
 		}
 	}
