@@ -82,7 +82,7 @@ public:
 	void itemRemoved(MQTTTopic* item) override;
 	void itemsRemoved(Array<MQTTTopic*> item) override;
 
-	void updateTopicSubs(bool keepData = true);
+	void updateTopicSubs();
 
 	void afterLoadJSONDataInternal() override;
 

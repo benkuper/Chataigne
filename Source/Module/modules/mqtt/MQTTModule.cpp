@@ -161,25 +161,11 @@ void MQTTClientModule::itemsRemoved(Array<MQTTTopic*> items)
 	updateTopicSubs();
 }
 
-void MQTTClientModule::updateTopicSubs(bool keepData)
+void MQTTClientModule::updateTopicSubs()
 {
 	GenericScopedLock lock(updateTopicLock);
 
-	var oldData(new DynamicObject());
-
-#if JUCE_WINDOWS
-	for (int i = 0; i < topicsManager.items.size(); i++)
-	{
-		String t = topicsManager.items[i]->topic->stringValue();
-
-		if (ControllableContainer* cc = valuesCC.getControllableContainerByName(t))
-		{
-			oldData.getDynamicObject()->setProperty(t, cc->getJSONData());
-		}
-	}
-#endif
-
-	valuesCC.clear();
+	//valuesCC.clear();
 	topicItemMap.clear();
 
 
@@ -195,29 +181,64 @@ void MQTTClientModule::updateTopicSubs(bool keepData)
 		{
 		case MQTTTopic::JSON:
 		{
-			ControllableContainer* cc = new ControllableContainer(s);
-			cc->userCanAddControllables = true;
-			cc->saveAndLoadRecursiveData = true;
-			cc->saveAndLoadName = true;
-			if (oldData.hasProperty(s)) cc->loadJSONData(oldData.getDynamicObject()->getProperty(s));
-			valuesCC.addChildControllableContainer(cc, true);
+			ControllableContainer* cc = valuesCC.getControllableContainerByName(s, true);
+			if (cc == nullptr)
+			{
+				cc = new ControllableContainer(s);
+				cc->userCanAddControllables = true;
+				cc->saveAndLoadRecursiveData = true;
+				cc->saveAndLoadName = true;
+				valuesCC.addChildControllableContainer(cc, true);
+			}
 		}
 		break;
 
 		case MQTTTopic::RAW:
 		{
-			StringParameter* b = valuesCC.addStringParameter(s, "Last received message for this topic", "");
-			b->isSavable = false;
+			StringParameter* b = dynamic_cast<StringParameter*>(valuesCC.getParameterByName(s, true));
+			if (b == nullptr) b = valuesCC.addStringParameter(s, "Last received message for this topic", "");
 		}
 		break;
 		}
-
 
 #if JUCE_WINDOWS
 		subscribe(&topic->mid, s.toStdString().c_str());
 #endif
 		topicItemMap.set(s, topic);
 	}
+
+	Array<Controllable*> controllablesToRemove;
+	for (auto& c : valuesCC.controllables)
+	{
+		bool found = false;
+		for (auto& top : topicsManager.items)
+		{
+			if (top->topic->stringValue() == c->niceName)
+			{
+				found = true;
+				break;
+			}
+		}
+		if (!found) controllablesToRemove.add(c);
+	}
+
+	Array<ControllableContainer*> containersToRemove;
+	for (auto& cc : valuesCC.controllableContainers)
+	{
+		bool found = false;
+		for (auto& top : topicsManager.items)
+		{
+			if (top->topic->stringValue() == cc->niceName)
+			{
+				found = true;
+				break;
+			}
+		}
+		if (!found) containersToRemove.add(cc);
+	}
+
+	for (auto& c : controllablesToRemove) valuesCC.removeControllable(c);
+	for (auto& cc : containersToRemove) valuesCC.removeChildControllableContainer(cc);
 
 	valuesCC.queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, &valuesCC));
 }
