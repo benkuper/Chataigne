@@ -181,6 +181,9 @@ void MQTTClientModule::updateTopicSubs()
 		{
 		case MQTTTopic::JSON:
 		{
+			//cleanup
+			if (Parameter* p = valuesCC.getParameterByName(s, true)) valuesCC.removeControllable(p);
+
 			ControllableContainer* cc = valuesCC.getControllableContainerByName(s, true);
 			if (cc == nullptr)
 			{
@@ -195,6 +198,9 @@ void MQTTClientModule::updateTopicSubs()
 
 		case MQTTTopic::RAW:
 		{
+			//cleanup
+			if (ControllableContainer* cc = valuesCC.getControllableContainerByName(s, true)) valuesCC.removeChildControllableContainer(cc);
+
 			StringParameter* b = dynamic_cast<StringParameter*>(valuesCC.getParameterByName(s, true));
 			if (b == nullptr) b = valuesCC.addStringParameter(s, "Last received message for this topic", "");
 		}
