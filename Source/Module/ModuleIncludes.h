@@ -180,7 +180,6 @@
 #include "modules/state/commands/StateCommand.h"
 #include "modules/state/StateModule.h"
 
-#include "modules/system/os/lib/cpumem_monitor.h"
 #include "modules/system/os/OSModule.h"
 #include "modules/system/os/commands/OSExecCommand.h"
 #include "modules/system/os/commands/OSPowerCommand.h"

@@ -13,6 +13,20 @@
 
 #if JUCE_WINDOWS
 #include <TlHelp32.h>
+#include <winsock2.h>
+#include <ws2tcpip.h>
+#include <icmpapi.h>
+#pragma comment(lib, "ws2_32.lib")
+#define CLOSESOCKET closesocket
+#else
+#include <unistd.h>
+#include <arpa/inet.h>
+#include <netinet/ip_icmp.h>
+#include <netinet/in.h>
+#include <sys/socket.h>
+#include <sys/types.h>
+#include <netdb.h>
+#define CLOSESOCKET close
 #endif
 
 float OSModule::timeAtProcessStart = Time::getMillisecondCounter() / 1000.0f;
@@ -26,8 +40,8 @@ OSModule::OSModule() :
 	appControlStatusCC("App Control"),
 	pingIPsCC("Ping IPs"),
 	pingStatusCC("Ping Status"),
-	pingThread(this),
-	usageIndex(0)
+	osThread(this),
+	pingThread(this)
 {
 	includeValuesInSave = true;
 
@@ -37,7 +51,8 @@ OSModule::OSModule() :
 
 	//Params
 	listIPs = moduleParams.addTrigger("List IPs", "List all IPs of all network interfaces");
-	pingFrequency = moduleParams.addIntParameter("Ping Interval", "Time between each ping routine, in seconds.", 5);
+	pingInterval = moduleParams.addIntParameter("Ping Interval", "Time between each ping routine, in seconds.", 5);
+	pingTimeout = moduleParams.addFloatParameter("Ping Timeout", "Timeout for each ping routine, in seconds.", 0.5f, 0.1f, 10.0f);
 
 	appControlNamesCC.userCanAddControllables = true;
 	appControlNamesCC.customUserCreateControllableFunc = std::bind(&OSModule::appControlCreateControllable, this, std::placeholders::_1);
@@ -71,8 +86,6 @@ OSModule::OSModule() :
 
 	processUpTime = osInfoCC.addFloatParameter("Process Up Time", "Time since the system this app has started, in seconds", 0, 0);
 	processUpTime->defaultUI = FloatParameter::TIME;
-	osCPUProcessUsage = osInfoCC.addFloatParameter("CPU Process Usage", "CPU Usage of this process from 0 to 1", 0, 0, 1);
-	osMemoryProcessUsage = osInfoCC.addFloatParameter("Memory Process Usage", "Memory Usage of this process from 0 to 1", 0, 0, 1);
 
 	osInfoCC.addChildControllableContainer(&appControlStatusCC);
 	valuesCC.addChildControllableContainer(&osInfoCC);
@@ -113,16 +126,17 @@ OSModule::OSModule() :
 
 	startTimer(OS_IP_TIMER, 5000);
 	startTimer(OS_APP_TIMER, 1000);
-	startTimer(OS_CPUMEM_TIMER, 500);
+
+	osThread.startThread();
 }
 
 OSModule::~OSModule()
 {
 	stopTimer(OS_IP_TIMER);
 	stopTimer(OS_APP_TIMER);
-	stopTimer(OS_CPUMEM_TIMER);
 	stopThread(100);
 	pingThread.stopThread(2000);
+	osThread.stopThread(2000);
 }
 
 void OSModule::updateIps()
@@ -287,7 +301,7 @@ void OSModule::childStructureChanged(ControllableContainer* c)
 {
 	Module::childStructureChanged(c);
 
-	if(!isCurrentlyLoadingData && c == &moduleParams)
+	if (!isCurrentlyLoadingData && c == &moduleParams)
 	{
 		updatePingStatusValues(); //could be better filtered to avoid other structure than Ping IPs to trigger
 	}
@@ -295,12 +309,12 @@ void OSModule::childStructureChanged(ControllableContainer* c)
 
 void OSModule::onContainerParameterChangedInternal(Parameter* p)
 {
-    Module::onContainerParameterChangedInternal(p);
-    if(p == enabled)
-    {
-        if(!enabled->boolValue())  pingThread.stopThread(2000);
-        else if (pingIPsCC.controllables.size() > 0) pingThread.startThread();
-    }
+	Module::onContainerParameterChangedInternal(p);
+	if (p == enabled)
+	{
+		if (!enabled->boolValue())  pingThread.stopThread(2000);
+		else if (pingIPsCC.controllables.size() > 0) pingThread.startThread();
+	}
 }
 
 void OSModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
@@ -363,10 +377,11 @@ void OSModule::appControlCreateControllable(ControllableContainer* c)
 
 void OSModule::pingIPsCreateControllable(ControllableContainer* c)
 {
-	StringParameter* sp = c->addStringParameter("IP 1", "IP to ping", "");
+	StringParameter* sp = new StringParameter("IP 1", "IP to ping", "");
 	sp->userCanChangeName = true;
 	sp->saveValueOnly = false;
 	sp->isRemovableByUser = true;
+	c->addParameter(sp);
 
 	updatePingStatusValues();
 }
@@ -411,37 +426,6 @@ void OSModule::timerCallback(int timerID)
 	{
 	case OS_IP_TIMER: updateIps(); break;
 	case OS_APP_TIMER: checkAppControl(); break;
-	case OS_CPUMEM_TIMER:
-	{
-		osUpTime->setValue((int)(Time::getMillisecondCounter() / 1000.0f));
-		processUpTime->setValue((int)(osUpTime->floatValue() - timeAtProcessStart));
-		cpuUsage[usageIndex] = cpuMemMonitor.getCPUUsage();
-		memoryUsage[usageIndex] = cpuMemMonitor.getMemoryUsage();
-		usageIndex = (usageIndex + 1) % 4;
-
-		float maxCPUTotal = 0;
-		float maxCPUProcess = 0;
-		float maxMemTotal = 0;
-		float maxMemProcess = 0;
-		for (int i = 0; i < 4; i++)
-		{
-			maxCPUTotal = jmax<float>(maxCPUTotal, cpuUsage[i].TotalUse / 10.0f);
-			maxCPUProcess = jmax<float>(maxCPUProcess, cpuUsage[i].ProcessUse / 10.0f);
-			maxMemTotal = jmax<float>(maxMemTotal, memoryUsage[i].PhysicalTotalUsed);
-			maxMemProcess = jmax<float>(maxMemProcess, memoryUsage[i].PhysicalProcessUsed);
-		}
-
-		osCPUUsage->setValue(maxCPUTotal);
-		osCPUProcessUsage->setValue(maxCPUProcess);
-		osMemoryUsage->setValue(maxMemTotal / memoryUsage[0].PhysicalTotalAvailable);
-		osMemoryProcessUsage->setValue(maxMemProcess / memoryUsage[0].PhysicalTotalAvailable);
-
-		if (logIncomingData->boolValue())
-		{
-			LOG("CPU Usage :" << (int)(osCPUUsage->floatValue() * 100) << "%, Memory Usage : " << (int)(osMemoryUsage->floatValue() * 100) << "%");
-		}
-	}
-	break;
 	}
 }
 
@@ -491,9 +475,9 @@ void OSModule::PingThread::run()
 {
 	while (!threadShouldExit() && !moduleRef.wasObjectDeleted())
 	{
-		wait(osModule->pingFrequency->intValue() * 1000);
-        if(threadShouldExit()) return;
-        
+		wait(osModule->pingInterval->intValue() * 1000);
+		if (threadShouldExit()) return;
+
 		Array<WeakReference<Parameter>> ipParams = osModule->pingIPsCC.getAllParameters();
 		Array<WeakReference<Parameter>> statusParams = osModule->pingStatusCC.getAllParameters();
 
@@ -508,31 +492,7 @@ void OSModule::PingThread::run()
 			//
 			if (osModule->logOutgoingData->boolValue()) NLOG(osModule->niceName, "Pinging " + ipParams[i]->stringValue() + " ...");
 
-			ChildProcess process;
-#if JUCE_WINDOWS
-			String command = "ping -n 1 -w 500 " + ip;
-#else
-			String command = "ping -c 1 -W 1 " + ip;
-#endif
-
-			process.start(command);
-
-			String result = process.readAllProcessOutput();
-   
-            process.kill();
-            
-            if(threadShouldExit()) return;
-            
-			if (osModule->logIncomingData->boolValue())
-			{
-				NLOG(osModule->niceName, "Ping result :\n" + result);
-			}
-
-#if JUCE_WINDOWS
-			bool success = result.contains("TTL") && (result.contains("Received = 1") || result.contains("(0% ") || result.contains(" 0%)"));
-#else
-			bool success = result.contains(" 0.0% packet loss");
-#endif
+			bool success = icmpPing(ip);
 
 			if (osModule->logOutgoingData->boolValue())
 			{
@@ -545,4 +505,125 @@ void OSModule::PingThread::run()
 	}
 
 	if (!moduleRef.wasObjectDeleted() && osModule->logOutgoingData->boolValue()) LOG("Stop pinging thread");
+}
+
+bool OSModule::PingThread::icmpPing(const String& host)
+{
+	int timeout_ms = osModule->pingTimeout->floatValue() * 1000;
+
+#if JUCE_WINDOWS
+	HANDLE hIcmpFile = IcmpCreateFile();
+	if (hIcmpFile == INVALID_HANDLE_VALUE) {
+		DBG("IcmpCreateFile failed");
+		return false;
+	}
+
+	const int bufferSize = 32; // Size of the buffer in bytes
+	BYTE sendBuffer[bufferSize];
+	memset(sendBuffer, 'E', sizeof(sendBuffer)); // Filling buffer with arbitrary data
+
+	int replySize = sizeof(ICMP_ECHO_REPLY) + bufferSize;
+	LPVOID replyBuffer = malloc(replySize);
+	if (replyBuffer == nullptr) {
+		DBG("Memory allocation error");
+		IcmpCloseHandle(hIcmpFile);
+		return false;
+	}
+
+	DWORD reply = IcmpSendEcho(hIcmpFile, inet_addr(host.toStdString().c_str()), sendBuffer, sizeof(sendBuffer), nullptr, replyBuffer, replySize, timeout_ms);
+
+	bool success = false;
+	if (reply != 0) {
+		success = true;
+		//LOG("ICMP echo request successful");
+		// Process the ICMP echo reply if needed
+	}
+	else {
+		DBG("ICMP echo request failed: " << GetLastError());
+	}
+
+	free(replyBuffer);
+	IcmpCloseHandle(hIcmpFile);
+
+	return success;
+
+#else // UNIX
+	int sock = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP);
+	if (sock < 0) {
+		DBG("Socket creation error");
+		return false;
+	}
+
+	struct timeval tv;
+	tv.tv_sec = timeout_ms / 1000;
+	tv.tv_usec = (timeout_ms % 1000) * 1000;
+	setsockopt(sock, SOL_SOCKET, SO_RCVTIMEO, reinterpret_cast<const char*>(&tv), sizeof(tv));
+
+	char packet[1024];
+	memset(packet, 0, sizeof(packet));
+
+	struct icmphdr* icmp = reinterpret_cast<struct icmphdr*>(packet);
+	icmp->type = ICMP_ECHO;
+	icmp->code = 0;
+	icmp->checksum = 0;
+	icmp->un.echo.id = getpid();
+	icmp->un.echo.sequence = 0;
+	icmp->checksum = 0; // Calculate checksum
+
+	struct sockaddr_in dest_addr;
+	memset(&dest_addr, 0, sizeof(dest_addr));
+	dest_addr.sin_family = AF_INET;
+	dest_addr.sin_addr.s_addr = inet_addr(host.toStdString().c_str());
+
+	int bytes_sent = sendto(sock, packet, sizeof(packet), 0, reinterpret_cast<struct sockaddr*>(&dest_addr), sizeof(dest_addr));
+	if (bytes_sent == -1 || bytes_sent != sizeof(packet)) {
+		LOGWARNING("Error sending ICMP packet, you may need administrator/root privileges");
+		close(sock);
+		return false;
+	}
+
+	// Receive ICMP reply
+	struct sockaddr_in from;
+	socklen_t fromlen = sizeof(from);
+	int bytes_received = recvfrom(sock, packet, sizeof(packet), 0, reinterpret_cast<struct sockaddr*>(&from), &fromlen);
+
+	if (bytes_received > 0) {
+		DBG("Received ICMP reply");
+		// Process the ICMP reply if needed
+	}
+	else if (bytes_received == 0) {
+		DBG("No data received");
+	}
+	else {
+		if (errno == EAGAIN || errno == EWOULDBLOCK) {
+			DBG("Timeout reached");
+		}
+		else {
+			DBG("Receive error: " << strerror(errno));
+		}
+	}
+
+	close(sock);
+	return true; // Placeholder for successful ping
+#endif
+}
+
+void OSModule::OSThread::run()
+{
+	while (!threadShouldExit() && !moduleRef.wasObjectDeleted())
+	{
+		osModule->osUpTime->setValue((int)(Time::getMillisecondCounter() / 1000.0f));
+		osModule->processUpTime->setValue((int)(osModule->osUpTime->floatValue() - OSModule::timeAtProcessStart));
+
+
+		float usage = OSSystemInfo::getSystemCPUUsage();
+		if(usage > 0) osModule->osCPUUsage->setValue(usage);
+		osModule->osMemoryUsage->setValue(OSSystemInfo::getSystemMemoryUsageRatio());
+		//osMemoryProcessUsage->setValue(maxMemProcess / memoryUsage[0].PhysicalTotalAvailable);
+
+		if (osModule->logIncomingData->boolValue())
+		{
+			LOG("CPU Usage :" << (int)(osModule->osCPUUsage->floatValue() * 100) << "%, Memory Usage : " << (int)(osModule->osMemoryUsage->floatValue() * 100) << "%");
+		}
+	}
 }

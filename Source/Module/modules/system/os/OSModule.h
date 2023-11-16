@@ -12,7 +12,6 @@
 
 #define OS_IP_TIMER 1
 #define OS_APP_TIMER 2
-#define OS_CPUMEM_TIMER 3
 
 class OSModule :
 	public Module,
@@ -26,7 +25,8 @@ public:
 	enum OSType { OS_WIN, OS_MAC, OS_LINUX };
 
 	Trigger* listIPs;
-	IntParameter* pingFrequency; // in seconds
+	IntParameter* pingInterval; // in seconds
+	FloatParameter* pingTimeout;
 
 	Trigger* terminateTrigger;
 	Trigger* crashedTrigger;
@@ -34,9 +34,7 @@ public:
 	ControllableContainer osInfoCC;
 	EnumParameter* osType;
 	StringParameter* osName;
-	FloatParameter* osCPUProcessUsage;
 	FloatParameter* osCPUUsage;
-	FloatParameter* osMemoryProcessUsage;
 	FloatParameter* osMemoryUsage;
 	FloatParameter* osUpTime;
 	FloatParameter* processUpTime;
@@ -51,15 +49,6 @@ public:
 	ControllableContainer pingIPsCC;
 	ControllableContainer pingStatusCC;
 
-	//Ping
-	OwnedArray<ChildProcess> pingProcesses;
-	var statusAndIpGhostData;
-
-	SL::NET::CPUMemMonitor cpuMemMonitor;
-	SL::NET::CPUUse cpuUsage[4];
-	SL::NET::MemoryUse memoryUsage[4];
-	int usageIndex;
-
 	static float timeAtProcessStart;
 
 	//Script
@@ -72,6 +61,20 @@ public:
 	//child process
 	Array<String, CriticalSection> commandsToRun;
 
+	class OSThread :
+		public Thread
+	{
+	public:
+		OSThread(OSModule* m) : Thread("OS"), osModule(m), moduleRef(m) {}
+		~OSThread() {}
+
+		OSModule* osModule;
+		WeakReference<Inspectable> moduleRef;
+		void run();
+	};
+
+	OSThread osThread;
+
 	class PingThread :
 		public Thread
 	{
@@ -83,6 +86,7 @@ public:
 		WeakReference<Inspectable> moduleRef;
 
 		void run() override;
+		bool icmpPing(const String& host);
 	};
 
 	PingThread pingThread;
@@ -103,7 +107,7 @@ public:
 	void pingIPsCreateControllable(ControllableContainer* c);
 
 	void childStructureChanged(ControllableContainer* c) override;
-    void onContainerParameterChangedInternal(Parameter* p) override;
+	void onContainerParameterChangedInternal(Parameter* p) override;
 	void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
 
 	static var launchFileFromScript(const var::NativeFunctionArgs& args);

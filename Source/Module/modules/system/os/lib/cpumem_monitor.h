@@ -1,323 +1,142 @@
 #pragma once
-#include <iomanip>
-#include <math.h>
-#include <sstream>
-#include <string.h>
-#include <string>
+#include "JuceHeader.h"
 
-#ifdef WIN32
-#include <pdh.h>
+#if JUCE_WINDOWS
+#include <windows.h>
 #include <psapi.h>
-#include <tchar.h>
-#pragma comment(lib, "pdh")
-
-#elif __APPLE__
-
-#elif __linux__
-#include <sys/sysinfo.h>
-#include <sys/times.h>
-#include <sys/types.h>
-//#include <sys/vtimes.h>
-
-#else
-#error "Unknown Operating System!"
+#include <pdh.h>
+#pragma comment(lib,"pdh.lib")
+#elif JUCE_LINUX
+#include <fstream>
+#include <sstream>
+#elif JUCE_MAC
+#include <mach/mach.h>
+#include <unistd.h>
+#include <sys/sysctl.h>
 #endif
-namespace SL {
-    namespace NET {
 
-        inline std::string to_PrettyBytes(long long int bytes)
-        {
-            static auto convlam = [](const auto a_value, const int n) {
-                std::ostringstream out;
-                out << std::fixed << std::setprecision(n) << a_value;
-                return out.str();
-            };
+class OSSystemInfo {
+public:
+	static double getSystemCPUUsage() {
+#if JUCE_WINDOWS
+		PDH_HQUERY query;
+		PDH_HCOUNTER counter;
+		PDH_FMT_COUNTERVALUE value;
 
-            const char *suffixes[7];
-            suffixes[0] = " B";
-            suffixes[1] = " KB";
-            suffixes[2] = " MB";
-            suffixes[3] = " GB";
-            suffixes[4] = " TB";
-            suffixes[5] = " PB";
-            suffixes[6] = " EB";
-            unsigned int s = 0; // which suffix to use
-            auto count = static_cast<double>(bytes);
-            while (count >= 1024 && s < 7) {
-                s++;
-                count /= 1024;
-            }
-            if (count - floor(count) == 0.0)
-                return std::to_string((int)count) + suffixes[s];
-            else
-                return convlam(count, 2) + suffixes[s];
-        }
-        struct MemoryUse {
-            long long int VirtualTotalUsed = 0;
-            long long int VirtualProcessUsed = 0;
-            long long int VirtualTotalAvailable = 0;
-            long long int PhysicalTotalUsed = 0;
-            long long int PhysicalProcessUsed = 0;
-            long long int PhysicalTotalAvailable = 0;
-        };
-        struct CPUUse {
-            double ProcessUse = 0.0;
-            double TotalUse = 0.0;
-        };
-#ifdef WIN32
+		PdhOpenQuery(NULL, NULL, &query);
+		PdhAddEnglishCounter(query, "\\Processor(_Total)\\% Processor Time", NULL, &counter);
+		PdhCollectQueryData(query);
+		Thread::getCurrentThread()->wait(500);
+		PdhCollectQueryData(query);
+		PdhGetFormattedCounterValue(counter, PDH_FMT_DOUBLE, NULL, &value);
+		PdhCloseQuery(query);
 
-        class CPUMemMonitor {
-            HANDLE cpuQuery = NULL;
-            HANDLE cpuTotal = NULL;
-            ULARGE_INTEGER lastCPU = { 0 };
-            ULARGE_INTEGER lastSysCPU = { 0 };
-            ULARGE_INTEGER lastUserCPU = { 0 };
-            int numProcessors = 1;
-            HANDLE currentprocess = NULL;
+		return value.doubleValue / 100.0;
 
-        public:
-            CPUMemMonitor()
-            {
-                PdhOpenQuery(NULL, NULL, &cpuQuery);
+#elif JUCE_LINUX
+		std::ifstream file("/proc/stat");
+		std::string line;
+		std::getline(file, line);
 
-                PdhAddEnglishCounterW(cpuQuery, L"\\Processor(_Total)\\% Processor Time", NULL, &cpuTotal);
-                PdhCollectQueryData(cpuQuery);
+		// /proc/stat format: cpu user nice system idle iowait irq softirq
+		std::istringstream ss(line);
+		std::string cpuLabel;
+		ss >> cpuLabel;
+		if (cpuLabel != "cpu") {
+			DBG("Error reading CPU stats");
+			return -1.0;
+		}
 
-                SYSTEM_INFO sysInfo;
-                FILETIME ftime, fsys, fuser;
+		int user, nice, system, idle, iowait, irq, softirq;
+		ss >> user >> nice >> system >> idle >> iowait >> irq >> softirq;
 
-                GetSystemInfo(&sysInfo);
-                numProcessors = sysInfo.dwNumberOfProcessors;
+		int totalCpuTime = user + nice + system + idle + iowait + irq + softirq;
+		int idleTime = idle + iowait;
+		double cpuUsage = 1.0 - (double)idleTime / totalCpuTime;
+		return cpuUsage;
 
-                GetSystemTimeAsFileTime(&ftime);
-                memcpy(&lastCPU, &ftime, sizeof(FILETIME));
+#elif JUCE_MAC
+		mach_msg_type_number_t count = HOST_CPU_LOAD_INFO_COUNT;
+		host_cpu_load_info_data_t cpuinfo;
+		if (host_statistics(mach_host_self(), HOST_CPU_LOAD_INFO, (host_info_t)&cpuinfo, &count) != KERN_SUCCESS) {
+			DBG("Error getting CPU info on macOS");
+			return -1.0;
+		}
 
-                currentprocess = GetCurrentProcess();
-                GetProcessTimes(currentprocess, &ftime, &ftime, &fsys, &fuser);
-                memcpy(&lastSysCPU, &fsys, sizeof(FILETIME));
-                memcpy(&lastUserCPU, &fuser, sizeof(FILETIME));
-            }
-            ~CPUMemMonitor()
-            {
-                if (cpuQuery == NULL) {
-                    PdhCloseQuery(cpuQuery);
-                }
-            }
-            CPUUse getCPUUsage()
-            {
-                PDH_FMT_COUNTERVALUE counterVal;
-                PdhCollectQueryData(cpuQuery);
-                PdhGetFormattedCounterValue(cpuTotal, PDH_FMT_DOUBLE, NULL, &counterVal);
-                CPUUse c;
-                c.TotalUse = counterVal.doubleValue;
+		double totalTicks = 0;
+		for (int i = 0; i < CPU_STATE_MAX; i++) {
+			totalTicks += cpuinfo.cpu_ticks[i];
+		}
 
-                FILETIME ftime, fsys, fuser;
-                ULARGE_INTEGER now, sys, user;
-                double percent = 0.0;
-                GetSystemTimeAsFileTime(&ftime);
-                memcpy(&now, &ftime, sizeof(FILETIME));
-                GetProcessTimes(currentprocess, &ftime, &ftime, &fsys, &fuser);
-                memcpy(&sys, &fsys, sizeof(FILETIME));
-                memcpy(&user, &fuser, sizeof(FILETIME));
-                percent = static_cast<double>(sys.QuadPart - lastSysCPU.QuadPart) + (user.QuadPart - lastUserCPU.QuadPart);
-                percent /= static_cast<double>(now.QuadPart - lastCPU.QuadPart);
-                percent /= static_cast<double>(numProcessors);
-                lastCPU = now;
-                lastUserCPU = user;
-                lastSysCPU = sys;
-                c.ProcessUse = percent * 100.0;
-                return c;
-            }
-            MemoryUse getMemoryUsage()
-            {
-                PROCESS_MEMORY_COUNTERS_EX pmc;
-                GetProcessMemoryInfo(currentprocess, (PROCESS_MEMORY_COUNTERS *)&pmc, sizeof(pmc));
-                MEMORYSTATUSEX memInfo;
-                memInfo.dwLength = sizeof(MEMORYSTATUSEX);
-                GlobalMemoryStatusEx(&memInfo);
-                MemoryUse m;
-                m.PhysicalTotalUsed = memInfo.ullTotalPhys - memInfo.ullAvailPhys;
-                m.PhysicalTotalAvailable = memInfo.ullTotalPhys;
-                m.PhysicalProcessUsed = pmc.WorkingSetSize;
-
-                m.VirtualTotalAvailable = memInfo.ullTotalPageFile;
-                m.VirtualTotalUsed = memInfo.ullTotalPageFile - memInfo.ullAvailPageFile;
-                m.VirtualProcessUsed = pmc.PrivateUsage;
-                return m;
-            }
-        };
-#elif __APPLE__
-
-        class CPUMemMonitor {
-
-        public:
-            CPUMemMonitor() {}
-            ~CPUMemMonitor() {}
-            CPUUse getCPUUsage()
-            {
-                CPUUse c = { 0 };
-                return c;
-            }
-            MemoryUse getMemoryUsage()
-            {
-                MemoryUse m = { 0 };
-                return m;
-            }
-        };
-#elif __linux__
-
-        class CPUMemMonitor {
-        private:
-            long long int parseLine(char *line)
-            {
-
-                // This assumes that a digit will be found and the line ends in " Kb".
-                int i = strlen(line);
-                const char *p = line;
-                while (*p < '0' || *p > '9')
-                    p++;
-                line[i - 3] = '\0';
-                return atoll(p) * 1000; // translate to bytes
-            }
-            void getprocessmemory(MemoryUse &m)
-            {
-                m.PhysicalProcessUsed = m.VirtualProcessUsed = 0;
-                FILE *file = fopen("/proc/self/status", "r");
-                if (file == NULL) return;
-                char line[128];
-                while (fgets(line, 128, file) != NULL && (m.VirtualProcessUsed == 0 || m.PhysicalProcessUsed == 0)) {
-                    if (strncmp(line, "VmSize:", 7) == 0) {
-                        m.VirtualProcessUsed = parseLine(line);
-                    }
-                    else if (strncmp(line, "VmRSS:", 6) == 0) {
-                        m.PhysicalProcessUsed = parseLine(line);
-                    }
-                }
-                fclose(file);
-            }
-            unsigned long long lastTotalUser = 0;
-            unsigned long long lastTotalUserLow = 0;
-            unsigned long long lastTotalSys = 0;
-            unsigned long long lastTotalIdle = 0;
-            clock_t lastCPU = { 0 };
-            clock_t lastSysCPU = { 0 };
-            clock_t lastUserCPU = { 0 };
-            int numProcessors = 0;
-
-        public:
-            CPUMemMonitor()
-            {
-                FILE *file = fopen("/proc/stat", "r");
-                if (file) {
-                    fscanf(file, "cpu %llu %llu %llu %llu", &lastTotalUser, &lastTotalUserLow, &lastTotalSys, &lastTotalIdle);
-                    fclose(file);
-                }
-
-                file = NULL;
-                struct tms timeSample;
-                char line[128];
-
-                lastCPU = times(&timeSample);
-                lastSysCPU = timeSample.tms_stime;
-                lastUserCPU = timeSample.tms_utime;
-                if (file) {
-                    file = fopen("/proc/cpuinfo", "r");
-                    numProcessors = 0;
-                    while (fgets(line, 128, file) != NULL) {
-                        if (strncmp(line, "processor", 9) == 0)
-                            numProcessors++;
-                    }
-                    fclose(file);
-                }
-            }
-            ~CPUMemMonitor() {}
-            CPUUse getCPUUsage()
-            {
-                CPUUse c;
-                double percent;
-                unsigned long long totalUser, totalUserLow, totalSys, totalIdle, total;
-
-                FILE * file = fopen("/proc/stat", "r");
-                if (file) {
-                    fscanf(file, "cpu %llu %llu %llu %llu", &totalUser, &totalUserLow, &totalSys, &totalIdle);
-                    fclose(file);
-                }
-
-                if (totalUser < lastTotalUser || totalUserLow < lastTotalUserLow || totalSys < lastTotalSys || totalIdle < lastTotalIdle) {
-                    // Overflow detection. Just skip this value.
-                    percent = -1.0;
-                }
-                else {
-                    total = (totalUser - lastTotalUser) + (totalUserLow - lastTotalUserLow) + (totalSys - lastTotalSys);
-                    percent = total;
-                    total += (totalIdle - lastTotalIdle);
-                    percent /= total;
-                    percent *= 100.0;
-                }
-
-                lastTotalUser = totalUser;
-                lastTotalUserLow = totalUserLow;
-                lastTotalSys = totalSys;
-                lastTotalIdle = totalIdle;
-                c.TotalUse = percent;
-
-                struct tms timeSample;
-                clock_t now;
-                percent = 0.0;
-                now = times(&timeSample);
-                if (now <= lastCPU || timeSample.tms_stime < lastSysCPU || timeSample.tms_utime < lastUserCPU) {
-                    // Overflow detection. Just skip this value.
-                    percent = -1.0;
-                }
-                else {
-                    percent = (timeSample.tms_stime - lastSysCPU) + (timeSample.tms_utime - lastUserCPU);
-                    percent /= (now - lastCPU);
-                    percent /= numProcessors;
-                    percent *= 100.0;
-                }
-                lastCPU = now;
-                lastSysCPU = timeSample.tms_stime;
-                lastUserCPU = timeSample.tms_utime;
-                c.ProcessUse = percent;
-                return c;
-            }
-            MemoryUse getMemoryUsage()
-            {
-
-                struct sysinfo memInfo;
-                sysinfo(&memInfo);
-
-                long long int totalPhysMem = memInfo.totalram;
-                // Multiply in next statement to avoid int overflow on right hand side...
-                totalPhysMem *= memInfo.mem_unit;
-
-                long long int physMemUsed = memInfo.totalram - memInfo.freeram;
-                // Multiply in next statement to avoid int overflow on right hand side...
-                physMemUsed *= memInfo.mem_unit;
-                MemoryUse m;
-                m.PhysicalTotalUsed = physMemUsed;
-                m.PhysicalTotalAvailable = totalPhysMem;
-                m.PhysicalProcessUsed = 0;
-
-                long long int totalVirtualMem = memInfo.totalram;
-                // Add other values in next statement to avoid int overflow on right hand side...
-                totalVirtualMem += memInfo.totalswap;
-                totalVirtualMem *= memInfo.mem_unit;
-
-                long long int virtualMemUsed = memInfo.totalram - memInfo.freeram;
-                // Add other values in next statement to avoid int overflow on right hand side...
-                virtualMemUsed += memInfo.totalswap - memInfo.freeswap;
-                virtualMemUsed *= memInfo.mem_unit;
-
-                m.VirtualTotalAvailable = totalVirtualMem;
-                m.VirtualTotalUsed = virtualMemUsed;
-                m.VirtualProcessUsed = 0;
-                getprocessmemory(m);
-                return m;
-            }
-        };
+		double idleTicks = cpuinfo.cpu_ticks[CPU_STATE_IDLE];
+		double cpuUsage = 1.0 - (idleTicks / totalTicks);
+		return cpuUsage;
 #else
-#error "Unknown Operating System!"
+		DBG("Platform not supported");
+		return -1.0;
 #endif
-    } // namespace NET
-} // namespace SL
+	}
+
+	static double getSystemMemoryUsageRatio()
+	{
+#if JUCE_WINDOWS
+		MEMORYSTATUSEX memInfo;
+		memInfo.dwLength = sizeof(MEMORYSTATUSEX);
+		GlobalMemoryStatusEx(&memInfo);
+		double usedMemory = static_cast<double>(memInfo.ullTotalPhys - memInfo.ullAvailPhys);
+		double totalMemory = static_cast<double>(memInfo.ullTotalPhys);
+		return usedMemory / totalMemory;
+#elif JUCE_LINUX
+		std::ifstream memInfo("/proc/meminfo");
+		std::string line;
+		long totalMem = 0, freeMem = 0, bufferMem = 0, cacheMem = 0;
+		while (std::getline(memInfo, line)) {
+			std::istringstream iss(line);
+			std::string label;
+			long value;
+			iss >> label >> value;
+
+			if (label == "MemTotal:") {
+				totalMem = value;
+			}
+			else if (label == "MemFree:") {
+				freeMem = value;
+			}
+			else if (label == "Buffers:") {
+				bufferMem = value;
+			}
+			else if (label == "Cached:") {
+				cacheMem = value;
+			}
+		}
+
+		long usedMem = totalMem - freeMem - bufferMem - cacheMem;
+		return static_cast<double>(usedMem) / static_cast<double>(totalMem);
+
+#elif JUCE_MAC
+		int mib[2];
+		int64_t totalMemory, freeMemory;
+		size_t length = sizeof(int64_t);
+		mib[0] = CTL_HW;
+		mib[1] = HW_MEMSIZE;
+		sysctl(mib, 2, &totalMemory, &length);
+
+		vm_size_t page_size;
+		mach_port_t mach_port;
+		mach_msg_type_number_t count;
+		vm_statistics64_data_t vm_stats;
+		mach_port = mach_host_self();
+		count = sizeof(vm_stats) / sizeof(natural_t);
+		host_page_size(mach_port, &page_size);
+		if (host_statistics64(mach_port, HOST_VM_INFO64, (host_info64_t)&vm_stats, &count) != KERN_SUCCESS) {
+			DBG("Failed to get memory info");
+			return -1.0; // Return -1 to indicate failure
+		}
+
+		int64_t usedMemory = (int64_t)vm_stats.active_count + (int64_t)vm_stats.inactive_count +
+			(int64_t)vm_stats.wire_count;
+		usedMemory *= (int64_t)page_size;
+		return static_cast<double>(usedMemory) / static_cast<double>(totalMemory);
+#endif
+		}
+	};
