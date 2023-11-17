@@ -15,9 +15,20 @@
 #define PING_SUPPORT 1
 #endif
 
-#if PING_SUPPORT
+#ifndef OS_SYSINFO_SUPPORT
+#define OS_SYSINFO_SUPPORT 1
+#endif
+
+#if OS_SYSINFO_SUPPORT
 #if JUCE_WINDOWS
 #include <TlHelp32.h>
+#endif
+#endif // OS_SYSINFO_SUPPORT
+
+
+
+#if PING_SUPPORT
+#if JUCE_WINDOWS
 #include <winsock2.h>
 #include <ws2tcpip.h>
 #include <icmpapi.h>
@@ -32,8 +43,8 @@
 #include <sys/types.h>
 #include <netdb.h>
 #define CLOSESOCKET close
-#endif
-#endif
+#endif 
+#endif // PING_SUPPORT
 
 float OSModule::timeAtProcessStart = Time::getMillisecondCounter() / 1000.0f;
 
@@ -401,6 +412,9 @@ bool OSModule::isProcessRunning(const String& processName)
 StringArray OSModule::getRunningProcesses()
 {
 	StringArray result;
+
+#if OS_SYSINFO_SUPPORT
+
 #if JUCE_WINDOWS
 	HANDLE hProcessSnap;
 	PROCESSENTRY32 pe32;
@@ -420,6 +434,8 @@ StringArray OSModule::getRunningProcesses()
 	CloseHandle(hProcessSnap);
 #elif JUCE_MAC
 #elif JUCE_LINUX
+#endif
+
 #endif
 
 	return result;
