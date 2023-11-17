@@ -110,7 +110,7 @@ void Action::setHasOffConsequences(bool value)
 	{
 		if (csmOff == nullptr)
 		{
-			removeControllable(triggerOff);
+			if(triggerOff != nullptr) removeControllable(triggerOff);
 			triggerOff = nullptr;
 			csmOff.reset(new ConsequenceManager("Consequences : FALSE", multiplex));
 			addChildControllableContainer(csmOff.get());

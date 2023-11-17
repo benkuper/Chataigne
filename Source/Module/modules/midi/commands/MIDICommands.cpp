@@ -101,7 +101,7 @@ void MIDINoteAndCCCommand::updateNoteParams()
 		}
 		octave = new IntParameter("Octave", "Octave for the note", 0, -10, 10);
 
-		removeControllable(number);
+		if(number != nullptr) removeControllable(number);
 		number = nullptr;
 
 		addParameter(noteEnum, controllables.indexOf(channel) + 1);
