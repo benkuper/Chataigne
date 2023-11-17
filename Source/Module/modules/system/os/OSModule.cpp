@@ -42,6 +42,9 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <netdb.h>
+#if JUCE_MAC
+#define iphdr ip
+#endif
 #define CLOSESOCKET close
 #endif 
 #endif // PING_SUPPORT
