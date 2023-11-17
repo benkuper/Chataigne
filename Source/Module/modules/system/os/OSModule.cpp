@@ -26,7 +26,6 @@
 #endif // OS_SYSINFO_SUPPORT
 
 
-
 #if PING_SUPPORT
 #if JUCE_WINDOWS
 #include <winsock2.h>
@@ -43,7 +42,32 @@
 #include <sys/types.h>
 #include <netdb.h>
 #if JUCE_MAC
-#define iphdr ip
+// If the OS doesn't declare it, do it ourself (copy-pasted from GNU C Library, license: LGPL)
+#include <stdint.h>
+struct icmphdr
+{
+	uint8_t type;           /* message type */
+	uint8_t code;           /* type sub-code */
+	uint16_t checksum;
+	union
+	{
+		struct
+		{
+			uint16_t        id;
+			uint16_t        sequence;
+		} echo;                 /* echo datagram */
+		uint32_t        gateway;        /* gateway address */
+		struct
+		{
+			uint16_t        unused;
+			uint16_t        mtu;
+		} frag;                 /* path mtu discovery */
+		/*uint8_t reserved[4];*/
+	} un;
+};
+
+// Fix slightly changed names
+#define SOL_IP IPPROTO_IP
 #endif
 #define CLOSESOCKET close
 #endif 
