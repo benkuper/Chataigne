@@ -1828,7 +1828,7 @@
         <MODULEPATH id="juce_serial" path="Modules"/>
       </MODULEPATHS>
     </VS2022>
-    <VS2022 targetFolder="Builds/VisualStudio2022_Win7CI" extraDefs="USE_KINECT=0&#10;USE_ABLETONLINK=0&#10;BLE_SUPPORT=0"
+    <VS2022 targetFolder="Builds/VisualStudio2022_Win7CI" extraDefs="USE_KINECT=0&#10;USE_ABLETONLINK=0&#10;BLE_SUPPORT=0&#10;PING_SUPPORT=0"
             extraCompilerFlags="/Zm1000 /bigobj" extraLinkerFlags="/HEAP:0x400000,0x10000"
             externalLibraries="hid.lib&#10;JoyShockLibrary.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib&#10;iphlpapi.lib&#10;hid.lib&#10;hidapi_static.lib&#10;mosquitto.lib&#10;mosquittopp.lib"
             smallIcon="nVz6Li" bigIcon="nVz6Li">

@@ -11,6 +11,11 @@
 #include "Module/ModuleIncludes.h"
 #include "lib/cpumem_monitor.h"
 
+#ifndef PING_SUPPORT
+#define PING_SUPPORT 1
+#endif
+
+#if PING_SUPPORT
 #if JUCE_WINDOWS
 #include <TlHelp32.h>
 #include <winsock2.h>
@@ -27,6 +32,7 @@
 #include <sys/types.h>
 #include <netdb.h>
 #define CLOSESOCKET close
+#endif
 #endif
 
 float OSModule::timeAtProcessStart = Time::getMillisecondCounter() / 1000.0f;
@@ -473,6 +479,7 @@ void OSModule::afterLoadJSONDataInternal()
 
 void OSModule::PingThread::run()
 {
+#if PING_SUPPORT
 	while (!threadShouldExit() && !moduleRef.wasObjectDeleted())
 	{
 		wait(osModule->pingInterval->intValue() * 1000);
@@ -505,10 +512,12 @@ void OSModule::PingThread::run()
 	}
 
 	if (!moduleRef.wasObjectDeleted() && osModule->logOutgoingData->boolValue()) LOG("Stop pinging thread");
+#endif
 }
 
 bool OSModule::PingThread::icmpPing(const String& host)
 {
+#if PING_SUPPORT
 	int timeout_ms = osModule->pingTimeout->floatValue() * 1000;
 
 #if JUCE_WINDOWS
@@ -547,7 +556,7 @@ bool OSModule::PingThread::icmpPing(const String& host)
 
 	return success;
 
-#else // UNIX
+#elif JUCE_LINUX // UNIX
 	int sock = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP);
 	if (sock < 0) {
 		DBG("Socket creation error");
@@ -605,7 +614,71 @@ bool OSModule::PingThread::icmpPing(const String& host)
 
 	close(sock);
 	return true; // Placeholder for successful ping
-#endif
+
+#elif JUCE_MAC
+
+	int sock = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP);
+	if (sock < 0) {
+		DBG("Socket creation error");
+		return false;
+	}
+
+	struct timeval tv;
+	tv.tv_sec = timeout_ms / 1000;
+	tv.tv_usec = (timeout_ms % 1000) * 1000;
+	setsockopt(sock, SOL_SOCKET, SO_RCVTIMEO, reinterpret_cast<const char*>(&tv), sizeof(tv));
+
+	char packet[1024];
+	memset(packet, 0, sizeof(packet));
+
+	struct icmphdr* icmp = reinterpret_cast<struct icmphdr*>(packet);
+	icmp->type = ICMP_ECHO;
+	icmp->code = 0;
+	icmp->checksum = 0;
+	icmp->un.echo.id = getpid();
+	icmp->un.echo.sequence = 0;
+	icmp->checksum = 0; // Calculate checksum
+
+	struct sockaddr_in dest_addr;
+	memset(&dest_addr, 0, sizeof(dest_addr));
+	dest_addr.sin_family = AF_INET;
+	dest_addr.sin_addr.s_addr = inet_addr(host.toStdString().c_str());
+
+	int bytes_sent = sendto(sock, packet, sizeof(packet), 0, reinterpret_cast<struct sockaddr*>(&dest_addr), sizeof(dest_addr));
+	if (bytes_sent == -1 || bytes_sent != sizeof(packet)) {
+		DBG("Error sending ICMP packet");
+		close(sock);
+		return false;
+	}
+
+	// Receive ICMP reply
+	struct sockaddr_in from;
+	socklen_t fromlen = sizeof(from);
+	int bytes_received = recvfrom(sock, packet, sizeof(packet), 0, reinterpret_cast<struct sockaddr*>(&from), &fromlen);
+
+	if (bytes_received > 0) {
+		DBG("Received ICMP reply");
+		// Process the ICMP reply if needed
+	}
+	else if (bytes_received == 0) {
+		DBG("No data received");
+	}
+	else {
+		if (errno == EAGAIN || errno == EWOULDBLOCK) {
+			DBG("Timeout reached");
+		}
+		else {
+			DBG("Receive error: " << strerror(errno));
+		}
+	}
+
+	close(sock);
+	return true; // Placeholder for successful ping
+#endif //PLATFORM
+
+#else// PING_SUPPORT
+	return false;
+#endif // PING_SUPPORT
 }
 
 void OSModule::OSThread::run()
@@ -617,7 +690,7 @@ void OSModule::OSThread::run()
 
 
 		float usage = OSSystemInfo::getSystemCPUUsage();
-		if(usage > 0) osModule->osCPUUsage->setValue(usage);
+		if (usage > 0) osModule->osCPUUsage->setValue(usage);
 		osModule->osMemoryUsage->setValue(OSSystemInfo::getSystemMemoryUsageRatio());
 		//osMemoryProcessUsage->setValue(maxMemProcess / memoryUsage[0].PhysicalTotalAvailable);
 
