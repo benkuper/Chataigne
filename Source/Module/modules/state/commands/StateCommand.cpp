@@ -179,20 +179,22 @@ void StateCommand::triggerInternal(int multiplexIndex)
 
 void StateCommand::loadJSONDataInternal(var data)
 {
-	if (Engine::mainEngine->isLoadingFile)
-	{
-		Engine::mainEngine->addEngineListener(this);
-		dataToLoad = data;
-	}
-	else BaseCommand::loadJSONDataInternal(data);
+	BaseCommand::loadJSONDataInternal(data);
+
+	//if (Engine::mainEngine->isLoadingFile)
+	//{
+	//	Engine::mainEngine->addEngineListener(this);
+	//	dataToLoad = data;
+	//}
+	//else BaseCommand::loadJSONDataInternal(data);
 }
 
 void StateCommand::endLoadFile()
 {
-	if (target != nullptr) target->setValue("", true);
+	//if (target != nullptr) target->setValue("", true);
 
-	loadJSONData(dataToLoad);
-	dataToLoad = var();
+	//loadJSONData(dataToLoad);
+	//dataToLoad = var();
 
-	Engine::mainEngine->removeEngineListener(this);
+	//Engine::mainEngine->removeEngineListener(this);
 }
