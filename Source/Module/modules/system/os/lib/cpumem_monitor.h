@@ -1,6 +1,11 @@
 #pragma once
 #include "JuceHeader.h"
 
+#ifndef OS_SYSINFO_SUPPORT
+#define OS_SYSINFO_SUPPORT 1
+#endif
+
+#if OS_SYSINFO_SUPPORT
 #if JUCE_WINDOWS
 #include <windows.h>
 #include <psapi.h>
@@ -10,14 +15,20 @@
 #include <fstream>
 #include <sstream>
 #elif JUCE_MAC
-#include <mach/mach.h>
-#include <unistd.h>
+#include <sys/types.h>
 #include <sys/sysctl.h>
+#include <sys/param.h>
+#include <sys/mount.h>
+#include <unistd.h>
+#include <mach/mach.h>
+#endif
 #endif
 
 class OSSystemInfo {
 public:
 	static double getSystemCPUUsage() {
+#if OS_SYSINFO_SUPPORT
+
 #if JUCE_WINDOWS
 		PDH_HQUERY query;
 		PDH_HCOUNTER counter;
@@ -75,10 +86,16 @@ public:
 		DBG("Platform not supported");
 		return -1.0;
 #endif
+
+#else // OS_SYSINFO_SUPPORT
+		DBG("OS_SYSINFO_SUPPORT not enabled");
+		return 0.0;
+#endif
 	}
 
 	static double getSystemMemoryUsageRatio()
 	{
+#if OS_SYSINFO_SUPPORT
 #if JUCE_WINDOWS
 		MEMORYSTATUSEX memInfo;
 		memInfo.dwLength = sizeof(MEMORYSTATUSEX);
@@ -138,5 +155,10 @@ public:
 		usedMemory *= (int64_t)page_size;
 		return static_cast<double>(usedMemory) / static_cast<double>(totalMemory);
 #endif
-		}
-	};
+
+#else 
+		DBG("OS_SYSINFO_SUPPORT not enabled");
+		return 0.0;
+#endif
+	}
+};
