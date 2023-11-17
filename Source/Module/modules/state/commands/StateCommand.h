@@ -13,8 +13,7 @@
 class StateModule;
 
 class StateCommand :
-	public BaseCommand,
-	public EngineListener
+	public BaseCommand
 {
 public:
 	StateCommand(StateModule* _module, CommandContext context, var params, Multiplex* multiplex = nullptr);
@@ -45,12 +44,6 @@ public:
 	Parameter* val;
 
 	void triggerInternal(int multiplexIndex) override;
-
-	//Delayed loading mechanism to ensure all content is created for right targeting
-	var dataToLoad;
-
-	void loadJSONDataInternal(var data) override;
-	void endLoadFile() override;
 
 	static BaseCommand* create(ControllableContainer* module, CommandContext context, var params, Multiplex* multiplex) { return new StateCommand((StateModule*)module, context, params, multiplex); }
 

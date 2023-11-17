@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "State/StateIncludes.h"
+
 StateCommand::StateCommand(StateModule* _module, CommandContext context, var params, Multiplex* multiplex) :
 	BaseCommand(_module, context, params, multiplex),
 	stateModule(_module),
@@ -175,26 +177,4 @@ void StateCommand::triggerInternal(int multiplexIndex)
 		}
 		break;
 	}
-}
-
-void StateCommand::loadJSONDataInternal(var data)
-{
-	BaseCommand::loadJSONDataInternal(data);
-
-	//if (Engine::mainEngine->isLoadingFile)
-	//{
-	//	Engine::mainEngine->addEngineListener(this);
-	//	dataToLoad = data;
-	//}
-	//else BaseCommand::loadJSONDataInternal(data);
-}
-
-void StateCommand::endLoadFile()
-{
-	//if (target != nullptr) target->setValue("", true);
-
-	//loadJSONData(dataToLoad);
-	//dataToLoad = var();
-
-	//Engine::mainEngine->removeEngineListener(this);
 }
