@@ -8,7 +8,7 @@
   ==============================================================================
 */
 
-#include "State/StateIncludes.h"
+#include "StateMachine/StateIncludes.h"
 
 StateCommand::StateCommand(StateModule* _module, CommandContext context, var params, Multiplex* multiplex) :
 	BaseCommand(_module, context, params, multiplex),
