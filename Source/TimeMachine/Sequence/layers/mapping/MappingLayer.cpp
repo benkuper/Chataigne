@@ -9,6 +9,8 @@
   ==============================================================================
 */
 
+#include "TimeMachine/TimeMachineIncludes.h"
+#include "Common/Processor/ProcessorIncludes.h"
 
 MappingLayer::MappingLayer(const String &name, Sequence *_sequence, var params) :
 	SequenceLayer(_sequence, name),
@@ -24,6 +26,7 @@ MappingLayer::MappingLayer(const String &name, Sequence *_sequence, var params) 
 	mapping->editorIsCollapsed = false;
 	mapping->editorCanBeCollapsed = false;
 	mapping->hideEditorHeader = true;
+	mapping->setHasCustomColor(false);
 
 	alwaysUpdate = addBoolParameter("Always Update", "If checked, the mapping will be processed and output will be sent at each time change of the sequence", false);
 	sendOnPlay = addBoolParameter("Send On Play", " If checked, this will force the value to go through the mapping when sequence starts playing", true);
@@ -110,7 +113,10 @@ void MappingLayer::exportBakedValues(bool dataOnly)
 void MappingLayer::onContainerParameterChangedInternal(Parameter * p)
 {
 	SequenceLayer::onContainerParameterChangedInternal(p);
-	if (p == alwaysUpdate)
+	if (p == enabled)
+	{
+		mapping->setForceDisabled(!enabled->boolValue());
+	}else if (p == alwaysUpdate)
 	{
 		mapping->setProcessMode(alwaysUpdate->boolValue() ? Mapping::MANUAL : Mapping::VALUE_CHANGE);
 	}
