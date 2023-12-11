@@ -47,6 +47,7 @@ MIDIModule::MIDIModule(const String& name, bool _useGenericControls) :
 
 	useHierarchy = moduleParams.addBoolParameter("Use Hierarchy", "If checked, incoming messages will be sorted in nested containers instead of 1-level", false);
 	autoFeedback = moduleParams.addBoolParameter("Auto Feedback", "If checked, all changed values will be resent automatically to the outputs", false);
+	outputFeedback = moduleParams.addBoolParameter("Output Feedback", "If Checked, values sent as output will be set as the current value in the module", false);
 
 	octaveShift = moduleParams.addIntParameter("Octave Shift", "This allows to adjust to other software's conventions when converting Pitch to Note name. Because MIDI sucks.", 0, -5, 5);
 
@@ -129,6 +130,14 @@ void MIDIModule::sendNoteOn(int channel, int pitch, int velocity)
 	if (logOutgoingData->boolValue()) NLOG(niceName, "Send Note on, channel : " << channel << ", note : " << MIDIManager::getNoteName(pitch) << " (pitch : " << String(pitch) + "), velocity : " << velocity);
 	outActivityTrigger->trigger();
 	outputDevice->sendNoteOn(channel, pitch, velocity);
+
+	
+	if (outputFeedback)
+	{
+		noteOns.addIfNotAlreadyThere(channel * 128 + pitch); //Needed? Unsure
+		String noteName = usePitchForNoteNames->boolValue() ? "Pitch " + String(pitch) : MIDIManager::getNoteName(pitch, true, octaveShift->intValue());
+		updateValue(channel, noteName, velocity, MIDIValueParameter::NOTE_ON, pitch);
+	}
 }
 
 void MIDIModule::sendNoteOff(int channel, int pitch)
@@ -145,6 +154,14 @@ void MIDIModule::sendNoteOff(int channel, int pitch)
 	if (logOutgoingData->boolValue()) NLOG(niceName, "Send Note off, channel : " << channel << ", note : " << MIDIManager::getNoteName(pitch) << " (pitch : " << String(pitch) + ")");
 	outActivityTrigger->trigger();
 	outputDevice->sendNoteOff(channel, pitch);
+
+	if (outputFeedback) 
+	{
+		noteOns.removeAllInstancesOf(channel * 128 + pitch);//Needed? Unsure
+		if (noteOns.isEmpty()) oneNoteOn->setValue(false); //Needed? Unsure
+		String noteName = usePitchForNoteNames->boolValue() ? "Pitch " + String(pitch) : MIDIManager::getNoteName(pitch, true, octaveShift->intValue());
+		updateValue(channel, noteName, 0, MIDIValueParameter::NOTE_OFF, pitch); //how should velocity be handled? Currently hard set to 0
+	}
 }
 
 void MIDIModule::sendControlChange(int channel, int number, int value)
@@ -154,6 +171,7 @@ void MIDIModule::sendControlChange(int channel, int number, int value)
 	if (logOutgoingData->boolValue()) NLOG(niceName, "Send Control Change, channel : " << channel << ", number : " << number << ", value " << value);
 	outActivityTrigger->trigger();
 	outputDevice->sendControlChange(channel, number, value);
+	if (outputFeedback) updateValue(channel, "CC" + String(number), value, MIDIValueParameter::CONTROL_CHANGE, number);
 }
 
 void MIDIModule::sendProgramChange(int channel, int program)
@@ -163,6 +181,7 @@ void MIDIModule::sendProgramChange(int channel, int program)
 	if (logOutgoingData->boolValue()) NLOG(niceName, "Send ProgramChange, channel : " << channel << ", program : " << program);
 	outActivityTrigger->trigger();
 	outputDevice->sendProgramChange(channel, program);
+	if (outputFeedback) updateValue(channel, "ProgramChange", program, MIDIValueParameter::PROGRAM_CHANGE, 0);
 }
 
 void MIDIModule::sendSysex(Array<uint8> data)
@@ -185,6 +204,7 @@ void MIDIModule::sendPitchWheel(int channel, int value)
 	if (outputDevice == nullptr) return;
 	if (logOutgoingData->boolValue()) NLOG(niceName, "Send PitchWheel channel : " << channel << ", value : " << value);
 	outputDevice->sendPitchWheel(channel, value);
+	if (outputFeedback) updateValue(channel, "PitchWheel", value, MIDIValueParameter::PITCH_WHEEL, 0);
 }
 
 void MIDIModule::sendChannelPressure(int channel, int value)
@@ -193,6 +213,7 @@ void MIDIModule::sendChannelPressure(int channel, int value)
 	if (outputDevice == nullptr) return;
 	if (logOutgoingData->boolValue()) NLOG(niceName, "Send Channel Pressure channel : " << channel << ", value : " << value);
 	outputDevice->sendChannelPressure(channel, value);
+	if (outputFeedback) updateValue(channel, "ChannelPressure", value, MIDIValueParameter::CHANNEL_PRESSURE, 0);
 }
 
 void MIDIModule::sendAfterTouch(int channel, int note, int value)
@@ -201,6 +222,7 @@ void MIDIModule::sendAfterTouch(int channel, int note, int value)
 	if (outputDevice == nullptr) return;
 	if (logOutgoingData->boolValue()) NLOG(niceName, "Send After touch channel : " << channel << ", note : " << note << ", value : " << value);
 	outputDevice->sendAfterTouch(channel, note, value);
+	if (outputFeedback) updateValue(channel, "AfterTouch " + (usePitchForNoteNames->boolValue() ? "Pitch " + String(note) : MIDIManager::getNoteName(note)), value, MIDIValueParameter::AFTER_TOUCH, note);
 }
 
 void MIDIModule::sendFullFrameTimecode(int hours, int minutes, int seconds, int frames, MidiMessage::SmpteTimecodeType timecodeType)

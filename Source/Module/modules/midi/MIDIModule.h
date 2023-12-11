@@ -72,6 +72,7 @@ public:
 	BoolParameter* autoAdd;
 	BoolParameter* autoFeedback;
 	BoolParameter* useHierarchy;
+	BoolParameter* outputFeedback;
 	IntParameter* octaveShift;
 	BoolParameter* usePitchForNoteNames;
 
