@@ -30,6 +30,8 @@ public:
 
 	std::unique_ptr<SequenceModule> module;
 
+	void createSequenceFromAudioFile(File f) override;
+
 	static void showMenuAndGetSequenceStatic(ControllableContainer* startFromCC, std::function<void(Sequence*)> returnFunc);
 	static void showMenuAndGetLayerStatic(ControllableContainer* startFromCC, std::function<void(SequenceLayer*)> returnFunc);
 	static void showMenuAndGetCueStatic(ControllableContainer* startFromCC, std::function<void(TimeCue*)> returnFunc);
