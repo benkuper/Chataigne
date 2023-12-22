@@ -386,8 +386,10 @@ void Mapping::inputReferenceChanged(MappingInput*)
 	updateMappingChain();
 }
 
-void Mapping::inputParameterValueChanged(MappingInput*, int multiplexIndex)
+void Mapping::inputParameterValueChanged(MappingInput* mi, int multiplexIndex)
 {
+	if (!mi->triggersProcess->boolValue()) return;
+
 	if (processMode == VALUE_CHANGE && !isThreadRunning())
 	{
 		process(true, multiplexIndex);

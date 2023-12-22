@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.17"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.18b1"
               bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
               companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
               companyEmail="benjamin@kuperberg.fr" defines="VST_LOGGING=0"
@@ -9,6 +9,7 @@
               projectLineFeed="&#10;" jucerFormatVersion="1">
   <MAINGROUP id="EDDVhd" name="Chataigne">
     <GROUP id="{E61F6705-4C4B-3F04-F742-20CC91F590E4}" name="Resources">
+      <FILE id="J10iXd" name="process.png" compile="0" resource="1" file="Resources/process.png"/>
       <FILE id="r0e3yz" name="keyframe_off.png" compile="0" resource="1"
             file="Resources/keyframe_off.png"/>
       <FILE id="n4WkHv" name="keyframe_on.png" compile="0" resource="1" file="Resources/keyframe_on.png"/>

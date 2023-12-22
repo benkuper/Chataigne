@@ -122,6 +122,7 @@
 		01FB0EC51EDF5579E6446D73 /* Action.cpp */ /* Action.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Action.cpp; path = ../../Source/Common/Processor/Action/Action.cpp; sourceTree = SOURCE_ROOT; };
 		021E427BFA3E8B6BC6AC3D5A /* TCPClientModule.cpp */ /* TCPClientModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TCPClientModule.cpp; path = ../../Source/Module/modules/tcp/tcpclient/TCPClientModule.cpp; sourceTree = SOURCE_ROOT; };
 		02719A9820DD6EE1547FA8FE /* ZeroconfManager.h */ /* ZeroconfManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZeroconfManager.h; path = ../../Source/Common/Zeroconf/ZeroconfManager.h; sourceTree = SOURCE_ROOT; };
+		0330DBB20FDF9D9EBD0F983A /* process.png */ /* process.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = process.png; path = ../../Resources/process.png; sourceTree = SOURCE_ROOT; };
 		03AB9E7E2EEBA80B4F45E924 /* CustomValuesCommandArgumentManager.cpp */ /* CustomValuesCommandArgumentManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CustomValuesCommandArgumentManager.cpp; path = ../../Source/Common/Command/CustomValues/CustomValuesCommandArgumentManager.cpp; sourceTree = SOURCE_ROOT; };
 		03B34F65CD67AA62113F23C3 /* include_juce_organicui2.cpp */ /* include_juce_organicui2.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_juce_organicui2.cpp; path = ../../JuceLibraryCode/include_juce_organicui2.cpp; sourceTree = SOURCE_ROOT; };
 		03BEA098E001E6F85A88913C /* StreamDeckCommand.h */ /* StreamDeckCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StreamDeckCommand.h; path = ../../Source/Module/modules/controller/streamdeck/commands/StreamDeckCommand.h; sourceTree = SOURCE_ROOT; };
@@ -2875,6 +2876,7 @@
 		C220F6DC306F1E9F6178C370 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				0330DBB20FDF9D9EBD0F983A,
 				3817618A6541867A57699C53,
 				1801A84E852A7D8B922A5D78,
 				B304D7517FFA94986E5C1C15,
@@ -3815,8 +3817,8 @@
 					"USE_ABLETONLINK=1",
 					"LINK_PLATFORM_MACOSX=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.9.17",
-					"JUCE_APP_VERSION_HEX=0x10911",
+					"JUCE_APP_VERSION=1.9.18b1",
+					"JUCE_APP_VERSION_HEX=0x10912",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
 					"JucePlugin_Build_AU=0",
@@ -3896,8 +3898,8 @@
 					"USE_ABLETONLINK=1",
 					"LINK_PLATFORM_MACOSX=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.9.17",
-					"JUCE_APP_VERSION_HEX=0x10911",
+					"JUCE_APP_VERSION=1.9.18b1",
+					"JUCE_APP_VERSION_HEX=0x10912",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
 					"JucePlugin_Build_AU=0",
@@ -4027,8 +4029,8 @@
 					"USE_ABLETONLINK=1",
 					"LINK_PLATFORM_MACOSX=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.9.17",
-					"JUCE_APP_VERSION_HEX=0x10911",
+					"JUCE_APP_VERSION=1.9.18b1",
+					"JUCE_APP_VERSION_HEX=0x10912",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
 					"JucePlugin_Build_AU=0",
@@ -4108,8 +4110,8 @@
 					"USE_ABLETONLINK=1",
 					"LINK_PLATFORM_MACOSX=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.9.17",
-					"JUCE_APP_VERSION_HEX=0x10911",
+					"JUCE_APP_VERSION=1.9.18b1",
+					"JUCE_APP_VERSION_HEX=0x10912",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
 					"JucePlugin_Build_AU=0",
