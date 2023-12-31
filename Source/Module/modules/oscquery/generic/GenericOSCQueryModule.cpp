@@ -578,7 +578,7 @@ void GenericOSCQueryModule::requestStructure()
 
 	std::unique_ptr<InputStream> stream(url.createInputStream(
 		URL::InputStreamOptions(URL::ParameterHandling::inAddress)
-		.withConnectionTimeoutMs(2000)
+		.withConnectionTimeoutMs(15000)
 		.withResponseHeaders(&responseHeaders)
 		.withStatusCode(&statusCode)
 	));
