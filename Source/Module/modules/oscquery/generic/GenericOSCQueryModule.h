@@ -87,6 +87,7 @@ public:
 	void connectionError(const String& errorMessage) override;
 
 	void dataReceived(const MemoryBlock& data) override;
+	void processOSCMessage(const OSCMessage& m);
 	void messageReceived(const String& message) override;
 
 	var getJSONData() override;
