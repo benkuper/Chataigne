@@ -274,6 +274,10 @@
  //#define JUCE_DISABLE_COREGRAPHICS_FONT_SMOOTHING 0
 #endif
 
+#ifndef    JUCE_FLOAT_COLOURS
+ #define   JUCE_FLOAT_COLOURS 1
+#endif
+
 //==============================================================================
 // juce_gui_basics flags:
 
