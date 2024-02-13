@@ -151,6 +151,7 @@ public:
 	void sendMidiMachineControlGoto(int hours, int minutes, int seconds, int frames);
 
 	void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
+	virtual void onContainerParameterChangedInternal(Parameter* p) override;
 	void updateMIDIDevices();
 
 	virtual void noteOnReceived(const int& channel, const int& pitch, const int& velocity) override;

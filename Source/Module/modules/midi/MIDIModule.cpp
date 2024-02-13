@@ -297,11 +297,23 @@ void MIDIModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc,
 	}
 }
 
+void MIDIModule::onContainerParameterChangedInternal(Parameter* p)
+{
+	Module::onContainerParameterChangedInternal(p);
+	if (p == enabled){
+		updateMIDIDevices();
+	}
+}
+
 void MIDIModule::updateMIDIDevices()
 {
-	MIDIInputDevice* newInput = midiParam->inputDevice;
-	//if (inputDevice != newInput)
-	//{
+	MIDIInputDevice* newInput = nullptr;
+	MIDIOutputDevice* newOutput = nullptr;
+	if (enabled->boolValue()){
+		newInput = midiParam->inputDevice;
+		newOutput = midiParam->outputDevice;
+	}
+
 	if (inputDevice != nullptr)
 	{
 		inputDevice->removeMIDIInputListener(this);
@@ -317,11 +329,7 @@ void MIDIModule::updateMIDIDevices()
 		mtcReceiver->addMTCListener(this);
 		noteOns.clear();
 	}
-	//}
 
-	MIDIOutputDevice* newOutput = midiParam->outputDevice;
-	//if (outputDevice != newOutput)
-	//{
 	if (outputDevice != nullptr)
 	{
 		if (sendClock->boolValue()) outClock.setOutDevice(nullptr);

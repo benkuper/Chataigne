@@ -64,5 +64,10 @@ public:
 		return MidiMessage::getMidiNoteName(pitch, true, includeOctave, 3 - octaveShift);
 	}
 
+	MidiDeviceListConnection connection = MidiDeviceListConnection::make ([this]
+    {
+        checkDevices();
+    });
+
 	JUCE_DECLARE_NON_COPYABLE(MIDIManager)
 };
