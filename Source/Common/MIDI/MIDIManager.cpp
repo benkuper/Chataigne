@@ -179,8 +179,3 @@ MIDIOutputDevice* MIDIManager::getOutputDeviceWithName(const String& name)
 	for (auto& d : outputs) if (d->name == name) return d;
 	return nullptr;
 }
-
-void MIDIManager::timerCallback()
-{
-	checkDevices();
-}
