@@ -132,7 +132,7 @@ void MIDIOutputDevice::close()
 	if (usageCount == 0)
 	{
 		device = nullptr;
-		LOG("MIDI In " << name << " closed");
+		LOG("MIDI Out " << name << " closed");
 	}
 }
 
