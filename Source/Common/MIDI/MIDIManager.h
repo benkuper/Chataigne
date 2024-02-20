@@ -10,8 +10,7 @@
 
 #pragma once
 
-class MIDIManager :
-	public Timer
+class MIDIManager
 {
 public:
 	juce_DeclareSingleton(MIDIManager, true)
@@ -55,14 +54,15 @@ public:
 	void removeMIDIManagerListener(Listener* listener) { listeners.remove(listener); }
 
 
-
-	// Inherited via Timer
-	virtual void timerCallback() override;
-
 	static String getNoteName(const int& pitch, bool includeOctave = true, int octaveShift = 0)
 	{
 		return MidiMessage::getMidiNoteName(pitch, true, includeOctave, 3 - octaveShift);
 	}
+
+	MidiDeviceListConnection connection = MidiDeviceListConnection::make ([this]
+	{
+        checkDevices();
+	});
 
 	JUCE_DECLARE_NON_COPYABLE(MIDIManager)
 };

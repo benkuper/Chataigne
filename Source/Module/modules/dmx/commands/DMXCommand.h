@@ -14,7 +14,8 @@ class DMXCommand :
 	public BaseCommand
 {
 public:
-	enum DMXAction { SET_VALUE, SET_RANGE, COLOR, SET_VALUE_16BIT, BLACK_OUT, SET_ALL, SET_CUSTOM };
+	enum DMXAction { SET_VALUE, SET_RANGE, COLOR, SET_VALUE_16BIT, BLACK_OUT, SET_ALL, SET_CUSTOM, COLOR_16BIT };
+	enum DMXColorType { RGB, RGBA, ARGB, RGB_MULTIPLIED };
 
 	DMXCommand(DMXModule * _module, CommandContext context, var params, Multiplex* multiplex = nullptr);
 	~DMXCommand();
@@ -30,6 +31,7 @@ public:
 	IntParameter * channel2;
 	IntParameter * value;
 	ColorParameter * colorParam;
+	EnumParameter * colorType;
 
 	int remapTarget;
 	BoolParameter * remap01To255;

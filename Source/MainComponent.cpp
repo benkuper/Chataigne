@@ -112,19 +112,28 @@ void MainContentComponent::parameterAddToContextMenu(ControllableUI* ui, PopupMe
 			layerMenu.addItem("Create new Mapping", [commandDef, sequence, ui]
 				{
 					Controllable* controllable = ui->controllable;
-					Mapping1DLayer* mappingLayer = Mapping1DLayer::create(sequence, {});
-					mappingLayer->setNiceName(controllable->niceName);
-					if (Parameter* parameter = dynamic_cast<Parameter*>(controllable))
+					MappingLayer* mappingLayer = nullptr;
+					if (controllable->type == Controllable::COLOR)
 					{
-						if (parameter->hasRange() && 
-							(dynamic_cast<FloatParameter*>(controllable) || dynamic_cast<IntParameter*>(controllable))
-							)
-						{
-							const Point<float> range{ parameter->minimumValue, parameter->maximumValue };
-							mappingLayer->automation->valueRange->setPoint(range);
-							mappingLayer->automation->viewValueRange->setPoint(range);
-						}
+						mappingLayer = ColorMappingLayer::create(sequence, {});
 					}
+					else
+					{
+						Mapping1DLayer * mapping1DLayer = Mapping1DLayer::create(sequence, {});
+						if (Parameter* parameter = dynamic_cast<Parameter*>(controllable))
+						{
+							if (parameter->hasRange() && 
+								(dynamic_cast<FloatParameter*>(controllable) || dynamic_cast<IntParameter*>(controllable))
+								)
+							{
+								const Point<float> range{ parameter->minimumValue, parameter->maximumValue };
+								mapping1DLayer->automation->valueRange->setPoint(range);
+								mapping1DLayer->automation->viewValueRange->setPoint(range);
+							}
+						}
+						mappingLayer = mapping1DLayer;
+					}
+					mappingLayer->setNiceName(controllable->niceName);
 					sequence->layerManager->addItem(mappingLayer);
 					addOutput(mappingLayer, commandDef, controllable);
 				});

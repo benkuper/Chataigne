@@ -1,20 +1,23 @@
 /*
   ==============================================================================
 
-    MappingInputUI.cpp
-    Created: 28 Oct 2016 8:11:42pm
-    Author:  bkupe
+	MappingInputUI.cpp
+	Created: 28 Oct 2016 8:11:42pm
+	Author:  bkupe
 
   ==============================================================================
 */
 
+#include "Common/Processor/ProcessorIncludes.h"
 
-MappingInputEditor::MappingInputEditor(MappingInput * _input, bool isRoot) :
-	BaseItemEditor(_input,isRoot),
+MappingInputEditor::MappingInputEditor(MappingInput* _input, bool isRoot) :
+	BaseItemEditor(_input, isRoot),
 	input(_input)
 {
 	input->addAsyncMappingInputListener(this);
 	updateSourceUI();
+	triggersProcessUI.reset(input->triggersProcess->createToggle(ImageCache::getFromMemory(BinaryData::process_png, BinaryData::process_pngSize)));
+	addAndMakeVisible(triggersProcessUI.get());
 }
 
 MappingInputEditor::~MappingInputEditor()
@@ -25,7 +28,7 @@ MappingInputEditor::~MappingInputEditor()
 void MappingInputEditor::updateSourceUI()
 {
 	if (sourceFeedbackUI != nullptr) removeChildComponent(sourceFeedbackUI.get());
-	if (Parameter * p = input->getInputAt(input->getPreviewIndex()))
+	if (Parameter* p = input->getInputAt(input->getPreviewIndex()))
 	{
 		sourceFeedbackUI.reset(p->createDefaultUI());
 		if (p->type == Parameter::POINT2D)
@@ -43,11 +46,12 @@ void MappingInputEditor::updateSourceUI()
 
 void MappingInputEditor::resizedInternalHeaderItemInternal(Rectangle<int>& r)
 {
-	if (sourceFeedbackUI != nullptr) sourceFeedbackUI->setBounds(r.removeFromRight(jlimit(100,300,r.getWidth())).reduced(2));
+	triggersProcessUI->setBounds(r.removeFromRight(r.getHeight()).reduced(2));
+	if (sourceFeedbackUI != nullptr) sourceFeedbackUI->setBounds(r.removeFromRight(jlimit(100, 300, r.getWidth())).reduced(2));
 	BaseItemEditor::resizedInternalHeaderItemInternal(r);
 }
 
-void MappingInputEditor::newMessage(const MappingInput::MappingInputEvent & e)
+void MappingInputEditor::newMessage(const MappingInput::MappingInputEvent& e)
 {
 	switch (e.type)
 	{
@@ -65,7 +69,7 @@ void MappingInputEditor::newMessage(const MappingInput::MappingInputEvent & e)
 }
 
 
-void MappingInputEditor::inputReferenceChangedAsync(MappingInput *)
+void MappingInputEditor::inputReferenceChangedAsync(MappingInput*)
 {
 	updateSourceUI();
 }

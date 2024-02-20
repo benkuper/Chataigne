@@ -8,6 +8,9 @@
 
 namespace BinaryData
 {
+    extern const char*   process_png;
+    const int            process_pngSize = 717;
+
     extern const char*   keyframe_off_png;
     const int            keyframe_off_pngSize = 2210;
 
@@ -234,7 +237,7 @@ namespace BinaryData
     const int            tray_icon_pngSize = 3363;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 75;
+    const int namedResourceListSize = 76;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

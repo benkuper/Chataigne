@@ -18,6 +18,7 @@ public:
 	MappingInput(const String& name = "Input", var params = var(), Multiplex* multiplex = nullptr);
 	virtual ~MappingInput();
 
+	BoolParameter* triggersProcess;
 	WeakReference<Parameter> inputReference;
 
 	virtual void clear() override;

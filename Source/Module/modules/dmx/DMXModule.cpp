@@ -32,6 +32,7 @@ DMXModule::DMXModule() :
 	defManager->add(CommandDefinition::createDef(this, "", "Set all", &DMXCommand::create)->addParam("action", DMXCommand::SET_ALL));
 	defManager->add(CommandDefinition::createDef(this, "", "Set custom values", &DMXCommand::create)->addParam("action", DMXCommand::SET_CUSTOM));
 	defManager->add(CommandDefinition::createDef(this, "", "Set Color", &DMXCommand::create)->addParam("action", DMXCommand::COLOR));
+	defManager->add(CommandDefinition::createDef(this, "", "Set Color 16bit", &DMXCommand::create)->addParam("action", DMXCommand::COLOR_16BIT));
 
 	dmxType = moduleParams.addEnumParameter("DMX Type", "Choose the type of dmx interface you want to connect");
 
@@ -189,7 +190,7 @@ void DMXModule::sendDMXRange(DMXUniverse* u, int startChannel, Array<uint8> valu
 
 	if (startChannel <= 0) return;
 
-	if (logOutgoingData->boolValue())NLOG(niceName, "Send DMX Range " << startChannel << " > " << startChannel + values.size() << " to " << u->toString());
+	if (logOutgoingData->boolValue())NLOG(niceName, "Send DMX Range " << startChannel << " > " << startChannel + values.size() - 1 << " to " << u->toString());
 
 	outActivityTrigger->trigger();
 
@@ -227,7 +228,7 @@ void DMXModule::send16BitDMXRange(DMXUniverse* u, int startChannel, Array<int> v
 
 	if (startChannel <= 0) return;
 
-	if (logOutgoingData->boolValue()) NLOG(niceName, "Send 16-bit DMX Range " << startChannel << " > " << startChannel + values.size() << " to " << u->toString());
+	if (logOutgoingData->boolValue()) NLOG(niceName, "Send 16-bit DMX Range " << startChannel << " > " << startChannel + values.size() - 1 << " to " << u->toString());
 	outActivityTrigger->trigger();
 
 	startChannel--; //rebase at 0

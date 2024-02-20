@@ -17,6 +17,13 @@ public:
 	MadMapperModule();
 	~MadMapperModule();
 
+	OSCReceiver receiver;
+	IntParameter* oscReceivePort;
+
+	void setupReceiver();
+
+	virtual void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
+	virtual void onControllableStateChanged(Controllable* c) override;
 
 	String getTypeString() const override { return "MadMapper";  }
 	static MadMapperModule * create() { return new MadMapperModule(); }

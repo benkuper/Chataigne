@@ -22,6 +22,7 @@ public:
 	MappingInput * input;
 
 	std::unique_ptr<ControllableUI> sourceFeedbackUI;
+	std::unique_ptr<BoolToggleUI> triggersProcessUI;
 
 	void updateSourceUI();
 	void resizedInternalHeaderItemInternal(Rectangle<int> &r) override;

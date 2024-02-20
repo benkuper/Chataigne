@@ -19,6 +19,7 @@ DMXCommand::DMXCommand(DMXModule* _module, CommandContext context, var params, M
 	channel2(nullptr),
 	value(nullptr),
 	colorParam(nullptr),
+	colorType(nullptr),
 	remapTarget(0),
 	remap01To255(nullptr)
 {
@@ -32,7 +33,7 @@ DMXCommand::DMXCommand(DMXModule* _module, CommandContext context, var params, M
 
 	if (dmxModule->outputUniverseManager.items.size() > 0) dmxUniverse->setValueFromTarget(dmxModule->outputUniverseManager.items[0]);
 
-	if (dmxAction == SET_VALUE_16BIT)
+	if (dmxAction == SET_VALUE_16BIT || dmxAction == COLOR_16BIT)
 	{
 		byteOrder = addEnumParameter("Byte Order", "Byte ordering, most devices use MSB");
 		byteOrder->addOption("MSB", DMXByteOrder::MSB)->addOption("LSB", DMXByteOrder::LSB);
@@ -57,7 +58,13 @@ DMXCommand::DMXCommand(DMXModule* _module, CommandContext context, var params, M
 		break;
 
 	case COLOR:
+	case COLOR_16BIT:
 		channel = addIntParameter("Start Channel", "DMX Channel", 1, 1, 512);
+
+		colorType = addEnumParameter("Type", "Choose color DMX channels order");
+		colorType->addOption("RGB", RGB)->addOption("RGBA", RGBA)->addOption("ARGB", ARGB) ->addOption("RGB multiplied with A", RGB_MULTIPLIED);
+		colorType->setValueWithKey("RGB");
+
 		colorParam = new ColorParameter("Color", "DMX Color");
 		addParameter(colorParam);
 		linkParamToMappingIndex(colorParam, 0);
@@ -176,11 +183,43 @@ void DMXCommand::triggerInternal(int multiplexIndex)
 
 
 	case COLOR:
+	case COLOR_16BIT:
 	{
 		var val = getLinkedValue(colorParam, multiplexIndex);
-		Array<uint8> values;
-		for (int i = 0; i < 3; ++i) values.add((uint8)(int)((float)val[i] * 255));
-		dmxModule->sendDMXRange(u, getLinkedValue(channel, multiplexIndex), values);
+		Array<float> floatValues;
+		DMXColorType type = colorType->getValueDataAsEnum<DMXColorType>();
+
+		switch (type)
+		{
+		case ARGB:
+			floatValues.add(val[3]);
+		case RGB:
+		case RGBA:
+		{
+			for (int i = 0; i < 3; ++i) floatValues.add(val[i]);
+			if(type == RGBA) floatValues.add(val[3]);
+		}
+		break;
+		case RGB_MULTIPLIED:
+		{
+			for (int i = 0; i < 3; ++i) floatValues.add((float)val[i] * (float)val[3]);
+		}
+		break;
+		default:
+			return;
+		}
+
+		if(dmxAction == COLOR){
+			Array<uint8> values;
+			for (int i = 0; i < floatValues.size(); ++i) values.add((uint8)(int)((float)floatValues[i] * 255));
+			dmxModule->sendDMXRange(u, getLinkedValue(channel, multiplexIndex), values);
+		}else{ // COLOR_16BIT
+			Array<int> values;
+			for (int i = 0; i < floatValues.size(); ++i) values.add((int)((float)floatValues[i] * 65535));
+			dmxModule->send16BitDMXRange(u, getLinkedValue(channel, multiplexIndex), values, byteOrder->getValueDataAsEnum<DMXByteOrder>());
+		}
+
+		
 	}
 	break;
 

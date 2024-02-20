@@ -9,6 +9,7 @@
 */
 
 #include "Module/ModuleIncludes.h"
+#include "GenericOSCQueryModule.h"
 
 GenericOSCQueryModule::GenericOSCQueryModule(const String& name, int defaultRemotePort) :
 	Module(name),
@@ -408,6 +409,11 @@ void GenericOSCQueryModule::dataReceived(const MemoryBlock& data)
 	OSCPacketParser parser(data.getData(), (int)data.getSize());
 	OSCMessage m = parser.readMessage();
 
+	processOSCMessage(m);
+}
+
+void GenericOSCQueryModule::processOSCMessage(const OSCMessage& m)
+{
 	if (logIncomingData->boolValue())
 	{
 		String s = m.getAddressPattern().toString();
@@ -578,7 +584,7 @@ void GenericOSCQueryModule::requestStructure()
 
 	std::unique_ptr<InputStream> stream(url.createInputStream(
 		URL::InputStreamOptions(URL::ParameterHandling::inAddress)
-		.withConnectionTimeoutMs(2000)
+		.withConnectionTimeoutMs(15000)
 		.withResponseHeaders(&responseHeaders)
 		.withStatusCode(&statusCode)
 	));

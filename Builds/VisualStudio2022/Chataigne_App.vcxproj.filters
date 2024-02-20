@@ -10169,6 +10169,9 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Resources\process.png">
+      <Filter>Chataigne\Resources</Filter>
+    </None>
     <None Include="..\..\Resources\keyframe_off.png">
       <Filter>Chataigne\Resources</Filter>
     </None>

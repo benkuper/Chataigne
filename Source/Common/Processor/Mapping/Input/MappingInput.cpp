@@ -20,6 +20,9 @@ MappingInput::MappingInput(const String& name, var params, Multiplex* processor)
 {
 	canBeCopiedAndPasted = true;
 	nameCanBeChangedByUser = false;
+
+	triggersProcess = addBoolParameter("Triggers Process", "If true, the input will trigger the process when its value changes", true);
+	triggersProcess->hideInEditor = true;
 }
 
 MappingInput::~MappingInput()
