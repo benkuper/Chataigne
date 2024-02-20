@@ -75,9 +75,9 @@ public:
 
 	void dmxDeviceSetupChanged(DMXDevice*) override;
 
-	void dmxDataInChanged(DMXDevice*, int net, int subnet, int universe, Array<uint8> values, const String& sourceName = "") override;
+	void dmxDataInChanged(DMXDevice*, int net, int subnet, int universe,int priority, Array<uint8> values, const String& sourceName = "") override;
 
-	DMXUniverse* getUniverse(bool isInput, int net, int subnet, int universe, bool createIfNotThere = true);
+	DMXUniverse* getUniverse(bool isInput, int net, int subnet, int universe, int priority, bool createIfNotThere = true);
 
 	void run() override;
 
