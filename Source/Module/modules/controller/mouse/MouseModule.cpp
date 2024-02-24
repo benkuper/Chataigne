@@ -16,6 +16,8 @@
 #define MIDDLE_UP MOUSEEVENTF_MIDDLEUP
 #define RIGHT_DOWN MOUSEEVENTF_RIGHTDOWN
 #define RIGHT_UP MOUSEEVENTF_RIGHTUP
+#define WHEEL MOUSEEVENTF_WHEEL
+#define HWHEEL MOUSEEVENTF_HWHEEL
 #elif JUCE_MAC
 #include "MouseMacFunctions.h"
 #if JUCE_SUPPORT_CARBON
@@ -35,6 +37,8 @@
 #define MIDDLE_UP 3
 #define RIGHT_DOWN 4
 #define RIGHT_UP 5
+#define WHEEL 6
+#define HWHEEL 7
 #endif
 
 
@@ -98,8 +102,19 @@ void MouseModule::setCursorPosition(Point<float>& pos, bool isRelative)
 void MouseModule::setWheelData(float wheelDelta, int orientation)
 {
 	if (!enabled->boolValue()) return;
-	NLOG(niceName, wheelDelta);
-	NLOG(niceName, orientation);
+	outActivityTrigger->trigger();
+	NLOG(niceName, "Sent delta of " << wheelDelta << " to " << (orientation == 1 ? "Vertical Wheel" : "Horizontal Wheel"));
+	int wheelType = (orientation == 1 ? WHEEL : HWHEEL);
+	int winWheelTravel = wheelDelta * 515;
+#if JUCE_WINDOWS
+	INPUT    Input = { 0 };
+	Input.type = INPUT_MOUSE;
+	Input.mi.dwFlags = wheelType;
+	Input.mi.mouseData = winWheelTravel;
+	::SendInput(1, &Input, sizeof(INPUT));
+//#elif JUCE_MAC
+//	mousemac::sendScrollWheelEvent(buttonEvent, pos.x, pos.y);
+#endif
 }
 
 void MouseModule::setButtonDown(int buttonID)
@@ -165,7 +180,7 @@ void MouseModule::mouseWheelMove(const MouseEvent& e, const MouseWheelDetails& d
 	if (!enabled->boolValue()) return;
 
 	inActivityTrigger->trigger();
-	int reversed = d.isReversed ? 1 : -1;
+	int reversed = d.isReversed ? -1 : 1;
 	String revStr = d.isReversed ? "True" : "False";
 	if (d.deltaY != 0) {
 		wheelYDelta->setValue(d.deltaY * reversed);
