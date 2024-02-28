@@ -409,7 +409,7 @@ void DMXModule::dmxDeviceSetupChanged(DMXDevice*)
 	connectionFeedbackRef = dmxDevice->isConnected;
 
 }
-void DMXModule::dmxDataInChanged(DMXDevice*, int net, int subnet, int universe, Array<uint8> values, const String& sourceName)
+void DMXModule::dmxDataInChanged(DMXDevice*, int net, int subnet, int universe, int priority, Array<uint8> values, const String& sourceName)
 {
 	if (isClearing || !enabled->boolValue()) return;
 	if (logIncomingData->boolValue())
@@ -433,7 +433,7 @@ void DMXModule::dmxDataInChanged(DMXDevice*, int net, int subnet, int universe, 
 				{
 					if (m->dmxDevice != nullptr)
 					{
-						m->dmxDevice->sendDMXValues(net, subnet, universe, values.getRawDataPointer());
+						m->dmxDevice->sendDMXValues(net, subnet, universe, priority, values.getRawDataPointer());
 					}
 				}
 			}
@@ -458,7 +458,7 @@ void DMXModule::dmxDataInChanged(DMXDevice*, int net, int subnet, int universe, 
 	}
 }
 
-DMXUniverse* DMXModule::getUniverse(bool isInput, int net, int subnet, int universe, bool createIfNotThere)
+DMXUniverse* DMXModule::getUniverse(bool isInput, int net, int subnet, int universe, int priority, bool createIfNotThere)
 {
 	DMXUniverseManager* m = isInput ? &inputUniverseManager : &outputUniverseManager;
 	for (auto& u : m->items) if (u->checkSignature(net, subnet, universe)) return u;
@@ -469,6 +469,7 @@ DMXUniverse* DMXModule::getUniverse(bool isInput, int net, int subnet, int unive
 	u->netParam->setValue(net);
 	u->subnetParam->setValue(subnet);
 	u->universeParam->setValue(universe);
+	u->priorityParam->setValue(priority);
 
 	return m->addItem(u);
 }
