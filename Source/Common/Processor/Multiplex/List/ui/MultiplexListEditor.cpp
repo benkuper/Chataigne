@@ -252,7 +252,9 @@ void InputValueListEditor::handleFillMenuResult(int result)
 		for (auto& m : modules)
 		{
 			ContainerChooserPopupMenu* chooser = new ContainerChooserPopupMenu(&m->valuesCC, offset, -1, nullptr, StringArray(), StringArray(), true);
+			
 			choosers->add(chooser);
+			
 			cp.addSubMenu(m->niceName, *chooser);
 			offset += 100000;
 		}
