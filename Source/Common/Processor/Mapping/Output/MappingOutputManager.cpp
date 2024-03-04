@@ -50,7 +50,8 @@ void MappingOutputManager::setOutParams(Array<Parameter *> params, int multiplex
 	outParams.set(multiplexIndex, Array<WeakReference<Parameter>>(params.getRawDataPointer(), params.size()));
 	if(outParams.size() > 0) for (auto &o : items) o->setOutParams(outParams[multiplexIndex], multiplexIndex); //better than this ? should handle all ?
 
-	prevMergedValue = getMergedOutValue(multiplexIndex);
+	prevMergedValue.ensureStorageAllocated(multiplexIndex+1);
+	prevMergedValue.set(multiplexIndex, getMergedOutValue(multiplexIndex));
 
 	omAsyncNotifier.addMessage(new OutputManagerEvent(OutputManagerEvent::OUTPUT_CHANGED));
 }
@@ -60,10 +61,10 @@ void MappingOutputManager::updateOutputValues(int multiplexIndex, bool sendOnOut
 {
 	var value = getMergedOutValue(multiplexIndex);
 	if (value.isVoid()) return; //possible if parameters have been deleted in another thread during process
-	if (sendOnOutputChangedOnly && value == prevMergedValue) return;
+	if (sendOnOutputChangedOnly && value == prevMergedValue[multiplexIndex]) return;
 
 	for (auto& i : items) i->setValue(value, multiplexIndex);
-	prevMergedValue = value;
+	prevMergedValue.set(multiplexIndex, value);
 }
 
 void MappingOutputManager::updateOutputValue(MappingOutput * o, int multiplexIndex)

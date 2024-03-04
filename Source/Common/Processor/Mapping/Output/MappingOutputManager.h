@@ -22,7 +22,7 @@ public:
 	bool forceDisabled;
 
 	Array<Array<WeakReference<Parameter>>> outParams;
-	var prevMergedValue;
+	Array<var> prevMergedValue;
 
 	void clear() override;
 
