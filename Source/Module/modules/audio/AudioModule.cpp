@@ -61,6 +61,7 @@ AudioModule::AudioModule(const String& name) :
 	curLTCFPS = ltcFPS->getValueData();
 
 	ltcChannel = ltcParamsCC.addIntParameter("LTC Channel", "Enable and select the channel you want to use to decode LTC", 1, 1, 64);
+	ltcUseDate = ltcParamsCC.addBoolParameter("Use LTC Date", "Does the sending device use the date in the LTC user bits? (Almost always false)", false);
 
 	//Values
 	detectedVolume = valuesCC.addFloatParameter("Volume", "Volume of the audio input", 0, 0, 1);
@@ -429,7 +430,7 @@ void AudioModule::audioDeviceIOCallbackWithContext(const float* const* inputChan
 				while (ltc_decoder_read(ltcDecoder.get(), &frame))
 				{
 					SMPTETimecode stime;
-					ltc_frame_to_time(&stime, &frame.ltc, 1);
+					ltc_frame_to_time(&stime, &frame.ltc, (ltcUseDate->boolValue() ? 1 : 0));
 
 					float time = stime.days * 3600 * 24 + stime.hours * 3600 + stime.mins * 60 + stime.secs + stime.frame * 1.0f / curLTCFPS;
 					ltcTime->setValue(time);
