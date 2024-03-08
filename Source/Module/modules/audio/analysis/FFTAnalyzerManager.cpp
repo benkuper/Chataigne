@@ -115,6 +115,6 @@ var FFTAnalyzerManager::getFFTDataFromScript(const var::NativeFunctionArgs& a)
 
 	float tmpScopeData[scopeSize];
 	manager->copyScopeData(tmpScopeData);
-	resultArray.addArray(tmpScopeData, scopeSize);
+	resultArray.addArray((float*)tmpScopeData, scopeSize);
 	return result;
 }
