@@ -16,6 +16,8 @@
 #define MIDDLE_UP MOUSEEVENTF_MIDDLEUP
 #define RIGHT_DOWN MOUSEEVENTF_RIGHTDOWN
 #define RIGHT_UP MOUSEEVENTF_RIGHTUP
+#define WHEEL MOUSEEVENTF_WHEEL
+#define HWHEEL MOUSEEVENTF_HWHEEL
 #elif JUCE_MAC
 #include "MouseMacFunctions.h"
 #if JUCE_SUPPORT_CARBON
@@ -35,6 +37,8 @@
 #define MIDDLE_UP 3
 #define RIGHT_DOWN 4
 #define RIGHT_UP 5
+#define WHEEL 6
+#define HWHEEL 7
 #endif
 
 
@@ -51,6 +55,10 @@ MouseModule::MouseModule() :
 	leftButtonDown = valuesCC.addBoolParameter("Left button", "Is left button down ?", false);
 	middleButtonDown = valuesCC.addBoolParameter("Middle button", "Is middle button down ?", false);
 	rightButtonDown = valuesCC.addBoolParameter("Right button", "Is right button down ?", false);
+	wheelYDelta = valuesCC.addFloatParameter("Wheel Delta - Vertical", "Data received from a vertical mouse wheel, negative for down.", 0, -2, 2);
+	wheelYData = valuesCC.addTrigger("Wheel Data - Vertical", "Has data been received from the vertical mouse wheel?");
+	wheelXDelta = valuesCC.addFloatParameter("Wheel Delta - Horizontal", "Data received from a horizontal mouse wheel, negative for right.", 0, -2, 2);
+	wheelXData = valuesCC.addTrigger("Wheel Data - Horizontal", "Has data been received from the horizontal mouse wheel?");
 
 	Desktop::getInstance().addGlobalMouseListener(this);
 
@@ -58,6 +66,7 @@ MouseModule::MouseModule() :
 	defManager->add(CommandDefinition::createDef(this, "", "Button Down", &MouseModuleCommands::create)->addParam("type", MouseModuleCommands::BUTTON_DOWN));
 	defManager->add(CommandDefinition::createDef(this, "", "Button Up", &MouseModuleCommands::create)->addParam("type", MouseModuleCommands::BUTTON_UP));
 	defManager->add(CommandDefinition::createDef(this, "", "Button Click",&MouseModuleCommands::create)->addParam("type", MouseModuleCommands::BUTTON_CLICK));
+	defManager->add(CommandDefinition::createDef(this, "", "Mouse Wheel", &MouseModuleCommands::create)->addParam("type", MouseModuleCommands::MOUSE_WHEEL));
 
 	startTimerHz(updateRate->intValue());
 }
@@ -88,6 +97,24 @@ void MouseModule::setCursorPosition(Point<float>& pos, bool isRelative)
 	}
 
 	Desktop::getInstance().getMainMouseSource().setScreenPosition(pos);
+}
+
+void MouseModule::setWheelData(float wheelDelta, int orientation)
+{
+	if (!enabled->boolValue()) return;
+	outActivityTrigger->trigger();
+	NLOG(niceName, "Sent delta of " << wheelDelta << " to " << (orientation == 1 ? "Vertical Wheel" : "Horizontal Wheel"));
+	int wheelType = (orientation == 1 ? WHEEL : HWHEEL);
+	int winWheelTravel = wheelDelta * 515;
+#if JUCE_WINDOWS
+	INPUT    Input = { 0 };
+	Input.type = INPUT_MOUSE;
+	Input.mi.dwFlags = wheelType;
+	Input.mi.mouseData = winWheelTravel;
+	::SendInput(1, &Input, sizeof(INPUT));
+//#elif JUCE_MAC
+//	mousemac::sendScrollWheelEvent(buttonEvent, pos.x, pos.y);
+#endif
 }
 
 void MouseModule::setButtonDown(int buttonID)
@@ -146,6 +173,25 @@ void MouseModule::mouseUp(const MouseEvent& e)
 	leftButtonDown->setValue(false);
 	middleButtonDown->setValue(false);
 	rightButtonDown->setValue(false);
+}
+
+void MouseModule::mouseWheelMove(const MouseEvent& e, const MouseWheelDetails& d)
+{
+	if (!enabled->boolValue()) return;
+
+	inActivityTrigger->trigger();
+	int reversed = d.isReversed ? -1 : 1;
+	String revStr = d.isReversed ? "True" : "False";
+	if (d.deltaY != 0) {
+		wheelYDelta->setValue(d.deltaY * reversed);
+		wheelYData->trigger();
+		if (logIncomingData->boolValue()) NLOG(niceName, "Y Delta " << d.deltaY << " received. Reversed: " << revStr);
+	}
+	if (d.deltaX != 0) {
+		wheelXDelta->setValue(d.deltaX * reversed);
+		wheelXData->trigger();
+		if (logIncomingData->boolValue()) NLOG(niceName, "X Delta " << d.deltaX << " received. Reversed: " << revStr);
+	}
 }
 
 void MouseModule::onContainerParameterChangedInternal(Parameter* p)

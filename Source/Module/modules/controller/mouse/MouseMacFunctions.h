@@ -51,4 +51,11 @@ namespace mousemac {
 #endif
         
     }
+
+    void sendScrollWheelEvent() {
+#if JUCE_SUPPORT_CARBON
+
+#endif
+
+    }
 }
