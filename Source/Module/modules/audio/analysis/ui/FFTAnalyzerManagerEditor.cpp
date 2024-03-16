@@ -50,9 +50,11 @@ void FFTAnalyzerManagerEditor::FFTViz::paint(Graphics& g)
 	Path fftPath;
 	fftPath.startNewSubPath(r.getRelativePoint(0.f, 1.0f).toFloat());
 
+	float scopeData[analyzerManager->scopeSize];
+	analyzerManager->copyScopeData(scopeData);
 	for (int i = 0; i < analyzerManager->scopeSize; ++i)
 	{
-		fftPath.lineTo(r.getRelativePoint(i * 1.0f / analyzerManager->scopeSize, 1 - analyzerManager->scopeData[i]).toFloat());
+		fftPath.lineTo(r.getRelativePoint(i * 1.0f / analyzerManager->scopeSize, 1 - scopeData[i]).toFloat());
 	}
 
 	fftPath.lineTo(r.getRelativePoint(1.0f, 1.0f).toFloat());
