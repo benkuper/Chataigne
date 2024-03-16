@@ -91,6 +91,8 @@
 #include "Mapping/Filter/filters/number/SimpleSmoothFilter.h"
 #include "Mapping/Filter/filters/number/OneEuroFilter.h"
 
+#include "Mapping/Filter/filters/string/StringFilter.h"
+
 
 #include "Mapping/Filter/ui/MappingFilterEditor.h"
 

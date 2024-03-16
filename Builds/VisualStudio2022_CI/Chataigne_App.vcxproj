@@ -375,6 +375,9 @@
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\ui\MappingFilterEditor.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\string\StringFilter.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\DelayFilter.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -3026,6 +3029,7 @@
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\MappingFilter.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\MappingFilterManager.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\ui\MappingFilterEditor.h"/>
+    <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\string\StringFilter.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\DelayFilter.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\TimeFilter.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\condition\ConditionFilter.h"/>

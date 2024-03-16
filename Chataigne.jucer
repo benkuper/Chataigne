@@ -488,6 +488,11 @@
                       file="Source/Common/Processor/Mapping/Filter/ui/MappingFilterEditor.h"/>
               </GROUP>
               <GROUP id="{B0B4810E-8573-A36C-4561-1CE52F06C6BA}" name="filters">
+                <GROUP id="{8F9F1D85-4A15-F5C6-3DA8-D7D63D54413A}" name="string">
+                  <FILE id="I55elm" name="StringFilter.cpp" compile="0" resource="0"
+                        file="Source/Common/Processor/Mapping/Filter/filters/string/StringFilter.cpp"/>
+                  <FILE id="udG1n5" name="StringFilter.h" compile="0" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/string/StringFilter.h"/>
+                </GROUP>
                 <FILE id="OpwaC4" name="DelayFilter.cpp" compile="0" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/DelayFilter.cpp"/>
                 <FILE id="KOqEaF" name="DelayFilter.h" compile="0" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/DelayFilter.h"/>
                 <FILE id="H0vd9c" name="TimeFilter.cpp" compile="0" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/TimeFilter.cpp"/>

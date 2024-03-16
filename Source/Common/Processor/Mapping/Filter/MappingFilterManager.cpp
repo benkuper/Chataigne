@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "Common/Processor/ProcessorIncludes.h"
+
 MappingFilterManager::MappingFilterManager(Multiplex* multiplex) :
 	BaseManager<MappingFilter>("Filters"),
 	MultiplexTarget(multiplex),
@@ -44,6 +46,10 @@ MappingFilterManager::MappingFilterManager(Multiplex* multiplex) :
 
 	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<ColorShiftFilter>("Color", ColorShiftFilter::getTypeStringStatic(), multiplex));
 	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<ColorRemapFilter>("Color", ColorRemapFilter::getTypeStringStatic(), multiplex));
+
+	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<StringSliceFilter>("String", StringSliceFilter::getTypeStringStatic(), multiplex));
+	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<StringReplaceFilter>("String", StringReplaceFilter::getTypeStringStatic(), multiplex));
+	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<StringOffsetFilter>("String", StringOffsetFilter::getTypeStringStatic(), multiplex));
 
 	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<ConditionFilter>("", "Condition", multiplex));
 	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<ScriptFilter>("", "Script", multiplex));
@@ -175,7 +181,7 @@ void MappingFilterManager::removeItemInternal(MappingFilter* f)
 void MappingFilterManager::setItemIndex(MappingFilter* item, int index, bool addToUndo)
 {
 	BaseManager::setItemIndex(item, index);
-	if(!addToUndo) notifyNeedsRebuild();
+	if (!addToUndo) notifyNeedsRebuild();
 }
 
 void MappingFilterManager::reorderItems()

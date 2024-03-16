@@ -19,7 +19,7 @@ MappingInputManager::MappingInputManager(Multiplex* multiplex) :
 	if (isMultiplexed()) factory.defs.add(MultiplexTargetDefinition<MappingInput>::createDef<StandardMappingInput>("", StandardMappingInput::getTypeStringStatic(true), multiplex)->addParam("listMode", true));
 
 	//Manual
-	Array<String> manualTypes{ FloatParameter::getTypeStringStatic(), IntParameter::getTypeStringStatic(), BoolParameter::getTypeStringStatic(), Point2DParameter::getTypeStringStatic(), Point3DParameter::getTypeStringStatic() };
+	Array<String> manualTypes{ FloatParameter::getTypeStringStatic(), IntParameter::getTypeStringStatic(), BoolParameter::getTypeStringStatic(), Point2DParameter::getTypeStringStatic(), Point3DParameter::getTypeStringStatic(), StringParameter::getTypeStringStatic() };
 
 	for (auto& m : manualTypes) factory.defs.add(MultiplexTargetDefinition<MappingInput>::createDef<ManualMappingInput>("Manual", ManualMappingInput::getTypeStringStatic(m), multiplex)->addParam("paramType", m));
 

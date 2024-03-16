@@ -131,6 +131,9 @@
     <Filter Include="Chataigne\Source\Common\Processor\Mapping\Filter\ui">
       <UniqueIdentifier>{B217B4E4-2048-83FE-B510-336E0B934F98}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Common\Processor\Mapping\Filter\filters\string">
+      <UniqueIdentifier>{951F887D-E2BF-9EC4-4DC3-D7BC6D83AEAD}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Common\Processor\Mapping\Filter\filters\condition">
       <UniqueIdentifier>{7B8865FC-7D21-02DD-FD97-2DF8A95BE617}</UniqueIdentifier>
     </Filter>
@@ -1458,6 +1461,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\ui\MappingFilterEditor.cpp">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\string\StringFilter.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\string</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\DelayFilter.cpp">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters</Filter>
@@ -4517,6 +4523,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\ui\MappingFilterEditor.h">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\string\StringFilter.h">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\string</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\DelayFilter.h">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters</Filter>

@@ -523,6 +523,7 @@
 		830C08E624F7EF32DD46FE2B /* AudioModuleHardwareEditor.h */ /* AudioModuleHardwareEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AudioModuleHardwareEditor.h; path = ../../Source/Module/modules/audio/ui/AudioModuleHardwareEditor.h; sourceTree = SOURCE_ROOT; };
 		838C8313674554E96077F76A /* AutomationMappingLayerPanel.cpp */ /* AutomationMappingLayerPanel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = AutomationMappingLayerPanel.cpp; path = ../../Source/TimeMachine/Sequence/layers/mapping/automation/ui/AutomationMappingLayerPanel.cpp; sourceTree = SOURCE_ROOT; };
 		842C24D22B14BC2701DAA448 /* Serial.png */ /* Serial.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Serial.png; path = ../../Resources/Modules/Serial.png; sourceTree = SOURCE_ROOT; };
+		847D801016029BB199CA65D3 /* StringFilter.cpp */ /* StringFilter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = StringFilter.cpp; path = ../../Source/Common/Processor/Mapping/Filter/filters/string/StringFilter.cpp; sourceTree = SOURCE_ROOT; };
 		85D8FFDCE078F33306AB4713 /* CVPresetEditor.cpp */ /* CVPresetEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CVPresetEditor.cpp; path = ../../Source/CustomVariables/Preset/ui/CVPresetEditor.cpp; sourceTree = SOURCE_ROOT; };
 		85EEFA7FD0EF84C47F198A73 /* MappingLayerPanel.h */ /* MappingLayerPanel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MappingLayerPanel.h; path = ../../Source/TimeMachine/Sequence/layers/mapping/ui/MappingLayerPanel.h; sourceTree = SOURCE_ROOT; };
 		864BCF10F9B195B54E362857 /* ScriptCondition.cpp */ /* ScriptCondition.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ScriptCondition.cpp; path = ../../Source/Common/Processor/Action/Condition/conditions/ScriptCondition/ScriptCondition.cpp; sourceTree = SOURCE_ROOT; };
@@ -806,6 +807,7 @@
 		D75B6A6DB57C7D3652AE5CE7 /* MadMapperModule.cpp */ /* MadMapperModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MadMapperModule.cpp; path = ../../Source/Module/modules/oscquery/MadMapperModule.cpp; sourceTree = SOURCE_ROOT; };
 		D79093F70C3583A699ED2C52 /* ReaperTimeCommand.cpp */ /* ReaperTimeCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ReaperTimeCommand.cpp; path = ../../Source/Module/modules/osc/reaper/commands/ReaperTimeCommand.cpp; sourceTree = SOURCE_ROOT; };
 		D79CC2C49C8F65182898823E /* about.png */ /* about.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = about.png; path = ../../Resources/about.png; sourceTree = SOURCE_ROOT; };
+		D7EF74174F5E3A3F44D00824 /* StringFilter.h */ /* StringFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StringFilter.h; path = ../../Source/Common/Processor/Mapping/Filter/filters/string/StringFilter.h; sourceTree = SOURCE_ROOT; };
 		D7F0EB4EE85590452E181427 /* ResolumeModule.h */ /* ResolumeModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ResolumeModule.h; path = ../../Source/Module/modules/osc/resolume/ResolumeModule.h; sourceTree = SOURCE_ROOT; };
 		D820B7269DFE5269CD8195F1 /* MTCReceiver.h */ /* MTCReceiver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MTCReceiver.h; path = ../../Source/Common/MIDI/MTCReceiver.h; sourceTree = SOURCE_ROOT; };
 		D82215C4C7AB1F977D3D2B92 /* MultiplexList.cpp */ /* MultiplexList.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MultiplexList.cpp; path = ../../Source/Common/Processor/Multiplex/List/MultiplexList.cpp; sourceTree = SOURCE_ROOT; };
@@ -1616,6 +1618,7 @@
 		4545E10ABE8AF2EF652D28E0 /* filters */ = {
 			isa = PBXGroup;
 			children = (
+				BF896506D67618387729BACD,
 				CF6BBDEFC5E44064A6FFE9DB,
 				E2EAF430B045BAA5F0C3CA19,
 				446C48CFB7279D722A57242C,
@@ -2800,6 +2803,15 @@
 				6CA54F330A265B66584BC7CC,
 			);
 			name = ui;
+			sourceTree = "<group>";
+		};
+		BF896506D67618387729BACD /* string */ = {
+			isa = PBXGroup;
+			children = (
+				847D801016029BB199CA65D3,
+				D7EF74174F5E3A3F44D00824,
+			);
+			name = string;
 			sourceTree = "<group>";
 		};
 		C06277AE11620744E584C6AC /* loupedeck */ = {
