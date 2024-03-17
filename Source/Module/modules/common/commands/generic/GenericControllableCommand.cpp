@@ -125,13 +125,16 @@ void GenericControllableCommand::updateValueFromTargetAndComponent()
 	bool curUpdating = isUpdatingContent;
 	isUpdatingContent = true;
 
+
 	if (value != nullptr && !value.wasObjectDeleted())
 	{
 		if (ghostValueData.isVoid())
 		{
 			ghostValueData = value->getJSONData();
 		}
-		getLinkedParam(value);
+		ParameterLink* pLink = getLinkedParam(value);
+		if (pLink != nullptr) ghostValueParamLinkData = pLink->getJSONData();
+
 		removeControllable(value.get());
 	}
 
@@ -176,7 +179,9 @@ void GenericControllableCommand::updateValueFromTargetAndComponent()
 		if (isMultiplexed()) value->clearRange(); //don't fix a range for multilex, there could be many ranges
 
 		addParameter(value);
-		linkParamToMappingIndex(value, 0);
+
+		ParameterLink* pLink = getLinkedParam(value);
+		if (pLink != nullptr && !ghostValueParamLinkData.isVoid()) pLink->loadJSONData(ghostValueParamLinkData);
 
 		ghostValueData = var();
 	}

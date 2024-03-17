@@ -34,6 +34,7 @@ public:
 	WeakReference<Parameter> value;
 	var dataToLoad;
 	var ghostValueData; // to keep when target is lost
+	var ghostValueParamLinkData;
 	var ghostOperator;
 	var ghostComponent;
 
