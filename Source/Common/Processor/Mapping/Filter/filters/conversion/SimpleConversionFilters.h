@@ -21,6 +21,7 @@ public:
 	String outTypeString;
 
 	var ghostOptions;
+	var ghostLinkData;
 	bool autoLoadDataOnSetup;
 
 	EnumParameter* retargetComponent;

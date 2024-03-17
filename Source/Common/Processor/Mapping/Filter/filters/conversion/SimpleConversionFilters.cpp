@@ -56,8 +56,6 @@ Parameter* SimpleConversionFilter::setupSingleParameterInternal(Parameter* sourc
 
 	if (multiplexIndex != 0) return p; //only setup for 1st if multiplex multiplex
 
-
-
 	int ghostData = !retargetComponent->getValueData().isVoid() ? retargetComponent->getValueData() : ghostOptions.getProperty("retarget", 0);
 	retargetComponent->clearOptions();
 
@@ -321,7 +319,7 @@ var SimpleConversionFilter::getJSONData()
 void SimpleConversionFilter::loadJSONDataItemInternal(var data)
 {
 	ghostOptions = data.getProperty("ghostOptions", var());
-	DBG(JSON::toString(ghostOptions));
+	if(ghostLinkData.isVoid()) ghostLinkData = data.getProperty("filterParams", var()).getProperty("paramLinks", var());
 	MappingFilter::loadJSONDataItemInternal(data);
 }
 
@@ -584,8 +582,15 @@ void ToColorFilter::setupParametersInternal(int multiplexIndex, bool rangeOnly)
 	if (ghostOptions.isObject() && baseColor != nullptr)
 	{
 		if (ghostOptions.hasProperty("color")) baseColor->setValue(ghostOptions.getDynamicObject()->getProperty("color"));
+		if (ParameterLink* pLink = filterParams.getLinkedParam(baseColor))
+		{
+			var pLinkGhostData = ghostLinkData.getProperty("baseColor", var());
+			if (!pLinkGhostData.isVoid()) pLink->loadJSONData(pLinkGhostData);
+
+		}
 		ghostOptions = var();
 	}
+
 }
 
 void ToColorFilter::addExtraRetargetOptions()
