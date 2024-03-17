@@ -29,11 +29,14 @@ public:
 	//Recording
 	BoolParameter* arm;
 	BoolParameter * autoDisarm;
+	Array<AudioProcessorGraph::Connection> inputConnections;
 	float timeAtStartRecord;
 
 	virtual void clearItem() override;
 
 	void setAudioModule(AudioModule * newModule);
+	void updateSelectedOutChannels() override;
+	void updateInputConnections(bool updatePlayConfig = true);
 	AudioLayerProcessor* createAudioLayerProcessor() override;
 
 	void itemAdded(Module* m) override;
@@ -45,9 +48,12 @@ public:
 	void exportRMS(bool toNewMappingLayer, bool toClipboard, bool dataOnly = false);
 
 
+	void onContainerParameterChanged(Parameter* p) override;
+
 	void sequenceCurrentTimeChanged(Sequence* s, float prevTime, bool evaluateSkippedData) override;
 	void sequencePlayStateChanged(Sequence* s) override;
 	void audioSetupChanged() override;
+
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
