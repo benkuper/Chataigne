@@ -110,8 +110,8 @@ MappingFilter::ProcessResult StringOffsetFilter::processSingleParameterInternal(
 
 	int o = filterParams.getLinkedValue(offset, multiplexIndex);
 
-	int s = start->enabled ? filterParams.getLinkedValue(start, multiplexIndex) : 0;
-	int e = end->enabled ? filterParams.getLinkedValue(end, multiplexIndex) : str.length() + 1;
+	int s = start->enabled ? (int)filterParams.getLinkedValue(start, multiplexIndex) : 0;
+	int e = end->enabled ? (int)filterParams.getLinkedValue(end, multiplexIndex) : str.length() + 1;
 
 	if (s < 0) s += str.length();
 	if (e < 0) e += str.length();
