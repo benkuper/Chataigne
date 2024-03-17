@@ -374,8 +374,6 @@ void ChataigneAudioLayerProcessor::processBlock(AudioBuffer<float>& buffer, Midi
 	numInputChannels = buffer.getNumChannels();
 	if (isRecording() && numInputChannels > 0)
 	{
-		LOG("AudioLayer Channel 0 RMS " << buffer.getRMSLevel(0, 0, buffer.getNumSamples()));
-
 		{
 			const GenericScopedLock sl(writerLock);
 			activeWriter.load()->write(buffer.getArrayOfReadPointers(), buffer.getNumSamples());
