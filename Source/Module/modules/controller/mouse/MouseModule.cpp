@@ -112,8 +112,10 @@ void MouseModule::setWheelData(float wheelDelta, int orientation)
 	Input.mi.dwFlags = wheelType;
 	Input.mi.mouseData = winWheelTravel;
 	::SendInput(1, &Input, sizeof(INPUT));
-//#elif JUCE_MAC
-//	mousemac::sendScrollWheelEvent(buttonEvent, pos.x, pos.y);
+#elif JUCE_MAC
+	int32 scrollX = (orientation == 1 ? 0 : wheelDelta * 5);
+	int32 scrollY = (orientation == 1 ? wheelDelta * 5 : 0);
+	mousemac::sendScrollWheelEvent(scrollX, scrollY);
 #endif
 }
 
@@ -188,7 +190,7 @@ void MouseModule::mouseWheelMove(const MouseEvent& e, const MouseWheelDetails& d
 		if (logIncomingData->boolValue()) NLOG(niceName, "Y Delta " << d.deltaY << " received. Reversed: " << revStr);
 	}
 	if (d.deltaX != 0) {
-		wheelXDelta->setValue(d.deltaX * reversed);
+		wheelXDelta->setValue(d.deltaX * reversed * -1);
 		wheelXData->trigger();
 		if (logIncomingData->boolValue()) NLOG(niceName, "X Delta " << d.deltaX << " received. Reversed: " << revStr);
 	}
