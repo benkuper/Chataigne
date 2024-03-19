@@ -413,7 +413,6 @@ void ToStringFilter::setupParametersInternal(int multiplexIndex, bool rangeOnly)
 		{
 			enumConvertMode = filterParams.addEnumParameter("Convert Mode", "What to convert in the enum");
 			enumConvertMode->addOption("Key", KEY)->addOption("Value", VALUE);
-			DBG(JSON::toString(ghostOptions));
 			if (ghostOptions.hasProperty("convertMode")) enumConvertMode->setValueWithData(ghostOptions.getDynamicObject()->getProperty("convertMode"));
 		}
 	}

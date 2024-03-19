@@ -183,7 +183,7 @@ void CommandTemplate::loadJSONDataInternal(var data)
 		Array<var> * paramsData = data.getProperty("params", var()).getArray();
 		for (auto &pd : *paramsData)
 		{
-			DBG(JSON::toString(pd));
+			//DBG(JSON::toString(pd));
 			CommandTemplateParameter * ctp = dynamic_cast<CommandTemplateParameter *>(paramsContainer.getControllableContainerByName(pd.getProperty("niceName",""), true));
 			jassert(ctp != nullptr);
 			if(ctp != nullptr) ctp->loadJSONData(pd);
