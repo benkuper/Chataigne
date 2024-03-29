@@ -17,6 +17,7 @@ Conductor::Conductor(var params, Multiplex* multiplex) :
 	uiCC("UI Settings"),
 	processorManager("Processors", multiplex)
 {
+	processorManager.itemDataType = "Cue";
 	saveAndLoadRecursiveData = true;
 	type = CONDUCTOR;
 
