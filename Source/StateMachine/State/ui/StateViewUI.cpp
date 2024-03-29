@@ -49,7 +49,9 @@ void StateViewUI::setTransitionReceptionMode(TransitionReceptionMode value)
 
 void StateViewUI::mouseDown(const MouseEvent & e)
 {
+	if (dynamic_cast<ProcessorUI*>(e.eventComponent) != nullptr) return;
 	BaseItemUI::mouseDown(e);
+
 
 	if (transitionReceptionMode == START)
 	{
