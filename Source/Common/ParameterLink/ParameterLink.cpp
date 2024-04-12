@@ -426,7 +426,7 @@ ParamLinkContainer::ParamLinkContainer(const String& name, Multiplex* multiplex)
 	MultiplexTarget(multiplex),
 	paramsCanBeLinked(true),
 	canLinkToMapping(true),
-	ghostData(new DynamicObject())
+	linksGhostData(new DynamicObject())
 {
 	scriptObject.getDynamicObject()->setMethod("linkParamToMappingIndex", &ParamLinkContainer::linkParamToMappingIndexFromScript);
 }
@@ -452,9 +452,9 @@ void ParamLinkContainer::onControllableAdded(Controllable* c)
 		paramLinkMap.set(p, pLink);
 		linkParamMap.set(pLink, p);
 
-		if (ghostData.hasProperty(pLink->parameter->shortName))
+		if (linksGhostData.hasProperty(pLink->parameter->shortName))
 		{
-			pLink->loadJSONData(ghostData.getProperty(pLink->parameter->shortName, var()));
+			pLink->loadJSONData(linksGhostData.getProperty(pLink->parameter->shortName, var()));
 		}
 	}
 }
@@ -468,8 +468,8 @@ void ParamLinkContainer::onControllableRemoved(Controllable* c)
 		{
 			if (ParameterLink* pLink = paramLinkMap[p])
 			{
-				if (ghostData.isVoid()) ghostData = new DynamicObject();
-				ghostData.getDynamicObject()->setProperty(pLink->parameter->shortName, pLink->getJSONData());
+				if (linksGhostData.isVoid()) linksGhostData = new DynamicObject();
+				linksGhostData.getDynamicObject()->setProperty(pLink->parameter->shortName, pLink->getJSONData());
 
 				pLink->removeParameterLinkListener(this);
 
@@ -593,15 +593,15 @@ var ParamLinkContainer::getJSONData()
 
 void ParamLinkContainer::loadJSONDataInternal(var data)
 {
-	ghostData = data.getProperty("paramLinks", var()).clone();
+	linksGhostData = data.getProperty("paramLinks", var()).clone();
 	for (auto& pLink : paramLinks)
 	{
 		if (pLink->parameter == nullptr || pLink->parameter.wasObjectDeleted()) continue;
 
-		if (ghostData.isObject() && ghostData.hasProperty(pLink->parameter->shortName))
+		if (linksGhostData.isObject() && linksGhostData.hasProperty(pLink->parameter->shortName))
 		{
-			pLink->loadJSONData(ghostData.getProperty(pLink->parameter->shortName, var()));
-			ghostData.getDynamicObject()->removeProperty(pLink->parameter->shortName);
+			pLink->loadJSONData(linksGhostData.getProperty(pLink->parameter->shortName, var()));
+			linksGhostData.getDynamicObject()->removeProperty(pLink->parameter->shortName);
 		}
 		else
 		{

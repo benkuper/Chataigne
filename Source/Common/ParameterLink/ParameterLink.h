@@ -109,7 +109,7 @@ public:
     bool paramsCanBeLinked;
     bool canLinkToMapping;
 
-    var ghostData;
+    var linksGhostData;
 
     virtual void onControllableAdded(Controllable* c) override;
     virtual void onControllableRemoved(Controllable* c) override;
