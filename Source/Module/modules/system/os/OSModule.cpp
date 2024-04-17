@@ -670,6 +670,8 @@ void OSModule::OSThread::run()
 {
 	while (!threadShouldExit() && !moduleRef.wasObjectDeleted())
 	{
+		wait(1000);
+		
 		osModule->osUpTime->setValue((int)(Time::getMillisecondCounter() / 1000.0f));
 		osModule->processUpTime->setValue((int)(osModule->osUpTime->floatValue() - OSModule::timeAtProcessStart));
 
