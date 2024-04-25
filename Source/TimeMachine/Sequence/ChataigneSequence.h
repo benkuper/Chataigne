@@ -41,8 +41,6 @@ public:
 	FloatParameter* syncOffset;
 	BoolParameter* reverseOffset;
 
-	Factory<SequenceLayer> layerFactory;
-
 	virtual void clearItem() override;
 
 	void setMasterAudioModule(AudioModule * module);

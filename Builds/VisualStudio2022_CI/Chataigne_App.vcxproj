@@ -1118,6 +1118,9 @@
     <ClCompile Include="..\..\JUCE\modules\juce_core\containers\juce_DynamicObject.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_core\containers\juce_Enumerate_test.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_core\containers\juce_FixedSizeFunction_test.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1212,6 +1215,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_core\memory\juce_MemoryBlock.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_core\memory\juce_SharedResourcePointer_test.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_core\misc\juce_ConsoleApplication.cpp">
@@ -1956,6 +1962,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\windows\juce_NativeMessageBox.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\windows\juce_NativeScaleFactorNotifier.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\windows\juce_ResizableWindow.cpp">
@@ -3279,6 +3288,7 @@
     <ClInclude Include="..\..\JUCE\modules\juce_core\containers\juce_ArrayBase.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_core\containers\juce_DynamicObject.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_core\containers\juce_ElementComparator.h"/>
+    <ClInclude Include="..\..\JUCE\modules\juce_core\containers\juce_Enumerate.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_core\containers\juce_FixedSizeFunction.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_core\containers\juce_HashMap.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_core\containers\juce_LinkedListPointer.h"/>
@@ -3294,6 +3304,7 @@
     <ClInclude Include="..\..\JUCE\modules\juce_core\containers\juce_Span.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_core\containers\juce_SparseSet.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_core\containers\juce_Variant.h"/>
+    <ClInclude Include="..\..\JUCE\modules\juce_core\detail\juce_CallbackListenerList.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_core\files\juce_AndroidDocument.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_core\files\juce_common_MimeTypes.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_core\files\juce_DirectoryIterator.h"/>
@@ -3643,6 +3654,7 @@
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\windows\juce_DocumentWindow.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\windows\juce_MessageBoxOptions.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\windows\juce_NativeMessageBox.h"/>
+    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\windows\juce_NativeScaleFactorNotifier.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\windows\juce_ResizableWindow.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\windows\juce_ScopedMessageBox.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\windows\juce_ThreadWithProgressWindow.h"/>
