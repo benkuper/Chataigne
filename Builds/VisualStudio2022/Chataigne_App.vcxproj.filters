@@ -10232,6 +10232,9 @@
     <None Include="..\..\Resources\Modules\Gamepad.png">
       <Filter>Chataigne\Resources\Modules</Filter>
     </None>
+    <None Include="..\..\Resources\Modules\GPIO.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
     <None Include="..\..\Resources\Modules\HeavyM.png">
       <Filter>Chataigne\Resources\Modules</Filter>
     </None>

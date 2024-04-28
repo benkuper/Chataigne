@@ -4933,6 +4933,7 @@
     <None Include="..\..\Resources\Modules\DMX.png"/>
     <None Include="..\..\Resources\Modules\Empty.png"/>
     <None Include="..\..\Resources\Modules\Gamepad.png"/>
+    <None Include="..\..\Resources\Modules\GPIO.png"/>
     <None Include="..\..\Resources\Modules\HeavyM.png"/>
     <None Include="..\..\Resources\Modules\HTTP.png"/>
     <None Include="..\..\Resources\Modules\JoyCon.png"/>

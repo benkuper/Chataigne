@@ -131,6 +131,11 @@ jobs:
           hdiutil mount Packages.dmg
           sudo installer -pkg "/Volumes/Packages ${{ env.PackagesVersion }}/Install Packages.pkg" -target /
           hdiutil detach "/Volumes/Packages ${{ env.PackagesVersion }}/"
+          
+      - name: Setup XCode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '15.3'
 
       - name: Build
         uses: sersoft-gmbh/xcodebuild-action@v2.0.1

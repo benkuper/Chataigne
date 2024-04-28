@@ -736,6 +736,7 @@
 		C4027CFB515DA11787FE11A9 /* commandScriptTemplate.js */ /* commandScriptTemplate.js */ = {isa = PBXFileReference; lastKnownFileType = file.js; name = commandScriptTemplate.js; path = ../../Resources/Templates/Scripts/commandScriptTemplate.js; sourceTree = SOURCE_ROOT; };
 		C45B37ABCDE0A9FA3B40EA19 /* MIDIDeviceParameter.cpp */ /* MIDIDeviceParameter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MIDIDeviceParameter.cpp; path = ../../Source/Common/MIDI/MIDIDeviceParameter.cpp; sourceTree = SOURCE_ROOT; };
 		C49FCF8B1A26685194B3FFDB /* StateManagerUI.cpp */ /* StateManagerUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = StateManagerUI.cpp; path = ../../Source/StateMachine/ui/StateManagerUI.cpp; sourceTree = SOURCE_ROOT; };
+		C5068B3A03C1E003AE74E051 /* GPIO.png */ /* GPIO.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = GPIO.png; path = ../../Resources/Modules/GPIO.png; sourceTree = SOURCE_ROOT; };
 		C5310AD14DE7C82A67357B95 /* os_win.c */ /* os_win.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = os_win.c; path = ../../Source/Module/modules/controller/wiimote/lib/wiiuse/os_win.c; sourceTree = SOURCE_ROOT; };
 		C59D381E042481F4FB5DC78B /* CommandDefinitionManager.cpp */ /* CommandDefinitionManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CommandDefinitionManager.cpp; path = ../../Source/Common/Command/CommandDefinitionManager.cpp; sourceTree = SOURCE_ROOT; };
 		C5C617A12B52E00D9C5A7EEC /* StreamDeckV2.cpp */ /* StreamDeckV2.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = StreamDeckV2.cpp; path = ../../Source/Module/modules/controller/streamdeck/models/StreamDeckV2.cpp; sourceTree = SOURCE_ROOT; };
@@ -1858,6 +1859,7 @@
 				068D5BDCBB49D14D8C13012E,
 				74637658C178668184A2A835,
 				0E23FCDD33ADDAC7FAFF8BD6,
+				C5068B3A03C1E003AE74E051,
 				C60629FA5A98B14697D1DA4E,
 				119888D65DE05EACD18D1B11,
 				F14BD61EF6AB97B4C7433424,
@@ -3831,7 +3833,6 @@
 					"JUCE_COREGRAPHICS_DRAW_ASYNC=1",
 					"USE_ABLETONLINK=1",
 					"LINK_PLATFORM_MACOSX=1",
-					"JUCE_SILENCE_XCODE_15_LINKER_WARNING=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
 					"JUCE_APP_VERSION=1.9.18b3",
 					"JUCE_APP_VERSION_HEX=0x10912",
@@ -3913,7 +3914,6 @@
 					"JUCE_COREGRAPHICS_DRAW_ASYNC=1",
 					"USE_ABLETONLINK=1",
 					"LINK_PLATFORM_MACOSX=1",
-					"JUCE_SILENCE_XCODE_15_LINKER_WARNING=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
 					"JUCE_APP_VERSION=1.9.18b3",
 					"JUCE_APP_VERSION_HEX=0x10912",
@@ -4046,7 +4046,6 @@
 					"JUCE_COREGRAPHICS_DRAW_ASYNC=1",
 					"USE_ABLETONLINK=1",
 					"LINK_PLATFORM_MACOSX=1",
-					"JUCE_SILENCE_XCODE_15_LINKER_WARNING=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
 					"JUCE_APP_VERSION=1.9.18b3",
 					"JUCE_APP_VERSION_HEX=0x10912",
@@ -4128,7 +4127,6 @@
 					"JUCE_COREGRAPHICS_DRAW_ASYNC=1",
 					"USE_ABLETONLINK=1",
 					"LINK_PLATFORM_MACOSX=1",
-					"JUCE_SILENCE_XCODE_15_LINKER_WARNING=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
 					"JUCE_APP_VERSION=1.9.18b3",
 					"JUCE_APP_VERSION_HEX=0x10912",
