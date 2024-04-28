@@ -181,7 +181,11 @@ void GenericControllableCommand::updateValueFromTargetAndComponent()
 		addParameter(value);
 
 		ParameterLink* pLink = getLinkedParam(value);
-		if (pLink != nullptr && !ghostValueParamLinkData.isVoid()) pLink->loadJSONData(ghostValueParamLinkData);
+		if (pLink != nullptr)
+		{
+			if (!ghostValueParamLinkData.isVoid()) pLink->loadJSONData(ghostValueParamLinkData);
+			else if (!isCurrentlyLoadingData) linkParamToMappingIndex(value, 0);
+		}
 
 		ghostValueData = var();
 	}
