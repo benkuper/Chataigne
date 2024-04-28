@@ -7,7 +7,7 @@ If you want to send a MIDI event from this script, you can do the following :
 local.sendNoteOn(1, 12, 127); //This will send a NoteOn Event on channel 1, pitch 12, velocity 127
 local.sendNoteOff(1, 12); //This will send a NoteOff Event on chanenl 1, pitch 12
 local.sendCC(3, 20, 65); //This will send a ControlChange on channel 3, number 20, value 65
-local.sendSysEx(15,20,115,10); //This will send 4 bytes as a SysEx message
+local.sendSysex(15,20,115,10); //This will send 4 bytes as a SysEx message
 local.sendPitchWheel (3, 2000);
 local.sendChannelPressure (1, 67);
 local.sendAfterTouch (3, 20, 65);
