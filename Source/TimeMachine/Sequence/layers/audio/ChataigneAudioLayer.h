@@ -35,7 +35,7 @@ public:
 	virtual void clearItem() override;
 
 	void setAudioModule(AudioModule * newModule);
-	void updateSelectedOutChannels() override;
+	void updateSelectedOutChannelsInternal() override;
 	void updateInputConnections(bool updatePlayConfig = true);
 	AudioLayerProcessor* createAudioLayerProcessor() override;
 
