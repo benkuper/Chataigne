@@ -185,7 +185,7 @@ I do this on my own free time, feel free to buy me a beer :)
 
 [![Donate](https://benjamin.kuperberg.fr/chataigne/user/images/paypal_qr.png)](https://www.paypal.com/donate/?hosted_button_id=VCCTD7P9EG27Q)
 
-Donate with Metamask ! Public key : 0xD21F99CE5FdF4d1591278E54cb2073B54E57bD6B
+Donate with Metamask ! Public key : 0x236F32251cD85745006353f9C61b49519412D5d5
 
 Are you using Chataigne on a regular basis ? Then why not support me accordingly, so I can have a more stable way to work on it !
 
