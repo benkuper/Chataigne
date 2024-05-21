@@ -97,7 +97,10 @@ void CVGroup::setValuesToPreset(CVPreset* preset)
 		Parameter* p = dynamic_cast<Parameter*>(v->controllable);
 		if (p == nullptr) continue;
 		ParameterPreset* pp = preset->values.getParameterPresetForSource(p);
-		if (pp != nullptr) p->setValue(pp->parameter->value);
+		if (pp == nullptr) continue;
+		const ParameterPreset::InterpolationMode mode = pp->interpolationMode->getValueDataAsEnum<ParameterPreset::InterpolationMode>();
+		if (mode == ParameterPreset::NONE) continue;
+		p->setValue(pp->parameter->value);
 	}
 }
 
