@@ -84,7 +84,7 @@ public:
         virtual void listItemUpdated(ParameterLink * pLink, int multiplexIndex) {}
     };
 
-    ListenerList<ParameterLinkListener> parameterLinkListeners;
+    ListenerList<ParameterLinkListener, Array<ParameterLinkListener*, CriticalSection>> parameterLinkListeners;
     void addParameterLinkListener(ParameterLinkListener* newListener) { parameterLinkListeners.add(newListener); }
     void removeParameterLinkListener(ParameterLinkListener* listener) { parameterLinkListeners.remove(listener); }
 
@@ -160,7 +160,7 @@ public:
     };
 
 
-    ListenerList<ParamLinkContainerListener> paramLinkContainerListeners;
+    ListenerList<ParamLinkContainerListener, Array<ParamLinkContainerListener*, CriticalSection>> paramLinkContainerListeners;
     void addParamLinkContainerListener(ParamLinkContainerListener* newListener) { paramLinkContainerListeners.add(newListener); }
     void removeParamLinkContainerListener(ParamLinkContainerListener* listener) { paramLinkContainerListeners.remove(listener); }
 

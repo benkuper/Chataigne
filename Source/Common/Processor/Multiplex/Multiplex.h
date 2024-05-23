@@ -31,7 +31,7 @@ public:
 
     void showAndGetList(ControllableContainer* startFromCC, std::function<void(ControllableContainer *)> returnFunc);
 
-    ListenerList<MultiplexListener> multiplexListeners;
+    ListenerList<MultiplexListener, Array<MultiplexListener*, CriticalSection>> multiplexListeners;
     void addMultiplexListener(MultiplexListener* newListener) { multiplexListeners.add(newListener); }
     void removeMultiplexListener(MultiplexListener* listener) { multiplexListeners.remove(listener); }
 

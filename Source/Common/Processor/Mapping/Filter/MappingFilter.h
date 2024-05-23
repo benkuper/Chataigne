@@ -81,7 +81,7 @@ public:
 		virtual void filteredParamRangeChanged(MappingFilter*) {}
 	};
 
-	ListenerList<FilterListener> mappingFilterListeners;
+	ListenerList<FilterListener, Array<FilterListener*, CriticalSection>> mappingFilterListeners;
 	void addMappingFilterListener(FilterListener* newListener) { mappingFilterListeners.add(newListener); }
 	void removeMappingFilterListener(FilterListener* listener) { mappingFilterListeners.remove(listener); }
 
