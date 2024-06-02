@@ -67,7 +67,7 @@ void ParameterLink::setLinkType(LinkType type)
 	if (linkType != CV_PRESET_PARAM) presetParamName = "";
 
 
-	if(parameter != nullptr && !parameter.wasObjectDeleted()) parameter->setControllableFeedbackOnly(linkType != NONE);
+	if (parameter != nullptr && !parameter.wasObjectDeleted()) parameter->setControllableFeedbackOnly(linkType != NONE);
 
 	notifyLinkUpdated();
 }
@@ -364,13 +364,76 @@ void ParameterLink::notifyLinkUpdated()
 }
 
 
+void ParameterLink::setLinkFromScript(var data)
+{
+	if (!data.isObject())
+	{
+		NLOGWARNING("setLink", "Argument must be an object containing a \"type\" property and a \"value\" property");
+	}
+	else
+	{
+		if (!data.hasProperty("type") || !data.hasProperty("value"))
+		{
+			NLOGWARNING("setLink", "Argument must be an object containing a \"type\" property and a \"value\" property");
+		}
+		else
+		{
+			String type = data.getProperty("type", "");
+			if (type == "input")
+			{
+				if (canLinkToMapping)
+				{
+					setLinkType(MAPPING_INPUT);
+					mappingValueIndex = jmax<int>((int)data.getProperty("value", 0) - 1, 0);
+				}
+				else
+				{
+					NLOGWARNING("setLink", "Cannot set link type to input for non-mapping parameter");
+				}
+			}
+			else if (type == "index" || type == "index0")
+			{
+				if (isMultiplexed())
+				{
+					setLinkType(type == "index" ? INDEX : INDEX_ZERO);
+				}
+				else
+				{
+					NLOGWARNING("setLink", "Cannot set link type to index for non-multiplexed parameter");
+				}
+			}
+			else if (type == "list")
+			{
+				if (isMultiplexed())
+				{
+					String targetList = data.getProperty("value", "").toString();
+					BaseMultiplexList* l = multiplex->listManager.getItemWithName(data.getProperty("value", ""));
+					if (l != nullptr) setLinkedList(l);
+					else
+					{
+						NLOGWARNING("setLink", "Invalid list name: " + targetList);
+					}
+				}
+				else
+				{
+					NLOGWARNING("setLink", "Cannot set link type to list for non-multiplexed parameter");
+				}
+			}
+			else
+			{
+				NLOGWARNING("setLink", "Invalid link type: " + type);
+			}
+		}
+	}
+}
+
 var ParameterLink::getJSONData()
 {
 	var data(new DynamicObject());
 	if (isLinkable)
 	{
 		data.getDynamicObject()->setProperty("linkType", linkType);
-		if (linkType == MAPPING_INPUT) data.getDynamicObject()->setProperty("mappingValueIndex", jmax<int>(mappingValueIndex,0));
+		if (linkType == MAPPING_INPUT) data.getDynamicObject()->setProperty("mappingValueIndex", jmax<int>(mappingValueIndex, 0));
 		else if ((linkType == MULTIPLEX_LIST || linkType == CV_PRESET_PARAM) && list != nullptr && !listRef.wasObjectDeleted())
 		{
 			data.getDynamicObject()->setProperty("list", list->shortName);
@@ -429,6 +492,8 @@ ParamLinkContainer::ParamLinkContainer(const String& name, Multiplex* multiplex)
 	linksGhostData(new DynamicObject())
 {
 	scriptObject.getDynamicObject()->setMethod("linkParamToMappingIndex", &ParamLinkContainer::linkParamToMappingIndexFromScript);
+	scriptObject.getDynamicObject()->setMethod("setParamLink", &ParamLinkContainer::setParamLinkFromScript);
+	scriptObject.getDynamicObject()->setMethod("unlinkParam", &ParamLinkContainer::unlinkParamFromScript);
 }
 
 ParamLinkContainer::~ParamLinkContainer()
@@ -526,6 +591,43 @@ var ParamLinkContainer::linkParamToMappingIndexFromScript(const var::NativeFunct
 {
 	if (!checkNumArgs("linkToMappingIndex", a, 2)) return false;
 
+	if (ParameterLink* link = getLinkedParamFromScript(a))
+	{
+		if (link->canLinkToMapping)
+		{
+			link->setLinkType(ParameterLink::MAPPING_INPUT);
+			link->mappingValueIndex = jmax((int)a.arguments[1] - 1, 0);
+			return true;
+		}
+	}
+
+	return false;
+}
+
+var ParamLinkContainer::setParamLinkFromScript(const var::NativeFunctionArgs& a)
+{
+	if (!checkNumArgs("setLink", a, 2)) return false;
+	if (ParameterLink* link = getLinkedParamFromScript(a))
+	{
+		link->setLinkFromScript(a.arguments[1]);
+		return true;
+	}
+	return false;
+}
+
+var ParamLinkContainer::unlinkParamFromScript(const var::NativeFunctionArgs& a)
+{
+	if (!checkNumArgs("setLink", a, 2)) return false;
+	if (ParameterLink* link = getLinkedParamFromScript(a))
+	{
+		link->setLinkType(ParameterLink::NONE);
+		return true;
+	}
+	return false;
+}
+
+ParameterLink* ParamLinkContainer::getLinkedParamFromScript(const var::NativeFunctionArgs& a)
+{
 	if (ParamLinkContainer* linkC = getObjectFromJS<ParamLinkContainer>(a))
 	{
 		var targetPData = a.arguments[0];
@@ -535,19 +637,14 @@ var ParamLinkContainer::linkParamToMappingIndexFromScript(const var::NativeFunct
 
 		if (p == nullptr)
 		{
-			LOGWARNING("Set target from script, Target not found " << targetPData.toString());
-			return false;
+			LOGWARNING("Link to mapping Index, Target not found " << targetPData.toString());
+			return nullptr;
 		}
 
-		int index = jmax((int)a.arguments[1] - 1, 0);
-		linkC->linkParamToMappingIndex(p, index);
-	}
-	else
-	{
-		return false;
+		return linkC->getLinkedParam(p);
 	}
 
-	return true;
+	return nullptr;
 }
 
 void ParamLinkContainer::setInputNamesFromParams(Array<WeakReference<Parameter>> outParams)

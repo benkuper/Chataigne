@@ -73,6 +73,9 @@ public:
 
     void notifyLinkUpdated();
 
+
+    void setLinkFromScript(var data);
+
     var getJSONData();
     void loadJSONData(var data);
 
@@ -148,6 +151,10 @@ public:
     virtual void linkParamToMappingIndex(Parameter* p, int mappingIndex);
 
     static var linkParamToMappingIndexFromScript(const var::NativeFunctionArgs& a);
+    static var setParamLinkFromScript(const var::NativeFunctionArgs& a);
+    static var unlinkParamFromScript(const var::NativeFunctionArgs& a);
+
+    static ParameterLink* getLinkedParamFromScript(const var::NativeFunctionArgs& a);
 
     virtual void setInputNamesFromParams(Array<WeakReference<Parameter>> outParams);
 
