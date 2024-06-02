@@ -60,9 +60,14 @@ void CVPreset::loadJSONDataInternal(var data)
 var CVPreset::getValuesAsJSON()
 {
 	var data = new DynamicObject();
-	Array<WeakReference<Parameter>> params = values.getAllParameters();
-	for (auto& p : params) data.getDynamicObject()->setProperty(p->shortName, p->value);
+	for (auto& cc : values.controllableContainers)
+	{
+		if (ParameterPreset* pp = dynamic_cast<ParameterPreset*>(cc.get()))
+		{
+			data.getDynamicObject()->setProperty(pp->shortName, pp->parameter->value);
 
+		}
+	}
 	return data;
 }
 
@@ -77,8 +82,7 @@ void CVPreset::loadValuesFromJSON(var data)
 	NamedValueSet props = data.getDynamicObject()->getProperties();
 	for (auto& nv : props)
 	{
-		Parameter* p = values.getParameterByName(nv.name.toString());
-		if (p != nullptr) p->setValue(nv.value);
+		if (ParameterPreset* pp = dynamic_cast<ParameterPreset*>(values.getControllableContainerByName(nv.name.toString()))) pp->parameter->setValue(nv.value);
 	}
 }
 
