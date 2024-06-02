@@ -10,6 +10,7 @@
 */
 
 #include "Module/ModuleIncludes.h"
+#include "DMXModule.h"
 
 DMXModule::DMXModule() :
 	Module("DMX"),
@@ -245,6 +246,15 @@ void DMXModule::send16BitDMXRange(DMXUniverse* u, int startChannel, Array<int> v
 	}
 }
 
+void DMXModule::sendFromPassTrough(int net, int subnet, int universe, int priority, Array<uint8> values)
+{
+	if (!enabled->boolValue()) return;
+	if (dmxDevice == nullptr) return;
+	dmxDevice->sendDMXValues(net, subnet, universe, priority, values.getRawDataPointer(), values.size());
+	outActivityTrigger->trigger();
+	if (logOutgoingData->boolValue()) NLOG(niceName, "Send DMX from pass-through to Net " << net << ", Subnet " << subnet << ", Universe " << universe);
+}
+
 var DMXModule::sendDMXFromScript(const var::NativeFunctionArgs& args)
 {
 	DMXModule* m = getObjectFromJS<DMXModule>(args);
@@ -431,10 +441,7 @@ void DMXModule::dmxDataInChanged(DMXDevice*, int net, int subnet, int universe, 
 				if (!mt->enabled) continue;
 				if (DMXModule* m = (DMXModule*)(mt->targetContainer.get()))
 				{
-					if (m->dmxDevice != nullptr)
-					{
-						m->dmxDevice->sendDMXValues(net, subnet, universe, priority, values.getRawDataPointer());
-					}
+					m->sendFromPassTrough(net, subnet, universe, priority, values);
 				}
 			}
 		}

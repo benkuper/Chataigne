@@ -59,10 +59,12 @@ public:
 	void send16BitDMXValue(DMXUniverse* u, int channel, int value, DMXByteOrder byteOrder);
 	void send16BitDMXRange(DMXUniverse* u, int startChannel, Array<int> values, DMXByteOrder byteOrder);
 
+	void sendFromPassTrough(int net, int subnet, int universe, int priority, Array<uint8> values);
 
 	//Script
 	static var sendDMXFromScript(const var::NativeFunctionArgs& args);
 	static var sendDMXUniverseFromScript(const var::NativeFunctionArgs& args);
+
 
 	virtual void clearItem() override;
 
