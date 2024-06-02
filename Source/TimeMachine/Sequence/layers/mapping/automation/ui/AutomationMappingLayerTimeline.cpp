@@ -36,13 +36,13 @@ void AutomationMappingLayerTimeline::updateContent()
 void AutomationMappingLayerTimeline::setSeekManipulationMode(bool isManipulating)
 {
 	MappingLayerTimeline::setSeekManipulationMode(isManipulating);
-	automationUI->setPreviewMode(isManipulating || aml->miniMode->boolValue());
+	automationUI->setPreviewMode(isManipulating || aml->miniMode->boolValue() || aml->isUILocked->boolValue());
 }
 
 void AutomationMappingLayerTimeline::updateMiniModeUI()
 {
 	MappingLayerTimeline::updateMiniModeUI();
-	automationUI->setPreviewMode(aml->miniMode->boolValue());
+	automationUI->setPreviewMode(aml->miniMode->boolValue() || aml->isUILocked->boolValue());
 }
 
 void AutomationMappingLayerTimeline::controllableFeedbackUpdateInternal(Controllable* c)
@@ -53,6 +53,10 @@ void AutomationMappingLayerTimeline::controllableFeedbackUpdateInternal(Controll
 	{
 		needle.timeBarColor = aml->recorder.arm->boolValue() ? RED_COLOR : needle.defaultTimeBarColor;
 		repaint();
+	}
+	else if (c == aml->isUILocked)
+	{
+		updateMiniModeUI();
 	}
 }
 
