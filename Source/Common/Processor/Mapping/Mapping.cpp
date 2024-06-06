@@ -33,8 +33,8 @@ Mapping::Mapping(var params, Multiplex* multiplex, bool canBeDisabled) :
 	forceContinuousProcess = mappingParams.addBoolParameter("Force Continuous Process", "This will force the mapping to process continuously, even if no continuous filters are present", false);
 
 	sendOnInputChangeOnly = mappingParams.addBoolParameter("Send On Input Change Only", "This decides whether the Mapping Outputs are always triggered when a filter changes, or only when an input has changed.", false);
-	sendOnOutputChangeOnly = mappingParams.addBoolParameter("Send On Output Change Only", "This decides whether the Mapping Outputs are always triggered on source change, or only when a value's filtered output has changed.", false);
-	sendOnOutputChangeOnly->forceSaveValue = true;
+	sendOnOutputChangeOnly = mappingParams.addBoolParameter("Send On Output Change Only", "This decides whether the Mapping Outputs are always triggered on source change, or only when a value's filtered output has changed.", true);
+	//sendOnOutputChangeOnly->forceSaveValue = true;
 
 	sendAfterLoad = mappingParams.addBoolParameter("Send After Load", "This will force sending values once after loading", false);
 	sendOnActivate = mappingParams.addBoolParameter("Send on Activate", "This will force sending values once each time the mapping is activated", false);
@@ -115,7 +115,7 @@ void Mapping::checkFiltersNeedContinuousProcess()
 	}
 
 	updateRate->setEnabled(need);
-	if (!sendOnOutputChangeOnly->isOverriden && !isCurrentlyLoadingData) sendOnOutputChangeOnly->setDefaultValue(updateRate->enabled);
+	//if (!sendOnOutputChangeOnly->isOverriden && !isCurrentlyLoadingData) sendOnOutputChangeOnly->setDefaultValue(updateRate->enabled);
 }
 
 void Mapping::updateMappingChain(MappingFilter* afterThisFilter, bool processAfter, bool rangeOnly, bool afterProcessSendOutput)
@@ -328,10 +328,10 @@ void Mapping::afterLoadJSONDataInternal()
 {
 	//force here sendOutputOnchangeOnly overriden to avoid auto set after load, i'm sure there is a better way to do this
 	
-	bool prevOverriden = sendOnOutputChangeOnly->isOverriden;
-	sendOnOutputChangeOnly->isOverriden = true;
+	//bool prevOverriden = sendOnOutputChangeOnly->isOverriden;
+	//sendOnOutputChangeOnly->isOverriden = true;
 	updateMappingChain(nullptr, false);
-	sendOnOutputChangeOnly->isOverriden = prevOverriden;
+	//sendOnOutputChangeOnly->isOverriden = prevOverriden;
 
 	if (sendAfterLoad->boolValue())
 	{
