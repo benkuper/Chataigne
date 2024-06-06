@@ -61,14 +61,14 @@ void AutomationMappingLayerPanel::buttonClicked(Button* b)
     {
         if (AutomationKey* k = aml->automation->getKeyForPosition(aml->sequence->currentTime->floatValue(), false))
         {
-            aml->sequence->setCurrentTime(aml->sequence->getPrevFrameTimeForTime(k->position->floatValue()));
+            aml->sequence->setCurrentTime(aml->sequence->getPrevFrameTimeForTime(k->position->floatValue()), true, true);
         }
     }
     else if (b == nextKeyBT.get())
     {
         if (AutomationKey* k = aml->automation->getNextKeyForPosition(aml->sequence->currentTime->floatValue(), false))
         {
-            aml->sequence->setCurrentTime(aml->sequence->getNextFrameTimeForTime(k->position->floatValue()));
+            aml->sequence->setCurrentTime(aml->sequence->getNextFrameTimeForTime(k->position->floatValue()), true, true);
         }
     }
 }

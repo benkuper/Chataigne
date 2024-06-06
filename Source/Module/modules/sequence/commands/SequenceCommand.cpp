@@ -191,7 +191,7 @@ void SequenceCommand::triggerInternal(int multiplexIndex)
 	case TOGGLE_SEQUENCE:
 		if (Sequence* s = getLinkedTargetContainerAs<Sequence>(target, multiplexIndex))
 		{
-			if (getLinkedValue(playFromStart, multiplexIndex) && !s->isPlaying->boolValue()) s->setCurrentTime(0);
+			if (getLinkedValue(playFromStart, multiplexIndex) && !s->isPlaying->boolValue()) s->setCurrentTime(0, true, true);
 			s->togglePlayTrigger->trigger();
 		}
 		break;
