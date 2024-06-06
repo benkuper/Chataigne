@@ -27,6 +27,7 @@ public:
 	TopLevelWindow * window;
 
 	StringParameter* lastKey;
+	IntParameter* lastKeyCode;
 	StringParameter * combination;
 	BoolParameter * ctrl;
 	BoolParameter * shift;
