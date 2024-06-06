@@ -191,7 +191,7 @@ bool KeyboardModule::keyPressed(const KeyPress& key, juce::Component* originatin
 
 	char k = (char)key.getTextCharacter();
 	String ks = String::fromUTF8(&k, 1);
-	lastKey->setValue(iks.toLowerCase());
+	lastKey->setValue(ks.toLowerCase());
 	lastKeyCode->setValue(key.getKeyCode());
 
 	shift->setValue(key.getModifiers().isShiftDown());
