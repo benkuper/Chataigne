@@ -122,7 +122,7 @@ void StandardCondition::updateSourceFromTarget()
 
 void StandardCondition::updateComparatorFromSource(int multiplexIndex)
 {
-	if (isMultiplexed() && multiplexIndex != 0) return;
+	if (isMultiplexed() && multiplexIndex > 0) return;
 
 	if (Controllable* c = getSourceControllableAt(0))
 	{
