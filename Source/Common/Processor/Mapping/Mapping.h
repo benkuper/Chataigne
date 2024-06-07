@@ -87,7 +87,7 @@ public:
 
 	ProcessorUI* getUI() override;
 
-	DECLARE_ASYNC_EVENT(Mapping, Mapping, mapping, { OUTPUT_TYPE_CHANGED } )
+	DECLARE_ASYNC_EVENT(Mapping, Mapping, mapping, { OUTPUT_TYPE_CHANGED }, EVENT_ITEM_CHECK )
 
 	DECLARE_TYPE("Mapping")
 };

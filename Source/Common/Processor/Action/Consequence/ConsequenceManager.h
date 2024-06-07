@@ -85,7 +85,7 @@ public:
 	void addConsequenceManagerListener(ConsequenceManagerListener* newListener) { consequenceManagerListeners.add(newListener); }
 	void removeConsequenceManagerListener(ConsequenceManagerListener* listener) { consequenceManagerListeners.remove(listener); }
 
-	DECLARE_ASYNC_EVENT(ConsequenceManager, ConsequenceManager, csm, ENUM_LIST(MULTIPLEX_PREVIEW_CHANGED, STAGGER_CHANGED));
+	DECLARE_ASYNC_EVENT(ConsequenceManager, ConsequenceManager, csm, ENUM_LIST(MULTIPLEX_PREVIEW_CHANGED, STAGGER_CHANGED), EVENT_INSPECTABLE_CHECK);
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ConsequenceManager)
 

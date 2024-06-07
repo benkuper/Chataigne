@@ -47,7 +47,7 @@ public:
 
 	virtual BaseComparatorUI * createUI();
 
-	DECLARE_ASYNC_EVENT(BaseComparator, Comparator, comparator, { REFERENCE_CHANGED })
+	DECLARE_ASYNC_EVENT(BaseComparator, Comparator, comparator, { REFERENCE_CHANGED }, EVENT_INSPECTABLE_CHECK)
 };
 
 /*

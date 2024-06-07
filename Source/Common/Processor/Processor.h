@@ -29,7 +29,7 @@ public:
 	virtual void setForceDisabled(bool value, bool force = false);
 	virtual void updateDisables(bool force = false) {}
 
-	DECLARE_ASYNC_EVENT(Processor, Processor, processor, { FORCE_DISABLED_CHANGED })
+	DECLARE_ASYNC_EVENT(Processor, Processor, processor, { FORCE_DISABLED_CHANGED }, EVENT_ITEM_CHECK)
 
 	virtual ProcessorUI * getUI();
 };
