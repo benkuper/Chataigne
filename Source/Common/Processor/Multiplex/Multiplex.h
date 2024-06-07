@@ -33,7 +33,10 @@ public:
 
     ListenerList<MultiplexListener, Array<MultiplexListener*, CriticalSection>> multiplexListeners;
     void addMultiplexListener(MultiplexListener* newListener) { multiplexListeners.add(newListener); }
-    void removeMultiplexListener(MultiplexListener* listener) { multiplexListeners.remove(listener); }
+    void removeMultiplexListener(MultiplexListener* listener) {
+        if (isBeingDestroyed) return;
+        multiplexListeners.remove(listener); 
+    }
 
     ProcessorUI* getUI() override;
     

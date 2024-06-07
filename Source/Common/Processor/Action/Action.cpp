@@ -61,9 +61,10 @@ Action::~Action()
 {
 }
 
+
 void Action::updateConditionRoles()
 {
-	if (Engine::mainEngine->isClearing) return;
+	if (Engine::mainEngine->isClearing || isClearing) return;
 
 	if (cdm != nullptr && !cdm->hasActivationDefinitions()) return;
 
