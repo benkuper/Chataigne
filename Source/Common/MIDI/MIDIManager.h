@@ -13,8 +13,8 @@
 class MIDIManager
 {
 public:
-	juce_DeclareSingleton(MIDIManager, true)
-		MIDIManager();
+	juce_DeclareSingleton(MIDIManager, true);
+	MIDIManager();
 	~MIDIManager();
 
 	OwnedArray<MIDIInputDevice> inputs;
@@ -59,10 +59,10 @@ public:
 		return MidiMessage::getMidiNoteName(pitch, true, includeOctave, 3 - octaveShift);
 	}
 
-	MidiDeviceListConnection connection = MidiDeviceListConnection::make ([this]
-	{
-        checkDevices();
-	});
+	MidiDeviceListConnection connection = MidiDeviceListConnection::make([this]
+		{
+			checkDevices();
+		});
 
 	JUCE_DECLARE_NON_COPYABLE(MIDIManager)
 };

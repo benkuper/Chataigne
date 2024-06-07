@@ -169,7 +169,10 @@ public:
 
     ListenerList<ParamLinkContainerListener, Array<ParamLinkContainerListener*, CriticalSection>> paramLinkContainerListeners;
     void addParamLinkContainerListener(ParamLinkContainerListener* newListener) { paramLinkContainerListeners.add(newListener); }
-    void removeParamLinkContainerListener(ParamLinkContainerListener* listener) { paramLinkContainerListeners.remove(listener); }
+    void removeParamLinkContainerListener(ParamLinkContainerListener* listener) { 
+        if (isBeingDestroyed) return;
+        paramLinkContainerListeners.remove(listener); 
+    }
 
     virtual var getJSONData() override;
     virtual void loadJSONDataInternal(var data) override;
