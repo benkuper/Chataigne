@@ -50,7 +50,7 @@ public:
 	void lockInputTo(Array<Parameter*> lockParam);
 	void checkFiltersNeedContinuousProcess();
 
-	void updateMappingChain(MappingFilter * afterThisFilter = nullptr, bool processAfter = true, bool rangeOnly = false, bool afterProcessSendOutput = true); //will host warnings and type change checks
+	void updateMappingChain(MappingFilter * afterThisFilter = nullptr, bool processAfter = true, bool rangeOnly = false, bool afterProcessSendOutput = true, int multiplexIndex = -1); //will host warnings and type change checks
 	virtual void multiplexCountChanged() override;
 	virtual void multiplexPreviewIndexChanged() override;
 
@@ -70,7 +70,7 @@ public:
 	void itemsRemoved(Array<MappingInput*>) override;
 	void itemsReordered() override; //MappingInput
 
-	void inputReferenceChanged(MappingInput*) override;
+	void inputReferenceChanged(MappingInput*, int multiplexIndex) override;
 	void inputParameterValueChanged(MappingInput*, int multiplexIndex) override;
 	void inputParameterRangeChanged(MappingInput*) override;
 

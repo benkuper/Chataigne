@@ -39,6 +39,6 @@ class MultiplexListListener
 {
 public:
     virtual ~MultiplexListListener() {}
-    virtual void listReferenceUpdated() {}
-    virtual void listItemUpdated(int /*multiplexIndex */) {}
+    virtual void listReferenceUpdated(int /* multiplexIndex */ ) {}
+    virtual void listItemUpdated(int /* multiplexIndex */) {}
 };

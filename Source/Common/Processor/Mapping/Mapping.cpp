@@ -118,7 +118,7 @@ void Mapping::checkFiltersNeedContinuousProcess()
 	//if (!sendOnOutputChangeOnly->isOverriden && !isCurrentlyLoadingData) sendOnOutputChangeOnly->setDefaultValue(updateRate->enabled);
 }
 
-void Mapping::updateMappingChain(MappingFilter* afterThisFilter, bool processAfter, bool rangeOnly, bool afterProcessSendOutput)
+void Mapping::updateMappingChain(MappingFilter* afterThisFilter, bool processAfter, bool rangeOnly, bool afterProcessSendOutput, int multiplexIndex)
 {
 	if (isCurrentlyLoadingData || isClearing) return;
 	if (isRebuilding)
@@ -139,54 +139,67 @@ void Mapping::updateMappingChain(MappingFilter* afterThisFilter, bool processAft
 		isRebuilding = true;
 		rebuildPending = false;
 
-		if (!rangeOnly) outValuesCC.clear();
-
-		for (int i = 0; i < getMultiplexCount(); i++)
+		if (!rangeOnly)
 		{
-			if (afterThisFilter == nullptr) fm.setupSources(im.getInputReferences(i), i); //do the whole rebuild
-			else fm.rebuildFilterChain(afterThisFilter, i, rangeOnly); //only ask to rebuild after the changed filter
+			if (!isMultiplexed() || multiplexIndex == -1) outValuesCC.clear();
+			else if (outValuesCC.controllableContainers.size() > multiplexIndex) outValuesCC.controllableContainers[multiplexIndex]->clear();
+		}
 
-			Array<Parameter*> processedParams = fm.getLastFilteredParameters(i);
-
-			ControllableContainer* outCC = &outValuesCC;
-
-			if (!rangeOnly)
+		std::function<void(int)> updateMultiplexChainFunc = [&](int i)
 			{
-				if (isMultiplexed())
+				if (afterThisFilter == nullptr) fm.setupSources(im.getInputReferences(i), i); //do the whole rebuild
+				else fm.rebuildFilterChain(afterThisFilter, i, rangeOnly); //only ask to rebuild after the changed filter
+
+				Array<Parameter*> processedParams = fm.getLastFilteredParameters(i);
+
+				ControllableContainer* outCC = &outValuesCC;
+
+				if (!rangeOnly)
 				{
-					ControllableContainer* multiplexOutCC = new ControllableContainer("Index " + String(i + 1));
-					outValuesCC.addChildControllableContainer(multiplexOutCC, true);
-					outCC = multiplexOutCC;
-				}
-
-				Array<Parameter*> mOutParams;
-				for (auto& sp : processedParams)
-				{
-					if (sp == nullptr) continue;
-
-					Parameter* p = ControllableFactory::createParameterFrom(sp, false, false);
-					mOutParams.add(p);
-					outCC->addParameter(p);
-					p->setControllableFeedbackOnly(true);
-					p->setNiceName("Out " + String(mOutParams.size()));
-					p->setValue(sp->value);
-				}
-
-				om.setOutParams(mOutParams, i);
-			}
-			else
-			{
-				if (isMultiplexed()) outCC = outValuesCC.controllableContainers[i];
-
-				for (int j = 0; j < processedParams.size(); j++)
-				{
-					if (Parameter* p = (Parameter*)outCC->controllables[j])
+					if (isMultiplexed())
 					{
-						if (p->hasRange()) p->setRange(processedParams[j]->minimumValue, processedParams[j]->maximumValue);
+						String cName = "Index " + String(i + 1);
+						ControllableContainer* multiplexOutCC = outValuesCC.getControllableContainerByName(cName);
+						if (multiplexOutCC == nullptr)
+						{
+							multiplexOutCC = new ControllableContainer(cName);
+							outValuesCC.addChildControllableContainer(multiplexOutCC, true);
+						}
+						outCC = multiplexOutCC;
+					}
+
+					Array<Parameter*> mOutParams;
+					for (auto& sp : processedParams)
+					{
+						if (sp == nullptr) continue;
+
+						Parameter* p = ControllableFactory::createParameterFrom(sp, false, false);
+						mOutParams.add(p);
+						outCC->addParameter(p);
+						p->setControllableFeedbackOnly(true);
+						p->setNiceName("Out " + String(mOutParams.size()));
+						p->setValue(sp->value);
+					}
+
+					om.setOutParams(mOutParams, i);
+				}
+				else
+				{
+					if (isMultiplexed()) outCC = outValuesCC.controllableContainers[i];
+
+					for (int j = 0; j < processedParams.size(); j++)
+					{
+						if (Parameter* p = (Parameter*)outCC->controllables[j])
+						{
+							if (p->hasRange()) p->setRange(processedParams[j]->minimumValue, processedParams[j]->maximumValue);
+						}
 					}
 				}
-			}
-		}
+			};
+
+
+		if (multiplexIndex == -1) for (int i = 0; i < getMultiplexCount(); i++) updateMultiplexChainFunc(i);
+		else updateMultiplexChainFunc(multiplexIndex);
 
 		if (!rangeOnly)
 		{
@@ -244,14 +257,21 @@ void Mapping::process(bool sendOutput, int multiplexIndex)
 			Array<Parameter*> filteredParameters = fm.getLastFilteredParameters(multiplexIndex);
 
 			ControllableContainer* outCC = isMultiplexed() ? outValuesCC.controllableContainers[multiplexIndex].get() : &outValuesCC;
-			for (int i = 0; i < filteredParameters.size(); i++)
+			if (outCC == nullptr)
 			{
-				if (Parameter* fp = filteredParameters[i])
+				NLOGWARNING(niceName, "Out CC is null in Mapping::process");
+			}
+			else
+			{
+				for (int i = 0; i < filteredParameters.size(); i++)
 				{
-					if (Parameter* p = (Parameter*)outCC->controllables[i])
+					if (Parameter* fp = filteredParameters[i])
 					{
-						if (p->type == Parameter::ENUM) ((EnumParameter*)p)->setValueWithKey(((EnumParameter*)fp)->getValueKey());
-						else p->setValue(fp->value);
+						if (Parameter* p = (Parameter*)outCC->controllables[i])
+						{
+							if (p->type == Parameter::ENUM) ((EnumParameter*)p)->setValueWithKey(((EnumParameter*)fp)->getValueKey());
+							else p->setValue(fp->value);
+						}
 					}
 				}
 			}
@@ -327,7 +347,7 @@ void Mapping::loadJSONDataInternal(var data)
 void Mapping::afterLoadJSONDataInternal()
 {
 	//force here sendOutputOnchangeOnly overriden to avoid auto set after load, i'm sure there is a better way to do this
-	
+
 	//bool prevOverriden = sendOnOutputChangeOnly->isOverriden;
 	//sendOnOutputChangeOnly->isOverriden = true;
 	updateMappingChain(nullptr, false);
@@ -379,11 +399,11 @@ void Mapping::itemsReordered()
 	updateMappingChain();
 }
 
-void Mapping::inputReferenceChanged(MappingInput*)
+void Mapping::inputReferenceChanged(MappingInput*, int multiplexIndex)
 {
 	if (Engine::mainEngine->isClearing) return;
 
-	updateMappingChain();
+	updateMappingChain(nullptr, true, false, true, multiplexIndex);
 }
 
 void Mapping::inputParameterValueChanged(MappingInput* mi, int multiplexIndex)

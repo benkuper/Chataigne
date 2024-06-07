@@ -212,14 +212,15 @@ void InputValueMultiplexList::onContainerParameterChangedInternal(Parameter* p)
 
 		}
 
-		listListeners.call(&MultiplexListListener::listReferenceUpdated);
+		listListeners.call(&MultiplexListListener::listReferenceUpdated, index);
 		notifyItemUpdated(index);
 	}
 }
 
 void InputValueMultiplexList::onExternalParameterRangeChanged(Parameter* p)
 {
-	if (inputControllables.indexOf(p) != -1) listListeners.call(&MultiplexListListener::listReferenceUpdated);
+	int index = inputControllables.indexOf(p) != -1;
+	if (index) listListeners.call(&MultiplexListListener::listReferenceUpdated, index);
 }
 
 void InputValueMultiplexList::onExternalParameterValueChanged(Parameter* p)

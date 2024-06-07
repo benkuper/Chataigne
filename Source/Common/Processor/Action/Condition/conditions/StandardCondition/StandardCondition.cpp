@@ -120,8 +120,10 @@ void StandardCondition::updateSourceFromTarget()
 	conditionAsyncNotifier.addMessage(new ConditionEvent(ConditionEvent::SOURCE_CHANGED, this));
 }
 
-void StandardCondition::updateComparatorFromSource()
+void StandardCondition::updateComparatorFromSource(int multiplexIndex)
 {
+	if (multiplexIndex != 0) return;
+
 	if (Controllable* c = getSourceControllableAt(0))
 	{
 		bool rebuildComparator = comparator == nullptr || c->type != comparator->reference->type;
@@ -208,9 +210,9 @@ void StandardCondition::forceToggleState(bool value)
 	}
 }
 
-void StandardCondition::listReferenceUpdated()
+void StandardCondition::listReferenceUpdated(int multiplexIndex)
 {
-	updateComparatorFromSource();
+	updateComparatorFromSource(multiplexIndex);
 }
 
 void StandardCondition::listItemUpdated(int multiplexIndex)

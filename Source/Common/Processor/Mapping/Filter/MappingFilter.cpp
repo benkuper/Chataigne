@@ -70,7 +70,7 @@ bool MappingFilter::setupSources(Array<Parameter*> sources, int multiplexIndex, 
 			if (filteredParameter != nullptr)
 			{
 				filteredParameter->removeParameterListener(this);
-				removeControllable(filteredParameter);
+				//removeControllable(filteredParameter);
 			}
 		}
 
@@ -118,7 +118,10 @@ void MappingFilter::setupParametersInternal(int multiplexIndex, bool rangeOnly)
 		return;
 	}
 
-	if (!rangeOnly) filteredParameters[multiplexIndex]->clear();
+	if (!rangeOnly)
+	{
+		filteredParameters[multiplexIndex]->clear();
+	}
 
 	int index = 0;
 	for (auto& source : sourceParams[multiplexIndex])
