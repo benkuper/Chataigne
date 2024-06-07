@@ -42,7 +42,7 @@ public:
 class GenericControllableManagerLinkedContainer :
 	public ControllableContainer,
 	public GenericControllableManager::ManagerListener,
-	public EnumParameter::Listener
+	public EnumParameter::EnumParameterListener
 {
 public:
 	GenericControllableManagerLinkedContainer(const String& name, GenericControllableManager* manager, bool keepValuesInSync);

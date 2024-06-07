@@ -19,7 +19,6 @@ public:
 	CustomValuesCommandArgumentManager(const String &name, bool _mappingEnabled, bool templateMode = false, Multiplex* multiplex = nullptr);
 	virtual ~CustomValuesCommandArgumentManager();
 
-	bool isBeingDestroyed; //to keep track for templates, do not sync on destroy, so we can keep a ghost
 	bool mappingEnabled;
 	bool templateMode;
 	bool enablePrecison;

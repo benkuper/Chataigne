@@ -167,12 +167,7 @@ public:
     };
 
 
-    ListenerList<ParamLinkContainerListener, Array<ParamLinkContainerListener*, CriticalSection>> paramLinkContainerListeners;
-    void addParamLinkContainerListener(ParamLinkContainerListener* newListener) { paramLinkContainerListeners.add(newListener); }
-    void removeParamLinkContainerListener(ParamLinkContainerListener* listener) { 
-        if (isBeingDestroyed) return;
-        paramLinkContainerListeners.remove(listener); 
-    }
+    DECLARE_INSPECTACLE_CRITICAL_LISTENER(ParamLinkContainer, paramLinkContainer);
 
     virtual var getJSONData() override;
     virtual void loadJSONDataInternal(var data) override;

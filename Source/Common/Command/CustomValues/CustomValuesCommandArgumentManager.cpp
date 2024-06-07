@@ -14,7 +14,6 @@
 CustomValuesCommandArgumentManager::CustomValuesCommandArgumentManager(const String& name, bool _mappingEnabled, bool templateMode, Multiplex* multiplex) :
 	BaseManager(name),
 	MultiplexTarget(multiplex),
-	isBeingDestroyed(false),
 	mappingEnabled(_mappingEnabled),
 	templateMode(templateMode),
 	enablePrecison(true),
@@ -29,7 +28,6 @@ CustomValuesCommandArgumentManager::CustomValuesCommandArgumentManager(const Str
 
 CustomValuesCommandArgumentManager::~CustomValuesCommandArgumentManager()
 {
-	isBeingDestroyed = true;
 	linkToTemplate(nullptr);
 }
 

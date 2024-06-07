@@ -31,12 +31,7 @@ public:
 
     void showAndGetList(ControllableContainer* startFromCC, std::function<void(ControllableContainer *)> returnFunc);
 
-    ListenerList<MultiplexListener, Array<MultiplexListener*, CriticalSection>> multiplexListeners;
-    void addMultiplexListener(MultiplexListener* newListener) { multiplexListeners.add(newListener); }
-    void removeMultiplexListener(MultiplexListener* listener) {
-        if (isBeingDestroyed) return;
-        multiplexListeners.remove(listener); 
-    }
+    DECLARE_INSPECTACLE_CRITICAL_LISTENER(Multiplex, multiplex);
 
     ProcessorUI* getUI() override;
     

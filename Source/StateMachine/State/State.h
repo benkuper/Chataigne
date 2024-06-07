@@ -55,13 +55,7 @@ public:
 		virtual void stateStartActivationChanged(State*) {}
 	};
 
-	ListenerList<StateListener> stateListeners;
-	void addStateListener(StateListener* newListener) { stateListeners.add(newListener); }
-	void removeStateListener(StateListener* listener) {
-		if (isClearing || isBeingDestroyed) return;
-		stateListeners.remove(listener);
-	}
-
+	DECLARE_INSPECTACLE_CRITICAL_LISTENER(State, state)
 
 private:
 	WeakReference<State>::Master masterReference;
