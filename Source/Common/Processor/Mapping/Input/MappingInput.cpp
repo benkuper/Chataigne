@@ -113,7 +113,7 @@ StandardMappingInput::StandardMappingInput(var params, Multiplex* processor) :
 
 StandardMappingInput::~StandardMappingInput()
 {
-	if (list != nullptr) list->removeListListener(this);
+	if (list != nullptr) list->removeMultiplexListListener(this);
 }
 
 void StandardMappingInput::lockInput(Parameter* input)
@@ -129,14 +129,14 @@ void StandardMappingInput::setList(BaseMultiplexList* newList)
 
 	if (list != nullptr)
 	{
-		list->removeListListener(this);
+		list->removeMultiplexListListener(this);
 	}
 
 	list = newList;
 
 	if (list != nullptr)
 	{
-		list->addListListener(this);
+		list->addMultiplexListListener(this);
 	}
 
 	mappinginputListeners.call(&StandardMappingInput::Listener::inputReferenceChanged, this, -1);

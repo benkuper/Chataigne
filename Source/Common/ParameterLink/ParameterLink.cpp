@@ -31,7 +31,7 @@ ParameterLink::~ParameterLink()
 {
 	if (list != nullptr && !listRef.wasObjectDeleted())
 	{
-		list->removeListListener(this);
+		list->removeMultiplexListListener(this);
 	}
 }
 
@@ -58,7 +58,7 @@ void ParameterLink::setLinkType(LinkType type)
 	{
 		if (list != nullptr && !listRef.wasObjectDeleted())
 		{
-			list->removeListListener(this);
+			list->removeMultiplexListListener(this);
 			list = nullptr;
 			listRef = nullptr;
 		}
@@ -188,7 +188,7 @@ void ParameterLink::setLinkedList(BaseMultiplexList* _list)
 
 	if (list != nullptr)
 	{
-		list->removeListListener(this);
+		list->removeMultiplexListListener(this);
 	}
 
 	list = _list;
@@ -200,7 +200,7 @@ void ParameterLink::setLinkedList(BaseMultiplexList* _list)
 		setLinkType(MULTIPLEX_LIST);
 		list = _list;
 		listRef = _list;;
-		list->addListListener(this);
+		list->addMultiplexListListener(this);
 
 		if (shouldNotify) notifyLinkUpdated();
 	}
@@ -216,7 +216,7 @@ void ParameterLink::setLinkedPresetParam(CVPresetMultiplexList* _list, const Str
 
 	if (list != nullptr)
 	{
-		list->removeListListener(this);
+		list->removeMultiplexListListener(this);
 	}
 
 	list = _list;
@@ -228,7 +228,7 @@ void ParameterLink::setLinkedPresetParam(CVPresetMultiplexList* _list, const Str
 		list = _list;
 		listRef = _list;
 		presetParamName = paramName;
-		list->addListListener(this);
+		list->addMultiplexListListener(this);
 	}
 	else
 	{

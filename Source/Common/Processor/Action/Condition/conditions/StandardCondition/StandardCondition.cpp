@@ -50,7 +50,7 @@ StandardCondition::~StandardCondition()
 void StandardCondition::clearItem()
 {
 	BaseItem::clearItem();
-	if (sourceList != nullptr) sourceList->removeListListener(this);
+	if (sourceList != nullptr) sourceList->removeMultiplexListListener(this);
 	if (sourceControllable != nullptr)
 	{
 		if (sourceControllable->type == Controllable::TRIGGER) ((Trigger*)sourceControllable.get())->removeTriggerListener(this);
@@ -87,14 +87,14 @@ void StandardCondition::updateSourceFromTarget()
 	{
 		if (sourceList != nullptr)
 		{
-			sourceList->removeListListener(this);
+			sourceList->removeMultiplexListListener(this);
 		}
 
 		sourceList = dynamic_cast<BaseMultiplexList*>(sourceTarget->targetContainer.get());
 
 		if (sourceList != nullptr)
 		{
-			sourceList->addListListener(this);
+			sourceList->addMultiplexListListener(this);
 		}
 	}
 	else

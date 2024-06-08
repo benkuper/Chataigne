@@ -46,9 +46,7 @@ public:
 	InspectableEditor* getNumberListEditor(bool isFloat, bool isRoot, Array<Inspectable*> inspectables = Array<Inspectable*>());
 
 
-	ListenerList<MultiplexListListener> listListeners;
-	void addListListener(MultiplexListListener* newListener) { listListeners.add(newListener); }
-	void removeListListener(MultiplexListListener* listener) { listListeners.remove(listener); }
+	DECLARE_INSPECTACLE_CRITICAL_LISTENER(MultiplexList, list);
 };
 
 template<class T>
