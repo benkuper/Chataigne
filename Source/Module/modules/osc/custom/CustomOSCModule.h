@@ -24,6 +24,7 @@ public:
 	
 	EnumParameter* colorMode;
 	EnumParameter* boolMode;
+	Trigger* clearValues;
 
 	HashMap<String, WeakReference<Controllable>, DefaultHashFunctions, CriticalSection> controllableAddressMap;
 	bool hierarchyStructureSwitch;

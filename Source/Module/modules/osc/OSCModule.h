@@ -32,6 +32,7 @@ public:
 	std::unique_ptr<OSCReceiver> receiver;
 	std::unique_ptr<DatagramSocket> socket;
 
+
 	void setForceDisabled(bool value);
 
 	virtual void setupSender();

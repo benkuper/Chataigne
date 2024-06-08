@@ -33,6 +33,7 @@ OSCModule::OSCModule(const String& name, int defaultLocalPort, int defaultRemote
 		localPort = receiveCC->addIntParameter("Local Port", "Local Port to bind to receive OSC Messages", defaultLocalPort, 1, 65535);
 		localPort->warningResolveInspectable = this;
 
+
 		receiver.registerFormatErrorHandler(&OSCHelpers::logOSCFormatError);
 		receiver.addListener(this);
 
@@ -654,6 +655,7 @@ OSCOutput::OSCOutput() :
 	listenToOutputFeedback = addBoolParameter("Listen to Feedback", "If checked, this will listen to the (randomly set) bound port of this sender. This is useful when some softwares automatically detect incoming host and port to send back messages.", false);
 
 	if (!Engine::mainEngine->isLoadingFile) setupSender();
+
 }
 
 OSCOutput::~OSCOutput()
