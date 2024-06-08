@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    MouseModule.cpp
-    Created: 12 Mar 2020 3:08:47pm
-    Author:  bkupe
+	MouseModule.cpp
+	Created: 12 Mar 2020 3:08:47pm
+	Author:  bkupe
 
   ==============================================================================
 */
@@ -18,6 +18,7 @@
 #define RIGHT_UP MOUSEEVENTF_RIGHTUP
 #elif JUCE_MAC
 #include "MouseMacFunctions.h"
+#include "MouseModule.h"
 #if JUCE_SUPPORT_CARBON
 #define LEFT_DOWN kCGEventLeftMouseDown
 #define LEFT_UP kCGEventLeftMouseUp
@@ -38,7 +39,7 @@
 #endif
 
 
-MouseModule::MouseModule() : 
+MouseModule::MouseModule() :
 	Module(getTypeString())
 {
 	setupIOConfiguration(true, true);
@@ -51,30 +52,43 @@ MouseModule::MouseModule() :
 	leftButtonDown = valuesCC.addBoolParameter("Left button", "Is left button down ?", false);
 	middleButtonDown = valuesCC.addBoolParameter("Middle button", "Is middle button down ?", false);
 	rightButtonDown = valuesCC.addBoolParameter("Right button", "Is right button down ?", false);
+	extraButton1 = valuesCC.addBoolParameter("Extra button 1", "Is extra button 1 down ?", false);
+	extraButton2 = valuesCC.addBoolParameter("Extra button 2", "Is extra button 2 down ?", false);
 
+
+#if JUCE_WINDOWS
+	MouseHooker::getInstance()->addListener(this);
+#else
 	Desktop::getInstance().addGlobalMouseListener(this);
+#endif
 
 	defManager->add(CommandDefinition::createDef(this, "", "Set Cursor Pos", &MouseModuleCommands::create)->addParam("type", MouseModuleCommands::SET_CURSOR_POSITION));
 	defManager->add(CommandDefinition::createDef(this, "", "Button Down", &MouseModuleCommands::create)->addParam("type", MouseModuleCommands::BUTTON_DOWN));
 	defManager->add(CommandDefinition::createDef(this, "", "Button Up", &MouseModuleCommands::create)->addParam("type", MouseModuleCommands::BUTTON_UP));
-	defManager->add(CommandDefinition::createDef(this, "", "Button Click",&MouseModuleCommands::create)->addParam("type", MouseModuleCommands::BUTTON_CLICK));
+	defManager->add(CommandDefinition::createDef(this, "", "Button Click", &MouseModuleCommands::create)->addParam("type", MouseModuleCommands::BUTTON_CLICK));
 
 	startTimerHz(updateRate->intValue());
 }
 
 MouseModule::~MouseModule()
 {
+
 }
 
 void MouseModule::clearItem()
 {
+	Module::clearItem();
+#if JUCE_WINDOWS
+	MouseHooker::getInstance()->removeListener(this);
+#else
 	Desktop::getInstance().removeGlobalMouseListener(this);
+#endif
 }
 
 void MouseModule::setCursorPosition(Point<float>& pos, bool isRelative)
 {
 	if (!enabled->boolValue()) return;
-	
+
 	outActivityTrigger->trigger();
 
 	MessageManagerLock mmLock;
@@ -122,15 +136,31 @@ void MouseModule::sendButtonEvent(int buttonEvent)
 	Input.mi.dwFlags = buttonEvent;
 	::SendInput(1, &Input, sizeof(INPUT));
 #elif JUCE_MAC
-    juce::Point<float> pos = Desktop::getInstance().getMainMouseSource().getScreenPosition();
-    mousemac::sendMouseEvent(buttonEvent, pos.x, pos.y);
+	juce::Point<float> pos = Desktop::getInstance().getMainMouseSource().getScreenPosition();
+	mousemac::sendMouseEvent(buttonEvent, pos.x, pos.y);
 #endif
 }
 
+
+#if JUCE_WINDOWS
+void MouseModule::mouseButtonChanged(int button, bool pressed)
+{
+	if (!enabled->boolValue()) return;
+	if (logIncomingData->boolValue()) LOG("Mouse button " << button << " " << (pressed ? "down" : "up")
+		<< " at " << relativePosition->getPoint().toString());
+
+	inActivityTrigger->trigger();
+	if (button == 0) leftButtonDown->setValue(pressed);
+	else if (button == 1) rightButtonDown->setValue(pressed);
+	else if (button == 2) middleButtonDown->setValue(pressed);
+	else if (button == 3) extraButton1->setValue(pressed);
+	else if (button == 4) extraButton2->setValue(pressed);
+}
+#else
 void MouseModule::mouseDown(const MouseEvent& e)
 {
 	if (!enabled->boolValue()) return;
-	
+
 	inActivityTrigger->trigger();
 	leftButtonDown->setValue(e.mods.isLeftButtonDown());
 	middleButtonDown->setValue(e.mods.isMiddleButtonDown());
@@ -141,12 +171,13 @@ void MouseModule::mouseDown(const MouseEvent& e)
 void MouseModule::mouseUp(const MouseEvent& e)
 {
 	if (!enabled->boolValue()) return;
-	
+
 	inActivityTrigger->trigger();
 	leftButtonDown->setValue(false);
 	middleButtonDown->setValue(false);
 	rightButtonDown->setValue(false);
 }
+#endif
 
 void MouseModule::onContainerParameterChangedInternal(Parameter* p)
 {
@@ -178,7 +209,7 @@ void MouseModule::updateMouseInfos()
 		if (r.contains(pos.toInt()))
 		{
 			currentScreen->setValue(i);
-			Point<float> sp = pos- r.getTopLeft().toFloat();
+			Point<float> sp = pos - r.getTopLeft().toFloat();
 			relativePosition->setPoint(sp.x / r.getWidth(), sp.y / r.getHeight());
 
 		}

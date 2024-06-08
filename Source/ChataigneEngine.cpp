@@ -80,7 +80,8 @@ ChataigneEngine::~ChataigneEngine()
 	isClearing = true;
 
 #if JUCE_WINDOWS
-	WindowsHooker::deleteInstance();
+	KeyboardHooker::deleteInstance();
+	MouseHooker::deleteInstance();
 #endif
 
 

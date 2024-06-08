@@ -70,7 +70,6 @@
 #include "modules/controller/gamepad/GamepadModule.cpp"
 #include "modules/controller/joycon/JoyConModule.cpp"
 #include "modules/controller/keyboard/KeyboardModule.cpp"
-#include "modules/controller/keyboard/WindowsHooker.cpp"
 #include "modules/controller/keyboard/commands/KeyboardModuleCommands.cpp"
 #include "modules/controller/kinect/KinectV2Module.cpp"
 #include "modules/controller/mouse/MouseModule.cpp"

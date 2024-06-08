@@ -173,6 +173,9 @@
     <ClCompile Include="..\..\Source\Analytics\MatomoAnalytics.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Common\OSHelpers\KeyboardMouseHooker.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\BLE\BLEDevice.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -699,9 +702,6 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\controller\keyboard\KeyboardModule.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\controller\keyboard\WindowsHooker.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\controller\kinect\KinectV2Module.cpp">
@@ -2951,6 +2951,7 @@
     <ClInclude Include="..\..\Source\Guider\Guider.h"/>
     <ClInclude Include="..\..\Source\Guider\GuiderIncludes.h"/>
     <ClInclude Include="..\..\Source\Analytics\MatomoAnalytics.h"/>
+    <ClInclude Include="..\..\Source\Common\OSHelpers\KeyboardMouseHooker.h"/>
     <ClInclude Include="..\..\Source\Common\BLE\BLEDevice.h"/>
     <ClInclude Include="..\..\Source\Common\BLE\BLEDeviceParameter.h"/>
     <ClInclude Include="..\..\Source\Common\BLE\BLEManager.h"/>
@@ -3145,7 +3146,6 @@
     <ClInclude Include="..\..\Source\Module\modules\controller\keyboard\commands\KeyboardModuleCommands.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\keyboard\KeyboardMacFunctions.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\keyboard\KeyboardModule.h"/>
-    <ClInclude Include="..\..\Source\Module\modules\controller\keyboard\WindowsHooker.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\kinect\KinectV2Module.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\wiimote\WiimoteManager.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\wiimote\WiimoteModule.h"/>

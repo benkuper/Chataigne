@@ -23,6 +23,9 @@
     <Filter Include="Chataigne\Source\Analytics">
       <UniqueIdentifier>{BFFB54F9-F042-7395-56B9-D0358B5F6ED9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Common\OSHelpers">
+      <UniqueIdentifier>{88EA9146-FF05-BD31-505C-6DB3FAB26669}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Common\BLE">
       <UniqueIdentifier>{31057B66-59D5-3FE4-C446-D12488975085}</UniqueIdentifier>
     </Filter>
@@ -1249,6 +1252,9 @@
     <ClCompile Include="..\..\Source\Analytics\MatomoAnalytics.cpp">
       <Filter>Chataigne\Source\Analytics</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Common\OSHelpers\KeyboardMouseHooker.cpp">
+      <Filter>Chataigne\Source\Common\OSHelpers</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\BLE\BLEDevice.cpp">
       <Filter>Chataigne\Source\Common\BLE</Filter>
     </ClCompile>
@@ -1793,9 +1799,6 @@
       <Filter>Chataigne\Source\Module\modules\controller\keyboard\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\controller\keyboard\KeyboardModule.cpp">
-      <Filter>Chataigne\Source\Module\modules\controller\keyboard</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\controller\keyboard\WindowsHooker.cpp">
       <Filter>Chataigne\Source\Module\modules\controller\keyboard</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\controller\kinect\KinectV2Module.cpp">
@@ -4293,6 +4296,9 @@
     <ClInclude Include="..\..\Source\Analytics\MatomoAnalytics.h">
       <Filter>Chataigne\Source\Analytics</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Common\OSHelpers\KeyboardMouseHooker.h">
+      <Filter>Chataigne\Source\Common\OSHelpers</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Common\BLE\BLEDevice.h">
       <Filter>Chataigne\Source\Common\BLE</Filter>
     </ClInclude>
@@ -4873,9 +4879,6 @@
       <Filter>Chataigne\Source\Module\modules\controller\keyboard</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\controller\keyboard\KeyboardModule.h">
-      <Filter>Chataigne\Source\Module\modules\controller\keyboard</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Module\modules\controller\keyboard\WindowsHooker.h">
       <Filter>Chataigne\Source\Module\modules\controller\keyboard</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\controller\kinect\KinectV2Module.h">

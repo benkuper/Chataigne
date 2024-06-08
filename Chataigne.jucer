@@ -146,6 +146,12 @@
               file="Source/Analytics/MatomoAnalytics.h"/>
       </GROUP>
       <GROUP id="{6C7DFFF7-D47E-97B5-FE74-27F24C7A349F}" name="Common">
+        <GROUP id="{D49E231C-ADD0-09C8-3F30-1D993C9DBD37}" name="OSHelpers">
+          <FILE id="MUIzQg" name="KeyboardMouseHooker.cpp" compile="0" resource="0"
+                file="Source/Common/OSHelpers/KeyboardMouseHooker.cpp"/>
+          <FILE id="zYfyiH" name="KeyboardMouseHooker.h" compile="0" resource="0"
+                file="Source/Common/OSHelpers/KeyboardMouseHooker.h"/>
+        </GROUP>
         <GROUP id="{7EA63998-1B48-26A4-FBAD-A9E3C0A981D3}" name="BLE">
           <FILE id="SUr3In" name="BLEDevice.cpp" compile="0" resource="0" file="Source/Common/BLE/BLEDevice.cpp"/>
           <FILE id="lvTRDP" name="BLEDevice.h" compile="0" resource="0" file="Source/Common/BLE/BLEDevice.h"/>
@@ -997,9 +1003,6 @@
                     file="Source/Module/modules/controller/keyboard/KeyboardModule.cpp"/>
               <FILE id="CYr9Wv" name="KeyboardModule.h" compile="0" resource="0"
                     file="Source/Module/modules/controller/keyboard/KeyboardModule.h"/>
-              <FILE id="KPN1AM" name="WindowsHooker.cpp" compile="0" resource="0"
-                    file="Source/Module/modules/controller/keyboard/WindowsHooker.cpp"/>
-              <FILE id="UGSpnr" name="WindowsHooker.h" compile="0" resource="0" file="Source/Module/modules/controller/keyboard/WindowsHooker.h"/>
             </GROUP>
             <GROUP id="{122191F4-B849-F53D-521E-9F1E09A3A5C0}" name="kinect">
               <FILE id="vmVn7s" name="KinectV2Module.cpp" compile="0" resource="0"

@@ -47,11 +47,11 @@ KeyboardModule::KeyboardModule() :
 	lastKeyCode->alwaysNotify = true;
 
 #if JUCE_WINDOWS
-	WindowsHooker::getInstance()->addListener(this);
+	KeyboardHooker::getInstance()->addListener(this);
 
 	for (int i = 0; i <= 255; i++)
 	{
-		String s = WindowsHooker::getInstance()->getKeyName(i);
+		String s = KeyboardHooker::getInstance()->getKeyName(i);
 		if (s.isEmpty()) continue;
 		String sn = "key" + String(i);
 		BoolParameter* p = new BoolParameter(s, "Is this key pressed ?", false);
@@ -92,7 +92,7 @@ KeyboardModule::~KeyboardModule()
 {
 
 #if JUCE_WINDOWS
-	if (WindowsHooker::getInstanceWithoutCreating() != nullptr) WindowsHooker::getInstance()->removeListener(this);
+	if (KeyboardHooker::getInstanceWithoutCreating() != nullptr) KeyboardHooker::getInstance()->removeListener(this);
 #else
 	if (TopLevelWindow::getActiveTopLevelWindow() == window) window->removeKeyListener(this);
 #endif
@@ -170,7 +170,7 @@ void KeyboardModule::keyChanged(int keyCode, bool pressed)
 {
 	if (!enabled->boolValue()) return;
 
-	String kn = WindowsHooker::getInstance()->getKeyName(keyCode);
+	String kn = KeyboardHooker::getInstance()->getKeyName(keyCode);
 	inActivityTrigger->trigger();
 	if (logIncomingData->boolValue())
 	{
