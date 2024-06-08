@@ -77,12 +77,13 @@ MouseModule::~MouseModule()
 
 void MouseModule::clearItem()
 {
-	Module::clearItem();
 #if JUCE_WINDOWS
-	MouseHooker::getInstance()->removeListener(this);
+	if(MouseHooker::getInstanceWithoutCreating() != nullptr) MouseHooker::getInstance()->removeListener(this);
 #else
-	Desktop::getInstance().removeGlobalMouseListener(this);
+	if(Desktop::getInstanceWithoutCreating() != nullptr) Desktop::getInstance().removeGlobalMouseListener(this);
 #endif
+
+	Module::clearItem();
 }
 
 void MouseModule::setCursorPosition(Point<float>& pos, bool isRelative)
