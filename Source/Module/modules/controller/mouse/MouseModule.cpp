@@ -80,7 +80,7 @@ void MouseModule::clearItem()
 #if JUCE_WINDOWS
 	if(MouseHooker::getInstanceWithoutCreating() != nullptr) MouseHooker::getInstance()->removeListener(this);
 #else
-	if(Desktop::getInstanceWithoutCreating() != nullptr) Desktop::getInstance().removeGlobalMouseListener(this);
+	if(Desktop::getInstance() != nullptr) Desktop::getInstance().removeGlobalMouseListener(this);
 #endif
 
 	Module::clearItem();
