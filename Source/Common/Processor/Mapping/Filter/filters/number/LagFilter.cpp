@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    LagFilter.cpp
-    Created: 4 Feb 2017 5:39:47pm
-    Author:  Ben
+	LagFilter.cpp
+	Created: 4 Feb 2017 5:39:47pm
+	Author:  Ben
 
   ==============================================================================
 */
@@ -12,19 +12,19 @@ LagFilter::LagFilter(var params, Multiplex* multiplex) :
 	MappingFilter(getTypeString(), params, multiplex, true)
 {
 	frequency = filterParams.addFloatParameter("Frequency", "Lag frequency in Hz", 5, .01f, 50);
-	startTimer(1000 / frequency->floatValue());
 
 	processOnSameValue = true;
 }
 
 LagFilter::~LagFilter()
 {
-
 }
 
 void LagFilter::setupParametersInternal(int multiplexIndex, bool rangeOnly)
 {
-	if(!rangeOnly) paramTempValueMap.clear();
+	if (!rangeOnly) paramTempValueMap.clear();
+	lastSendTime.resize(getMultiplexCount());
+	lastSendTime.fill(Time::getMillisecondCounterHiRes());
 	MappingFilter::setupParametersInternal(multiplexIndex, rangeOnly);
 }
 
@@ -41,25 +41,23 @@ Parameter* LagFilter::setupSingleParameterInternal(Parameter* source, int multip
 MappingFilter::ProcessResult  LagFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
 {
 	if (!paramTempValueMap.contains(source)) return UNCHANGED;
+
+	paramTempValueMap.set(source, source->getValue());
 	if (paramTempValueMap[source] == out->getValue()) return UNCHANGED;
-	
+
+	double lastTime = lastSendTime[multiplexIndex];
+	double currentTime = Time::getMillisecondCounterHiRes();
+	double msToWait = 1000.0 / frequency->doubleValue();
+
+
+	if (currentTime - lastTime < msToWait) return UNCHANGED;
 	out->setValue(paramTempValueMap[source]);
+
+	lastSendTime.set(multiplexIndex, currentTime);
+
 	return CHANGED;
 }
 
-void LagFilter::filterParamChanged(Parameter * p)
+void LagFilter::filterParamChanged(Parameter* p)
 {
-	if(p == frequency) startTimer(1000 / frequency->floatValue());
-}
-
-void LagFilter::hiResTimerCallback()
-{
-	for (auto& mSourceParams : sourceParams)
-	{
-		for (auto& s : mSourceParams)
-		{
-			if (s == nullptr) continue;
-			paramTempValueMap.set(s, var(s->value));
-		}
-	}
 }
