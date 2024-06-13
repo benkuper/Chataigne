@@ -16,6 +16,7 @@ ParameterLink::ParameterLink(WeakReference<Parameter> p, Multiplex* multiplex) :
 	MultiplexTarget(multiplex),
 	isLinkable(true),
 	canLinkToMapping(true),
+	isLinkBeingDestroyed(false),
 	linkType(NONE),
 	parameter(p),
 	mappingValueIndex(0),
@@ -29,6 +30,7 @@ ParameterLink::ParameterLink(WeakReference<Parameter> p, Multiplex* multiplex) :
 
 ParameterLink::~ParameterLink()
 {
+	isLinkBeingDestroyed = true;
 	if (list != nullptr && !listRef.wasObjectDeleted())
 	{
 		list->removeMultiplexListListener(this);

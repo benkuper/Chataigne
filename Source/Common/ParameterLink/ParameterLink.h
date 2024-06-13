@@ -29,6 +29,7 @@ public:
 
     bool isLinkable;
     bool canLinkToMapping;
+    bool isLinkBeingDestroyed;
 
     LinkType linkType;
     WeakReference<Parameter> parameter;
@@ -89,9 +90,9 @@ public:
 
     ListenerList<ParameterLinkListener, Array<ParameterLinkListener*, CriticalSection>> parameterLinkListeners;
     void addParameterLinkListener(ParameterLinkListener* newListener) { parameterLinkListeners.add(newListener); }
-    void removeParameterLinkListener(ParameterLinkListener* listener) { parameterLinkListeners.remove(listener); }
+    void removeParameterLinkListener(ParameterLinkListener* listener) { if(!isLinkBeingDestroyed) parameterLinkListeners.remove(listener); }
 
-    DECLARE_ASYNC_EVENT(ParameterLink, ParameterLink, paramLink, ENUM_LIST(LINK_UPDATED, PREVIEW_UPDATED, INPUT_VALUE_UPDATED, LIST_ITEM_UPDATED), EVENT_NO_CHECK)
+    DECLARE_ASYNC_EVENT(ParameterLink, ParameterLink, paramLink, ENUM_LIST(LINK_UPDATED, PREVIEW_UPDATED, INPUT_VALUE_UPDATED, LIST_ITEM_UPDATED), !isLinkBeingDestroyed)
 };
 
 
