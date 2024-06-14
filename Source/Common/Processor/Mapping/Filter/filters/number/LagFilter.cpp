@@ -22,36 +22,23 @@ LagFilter::~LagFilter()
 
 void LagFilter::setupParametersInternal(int multiplexIndex, bool rangeOnly)
 {
-	if (!rangeOnly) paramTempValueMap.clear();
-	lastSendTime.resize(getMultiplexCount());
-	lastSendTime.fill(Time::getMillisecondCounterHiRes());
-	MappingFilter::setupParametersInternal(multiplexIndex, rangeOnly);
-}
-
-Parameter* LagFilter::setupSingleParameterInternal(Parameter* source, int multiplexIndex, bool rangeOnly)
-{
-	if (!rangeOnly)
+	if (lastSendTime.size() != getMultiplexCount())
 	{
-		var tmpVal = var(source->getValue()); //shoud maybe copy the values or is it enough ?
-		paramTempValueMap.set(source, tmpVal);
+		lastSendTime.resize(getMultiplexCount());
+		lastSendTime.fill(Time::getMillisecondCounterHiRes());
 	}
-	return MappingFilter::setupSingleParameterInternal(source, multiplexIndex, rangeOnly);
+	MappingFilter::setupParametersInternal(multiplexIndex, rangeOnly);
 }
 
 MappingFilter::ProcessResult  LagFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
 {
-	if (!paramTempValueMap.contains(source)) return UNCHANGED;
-
-	paramTempValueMap.set(source, source->getValue());
-	if (paramTempValueMap[source] == out->getValue()) return UNCHANGED;
-
 	double lastTime = lastSendTime[multiplexIndex];
 	double currentTime = Time::getMillisecondCounterHiRes();
 	double msToWait = 1000.0 / frequency->doubleValue();
 
 
 	if (currentTime - lastTime < msToWait) return UNCHANGED;
-	out->setValue(paramTempValueMap[source]);
+	out->setValue(source->getValue());
 
 	lastSendTime.set(multiplexIndex, currentTime);
 

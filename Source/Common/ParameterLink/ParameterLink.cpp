@@ -30,9 +30,9 @@ ParameterLink::ParameterLink(WeakReference<Parameter> p, Multiplex* multiplex) :
 
 ParameterLink::~ParameterLink()
 {
-	
+
 	paramLinkNotifier.cancelPendingUpdate();
-	
+
 	isLinkBeingDestroyed = true;
 
 	if (list != nullptr && !listRef.wasObjectDeleted())
@@ -170,12 +170,9 @@ WeakReference<ControllableContainer> ParameterLink::getLinkedTargetContainer(int
 
 		if (linkType == MULTIPLEX_LIST)
 		{
-			if (fullPresetSelectMode)
+			if (CVPresetMultiplexList* pList = dynamic_cast<CVPresetMultiplexList*>(list))
 			{
-				if (CVPresetMultiplexList* pList = dynamic_cast<CVPresetMultiplexList*>(list))
-				{
-					return pList->getPresetAt(multiplexIndex);
-				}
+				return pList->getPresetAt(multiplexIndex);
 			}
 			else
 			{

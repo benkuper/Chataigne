@@ -148,25 +148,29 @@ void LinkableParameterEditor::buttonClicked(Button* b)
 				bool t = link->linkType == link->CV_PRESET_PARAM && link->list == bli;
 				ticked |= t;
 
-				CVPresetMultiplexList* pList = dynamic_cast<CVPresetMultiplexList*>(bli);
-				if ((pList == nullptr && !link->fullPresetSelectMode) || (pList != nullptr && link->fullPresetSelectMode))
+				//CVPresetMultiplexList* pList = dynamic_cast<CVPresetMultiplexList*>(bli);
+				//if ((pList == nullptr && !link->fullPresetSelectMode) || (pList != nullptr && link->fullPresetSelectMode))
+				//{
+				bool ti = link->linkType == link->MULTIPLEX_LIST && link->list == bli;
+				itMenu.addItem(1000 + i, "List : " + bli->niceName, true, ti);
+				//}
+
+				if (CVPresetMultiplexList* pList = dynamic_cast<CVPresetMultiplexList*>(bli))
 				{
-					bool ti = link->linkType == link->MULTIPLEX_LIST && link->list == bli;
-					itMenu.addItem(1000 + i, "List : " + bli->niceName, true, ti);
-				}
-				else if (pList != nullptr && !link->fullPresetSelectMode)
-				{
-					if (CVGroup* group = dynamic_cast<CVGroup*>(pList->cvTarget->targetContainer.get()))
+					if (!link->fullPresetSelectMode)
 					{
-						PopupMenu presetMenu;
-
-						for (int j = 0; j < group->values.items.size(); j++)
+						if (CVGroup* group = dynamic_cast<CVGroup*>(pList->cvTarget->targetContainer.get()))
 						{
-							bool pt = link->presetParamName == group->values.items[j]->shortName;
-							presetMenu.addItem(10000 + i * 100 + j, group->values.items[j]->niceName, true, pt);
-						}
+							PopupMenu presetMenu;
 
-						itMenu.addSubMenu("Presets : " + pList->niceName, presetMenu, true, Image(), t);
+							for (int j = 0; j < group->values.items.size(); j++)
+							{
+								bool pt = link->presetParamName == group->values.items[j]->shortName;
+								presetMenu.addItem(10000 + i * 100 + j, group->values.items[j]->niceName, true, pt);
+							}
+
+							itMenu.addSubMenu("Presets : " + pList->niceName, presetMenu, true, Image(), t);
+						}
 					}
 				}
 			}
