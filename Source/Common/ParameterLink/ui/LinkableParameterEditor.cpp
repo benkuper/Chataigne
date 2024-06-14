@@ -15,7 +15,7 @@
 
 LinkableParameterEditor::LinkableParameterEditor(Array<ParameterLink*> pLinks, bool showMappingOptions) :
 	InspectableEditor(getLinksAs<Inspectable>(pLinks), false),
-	showMappingOptions(showMappingOptions && pLinks.size() > 0 && pLinks[0] != nullptr && pLinks[0]->canLinkToMapping),
+	showMappingOptions(showMappingOptions&& pLinks.size() > 0 && pLinks[0] != nullptr && pLinks[0]->canLinkToMapping),
 	links(pLinks),
 	link(pLinks.size() > 0 ? pLinks[0] : nullptr)
 
@@ -44,9 +44,13 @@ LinkableParameterEditor::LinkableParameterEditor(Array<ParameterLink*> pLinks, b
 
 LinkableParameterEditor::~LinkableParameterEditor()
 {
-	for (auto& l : links)
+	for (auto& i : inspectables)
 	{
-		l->removeAsyncParameterLinkListener(this);
+		if (i == nullptr || i.wasObjectDeleted()) continue;
+		if (ParameterLink* l = dynamic_cast<ParameterLink*>(i.get()))
+		{
+			if (!l->isLinkBeingDestroyed) l->removeAsyncParameterLinkListener(this);
+		}
 	}
 }
 
