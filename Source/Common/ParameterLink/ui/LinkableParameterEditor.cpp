@@ -44,13 +44,10 @@ LinkableParameterEditor::LinkableParameterEditor(Array<ParameterLink*> pLinks, b
 
 LinkableParameterEditor::~LinkableParameterEditor()
 {
-	for (auto& i : inspectables)
+	for (auto& l : links)
 	{
-		if (i == nullptr || i.wasObjectDeleted()) continue;
-		if (ParameterLink* l = dynamic_cast<ParameterLink*>(i.get()))
-		{
-			if (!l->isLinkBeingDestroyed) l->removeAsyncParameterLinkListener(this);
-		}
+		if (l == nullptr) continue;
+		if (!l->isLinkBeingDestroyed) l->removeAsyncParameterLinkListener(this);
 	}
 }
 

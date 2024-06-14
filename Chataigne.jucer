@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.18b9"
-              bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
-              companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
-              companyEmail="benjamin@kuperberg.fr" defines="VST_LOGGING=0"
-              splashScreenColour="Dark" cppLanguageStandard="17" companyCopyright="Ben Kuper"
-              headerPath="../../Source&#10;../../External/wiiuse&#10;../../External/asio&#10;../../External/asiodriver&#10;../../External/kinect/include&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/ois/include&#10;../../External/sdl/include&#10;../../External/hidapi/include&#10;../../External/abletonlink/include&#10;../../External/libusb/include/libusb-1.0&#10;../../External/mosquitto/include&#10;../../External/posistagenet/include&#10;../../External/simpleble/include"
+              bundleIdentifier="benkuper.Chataigne" companyName="Ben Kuper"
+              companyWebsite="http://benjamin.kuperberg.fr/chataigne" companyEmail="benjamin@kuperberg.fr"
+              defines="VST_LOGGING=0" splashScreenColour="Dark" cppLanguageStandard="17"
+              companyCopyright="Ben Kuper" headerPath="../../Source&#10;../../External/wiiuse&#10;../../External/asio&#10;../../External/asiodriver&#10;../../External/kinect/include&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/ois/include&#10;../../External/sdl/include&#10;../../External/hidapi/include&#10;../../External/abletonlink/include&#10;../../External/libusb/include/libusb-1.0&#10;../../External/mosquitto/include&#10;../../External/posistagenet/include&#10;../../External/simpleble/include"
               projectLineFeed="&#10;" jucerFormatVersion="1">
   <MAINGROUP id="EDDVhd" name="Chataigne">
     <GROUP id="{E61F6705-4C4B-3F04-F742-20CC91F590E4}" name="Resources">
