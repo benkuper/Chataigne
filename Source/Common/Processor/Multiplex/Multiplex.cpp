@@ -32,7 +32,6 @@ Multiplex::Multiplex(var params) :
 
 Multiplex::~Multiplex()
 {
-	DBG("Multiplex clear");
 }
 
 void Multiplex::onContainerParameterChangedInternal(Parameter* p)

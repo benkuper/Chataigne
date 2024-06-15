@@ -55,7 +55,6 @@ MappingFilter::ProcessResult  DelayFilter::processSingleParameterInternal(Parame
 	double t = Time::getMillisecondCounterHiRes() / 1000.0;
 
 	var val = source->getValue();
-	DBG(multiplexIndex << " : " << val.toString() << " <> " << out->stringValue());
 
 	if (values->size() > 0)
 	{
