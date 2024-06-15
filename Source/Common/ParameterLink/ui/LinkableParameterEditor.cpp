@@ -44,7 +44,7 @@ LinkableParameterEditor::LinkableParameterEditor(Array<ParameterLink*> pLinks, b
 
 LinkableParameterEditor::~LinkableParameterEditor()
 {
-	if (inspectable.wasObjectDeleted()) return;
+	if (inspectable.wasObjectDeleted() || paramEditor->parameter == nullptr || paramEditor->parameter.wasObjectDeleted()) return;
 
 	for (int i = 0; i < links.size(); i++)
 	{
