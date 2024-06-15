@@ -30,11 +30,11 @@ ParameterLink::ParameterLink(WeakReference<Parameter> p, Multiplex* multiplex) :
 
 ParameterLink::~ParameterLink()
 {
-
-	paramLinkNotifier.cancelPendingUpdate();
-
+	masterReference.clear();
 	isLinkBeingDestroyed = true;
 
+	paramLinkNotifier.cancelPendingUpdate();
+	
 	if (list != nullptr && !listRef.wasObjectDeleted())
 	{
 		list->removeMultiplexListListener(this);
