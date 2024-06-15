@@ -54,11 +54,11 @@ public:
 	virtual void multiplexCountChanged() override;
 	virtual void multiplexPreviewIndexChanged() override;
 
-	void process(bool sendOutput = true, int multiplexIndex = -1);
+	void process(bool sendOutput = true, int multiplexIndex = -1, bool forceSend = false);
 
 	void updateContinuousProcess();
 
-	void setForceDisabled(bool value, bool force = false) override;
+	void setForceDisabled(bool value, bool force = false, bool fromActivation = false) override;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

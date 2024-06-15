@@ -44,7 +44,7 @@ public:
 
 	void updateConditionRoles();
 	void setHasOffConsequences(bool value);
-	virtual void updateDisables(bool force = false) override;
+	virtual void updateDisables(bool force = false, bool fromActivation = false) override;
 
 	void forceCheck(bool triggerIfChanged);
 

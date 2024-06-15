@@ -28,11 +28,11 @@ ProcessorManager::~ProcessorManager()
 {
 }
 
-void ProcessorManager::setForceDisabled(bool value, bool force)
+void ProcessorManager::setForceDisabled(bool value, bool force, bool fromActivation)
 {
 	if (forceDisabled == value && !force) return;
 	forceDisabled = value;
-	for (auto& i : items) i->setForceDisabled(forceDisabled);
+	for (auto& i : items) i->setForceDisabled(forceDisabled, force, fromActivation);
 }
 
 void ProcessorManager::addItemInternal(Processor* item, var data)
@@ -132,12 +132,14 @@ void ProcessorManager::checkAllDeactivateActions()
 	}
 }
 
-void ProcessorManager::processAllMappings(bool fromLoad)
+void ProcessorManager::processAllMappings()
 {
+	bool loading = Engine::mainEngine->isLoadingFile;
+
 	Array<Mapping*> mappings = getAllMappings();
 	for (auto& m : mappings)
 	{
-		if (fromLoad && !m->sendAfterLoad->boolValue()) continue;
+		if (loading && !m->sendAfterLoad->boolValue()) continue;
 		m->process();
 	}
 }
@@ -145,6 +147,6 @@ void ProcessorManager::processAllMappings(bool fromLoad)
 void ProcessorManager::loadJSONDataInternal(var data)
 {
 	BaseManager::loadJSONDataInternal(data);
-	setForceDisabled(forceDisabled, true);
+	//setForceDisabled(forceDisabled, true);
 }
 

@@ -36,6 +36,8 @@ public:
 
 	void handleLoadActivation();
 
+	void handleActiveChanged();
+
 	void onContainerParameterChangedInternal(Parameter*) override;
 
 	var getJSONData() override;

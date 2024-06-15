@@ -27,7 +27,7 @@ public:
 
     void onContainerParameterChangedInternal(Parameter* p) override;
 
-    void updateDisables(bool force) override;
+    void updateDisables(bool force, bool fromActivation = false) override;
 
     void showAndGetList(ControllableContainer* startFromCC, std::function<void(ControllableContainer *)> returnFunc);
 

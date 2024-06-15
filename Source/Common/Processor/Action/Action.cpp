@@ -111,7 +111,7 @@ void Action::setHasOffConsequences(bool value)
 	{
 		if (csmOff == nullptr)
 		{
-			if(triggerOff != nullptr) removeControllable(triggerOff);
+			if (triggerOff != nullptr) removeControllable(triggerOff);
 			triggerOff = nullptr;
 			csmOff.reset(new ConsequenceManager("Consequences : FALSE", multiplex));
 			addChildControllableContainer(csmOff.get());
@@ -128,9 +128,9 @@ void Action::setHasOffConsequences(bool value)
 	}
 }
 
-void Action::updateDisables(bool force)
+void Action::updateDisables(bool force, bool fromActivation)
 {
-	Processor::updateDisables();
+	Processor::updateDisables(force, fromActivation);
 
 	bool en = enabled->boolValue() && !forceDisabled;
 	if (triggerOn != nullptr) triggerOn->setEnabled(en);
@@ -186,10 +186,10 @@ void Action::loadJSONDataItemInternal(var data)
 void Action::endLoadFile()
 {
 	Engine::mainEngine->removeEngineListener(this);
-	if (actionRoles.contains(Role::ACTIVATE) && cdm != nullptr)
-	{
-		for (int i = 0; i < getMultiplexCount(); i++) if (cdm->getIsValid(i, false)) triggerConsequences(true, i);
-	}
+	//if (actionRoles.contains(Role::ACTIVATE) && cdm != nullptr)
+	//{
+	//	for (int i = 0; i < getMultiplexCount(); i++) if (cdm->getIsValid(i, false)) triggerConsequences(true, i);
+	//}
 }
 
 void Action::onContainerTriggerTriggered(Trigger* t)

@@ -230,7 +230,7 @@ void Mapping::multiplexPreviewIndexChanged()
 	mappingNotifier.addMessage(new MappingEvent(MappingEvent::OUTPUT_TYPE_CHANGED, this)); //force updating output to update the good index
 }
 
-void Mapping::process(bool sendOutput, int multiplexIndex)
+void Mapping::process(bool sendOutput, int multiplexIndex, bool forceSend)
 {
 	if ((canBeDisabled && !enabled->boolValue()) || forceDisabled) return;
 	if (im.items.size() == 0) return;
@@ -238,7 +238,7 @@ void Mapping::process(bool sendOutput, int multiplexIndex)
 
 	if (multiplexIndex == -1) // -1 makes process all
 	{
-		for (int i = 0; i < getMultiplexCount(); i++) process(sendOutput, i);
+		for (int i = 0; i < getMultiplexCount(); i++) process(sendOutput, i, forceSend);
 		return;
 	}
 
@@ -276,7 +276,7 @@ void Mapping::process(bool sendOutput, int multiplexIndex)
 				}
 			}
 
-			if (sendOutput) om.updateOutputValues(multiplexIndex, sendOnOutputChangeOnly->boolValue());
+			if (sendOutput) om.updateOutputValues(multiplexIndex, sendOnOutputChangeOnly->boolValue() && !forceSend);
 		}
 
 		isProcessing = false;
@@ -305,7 +305,7 @@ void Mapping::updateContinuousProcess()
 	}
 }
 
-void Mapping::setForceDisabled(bool value, bool force)
+void Mapping::setForceDisabled(bool value, bool force, bool fromActivation)
 {
 	bool changed = value != forceDisabled;
 
@@ -315,7 +315,7 @@ void Mapping::setForceDisabled(bool value, bool force)
 	{
 		if (!forceDisabled && sendOnActivate->boolValue())
 		{
-			process();
+			process(true, -1, fromActivation);
 			//for (int i = 0; i < getMultiplexCount(); i++) om.updateOutputValues(i);
 		}
 	}

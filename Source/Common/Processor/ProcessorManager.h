@@ -22,7 +22,7 @@ public:
 	~ProcessorManager();
 
 	bool forceDisabled;
-	void setForceDisabled(bool value, bool force = false);
+	void setForceDisabled(bool value, bool force = false, bool fromActivation = false);
 	void addItemInternal(Processor* item, var data) override;
 	void addItemsInternal(Array<Processor *> item, var data) override;
 
@@ -32,7 +32,7 @@ public:
 	Array<Mapping *> getAllMappings(bool includeMultiplexes = true);
 	void checkAllActivateActions();
 	void checkAllDeactivateActions();
-	void processAllMappings(bool fromLoad = false);
+	void processAllMappings();
 
 	Factory<Processor> factory;
 
