@@ -19,14 +19,14 @@ LinkableParameterEditor::LinkableParameterEditor(Array<ParameterLink*> pLinks, b
 	link(pLinks.size() > 0 ? pLinks[0] : nullptr)
 
 {
-	for (auto& i : inspectables) links.add(dynamic_cast<ParameterLink*>(i.get()));
+	//for (auto& i : inspectables) links.add(dynamic_cast<ParameterLink*>(i.get()));
 
 	if (link == nullptr) return;
 
-	for (auto& l : links)
-	{
-		l->addAsyncParameterLinkListener(this);
-	}
+	link->addAsyncParameterLinkListener(this);
+	//for (auto& l : links)
+	//{
+	//}
 
 	linkBT.reset(AssetManager::getInstance()->getToggleBTImage(ChataigneAssetManager::getInstance()->linkOnImage));
 	linkBT->addListener(this);
@@ -45,14 +45,14 @@ LinkableParameterEditor::LinkableParameterEditor(Array<ParameterLink*> pLinks, b
 
 LinkableParameterEditor::~LinkableParameterEditor()
 {
-	if (link == nullptr || link.wasObjectDeleted()) return;
-	if (inspectable.wasObjectDeleted() || paramEditor->parameter == nullptr || paramEditor->parameter.wasObjectDeleted()) return;
+	if (link == nullptr || link.wasObjectDeleted() || inspectable.wasObjectDeleted()) return;
+	link->removeAsyncParameterLinkListener(this);
 
-	for (int i = 0; i < links.size(); i++)
-	{
-		if (links[i] == nullptr || inspectables[i] == nullptr || inspectables[i].wasObjectDeleted()) continue;
-		if (links[i]->isLinkBeingDestroyed) links[i]->removeAsyncParameterLinkListener(this);
-	}
+	//for (int i = 0; i < links.size(); i++)
+	//{
+	//	if (links[i] == nullptr || inspectables[i] == nullptr || inspectables[i].wasObjectDeleted()) continue;
+	//	if (links[i]->isLinkBeingDestroyed) links[i]->removeAsyncParameterLinkListener(this);
+	//}
 }
 
 void LinkableParameterEditor::paint(Graphics& g)

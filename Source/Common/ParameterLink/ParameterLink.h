@@ -94,7 +94,7 @@ public:
 
     DECLARE_ASYNC_EVENT(ParameterLink, ParameterLink, paramLink, ENUM_LIST(LINK_UPDATED, PREVIEW_UPDATED, INPUT_VALUE_UPDATED, LIST_ITEM_UPDATED), !isLinkBeingDestroyed)
 
-    juce::WeakReference<Inspectable>::Master masterReference;
+    juce::WeakReference<ParameterLink>::Master masterReference;
 
 };
 
