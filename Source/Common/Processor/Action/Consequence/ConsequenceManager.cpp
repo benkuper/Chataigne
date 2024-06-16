@@ -37,6 +37,8 @@ ConsequenceManager::ConsequenceManager(const String& name, Multiplex* multiplex)
 	stagger->defaultUI = FloatParameter::TIME;
 	stagger->hideInEditor = true;
 
+	killDelaysOnTrigger = addBoolParameter("Cancel delays on Trigger", "If checked, this will ensure that when triggering, all previous delayed consequences are cancelled", false, false);
+
 	staggerProgression = addFloatParameter("Stagger Progression", "If stagger is used, this animates the progression of the stagger", 0, 0, 1);
 	staggerProgression->hideInEditor = true;
 	staggerProgression->setControllableFeedbackOnly(true);
@@ -52,7 +54,7 @@ ConsequenceManager::~ConsequenceManager()
 
 void ConsequenceManager::triggerAll(int multiplexIndex)
 {
-	if (killDelaysOnTrigger != nullptr && killDelaysOnTrigger->boolValue()) cancelDelayedConsequences();
+	if (killDelaysOnTrigger->boolValue()) cancelDelayedConsequences();
 
 	if (items.size() > 0)
 	{
@@ -91,18 +93,7 @@ void ConsequenceManager::setForceDisabled(bool value, bool force)
 void ConsequenceManager::updateKillDelayTrigger()
 {
 	bool showKill = items.size() > 1 && (delay->floatValue() > 0 || stagger->floatValue() > 0);
-	if (showKill)
-	{
-		if (killDelaysOnTrigger == nullptr) killDelaysOnTrigger = addBoolParameter("Cancel delays on Trigger", "If checked, this will ensure that when triggering, all previous delayed consequences are cancelled", false);
-	}
-	else
-	{
-		if (killDelaysOnTrigger != nullptr)
-		{
-			removeControllable(killDelaysOnTrigger);
-			killDelaysOnTrigger = nullptr;
-		}
-	}
+	killDelaysOnTrigger->setEnabled(showKill);
 
 }
 
