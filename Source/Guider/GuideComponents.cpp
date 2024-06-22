@@ -86,7 +86,7 @@ void GuideFocusComponent::paint(Graphics & g)
 	}
 
 	g.setColour(TEXT_COLOR);
-	g.setFont(30);
+	g.setFont(FontOptions(30));
 	g.drawFittedText(text, getLocalBounds().reduced(30), Justification::centred, 5);
 }
 

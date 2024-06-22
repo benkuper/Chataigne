@@ -25,7 +25,7 @@ void ConductorCueUI::paint(Graphics& g)
 {
 	ActionUI::paint(g);
 	g.setColour(bgColor.brighter(.2f));
-	g.setFont(indexRect.getHeight() - 4);
+	g.setFont(FontOptions(indexRect.getHeight() - 4));
 	g.drawFittedText(String(cue->index), indexRect, Justification::centred, 1);
 
 }

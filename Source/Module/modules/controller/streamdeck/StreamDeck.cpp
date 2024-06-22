@@ -59,7 +59,7 @@ void StreamDeck::setColor(int row, int column, Colour color, bool highlight, con
 	if (overlayText.isNotEmpty())
 	{
 		g.setColour(color.getPerceivedBrightness() > .5f ? Colours::black : Colours::white);
-		g.setFont(textSize);
+		g.setFont(FontOptions(textSize));
 		g.drawFittedText(overlayText, g.getClipBounds().reduced(2), Justification::centred, 5);
 	}
 
@@ -84,7 +84,7 @@ void StreamDeck::setImage(int row, int column, Image image, Colour tint, bool hi
 	if (overlayText.isNotEmpty())
 	{
 		g.setColour(tint.getPerceivedBrightness() > .5f ? Colours::black : Colours::white);
-		g.setFont(textSize);
+		g.setFont(FontOptions(textSize));
 		g.drawFittedText(overlayText, g.getClipBounds().reduced(5), Justification::centred, 5);
 	}
 

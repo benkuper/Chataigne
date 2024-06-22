@@ -153,6 +153,6 @@ void ChannelListModel::paintListBoxItem(int rowNumber, Graphics& g, int width, i
     Rectangle<float> r = Rectangle<float>(0, 0, width, height).reduced(4, 0);
     g.setColour(rowIsSelected ? GREEN_COLOR : TEXT_COLOR.darker(.3f));
     g.fillRoundedRectangle(r.removeFromRight(r.getHeight()).reduced(4), 2);
-    g.setFont(12);
+    g.setFont(FontOptions(12));
     g.drawText("Input #" + String(rowNumber + 1), r.reduced(2), Justification::centredLeft);
 }

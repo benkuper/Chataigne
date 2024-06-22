@@ -243,16 +243,8 @@
  //#define JUCE_USE_COREIMAGE_LOADER 1
 #endif
 
-#ifndef    JUCE_USE_DIRECTWRITE
- //#define JUCE_USE_DIRECTWRITE 1
-#endif
-
 #ifndef    JUCE_DISABLE_COREGRAPHICS_FONT_SMOOTHING
  //#define JUCE_DISABLE_COREGRAPHICS_FONT_SMOOTHING 0
-#endif
-
-#ifndef    JUCE_FLOAT_COLOURS
- #define   JUCE_FLOAT_COLOURS 1
 #endif
 
 //==============================================================================
@@ -293,6 +285,10 @@
  //#define JUCE_WEB_BROWSER 1
 #endif
 
+#ifndef    JUCE_USE_WIN_WEBVIEW2_WITH_STATIC_LINKING
+ //#define JUCE_USE_WIN_WEBVIEW2_WITH_STATIC_LINKING 0
+#endif
+
 #ifndef    JUCE_USE_WIN_WEBVIEW2
  #define   JUCE_USE_WIN_WEBVIEW2 1
 #endif
@@ -314,25 +310,6 @@
 
 #ifndef    ORGANICUI_USE_WEBSERVER
  #define   ORGANICUI_USE_WEBSERVER 1
-#endif
-
-//==============================================================================
-// juce_osc flags:
-
-#ifndef    JUCE_ALLOW_SPECIAL_CHARS_IN_ADDRESS
- #define   JUCE_ALLOW_SPECIAL_CHARS_IN_ADDRESS 1
-#endif
-
-#ifndef    JUCE_ENABLE_BROADCAST_BY_DEFAULT
- #define   JUCE_ENABLE_BROADCAST_BY_DEFAULT 1
-#endif
-
-#ifndef    JUCE_EXCLUSIVE_BINDING_BY_DEFAULT
- #define   JUCE_EXCLUSIVE_BINDING_BY_DEFAULT 1
-#endif
-
-#ifndef    JUCE_IP_AND_PORT_DETECTION
- #define   JUCE_IP_AND_PORT_DETECTION 1
 #endif
 
 //==============================================================================

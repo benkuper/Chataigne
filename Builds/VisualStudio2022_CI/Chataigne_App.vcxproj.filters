@@ -638,6 +638,24 @@
     <Filter Include="JUCE Modules\juce_core\files">
       <UniqueIdentifier>{7868764A-6572-381A-906C-9C26792A4C29}</UniqueIdentifier>
     </Filter>
+    <Filter Include="JUCE Modules\juce_core\javascript\choc\containers">
+      <UniqueIdentifier>{259B70B2-0C68-1990-EC86-42DAA564D388}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_core\javascript\choc\javascript">
+      <UniqueIdentifier>{19C3DF40-ABE4-49F7-CDD2-7A592EA01F73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_core\javascript\choc\math">
+      <UniqueIdentifier>{20DE6E65-B828-EB00-17F7-541D368DFA9B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_core\javascript\choc\platform">
+      <UniqueIdentifier>{5CCB85C1-6052-8F8C-FCA7-E34D5514A0EE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_core\javascript\choc\text">
+      <UniqueIdentifier>{375615B1-7B81-BB18-920B-926E88A78F9A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_core\javascript\choc">
+      <UniqueIdentifier>{17CA846A-C621-9676-4FBD-8B04DBAA4488}</UniqueIdentifier>
+    </Filter>
     <Filter Include="JUCE Modules\juce_core\javascript">
       <UniqueIdentifier>{03678508-A517-48BB-FB4A-485628C34E08}</UniqueIdentifier>
     </Filter>
@@ -790,6 +808,9 @@
     </Filter>
     <Filter Include="JUCE Modules\juce_gui_extra\code_editor">
       <UniqueIdentifier>{DF95D4BF-E18C-125A-5EBB-8993A06E232C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_gui_extra\detail">
+      <UniqueIdentifier>{E0FCBD5F-0B11-D78C-F786-52AB7FEE2383}</UniqueIdentifier>
     </Filter>
     <Filter Include="JUCE Modules\juce_gui_extra\documents">
       <UniqueIdentifier>{118946F2-AC24-0F09-62D5-753DF87A60CD}</UniqueIdentifier>
@@ -2638,6 +2659,9 @@
     <ClCompile Include="..\..\JUCE\modules\juce_core\juce_core.mm">
       <Filter>JUCE Modules\juce_core</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_core\juce_core_CompilationTime.cpp">
+      <Filter>JUCE Modules\juce_core</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_cryptography\encryption\juce_BlowFish.cpp">
       <Filter>JUCE Modules\juce_cryptography\encryption</Filter>
     </ClCompile>
@@ -2938,9 +2962,6 @@
     <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\misc\juce_FocusOutline.cpp">
       <Filter>JUCE Modules\juce_gui_basics\misc</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\misc\juce_JUCESplashScreen.cpp">
-      <Filter>JUCE Modules\juce_gui_basics\misc</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\mouse\juce_ComponentDragger.cpp">
       <Filter>JUCE Modules\juce_gui_basics\mouse</Filter>
     </ClCompile>
@@ -3041,6 +3062,9 @@
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_UIViewComponentPeer_ios.mm">
+      <Filter>JUCE Modules\juce_gui_basics\native</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_VBlank_windows.cpp">
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_Windowing_android.cpp">
@@ -3263,6 +3287,9 @@
       <Filter>JUCE Modules\juce_gui_extra\misc</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_gui_extra\misc\juce_WebBrowserComponent.cpp">
+      <Filter>JUCE Modules\juce_gui_extra\misc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_extra\misc\juce_WebControlRelays.cpp">
       <Filter>JUCE Modules\juce_gui_extra\misc</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_gui_extra\native\juce_ActiveXComponent_windows.cpp">
@@ -4216,6 +4243,9 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_core.cpp">
       <Filter>JUCE Library Code</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\include_juce_core_CompilationTime.cpp">
+      <Filter>JUCE Library Code</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_cryptography.cpp">
       <Filter>JUCE Library Code</Filter>
     </ClCompile>
@@ -4232,6 +4262,9 @@
       <Filter>JUCE Library Code</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_graphics.cpp">
+      <Filter>JUCE Library Code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\include_juce_graphics_Harfbuzz.cpp">
       <Filter>JUCE Library Code</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_gui_basics.cpp">
@@ -5391,6 +5424,39 @@
     <ClInclude Include="..\..\JUCE\modules\juce_core\files\juce_WildcardFileFilter.h">
       <Filter>JUCE Modules\juce_core\files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_core\javascript\choc\containers\choc_Value.h">
+      <Filter>JUCE Modules\juce_core\javascript\choc\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_core\javascript\choc\javascript\choc_javascript.h">
+      <Filter>JUCE Modules\juce_core\javascript\choc\javascript</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_core\javascript\choc\javascript\choc_javascript_QuickJS.h">
+      <Filter>JUCE Modules\juce_core\javascript\choc\javascript</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_core\javascript\choc\math\choc_MathHelpers.h">
+      <Filter>JUCE Modules\juce_core\javascript\choc\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_core\javascript\choc\platform\choc_Assert.h">
+      <Filter>JUCE Modules\juce_core\javascript\choc\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_core\javascript\choc\platform\choc_DisableAllWarnings.h">
+      <Filter>JUCE Modules\juce_core\javascript\choc\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_core\javascript\choc\platform\choc_ReenableAllWarnings.h">
+      <Filter>JUCE Modules\juce_core\javascript\choc\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_core\javascript\choc\text\choc_FloatToString.h">
+      <Filter>JUCE Modules\juce_core\javascript\choc\text</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_core\javascript\choc\text\choc_JSON.h">
+      <Filter>JUCE Modules\juce_core\javascript\choc\text</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_core\javascript\choc\text\choc_StringUtilities.h">
+      <Filter>JUCE Modules\juce_core\javascript\choc\text</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_core\javascript\choc\text\choc_UTF8.h">
+      <Filter>JUCE Modules\juce_core\javascript\choc\text</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_core\javascript\juce_Javascript.h">
       <Filter>JUCE Modules\juce_core\javascript</Filter>
     </ClInclude>
@@ -5485,6 +5551,9 @@
       <Filter>JUCE Modules\juce_core\misc</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_core\misc\juce_Functional.h">
+      <Filter>JUCE Modules\juce_core\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_core\misc\juce_OptionsHelpers.h">
       <Filter>JUCE Modules\juce_core\misc</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_core\misc\juce_Result.h">
@@ -5961,6 +6030,9 @@
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\detail\juce_ScopedMessageBoxInterface.h">
       <Filter>JUCE Modules\juce_gui_basics\detail</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\detail\juce_StandardCachedComponentImage.h">
+      <Filter>JUCE Modules\juce_gui_basics\detail</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\detail\juce_ToolbarItemDragAndDropOverlayComponent.h">
       <Filter>JUCE Modules\juce_gui_basics\detail</Filter>
     </ClInclude>
@@ -6166,9 +6238,6 @@
       <Filter>JUCE Modules\juce_gui_basics\misc</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\misc\juce_FocusOutline.h">
-      <Filter>JUCE Modules\juce_gui_basics\misc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\misc\juce_JUCESplashScreen.h">
       <Filter>JUCE Modules\juce_gui_basics\misc</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\mouse\juce_ComponentDragger.h">
@@ -6450,6 +6519,9 @@
     <ClInclude Include="..\..\JUCE\modules\juce_gui_extra\code_editor\juce_XMLCodeTokeniser.h">
       <Filter>JUCE Modules\juce_gui_extra\code_editor</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_gui_extra\detail\juce_WebControlRelayEvents.h">
+      <Filter>JUCE Modules\juce_gui_extra\detail</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_extra\documents\juce_FileBasedDocument.h">
       <Filter>JUCE Modules\juce_gui_extra\documents</Filter>
     </ClInclude>
@@ -6505,6 +6577,12 @@
       <Filter>JUCE Modules\juce_gui_extra\misc</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_extra\misc\juce_WebBrowserComponent.h">
+      <Filter>JUCE Modules\juce_gui_extra\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_gui_extra\misc\juce_WebControlParameterIndexReceiver.h">
+      <Filter>JUCE Modules\juce_gui_extra\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_gui_extra\misc\juce_WebControlRelays.h">
       <Filter>JUCE Modules\juce_gui_extra\misc</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_extra\native\juce_NSViewFrameWatcher_mac.h">
@@ -10432,6 +10510,12 @@
     </None>
     <None Include="..\..\Resources\tray_icon.png">
       <Filter>Chataigne\Resources</Filter>
+    </None>
+    <None Include="..\..\JUCE\modules\juce_core\javascript\choc\JUCE_CHANGES.txt">
+      <Filter>JUCE Modules\juce_core\javascript\choc</Filter>
+    </None>
+    <None Include="..\..\JUCE\modules\juce_core\javascript\choc\LICENSE.md">
+      <Filter>JUCE Modules\juce_core\javascript\choc</Filter>
     </None>
     <None Include="..\..\JUCE\modules\juce_core\native\java\README.txt">
       <Filter>JUCE Modules\juce_core\native\java</Filter>

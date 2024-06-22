@@ -27,6 +27,6 @@ void AboutWindow::paint(Graphics& g)
 	g.drawImage(aboutImage, getLocalBounds().toFloat());
 
 	g.setColour(TEXT_COLOR);
-	g.setFont(12);
+	g.setFont(FontOptions(12));
 	g.drawText(getApp().getApplicationName() + " " + getApp().getApplicationVersion(), getLocalBounds().removeFromBottom(30).removeFromRight(200).reduced(5).toFloat(), Justification::right);
 }

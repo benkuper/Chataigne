@@ -1,27 +1,27 @@
 /*
   ==============================================================================
 
-    ConversionConnector.cpp
-    Created: 4 Mar 2020 12:28:30am
-    Author:  bkupe
+	ConversionConnector.cpp
+	Created: 4 Mar 2020 12:28:30am
+	Author:  bkupe
 
   ==============================================================================
 */
 
-ConversionConnector::ConversionConnector(StringRef label, Parameter *param,  int valueIndex) :
+ConversionConnector::ConversionConnector(StringRef label, Parameter* param, int valueIndex) :
 	Component("Connector" + label),
 	isSource(true),
-    label(label),
+	label(label),
 	param(param),
 	convertedParam(nullptr),
-    valueIndex(valueIndex),
-    dropCandidate(false)
+	valueIndex(valueIndex),
+	dropCandidate(false)
 {
 	setRepaintsOnMouseActivity(true);
 }
 
-ConversionConnector::ConversionConnector(StringRef label, ConvertedParameter * param, int valueIndex) :
-	ConversionConnector(label, (Parameter *)nullptr,  valueIndex)
+ConversionConnector::ConversionConnector(StringRef label, ConvertedParameter* param, int valueIndex) :
+	ConversionConnector(label, (Parameter*)nullptr, valueIndex)
 {
 	isSource = false;
 	convertedParam = param;
@@ -36,11 +36,11 @@ void ConversionConnector::paint(Graphics& g)
 {
 	Rectangle<int> r = getLocalBounds();
 
-	g.setColour((isMouseOverOrDragging() || dropCandidate)?HIGHLIGHT_COLOR:TEXT_COLOR);
+	g.setColour((isMouseOverOrDragging() || dropCandidate) ? HIGHLIGHT_COLOR : TEXT_COLOR);
 	Rectangle<int> cr = isSource ? r.removeFromRight(r.getHeight()) : r.removeFromLeft(r.getHeight());
 	g.fillEllipse(cr.reduced(2).toFloat());
-	g.setFont(getHeight());
-	g.drawFittedText(label, r, isSource? Justification::centredRight : Justification::centredLeft, 1);
+	g.setFont(FontOptions(getHeight()));
+	g.drawFittedText(label, r, isSource ? Justification::centredRight : Justification::centredLeft, 1);
 }
 
 bool ConversionConnector::hitTest(int x, int y)

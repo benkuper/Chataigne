@@ -1,14 +1,14 @@
 /*
   ==============================================================================
 
-    CommandTemplateManagerUI.cpp
-    Created: 31 May 2018 11:29:19am
-    Author:  Ben
+	CommandTemplateManagerUI.cpp
+	Created: 31 May 2018 11:29:19am
+	Author:  Ben
 
   ==============================================================================
 */
 
-CommandTemplateManagerPanel::CommandTemplateManagerPanel(const String &_name) :
+CommandTemplateManagerPanel::CommandTemplateManagerPanel(const String& _name) :
 	ShapeShifterContentComponent(_name),
 	module(nullptr)
 {
@@ -19,10 +19,10 @@ CommandTemplateManagerPanel::CommandTemplateManagerPanel(const String &_name) :
 
 	if (!InspectableSelectionManager::mainSelectionManager->isEmpty())
 	{
-		Inspectable * i = InspectableSelectionManager::mainSelectionManager->currentInspectables[0];
-		Module * m = dynamic_cast<Module *>(i);
-		if(m != nullptr) editModule(m);
-		
+		Inspectable* i = InspectableSelectionManager::mainSelectionManager->currentInspectables[0];
+		Module* m = dynamic_cast<Module*>(i);
+		if (m != nullptr) editModule(m);
+
 	}
 }
 
@@ -33,7 +33,7 @@ CommandTemplateManagerPanel::~CommandTemplateManagerPanel()
 }
 
 
-void CommandTemplateManagerPanel::editModule(Module * _module)
+void CommandTemplateManagerPanel::editModule(Module* _module)
 {
 	if (_module == module) return;
 
@@ -62,14 +62,14 @@ void CommandTemplateManagerPanel::resized()
 	if (modelManagerUI != nullptr) modelManagerUI->setBounds(getLocalBounds().reduced(2));
 }
 
-void CommandTemplateManagerPanel::paint(Graphics & g)
+void CommandTemplateManagerPanel::paint(Graphics& g)
 {
 	//ShapeShifterContentComponent::paint(g);
 
 	if (module == nullptr)
 	{
 		g.setColour(Colours::white.withAlpha(.4f));
-		g.setFont(16);
+		g.setFont(FontOptions(16));
 		g.drawFittedText("Select a Module to edit its command models or create new ones", getLocalBounds().reduced(20), Justification::centred, 6);
 	}
 }
@@ -77,19 +77,19 @@ void CommandTemplateManagerPanel::paint(Graphics & g)
 void CommandTemplateManagerPanel::inspectablesSelectionChanged()
 {
 	if (InspectableSelectionManager::mainSelectionManager->isEmpty()) return;
-	Inspectable * i = InspectableSelectionManager::mainSelectionManager->currentInspectables[0];
-	Module * m = dynamic_cast<Module *>(i);
+	Inspectable* i = InspectableSelectionManager::mainSelectionManager->currentInspectables[0];
+	Module* m = dynamic_cast<Module*>(i);
 	if (m != nullptr) editModule(m);
 }
 
-void CommandTemplateManagerPanel::inspectableDestroyed(Inspectable * i)
+void CommandTemplateManagerPanel::inspectableDestroyed(Inspectable* i)
 {
 	if (module == i) editModule(nullptr);
 }
 
 //ManagerUI
 
-CommandTemplateManagerUI::CommandTemplateManagerUI(CommandTemplateManager * manager, const String &moduleName) :
+CommandTemplateManagerUI::CommandTemplateManagerUI(CommandTemplateManager* manager, const String& moduleName) :
 	BaseManagerUI("Command Templates for " + moduleName, manager)
 {
 	drawContour = true;

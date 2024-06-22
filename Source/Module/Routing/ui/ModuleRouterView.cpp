@@ -35,11 +35,11 @@ ModuleRouterView::ModuleRouterView() :
 	feedbackLabel.setColour(Label::textColourId, Colours::grey);
 	outParamsLabel.setColour(Label::textColourId, Colours::grey);
 	
-	sourceLabel.setFont(12);
-	destLabel.setFont(12);
-	sourceValueLabel.setFont(12);
-	feedbackLabel.setFont(12);
-	outParamsLabel.setFont(12);
+	sourceLabel.setFont(FontOptions(12));
+	destLabel.setFont(FontOptions(12));
+	sourceValueLabel.setFont(FontOptions(12));
+	feedbackLabel.setFont(FontOptions(12));
+	outParamsLabel.setFont(FontOptions(12));
 
 
 	addAndMakeVisible(&sourceLabel);

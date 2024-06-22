@@ -20,17 +20,17 @@ CommunityModuleInfoEditor::CommunityModuleInfoEditor(CommunityModuleInfo * cmi, 
 	description.setColour(description.shadowColourId, Colours::transparentBlack);
 	description.setColour(description.textColourId, TEXT_COLOR);
 	description.setText(cmi->description);
-	urlLabel.setFont(14);
+	urlLabel.setFont(FontOptions(14));
 
 	urlLabel.setEditable(false);
 	urlLabel.setColour(urlLabel.textColourId, BLUE_COLOR);
-	urlLabel.setFont(12);
+	urlLabel.setFont(FontOptions(12));
 	urlLabel.setMouseCursor(MouseCursor::PointingHandCursor);
 	urlLabel.addMouseListener(this, false);
 
 	versionsLabel.setEditable(false);
 	versionsLabel.setColour(urlLabel.textColourId, TEXT_COLOR);
-	versionsLabel.setFont(12);
+	versionsLabel.setFont(FontOptions(12));
 	versionsLabel.setJustificationType(Justification::centredRight);
 
 	

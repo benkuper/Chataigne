@@ -18,7 +18,7 @@ ModuleRouterValueEditor::ModuleRouterValueEditor(ModuleRouterValue * mrv) :
 	addAndMakeVisible(valueUI.get());
 
 	valueLabel.setColour(valueLabel.textColourId, TEXTNAME_COLOR);
-	valueLabel.setFont(10);
+	valueLabel.setFont(FontOptions(10));
 	valueLabel.setText(item->sourceValue->niceName,dontSendNotification);
 
 	addAndMakeVisible(&valueLabel);

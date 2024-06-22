@@ -14,7 +14,7 @@ EnablingNetworkControllableContainerEditor::EnablingNetworkControllableContainer
 	StringArray ips = NetworkHelpers::getLocalIPs();
 	ipLabel.setText("IPs : "+ips.joinIntoString(","),dontSendNotification);
 	ipLabel.setColour(ipLabel.textColourId, TEXTNAME_COLOR);
-	ipLabel.setFont(headerHeight - 6);
+	ipLabel.setFont(FontOptions(headerHeight - 6));
 	addAndMakeVisible(&ipLabel);
 }
 
