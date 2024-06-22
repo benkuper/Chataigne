@@ -242,7 +242,7 @@ void CustomOSCModule::processMessageInternal(const OSCMessage& msg)
 			break;
 
 		case 1:
-			if (msg[0].isTorF())
+			if (msg[0].isBool())
 			{
 				c = new BoolParameter(cNiceName, "", msg[0].getBool());
 			}

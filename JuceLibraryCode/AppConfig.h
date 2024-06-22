@@ -313,6 +313,25 @@
 #endif
 
 //==============================================================================
+// juce_osc flags:
+
+#ifndef    JUCE_ALLOW_SPECIAL_CHARS_IN_ADDRESS
+ #define   JUCE_ALLOW_SPECIAL_CHARS_IN_ADDRESS 1
+#endif
+
+#ifndef    JUCE_ENABLE_BROADCAST_BY_DEFAULT
+ #define   JUCE_ENABLE_BROADCAST_BY_DEFAULT 1
+#endif
+
+#ifndef    JUCE_EXCLUSIVE_BINDING_BY_DEFAULT
+ #define   JUCE_EXCLUSIVE_BINDING_BY_DEFAULT 1
+#endif
+
+#ifndef    JUCE_IP_AND_PORT_DETECTION
+ #define   JUCE_IP_AND_PORT_DETECTION 1
+#endif
+
+//==============================================================================
 // juce_sharedtexture flags:
 
 #ifndef    SHAREDTEXTURE_USE_CPU_IMAGE
