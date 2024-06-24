@@ -9,6 +9,7 @@
 */
 
 #include "Module/ModuleIncludes.h"
+#include "ModuleFactory.h"
 
 ModuleFactory::ModuleFactory() {
 
@@ -137,10 +138,10 @@ void ModuleFactory::addCustomModulesInFolder(File folder, bool isLocal, bool log
 
 				if (!isLocal)
 				{
-					if (CommunityModuleInfo* info = CommunityModuleManager::getInstance()->getModuleInfoForFolder(m))
-					{
-						info->updateLocalData();
-					}
+					//if (CommunityModuleInfo* info = CommunityModuleManager::getInstance()->getModuleInfoForFolder(m))
+					//{
+					//	info->updateLocalData();
+					//}
 				}
 
 				Image img = ImageCache::getFromFile(m.getChildFile("icon.png"));
@@ -167,6 +168,18 @@ var ModuleFactory::getCustomModuleInfo(StringRef moduleName)
 {
 	if (!customModulesDefMap.contains(moduleName)) return var();
 	return customModulesDefMap[moduleName]->customModuleData;
+}
+
+var ModuleFactory::getCustomModulesInfo()
+{
+	var data;
+	HashMap<String, ModuleDefinition*>::Iterator it(customModulesDefMap);
+	while (it.next())
+	{
+		data.append(it.getValue()->customModuleData);
+
+	}
+	return data;
 }
 
 void ModuleFactory::setModuleNewVersionAvailable(StringRef moduleName, bool newVersionAvailable)
@@ -247,7 +260,7 @@ Module* ModuleFactory::createFromMenuResult(int result)
 {
 	if (result == -1)
 	{
-		CommunityModuleManager::getInstance()->selectThis();
+		ShapeShifterManager::getInstance()->showContent(CommunityModulePanel::getPanelName());
 		return nullptr;
 	}
 

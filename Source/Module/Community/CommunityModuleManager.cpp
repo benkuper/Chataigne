@@ -1,135 +1,74 @@
 /*
   ==============================================================================
 
-    CommunityModuleManager.cpp
-    Created: 29 Jan 2019 3:52:46pm
-    Author:  bkupe
+	CommunityModuleManager.cpp
+	Created: 29 Jan 2019 3:52:46pm
+	Author:  bkupe
 
   ==============================================================================
 */
 
 juce_ImplementSingleton(CommunityModuleManager)
 
-CommunityModuleManager::CommunityModuleManager() :
-	BaseManager("Community Modules"),
-	Thread("communityModules")
+CommunityModuleManager::CommunityModuleManager()
 {
-	userCanAddItemsManually = false;
-    selectItemWhenCreated = false;
-	startThread();
 }
 
 CommunityModuleManager::~CommunityModuleManager()
 {
-	stopThread(5000);
 }
 
-void CommunityModuleManager::run()
+
+bool CommunityModuleManager::installModule(const String& url, const String& moduleName)
 {
-	wait(500);
+	installingModuleName = moduleName;
+	File df = getDownloadFilePath(installingModuleName);
+	if (df.exists()) df.deleteFile();
 
-	var data = getJSONDataForURL(URL("https://benjamin.kuperberg.fr/chataigne/releases/modules.json"));
-	
-	if (threadShouldExit()) return;
+	DBG("Download to file " << url << " > " << df.getFullPathName());
 
-	if (!data.isObject())
+	downloadTask = nullptr;
+	downloadTask = URL(url).downloadToFile(df, URL::DownloadTaskOptions().withListener(this));
+
+	if (downloadTask == nullptr)
 	{
-		LOGWARNING("Error fetching community modules, wrong data format.");
+		LOGERROR("Error trying to download module " + moduleName);
+		return false;
+	}
+
+	return true;
+}
+
+File CommunityModuleManager::getDownloadFilePath(const String& moduleName)
+{
+	File tmpFolder = File::getSpecialLocation(File::tempDirectory).getChildFile("Chataigne");
+	if (!tmpFolder.exists()) tmpFolder.createDirectory();
+	return tmpFolder.getChildFile(moduleName + ".zip");
+}
+
+void CommunityModuleManager::finished(URL::DownloadTask* task, bool success)
+{
+	if (!success)
+	{
+		LOGERROR("Error while downloading " + installingModuleName + ",\ntry downloading it directly from the website.\nError code : " + String(task->statusCode()));
 		return;
 	}
 
-	var defs = data.getProperty("definitions", var());
-	
-	if (!defs.isArray()) return;
+	File moduleFile = getDownloadFilePath(installingModuleName);
+	File modulesDir = ModuleManager::getInstance()->factory->getCustomModulesFolder();
 
-	for (int i = 0; i < defs.size(); ++i)
-	{
-		if (threadShouldExit()) return;
+	File moduleFolder = modulesDir.getChildFile(installingModuleName);
+	if (moduleFolder.exists()) moduleFolder.deleteRecursively();
 
-		String defURL = defs[i].toString();
-		if (defURL.isEmpty()) continue;
+	ZipFile zip(moduleFile);
+	zip.uncompressTo(modulesDir);
 
-		var moduleDefData = getJSONDataForURL(URL(defURL));
-
-		if (!moduleDefData.isObject())
-		{
-			LOGWARNING("Community Module definition file is not valid : " << defURL);
-			continue;
-		}
-
-		String moduleName = moduleDefData.getProperty("name", "");
-
-		if (moduleName.isEmpty()) {
-			DBG("Module name is empty !");
-			continue;
-		}
-
-		CommunityModuleInfo * m = new CommunityModuleInfo(moduleName, moduleDefData);
-		addItem(m, var(), false);
-	}
-	
-	LOG("Finished fetching Community modules.");
-
-	bool showUpdate = false;
-	for (auto& i : items)
-	{
-		if (i->status == CommunityModuleInfo::NEW_VERSION_AVAILABLE)
-		{
-			showUpdate = true;
-			break;
-		}
-	}
-
-	if (showUpdate)
-	{
-		LOG("Some Community Modules have an update available. Quick quick, check it out !");
-	}
+	ModuleManager::getInstance()->factory->updateCustomModules();
+	moduleFolder = ModuleManager::getInstance()->factory->getFolderForCustomModule(installingModuleName);
 }
 
-var CommunityModuleManager::getJSONDataForURL(URL url)
+void CommunityModuleManager::progress(URL::DownloadTask* /*task*/, int64 /*bytesDownloaded*/, int64 /*totalLength*/)
 {
-	StringPairArray responseHeaders;
-	int statusCode = 0;
-
-	std::unique_ptr<InputStream> stream(url.createInputStream(
-		URL::InputStreamOptions(URL::ParameterHandling::inAddress)
-		.withExtraHeaders("Cache-Control: no-cache")
-		.withConnectionTimeoutMs(2000)
-		.withProgressCallback(std::bind(&CommunityModuleManager::openStreamProgressCallback, this, std::placeholders::_1, std::placeholders::_2))
-		.withResponseHeaders(&responseHeaders)
-		.withStatusCode(&statusCode)
-	));
-
-	if (threadShouldExit()) return var();
-
-#if JUCE_WINDOWS
-	if (statusCode != 200)
-	{
-		LOGWARNING("Failed to connect, status code = " + String(statusCode));
-		return var();
-	}
-#endif
-
-    
-	if (stream != nullptr)
-	{
-		String content = stream->readEntireStreamAsString();
-		var data = JSON::parse(content);
-		return data;
-    }else{
-        DBG("Error with url request : " << statusCode);
-    }
-
-	return var();
-}
-
-CommunityModuleInfo* CommunityModuleManager::getModuleInfoForFolder(const File &folder)
-{
-	for (auto& i : items) if (i->localModuleFolder == folder) return i;
-	return nullptr;
-}
-
-bool CommunityModuleManager::openStreamProgressCallback(int, int)
-{
-	return !threadShouldExit();
+	//float percent = (int)(bytesDownloaded * 100.0f / totalLength);
+	//LOG("Installing " << installingModuleName << "... " << percent << "%");
 }

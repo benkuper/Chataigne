@@ -20,9 +20,8 @@
 #include "Common/CommonIncludes.h"
 #include "Common/Command/CommandIncludes.h"
 
-#include "Community/CommunityModuleInfo.h"
 #include "Community/CommunityModuleManager.h"
-#include "Community/ui/CommunityModuleInfoEditor.h"
+#include "Community/ui/CommunityModulePanel.h"
 
 #include "Routing/ModuleRouterValue.h"
 #include "Routing/ModuleRouter.h"

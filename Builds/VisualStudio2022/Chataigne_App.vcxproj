@@ -561,10 +561,7 @@
     <ClCompile Include="..\..\Source\CustomVariables\CVGroupManager.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Module\Community\ui\CommunityModuleInfoEditor.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Module\Community\CommunityModuleInfo.cpp">
+    <ClCompile Include="..\..\Source\Module\Community\ui\CommunityModulePanel.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\Community\CommunityModuleManager.cpp">
@@ -3103,8 +3100,7 @@
     <ClInclude Include="..\..\Source\CustomVariables\CustomVariablesIncludes.h"/>
     <ClInclude Include="..\..\Source\CustomVariables\CVGroup.h"/>
     <ClInclude Include="..\..\Source\CustomVariables\CVGroupManager.h"/>
-    <ClInclude Include="..\..\Source\Module\Community\ui\CommunityModuleInfoEditor.h"/>
-    <ClInclude Include="..\..\Source\Module\Community\CommunityModuleInfo.h"/>
+    <ClInclude Include="..\..\Source\Module\Community\ui\CommunityModulePanel.h"/>
     <ClInclude Include="..\..\Source\Module\Community\CommunityModuleManager.h"/>
     <ClInclude Include="..\..\Source\Module\modules\ble\BLEModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\mqtt\ui\MQTTModuleUI.h"/>
@@ -5046,4 +5042,7 @@
     <Import Project="packages\Microsoft.Web.WebView2.1.0.1901.177\build\native\Microsoft.Web.WebView2.targets"
             Condition="Exists('packages\Microsoft.Web.WebView2.1.0.1901.177\build\native\Microsoft.Web.WebView2.targets')"/>
   </ImportGroup>
+  <PropertyGroup>
+    <WebView2LoaderPreference>Static</WebView2LoaderPreference>
+  </PropertyGroup>
 </Project>

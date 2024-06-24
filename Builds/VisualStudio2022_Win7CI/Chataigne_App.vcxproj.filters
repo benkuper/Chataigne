@@ -1678,11 +1678,8 @@
     <ClCompile Include="..\..\Source\CustomVariables\CVGroupManager.cpp">
       <Filter>Chataigne\Source\CustomVariables</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Module\Community\ui\CommunityModuleInfoEditor.cpp">
+    <ClCompile Include="..\..\Source\Module\Community\ui\CommunityModulePanel.cpp">
       <Filter>Chataigne\Source\Module\Community\ui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Module\Community\CommunityModuleInfo.cpp">
-      <Filter>Chataigne\Source\Module\Community</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\Community\CommunityModuleManager.cpp">
       <Filter>Chataigne\Source\Module\Community</Filter>
@@ -4752,11 +4749,8 @@
     <ClInclude Include="..\..\Source\CustomVariables\CVGroupManager.h">
       <Filter>Chataigne\Source\CustomVariables</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Module\Community\ui\CommunityModuleInfoEditor.h">
+    <ClInclude Include="..\..\Source\Module\Community\ui\CommunityModulePanel.h">
       <Filter>Chataigne\Source\Module\Community\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Module\Community\CommunityModuleInfo.h">
-      <Filter>Chataigne\Source\Module\Community</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\Community\CommunityModuleManager.h">
       <Filter>Chataigne\Source\Module\Community</Filter>

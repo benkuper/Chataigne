@@ -37,9 +37,8 @@
 
 #include "ModuleManager.cpp"
 
-#include "Community/CommunityModuleInfo.cpp"
 #include "Community/CommunityModuleManager.cpp"
-#include "Community/ui/CommunityModuleInfoEditor.cpp"
+#include "Community/ui/CommunityModulePanel.cpp"
 
 #include "Routing/ModuleRouter.cpp"
 #include "Routing/ModuleRouterController.cpp"

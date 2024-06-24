@@ -43,6 +43,7 @@ public:
 	void addCustomModulesInFolder(File folder, bool isLocal, bool log = true);
 	void updateCustomModules(bool log = true);
 	var getCustomModuleInfo(StringRef moduleName);
+	var getCustomModulesInfo();
 	void setModuleNewVersionAvailable(StringRef moduleName, bool newVersionAvailable);
 	File getFolderForCustomModule(StringRef moduleName) const;
 	File getCustomModulesFolder() const;

@@ -750,15 +750,11 @@
       <GROUP id="{8FC20544-FEBB-B3BA-CF48-50962AA7C07C}" name="Module">
         <GROUP id="{A24B14A8-FF67-ADCB-9E46-46C5033BFA49}" name="Community">
           <GROUP id="{B0B256D2-DAF2-F548-FCFC-1DCE42C15269}" name="ui">
-            <FILE id="mF1hZz" name="CommunityModuleInfoEditor.cpp" compile="0"
-                  resource="0" file="Source/Module/Community/ui/CommunityModuleInfoEditor.cpp"/>
-            <FILE id="o923lk" name="CommunityModuleInfoEditor.h" compile="0" resource="0"
-                  file="Source/Module/Community/ui/CommunityModuleInfoEditor.h"/>
+            <FILE id="tOcUPR" name="CommunityModulePanel.cpp" compile="0" resource="0"
+                  file="Source/Module/Community/ui/CommunityModulePanel.cpp"/>
+            <FILE id="ZQKGNa" name="CommunityModulePanel.h" compile="0" resource="0"
+                  file="Source/Module/Community/ui/CommunityModulePanel.h"/>
           </GROUP>
-          <FILE id="V0waQO" name="CommunityModuleInfo.cpp" compile="0" resource="0"
-                file="Source/Module/Community/CommunityModuleInfo.cpp"/>
-          <FILE id="VvXghT" name="CommunityModuleInfo.h" compile="0" resource="0"
-                file="Source/Module/Community/CommunityModuleInfo.h"/>
           <FILE id="l8HbuY" name="CommunityModuleManager.cpp" compile="0" resource="0"
                 file="Source/Module/Community/CommunityModuleManager.cpp"/>
           <FILE id="F78gHh" name="CommunityModuleManager.h" compile="0" resource="0"
@@ -2006,7 +2002,8 @@
                JUCE_USE_MP3AUDIOFORMAT="1" JUCE_USE_LAME_AUDIO_FORMAT="1" JUCE_USE_WINDOWS_MEDIA_FORMAT="1"
                JUCE_ENABLE_BROADCAST_BY_DEFAULT="1" JUCE_EXCLUSIVE_BINDING_BY_DEFAULT="1"
                ORGANICUI_USE_WEBSERVER="1" JUCE_USE_WINRT_MIDI="0" JUCE_IP_AND_PORT_DETECTION="1"
-               ORGANICUI_USE_SHAREDTEXTURE="1" JUCE_USE_WIN_WEBVIEW2="1" JUCE_FLOAT_COLOURS="1"/>
+               ORGANICUI_USE_SHAREDTEXTURE="1" JUCE_USE_WIN_WEBVIEW2="1" JUCE_FLOAT_COLOURS="1"
+               JUCE_USE_WIN_WEBVIEW2_WITH_STATIC_LINKING="1"/>
   <LIVE_SETTINGS>
     <WINDOWS/>
     <OSX/>

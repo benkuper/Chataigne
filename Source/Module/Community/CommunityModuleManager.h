@@ -11,8 +11,7 @@
 #pragma once
 
 class CommunityModuleManager :
-	public BaseManager<CommunityModuleInfo>,
-	public Thread
+	public URL::DownloadTask::Listener
 {
 public:
 	juce_DeclareSingleton(CommunityModuleManager, true);
@@ -20,11 +19,11 @@ public:
 	CommunityModuleManager();
 	~CommunityModuleManager();
 
-	void run() override;
+	std::unique_ptr<URL::DownloadTask> downloadTask;
+	String installingModuleName;
 
-	var getJSONDataForURL(URL url);
-
-	CommunityModuleInfo* getModuleInfoForFolder(const File & folder);
-
-	bool openStreamProgressCallback(int /*bytesSent*/, int /*totalBytes*/);
+	bool installModule(const String& url, const String& moduleName);
+	File getDownloadFilePath(const String& moduleName);
+	virtual void progress(URL::DownloadTask* task, int64 bytesDownloaded, int64 totalLength) override;
+	virtual void finished(URL::DownloadTask* task, bool success) override;
 };

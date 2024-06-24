@@ -238,7 +238,7 @@ bool MainContentComponent::perform(const InvocationInfo& info)
 
 
 	case ChataigneCommandIDs::goToCommunityModules:
-		CommunityModuleManager::getInstance()->selectThis();
+		ShapeShifterManager::getInstance()->showContent(CommunityModulePanel::getPanelName());
 		break;
 
 	case ChataigneCommandIDs::reloadCustomModules:
