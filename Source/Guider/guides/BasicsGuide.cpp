@@ -138,15 +138,26 @@ void BasicsGuide::handleStep(int step)
 
 	case EDIT_CONDITION:
 	{
-		Rectangle<int> r = getLocalArea(ce->comparatorUI.get(), ce->comparatorUI->getLocalBounds()).expanded(10);
-		fc.setFocus(r, fc.RECTANGLE, "When should this action trigger ? Choose the \"=\" condition in the menu, then type a key in the field next to it, for example \"P\".");
+		for (int i = 0; i < cme->manager->items.size(); ++i)
+		{
+			ce = dynamic_cast<StandardConditionEditor*>(cme->getEditorForInspectable(cme->manager->items[i]));
+			if (ce != nullptr && condition == nullptr) break;
+		}
+		if (ce->comparatorUI != nullptr)
+		{
+			Rectangle<int> r = getLocalArea(ce->comparatorUI.get(), ce->comparatorUI->getLocalBounds()).expanded(10);
+			fc.setFocus(r, fc.RECTANGLE, "When should this action trigger ? Choose the \"=\" condition in the menu, then type a key in the field next to it, for example \"P\".");
+		}
 	}
 	break;
 
 	case OBSERVE_CONDITION:
 	{
-		Rectangle<int> r = getLocalArea(cme, cme->getLocalBounds());
-		fc.setFocus(r, fc.RECTANGLE, "Pressing the \"P\" key on your keyboard will now validate the condition. You can see that the background turns green whenever you hit the key.", "Yay! Let's do something useful now");
+		if (cme != nullptr)
+		{
+			Rectangle<int> r = getLocalArea(cme, cme->getLocalBounds());
+			fc.setFocus(r, fc.RECTANGLE, "Pressing the \"P\" key on your keyboard will now validate the condition. You can see that the background turns green whenever you hit the key.", "Yay! Let's do something useful now");
+		}
 	}
 	break;
 
@@ -218,7 +229,8 @@ void BasicsGuide::newMessage(const StandardCondition::ConditionEvent & e)
 				{
 					conditionReference = p;
 					conditionReference->addAsyncParameterListener(this);
-					nextStep();
+					auto nsFunc = std::bind(&BasicsGuide::nextStep, this);
+					Timer::callAfterDelay(500, nsFunc);
 				}
 			} 
 		}
