@@ -27,22 +27,25 @@ MainContentComponent::~MainContentComponent()
 
 void MainContentComponent::init()
 {
-	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Module Router", &ModuleRouterPanelView::create));
+	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Module Router", &ModuleRouterPanelView::create, StateMachineView::getPanelName()));
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Modules", &ModuleManagerUI::create));
-	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition(CommunityModulePanel::getPanelName(), &CommunityModulePanel::create));
+	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition(CommunityModulePanel::getPanelName(), &CommunityModulePanel::create, StateMachineView::getPanelName()));
 
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Custom Variables", &CVGroupManagerUI::create));
-	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Morpher", &MorpherPanel::create));
+	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Morpher", &MorpherPanel::create, StateMachineView::getPanelName()));
 
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Sequences", &createSequenceManagerUI));
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Sequence Editor", &TimeMachineView::create));
 
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("States", &StateManagerUI::create));
-	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("State Machine", &StateMachineView::create));
+	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition(StateMachineView::getPanelName(), &StateMachineView::create));
 
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Command Templates", &CommandTemplateManagerPanel::create));
 
+
 	OrganicMainContentComponent::init();
+
+	ShapeShifterFactory::getInstance()->getDefinitionForContentName(DashboardManagerView::getPanelName())->attachToContentName = StateMachineView::getPanelName();
 
 	String lastVersion = getAppProperties().getUserSettings()->getValue("lastVersion", "");
 
@@ -67,7 +70,7 @@ SequenceManagerUI* MainContentComponent::createSequenceManagerUI(const String& n
 void MainContentComponent::parameterAddToContextMenu(ControllableUI* ui, PopupMenu* m)
 {
 	if (ui->controllable.wasObjectDeleted() || ui->controllable->type == Controllable::TRIGGER || ui->controllable->isControllableFeedbackOnly) return;
-	
+
 	{
 		PopupMenu cvMenu;
 		for (auto& g : CVGroupManager::getInstance()->items)
@@ -76,21 +79,21 @@ void MainContentComponent::parameterAddToContextMenu(ControllableUI* ui, PopupMe
 		}
 		m->addSubMenu("Add & Link to Custom Variable...", cvMenu);
 	}
-	
+
 	{
-		Module * genericModule = static_cast<ChataigneEngine*>(Engine::mainEngine)->module.get();
+		Module* genericModule = static_cast<ChataigneEngine*>(Engine::mainEngine)->module.get();
 		CommandDefinition* commandDef = genericModule->defManager->getCommandDefinitionFor("", "Set Parameter Value");
-		static const auto addOutput = [] (MappingLayer* layer, CommandDefinition* commandDef, Controllable* target)
-		{
-			MappingOutput* output = layer->mapping->om.createItem();
-			output->setCommand(commandDef);
-			GenericControllableCommand* command = dynamic_cast<GenericControllableCommand*>(output->command.get());
-			if (command)
+		static const auto addOutput = [](MappingLayer* layer, CommandDefinition* commandDef, Controllable* target)
 			{
-				command->target->setValueFromTarget(target);
-			}
-			layer->mapping->om.addItem(output);
-		};
+				MappingOutput* output = layer->mapping->om.createItem();
+				output->setCommand(commandDef);
+				GenericControllableCommand* command = dynamic_cast<GenericControllableCommand*>(output->command.get());
+				if (command)
+				{
+					command->target->setValueFromTarget(target);
+				}
+				layer->mapping->om.addItem(output);
+			};
 
 		PopupMenu seqMenu;
 		for (auto& sequence : ChataigneSequenceManager::getInstance()->items)
@@ -119,10 +122,10 @@ void MainContentComponent::parameterAddToContextMenu(ControllableUI* ui, PopupMe
 					}
 					else
 					{
-						Mapping1DLayer * mapping1DLayer = Mapping1DLayer::create(sequence, {});
+						Mapping1DLayer* mapping1DLayer = Mapping1DLayer::create(sequence, {});
 						if (Parameter* parameter = dynamic_cast<Parameter*>(controllable))
 						{
-							if (parameter->hasRange() && 
+							if (parameter->hasRange() &&
 								(dynamic_cast<FloatParameter*>(controllable) || dynamic_cast<IntParameter*>(controllable))
 								)
 							{

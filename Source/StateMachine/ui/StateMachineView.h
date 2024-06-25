@@ -64,6 +64,7 @@ public:
 
 	static StateMachineView* create(const String& contentName) { return new StateMachineView(contentName, StateManager::getInstance()); }
 
+	static const String getPanelName() { return "State Machine"; }
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(StateMachineView)
 };
