@@ -9,6 +9,7 @@
 */
 
 #include "Module/ModuleIncludes.h"
+#include "AudioModule.h"
 
 AudioModule::AudioModule(const String& name) :
 	Module(name),
@@ -169,10 +170,10 @@ void AudioModule::updateAudioSetup()
 	int numSelectedInputChannelsInSetup = setup.inputChannels.countNumberOfSetBits();
 	int numSelectedOutputChannelsInSetup = setup.outputChannels.countNumberOfSetBits();
 
+	graph.suspendProcessing(true);
+
 	graph.setPlayConfigDetails(numSelectedInputChannelsInSetup, numSelectedOutputChannelsInSetup, currentSampleRate, currentBufferSize);
 	graph.prepareToPlay(currentSampleRate, currentBufferSize);
-
-	graph.suspendProcessing(true);
 
 	var mData = monitorParams.getJSONData();
 	for (auto& c : monitorOutChannels) monitorParams.removeControllable(c);
@@ -235,11 +236,14 @@ void AudioModule::updateAudioSetup()
 	audioModuleListeners.call(&AudioModuleListener::audioSetupChanged);
 	audioModuleListeners.call(&AudioModuleListener::monitorSetupChanged);
 
+	setupPitchDetector();
+
 	if (setup.outputDeviceName.isEmpty()) setWarningMessage("Module is not connected to an audio output");
 	else clearWarning();
 
 	am.addAudioCallback(&player);
 	am.addAudioCallback(this);
+
 
 	graph.suspendProcessing(false);
 }
@@ -258,6 +262,23 @@ void AudioModule::updateSelectedMonitorChannels()
 	numActiveMonitorOutputs = selectedMonitorOutChannels.size();
 }
 
+void AudioModule::setupPitchDetector()
+{
+	if (pitchDetectionMethod != nullptr) pitchDetector.reset();
+
+	PitchDetectionMethod pdm = pitchDetectionMethod->getValueDataAsEnum<PitchDetectionMethod>();
+
+	AudioDeviceManager::AudioDeviceSetup s;
+	am.getAudioDeviceSetup(s);
+
+	switch (pdm)
+	{
+	case NONE: pitchDetector.reset(nullptr); break;
+	case MPM: pitchDetector.reset(new PitchMPM((int)s.sampleRate, s.bufferSize));  break;
+	case YIN: pitchDetector.reset(new PitchYIN((int)s.sampleRate, s.bufferSize)); break;
+	}
+}
+
 void AudioModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
 {
 	Module::onControllableFeedbackUpdateInternal(cc, c);
@@ -268,18 +289,9 @@ void AudioModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc
 	}
 	else if (c == pitchDetectionMethod)
 	{
-		PitchDetectionMethod pdm = pitchDetectionMethod->getValueDataAsEnum<PitchDetectionMethod>();
-
-		AudioDeviceManager::AudioDeviceSetup s;
-		am.getAudioDeviceSetup(s);
-
-
-		switch (pdm)
-		{
-		case NONE: pitchDetector.reset(nullptr); break;
-		case MPM: pitchDetector.reset(new PitchMPM((int)s.sampleRate, s.bufferSize));  break;
-		case YIN: pitchDetector.reset(new PitchYIN((int)s.sampleRate, s.bufferSize)); break;
-		}
+		graph.suspendProcessing(true);
+		setupPitchDetector();
+		graph.suspendProcessing(false);
 
 	}
 	else if (c == ltcFPS)
@@ -374,9 +386,9 @@ void AudioModule::audioDeviceIOCallbackWithContext(const float* const* inputChan
 
 				if (pitchDetector != nullptr)
 				{
-					if ((int)pitchDetector->getBufferSize() != numSamples) pitchDetector->setBufferSize(numSamples);
-
-					if (inputChannelData[0][0] >= 0)
+					jassert((int)pitchDetector->getBufferSize() == numSamples);
+					
+					if (inputChannelData[0][0] >= 0) //do not process on the same frame if buffer changed
 					{
 						float freq = pitchDetector->getPitch(inputChannelData[0]);
 						frequency->setValue(freq);
