@@ -138,6 +138,8 @@ public:
 	virtual void updateAudioSetup();
 	void updateSelectedMonitorChannels();
 
+	void setupPitchDetector();
+
 	void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
 	void onContainerParameterChangedInternal(Parameter* p) override;
 
