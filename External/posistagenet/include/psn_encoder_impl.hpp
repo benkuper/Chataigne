@@ -97,13 +97,13 @@ encode_info( const tracker_map & trackers , uint64_t timestamp_usec )
                 break ;
             }
 
-            tracker_chunk->data_len = packet.buffer - ( (char *)tracker_chunk + sizeof( chunk_header ) ) ;
+            tracker_chunk->data_len = (uint32_t)(packet.buffer - ( (char *)tracker_chunk + sizeof( chunk_header ) )) ;
             tracker_list_chunk->data_len += tracker_chunk->data_len + sizeof( chunk_header ) ;
 
             ++tracker_it ;
         }
 
-        main_chunk->data_len = packet.buffer - ( buffer + sizeof( chunk_header ) ) ;
+        main_chunk->data_len = (uint32_t)(packet.buffer - ( buffer + sizeof( chunk_header ) )) ;
 
         packets.push_back( ::std::string( buffer , MAX_UDP_PACKET_SIZE - packet.size ) ) ;
     }
@@ -161,24 +161,24 @@ encode_data( const tracker_map & trackers , uint64_t timestamp_usec )
             }
 
             // Tracker fields
-            if ( tracker.is_pos_set()        && !fill_tracker_field( packet , DATA_TRACKER_POS ,       tracker.get_pos() ) ||
-                 tracker.is_speed_set()      && !fill_tracker_field( packet , DATA_TRACKER_SPEED ,     tracker.get_speed() ) ||
-                 tracker.is_ori_set()        && !fill_tracker_field( packet , DATA_TRACKER_ORI ,       tracker.get_ori() ) ||
-                 tracker.is_status_set()     && !fill_tracker_field( packet , DATA_TRACKER_STATUS ,    tracker.get_status() ) ||
-                 tracker.is_accel_set()      && !fill_tracker_field( packet , DATA_TRACKER_ACCEL ,     tracker.get_accel() ) ||
-                 tracker.is_target_pos_set() && !fill_tracker_field( packet , DATA_TRACKER_TRGTPOS ,   tracker.get_target_pos() ) ||
-                 tracker.is_timestamp_set()  && !fill_tracker_field( packet , DATA_TRACKER_TIMESTAMP , tracker.get_timestamp() ) )
+            if ( (tracker.is_pos_set()        && !fill_tracker_field( packet , DATA_TRACKER_POS ,       tracker.get_pos() )) ||
+                 (tracker.is_speed_set()      && !fill_tracker_field( packet , DATA_TRACKER_SPEED ,     tracker.get_speed() )) ||
+                 (tracker.is_ori_set()        && !fill_tracker_field( packet , DATA_TRACKER_ORI ,       tracker.get_ori() ) )||
+                 (tracker.is_status_set()     && !fill_tracker_field( packet , DATA_TRACKER_STATUS ,    tracker.get_status() )) ||
+                 (tracker.is_accel_set()      && !fill_tracker_field( packet , DATA_TRACKER_ACCEL ,     tracker.get_accel() )) ||
+                 (tracker.is_target_pos_set() && !fill_tracker_field( packet , DATA_TRACKER_TRGTPOS ,   tracker.get_target_pos() )) ||
+                 (tracker.is_timestamp_set()  && !fill_tracker_field( packet , DATA_TRACKER_TIMESTAMP , tracker.get_timestamp() )))
             {
                 packet = backup_packet ;
                 break ;
             }
 
-            tracker_chunk->data_len = packet.buffer - ( (char *)tracker_chunk + sizeof( chunk_header ) ) ;
+            tracker_chunk->data_len = (uint32_t) (packet.buffer - ( (char *)tracker_chunk + sizeof( chunk_header ) )) ;
             tracker_list_chunk->data_len += tracker_chunk->data_len + sizeof( chunk_header ) ;
             ++tracker_it ;
         }
 
-        main_chunk->data_len = packet.buffer - ( buffer + sizeof( chunk_header ) ) ;
+        main_chunk->data_len = (uint32_t) (packet.buffer - ( buffer + sizeof( chunk_header ) )) ;
 
         packets.push_back( ::std::string( buffer , MAX_UDP_PACKET_SIZE - packet.size ) ) ;
     }
@@ -203,7 +203,7 @@ fill_chunk_header( packet_t & packet , uint16_t id , bool has_subchunks , size_t
 
     chunk->id  = id ;
     chunk->has_subchunks = has_subchunks ? 1 : 0 ;
-    chunk->data_len = data_len ;
+    chunk->data_len = (uint32_t)data_len ;
     packet.apply_offset( sizeof( chunk_header ) ) ;
 
     return chunk ;
