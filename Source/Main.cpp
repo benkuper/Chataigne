@@ -88,7 +88,7 @@ void ChataigneApplication::handleCrashed()
 		while (MatomoAnalytics::getInstance()->isThreadRunning())
 		{
 			//wait until thread is done
-            wait(10);
+            Thread::getCurrentThread()->wait(10);
         }
 	}
 

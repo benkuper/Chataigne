@@ -1438,6 +1438,9 @@
     <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\ui\ConditionManagerEditor.cpp">
       <Filter>Chataigne\Source\Common\Processor\Action\Condition\ui</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\Condition.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Action\Condition</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\ConditionManager.cpp">
       <Filter>Chataigne\Source\Common\Processor\Action\Condition</Filter>
     </ClCompile>
@@ -4009,7 +4012,13 @@
     <ClCompile Include="..\..\Modules\juce_sharedtexture\juce_sharedtexture.cpp">
       <Filter>JUCE Modules\juce_sharedtexture</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_sharedtexture\juce_sharedtexture.mm">
+      <Filter>JUCE Modules\juce_sharedtexture</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_sharedtexture\SharedTexture.cpp">
+      <Filter>JUCE Modules\juce_sharedtexture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_sharedtexture\SyphonNSObject.mm">
       <Filter>JUCE Modules\juce_sharedtexture</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\impl\src.cpp">
@@ -7183,6 +7192,9 @@
       <Filter>JUCE Modules\juce_sharedtexture</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_sharedtexture\SpoutLibrary.h">
+      <Filter>JUCE Modules\juce_sharedtexture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_sharedtexture\SyphonNSObject.hpp">
       <Filter>JUCE Modules\juce_sharedtexture</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_sharedtexture\juce_sharedtexture.h">

@@ -442,7 +442,7 @@
                       file="Source/Common/Processor/Action/Condition/ui/ConditionManagerEditor.h"/>
               </GROUP>
               <FILE id="e9mchF" name="Condition.cpp" compile="0" resource="0" file="Source/Common/Processor/Action/Condition/Condition.cpp"
-                    xcodeResource="1"/>
+                    xcodeResource="0"/>
               <FILE id="o9Hby1" name="Condition.h" compile="0" resource="0" file="Source/Common/Processor/Action/Condition/Condition.h"/>
               <FILE id="J9ywhw" name="ConditionManager.cpp" compile="0" resource="0"
                     file="Source/Common/Processor/Action/Condition/ConditionManager.cpp"
@@ -1730,8 +1730,8 @@
                externalLibraries="Servus&#10;hidapi&#10;JoyShockLibrary" microphonePermissionNeeded="1"
                hardenedRuntimeOptions="com.apple.security.cs.allow-jit,com.apple.security.device.audio-input"
                extraDefs="JUCE_SUPPORT_CARBON=0&#10;JUCE_COREGRAPHICS_DRAW_ASYNC=1&#10;USE_ABLETONLINK=1&#10;LINK_PLATFORM_MACOSX=1"
-               xcodeValidArchs="arm64,x86_64" embeddedFrameworks="../../External/sdl/lib/osx/SDL2.framework"
-               frameworkSearchPaths="../../External/sdl/lib/osx">
+               xcodeValidArchs="arm64,x86_64" embeddedFrameworks="../../External/sdl/lib/osx/SDL2.framework&#10;../../External/syphon/Syphon.framework"
+               frameworkSearchPaths="../../External/sdl/lib/osx&#10;../../External/syphon">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="Chataigne"
                        cppLanguageStandard="c++11" cppLibType="libc++" enablePluginBinaryCopyStep="1"
