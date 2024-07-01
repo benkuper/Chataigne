@@ -61,6 +61,7 @@
 		A0AE74451296342E42C034F4 /* App */ = {isa = PBXBuildFile; fileRef = F6C3EA407EDC7084F2C44936; };
 		A13C813B7B915C202AE05F52 /* include_juce_organicui3.cpp */ = {isa = PBXBuildFile; fileRef = CD28AA5204CAAB7963FC2387; };
 		A2C0DA5E1710F15AA0E3F840 /* include_juce_osc.cpp */ = {isa = PBXBuildFile; fileRef = 8AB58B2FA156DD075B892850; };
+		A5DBAC91F733A774ABC21E24 /* Syphon.framework */ = {isa = PBXBuildFile; fileRef = B3B57699F8799056A09AC4D3; settings = { ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AA16489D69315BEFB98AFD53 /* Main.cpp */ = {isa = PBXBuildFile; fileRef = 6CFA3DB0B33499174D9A5C98; };
 		AF39E567B08EC2A6120300D6 /* CoreAudioKit.framework */ = {isa = PBXBuildFile; fileRef = F7C65A10F005D2BA26D357E8; };
 		B1E03C9E738F6A6C372470A2 /* CommandIncludes.cpp */ = {isa = PBXBuildFile; fileRef = 276305E4ADA161E7950ECB23; };
@@ -103,6 +104,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C6EDEE52606D81949D455AF7,
+				A5DBAC91F733A774ABC21E24,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -692,6 +694,7 @@
 		B304D7517FFA94986E5C1C15 /* nextkey.png */ /* nextkey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = nextkey.png; path = ../../Resources/nextkey.png; sourceTree = SOURCE_ROOT; };
 		B30CCDC51639FDE93F557033 /* prevkey.png */ /* prevkey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = prevkey.png; path = ../../Resources/prevkey.png; sourceTree = SOURCE_ROOT; };
 		B34DD1312FE1422CAC5C4781 /* OSCCommand.cpp */ /* OSCCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = OSCCommand.cpp; path = ../../Source/Module/modules/common/commands/osc/OSCCommand.cpp; sourceTree = SOURCE_ROOT; };
+		B3B57699F8799056A09AC4D3 /* Syphon.framework */ /* Syphon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Syphon.framework; path = ../../External/syphon/Syphon.framework; sourceTree = "<group>"; };
 		B3C3ED01C6D0D020BC0E895C /* server.crt */ /* server.crt */ = {isa = PBXFileReference; lastKnownFileType = file.crt; name = server.crt; path = ../../Resources/server/server.crt; sourceTree = SOURCE_ROOT; };
 		B3F9109E23EBCBBC1AD7FD5F /* CropFilter.h */ /* CropFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CropFilter.h; path = ../../Source/Common/Processor/Mapping/Filter/filters/number/CropFilter.h; sourceTree = SOURCE_ROOT; };
 		B52752D23217AA7EC926EAF6 /* WiimotePairUtil.cpp */ /* WiimotePairUtil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = WiimotePairUtil.cpp; path = ../../Source/Module/modules/controller/wiimote/WiimotePairUtil.cpp; sourceTree = SOURCE_ROOT; };
@@ -960,6 +963,7 @@
 				E3C637EEBA5139218230D444,
 				929BBF2871F7A7823334D2DE,
 				C6EDEE52606D81949D455AF7,
+				A5DBAC91F733A774ABC21E24,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2128,6 +2132,7 @@
 				41CE19EEF9A1E234AE534E47,
 				3048D13EBD9A691F911639FA,
 				A330B89FF4A3660791C566A1,
+				B3B57699F8799056A09AC4D3,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -3778,7 +3783,7 @@
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/../../Release";
 				DEAD_CODE_STRIPPING = YES;
 				EXCLUDED_ARCHS = "i386 arm64e";
-				FRAMEWORK_SEARCH_PATHS = ("$(SRCROOT)/../../External/sdl/lib/osx", "$(inherited)");
+				FRAMEWORK_SEARCH_PATHS = ("$(SRCROOT)/../../External/sdl/lib/osx", "$(SRCROOT)/../../External/syphon", "$(inherited)");
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -3860,7 +3865,7 @@
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/../../Release";
 				DEAD_CODE_STRIPPING = YES;
 				EXCLUDED_ARCHS = "i386 arm64e";
-				FRAMEWORK_SEARCH_PATHS = ("$(SRCROOT)/../../External/sdl/lib/osx", "$(inherited)");
+				FRAMEWORK_SEARCH_PATHS = ("$(SRCROOT)/../../External/sdl/lib/osx", "$(SRCROOT)/../../External/syphon", "$(inherited)");
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREPROCESSOR_DEFINITIONS = (
