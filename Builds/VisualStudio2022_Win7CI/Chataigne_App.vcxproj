@@ -3917,7 +3917,6 @@
     <ClInclude Include="..\..\Modules\juce_serial\juce_serial.h"/>
     <ClInclude Include="..\..\Modules\juce_sharedtexture\SharedTexture.h"/>
     <ClInclude Include="..\..\Modules\juce_sharedtexture\SpoutLibrary.h"/>
-    <ClInclude Include="..\..\Modules\juce_sharedtexture\SyphonNSObject.hpp"/>
     <ClInclude Include="..\..\Modules\juce_sharedtexture\juce_sharedtexture.h"/>
     <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\impl\dev_poll_reactor.hpp"/>
     <ClInclude Include="..\..\Modules\juce_simpleweb\asio\asio\include\asio\detail\impl\epoll_reactor.hpp"/>
