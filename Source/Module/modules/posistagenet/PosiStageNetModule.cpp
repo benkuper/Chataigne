@@ -84,6 +84,7 @@ void PosiStageNetModule::setupMulticast()
 	isConnected->setValue(false);
 
 	udp.reset(new DatagramSocket(true));
+	udp->setEnablePortReuse(true);
 	udp->setMulticastLoopbackEnabled(loopback->boolValue());
 
 	int bound = udp->bindToPort(sendMode->boolValue() ? 0 : multiCastPort->intValue());
