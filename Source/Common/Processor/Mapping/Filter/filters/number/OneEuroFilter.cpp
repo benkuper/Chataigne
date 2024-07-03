@@ -95,11 +95,6 @@ MappingFilter::ProcessResult OneEuroMappingFilter::processSingleParameterTimeInt
 
 	var val = filtersMap[source]->filter(oldVal, newVal, deltaTime);
 
-	for (int i = 0; i < val.size(); i++)
-	{
-		LOG("val[" << i << "] = " << (float)val[i]);
-	}
-
 	out->setValue(out->isComplex() ? val: val[0]);
 
 	return CHANGED;
