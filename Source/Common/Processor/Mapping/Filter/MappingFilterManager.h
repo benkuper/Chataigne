@@ -25,6 +25,7 @@ public:
 	CriticalSection filterLock;
 
 	Factory<MappingFilter> factory;
+	bool needsRebuild;
 	bool isRebuilding;
 
 	bool setupSources(Array<Parameter *> sources, int multiplexIndex);
