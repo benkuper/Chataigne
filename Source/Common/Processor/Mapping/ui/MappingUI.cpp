@@ -66,6 +66,7 @@ void MappingUI::updateOutputParamUI()
 				if (outputParamUI != nullptr)
 				{
 					outputParamUI->showLabel = false;
+					outputParamUI->updateUIParams();
 					addAndMakeVisible(outputParamUI.get());
 				}
 			}
@@ -80,7 +81,7 @@ void MappingUI::resizedInternalHeader(Rectangle<int>& r)
 	ProcessorUI::resizedInternalHeader(r);
 	if (outputParamUI != nullptr)
 	{
-		outputParamUI->setBounds(r.removeFromRight(120).reduced(1));
+		outputParamUI->setBounds(r.removeFromRight(150).reduced(1));
 	}
 }
 
