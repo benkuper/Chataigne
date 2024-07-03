@@ -89,6 +89,8 @@ MappingFilter::ProcessResult  SimpleRemapFilter::processSingleParameterInternal(
 	if (targetIn == nullptr || targetOut == nullptr || out == nullptr) return STOP_HERE;
 
 	var remappedValue = getRemappedValueFor(source, multiplexIndex);
+	jassert(remappedValue.size() == out->value.size());
+	if(remappedValue.size() != out->value.size()) return STOP_HERE;
 	out->setValue(remappedValue);
 
 	return CHANGED;
@@ -147,7 +149,6 @@ var SimpleRemapFilter::getRemappedValueFor(Parameter* source, int multiplexIndex
 				ttIn.append(linkIn[1]);
 				tIn.append(ttIn);
 			}
-			DBG(tIn.size() << " / " << sourceVal.size());
 		}
 		else
 		{
