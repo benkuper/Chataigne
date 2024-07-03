@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.20b1"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.19"
               bundleIdentifier="benkuper.Chataigne" companyName="Ben Kuper"
               companyWebsite="http://benjamin.kuperberg.fr/chataigne" companyEmail="benjamin@kuperberg.fr"
               defines="VST_LOGGING=0" splashScreenColour="Dark" cppLanguageStandard="17"
@@ -510,11 +510,6 @@
                         file="Source/Common/Processor/Mapping/Filter/filters/condition/ConditionFilter.h"/>
                 </GROUP>
                 <GROUP id="{641D0121-A8E2-C0FE-FB59-BF396A67A40C}" name="number">
-                  <GROUP id="{9F458A50-526A-5D47-E35E-A44C46ED2AB1}" name="oneeuro">
-                    <FILE id="pIOoVZ" name="OneEuroFilter.cpp" compile="0" resource="0"
-                          file="Source/Common/Processor/Mapping/Filter/filters/number/oneeuro/OneEuroFilter.cpp"/>
-                    <FILE id="cPXwuY" name="OneEuroFilter.h" compile="0" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/number/oneeuro/OneEuroFilter.h"/>
-                  </GROUP>
                   <FILE id="A56EOa" name="CropFilter.cpp" compile="0" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/number/CropFilter.cpp"/>
                   <FILE id="Y1uilS" name="CropFilter.h" compile="0" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/number/CropFilter.h"/>
                   <FILE id="BvilMR" name="CurveMapFilter.cpp" compile="0" resource="0"

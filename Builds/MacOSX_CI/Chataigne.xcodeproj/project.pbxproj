@@ -679,7 +679,6 @@
 		AD67363271F6148023CB67C8 /* SerialModule.h */ /* SerialModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SerialModule.h; path = ../../Source/Module/modules/serial/SerialModule.h; sourceTree = SOURCE_ROOT; };
 		AE434F9AEE0B3A6F07363076 /* ActivationCondition.h */ /* ActivationCondition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ActivationCondition.h; path = ../../Source/Common/Processor/Action/Condition/conditions/ActivationCondition/ActivationCondition.h; sourceTree = SOURCE_ROOT; };
 		AE5E1271E6FEE99A8E7B23C4 /* SendStreamStringCommand.cpp */ /* SendStreamStringCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SendStreamStringCommand.cpp; path = ../../Source/Module/modules/common/streaming/commands/SendStreamStringCommand.cpp; sourceTree = SOURCE_ROOT; };
-		AF12A15A475114CAA5FF9CDA /* OneEuroFilter.h */ /* OneEuroFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OneEuroFilter.h; path = ../../Source/Common/Processor/Mapping/Filter/filters/number/oneeuro/OneEuroFilter.h; sourceTree = SOURCE_ROOT; };
 		AF52F768B78BA08E716F431A /* PowerpointModule.h */ /* PowerpointModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PowerpointModule.h; path = ../../Source/Module/modules/osc/powerpoint/PowerpointModule.h; sourceTree = SOURCE_ROOT; };
 		AF7FA2B06071451BD3532954 /* ConsequenceManagerEditor.cpp */ /* ConsequenceManagerEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ConsequenceManagerEditor.cpp; path = ../../Source/Common/Processor/Action/Consequence/ui/ConsequenceManagerEditor.cpp; sourceTree = SOURCE_ROOT; };
 		AFA63ADA9DF83E578D4FC7E0 /* Mapping1DLayer.h */ /* Mapping1DLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Mapping1DLayer.h; path = ../../Source/TimeMachine/Sequence/layers/mapping/automation/1d/Mapping1DLayer.h; sourceTree = SOURCE_ROOT; };
@@ -736,7 +735,6 @@
 		C0BFDCF118F92A603852B8EB /* MIDICommands.cpp */ /* MIDICommands.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MIDICommands.cpp; path = ../../Source/Module/modules/midi/commands/MIDICommands.cpp; sourceTree = SOURCE_ROOT; };
 		C1D2BE99C657D67B5FB22423 /* StreamDeckV2.h */ /* StreamDeckV2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StreamDeckV2.h; path = ../../Source/Module/modules/controller/streamdeck/models/StreamDeckV2.h; sourceTree = SOURCE_ROOT; };
 		C27204324F51AD1704E2383F /* CVGroupUI.cpp */ /* CVGroupUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CVGroupUI.cpp; path = ../../Source/CustomVariables/ui/CVGroupUI.cpp; sourceTree = SOURCE_ROOT; };
-		C286D9E96D885B02CA708694 /* OneEuroFilter.cpp */ /* OneEuroFilter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = OneEuroFilter.cpp; path = ../../Source/Common/Processor/Mapping/Filter/filters/number/oneeuro/OneEuroFilter.cpp; sourceTree = SOURCE_ROOT; };
 		C3DDE9B9D449A6FB26D1D354 /* NetworkStreamingModule.h */ /* NetworkStreamingModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NetworkStreamingModule.h; path = ../../Source/Module/modules/common/streaming/NetworkStreamingModule.h; sourceTree = SOURCE_ROOT; };
 		C4027CFB515DA11787FE11A9 /* commandScriptTemplate.js */ /* commandScriptTemplate.js */ = {isa = PBXFileReference; lastKnownFileType = file.js; name = commandScriptTemplate.js; path = ../../Resources/Templates/Scripts/commandScriptTemplate.js; sourceTree = SOURCE_ROOT; };
 		C45B37ABCDE0A9FA3B40EA19 /* MIDIDeviceParameter.cpp */ /* MIDIDeviceParameter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MIDIDeviceParameter.cpp; path = ../../Source/Common/MIDI/MIDIDeviceParameter.cpp; sourceTree = SOURCE_ROOT; };
@@ -2996,7 +2994,6 @@
 		C7C1CACBB0573C0418FED20D /* number */ = {
 			isa = PBXGroup;
 			children = (
-				F1BCE98A352AB3437DD8D5F9,
 				D96A3F39FFB1F1FFBE297C29,
 				B3F9109E23EBCBBC1AD7FD5F,
 				93D205C2FA1058AA0F5FD66F,
@@ -3375,15 +3372,6 @@
 				75264E6590D2A292044545A1,
 			);
 			name = ui;
-			sourceTree = "<group>";
-		};
-		F1BCE98A352AB3437DD8D5F9 /* oneeuro */ = {
-			isa = PBXGroup;
-			children = (
-				C286D9E96D885B02CA708694,
-				AF12A15A475114CAA5FF9CDA,
-			);
-			name = oneeuro;
 			sourceTree = "<group>";
 		};
 		F1F4C5599569844466A8CB7F /* ui */ = {
@@ -3804,8 +3792,8 @@
 					"USE_ABLETONLINK=1",
 					"LINK_PLATFORM_MACOSX=1",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.9.20b1",
-					"JUCE_APP_VERSION_HEX=0x10914",
+					"JUCE_APP_VERSION=1.9.19",
+					"JUCE_APP_VERSION_HEX=0x10913",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
 					"JucePlugin_Build_AU=0",
@@ -3885,8 +3873,8 @@
 					"USE_ABLETONLINK=1",
 					"LINK_PLATFORM_MACOSX=1",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.9.20b1",
-					"JUCE_APP_VERSION_HEX=0x10914",
+					"JUCE_APP_VERSION=1.9.19",
+					"JUCE_APP_VERSION_HEX=0x10913",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
 					"JucePlugin_Build_AU=0",
