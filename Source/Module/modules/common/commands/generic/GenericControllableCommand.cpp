@@ -376,7 +376,7 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 						else
 						{
 							var pVal = p->value.clone();
-							if (pVal.isArray())
+							if (pVal.isArray() && pVal.size() > compOp)
 							{
 								pVal[compOp] = (float)val;
 								targetValue = pVal;
