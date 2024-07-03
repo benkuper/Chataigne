@@ -140,6 +140,9 @@
     <Filter Include="Chataigne\Source\Common\Processor\Mapping\Filter\filters\condition">
       <UniqueIdentifier>{7B8865FC-7D21-02DD-FD97-2DF8A95BE617}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Common\Processor\Mapping\Filter\filters\number\oneeuro">
+      <UniqueIdentifier>{5CAF8FEC-8E34-789E-7699-BFD59608A76D}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Common\Processor\Mapping\Filter\filters\number">
       <UniqueIdentifier>{A2546497-8314-1FDA-2D15-28E04DA32C12}</UniqueIdentifier>
     </Filter>
@@ -1482,6 +1485,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\condition\ConditionFilter.cpp">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\condition</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\oneeuro\OneEuroFilter.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\number\oneeuro</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\CropFilter.cpp">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\number</Filter>
@@ -4547,6 +4553,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\condition\ConditionFilter.h">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\condition</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\oneeuro\OneEuroFilter.h">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\number\oneeuro</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\CropFilter.h">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\number</Filter>
