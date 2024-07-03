@@ -43,6 +43,7 @@
 #include "Mapping/Filter/filters/number/MathFilter.cpp"
 #include "Mapping/Filter/filters/number/SimpleRemapFilter.cpp"
 #include "Mapping/Filter/filters/number/SimpleSmoothFilter.cpp"
+#include "Mapping/Filter/filters/number/oneeuro/OneEuroFilter.cpp"
 #include "Mapping/Filter/filters/number/OneEuroFilter.cpp"
 
 #include "Mapping/Filter/filters/string/StringFilter.cpp"

@@ -89,6 +89,7 @@
 #include "Mapping/Filter/filters/number/SimpleRemapFilter.h"
 #include "Mapping/Filter/filters/number/CurveMapFilter.h"
 #include "Mapping/Filter/filters/number/SimpleSmoothFilter.h"
+#include "Mapping/Filter/filters/number/oneeuro/OneEuroFilter.h"
 #include "Mapping/Filter/filters/number/OneEuroFilter.h"
 
 #include "Mapping/Filter/filters/string/StringFilter.h"
