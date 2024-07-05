@@ -22,6 +22,7 @@ public:
 
 	//---- GLOBAL SETTINGS CHATAIGNE SPECIFIC
 	BoolParameter * enableSendAnalytics;
+    bool crashSent;
 	//
 
 	void initialiseInternal(const String& /*commandLine*/) override;

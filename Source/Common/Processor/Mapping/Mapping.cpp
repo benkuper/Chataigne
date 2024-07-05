@@ -159,7 +159,9 @@ void Mapping::updateMappingChain(MappingFilter* afterThisFilter, bool processAft
 					if (isMultiplexed())
 					{
 						String cName = "Index " + String(i + 1);
-						ControllableContainer* multiplexOutCC = outValuesCC.getControllableContainerByName(cName);
+						ControllableContainer* multiplexOutCC = nullptr;
+						if (outValuesCC.controllableContainers.size() > i) multiplexOutCC = outValuesCC.controllableContainers[i];
+						//outValuesCC.getControllableContainerByName(cName);
 						if (multiplexOutCC == nullptr)
 						{
 							multiplexOutCC = new ControllableContainer(cName);
@@ -366,7 +368,7 @@ void Mapping::afterLoadJSONDataInternal()
 void Mapping::itemAdded(MappingInput* item)
 {
 	item->addMappingInputListener(this);
-	if (item->inputReference != nullptr) updateMappingChain();
+	updateMappingChain();
 }
 
 void Mapping::itemsAdded(Array<MappingInput*> items)

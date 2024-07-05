@@ -89,16 +89,15 @@ Parameter* SimpleConversionFilter::setupSingleParameterInternal(Parameter* sourc
 		{
 			if (transferType == TARGET)
 			{
-				if (baseValue != nullptr && baseValue->type != p->type)
+				bool needsToRecreate = baseValue == nullptr || baseValue->type != p->type;
+				if (needsToRecreate)
 				{
-					filterParams.removeControllable(baseValue);
-					baseValue = nullptr;
+					if (baseValue != nullptr) filterParams.removeControllable(baseValue);
+					baseValue = ControllableFactory::createParameterFrom(p, false, false);
+					baseValue->setNiceName("Base Value");
+					baseValue->description = "Base value for components that are not set by the conversion";
+					filterParams.addParameter(baseValue);
 				}
-
-				baseValue = ControllableFactory::createParameterFrom(p, false, false);
-				baseValue->setNiceName("Base Value");
-				baseValue->description = "Base value for components that are not set by the conversion";
-				filterParams.addParameter(baseValue);
 			}
 			else
 			{
@@ -319,7 +318,7 @@ var SimpleConversionFilter::getJSONData()
 void SimpleConversionFilter::loadJSONDataItemInternal(var data)
 {
 	ghostOptions = data.getProperty("ghostOptions", var());
-	if(ghostLinkData.isVoid()) ghostLinkData = data.getProperty("filterParams", var()).getProperty("paramLinks", var());
+	if (ghostLinkData.isVoid()) ghostLinkData = data.getProperty("filterParams", var()).getProperty("paramLinks", var());
 	MappingFilter::loadJSONDataItemInternal(data);
 }
 

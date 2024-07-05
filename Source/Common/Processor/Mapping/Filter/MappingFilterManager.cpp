@@ -13,7 +13,8 @@
 MappingFilterManager::MappingFilterManager(Multiplex* multiplex) :
 	BaseManager<MappingFilter>("Filters"),
 	MultiplexTarget(multiplex),
-	isRebuilding(false)
+	isRebuilding(false),
+	needsRebuild(false)
 {
 	canBeCopiedAndPasted = true;
 
@@ -38,7 +39,7 @@ MappingFilterManager::MappingFilterManager(Multiplex* multiplex) :
 
 	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<SimpleSmoothFilter>("Time", "Smooth", multiplex));
 	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<DampingFilter>("Time", "Damping", multiplex));
-	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<OneEuroFilter>("Time", "One Euro", multiplex));
+	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<OneEuroMappingFilter>("Time", "One Euro", multiplex));
 	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<LagFilter>("Time", "FPS", multiplex));
 	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<DelayFilter>("Time", "Delay", multiplex));
 	factory.defs.add(MultiplexTargetDefinition<MappingFilter>::createDef<SpeedFilter>("Time", "Speed", multiplex));
@@ -74,6 +75,8 @@ bool MappingFilterManager::setupSources(Array<Parameter*> sources, int multiplex
 
 MappingFilter::ProcessResult MappingFilterManager::processFilters(Array<Parameter*> inputs, int multiplexIndex)
 {
+	if (isRebuilding || needsRebuild) return MappingFilter::STOP_HERE;
+
 	if (getLastEnabledFilter() == nullptr)
 	{
 		filteredParameters.set(multiplexIndex, inputs);// Array<Parameter*>(multiplexInputSourceMap[multiplexIndex].getRawDataPointer(), multiplexInputSourceMap[multiplexIndex].size());
@@ -89,6 +92,8 @@ MappingFilter::ProcessResult MappingFilterManager::processFilters(Array<Paramete
 
 	for (auto& f : items)
 	{
+		if(needsRebuild) return MappingFilter::STOP_HERE;
+
 		if (!f->enabled->boolValue()) continue; //f
 		MappingFilter::ProcessResult r = f->process(fp, multiplexIndex);
 		if (r == MappingFilter::STOP_HERE) return MappingFilter::STOP_HERE;
@@ -146,6 +151,7 @@ bool MappingFilterManager::rebuildFilterChain(MappingFilter* afterThisFilter, in
 	if (!rangeOnly) filteredParameters.set(multiplexIndex, fp);
 
 	isRebuilding = false;
+	needsRebuild = false;
 
 	return true;
 }
@@ -153,6 +159,7 @@ bool MappingFilterManager::rebuildFilterChain(MappingFilter* afterThisFilter, in
 void MappingFilterManager::notifyNeedsRebuild(MappingFilter* afterThisFilter, bool rangeOnly)
 {
 	if (isCurrentlyLoadingData || isRebuilding) return;
+	needsRebuild = true;
 	filterManagerListeners.call(&FilterManagerListener::filterManagerNeedsRebuild, afterThisFilter, rangeOnly);
 }
 
@@ -180,12 +187,14 @@ void MappingFilterManager::removeItemInternal(MappingFilter* f)
 
 void MappingFilterManager::setItemIndex(MappingFilter* item, int index, bool addToUndo)
 {
+	needsRebuild = true; 
 	BaseManager::setItemIndex(item, index);
 	if (!addToUndo) notifyNeedsRebuild();
 }
 
 void MappingFilterManager::reorderItems()
 {
+	needsRebuild = true;
 	BaseManager::reorderItems();
 	notifyNeedsRebuild();
 }

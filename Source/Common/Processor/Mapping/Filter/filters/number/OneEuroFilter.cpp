@@ -1,3 +1,4 @@
+#include "Common/Processor/ProcessorIncludes.h"
 /*
   ==============================================================================
 
@@ -8,7 +9,7 @@
   ==============================================================================
 */
 
-OneEuroFilter::OneEuroFilter(var params, Multiplex* multiplex) :
+OneEuroMappingFilter::OneEuroMappingFilter(var params, Multiplex* multiplex) :
 	TimeFilter(getTypeString(), params, multiplex)
 {
 	processOnSameValue = true;
@@ -19,25 +20,28 @@ OneEuroFilter::OneEuroFilter(var params, Multiplex* multiplex) :
 	mincutoff = addFloatParameter("Min Cutoff", "Minimum cutoff", .3f, 0);
 	beta_ = addFloatParameter("Beta", "Beta", .1f, 0);
 
-	x.reset(new LowPassFilter(alpha(mincutoff->floatValue())));
-	dx.reset(new LowPassFilter(alpha(dcutoff)));
-
 	filterTypeFilters.add(Controllable::BOOL, Controllable::FLOAT, Controllable::INT, Controllable::COLOR, Controllable::POINT2D, Controllable::POINT3D);
 }
 
-OneEuroFilter::~OneEuroFilter()
+OneEuroMappingFilter::~OneEuroMappingFilter()
 {
 }
 
-float OneEuroFilter::alpha(float cutoff)
+float OneEuroMappingFilter::alpha(float cutoff)
 {
-    float te = 1.0f / freq;
-    float tau = 1.0f / (2 * MathConstants<float>::pi * cutoff);
-    return 1.0f / (1.0f + tau / te);
+	float te = 1.0f / freq;
+	float tau = 1.0f / (2 * MathConstants<float>::pi * cutoff);
+	return 1.0f / (1.0f + tau / te);
 }
 
+void OneEuroMappingFilter::setupParametersInternal(int mutiplexIndex, bool rangeOnly)
+{
+	allFilters.clear();
+	filtersMap.clear();
+	MappingFilter::setupParametersInternal(mutiplexIndex, rangeOnly);
+}
 
-Parameter* OneEuroFilter::setupSingleParameterInternal(Parameter* source, int multiplexIndex, bool rangeOnly)
+Parameter* OneEuroMappingFilter::setupSingleParameterInternal(Parameter* source, int multiplexIndex, bool rangeOnly)
 {
 	Parameter* p = nullptr;
 	if (!rangeOnly && source->type == Controllable::BOOL)
@@ -51,50 +55,53 @@ Parameter* OneEuroFilter::setupSingleParameterInternal(Parameter* source, int mu
 		p = MappingFilter::setupSingleParameterInternal(source, multiplexIndex, rangeOnly);
 	}
 
+	if (!filtersMap.contains(source))
+	{
+
+		int numDimensions = source->isComplex() ? source->value.size() : 1;
+		OneEuroFilter* filter = new OneEuroFilter(numDimensions);
+		allFilters.add(filter);
+		filtersMap.set(source, filter);
+	}
+
 	return p;
 }
 
 
-MappingFilter::ProcessResult OneEuroFilter::processSingleParameterTimeInternal(Parameter* source, Parameter* out, int multiplexIndex, double deltaTime)
+
+MappingFilter::ProcessResult OneEuroMappingFilter::processSingleParameterTimeInternal(Parameter* source, Parameter* out, int multiplexIndex, double deltaTime)
 {
 	var oldVal = out->getValue();
 	var newVal = source->getValue();
 
 	if (source->checkValueIsTheSame(oldVal, newVal)) return UNCHANGED;
 
-	var val;
 
-	
 
-	if (out->isComplex())
+	for (auto& f : allFilters)
 	{
-		for (int i = 0; i < oldVal.size(); ++i)
-		{
-			float dvalue = ((float)newVal[i] - (float)oldVal[i]) * freq; // FIXME: 0.0f or value?
-			float edvalue = dx->filterWithAlpha(dvalue, alpha(dcutoff));
-			float cutoff = mincutoff->floatValue() + beta_->floatValue() * fabs(edvalue);
-			val = x->filterWithAlpha((float)newVal[i], alpha(cutoff));
-		}
-
-	}
-	else
-	{
-		// estimate the current variation per second 
-		float dvalue = ((float)newVal - (float)oldVal) * freq; // FIXME: 0.0f or value?
-		float edvalue = dx->filterWithAlpha(dvalue, alpha(dcutoff));
-		// use it to update the cutoff frequency
-		float cutoff = mincutoff->floatValue() + beta_->floatValue() * fabs(edvalue);
-		// filter the given value
-		val = x->filterWithAlpha((float)newVal, alpha(cutoff));
+		f->freq = freq;
+		f->derivativeCutOff = dcutoff;
+		f->minCutOff = mincutoff->floatValue();
+		f->beta = beta_->floatValue();
 	}
 
-	out->setValue(val);
+	//jassert(filtersMap.contains(source) && filtersMap[source] != nullptr);
+	if (!filtersMap.contains(source) || filtersMap[source] == nullptr)
+	{
+		NLOGWARNING(niceName, "Filter not initialized");
+		return STOP_HERE;
+	}
+
+	var val = filtersMap[source]->filter(oldVal, newVal, deltaTime);
+
+	out->setValue(out->isComplex() ? val: val[0]);
 
 	return CHANGED;
 }
 
 
-void OneEuroFilter::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
+void OneEuroMappingFilter::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
 {
 	MappingFilter::onControllableFeedbackUpdateInternal(cc, c);
 }

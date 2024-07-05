@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.18"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.20b1"
               bundleIdentifier="benkuper.Chataigne" companyName="Ben Kuper"
               companyWebsite="http://benjamin.kuperberg.fr/chataigne" companyEmail="benjamin@kuperberg.fr"
               defines="VST_LOGGING=0" splashScreenColour="Dark" cppLanguageStandard="17"
@@ -442,7 +442,7 @@
                       file="Source/Common/Processor/Action/Condition/ui/ConditionManagerEditor.h"/>
               </GROUP>
               <FILE id="e9mchF" name="Condition.cpp" compile="0" resource="0" file="Source/Common/Processor/Action/Condition/Condition.cpp"
-                    xcodeResource="1"/>
+                    xcodeResource="0"/>
               <FILE id="o9Hby1" name="Condition.h" compile="0" resource="0" file="Source/Common/Processor/Action/Condition/Condition.h"/>
               <FILE id="J9ywhw" name="ConditionManager.cpp" compile="0" resource="0"
                     file="Source/Common/Processor/Action/Condition/ConditionManager.cpp"
@@ -510,6 +510,11 @@
                         file="Source/Common/Processor/Mapping/Filter/filters/condition/ConditionFilter.h"/>
                 </GROUP>
                 <GROUP id="{641D0121-A8E2-C0FE-FB59-BF396A67A40C}" name="number">
+                  <GROUP id="{9F458A50-526A-5D47-E35E-A44C46ED2AB1}" name="oneeuro">
+                    <FILE id="KZui0t" name="OneEuroFilter.cpp" compile="0" resource="0"
+                          file="Source/Common/Processor/Mapping/Filter/filters/number/oneeuro/OneEuroFilter.cpp"/>
+                    <FILE id="WfqGyO" name="OneEuroFilter.h" compile="0" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/number/oneeuro/OneEuroFilter.h"/>
+                  </GROUP>
                   <FILE id="A56EOa" name="CropFilter.cpp" compile="0" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/number/CropFilter.cpp"/>
                   <FILE id="Y1uilS" name="CropFilter.h" compile="0" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/number/CropFilter.h"/>
                   <FILE id="BvilMR" name="CurveMapFilter.cpp" compile="0" resource="0"
@@ -1726,8 +1731,8 @@
                externalLibraries="Servus&#10;hidapi&#10;JoyShockLibrary" microphonePermissionNeeded="1"
                hardenedRuntimeOptions="com.apple.security.cs.allow-jit,com.apple.security.device.audio-input"
                extraDefs="JUCE_SUPPORT_CARBON=0&#10;JUCE_COREGRAPHICS_DRAW_ASYNC=1&#10;USE_ABLETONLINK=1&#10;LINK_PLATFORM_MACOSX=1"
-               xcodeValidArchs="arm64,x86_64" embeddedFrameworks="../../External/sdl/lib/osx/SDL2.framework"
-               frameworkSearchPaths="../../External/sdl/lib/osx">
+               xcodeValidArchs="arm64,x86_64" embeddedFrameworks="../../External/sdl/lib/osx/SDL2.framework&#10;../../External/syphon/Syphon.framework"
+               frameworkSearchPaths="../../External/sdl/lib/osx&#10;../../External/syphon">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="Chataigne"
                        cppLanguageStandard="c++11" cppLibType="libc++" enablePluginBinaryCopyStep="1"
@@ -1871,9 +1876,9 @@
                smallIcon="nVz6Li" bigIcon="nVz6Li" hardenedRuntimeOptions="com.apple.security.cs.allow-jit"
                customPList="&lt;plist&gt;&#10;&lt;dict&gt;&#10;&lt;key&gt;NSAppTransportSecurity&lt;/key&gt;&#10;&#9;&lt;dict&gt;&#10;&#9;&#9;&lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;&#10;&#9;&#9;&lt;true/&gt;&#10;&#9;&lt;/dict&gt;&#10;&lt;/dict&gt;&#10;&lt;/plist&gt;"
                microphonePermissionNeeded="1" extraFrameworks="IOBluetooth, ForceFeedback, IOKit"
-               documentExtensions="noisette" extraDefs="JUCE_SUPPORT_CARBON=0&#10;JUCE_COREGRAPHICS_DRAW_ASYNC=1&#10;USE_ABLETONLINK=1&#10;LINK_PLATFORM_MACOSX=1&#10;OS_SYSINFO_SUPPORT=0"
-               xcodeValidArchs="arm64,x86_64" frameworkSearchPaths="../../External/sdl/lib/osx"
-               embeddedFrameworks="../../External/sdl/lib/osx/SDL2.framework">
+               documentExtensions="noisette" extraDefs="JUCE_SUPPORT_CARBON=0&#10;JUCE_COREGRAPHICS_DRAW_ASYNC=1&#10;USE_ABLETONLINK=1&#10;LINK_PLATFORM_MACOSX=1"
+               xcodeValidArchs="arm64,x86_64" frameworkSearchPaths="../../External/sdl/lib/osx&#10;../../External/syphon"
+               embeddedFrameworks="../../External/sdl/lib/osx/SDL2.framework&#10;../../External/syphon/Syphon.framework">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="0" name="Release" libraryPath="../../External/servus/lib/osx/release&#10;../../External/joycon/lib/osx"
                        osxCompatibility="10.10 SDK" macOSDeploymentTarget="10.10" binaryPath="Release"/>

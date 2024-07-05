@@ -10,7 +10,8 @@
 //==============================================================================
 
 ChataigneApplication::ChataigneApplication() :
-	OrganicApplication("Chataigne", true, ImageCache::getFromMemory(BinaryData::tray_icon_png, BinaryData::tray_icon_pngSize))
+	OrganicApplication("Chataigne", true, ImageCache::getFromMemory(BinaryData::tray_icon_png, BinaryData::tray_icon_pngSize)),
+    crashSent(false)
 {
 	enableSendAnalytics = appSettings.addBoolParameter("Send Analytics", "This helps me improve the software by sending basic start/stop/crash infos", true);
 }
@@ -79,14 +80,16 @@ void ChataigneApplication::handleCrashed()
 	{
 		m->crashedTrigger->trigger();
 	}
-
-	if (!launchedFromCrash && enableSendAnalytics->boolValue())
+    
+	if (!crashSent && !launchedFromCrash && enableSendAnalytics->boolValue())
 	{
+        crashSent = true;
 		MatomoAnalytics::getInstance()->log(MatomoAnalytics::CRASH);
 		while (MatomoAnalytics::getInstance()->isThreadRunning())
 		{
 			//wait until thread is done
-		}
+            Thread::getCurrentThread()->wait(10);
+        }
 	}
 
 	OrganicApplication::handleCrashed();
