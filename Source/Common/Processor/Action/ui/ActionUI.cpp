@@ -9,15 +9,14 @@
 */
 
 #include "Common/Processor/ProcessorIncludes.h"
+#include "ActionUI.h"
 
-juce_ImplementSingleton(ActionUITimers)
 
 ActionUI::ActionUI(Action* _action, bool showMiniModeBT) :
 	ProcessorUI(_action, showMiniModeBT),
+	UITimerTarget(ORGANICUI_SLOW_TIMER),
 	action(_action)
 {
-	ActionUITimers::getInstance()->registerAction(this);
-
 	acceptedDropTypes.add("Module");
 	acceptedDropTypes.add("CommandTemplate");
 
@@ -58,8 +57,6 @@ ActionUI::~ActionUI()
 			action->csmOn->removeAsyncConsequenceManagerListener(this);
 		}
 	}
-
-	if (ActionUITimers* t = ActionUITimers::getInstanceWithoutCreating()) t->unregisterAction(this);
 }
 
 void ActionUI::paint(Graphics& g)
@@ -261,10 +258,11 @@ void ActionUI::newMessage(const ConsequenceManager::ConsequenceManagerEvent& e)
 	}
 }
 
-void ActionUI::handlePaintTimer()
+void ActionUI::handlePaintTimerInternal()
 {
-	if (shouldRepaint) repaint();
-	shouldRepaint = false;
+	if (!isShowing() || inspectable.wasObjectDeleted()) return;
+	DBG("Repaint from here");
+	repaint();
 }
 
 void ActionUI::addContextMenuItems(PopupMenu& p)
@@ -301,24 +299,4 @@ void ActionUI::handleContextMenuResult(int result)
 	case 104: SystemClipboard::copyTextToClipboard(JSON::toString(action->csmOff->getJSONData())); break;
 	case 105: action->csmOff->loadJSONData(JSON::fromString(SystemClipboard::getTextFromClipboard())); break;
 	}
-}
-
-ActionUITimers::ActionUITimers()
-{
-	startTimerHz(20);
-}
-
-void ActionUITimers::registerAction(ActionUI* ui)
-{
-	actionsUI.addIfNotAlreadyThere(ui);
-}
-
-void ActionUITimers::unregisterAction(ActionUI* ui)
-{
-	actionsUI.removeAllInstancesOf(ui);
-}
-
-void ActionUITimers::timerCallback()
-{
-	for (auto& ui : actionsUI) ui->handlePaintTimer();
 }
