@@ -1,0 +1,142 @@
+// Copyright (C) Microsoft Corporation. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+import "oaidl.idl";
+
+[uuid(79b85709-2a19-4645-9722-3cc51b86eda7), version(1.0)]
+library WebView2Interop {
+
+// Forward declarations
+interface ICoreWebView2Interop;
+interface ICoreWebView2CompositionControllerInterop;
+interface ICoreWebView2CompositionControllerInterop2;
+
+// Enums and structs
+// End of enums and structs
+
+/// Interop interface for the CoreWebView2 WinRT object to allow WinRT end
+/// developers to be able to use COM interfaces as parameters for some methods.
+/// This interface is implemented by the Microsoft.Web.WebView2.Core.CoreWebView2
+/// runtime class.
+[uuid(912b34a7-d10b-49c4-af18-7cb7e604e01a), object, pointer_default(unique)]
+interface ICoreWebView2Interop : IUnknown {
+  /// Add the provided host object to script running in the WebView with the
+  /// specified name.
+  /// See the documentation for ICoreWebView2::AddHostObjectToScript for more
+  /// information.
+  HRESULT AddHostObjectToScript([in] LPCWSTR name, [in] VARIANT* object);
+}
+
+/// Interop interface for the CoreWebView2CompositionController WinRT object to
+/// allow WinRT end developers to be able to use the COM interfaces as parameters
+/// for some methods.
+/// This interface is implemented by the Microsoft.Web.WebView2.Core.CoreWebView2CompositionController
+/// runtime class.
+[uuid(8e9922ce-9c80-42e6-bad7-fcebf291a495), object, pointer_default(unique)]
+interface ICoreWebView2CompositionControllerInterop : IUnknown {
+  /// Returns the UI Automation Provider for the WebView. See the documentation for
+  /// ICoreWebView2CompositionController::AutomationProvider for more information.
+  [propget] HRESULT AutomationProvider([out, retval] IUnknown** provider);
+
+  /// The RootVisualTarget is a visual in the hosting app's visual tree. This
+  /// visual is where the WebView2 will connect its visual tree.
+  /// See the documentation for ICoreWebView2CompositionController::RootVisualTarget
+  /// for more information.
+  [propget] HRESULT RootVisualTarget([out, retval] IUnknown** target);
+  /// Set the RootVisualTarget property.
+  [propput] HRESULT RootVisualTarget([in] IUnknown* target);
+}
+
+/// This interface is the continuation of the
+/// ICoreWebView2CompositionControllerInterop interface to manage drag and drop.
+[uuid(6b47bbe1-2480-4ff8-a5ba-69c2f0b868b3), object, pointer_default(unique)]
+interface ICoreWebView2CompositionControllerInterop2 : ICoreWebView2CompositionControllerInterop {
+  /// This function corresponds to [IDropTarget::DragEnter](/windows/win32/api/oleidl/nf-oleidl-idroptarget-dragenter).
+  ///
+  /// This function has a dependency on AllowExternalDrop property of
+  /// CoreWebView2Controller and return E_FAIL to callers to indicate this
+  /// operation is not allowed if AllowExternalDrop property is set to false.
+  ///
+  /// The hosting application must register as an IDropTarget and implement
+  /// and forward DragEnter calls to this function.
+  ///
+  /// point parameter must be modified to include the WebView's offset and be in
+  /// the WebView's client coordinates (Similar to how SendMouseInput works).
+  ///
+  /// \snippet DropTarget.cpp DragEnter
+  HRESULT DragEnter(
+      [in] IDataObject* dataObject,
+      [in] DWORD keyState,
+      [in] POINT point,
+      [out, retval] DWORD* effect);
+
+  /// This function corresponds to [IDropTarget::DragLeave](/windows/win32/api/oleidl/nf-oleidl-idroptarget-dragleave).
+  ///
+  /// This function has a dependency on AllowExternalDrop property of
+  /// CoreWebView2Controller and return E_FAIL to callers to indicate this
+  /// operation is not allowed if AllowExternalDrop property is set to false.
+  ///
+  /// The hosting application must register as an IDropTarget and implement
+  /// and forward DragLeave calls to this function.
+  ///
+  /// \snippet DropTarget.cpp DragLeave
+  HRESULT DragLeave();
+
+  /// This function corresponds to [IDropTarget::DragOver](/windows/win32/api/oleidl/nf-oleidl-idroptarget-dragover).
+  ///
+  /// This function has a dependency on AllowExternalDrop property of
+  /// CoreWebView2Controller and return E_FAIL to callers to indicate this
+  /// operation is not allowed if AllowExternalDrop property is set to false.
+  ///
+  /// The hosting application must register as an IDropTarget and implement
+  /// and forward DragOver calls to this function.
+  ///
+  /// point parameter must be modified to include the WebView's offset and be in
+  /// the WebView's client coordinates (Similar to how SendMouseInput works).
+  ///
+  /// \snippet DropTarget.cpp DragOver
+  HRESULT DragOver(
+      [in] DWORD keyState,
+      [in] POINT point,
+      [out, retval] DWORD* effect);
+
+  /// This function corresponds to [IDropTarget::Drop](/windows/win32/api/oleidl/nf-oleidl-idroptarget-drop).
+  ///
+  /// This function has a dependency on AllowExternalDrop property of
+  /// CoreWebView2Controller and return E_FAIL to callers to indicate this
+  /// operation is not allowed if AllowExternalDrop property is set to false.
+  ///
+  /// The hosting application must register as an IDropTarget and implement
+  /// and forward Drop calls to this function.
+  ///
+  /// point parameter must be modified to include the WebView's offset and be in
+  /// the WebView's client coordinates (Similar to how SendMouseInput works).
+  ///
+  /// \snippet DropTarget.cpp Drop
+  HRESULT Drop(
+      [in] IDataObject* dataObject,
+      [in] DWORD keyState,
+      [in] POINT point,
+      [out, retval] DWORD* effect);
+
+}
+
+/// Interop interface for the CoreWebView2Environment WinRT object to allow
+/// WinRT end developers to be able to use COM interfaces as parameters for some
+/// methods.
+/// This interface is implemented by the Microsoft.Web.WebView2.Core.CoreWebView2Environment
+/// runtime class.
+[uuid(ee503a63-c1e2-4fbf-8a4d-824e95f8bb13), object, pointer_default(unique)]
+interface ICoreWebView2EnvironmentInterop : IUnknown {
+  /// Returns the UI Automation Provider for the
+  /// ICoreWebView2CompositionController that corresponds with the given HWND.
+  /// See the documentation for ICoreWebView2Environment::GetAutomationProviderForWindow
+  /// for more information.
+  HRESULT GetAutomationProviderForWindow([in] HWND hwnd,
+                                         [out, retval] IUnknown** provider);
+}
+
+// End of interfaces
+
+}
