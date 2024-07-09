@@ -37,6 +37,12 @@ public:
 
 	AudioModule* ltcAudioModule;
 	TargetParameter* ltcModuleTarget;
+	enum LTCSyncMode { RECEIVE, SEND, BOTH};
+	EnumParameter* ltcMode;
+	EnumParameter* ltcSendFPS;
+	EnumParameter* ltcTVStandard;
+	using LTCEncoderPtr = std::unique_ptr<LTCEncoder, void (*)(LTCEncoder*)>;
+	LTCEncoderPtr ltcEncoder;
 
 	FloatParameter* syncOffset;
 	BoolParameter* reverseOffset;
@@ -66,6 +72,16 @@ public:
 	void setupMidiSyncDevices();
 
 	void setLTCAudioModule(AudioModule* am);
+
+	void setupLTCEncoder();
+
+	virtual void updateSampleRate() override;
+	virtual void audioDeviceIOCallbackWithContext(const float* const* inputChannelData,
+		int numInputChannels,
+		float* const* outputChannelData,
+		int numOutputChannels,
+		int numSamples,
+		const AudioIODeviceCallbackContext& context) override;
 
 	virtual void onContainerParameterChangedInternal(Parameter *) override;
 	virtual void onControllableStateChanged(Controllable* c) override;

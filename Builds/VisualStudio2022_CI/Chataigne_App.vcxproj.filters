@@ -3949,6 +3949,9 @@
     <ClCompile Include="..\..\Modules\juce_organicui\ui\LookAndFeelOO.cpp">
       <Filter>JUCE Modules\juce_organicui\ui</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\ui\UITimers.cpp">
+      <Filter>JUCE Modules\juce_organicui\ui</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\undo\UndoMaster.cpp">
       <Filter>JUCE Modules\juce_organicui\undo</Filter>
     </ClCompile>
@@ -7186,6 +7189,9 @@
       <Filter>JUCE Modules\juce_organicui\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\ui\Style.h">
+      <Filter>JUCE Modules\juce_organicui\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\ui\UITimers.h">
       <Filter>JUCE Modules\juce_organicui\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\undo\UndoMaster.h">

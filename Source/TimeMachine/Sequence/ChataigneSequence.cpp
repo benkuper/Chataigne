@@ -15,6 +15,7 @@ ChataigneSequence::ChataigneSequence() :
 	masterAudioModule(nullptr),
 	masterAudioLayer(nullptr),
 	ltcAudioModule(nullptr),
+	ltcEncoder(nullptr, &ltc_encoder_free),
 	mtcFPS(nullptr)
 {
 	midiSyncDevice = new MIDIDeviceParameter("Sync Devices", "MIDI Devices to send and/or receive MTC to sync the sequence with external systems.");
@@ -30,6 +31,11 @@ ChataigneSequence::ChataigneSequence() :
 	ltcModuleTarget->canBeDisabledByUser = true;
 	ltcModuleTarget->targetType = TargetParameter::CONTAINER;
 	ltcModuleTarget->maxDefaultSearchLevel = 0;
+	ltcMode = addEnumParameter("LTC Mode", "Either receiving or sending LTC", 0);
+	ltcMode->addOption("Receive", RECEIVE)->addOption("Send", SEND)->addOption("Both", BOTH);
+	ltcSendFPS = addEnumParameter("Send FPS", "The framerate to use to send LTC");
+	ltcSendFPS->addOption("24", LTC_TV_FILM_24)->addOption("25", LTC_TV_625_50)->addOption("30 (525_60)", LTC_TV_525_60)->addOption("30 (1125_60)", LTC_TV_1125_60);
+	ltcSendFPS->setDefaultValue(30);
 
 	syncOffset = addFloatParameter("Sync Offset", "The time to offset when sending and receiving", 0, 0);
 	syncOffset->defaultUI = FloatParameter::TIME;
@@ -305,6 +311,44 @@ void ChataigneSequence::setLTCAudioModule(AudioModule* am)
 	}
 }
 
+void ChataigneSequence::setupLTCEncoder()
+{
+	int fps = 24;
+	LTC_TV_STANDARD tv = ltcSendFPS->getValueDataAsEnum<LTC_TV_STANDARD>();
+	switch (tv)
+	{
+	case LTC_TV_FILM_24:
+		fps = 24;
+		break;
+	case LTC_TV_625_50:
+		fps = 25;
+		break;
+	case LTC_TV_525_60:
+		fps = 30;
+		break;
+	case LTC_TV_1125_60:
+		fps = 30;
+		break;
+	}
+
+	ltcEncoder.reset(ltc_encoder_create(sampleRate, fps, tv, 0));
+}
+
+void ChataigneSequence::updateSampleRate()
+{
+	setupLTCEncoder();
+}
+
+void ChataigneSequence::audioDeviceIOCallbackWithContext(const float* const* inputChannelData, int numInputChannels, float* const* outputChannelData, int numOutputChannels, int numSamples, const AudioIODeviceCallbackContext& context)
+{
+	Sequence::audioDeviceIOCallbackWithContext(inputChannelData, numInputChannels, outputChannelData, numOutputChannels, numSamples, context);
+
+	LTCSyncMode ltcM = ltcMode->getValueDataAsEnum<LTCSyncMode>();
+	if (ltcM == SEND || ltcM == BOTH)
+	{
+	}
+}
+
 void ChataigneSequence::onContainerParameterChangedInternal(Parameter* p)
 {
 	Sequence::onContainerParameterChangedInternal(p);
@@ -389,27 +433,31 @@ void ChataigneSequence::onExternalParameterValueChanged(Parameter* p)
 	}
 	else if (ltcAudioModule != nullptr)
 	{
-		if (p == ltcAudioModule->ltcPlaying)
+		LTCSyncMode ltcM = ltcMode->getValueDataAsEnum<LTCSyncMode>();
+		if (ltcM == RECEIVE || ltcM == BOTH)
 		{
-			if (ltcAudioModule->ltcPlaying->boolValue())
+			if (p == ltcAudioModule->ltcPlaying)
 			{
-				double time = ltcAudioModule->ltcTime->floatValue() + (syncOffset->floatValue() * (reverseOffset->boolValue() ? -1 : 1));
-				if (time >= 0 && time < totalTime->floatValue())
+				if (ltcAudioModule->ltcPlaying->boolValue())
 				{
-					setCurrentTime(time, true, true);
-					playTrigger->trigger();
+					double time = ltcAudioModule->ltcTime->floatValue() + (syncOffset->floatValue() * (reverseOffset->boolValue() ? -1 : 1));
+					if (time >= 0 && time < totalTime->floatValue())
+					{
+						setCurrentTime(time, true, true);
+						playTrigger->trigger();
+					}
+				}
+				else
+				{
+					pauseTrigger->trigger();
 				}
 			}
-			else
+			else if (p == ltcAudioModule->ltcTime)
 			{
-				pauseTrigger->trigger();
+				double time = ltcAudioModule->ltcTime->floatValue() + (syncOffset->floatValue() * (reverseOffset->boolValue() ? -1 : 1));
+				double diff = fabs(currentTime->floatValue() - time);
+				if (diff > 1) setCurrentTime(time, true, true);
 			}
-		}
-		else if (p == ltcAudioModule->ltcTime)
-		{
-			double time = ltcAudioModule->ltcTime->floatValue() + (syncOffset->floatValue() * (reverseOffset->boolValue() ? -1 : 1));
-			double diff = fabs(currentTime->floatValue() - time);
-			if (diff > 1) setCurrentTime(time, true, true);
 		}
 	}
 }
