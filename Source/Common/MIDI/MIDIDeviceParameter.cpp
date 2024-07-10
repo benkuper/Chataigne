@@ -34,7 +34,7 @@ void MIDIDeviceParameter::setInputDevice(MIDIInputDevice* i)
 {
 	var val;
 	val.append(i != nullptr ? i->id : "");
-	val.append(value[1]);
+	val.append(value.size() >= 2 ? value[1] : "");
 
 	if (i != nullptr)
 	{
@@ -50,7 +50,7 @@ void MIDIDeviceParameter::setInputDevice(MIDIInputDevice* i)
 void MIDIDeviceParameter::setOutputDevice(MIDIOutputDevice* o)
 {
 	var val;
-	val.append(value[0]);
+	val.append(value.size() >= 1 ? value[0] : "");
 	val.append(o != nullptr ? o->id : "");
 
 	if (o != nullptr)
@@ -128,10 +128,12 @@ void MIDIDeviceParameter::loadJSONDataInternal(var data)
 	Parameter::loadJSONDataInternal(data);
 	setInputDevice(MIDIManager::getInstance()->getInputDeviceWithID(value[0]));
 
-	if (inputDevice == nullptr) ghostDeviceIn = data.getProperty("value", var())[0];
+	var ghostInputVal = data.getProperty("value", var());
+	if (inputDevice == nullptr) ghostDeviceIn = ghostInputVal.size() > 0?ghostInputVal[0]:"";
 
 	setOutputDevice(MIDIManager::getInstance()->getOutputDeviceWithID(value[1]));
 
-	if (outputDevice == nullptr) ghostDeviceOut = data.getProperty("value", var())[1];
+	var ghostOutputVal = data.getProperty("value", var());
+	if (outputDevice == nullptr) ghostDeviceOut = ghostOutputVal.size()> 1?ghostOutputVal[1]:"";
 
 }
