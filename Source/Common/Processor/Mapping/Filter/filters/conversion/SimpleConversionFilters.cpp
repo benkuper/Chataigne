@@ -82,8 +82,8 @@ Parameter* SimpleConversionFilter::setupSingleParameterInternal(Parameter* sourc
 
 		addExtraRetargetOptions();
 
+		if (dynamic_cast<ColorParameter*>(retargetP) != nullptr) retargetComponent->addOption("Hue", HUE)->addOption("Saturation", SATURATION)->addOption("Brightness", BRIGHTNESS);
 		if (transferType == EXTRACT) retargetComponent->addOption("Min", MIN)->addOption("Max", MAX)->addOption("Average", AVERAGE)->addOption("Length", LENGTH)->addOption("Area", AREA);
-
 
 		if (useBaseValue)
 		{
@@ -272,6 +272,27 @@ MappingFilter::ProcessResult SimpleConversionFilter::processSingleParameterInter
 			val = 1;
 			for (int i = 0; i < source->value.size(); i++) val = (float)val * (float)source->value[i];
 			break;
+			
+		case HUE: 
+			{
+			ColorParameter* colorParam = dynamic_cast<ColorParameter*>(source);
+			val = colorParam->getColor().getHue();
+			break;
+			}
+
+		case SATURATION: 
+			{
+			ColorParameter* colorParam = dynamic_cast<ColorParameter*>(source);
+			val = colorParam->getColor().getSaturation();
+			break;
+			}
+
+		case BRIGHTNESS:
+			{
+			ColorParameter* colorParam = dynamic_cast<ColorParameter*>(source);
+			val = colorParam->getColor().getBrightness();
+			break;
+			}
 
 		default:
 			if (targetData < source->value.size()) val = source->value[targetData];
