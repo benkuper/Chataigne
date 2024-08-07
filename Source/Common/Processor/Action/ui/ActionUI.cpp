@@ -122,7 +122,7 @@ void ActionUI::paintOverChildren(Graphics& g)
 	BaseItemUI::paintOverChildren(g);
 	if (action->cdm != nullptr && action->cdm->getIsValid(action->getPreviewIndex()) && action->actionRoles.size() == 0) //no special roles like activate or deactivate
 	{
-		g.setColour(GREEN_COLOR);
+		g.setColour(GREEN_COLOR.withSaturation(item->forceDisabled?.2f:1));
 		g.drawRoundedRectangle(getMainBounds().toFloat(), rounderCornerSize, 2);
 	}
 }
