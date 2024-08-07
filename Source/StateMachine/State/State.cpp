@@ -32,6 +32,9 @@ State::State() :
 
 	//pm->setForceDisabled(true);
 
+	pm->setForceDisabled(!active->boolValue() || !enabled->boolValue(), false, true);
+
+
 	//set default value
 	//viewUISize->setBounds(50, 50,1000,1000);
 	viewUISize->setPoint(250, 200);
@@ -132,10 +135,14 @@ void State::onContainerParameterChangedInternal(Parameter* p)
 				handleActiveChanged();
 			}
 		}
-		else if (p == loadActivationBehavior)
+		else
 		{
-			stateListeners.call(&StateListener::stateStartActivationChanged, this);
+			pm->setForceDisabled(!active->boolValue() || !enabled->boolValue(), false, true);
 		}
+	}
+	else if (p == loadActivationBehavior)
+	{
+		stateListeners.call(&StateListener::stateStartActivationChanged, this);
 	}
 }
 
