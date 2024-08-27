@@ -85,10 +85,13 @@ void ChataigneApplication::handleCrashed()
 	{
         crashSent = true;
 		MatomoAnalytics::getInstance()->log(MatomoAnalytics::CRASH);
+		MatomoAnalytics::getInstance()->signalThreadShouldExit();
 		while (MatomoAnalytics::getInstance()->isThreadRunning())
 		{
 			//wait until thread is done
-            Thread::getCurrentThread()->wait(10);
+			Thread* t = Thread::getCurrentThread();
+			if (t == nullptr) break;
+			t->wait(10);
         }
 	}
 
