@@ -592,7 +592,7 @@ void ParamLinkContainer::linkParamToMappingIndex(Parameter* p, int mappingIndex)
 
 var ParamLinkContainer::linkParamToMappingIndexFromScript(const var::NativeFunctionArgs& a)
 {
-	if (!checkNumArgs("linkToMappingIndex", a, 2)) return false;
+	if (!checkNumArgs("linkParamToMappingIndex", a, 2)) return false;
 
 	if (ParameterLink* link = getLinkedParamFromScript(a))
 	{
@@ -609,7 +609,7 @@ var ParamLinkContainer::linkParamToMappingIndexFromScript(const var::NativeFunct
 
 var ParamLinkContainer::setParamLinkFromScript(const var::NativeFunctionArgs& a)
 {
-	if (!checkNumArgs("setLink", a, 2)) return false;
+	if (!checkNumArgs("setParamLink", a, 2)) return false;
 	if (ParameterLink* link = getLinkedParamFromScript(a))
 	{
 		link->setLinkFromScript(a.arguments[1]);
@@ -620,7 +620,7 @@ var ParamLinkContainer::setParamLinkFromScript(const var::NativeFunctionArgs& a)
 
 var ParamLinkContainer::unlinkParamFromScript(const var::NativeFunctionArgs& a)
 {
-	if (!checkNumArgs("setLink", a, 2)) return false;
+	if (!checkNumArgs("unlinkParam", a, 1)) return false;
 	if (ParameterLink* link = getLinkedParamFromScript(a))
 	{
 		link->setLinkType(ParameterLink::NONE);
