@@ -34,7 +34,7 @@ ParameterLink::~ParameterLink()
 	isLinkBeingDestroyed = true;
 
 	paramLinkNotifier.cancelPendingUpdate();
-	
+
 	if (list != nullptr && !listRef.wasObjectDeleted())
 	{
 		list->removeMultiplexListListener(this);
@@ -296,10 +296,19 @@ String ParameterLink::getReplacementString(int multiplexIndex)
 					{
 						if (BaseMultiplexList* curList = multiplex->listManager.getItemWithName(dotSplit[1]))
 						{
-
 							if (Parameter* lp = dynamic_cast<Parameter*>(curList->list[multiplexIndex]))
 							{
-								result += lp->stringValue();
+								if (lp->type == Controllable::TARGET)
+								{
+									if (Parameter* ltp = dynamic_cast<Parameter*>(((TargetParameter*)lp)->getTargetControllable()))
+									{
+										result += ltp->stringValue();
+									}
+									else
+									{
+										result += lp->stringValue();
+									}
+								}
 							}
 							else
 							{
