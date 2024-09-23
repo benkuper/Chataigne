@@ -134,13 +134,13 @@ bool MappingFilterManager::rebuildFilterChain(MappingFilter* afterThisFilter, in
 		else
 		{
 			if (!foundFilter) continue;
-			//if (!f->enabled->boolValue()) continue;
+			if (!f->enabled->boolValue()) continue;
 
 			bool setupResult = f->setupSources(fp, multiplexIndex, rangeOnly);
 			if (!setupResult) continue;
 		}
 
-		if (!rangeOnly && f->enabled->boolValue())
+		if (!rangeOnly)
 		{
 			OwnedArray<Parameter>* fParams = f->filteredParameters[multiplexIndex];
 			fp = Array<Parameter*>(fParams->getRawDataPointer(), fParams->size());
