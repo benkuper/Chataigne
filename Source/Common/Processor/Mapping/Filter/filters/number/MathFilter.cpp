@@ -52,6 +52,7 @@ void MathFilter::setupParametersInternal(int multiplexIndex, bool rangeOnly)
 				operationValue = (Parameter*)ControllableFactory::createControllable(mSourceParams[0]->getTypeString());
 				operationValue->setNiceName("Value");
 				if (loadLastData) operationValue->loadJSONData(opValueData);
+				opValueData = var();
 				//operationValue->isSavable = false;
 				filterParams.addParameter(operationValue);
 			}
@@ -255,7 +256,10 @@ bool MathFilter::filteredParamShouldHaveRange()
 var MathFilter::getJSONData()
 {
 	var data = MappingFilter::getJSONData();
-	if (operationValue != nullptr) data.getDynamicObject()->setProperty("operationValue", operationValue->getJSONData());
+	if (operationValue != nullptr)
+		data.getDynamicObject()->setProperty("operationValue", operationValue->getJSONData());
+	else if (opValueData.isObject())
+		data.getDynamicObject()->setProperty("operationValue", opValueData);
 	return data;
 }
 
