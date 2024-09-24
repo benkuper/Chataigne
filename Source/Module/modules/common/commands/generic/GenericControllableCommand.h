@@ -26,6 +26,8 @@ public:
 	Action action;
 	TargetParameter* target;
 
+	WeakReference<Parameter> targetParam; //for range check
+
 	EnumParameter* valueOperator;
 	EnumParameter* componentOperator;
 	BoolParameter* loop;
@@ -57,6 +59,8 @@ public:
 
 	virtual void linkUpdated(ParameterLink* pLink) override;
 	virtual void onContainerParameterChanged(Parameter*) override;
+
+	virtual void parameterRangeChanged(Parameter* p) override;
 
 	virtual void loadJSONDataInternal(var data) override;
 	virtual void endLoadFile() override;

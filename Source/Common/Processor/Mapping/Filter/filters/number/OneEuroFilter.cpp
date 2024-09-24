@@ -34,11 +34,14 @@ float OneEuroMappingFilter::alpha(float cutoff)
 	return 1.0f / (1.0f + tau / te);
 }
 
-void OneEuroMappingFilter::setupParametersInternal(int mutiplexIndex, bool rangeOnly)
+void OneEuroMappingFilter::setupParametersInternal(int multiplexIndex, bool rangeOnly)
 {
-	allFilters.clear();
-	filtersMap.clear();
-	MappingFilter::setupParametersInternal(mutiplexIndex, rangeOnly);
+	if (multiplexIndex == 0)
+	{
+		allFilters.clear();
+		filtersMap.clear();
+	}
+	MappingFilter::setupParametersInternal(multiplexIndex, rangeOnly);
 }
 
 Parameter* OneEuroMappingFilter::setupSingleParameterInternal(Parameter* source, int multiplexIndex, bool rangeOnly)
@@ -78,13 +81,6 @@ MappingFilter::ProcessResult OneEuroMappingFilter::processSingleParameterTimeInt
 
 
 
-	for (auto& f : allFilters)
-	{
-		f->freq = freq;
-		f->derivativeCutOff = dcutoff;
-		f->minCutOff = mincutoff->floatValue();
-		f->beta = beta_->floatValue();
-	}
 
 	//jassert(filtersMap.contains(source) && filtersMap[source] != nullptr);
 	if (!filtersMap.contains(source) || filtersMap[source] == nullptr)
@@ -93,9 +89,16 @@ MappingFilter::ProcessResult OneEuroMappingFilter::processSingleParameterTimeInt
 		return STOP_HERE;
 	}
 
-	var val = filtersMap[source]->filter(oldVal, newVal, deltaTime);
+	OneEuroFilter* f = filtersMap[source];
 
-	out->setValue(out->isComplex() ? val: val[0]);
+	f->freq = freq;
+	f->derivativeCutOff = dcutoff;
+	f->minCutOff = mincutoff->floatValue();
+	f->beta = beta_->floatValue();
+
+	var val = f->filter(oldVal, newVal, deltaTime);
+
+	out->setValue(out->isComplex() ? val : val[0]);
 
 	return CHANGED;
 }

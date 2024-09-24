@@ -29,7 +29,7 @@ public:
 
 	float alpha(float cutoff);
 
-	virtual void setupParametersInternal(int mutiplexIndex, bool rangeOnly = false) override;
+	virtual void setupParametersInternal(int multiplexIndex, bool rangeOnly = false) override;
 	Parameter* setupSingleParameterInternal(Parameter* source, int multiplexIndex, bool rangeOnly) override;
 	ProcessResult processSingleParameterTimeInternal(Parameter* source, Parameter* out, int multiplexIndex, double deltaTime) override;
 

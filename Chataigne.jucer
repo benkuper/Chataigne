@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.20b8"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.20b9"
               bundleIdentifier="benkuper.Chataigne" companyName="Ben Kuper"
               companyWebsite="http://benjamin.kuperberg.fr/chataigne" companyEmail="benjamin@kuperberg.fr"
               defines="VST_LOGGING=0" splashScreenColour="Dark" cppLanguageStandard="17"

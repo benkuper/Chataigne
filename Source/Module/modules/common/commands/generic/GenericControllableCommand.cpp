@@ -10,6 +10,7 @@
 
 
 #include "Module/ModuleIncludes.h"
+#include "GenericControllableCommand.h"
 
 GenericControllableCommand::GenericControllableCommand(Module* _module, CommandContext context, var params, Multiplex* multiplex) :
 	BaseCommand(_module, context, params, multiplex),
@@ -77,6 +78,8 @@ GenericControllableCommand::~GenericControllableCommand()
 			}
 		}
 	}
+
+	if(!isMultiplexed() && targetParam != nullptr && !targetParam.wasObjectDeleted()) targetParam->removeParameterListener(this);
 }
 
 void GenericControllableCommand::updateComponentFromTarget()
@@ -128,6 +131,8 @@ void GenericControllableCommand::updateValueFromTargetAndComponent()
 
 	if (value != nullptr && !value.wasObjectDeleted())
 	{
+		if (!isMultiplexed() && targetParam != nullptr && !targetParam.wasObjectDeleted()) targetParam->removeParameterListener(this);
+
 		if (ghostValueData.isVoid())
 		{
 			ghostValueData = value->getJSONData();
@@ -139,6 +144,7 @@ void GenericControllableCommand::updateValueFromTargetAndComponent()
 	}
 
 	value = nullptr;
+
 	if (target == nullptr)
 	{
 		isUpdatingContent = curUpdating;
@@ -149,6 +155,7 @@ void GenericControllableCommand::updateValueFromTargetAndComponent()
 
 	if (cTarget != nullptr)
 	{
+
 		var compData = componentOperator->getValueData();
 		if (!compData.isVoid())
 		{
@@ -164,6 +171,13 @@ void GenericControllableCommand::updateValueFromTargetAndComponent()
 				}
 			}
 		}
+
+		targetParam = cTarget;
+		if(!isMultiplexed()) targetParam->addParameterListener(this);
+	}
+	else
+	{
+		targetParam = nullptr;
 	}
 
 	if (value != nullptr)
@@ -176,7 +190,7 @@ void GenericControllableCommand::updateValueFromTargetAndComponent()
 			value->loadJSONData(ghostValueData);
 		}
 		value->setNiceName("Value");
-		if (isMultiplexed()) value->clearRange(); //don't fix a range for multilex, there could be many ranges
+		if (isMultiplexed()) value->clearRange(); //don't fix a range for multiplex, there could be many ranges
 
 		addParameter(value);
 
@@ -202,6 +216,7 @@ Controllable* GenericControllableCommand::getControllableFromTarget()
 {
 	return getLinkedTargetAs<Controllable>(target, 0); //use multiplex 0 to create param, should be better;
 }
+
 
 void GenericControllableCommand::updateOperatorOptions()
 {
@@ -289,6 +304,19 @@ void GenericControllableCommand::onContainerParameterChanged(Parameter* p)
 			if (curHide != value->hideInEditor || curHideLoop != loop->hideInEditor || curHideRandom != randomAlwaysUnique->hideInEditor) queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, this));
 
 		}
+	}
+}
+
+void GenericControllableCommand::parameterRangeChanged(Parameter* p)
+{
+	if (p == targetParam)
+	{
+		if (!p->hasRange()) value->clearRange();
+		else value->setRange(p->minimumValue, p->maximumValue);
+	}
+	else
+	{
+		BaseCommand::parameterRangeChanged(p);
 	}
 }
 
