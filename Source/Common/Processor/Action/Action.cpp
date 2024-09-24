@@ -183,14 +183,6 @@ void Action::loadJSONDataItemInternal(var data)
 	if (hasOffConsequences) csmOff->loadJSONData(data.getProperty("consequencesOff", var()));
 }
 
-void Action::endLoadFile()
-{
-	Engine::mainEngine->removeEngineListener(this);
-	//if (actionRoles.contains(Role::ACTIVATE) && cdm != nullptr)
-	//{
-	//	for (int i = 0; i < getMultiplexCount(); i++) if (cdm->getIsValid(i, false)) triggerConsequences(true, i);
-	//}
-}
 
 void Action::onContainerTriggerTriggered(Trigger* t)
 {

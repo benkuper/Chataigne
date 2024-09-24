@@ -69,7 +69,6 @@ public:
 
 	virtual var getJSONData() override;
 	virtual void loadJSONDataItemInternal(var data) override;
-	virtual void endLoadFile() override;
 
 	virtual ProcessorUI* getUI() override;
 
