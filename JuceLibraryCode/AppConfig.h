@@ -339,6 +339,30 @@
  #define   ORGANICUI_USE_WEBSERVER 1
 #endif
 
+#ifndef    ORGANICUI_USE_DASHBOARDPANEL
+ //#define ORGANICUI_USE_DASHBOARDPANEL 1
+#endif
+
+#ifndef    ORGANICUI_USE_PARROTPANEL
+ //#define ORGANICUI_USE_PARROTPANEL 1
+#endif
+
+#ifndef    ORGANICUI_USE_DETECTIVEPANEL
+ //#define ORGANICUI_USE_DETECTIVEPANEL 1
+#endif
+
+#ifndef    ORGANICUI_USE_HELPPANEL
+ //#define ORGANICUI_USE_HELPPANEL 1
+#endif
+
+#ifndef    ORGANICUI_USE_LOGGERPANEL
+ //#define ORGANICUI_USE_LOGGERPANEL 1
+#endif
+
+#ifndef    ORGANICUI_USE_WARNINGPANEL
+ //#define ORGANICUI_USE_WARNINGPANEL 1
+#endif
+
 //==============================================================================
 // juce_osc flags:
 
