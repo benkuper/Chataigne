@@ -363,6 +363,10 @@
  //#define ORGANICUI_USE_WARNINGPANEL 1
 #endif
 
+#ifndef    ORGANICUI_USE_OUTLINERPANEL
+ //#define ORGANICUI_USE_OUTLINERPANEL 1
+#endif
+
 //==============================================================================
 // juce_osc flags:
 
