@@ -308,6 +308,9 @@ String ParameterLink::getReplacementString(int multiplexIndex)
 									{
 										result += lp->stringValue();
 									}
+								}else
+								{
+									result += lp->stringValue();
 								}
 							}
 							else
