@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    BaseCommandHandlerEditor.cpp
-    Created: 19 Jan 2017 6:41:22pm
-    Author:  Ben
+	BaseCommandHandlerEditor.cpp
+	Created: 19 Jan 2017 6:41:22pm
+	Author:  Ben
 
   ==============================================================================
 */
@@ -13,11 +13,11 @@
 #include "CommandChooserUI.cpp"
 #include "../BaseCommandHandler.h"
 
-BaseCommandHandlerEditor::BaseCommandHandlerEditor(BaseCommandHandler * _handler, bool isRoot) :
+BaseCommandHandlerEditor::BaseCommandHandlerEditor(BaseCommandHandler* _handler, bool isRoot) :
 	BaseItemEditor(_handler, isRoot),
 	handler(_handler),
 	chooser(_handler->context, _handler->isMultiplexed())
-{	
+{
 	chooser.addChooserListener(this);
 	chooser.lockedModule = handler->lockedModule;
 
@@ -31,7 +31,7 @@ BaseCommandHandlerEditor::BaseCommandHandlerEditor(BaseCommandHandler * _handler
 	}
 
 	setSize(10, 40);
-	
+
 	updateChooserLabel();
 
 	resetAndBuild();
@@ -41,13 +41,13 @@ BaseCommandHandlerEditor::BaseCommandHandlerEditor(BaseCommandHandler * _handler
 
 BaseCommandHandlerEditor::~BaseCommandHandlerEditor()
 {
-	if(!inspectable.wasObjectDeleted()) handler->removeAsyncCommandHandlerListener(this);
+	if (!inspectable.wasObjectDeleted()) handler->removeAsyncCommandHandlerListener(this);
 }
 
 void BaseCommandHandlerEditor::resizedInternalHeaderItemInternal(Rectangle<int>& r)
 {
-	if(triggerBT != nullptr) triggerBT->setBounds(r.removeFromRight(50).reduced(2));
-	chooser.setBounds(r.removeFromRight(chooser.label.getFont().getStringWidth(chooser.label.getText()) + 50));
+	if (triggerBT != nullptr) triggerBT->setBounds(r.removeFromRight(50).reduced(2));
+	chooser.setBounds(r.removeFromRight(TextLayout::getStringWidth(chooser.label.getFont(), chooser.label.getText()) + 50));
 }
 
 void BaseCommandHandlerEditor::updateChooserLabel()
@@ -70,12 +70,12 @@ void BaseCommandHandlerEditor::updateChooserLabel()
 	chooser.repaint();
 }
 
-void BaseCommandHandlerEditor::definitionChosen(CommandDefinition * d)
+void BaseCommandHandlerEditor::definitionChosen(CommandDefinition* d)
 {
 	handler->setCommand(d);
 }
 
-void BaseCommandHandlerEditor::newMessage(const CommandHandlerEvent & e)
+void BaseCommandHandlerEditor::newMessage(const CommandHandlerEvent& e)
 {
 	if (e.type == CommandHandlerEvent::COMMAND_CHANGED)
 	{

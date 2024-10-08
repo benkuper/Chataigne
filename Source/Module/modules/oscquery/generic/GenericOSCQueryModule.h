@@ -63,6 +63,7 @@ public:
 
 	Array<Controllable*> noFeedbackList;
 
+	int connectionTries;
 
 	void setupWSClient();
 

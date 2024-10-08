@@ -24,7 +24,7 @@ EnablingNetworkControllableContainerEditor::~EnablingNetworkControllableContaine
 
 void EnablingNetworkControllableContainerEditor::resizedInternalHeader(Rectangle<int>& r)
 {
-	ipLabel.setBounds(r.removeFromRight(jmin(ipLabel.getFont().getStringWidth(ipLabel.getText()),getWidth()-100)));
+	ipLabel.setBounds(r.removeFromRight(jmin((int)TextLayout::getStringWidth(ipLabel.getFont(), ipLabel.getText()), getWidth() - 100)));
 	r.removeFromRight(2);
 	EnablingControllableContainerEditor::resizedInternalHeader(r);
 }

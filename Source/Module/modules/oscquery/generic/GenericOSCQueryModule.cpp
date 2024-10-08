@@ -18,7 +18,8 @@ GenericOSCQueryModule::GenericOSCQueryModule(const String& name, int defaultRemo
 	remoteHost(nullptr),
 	remotePort(nullptr),
 	isUpdatingStructure(false),
-	hasListenExtension(false)
+	hasListenExtension(false),
+	connectionTries(0)
 {
 	alwaysShowValues = true;
 	canHandleRouteValues = true;
@@ -97,7 +98,9 @@ void GenericOSCQueryModule::setupWSClient()
 
 	String url = host + ":" + wsPort + "/";
 
-	if (wsPort != remoteHost->stringValue()) LOG("Connecting to custom WS Port : " + url + "...");
+	connectionTries++;
+
+	if (wsPort != remoteHost->stringValue() && connectionTries == 0) LOG("Connecting to custom WS Port : " + url + "...");
 	wsClient->start(url);
 }
 
@@ -386,6 +389,7 @@ void GenericOSCQueryModule::connectionOpened()
 {
 	NLOG(niceName, "Websocket connection is opened, let's get bi, baby !");
 	isConnected->setValue(true);
+	connectionTries = 0;
 	clearWarning("sync");
 	updateAllListens();
 }
@@ -398,7 +402,7 @@ void GenericOSCQueryModule::connectionClosed(int status, const String& reason)
 
 void GenericOSCQueryModule::connectionError(const String& errorMessage)
 {
-	NLOGERROR(niceName, "Connection error " << errorMessage);
+	if(connectionTries == 0) NLOGERROR(niceName, "Connection error " << errorMessage);
 	isConnected->setValue(false);
 }
 
