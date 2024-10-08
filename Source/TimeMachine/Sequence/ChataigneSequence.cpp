@@ -9,6 +9,7 @@
 */
 
 #include "TimeMachine/TimeMachineIncludes.h"
+#include "ChataigneSequence.h"
 
 ChataigneSequence::ChataigneSequence() :
 	Sequence(),

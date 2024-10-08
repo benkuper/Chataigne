@@ -1,3 +1,4 @@
+#include "MIDIDevice.h"
 /*
   ==============================================================================
 
@@ -209,4 +210,10 @@ void MIDIOutputDevice::sendAfterTouch(int channel, int note, int value)
 {
 	if (device == nullptr) return;
 	device->sendMessageNow(MidiMessage::aftertouchChange(channel, note, value));
+}
+
+void MIDIOutputDevice::sendMessageNow(const MidiMessage& message)
+{
+	if (device == nullptr) return;
+	device->sendMessageNow(message);
 }

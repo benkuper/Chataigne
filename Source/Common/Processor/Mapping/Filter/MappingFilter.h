@@ -43,7 +43,7 @@ public:
 	bool filterParamsAreDirty; //This is use to force processing even if input has not changed when a filterParam has been changed
 
 	virtual bool setupSources(Array<Parameter*> sources, int multiplexIndex, bool rangeOnly = false);
-	virtual void setupParametersInternal(int mutiplexIndex, bool rangeOnly = false);
+	virtual void setupParametersInternal(int multiplexIndex, bool rangeOnly = false);
 	virtual Parameter* setupSingleParameterInternal(Parameter* source, int multiplexIndex, bool rangeOnly = false);
 
 	ProcessResult process(Array<Parameter*> inputs, int multiplexIndex);

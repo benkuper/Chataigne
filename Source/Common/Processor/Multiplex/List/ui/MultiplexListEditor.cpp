@@ -51,6 +51,8 @@ void BaseMultiplexListEditor::buttonClicked(Button* b)
 
 		p.showMenuAsync(PopupMenu::Options(), [this](int result)
 			{
+				if (result == 0) return;
+
 				switch (result)
 				{
 				case 1:

@@ -2557,6 +2557,15 @@
     <ClCompile Include="..\..\JUCE\modules\juce_core\text\juce_CharacterFunctions.cpp">
       <Filter>JUCE Modules\juce_core\text</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_core\text\juce_CharPointer_UTF8_test.cpp">
+      <Filter>JUCE Modules\juce_core\text</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_core\text\juce_CharPointer_UTF16_test.cpp">
+      <Filter>JUCE Modules\juce_core\text</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_core\text\juce_CharPointer_UTF32_test.cpp">
+      <Filter>JUCE Modules\juce_core\text</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_core\text\juce_Identifier.cpp">
       <Filter>JUCE Modules\juce_core\text</Filter>
     </ClCompile>
@@ -4279,6 +4288,9 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_graphics_Harfbuzz.cpp">
       <Filter>JUCE Library Code</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\include_juce_graphics_Sheenbidi.c">
+      <Filter>JUCE Library Code</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_gui_basics.cpp">
       <Filter>JUCE Library Code</Filter>
     </ClCompile>
@@ -5518,6 +5530,9 @@
       <Filter>JUCE Modules\juce_core\memory</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_core\memory\juce_ContainerDeletePolicy.h">
+      <Filter>JUCE Modules\juce_core\memory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_core\memory\juce_CopyableHeapBlock.h">
       <Filter>JUCE Modules\juce_core\memory</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_core\memory\juce_HeapBlock.h">

@@ -44,7 +44,9 @@ void MTCSender::pause(bool resumeIfAlreadyPaused)
 		stopThread(10);
 	}
 	else if (resumeIfAlreadyPaused)
+	{
 		startThread();
+	}
 }
 
 void MTCSender::stop()
@@ -57,15 +59,24 @@ void MTCSender::setPosition(double position, bool fullFrame)
 	if (device == nullptr) return;
 
 	double unused;
-	lock.enter();
+
+	bool wasRunning = isThreadRunning();
+	if (wasRunning) stopThread(100);
+
+	GenericScopedLock _lock(lock);
 	m_frame = static_cast<int>(modf(position, &unused) * fps);
 	m_second = static_cast<int>(position) % 60;
 	m_minute = (static_cast<int>(position) / 60) % 60;
 	m_hour = (static_cast<int>(position) / 60 / 60) % 60;
 	m_piece = Piece::FrameLSB;
-	lock.exit();
 
-	if (fullFrame) device->sendFullframeTimecode(m_hour, m_minute, m_second, m_frame, fpsType);
+
+	if (fullFrame)
+	{
+		device->sendFullframeTimecode(m_hour, m_minute, m_second, m_frame, fpsType);
+	}
+
+	if (wasRunning) startThread();
 }
 
 void MTCSender::setSpeedFactor(float speed)
@@ -78,10 +89,10 @@ void MTCSender::setFPS(MidiMessage::SmpteTimecodeType val)
 	fpsType = val;
 	switch (fpsType)
 	{
-	case MidiMessage::fps24: fps = 24;
-	case MidiMessage::fps25: fps = 25;
-	case MidiMessage::fps30: fps = 30;
-	case MidiMessage::fps30drop: fps = 29.997;
+	case MidiMessage::fps24: fps = 24; break;
+	case MidiMessage::fps25: fps = 25; break;
+	case MidiMessage::fps30: fps = 30; break;
+	case MidiMessage::fps30drop: fps = 29.997; break;
 	}
 }
 
@@ -94,6 +105,7 @@ void MTCSender::run()
 	while (!threadShouldExit())
 	{
 		sleep(1);
+		GenericScopedLock _lock(lock);
 
 		frameTime = (1000.0 / fps / 4) / speedFactor;
 
@@ -102,7 +114,6 @@ void MTCSender::run()
 
 		lastFrameTime += frameTime;
 
-		lock.enter();
 
 		const int value = getValue(m_piece);
 		device->sendQuarterframe(static_cast<int>(m_piece), value);
@@ -117,20 +128,18 @@ void MTCSender::run()
 				m_frame = 0;
 				if (++m_second >= 60)
 				{
-					m_second = 0;
+					m_second = m_second % 60;
 					if (++m_minute >= 60)
 					{
-						m_minute = 0;
+						m_minute = m_minute % 60;
 						if (++m_hour >= 24)
 						{
-							m_hour = 0;
+							m_hour = m_hour % 24;
 						}
 					}
 				}
 			}
 		}
-
-		lock.exit();
 	}
 
 }

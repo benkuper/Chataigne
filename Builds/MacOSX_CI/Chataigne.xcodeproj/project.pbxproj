@@ -12,6 +12,7 @@
 		14B03BE884B82BE8EC264AE9 /* include_juce_simpleweb.cpp */ = {isa = PBXBuildFile; fileRef = A344ECDA05A5372A32341886; };
 		1E38E7F8E4ECF0F020101DF4 /* include_juce_audio_processors_lv2_libs.cpp */ = {isa = PBXBuildFile; fileRef = DE62E8E7E1EBB5191F56029B; };
 		212B67A3534DE8B8475EFD36 /* include_juce_organicui2.cpp */ = {isa = PBXBuildFile; fileRef = 03B34F65CD67AA62113F23C3; };
+		216A21D06E923B13A5B3E6B5 /* include_juce_graphics_Sheenbidi.c */ = {isa = PBXBuildFile; fileRef = B6DACF38E3774C2D798157C4; };
 		21919F55110B8DBF3FC8D49F /* include_juce_graphics_Harfbuzz.cpp */ = {isa = PBXBuildFile; fileRef = 08727B1936C15CAECD0131E0; };
 		2231890C46C454B84C7D5049 /* include_juce_opengl.mm */ = {isa = PBXBuildFile; fileRef = F4590876F89E291434F6B792; };
 		2270C7A2C18C1C8F04F83D18 /* include_juce_organicui.cpp */ = {isa = PBXBuildFile; fileRef = 066DA60AFB60B8BE77E819E7; };
@@ -708,6 +709,7 @@
 		B659B9A2F92F0E7A59C628DD /* CommandTemplateManager.cpp */ /* CommandTemplateManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CommandTemplateManager.cpp; path = ../../Source/Common/Command/Template/CommandTemplateManager.cpp; sourceTree = SOURCE_ROOT; };
 		B68AA40E425DF28AFA78226B /* InputSystemManager.cpp */ /* InputSystemManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = InputSystemManager.cpp; path = ../../Source/Common/InputSystem/InputSystemManager.cpp; sourceTree = SOURCE_ROOT; };
 		B6A29DF2E614A624B07ADD6A /* DMXModule.h */ /* DMXModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DMXModule.h; path = ../../Source/Module/modules/dmx/DMXModule.h; sourceTree = SOURCE_ROOT; };
+		B6DACF38E3774C2D798157C4 /* include_juce_graphics_Sheenbidi.c */ /* include_juce_graphics_Sheenbidi.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = include_juce_graphics_Sheenbidi.c; path = ../../JuceLibraryCode/include_juce_graphics_Sheenbidi.c; sourceTree = SOURCE_ROOT; };
 		B7037B1303B113B3EB738DE2 /* os_mac_interface.m */ /* os_mac_interface.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = os_mac_interface.m; path = ../../Source/Module/modules/controller/wiimote/lib/wiiuse/os_mac/os_mac_interface.m; sourceTree = SOURCE_ROOT; };
 		B7BBA4821B4CAD95A467E9DE /* Condition.cpp */ /* Condition.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Condition.cpp; path = ../../Source/Common/Processor/Action/Condition/Condition.cpp; sourceTree = SOURCE_ROOT; };
 		B84FB7144270D3572B5D9239 /* BaseCommandHandlerEditor.h */ /* BaseCommandHandlerEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BaseCommandHandlerEditor.h; path = ../../Source/Common/Command/ui/BaseCommandHandlerEditor.h; sourceTree = SOURCE_ROOT; };
@@ -1367,6 +1369,7 @@
 				F7B87FFA7807F632CD294BA4,
 				A166E3006BBC663DDF05DE54,
 				08727B1936C15CAECD0131E0,
+				B6DACF38E3774C2D798157C4,
 				767E6C14CD8A82E65606EB02,
 				378FBC82648FC26CBEC330A9,
 				F4590876F89E291434F6B792,
@@ -3670,6 +3673,7 @@
 				B7D1E9B2DB666FD0C4DA9CA2,
 				6E48A19DAF47B6778318F790,
 				21919F55110B8DBF3FC8D49F,
+				216A21D06E923B13A5B3E6B5,
 				B84C47FC81D491DE8352F7A7,
 				F0BB5E30719519EA30B9FD86,
 				2231890C46C454B84C7D5049,
@@ -3808,8 +3812,8 @@
 					"USE_ABLETONLINK=1",
 					"LINK_PLATFORM_MACOSX=1",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.9.20b2",
-					"JUCE_APP_VERSION_HEX=0x10914",
+					"JUCE_APP_VERSION=2.0.0b1",
+					"JUCE_APP_VERSION_HEX=0x20000",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
 					"JucePlugin_Build_AU=0",
@@ -3889,8 +3893,8 @@
 					"USE_ABLETONLINK=1",
 					"LINK_PLATFORM_MACOSX=1",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.9.20b2",
-					"JUCE_APP_VERSION_HEX=0x10914",
+					"JUCE_APP_VERSION=2.0.0b1",
+					"JUCE_APP_VERSION_HEX=0x20000",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
 					"JucePlugin_Build_AU=0",
