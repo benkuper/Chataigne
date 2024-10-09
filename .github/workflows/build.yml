@@ -26,13 +26,19 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v2
         with:
-          submodules: 'recursive'
+          - name: Set JUCE branch
+            id: set_juce_branch
+            run: |
+              if [[ "${{ github.ref }}" == "refs/heads/juce8" ]]; then
+                echo "juce-branch=juce8_local" >> $GITHUB_ENV
+              else
+                echo "juce-branch=develop-local" >> $GITHUB_ENV
 
       - name: Checkout JUCE
         uses: actions/checkout@v2
         with:
           repository: benkuper/JUCE
-          ref: develop-local
+          ref: ${{ env.juce-branch }}
           path: JUCE
 
       - name: Set Variables
