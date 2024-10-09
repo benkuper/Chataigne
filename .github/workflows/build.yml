@@ -30,10 +30,12 @@ jobs:
 
       - name: Set JUCE branch
         run: |
-          if [[ "${{ github.ref }}" == "refs/heads/juce8" ]]; then
+          if [[ "${{ github.ref }}" == "refs/heads/juce8" ]]
+          then
             echo "juce-branch=juce8_local" >> $GITHUB_ENV
           else
             echo "juce-branch=develop-local" >> $GITHUB_ENV
+          fi
 
       - name: Checkout JUCE
         uses: actions/checkout@v2
@@ -121,10 +123,12 @@ jobs:
     
       - name: Set JUCE branch
         run: |
-          if [[ "${{ github.ref }}" == "refs/heads/juce8" ]]; then
+          if [[ "${{ github.ref }}" == "refs/heads/juce8" ]]
+          then
             echo "juce-branch=juce8_local" >> $GITHUB_ENV
           else
             echo "juce-branch=develop-local" >> $GITHUB_ENV
+          fi
 
       - name: Checkout JUCE
         uses: actions/checkout@v2
@@ -193,10 +197,12 @@ jobs:
 
       - name: Set JUCE branch
         run: |
-          if [[ "${{ github.ref }}" == "refs/heads/juce8" ]]; then
+          if [[ "${{ github.ref }}" == "refs/heads/juce8" ]]
+          then
             echo "juce-branch=juce8_local" >> $GITHUB_ENV
           else
             echo "juce-branch=develop-local" >> $GITHUB_ENV
+          fi
 
       - name: Checkout JUCE
         uses: actions/checkout@v2
@@ -294,10 +300,12 @@ jobs:
 
       - name: Set JUCE branch
         run: |
-          if [[ "${{ github.ref }}" == "refs/heads/juce8" ]]; then
+          if [[ "${{ github.ref }}" == "refs/heads/juce8" ]]
+          then
             echo "juce-branch=juce8_local" >> $GITHUB_ENV
           else
             echo "juce-branch=develop-local" >> $GITHUB_ENV
+          fi
 
       - name: Checkout JUCE
         uses: actions/checkout@v2
