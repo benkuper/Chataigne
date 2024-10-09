@@ -23,16 +23,16 @@ jobs:
       fail-fast: false
 
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
+
       - name: Set Variables
         id: set_variables
         uses: ./.github/actions/set-variables
         with:
           os: ${{ matrix.arch }}
-
-      - name: Checkout repo
-        uses: actions/checkout@v2
-        with:
-          submodules: 'recursive'
 
       - name: Checkout JUCE
         uses: actions/checkout@v2
@@ -109,25 +109,23 @@ jobs:
       fail-fast: false
 
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
+
       - name: Set Variables
         id: set_variables
         uses: ./.github/actions/set-variables
         with:
           os: 'osx-${{ matrix.suffix }}'
 
-      - name: Checkout repo
-        uses: actions/checkout@v2
-        with:
-          submodules: 'recursive'
-    
       - name: Checkout JUCE
         uses: actions/checkout@v2
         with:
           repository: benkuper/JUCE
           ref: develop-local
           path: JUCE
-
-
 
       - name: Download Packages 
         run: |
@@ -181,18 +179,18 @@ jobs:
         with:
           submodules: 'recursive'
 
+      - name: Set Variables
+          id: set_variables
+          uses: ./.github/actions/set-variables
+          with:
+            os: 'x64'
+
       - name: Checkout JUCE
         uses: actions/checkout@v2
         with:
           repository: benkuper/JUCE
           ref: develop-local
           path: JUCE
-
-      - name: Set Variables
-        id: set_variables
-        uses: ./.github/actions/set-variables
-        with:
-          os: 'x64'
 
       - name: Installing dependencies
         id: install_deps
@@ -270,16 +268,16 @@ jobs:
       fail-fast: false
 
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
+        
       - name: Set Variables
         id: set_variables
         uses: ./.github/actions/set-variables
         with:
           os: ${{ matrix.arch }}
-
-      - name: Checkout repo
-        uses: actions/checkout@v2
-        with:
-          submodules: 'recursive'
 
       - name: Checkout JUCE
         uses: actions/checkout@v2
