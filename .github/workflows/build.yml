@@ -38,7 +38,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: benkuper/JUCE
-          ref: develop-local
+          ref: ${{ env.juce-branch }}
           path: JUCE
       
 
@@ -124,7 +124,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: benkuper/JUCE
-          ref: develop-local
+          ref: ${{ env.juce-branch }}
           path: JUCE
 
       - name: Download Packages 
@@ -189,7 +189,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: benkuper/JUCE
-          ref: develop-local
+          ref: ${{ env.juce-branch }}
           path: JUCE
 
       - name: Installing dependencies
@@ -283,7 +283,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: benkuper/JUCE
-          ref: develop-local
+          ref: ${{ env.juce-branch }}
           path: JUCE
 
       - name: Download and prepare AppImage
