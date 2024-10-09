@@ -23,6 +23,12 @@ jobs:
       fail-fast: false
 
     steps:
+      - name: Set Variables
+        id: set_variables
+        uses: ./.github/actions/set-variables
+        with:
+          os: ${{ matrix.arch }}
+
       - name: Checkout repo
         uses: actions/checkout@v2
         with:
@@ -35,11 +41,7 @@ jobs:
           ref: develop-local
           path: JUCE
       
-      - name: Set Variables
-        id: set_variables
-        uses: ./.github/actions/set-suffix
-        with:
-          os: ${{ matrix.arch }}
+
 
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.0.2
@@ -107,6 +109,12 @@ jobs:
       fail-fast: false
 
     steps:
+      - name: Set Variables
+        id: set_variables
+        uses: ./.github/actions/set-variables
+        with:
+          os: 'osx-${{ matrix.suffix }}'
+
       - name: Checkout repo
         uses: actions/checkout@v2
         with:
@@ -119,11 +127,7 @@ jobs:
           ref: develop-local
           path: JUCE
 
-      - name: Set Suffix
-        id: set_variables
-        uses: ./.github/actions/set-suffix
-        with:
-          os: 'osx-${{ matrix.suffix }}'
+
 
       - name: Download Packages 
         run: |
@@ -184,9 +188,9 @@ jobs:
           ref: develop-local
           path: JUCE
 
-      - name: Set Suffix
+      - name: Set Variables
         id: set_variables
-        uses: ./.github/actions/set-suffix
+        uses: ./.github/actions/set-variables
         with:
           os: 'x64'
 
@@ -266,6 +270,12 @@ jobs:
       fail-fast: false
 
     steps:
+      - name: Set Variables
+        id: set_variables
+        uses: ./.github/actions/set-variables
+        with:
+          os: ${{ matrix.arch }}
+
       - name: Checkout repo
         uses: actions/checkout@v2
         with:
@@ -277,12 +287,6 @@ jobs:
           repository: benkuper/JUCE
           ref: develop-local
           path: JUCE
-
-      - name: Set Suffix
-        id: set_variables
-        uses: ./.github/actions/set-suffix
-        with:
-          os: ${{ matrix.arch }}
 
       - name: Download and prepare AppImage
         run: |
