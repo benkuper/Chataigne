@@ -180,10 +180,10 @@ jobs:
           submodules: 'recursive'
 
       - name: Set Variables
-          id: set_variables
-          uses: ./.github/actions/set-variables
-          with:
-            os: 'x64'
+        id: set_variables
+        uses: ./.github/actions/set-variables
+        with:
+          os: 'x64'
 
       - name: Checkout JUCE
         uses: actions/checkout@v2
