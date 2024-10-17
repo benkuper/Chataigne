@@ -78,7 +78,7 @@ public:
 		void setupClient();
 		void run() override;
 
-		void controllableContainerNameChanged(ControllableContainer* cc) override;
+		void controllableContainerNameChanged(ControllableContainer* cc, const String&) override;
 	};
 
 	IntParameter* numClients;

@@ -814,7 +814,7 @@ void PJLinkModule::PJLinkClient::run()
 	if (pjlinkModule->logOutgoingData->boolValue()) LOG("Connected to projector " << (id) << " (" << remoteHost->stringValue() << ":" << remotePort->intValue() << ")");
 }
 
-void PJLinkModule::PJLinkClient::controllableContainerNameChanged(ControllableContainer* cc)
+void PJLinkModule::PJLinkClient::controllableContainerNameChanged(ControllableContainer* cc, const String&)
 {
 	if (cc == &paramsCC)
 	{

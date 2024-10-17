@@ -1881,9 +1881,9 @@
                embeddedFrameworks="../../External/sdl/lib/osx/SDL2.framework&#10;../../External/syphon/Syphon.framework">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="0" name="Release" libraryPath="../../External/servus/lib/osx/release&#10;../../External/joycon/lib/osx"
-                       osxCompatibility="10.13 SDK" binaryPath="Release"/>
+                       osxCompatibility="10.13 SDK" binaryPath="Release" macOSDeploymentTarget="10.13"/>
         <CONFIGURATION isDebug="0" name="ReleaseSilicon" libraryPath="../../External/servus/lib/silicon/release&#10;../../External/joycon/lib/silicon"
-                       osxCompatibility="10.13 SDK" binaryPath="Release"/>
+                       osxCompatibility="10.13 SDK" binaryPath="Release" macOSDeploymentTarget="10.13"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_timeline" path="Modules"/>

@@ -182,6 +182,7 @@ void Module::loadJSONDataInternal(var data)
 {
 	BaseItem::loadJSONDataInternal(data);
 	setupScriptsFromJSONData(customModuleData); //needs to load after item loadJSON (scriptManager is clearing at load)
+
 }
 
 void Module::setupModuleFromJSONData(var data)
@@ -218,7 +219,7 @@ void Module::setupModuleFromJSONData(var data)
 
 	Array<WeakReference<Controllable>> valueList = getValueControllables();
 
-	if (!isCurrentlyLoadingData) setupScriptsFromJSONData(data);
+	//if (!isCurrentlyLoadingData) setupScriptsFromJSONData(data);
 
 
 	bool valuesAreEmpty = valuesCC.controllables.size() == 0 && valuesCC.controllableContainers.size() == 0;

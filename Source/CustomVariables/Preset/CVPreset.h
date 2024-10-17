@@ -58,7 +58,7 @@ public:
 
 	void parameterValueChanged(Parameter*) override;
 	void parameterRangeChanged(Parameter*) override;
-	void controllableNameChanged(Controllable*) override;
+	void controllableNameChanged(Controllable*, const String&) override;
 
 	ParameterPreset * getParameterPresetForSource(Parameter* p);
 

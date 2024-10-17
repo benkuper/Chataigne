@@ -288,7 +288,7 @@ void PresetParameterContainer::parameterRangeChanged(Parameter* source)
 	syncItem(pp, keepValuesInSync);
 }
 
-void PresetParameterContainer::controllableNameChanged(Controllable* sourceC)
+void PresetParameterContainer::controllableNameChanged(Controllable* sourceC, const String&)
 {
 	Parameter* source = dynamic_cast<Parameter*>(sourceC);
 	if (source == nullptr) return;

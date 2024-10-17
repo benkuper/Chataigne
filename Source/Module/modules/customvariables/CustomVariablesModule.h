@@ -70,7 +70,7 @@ public:
 	void onContainerParameterChanged(Parameter* p) override;
 	void onExternalParameterValueChanged(Parameter * p) override;
 	void parameterRangeChanged(Parameter*) override;
-	void controllableNameChanged(Controllable*) override;
+	void controllableNameChanged(Controllable*, const String&) override;
 	void controllableAttributeChanged(Controllable* c, const String& attribute) override;
 
 	Parameter* getParameterForSource(Parameter* p);

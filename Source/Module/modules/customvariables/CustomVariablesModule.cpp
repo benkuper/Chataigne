@@ -305,7 +305,7 @@ void GenericControllableManagerLinkedContainer::parameterRangeChanged(Parameter*
 	syncItem(p, source, keepValuesInSync);
 }
 
-void GenericControllableManagerLinkedContainer::controllableNameChanged(Controllable* sourceC)
+void GenericControllableManagerLinkedContainer::controllableNameChanged(Controllable* sourceC, const String&)
 {
 	Parameter* source = dynamic_cast<Parameter*>(sourceC);
 	if (source == nullptr) return;
