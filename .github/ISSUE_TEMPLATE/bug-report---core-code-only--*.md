@@ -1,6 +1,6 @@
 ---
-name: Bug report
-about: Create a report to help us improve
+name: Bug report - Core code only !*
+about: If you're posting for general questions or bugs, post on Discord
 title: ''
 labels: ''
 assignees: ''
@@ -15,11 +15,7 @@ assignees: ''
 A clear and concise description of what the bug is.
 
 **To Reproduce**
-Steps to reproduce the behavior:
-1. 
-2. 
-3.
-4. 
+Steps to reproduce the behavior
 
 **Expected behavior**
 A clear and concise description of what you expected to happen.
