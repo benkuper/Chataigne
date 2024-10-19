@@ -171,7 +171,7 @@ public:
     };
 
 
-    DECLARE_INSPECTACLE_CRITICAL_LISTENER(ParamLinkContainer, paramLinkContainer);
+    DECLARE_INSPECTACLE_SAFE_LISTENER(ParamLinkContainer, paramLinkContainer);
 
     virtual var getJSONData() override;
     virtual void loadJSONDataInternal(var data) override;

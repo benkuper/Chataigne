@@ -31,7 +31,7 @@ public:
 
     void showAndGetList(ControllableContainer* startFromCC, std::function<void(ControllableContainer *)> returnFunc);
 
-    DECLARE_INSPECTACLE_CRITICAL_LISTENER(Multiplex, multiplex);
+    DECLARE_INSPECTACLE_SAFE_LISTENER(Multiplex, multiplex);
 
     ProcessorUI* getUI() override;
     

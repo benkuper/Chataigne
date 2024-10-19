@@ -57,7 +57,7 @@ public:
 		virtual void stateStartActivationChanged(State*) {}
 	};
 
-	DECLARE_INSPECTACLE_CRITICAL_LISTENER(State, state)
+	DECLARE_INSPECTACLE_SAFE_LISTENER(State, state)
 
 private:
 	WeakReference<State>::Master masterReference;

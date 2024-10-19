@@ -219,7 +219,7 @@ void Module::setupModuleFromJSONData(var data)
 
 	Array<WeakReference<Controllable>> valueList = getValueControllables();
 
-	//if (!isCurrentlyLoadingData) setupScriptsFromJSONData(data);
+	if (!Engine::mainEngine->isLoadingFile && !isCurrentlyLoadingData) setupScriptsFromJSONData(data);
 
 
 	bool valuesAreEmpty = valuesCC.controllables.size() == 0 && valuesCC.controllableContainers.size() == 0;
