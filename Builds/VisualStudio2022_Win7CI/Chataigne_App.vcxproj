@@ -2095,6 +2095,21 @@
     <ClCompile Include="..\..\JUCE\modules\juce_gui_extra\juce_gui_extra.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_javascript\javascript\juce_Javascript_test.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_javascript\javascript\juce_JavascriptEngine.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_javascript\javascript\juce_JSCursor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_javascript\javascript\juce_JSObject.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_javascript\juce_javascript.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\app\CrashHandler.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2954,6 +2969,7 @@
       <AdditionalOptions> /bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_gui_extra.cpp"/>
+    <ClCompile Include="..\..\JuceLibraryCode\include_juce_javascript.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_opengl.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_organicui.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_organicui2.cpp"/>
@@ -3716,6 +3732,22 @@
     <ClInclude Include="..\..\JUCE\modules\juce_gui_extra\misc\juce_WebControlRelays.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_extra\native\juce_NSViewFrameWatcher_mac.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_gui_extra\juce_gui_extra.h"/>
+    <ClInclude Include="..\..\JUCE\modules\juce_javascript\choc\containers\choc_Value.h"/>
+    <ClInclude Include="..\..\JUCE\modules\juce_javascript\choc\javascript\choc_javascript.h"/>
+    <ClInclude Include="..\..\JUCE\modules\juce_javascript\choc\javascript\choc_javascript_QuickJS.h"/>
+    <ClInclude Include="..\..\JUCE\modules\juce_javascript\choc\math\choc_MathHelpers.h"/>
+    <ClInclude Include="..\..\JUCE\modules\juce_javascript\choc\platform\choc_Assert.h"/>
+    <ClInclude Include="..\..\JUCE\modules\juce_javascript\choc\platform\choc_DisableAllWarnings.h"/>
+    <ClInclude Include="..\..\JUCE\modules\juce_javascript\choc\platform\choc_ReenableAllWarnings.h"/>
+    <ClInclude Include="..\..\JUCE\modules\juce_javascript\choc\text\choc_FloatToString.h"/>
+    <ClInclude Include="..\..\JUCE\modules\juce_javascript\choc\text\choc_JSON.h"/>
+    <ClInclude Include="..\..\JUCE\modules\juce_javascript\choc\text\choc_StringUtilities.h"/>
+    <ClInclude Include="..\..\JUCE\modules\juce_javascript\choc\text\choc_UTF8.h"/>
+    <ClInclude Include="..\..\JUCE\modules\juce_javascript\detail\juce_QuickJSHelpers.h"/>
+    <ClInclude Include="..\..\JUCE\modules\juce_javascript\javascript\juce_JavascriptEngine.h"/>
+    <ClInclude Include="..\..\JUCE\modules\juce_javascript\javascript\juce_JSCursor.h"/>
+    <ClInclude Include="..\..\JUCE\modules\juce_javascript\javascript\juce_JSObject.h"/>
+    <ClInclude Include="..\..\..\JUCE\modules\juce_javascript\juce_javascript.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\app\CrashHandler.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\app\OrganicApplication.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\app\OrganicMainComponent.h"/>
@@ -5027,6 +5059,7 @@
     <None Include="..\..\Resources\tray_icon.png"/>
     <None Include="..\..\JUCE\modules\juce_core\native\java\README.txt"/>
     <None Include="..\..\Modules\juce_dmx\README.md"/>
+    <None Include="..\..\JUCE\modules\juce_javascript\choc\LICENSE.md"/>
     <None Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\ReadMe.txt"/>
     <None Include="..\..\Modules\juce_organicui\README.md"/>
     <None Include="..\..\Modules\juce_serial\README.md"/>
