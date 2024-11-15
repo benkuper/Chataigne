@@ -199,19 +199,19 @@ void PresetParameterContainer::syncValues(bool addToUndo)
 	{
 		if (ParameterPreset* pp = dynamic_cast<ParameterPreset*>(cc.get()))
 		{
-			if (addToUndo) actions.add(syncValue(pp, true));
+			if (addToUndo) actions.addArray(syncValue(pp, true));
 			else syncValue(pp, false);
 		}
 	}
 	if (addToUndo) UndoMaster::getInstance()->performActions("Update preset " + niceName, actions);
 }
 
-UndoableAction* PresetParameterContainer::syncValue(ParameterPreset* preset, bool onlyReturnUndoAction)
+Array<UndoableAction*> PresetParameterContainer::syncValue(ParameterPreset* preset, bool onlyReturnUndoAction)
 {
 	Parameter* p = preset->parameter;
 	Parameter* source = linkMap[preset];
 
-	if (onlyReturnUndoAction) return p->setUndoableValue(p->value, source->value, true);
+	if (onlyReturnUndoAction) return p->setUndoableValue(source->value, true);
 
 	p->setValue(source->value);
 	return nullptr;

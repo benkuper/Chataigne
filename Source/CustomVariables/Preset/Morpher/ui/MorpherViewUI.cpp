@@ -424,7 +424,7 @@ void MorpherViewUI::itemDragMove(const SourceDetails& details)
 	if (bui != nullptr && bui == &mainTargetUI)
 	{
 		Point<float> p = getPositionFromDrag(bui, details);
-		bui->item->viewUIPosition->setUndoablePoint(bui->item->viewUIPosition->getPoint(), p.toFloat());
+		bui->item->viewUIPosition->setUndoablePoint(p.toFloat());
 		updateComponentViewPosition(bui, bui->item->viewUIPosition->getPoint(), AffineTransform());
 		shouldRepaint = true;
 	}
@@ -441,7 +441,7 @@ void MorpherViewUI::itemDropped(const SourceDetails& details)
 	if (bui != nullptr && bui == &mainTargetUI)
 	{
 		Point<float> p = getPositionFromDrag(bui, details);
-		bui->item->viewUIPosition->setUndoablePoint(bui->item->viewUIPosition->getPoint(), p.toFloat());
+		bui->item->viewUIPosition->setUndoablePoint(p.toFloat());
 		updateComponentViewPosition(bui, bui->item->viewUIPosition->getPoint(), AffineTransform());
 	}
 

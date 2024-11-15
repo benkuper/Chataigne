@@ -48,7 +48,7 @@ public:
 	void syncItems(bool syncValues);
 
 	void syncValues(bool addToUndo = false);
-	UndoableAction* syncValue(ParameterPreset* preset, bool onlyReturnUndoAction = false);
+	Array<UndoableAction*> syncValue(ParameterPreset* preset, bool onlyReturnUndoAction = false);
 
 	void itemAdded(GenericControllableItem*) override;
 	void itemsAdded(Array<GenericControllableItem*> items) override;
