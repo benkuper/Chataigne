@@ -129,7 +129,7 @@ bool  StringComparator::regexpMatch(const juce::String& regexpString, const juce
         }
 
         if (flags.containsChar('m')) {
-          regexFlags |= std::regex::multiline;  // Specifies that ^ shall match the beginning of a line and $ shall match the end of a line, if the ECMAScript engine is selected.
+            regexFlags |= std::regex::multiline;  // Specifies that ^ shall match the beginning of a line and $ shall match the end of a line, if the ECMAScript engine is selected.
         }
 
         // Compile the regex with the specified flags
