@@ -240,7 +240,7 @@ void GenericOSCQueryModule::updateTreeFromData(var data)
 		Array<WeakReference<Parameter>> params = valuesCC.getAllParameters(true);
 		for (auto& p : params)
 		{
-			if (p->isOverriden) vData.getDynamicObject()->setProperty(p->getControlAddress(&valuesCC), p->value);
+			vData.getDynamicObject()->setProperty(p->getControlAddress(&valuesCC), p->value);
 		}
 
 		for (auto& cc : containers)
