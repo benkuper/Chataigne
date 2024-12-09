@@ -24,10 +24,17 @@ CommunityModuleManager::~CommunityModuleManager()
 	stopThread(5000);
 }
 
+// @TODO Move this to a generalized place.
+struct CaseInsensitiveCompare {
+    bool operator()(const String& a, const String& b) const {
+        return a.toLowerCase() < b.toLowerCase();
+    }
+};
+
 void CommunityModuleManager::run()
 {
 	wait(500);
-
+    LOG("Loading modules list...");
 	var data = getJSONDataForURL(URL("https://benjamin.kuperberg.fr/chataigne/releases/modules.json"));
 	
 	if (threadShouldExit()) return;
@@ -41,6 +48,13 @@ void CommunityModuleManager::run()
 	var defs = data.getProperty("definitions", var());
 	
 	if (!defs.isArray()) return;
+
+    // @TODO Add loading indicator on the UI, for now we just log.
+
+    // This sorts by key name automatically
+    std::map<String, var, CaseInsensitiveCompare> modules;
+
+    LOG("Loading module definitions...");
 
 	for (int i = 0; i < defs.size(); ++i)
 	{
@@ -64,10 +78,14 @@ void CommunityModuleManager::run()
 			continue;
 		}
 
-		CommunityModuleInfo * m = new CommunityModuleInfo(moduleName, moduleDefData);
-		addItem(m, var(), false);
+        modules[moduleName]=moduleDefData;
 	}
-	
+
+	for (const auto& [moduleName, moduleDefData] : modules) {
+		CommunityModuleInfo * m = new CommunityModuleInfo(moduleName, moduleDefData);
+    	addItem(m, var(), false);
+	}
+
 	LOG("Finished fetching Community modules.");
 
 	bool showUpdate = false;
