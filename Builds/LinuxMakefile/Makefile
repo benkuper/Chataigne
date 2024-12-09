@@ -8,6 +8,13 @@ else
 V_AT = @
 endif
 
+define PKG_CONFIG_WRAPPER
+$(foreach lib,$(2), \
+    $(if $(shell pkg-config --exists $(lib) 2>/dev/null && echo found),, \
+    $(error "Missing required library: $(lib). Install it or ensure pkg-config can find it."))) \
+    $(shell pkg-config $(1) $(2) 2>/dev/null)
+endef
+
 # (this disables dependency generation if multiple architectures are set)
 DEPFLAGS := $(if $(word 2, $(TARGET_ARCH)), , -MMD)
 
@@ -39,13 +46,13 @@ ifeq ($(CONFIG),Debug)
     TARGET_ARCH := -m64
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DDEBUG=1" "-D_DEBUG=1" "-DVST_LOGGING=0" "-DUSE_ABLETONLINK=1" "-DLINK_PLATFORM_LINUX=1" "-DGDK_BACKEND=x11" "-DJUCER_LINUX_MAKE_6D53C8B4=1" "-DJUCE_APP_VERSION=1.9.24" "-DJUCE_APP_VERSION_HEX=0x10918" $(shell $(PKG_CONFIG) --cflags alsa freetype2 gl libcurl webkit2gtk-4.0 gtk+-x11-3.0) -pthread -I../../JuceLibraryCode -I../../JUCE/modules -I../../Modules -I../../Source -I../../External/wiiuse -I../../External/asio -I../../External/asiodriver -I../../External/kinect/include -I../../External/joycon/include -I../../External/servus/include -I../../External/dnssd/include -I../../External/ois/include -I../../External/sdl/include -I../../External/hidapi/include -I../../External/abletonlink/include -I../../External/libusb/include/libusb-1.0 -I../../External/mosquitto/include -I../../External/posistagenet/include -I../../External/simpleble/include $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DDEBUG=1" "-D_DEBUG=1" "-DVST_LOGGING=0" "-DUSE_ABLETONLINK=1" "-DLINK_PLATFORM_LINUX=1" "-DGDK_BACKEND=x11" "-DJUCER_LINUX_MAKE_6D53C8B4=1" "-DJUCE_APP_VERSION=1.9.24" "-DJUCE_APP_VERSION_HEX=0x10918" $(call PKG_CONFIG_WRAPPER,--cflags,alsa freetype2 gl libcurl webkit2gtk-4.0 gtk+-x11-3.0) -pthread -I../../JuceLibraryCode -I../../JUCE/modules -I../../Modules -I../../Source -I../../External/wiiuse -I../../External/asio -I../../External/asiodriver -I../../External/kinect/include -I../../External/joycon/include -I../../External/servus/include -I../../External/dnssd/include -I../../External/ois/include -I../../External/sdl/include -I../../External/hidapi/include -I../../External/abletonlink/include -I../../External/libusb/include/libusb-1.0 -I../../External/mosquitto/include -I../../External/posistagenet/include -I../../External/simpleble/include $(CPPFLAGS)
   JUCE_CPPFLAGS_APP :=  "-DJucePlugin_Build_VST=0" "-DJucePlugin_Build_VST3=0" "-DJucePlugin_Build_AU=0" "-DJucePlugin_Build_AUv3=0" "-DJucePlugin_Build_AAX=0" "-DJucePlugin_Build_Standalone=0" "-DJucePlugin_Build_Unity=0" "-DJucePlugin_Build_LV2=0"
   JUCE_TARGET_APP := Chataigne
 
   JUCE_CFLAGS += $(JUCE_CPPFLAGS) $(TARGET_ARCH) -g -ggdb -O3 -Wno-multichar $(CFLAGS)
   JUCE_CXXFLAGS += $(JUCE_CFLAGS) -std=c++17 $(CXXFLAGS)
-  JUCE_LDFLAGS += $(TARGET_ARCH) -L$(JUCE_BINDIR) -L$(JUCE_LIBDIR) -L../../External/servus/lib/linux -L../../External/sdl/lib/linux -L/usr/lib/x86_64-linux-gnu/ -L../../External/joycon/lib/linux -L../../Modules/juce_simpleweb/libs/Linux/x86_64 $(shell $(PKG_CONFIG) --libs alsa freetype2 gl libcurl) -fvisibility=hidden -Wl,-rpath,"lib" -Wl,--as-needed -lrt -ldl -lpthread -lssl -lcrypto -lbluetooth -lServus -lcurl -lSDL2 -lusb-1.0 -lhidapi-hidraw -lJoyShockLibrary $(LDFLAGS)
+  JUCE_LDFLAGS += $(TARGET_ARCH) -L$(JUCE_BINDIR) -L$(JUCE_LIBDIR) -L../../External/servus/lib/linux -L../../External/sdl/lib/linux -L/usr/lib/x86_64-linux-gnu/ -L../../External/joycon/lib/linux -L../../Modules/juce_simpleweb/libs/Linux/x86_64 $(call PKG_CONFIG_WRAPPER,--libs,alsa freetype2 gl libcurl) -fvisibility=hidden -Wl,-rpath,"lib" -Wl,--as-needed -lrt -ldl -lpthread -lssl -lcrypto -lbluetooth -lServus -lcurl -lSDL2 -lusb-1.0 -lhidapi-hidraw -lJoyShockLibrary $(LDFLAGS)
 
   CLEANCMD = rm -rf $(JUCE_OUTDIR)/$(JUCE_TARGET_APP) $(JUCE_OBJDIR)
 endif
@@ -60,13 +67,13 @@ ifeq ($(CONFIG),Release)
     TARGET_ARCH := -m64
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DNDEBUG=1" "-DVST_LOGGING=0" "-DUSE_ABLETONLINK=1" "-DLINK_PLATFORM_LINUX=1" "-DGDK_BACKEND=x11" "-DJUCER_LINUX_MAKE_6D53C8B4=1" "-DJUCE_APP_VERSION=1.9.24" "-DJUCE_APP_VERSION_HEX=0x10918" $(shell $(PKG_CONFIG) --cflags alsa freetype2 gl libcurl webkit2gtk-4.0 gtk+-x11-3.0) -pthread -I../../JuceLibraryCode -I../../JUCE/modules -I../../Modules -I../../Source -I../../External/wiiuse -I../../External/asio -I../../External/asiodriver -I../../External/kinect/include -I../../External/joycon/include -I../../External/servus/include -I../../External/dnssd/include -I../../External/ois/include -I../../External/sdl/include -I../../External/hidapi/include -I../../External/abletonlink/include -I../../External/libusb/include/libusb-1.0 -I../../External/mosquitto/include -I../../External/posistagenet/include -I../../External/simpleble/include $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DNDEBUG=1" "-DVST_LOGGING=0" "-DUSE_ABLETONLINK=1" "-DLINK_PLATFORM_LINUX=1" "-DGDK_BACKEND=x11" "-DJUCER_LINUX_MAKE_6D53C8B4=1" "-DJUCE_APP_VERSION=1.9.24" "-DJUCE_APP_VERSION_HEX=0x10918" $(call PKG_CONFIG_WRAPPER,--cflags,alsa freetype2 gl libcurl webkit2gtk-4.0 gtk+-x11-3.0) -pthread -I../../JuceLibraryCode -I../../JUCE/modules -I../../Modules -I../../Source -I../../External/wiiuse -I../../External/asio -I../../External/asiodriver -I../../External/kinect/include -I../../External/joycon/include -I../../External/servus/include -I../../External/dnssd/include -I../../External/ois/include -I../../External/sdl/include -I../../External/hidapi/include -I../../External/abletonlink/include -I../../External/libusb/include/libusb-1.0 -I../../External/mosquitto/include -I../../External/posistagenet/include -I../../External/simpleble/include $(CPPFLAGS)
   JUCE_CPPFLAGS_APP :=  "-DJucePlugin_Build_VST=0" "-DJucePlugin_Build_VST3=0" "-DJucePlugin_Build_AU=0" "-DJucePlugin_Build_AUv3=0" "-DJucePlugin_Build_AAX=0" "-DJucePlugin_Build_Standalone=0" "-DJucePlugin_Build_Unity=0" "-DJucePlugin_Build_LV2=0"
   JUCE_TARGET_APP := Chataigne
 
   JUCE_CFLAGS += $(JUCE_CPPFLAGS) $(TARGET_ARCH) -O3 -Wno-multichar $(CFLAGS)
   JUCE_CXXFLAGS += $(JUCE_CFLAGS) -std=c++17 $(CXXFLAGS)
-  JUCE_LDFLAGS += $(TARGET_ARCH) -L$(JUCE_BINDIR) -L$(JUCE_LIBDIR) -L../../External/servus/lib/linux -L../../External/sdl/lib/linux -L/usr/lib/x86_64-linux-gnu/ -L../../External/joycon/lib/linux -L../../Modules/juce_simpleweb/libs/Linux/x86_64 $(shell $(PKG_CONFIG) --libs alsa freetype2 gl libcurl) -fvisibility=hidden -Wl,-rpath,"lib" -Wl,--as-needed -lrt -ldl -lpthread -lssl -lcrypto -lbluetooth -lServus -lcurl -lSDL2 -lusb-1.0 -lhidapi-hidraw -lJoyShockLibrary $(LDFLAGS)
+  JUCE_LDFLAGS += $(TARGET_ARCH) -L$(JUCE_BINDIR) -L$(JUCE_LIBDIR) -L../../External/servus/lib/linux -L../../External/sdl/lib/linux -L/usr/lib/x86_64-linux-gnu/ -L../../External/joycon/lib/linux -L../../Modules/juce_simpleweb/libs/Linux/x86_64 $(call PKG_CONFIG_WRAPPER,--libs,alsa freetype2 gl libcurl) -fvisibility=hidden -Wl,-rpath,"lib" -Wl,--as-needed -lrt -ldl -lpthread -lssl -lcrypto -lbluetooth -lServus -lcurl -lSDL2 -lusb-1.0 -lhidapi-hidraw -lJoyShockLibrary $(LDFLAGS)
 
   CLEANCMD = rm -rf $(JUCE_OUTDIR)/$(JUCE_TARGET_APP) $(JUCE_OBJDIR)
 endif
