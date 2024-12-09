@@ -123,14 +123,16 @@ bool  StringComparator::regexpMatch(const juce::String& regexpString, const juce
     {
         // Determine regex flags
         std::regex::flag_type regexFlags = std::regex::ECMAScript; // Default syntax
-
+        /*
         if (flags.containsChar('i')) {
             regexFlags |= std::regex::icase; // Case-insensitive
         }
 
         if (flags.containsChar('m')) {
-            regexFlags |= std::regex::multiline;  // Specifies that ^ shall match the beginning of a line and $ shall match the end of a line, if the ECMAScript engine is selected.
+            // Beware: This is only available from C++17, this broke the windows builds back when this was written.
+            // regexFlags |= std::regex::multiline;  // Specifies that ^ shall match the beginning of a line and $ shall match the end of a line, if the ECMAScript engine is selected.
         }
+        */
 
         // Compile the regex with the specified flags
         std::regex reg(regexpString.toStdString(), regexFlags);
