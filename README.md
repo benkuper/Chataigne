@@ -130,7 +130,7 @@ https://github.com/HBPVIS/servus
 
 You'll need at least these libs to compile the app:
 ```bash
-apt-get install build-essential libbluetooth-dev libcurlpp-dev  libfreetype-dev libfreetype6 libfreetype6-dev libwebkit2gtk-4.0-dev libhidapi-dev
+apt-get install build-essential libbluetooth-dev libcurl4-gnutls-dev  libfreetype-dev libfreetype6 libfreetype6-dev libwebkit2gtk-4.0-dev libhidapi-dev
 ```
 
 Compile it with the JUCE modules specified:
