@@ -113,13 +113,13 @@ StandardMappingInput::StandardMappingInput(var params, Multiplex* processor) :
 
 StandardMappingInput::~StandardMappingInput()
 {
-	if (list != nullptr) list->removeMultiplexListListener(this);
+	if (list != nullptr && !list->isClearing) list->removeMultiplexListListener(this);
 }
 
 void StandardMappingInput::lockInput(Parameter* input)
 {
 	setInput(input);
-	if (input != nullptr) inputTarget->setEnabled(false);
+	if (input != nullptr && !list->isClearing) inputTarget->setEnabled(false);
 }
 
 
@@ -127,14 +127,14 @@ void StandardMappingInput::setList(BaseMultiplexList* newList)
 {
 	if (newList == list) return;
 
-	if (list != nullptr)
+	if (list != nullptr && !list->isClearing)
 	{
 		list->removeMultiplexListListener(this);
 	}
 
 	list = newList;
 
-	if (list != nullptr)
+	if (list != nullptr && !list->isClearing)
 	{
 		list->addMultiplexListListener(this);
 	}
@@ -146,7 +146,7 @@ void StandardMappingInput::setList(BaseMultiplexList* newList)
 Parameter* StandardMappingInput::getInputAt(int multiplexIndex)
 {
 	if (!multiplexListMode) return MappingInput::getInputAt(multiplexIndex);
-	return dynamic_cast<Parameter*>(list != nullptr ? list->getTargetControllableAt(multiplexIndex) : nullptr);
+	return dynamic_cast<Parameter*>(list != nullptr && !list->isClearing ? list->getTargetControllableAt(multiplexIndex) : nullptr);
 }
 
 
