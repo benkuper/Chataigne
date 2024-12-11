@@ -274,7 +274,9 @@ void EnumMultiplexList::updateControllablesSetup()
 	for (auto& c : list)
 	{
 		EnumParameter* ep = (EnumParameter*)c;
-		ep->setOptions(Array<EnumParameter::EnumValue*>(referenceOptions.getRawDataPointer(), referenceOptions.size()));
+		Array<EnumParameter::EnumValue> options;
+		for (auto& ev : referenceOptions) options.add(EnumParameter::EnumValue(ev->key, ev->value));
+		ep->setOptions(options);
 	}
 }
 
