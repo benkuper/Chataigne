@@ -62,7 +62,7 @@ public:
 
 	ParameterPreset * getParameterPresetForSource(Parameter* p);
 
-	//var getJSONData() override;
+	//var getJSONData(bool includeNonOverriden = false) override;
 	void loadJSONData(var data, bool createIfNotThere = false) override;
 
 	class LinkedComparator
@@ -97,7 +97,7 @@ public:
 
 	PresetParameterContainer values;
 
-	var getJSONData() override;
+	var getJSONData(bool includeNonOverriden = false) override;
 	void loadJSONDataInternal(var data) override;
 
 	var getValuesAsJSON();

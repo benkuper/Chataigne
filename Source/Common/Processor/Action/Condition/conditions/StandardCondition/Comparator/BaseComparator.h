@@ -36,7 +36,7 @@ public:
 	void addCompareOption(const String& name, const Identifier& func);
 	void updateReferenceRange(Parameter* sourceParam);
 
-	var getJSONData() override;
+	var getJSONData(bool includeNonOverriden = false) override;
 	void loadJSONDataInternal(var data) override;
 
 	bool compare(Parameter* sourceParam, int multiplexIndex = 0);

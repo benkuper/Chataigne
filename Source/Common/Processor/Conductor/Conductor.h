@@ -69,7 +69,7 @@ public:
 
     void updateNextCue();
 
-    virtual var getJSONData() override;
+    virtual var getJSONData(bool includeNonOverriden = false) override;
     virtual void loadJSONDataItemInternal(var data) override;
     void afterLoadJSONDataInternal() override;
 

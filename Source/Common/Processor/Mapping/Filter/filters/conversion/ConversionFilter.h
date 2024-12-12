@@ -46,7 +46,7 @@ public:
 
 	void askForRemove(ConversionParamValueLink* link) override;
 
-	var getJSONData() override;
+	var getJSONData(bool includeNonOverriden = false) override;
 	void loadJSONDataItemInternal(var data) override;
 
 

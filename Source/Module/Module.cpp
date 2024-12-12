@@ -158,9 +158,9 @@ void Module::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Con
 	if (c->type != Controllable::TRIGGER) processDependencies((Parameter*)c);
 }
 
-var Module::getJSONData()
+var Module::getJSONData(bool includeNonOverriden)
 {
-	var data = BaseItem::getJSONData();
+	var data = BaseItem::getJSONData(includeNonOverriden);
 	data.getDynamicObject()->setProperty("params", moduleParams.getJSONData()); //keep "params" to avoid conflict with container's parameter
 
 	var templateData = templateManager->getJSONData();

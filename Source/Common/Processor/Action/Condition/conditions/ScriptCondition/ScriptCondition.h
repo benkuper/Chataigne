@@ -23,7 +23,7 @@ public:
 	//Script
 	static var setValidFromScript(const var::NativeFunctionArgs &a);
 
-	var getJSONData() override;
+	var getJSONData(bool includeNonOverriden = false) override;
 	void loadJSONDataInternal(var data) override;
 
 	DECLARE_TYPE("Script");

@@ -234,9 +234,9 @@ void DMXCommand::triggerInternal(int multiplexIndex)
 	}
 }
 
-var DMXCommand::getJSONData()
+var DMXCommand::getJSONData(bool includeNonOverriden)
 {
-	var data = BaseCommand::getJSONData();
+	var data = BaseCommand::getJSONData(includeNonOverriden);
 	if (customValuesManager != nullptr) data.getDynamicObject()->setProperty("customValues", customValuesManager->getJSONData());
 	return data;
 }

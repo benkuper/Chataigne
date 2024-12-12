@@ -263,9 +263,9 @@ void StandardCondition::onExternalTriggerTriggered(Trigger* t)
 	}
 }
 
-var StandardCondition::getJSONData()
+var StandardCondition::getJSONData(bool includeNonOverriden)
 {
-	var data = Condition::getJSONData();
+	var data = Condition::getJSONData(includeNonOverriden);
 	if (comparator != nullptr) data.getDynamicObject()->setProperty("comparator", comparator->getJSONData());
 	return data;
 }

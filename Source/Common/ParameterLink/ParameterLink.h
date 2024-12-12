@@ -77,7 +77,7 @@ public:
 
     void setLinkFromScript(var data);
 
-    var getJSONData();
+    var getJSONData(bool includeNonOverriden = false);
     void loadJSONData(var data);
 
     class ParameterLinkListener
@@ -173,7 +173,7 @@ public:
 
     DECLARE_INSPECTACLE_CRITICAL_LISTENER(ParamLinkContainer, paramLinkContainer);
 
-    virtual var getJSONData() override;
+    virtual var getJSONData(bool includeNonOverriden = false) override;
     virtual void loadJSONDataInternal(var data) override;
 
     virtual InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables = Array<Inspectable*>()) override;

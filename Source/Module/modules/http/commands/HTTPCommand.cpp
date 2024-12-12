@@ -73,9 +73,9 @@ void HTTPCommand::triggerInternal(int multiplexIndex)
 		);
 }
 
-var HTTPCommand::getJSONData()
+var HTTPCommand::getJSONData(bool includeNonOverriden)
 {
-	var data = BaseCommand::getJSONData();
+	var data = BaseCommand::getJSONData(includeNonOverriden);
 	var customValuesData = customValuesManager->getJSONData();
 	if (!customValuesData.isVoid()) data.getDynamicObject()->setProperty("argManager", customValuesData);
 	return data;

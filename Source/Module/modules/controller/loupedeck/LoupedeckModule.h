@@ -116,7 +116,7 @@ public:
 
     String getLoupedeckServerPath() const;
 
-    var getJSONData() override;
+    var getJSONData(bool includeNonOverriden = false) override;
     void loadJSONDataItemInternal(var data) override;
 
 

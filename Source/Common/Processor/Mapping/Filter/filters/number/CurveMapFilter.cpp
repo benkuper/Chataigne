@@ -71,9 +71,9 @@ void CurveMapFilter::onControllableFeedbackUpdateInternal(ControllableContainer 
 	MappingFilter::onControllableFeedbackUpdateInternal(cc, c);
 }
 
-var CurveMapFilter::getJSONData()
+var CurveMapFilter::getJSONData(bool includeNonOverriden)
 {
-	var data = MappingFilter::getJSONData();
+	var data = MappingFilter::getJSONData(includeNonOverriden);
 	data.getDynamicObject()->setProperty(curve.shortName, curve.getJSONData());
 	return data;
 }

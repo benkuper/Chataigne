@@ -443,9 +443,9 @@ void GenericOSCQueryModule::messageReceived(const String& message)
 	inActivityTrigger->trigger();
 }
 
-var GenericOSCQueryModule::getJSONData()
+var GenericOSCQueryModule::getJSONData(bool includeNonOverriden)
 {
-	var data = Module::getJSONData();
+	var data = Module::getJSONData(includeNonOverriden);
 	data.getDynamicObject()->setProperty("treeData", treeData);
 	data.getDynamicObject()->setProperty("hasListenExtension", hasListenExtension);
 	return data;

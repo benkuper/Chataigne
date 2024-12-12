@@ -36,9 +36,9 @@ void StateTransition::clearItem()
 	if (destState != nullptr && !destState.wasObjectDeleted()) destState->inTransitions.removeAllInstancesOf(this);
 }
 
-var StateTransition::getJSONData()
+var StateTransition::getJSONData(bool includeNonOverriden)
 {
-	var data = Action::getJSONData();
+	var data = Action::getJSONData(includeNonOverriden);
 	data.getDynamicObject()->setProperty("sourceState", sourceState->shortName);
 	data.getDynamicObject()->setProperty("destState", destState->shortName);
 	return data;

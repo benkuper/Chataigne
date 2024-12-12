@@ -106,9 +106,9 @@ void OSCCommand::buildArgsAndParamsFromData(var data)
 	}
 }
 
-var OSCCommand::getJSONData()
+var OSCCommand::getJSONData(bool includeNonOverriden)
 {
-	var data = BaseCommand::getJSONData();
+	var data = BaseCommand::getJSONData(includeNonOverriden);
 	data.getDynamicObject()->setProperty("arguments", argumentsContainer.getJSONData());
 	return data;
 }

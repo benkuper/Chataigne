@@ -325,9 +325,9 @@ void Mapping::setForceDisabled(bool value, bool force, bool fromActivation)
 	updateContinuousProcess();
 }
 
-var Mapping::getJSONData()
+var Mapping::getJSONData(bool includeNonOverriden)
 {
-	var data = Processor::getJSONData();
+	var data = Processor::getJSONData(includeNonOverriden);
 	data.getDynamicObject()->setProperty("im", im.getJSONData());
 	data.getDynamicObject()->setProperty("params", mappingParams.getJSONData()); //keep "params" to avoid conflict with ControllableContainer "parameters" object
 	data.getDynamicObject()->setProperty("filters", fm.getJSONData());

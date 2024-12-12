@@ -79,9 +79,9 @@ void ModuleRouterValue::setSourceAndOutModule(Module * s, Module * m)
 	valueListeners.call(&ValueListener::routeParamsChanged, this);
 }
 
-var ModuleRouterValue::getJSONData()
+var ModuleRouterValue::getJSONData(bool includeNonOverriden)
 {
-	var data = BaseItem::getJSONData();
+	var data = BaseItem::getJSONData(includeNonOverriden);
 	
 	data.getDynamicObject()->setProperty("customName", niceName);
 	if (sourceValue != nullptr) data.getDynamicObject()->setProperty("niceName", sourceValue->niceName);

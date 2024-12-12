@@ -20,9 +20,9 @@ ActivationCondition::~ActivationCondition()
 {
 }
 
-var ActivationCondition::getJSONData()
+var ActivationCondition::getJSONData(bool includeNonOverriden)
 {
-	var data = Condition::getJSONData();
+	var data = Condition::getJSONData(includeNonOverriden);
 	data.getDynamicObject()->setProperty("activationType", type);
 	return data;
 }

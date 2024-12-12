@@ -36,7 +36,7 @@ public:
 	void updateMappingInputValue(var value, int multiplexIndex) override;
 	void setInputNamesFromParams(Array<WeakReference<Parameter>> outParams) override;
 
-	var getJSONData() override;
+	var getJSONData(bool includeNonOverriden = false) override;
 	void loadJSONDataInternal(var data) override;
 
 	static CustomOSCCommand* create(ControllableContainer* cc, CommandContext context, var params, Multiplex* multiplex) { return new CustomOSCCommand(dynamic_cast<IOSCSenderModule*>(cc), context, params, multiplex); }

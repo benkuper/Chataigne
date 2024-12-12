@@ -28,7 +28,7 @@ public:
 
 	void filterParamChanged(Parameter*) override;
 
-	var getJSONData() override;
+	var getJSONData(bool includeNonOverriden = false) override;
 	void loadJSONDataItemInternal(var data) override;
 
 	String getTypeString() const override { return getTypeStringStatic(); }

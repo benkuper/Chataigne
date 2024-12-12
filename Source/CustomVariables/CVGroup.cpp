@@ -349,9 +349,9 @@ void CVGroup::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Co
 	}
 }
 
-var CVGroup::getJSONData()
+var CVGroup::getJSONData(bool includeNonOverriden)
 {
-	var data = BaseItem::getJSONData();
+	var data = BaseItem::getJSONData(includeNonOverriden);
 	data.getDynamicObject()->setProperty("params", params.getJSONData()); //keep "params" to avoid conflict with container's parameter
 	data.getDynamicObject()->setProperty(values.shortName, values.getJSONData());
 	data.getDynamicObject()->setProperty(pm->shortName, pm->getJSONData());

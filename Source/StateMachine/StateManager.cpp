@@ -419,9 +419,9 @@ var StateManager::addTransitionFromScript(const var::NativeFunctionArgs& a)
 }
 
 
-var StateManager::getJSONData()
+var StateManager::getJSONData(bool includeNonOverriden)
 {
-	var data = BaseManager::getJSONData();
+	var data = BaseManager::getJSONData(includeNonOverriden);
 
 	var tData = stm.getJSONData();
 	if (!tData.isVoid() && tData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(stm.shortName, tData);

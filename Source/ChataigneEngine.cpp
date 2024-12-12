@@ -124,9 +124,9 @@ void ChataigneEngine::clearInternal()
 	CVGroupManager::getInstance()->clear();
 }
 
-var ChataigneEngine::getJSONData()
+var ChataigneEngine::getJSONData(bool includeNonOverriden)
 {
-	var data = Engine::getJSONData();
+	var data = Engine::getJSONData(includeNonOverriden);
 
 	var mData = ModuleManager::getInstance()->getJSONData();
 	if (!mData.isVoid() && mData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(ModuleManager::getInstance()->shortName, mData);

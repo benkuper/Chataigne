@@ -313,9 +313,9 @@ void AudioModule::onContainerParameterChangedInternal(Parameter* p)
 	}
 }
 
-var AudioModule::getJSONData()
+var AudioModule::getJSONData(bool includeNonOverriden)
 {
-	var data = Module::getJSONData();
+	var data = Module::getJSONData(includeNonOverriden);
 
 	std::unique_ptr<XmlElement> xmlData(am.createStateXml());
 	if (xmlData != nullptr)

@@ -320,9 +320,9 @@ void DMXModule::clearItem()
 	setCurrentDMXDevice(nullptr);
 }
 
-var DMXModule::getJSONData()
+var DMXModule::getJSONData(bool includeNonOverriden)
 {
-	var data = Module::getJSONData();
+	var data = Module::getJSONData(includeNonOverriden);
 	if (dmxDevice != nullptr) data.getDynamicObject()->setProperty("device", dmxDevice->getJSONData());
 
 	var channelTypes;

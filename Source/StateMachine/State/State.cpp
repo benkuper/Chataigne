@@ -146,9 +146,9 @@ void State::onContainerParameterChangedInternal(Parameter* p)
 	}
 }
 
-var State::getJSONData()
+var State::getJSONData(bool includeNonOverriden)
 {
-	var data = BaseItem::getJSONData();
+	var data = BaseItem::getJSONData(includeNonOverriden);
 	var pData = pm->getJSONData();
 	if (!pData.isVoid() && pData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(pm->shortName, pData);
 	return data;

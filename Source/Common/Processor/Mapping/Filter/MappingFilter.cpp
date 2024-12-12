@@ -304,9 +304,9 @@ void MappingFilter::clearItem()
 	filteredParameters.clear();
 }
 
-var MappingFilter::getJSONData()
+var MappingFilter::getJSONData(bool includeNonOverriden)
 {
-	var data = BaseItem::getJSONData();
+	var data = BaseItem::getJSONData(includeNonOverriden);
 	data.getDynamicObject()->setProperty("filterParams", filterParams.getJSONData());
 	if (!excludedChannels.isEmpty())
 	{

@@ -30,7 +30,7 @@ public:
 
 	var convertModeData; //ghost loading
 
-	var getJSONData() override;
+	var getJSONData(bool includeNonOverriden = false) override;
 	void loadJSONDataItemInternal(var data) override;
 	
 	enum TransferType { DIRECT, EXTRACT, MERGE, TARGET};
@@ -116,7 +116,7 @@ public:
 	var convertValue(Parameter * source, var sourceValue, int multiplexIndex) override;
 	String getCasedString(const String& value);
 
-	var getJSONData() override;
+	var getJSONData(bool includeNonOverriden = false) override;
 
 	void filterParamChanged(Parameter*) override;
 
@@ -166,7 +166,7 @@ public:
 	enum RetargetMode { HUE = -1, SAT = -2, VAL = -3};
 	ColorParameter* baseColor;
 
-	var getJSONData() override;
+	var getJSONData(bool includeNonOverriden = false) override;
 
 	void setupParametersInternal(int multiplexIndex, bool rangeOnly) override;
 	virtual void addExtraRetargetOptions() override;

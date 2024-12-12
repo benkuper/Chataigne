@@ -121,7 +121,7 @@ public:
 
 	virtual void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 	
-	var getJSONData() override;
+	var getJSONData(bool includeNonOverriden = false) override;
 	void loadJSONDataItemInternal(var data) override;
 	void loadJSONDataInternal(var data) override; // needed for script loading after item load
 

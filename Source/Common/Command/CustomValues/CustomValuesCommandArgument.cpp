@@ -109,9 +109,9 @@ var CustomValuesCommandArgument::unlinkFromScript(const var::NativeFunctionArgs&
 	return false;
 }
 
-var CustomValuesCommandArgument::getJSONData()
+var CustomValuesCommandArgument::getJSONData(bool includeNonOverriden)
 {
-	var data = BaseItem::getJSONData();
+	var data = BaseItem::getJSONData(includeNonOverriden);
 	data.getDynamicObject()->setProperty("param", param->getJSONData());
 	if (paramLink != nullptr) data.getDynamicObject()->setProperty("paramLink", paramLink->getJSONData());
 	return data;

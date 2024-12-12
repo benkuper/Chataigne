@@ -226,9 +226,9 @@ void SerialModule::serialDataReceived(SerialDevice*, const var& data)
 	}
 }
 
-var SerialModule::getJSONData()
+var SerialModule::getJSONData(bool includeNonOverriden)
 {
-	var data = StreamingModule::getJSONData();
+	var data = StreamingModule::getJSONData(includeNonOverriden);
 	data.getDynamicObject()->setProperty("portID", lastOpenedPortID);
 	return data;
 }

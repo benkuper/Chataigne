@@ -126,9 +126,9 @@ void ModuleRouter::reloadSourceValues(bool keepData)
 }
 
 
-var ModuleRouter::getJSONData()
+var ModuleRouter::getJSONData(bool includeNonOverriden)
 {
-	var data = BaseItem::getJSONData();
+	var data = BaseItem::getJSONData(includeNonOverriden);
 	if (sourceModule != nullptr)
 	{
 		data.getDynamicObject()->setProperty("sourceModule", sourceModule->shortName);

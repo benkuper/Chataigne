@@ -186,9 +186,9 @@ void BLEModule::bleDataReceived(const var& data)
 	}
 }
 
-var BLEModule::getJSONData()
+var BLEModule::getJSONData(bool includeNonOverriden)
 {
-	var data = StreamingModule::getJSONData();
+	var data = StreamingModule::getJSONData(includeNonOverriden);
 	data.getDynamicObject()->setProperty("deviceID", lastOpenedDeviceID);
 	return data;
 }

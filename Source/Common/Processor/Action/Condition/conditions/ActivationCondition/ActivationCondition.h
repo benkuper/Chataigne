@@ -20,7 +20,7 @@ public:
 	enum Type { ON_ACTIVATE, ON_DEACTIVATE };
 	Type type;
 
-	var getJSONData() override;
+	var getJSONData(bool includeNonOverriden = false) override;
 	void loadJSONDataInternal(var data) override;
 
 	String getTypeString() const override { return ActivationCondition::getTypeStringStatic(type); }

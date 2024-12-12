@@ -120,9 +120,9 @@ void BaseCommandHandler::setCommand(CommandDefinition* commandDef)
 }
 
 
-var BaseCommandHandler::getJSONData()
+var BaseCommandHandler::getJSONData(bool includeNonOverriden)
 {
-	var data = BaseItem::getJSONData();
+	var data = BaseItem::getJSONData(includeNonOverriden);
 	if (command != nullptr && !commandDefinition.wasObjectDeleted())
 	{
 		if (command->module != nullptr) data.getDynamicObject()->setProperty("commandModule", command->module->shortName);

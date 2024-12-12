@@ -61,9 +61,9 @@ void BaseComparator::updateReferenceRange(Parameter* sourceParam)
 	else reference->clearRange();
 }
 
-var BaseComparator::getJSONData()
+var BaseComparator::getJSONData(bool includeNonOverriden)
 {
-	var data = ControllableContainer::getJSONData();
+	var data = ControllableContainer::getJSONData(includeNonOverriden);
 	if(refLink != nullptr) data.getDynamicObject()->setProperty("refLink", refLink->getJSONData());
 	return data;
 }

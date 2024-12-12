@@ -49,9 +49,9 @@ void ScriptCallbackCommand::triggerInternal(int multiplexIndex)
 	if(mName.isNotEmpty()) module->scriptManager->callFunctionOnAllItems(mName, args);
 }
 
-var ScriptCallbackCommand::getJSONData()
+var ScriptCallbackCommand::getJSONData(bool includeNonOverriden)
 {
-	var data = BaseCommand::getJSONData();
+	var data = BaseCommand::getJSONData(includeNonOverriden);
 	data.getDynamicObject()->setProperty("customValues", customValuesManager->getJSONData());
 	return data;
 }
