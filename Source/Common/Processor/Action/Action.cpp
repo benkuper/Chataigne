@@ -150,7 +150,8 @@ void Action::forceCheck(bool triggerIfChanged)
 void Action::triggerConsequences(bool triggerTrue, int multiplexIndex)
 {
 	if (!enabled->boolValue() || forceDisabled) return;
-
+	if (isClearing) return;
+	
 	if (!forceChecking)
 	{
 		if (triggerTrue) csmOn->triggerAll(multiplexIndex);
@@ -239,6 +240,7 @@ void Action::notifyActionTriggered(bool triggerTrue, int multiplexIndex)
 void Action::conditionManagerValidationChanged(ConditionManager*, int multiplexIndex, bool dispatchOnChangeOnly)
 {
 	if (forceChecking) return;
+	if (isClearing) return;
 
 	if (autoTriggerWhenAllConditionAreActives)
 	{

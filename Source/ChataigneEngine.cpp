@@ -104,6 +104,8 @@ ChataigneEngine::~ChataigneEngine()
 	InputSystemManager::deleteInstance();
 	StreamDeckManager::deleteInstance();
 
+	ConsequenceStaggerLauncher::deleteInstance();
+
 	ChataigneAssetManager::deleteInstance();
 
 	CVGroupManager::deleteInstance();
