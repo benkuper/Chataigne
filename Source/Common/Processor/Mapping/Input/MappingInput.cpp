@@ -119,7 +119,7 @@ StandardMappingInput::~StandardMappingInput()
 void StandardMappingInput::lockInput(Parameter* input)
 {
 	setInput(input);
-	if (input != nullptr && !list->isClearing) inputTarget->setEnabled(false);
+	if (input != nullptr && (list == nullptr || !list->isClearing)) inputTarget->setEnabled(false);
 }
 
 
