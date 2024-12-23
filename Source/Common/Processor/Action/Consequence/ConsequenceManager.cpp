@@ -10,6 +10,8 @@
 
 #include "Common/Processor/ProcessorIncludes.h"
 
+juce_ImplementSingleton(ConsequenceStaggerLauncher)
+
 ConsequenceManager::ConsequenceManager(const String& name, Multiplex* multiplex) :
 	BaseManager<BaseItem>(name),
 	MultiplexTarget(multiplex),
@@ -46,15 +48,12 @@ ConsequenceManager::ConsequenceManager(const String& name, Multiplex* multiplex)
 
 ConsequenceManager::~ConsequenceManager()
 {
-
+	cancelDelayedConsequences(-1);
 }
-
-
-
 
 void ConsequenceManager::triggerAll(int multiplexIndex)
 {
-	if (killDelaysOnTrigger->boolValue()) cancelDelayedConsequences();
+	if (killDelaysOnTrigger->boolValue()) cancelDelayedConsequences(multiplexIndex);
 
 	if (items.size() > 0)
 	{
@@ -68,15 +67,14 @@ void ConsequenceManager::triggerAll(int multiplexIndex)
 		}
 		else
 		{
-			staggerLaunchers.add(new StaggerLauncher(this, multiplexIndex));
+			ConsequenceStaggerLauncher::getInstance()->addLaunch(this, multiplexIndex);
 		}
 	}
 }
 
-void ConsequenceManager::cancelDelayedConsequences()
+void ConsequenceManager::cancelDelayedConsequences(int multiplexIndex)
 {
-	for (auto& launcher : staggerLaunchers) launcher->stopThread(100);
-	staggerLaunchers.clear();
+	ConsequenceStaggerLauncher::getInstance()->removeLaunchesFor(this, multiplexIndex);
 }
 
 void ConsequenceManager::setForceDisabled(bool value, bool force)
@@ -160,99 +158,117 @@ void ConsequenceManager::removeItemsInternal(Array<BaseItem*>)
 	updateKillDelayTrigger();
 }
 
-void ConsequenceManager::launcherTriggered(StaggerLauncher* launcher)
+void ConsequenceManager::launcherTriggered(int multiplexIndex, int triggerIndex)
 {
-	if (staggerLaunchers.size() == 0 || items.size() == 0) return;
-	if (launcher != staggerLaunchers.getLast()) return;
-	staggerProgression->setValue((launcher->triggerIndex + 1) * 1.0f / items.size());
+	staggerProgression->setValue((triggerIndex + 1) * 1.0f / items.size());
 }
 
-void ConsequenceManager::launcherFinished(StaggerLauncher* launcher)
-{
-	MessageManager::getInstance()->callAsync([=]()
-		{
-			launcher->stopThread(100);
-			staggerLaunchers.removeObject(launcher);
-		}
-	);
-}
 
 InspectableEditor* ConsequenceManager::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
 {
 	return new ConsequenceManagerEditor(this, CommandContext::ACTION, isRoot, isMultiplexed());
 }
 
-ConsequenceManager::StaggerLauncher::StaggerLauncher(ConsequenceManager* csm, int multiplexIndex) :
-	Thread("Stagger Launcher"),
-	csm(csm),
-	multiplexIndex(multiplexIndex)
+ConsequenceStaggerLauncher::ConsequenceStaggerLauncher() :
+	Thread("Stagger Launcher")
 {
 	startThread();
 }
 
-ConsequenceManager::StaggerLauncher::~StaggerLauncher()
+ConsequenceStaggerLauncher::~ConsequenceStaggerLauncher()
 {
-	if (Engine::mainEngine->isClearing) stopThread(1000);
-	else if (isThreadRunning())
-	{
-		MessageManager::callAsync([this] {
-			stopThread(100);
-			});
-	}
+	stopThread(1000);
 }
 
-void ConsequenceManager::StaggerLauncher::run()
+void ConsequenceStaggerLauncher::run()
 {
-	timeAtRun = Time::getMillisecondCounter();
-	triggerIndex = 0;
+	Array<Launch*> toRemove;
 
+	while (!threadShouldExit())
+	{
+		{
+			GenericScopedLock lock(launches.getLock());
+			for (auto& l : launches)
+			{
+				processLaunch(l);
+				if (l->isFinished()) toRemove.add(l);
+			}
+
+			for (auto& l : toRemove) launches.removeObject(l);
+
+			if (launches.isEmpty()) break;
+		}
+
+		wait(10);
+	}
+
+}
+
+void ConsequenceStaggerLauncher::processLaunch(Launch* l)
+{
+
+	ConsequenceManager* csm = l->manager;
 	uint32 d = (uint32)(csm->delay->floatValue() * 1000);
 	uint32 s = (uint32)(csm->stagger->floatValue() * 1000);
 
-	uint32 curTime = timeAtRun;
+	//check if last item
+	if (l->triggerIndex >= csm->items.size()) return;
 
-	Array<BaseItem*> consequencesToLaunch;
-	for (auto& bi : csm->items)
+
+	//get relative trigger index, not taking into account disabled items
+	int relativeIndex = 0;
+	for (int i = 0; i < l->triggerIndex; i++) if (csm->items[i]->enabled->boolValue()) relativeIndex++;
+
+	//Check if should trigger
+	uint32 curTime = Time::getMillisecondCounter();
+	uint32 triggerTime = l->startTime + d + s * relativeIndex;
+
+	if (curTime < triggerTime) return;
+
+	//Get first enabled item starting at index
 	{
-		if (!bi->enabled->boolValue()) continue;
-		consequencesToLaunch.add(bi);
-	}
-
-	while (!threadShouldExit() && triggerIndex < consequencesToLaunch.size())
-	{
-		uint32 nextTriggerTime = timeAtRun + d + s * triggerIndex;
-		while (nextTriggerTime > curTime)
+		GenericScopedLock lock(csm->items.getLock());
+		BaseItem* bi = csm->items[l->triggerIndex];
+		while (bi->enabled->boolValue() == false)
 		{
-			if (threadShouldExit()) break;
-			wait(jmin<uint32>(nextTriggerTime - curTime, 20));
-			curTime = Time::getMillisecondCounter();
-			nextTriggerTime = timeAtRun + d + s * triggerIndex;
-		}
-
-		if (triggerIndex >= consequencesToLaunch.size()) break;
-		BaseItem* bi = consequencesToLaunch[triggerIndex];
-
-		while (bi != nullptr && !bi->enabled->boolValue())
-		{
-			triggerIndex++;
-			if (triggerIndex >= consequencesToLaunch.size()) break;
-			bi = csm->items[triggerIndex];
+			l->triggerIndex++;
+			if (l->triggerIndex >= csm->items.size()) return;
+			bi = csm->items[l->triggerIndex];
 		}
 
 
-		if (threadShouldExit() || bi == nullptr) break;
-
-		if (Consequence* c = dynamic_cast<Consequence*>(bi)) c->triggerCommand(multiplexIndex);
-		else if (ConsequenceGroup* g = dynamic_cast<ConsequenceGroup*>(bi)) if (g->enabled->boolValue()) g->csm.triggerAll(multiplexIndex);
-
-		csm->launcherTriggered(this);
-		triggerIndex++;
+		if (Consequence* c = dynamic_cast<Consequence*>(bi)) c->triggerCommand(l->multiplexIndex);
+		else if (ConsequenceGroup* g = dynamic_cast<ConsequenceGroup*>(bi)) if (g->enabled->boolValue()) g->csm.triggerAll(l->multiplexIndex);
 	}
 
-	if (!threadShouldExit()) csm->launcherFinished(this);
+	csm->launcherTriggered(l->multiplexIndex, l->triggerIndex);
+	l->triggerIndex++;
+}
+
+void ConsequenceStaggerLauncher::addLaunch(ConsequenceManager* csm, int multiplexIndex)
+{
+	launches.add(new Launch(csm, multiplexIndex));
+	if (!isThreadRunning()) startThread();
+	else notify();
+}
+
+void ConsequenceStaggerLauncher::removeLaunchesFor(ConsequenceManager* manager, int multiplexIndex)
+{
+	GenericScopedLock lock(launches.getLock());
+	Array<Launch*> toRemove;
+	for (auto& l : launches)
+	{
+		if (l->manager == manager && (multiplexIndex == -1 || l->multiplexIndex == multiplexIndex)) toRemove.add(l);
+	}
+
+	for (auto& l : toRemove) launches.removeObject(l);
 }
 
 void ConsequenceManager::multiplexPreviewIndexChanged()
 {
 	csmNotifier.addMessage(new ConsequenceManagerEvent(ConsequenceManagerEvent::MULTIPLEX_PREVIEW_CHANGED, this));
+}
+
+bool ConsequenceStaggerLauncher::Launch::isFinished() {
+	return triggerIndex >= manager->items.size();
 }

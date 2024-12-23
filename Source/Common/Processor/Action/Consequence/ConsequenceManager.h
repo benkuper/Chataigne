@@ -10,6 +10,38 @@
 
 #pragma once
 
+class ConsequenceManager;
+
+class ConsequenceStaggerLauncher :
+	public Thread
+{
+public:
+	juce_DeclareSingleton(ConsequenceStaggerLauncher, false)
+
+		ConsequenceStaggerLauncher();
+	~ConsequenceStaggerLauncher();
+
+	struct Launch
+	{
+		Launch(ConsequenceManager* c, int multiplexIndex) : manager(c), startTime(Time::getMillisecondCounter()), multiplexIndex(multiplexIndex), triggerIndex(0) {}
+
+		ConsequenceManager* manager;
+		uint32 startTime;
+		int multiplexIndex;
+		int triggerIndex;
+
+		bool isFinished();
+	};
+
+	OwnedArray<Launch, juce::CriticalSection> launches;
+
+	void run() override;
+	void processLaunch(Launch* l);
+
+	void addLaunch(ConsequenceManager* c, int multiplexIndex);
+	void removeLaunchesFor(ConsequenceManager* manager, int multiplexIndex);
+};
+
 class ConsequenceManager :
 	public BaseManager<BaseItem>,
 	public MultiplexTarget,
@@ -32,10 +64,10 @@ public:
 
 
 	void triggerAll(int multiplexIndex = 0);
-	void cancelDelayedConsequences();
+	void cancelDelayedConsequences(int multiplexIndex = 0);
 
 	void setForceDisabled(bool value, bool force = false);
-	
+
 	void updateKillDelayTrigger();
 
 	void onContainerTriggerTriggered(Trigger*) override;
@@ -47,25 +79,7 @@ public:
 	void removeItemInternal(BaseItem*) override;
 	void removeItemsInternal(Array<BaseItem*>) override;
 
-	class StaggerLauncher :
-		public Thread
-	{
-	public:
-		StaggerLauncher(ConsequenceManager* csm, int multiplexIndex);
-		~StaggerLauncher();
-
-		ConsequenceManager* csm;
-		int multiplexIndex;
-
-		uint32 timeAtRun;
-		int triggerIndex;
-
-		void run() override;
-	};
-	OwnedArray<StaggerLauncher, CriticalSection> staggerLaunchers;
-
-	void launcherTriggered(StaggerLauncher* launcher);
-	void launcherFinished(StaggerLauncher* launcher);
+	void launcherTriggered(int multiplexIndex, int triggerIndex);
 
 	void multiplexPreviewIndexChanged() override;
 
@@ -81,12 +95,9 @@ public:
 	};
 
 
-	ListenerList<ConsequenceManagerListener> consequenceManagerListeners;
-	void addConsequenceManagerListener(ConsequenceManagerListener* newListener) { consequenceManagerListeners.add(newListener); }
-	void removeConsequenceManagerListener(ConsequenceManagerListener* listener) { consequenceManagerListeners.remove(listener); }
+	DECLARE_INSPECTACLE_CRITICAL_LISTENER(ConsequenceManager, consequenceManager);
 
 	DECLARE_ASYNC_EVENT(ConsequenceManager, ConsequenceManager, csm, ENUM_LIST(MULTIPLEX_PREVIEW_CHANGED, STAGGER_CHANGED), EVENT_INSPECTABLE_CHECK);
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ConsequenceManager)
-
 };
