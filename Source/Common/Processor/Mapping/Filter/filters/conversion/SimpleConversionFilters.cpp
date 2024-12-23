@@ -326,9 +326,9 @@ MappingFilter::ProcessResult SimpleConversionFilter::processSingleParameterInter
 	return CHANGED;
 }
 
-var SimpleConversionFilter::getJSONData()
+var SimpleConversionFilter::getJSONData(bool includeNonOverriden)
 {
-	var data = MappingFilter::getJSONData();
+	var data = MappingFilter::getJSONData(includeNonOverriden);
 
 	var goData = ghostOptions.isObject() ? ghostOptions.clone() : var(new DynamicObject());
 	goData.getDynamicObject()->setProperty("retarget", retargetComponent->getValueData());
@@ -525,9 +525,9 @@ void ToStringFilter::filterParamChanged(Parameter* p)
 	SimpleConversionFilter::filterParamChanged(p);
 }
 
-var ToStringFilter::getJSONData()
+var ToStringFilter::getJSONData(bool includeNonOverriden)
 {
-	var data = SimpleConversionFilter::getJSONData();
+	var data = SimpleConversionFilter::getJSONData(includeNonOverriden);
 	if (enumConvertMode != nullptr) data.getProperty("ghostOptions", var()).getDynamicObject()->setProperty("convertMode", enumConvertMode->getValueData());
 	return data;
 }
@@ -566,9 +566,9 @@ ToColorFilter::~ToColorFilter()
 {
 }
 
-var ToColorFilter::getJSONData()
+var ToColorFilter::getJSONData(bool includeNonOverriden)
 {
-	var data = SimpleConversionFilter::getJSONData();
+	var data = SimpleConversionFilter::getJSONData(includeNonOverriden);
 	if (baseColor != nullptr) data.getProperty("ghostOptions", var()).getDynamicObject()->setProperty("color", baseColor->getValue());
 	return data;
 }

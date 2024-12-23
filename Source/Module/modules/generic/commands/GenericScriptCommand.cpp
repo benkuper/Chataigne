@@ -70,9 +70,9 @@ void GenericScriptCommand::setInputNamesFromParams(Array<WeakReference<Parameter
 	scriptParamContainer->setInputNamesFromParams(outParams);
 }
 
-var GenericScriptCommand::getJSONData()
+var GenericScriptCommand::getJSONData(bool includeNonOverriden)
 {
-	var data = BaseCommand::getJSONData();
+	var data = BaseCommand::getJSONData(includeNonOverriden);
 	data.getDynamicObject()->setProperty("script", script.getJSONData());
 	return data;
 }

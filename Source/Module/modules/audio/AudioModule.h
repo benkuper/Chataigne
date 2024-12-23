@@ -144,7 +144,7 @@ public:
 	void onContainerParameterChangedInternal(Parameter* p) override;
 
 
-	var getJSONData() override;
+	var getJSONData(bool includeNonOverriden = false) override;
 	void loadJSONDataInternal(var data) override;
 
 	// Inherited via AudioIODeviceCallback

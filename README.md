@@ -123,7 +123,29 @@ Chataigne is using a modified version of JUCE. So you first need to compile the 
   - Build the solution from your IDE and compile it or make in linux
   - Check the dependency section below if you have dependency problems when running Chataigne
   - Enjoy !
-  
+
+### Linux specific tips
+You'll need to build this lib to run the app:
+https://github.com/HBPVIS/servus
+
+You'll need at least these libs to compile the app:
+```bash
+apt-get install build-essential libbluetooth-dev libcurl4-gnutls-dev  libfreetype-dev libfreetype6 libfreetype6-dev libwebkit2gtk-4.0-dev libhidapi-dev
+```
+
+Compile it with the JUCE modules specified:
+```bash
+Chataigne/Builds/LinuxMakefile$ CXXFLAGS="-I../../../JUCE/modules -I" make -j8
+```
+
+To start the built binary:
+```bash
+LD_LIBRARY_PATH=/path/to/Servus/build/lib/:$LD_LIBRARY_PATH ./build/Chataigne
+```
+
+Alternatively put `export LD_LIBRARY_PATH=/path/to/Servus/build/lib/:$LD_LIBRARY_PATH` into your .bashrc, and open a new terminal to make it work.
+
+
 
 ### Setting JUCE Global Paths
   

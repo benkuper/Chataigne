@@ -30,7 +30,7 @@ public:
 
 	void setSourceAndOutModule(Module * sourceModule, Module * outModule);
 
-	var getJSONData() override;
+	var getJSONData(bool includeNonOverriden = false) override;
 	void loadJSONDataInternal(var data) override;
 
 	void onContainerParameterChangedInternal(Parameter * p) override;

@@ -146,9 +146,9 @@ void CommandTemplate::onContainerTriggerTriggered(Trigger * t)
 	}
 }
 
-var CommandTemplate::getJSONData()
+var CommandTemplate::getJSONData(bool includeNonOverriden)
 {
-	var data = BaseItem::getJSONData();
+	var data = BaseItem::getJSONData(includeNonOverriden);
 
 	if (sourceDef == nullptr)
 	{

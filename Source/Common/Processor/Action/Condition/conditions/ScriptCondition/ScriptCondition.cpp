@@ -47,9 +47,9 @@ var ScriptCondition::setValidFromScript(const var::NativeFunctionArgs & a)
 	return var();
 }
 
-var ScriptCondition::getJSONData()
+var ScriptCondition::getJSONData(bool includeNonOverriden)
 {
-	var data = Condition::getJSONData();
+	var data = Condition::getJSONData(includeNonOverriden);
 	data.getDynamicObject()->setProperty("script",script.getJSONData());
 	return data;
 }

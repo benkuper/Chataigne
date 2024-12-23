@@ -255,9 +255,9 @@ void ChataigneAudioLayer::audioSetupChanged()
 	updateSelectedOutChannels();
 }
 
-var ChataigneAudioLayer::getJSONData()
+var ChataigneAudioLayer::getJSONData(bool includeNonOverriden)
 {
-	var data = AudioLayer::getJSONData();
+	var data = AudioLayer::getJSONData(includeNonOverriden);
 	if (audioModule != nullptr) data.getDynamicObject()->setProperty("audioModule", audioModule->shortName);
 	return data;
 }

@@ -44,9 +44,9 @@ CVPreset::~CVPreset()
 {
 }
 
-var CVPreset::getJSONData()
+var CVPreset::getJSONData(bool includeNonOverriden)
 {
-	var data = MorphTarget::getJSONData();
+	var data = MorphTarget::getJSONData(includeNonOverriden);
 	data.getDynamicObject()->setProperty(values.shortName, values.getJSONData());
 	return data;
 }

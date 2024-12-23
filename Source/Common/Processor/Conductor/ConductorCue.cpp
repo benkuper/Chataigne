@@ -126,9 +126,9 @@ ProcessorUI* ConductorCue::getUI()
 	return new ConductorCueUI(this);
 }
 
-var ConductorCue::getJSONData()
+var ConductorCue::getJSONData(bool includeNonOverriden)
 {
-	var data = Action::getJSONData();
+	var data = Action::getJSONData(includeNonOverriden);
 	data.getDynamicObject()->setProperty(seqCC.shortName, seqCC.getJSONData());
 	return data;
 }

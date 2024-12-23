@@ -25,6 +25,6 @@ public:
 
 	virtual void triggerInternal() override;
 
-	virtual var getJSONData() override;
+	virtual var getJSONData(bool includeNonOverriden = false) override;
 	virtual void loadJSONDataInternal(var data) override;
 };

@@ -40,7 +40,7 @@ public:
 
 	void onContainerParameterChangedInternal(Parameter*) override;
 
-	var getJSONData() override;
+	var getJSONData(bool includeNonOverriden = false) override;
 	void loadJSONDataInternal(var data) override;
 	void afterLoadJSONDataInternal() override;
 

@@ -24,7 +24,7 @@ public:
 
 	virtual void clearItem() override;
 
-	var getJSONData() override;
+	var getJSONData(bool includeNonOverriden = false) override;
 	void loadJSONDataInternal(var data) override;
 
 	void triggerConsequences(bool triggerTrue, int iterationIndex = 0) override;

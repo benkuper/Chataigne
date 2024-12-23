@@ -44,7 +44,7 @@ public:
 
     ProcessorUI* getUI() override;
 
-    virtual var getJSONData() override;
+    virtual var getJSONData(bool includeNonOverriden = false) override;
     virtual void loadJSONDataItemInternal(var data) override;
     
     String getTypeString() const override { return "Cue"; }

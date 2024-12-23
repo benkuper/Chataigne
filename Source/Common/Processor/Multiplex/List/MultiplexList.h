@@ -35,7 +35,7 @@ public:
 
 	virtual Controllable* createListControllable();
 
-	virtual var getJSONData() override;
+	virtual var getJSONData(bool includeNonOverriden = false) override;
 	virtual void loadJSONData(var data, bool createIfNotThere = false) override;
 	virtual void loadJSONDataMultiplexInternal(var data) {}
 
@@ -86,7 +86,7 @@ public:
 
 	void controllableAdded(Controllable* c) override;
 
-	var getJSONData() override;
+	var getJSONData(bool includeNonOverriden = false) override;
 	void loadJSONDataMultiplexInternal(var data) override;
 
 	InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables = Array<Inspectable*>()) override;
@@ -109,7 +109,7 @@ public:
 
 	void controllableAdded(Controllable* c) override;
 
-	var getJSONData() override;
+	var getJSONData(bool includeNonOverriden = false) override;
 	void loadJSONDataMultiplexInternal(var data) override;
 
 	InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables = Array<Inspectable*>()) override;

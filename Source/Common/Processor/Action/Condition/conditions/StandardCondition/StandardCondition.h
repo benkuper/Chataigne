@@ -62,7 +62,7 @@ public:
 	void onExternalParameterRangeChanged(Parameter* p) override;
 	void onExternalTriggerTriggered(Trigger* t) override;
 
-	var getJSONData() override;
+	var getJSONData(bool includeNonOverriden = false) override;
 	void loadJSONDataInternal(var data) override;
 	void afterLoadJSONDataInternal() override;
 

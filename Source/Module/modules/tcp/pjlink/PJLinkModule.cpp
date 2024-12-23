@@ -684,9 +684,9 @@ void PJLinkModule::requestInputName(int id)
 	if (indexInput == inputListVp.size()) sendMessageToClient("%1INPT ?", id);
 }
 
-var PJLinkModule::getJSONData()
+var PJLinkModule::getJSONData(bool includeNonOverriden)
 {
-	var data = StreamingModule::getJSONData();
+	var data = StreamingModule::getJSONData(includeNonOverriden);
 
 	var clientNames;
 	for (auto& c : clients) clientNames.append(c->paramsCC.niceName);

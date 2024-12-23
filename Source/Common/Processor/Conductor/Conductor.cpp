@@ -271,7 +271,7 @@ void Conductor::updateNextCue()
 	nextCueName->setValue(nextName);
 }
 
-var Conductor::getJSONData()
+var Conductor::getJSONData(bool includeNonOverriden)
 {
 	return Processor::getJSONData(); //bypass action
 }

@@ -128,7 +128,7 @@ public:
 	void requestInputName(int id);
 
 
-	var getJSONData() override;
+	var getJSONData(bool includeNonOverriden = false) override;
 	void loadJSONDataInternal(var data) override;
 
 	static PJLinkModule* create() { return new PJLinkModule(); }

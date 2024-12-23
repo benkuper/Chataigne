@@ -253,9 +253,9 @@ bool MathFilter::filteredParamShouldHaveRange()
 	return o != FLOOR && o != CEIL && o != ROUND;
 }
 
-var MathFilter::getJSONData()
+var MathFilter::getJSONData(bool includeNonOverriden)
 {
-	var data = MappingFilter::getJSONData();
+	var data = MappingFilter::getJSONData(includeNonOverriden);
 	if (operationValue != nullptr)
 		data.getDynamicObject()->setProperty("operationValue", operationValue->getJSONData());
 	else if (opValueData.isObject())

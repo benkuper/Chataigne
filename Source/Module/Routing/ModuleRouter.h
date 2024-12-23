@@ -39,7 +39,7 @@ public:
 
 	void reloadSourceValues(bool keepData = true);
 
-	var getJSONData() override;
+	var getJSONData(bool includeNonOverriden = false) override;
 	void loadJSONDataInternal(var data) override;
 
 	void newMessage(const ContainerAsyncEvent &e) override;

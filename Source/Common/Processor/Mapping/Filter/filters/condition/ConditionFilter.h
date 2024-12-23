@@ -25,7 +25,7 @@ public:
 
 	void updateConditionsLinks(Array<Parameter*> inputs, int multiplexIndex, bool updateLinkNames);
 
-	var getJSONData() override;
+	var getJSONData(bool includeNonOverriden = false) override;
 	void loadJSONDataItemInternal(var data) override;
 
 	String getTypeString() const override { return "Condition"; }

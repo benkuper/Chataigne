@@ -22,7 +22,7 @@ public:
 
 	void conditionManagerValidationChanged(ConditionManager *, int multiplexIndex, bool dispatchOnChangeOnly) override;
 
-	var getJSONData() override;
+	var getJSONData(bool includeNonOverriden = false) override;
 	void loadJSONDataInternal(var data) override;
 
 	String getTypeString() const override { return ConditionGroup::getTypeStringStatic(); }
