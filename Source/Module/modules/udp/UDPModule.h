@@ -19,6 +19,7 @@ public:
 	UDPModule(const String &name = "UDP", bool canHaveInput = true, bool canHaveOutput = true, int defaultLocalPort= 10000, int defaultRemotePort = 10001);
 	virtual ~UDPModule();
 
+
 	BoolParameter* multicastMode;
 
 	std::unique_ptr<DatagramSocket> receiver;

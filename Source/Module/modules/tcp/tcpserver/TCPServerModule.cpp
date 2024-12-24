@@ -34,7 +34,7 @@ void TCPServerModule::setupReceiver()
 	if (Engine::mainEngine == nullptr || Engine::mainEngine->isClearing) return;
 	if (!enabled->boolValue()) return;
 
-	connectionManager.setupReceiver(localPort->intValue());
+	connectionManager.setupReceiver(localPort->intValue(), networkInterface->getIP());
 	startThread();
 }
 

@@ -20,8 +20,9 @@ public:
 	StreamingSocket receiver;
 	OwnedArray<StreamingSocket, CriticalSection> connections; 
 	int portToBind;
+	String addressToBind;
 
-	void setupReceiver(int port);
+	void setupReceiver(int port, const String& address);
 	void removeConnection(StreamingSocket* connection);
 
 	void close();
