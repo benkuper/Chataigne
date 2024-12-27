@@ -27,4 +27,5 @@ RUN apt-get install -qyf \
         libusb-1.0-0-dev \
         libhidapi-dev \
         ladspa-sdk \
-        git
+        git \
+        g++
