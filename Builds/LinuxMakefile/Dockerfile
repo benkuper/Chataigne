@@ -4,6 +4,7 @@ FROM debian:bullseye
 # Install build dependencies and tools
 RUN apt-get update
 RUN apt-get install -qyf \
+        build-essential \
         wget \
         curl \
         libcurl3-gnutls \
@@ -27,5 +28,5 @@ RUN apt-get install -qyf \
         libusb-1.0-0-dev \
         libhidapi-dev \
         ladspa-sdk \
-        git \
-        g++
+        git
+        
