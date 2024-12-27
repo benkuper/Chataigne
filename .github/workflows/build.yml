@@ -253,7 +253,7 @@ jobs:
         include:
         - arch: armhf
           cpu: arm1176 #suitable for all Pi versions
-          base_image: raspios_lite:2021-05-07 
+          base_image: raspios_lite:2022-04-04 
           cpu_info: raspberrypi_zero_w
           buildFolder: "Raspberry"
           buildConfig: "Release"
@@ -314,10 +314,6 @@ jobs:
             echo "Installing JUCE lib dependencies and extra tools"
             apt-get install -qyf libcurl3-gnutls libfreetype6-dev libx11-dev libxinerama-dev libxrandr-dev libxcursor-dev libxcomposite-dev mesa-common-dev libasound2-dev freeglut3-dev libcurl4-gnutls-dev libasound2-dev libjack-dev libbluetooth-dev libgtk-3-dev libwebkit2gtk-4.0-dev libsdl2-dev libusb-1.0-0-dev libhidapi-dev ladspa-sdk libssl-dev
             apt-get install -qy curl
-
-            # Install GCC 11 and make it default (necessary for JUCE 8) (https://forum.juce.com/t/juce-8-linux-issue-with-harfbuzz/61970/3)
-            apt-get install g++-11 gcc-11
-            update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 100 --slave /usr/bin/g++ g++ /usr/bin/g++-11 --slave /usr/bin/gcov gcov /usr/bin/gcov-11
 
             cd Builds/${{ matrix.buildFolder }}
             make -j2 CONFIG=${{ matrix.buildConfig }}
