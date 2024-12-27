@@ -26,4 +26,5 @@ RUN apt-get install -qyf \
         libfuse2 \
         libusb-1.0-0-dev \
         libhidapi-dev \
-        ladspa-sdk
+        ladspa-sdk \
+        git
