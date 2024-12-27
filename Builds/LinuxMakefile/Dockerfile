@@ -30,3 +30,4 @@ RUN apt-get install -qyf \
         ladspa-sdk \
         git
         
+RUN apt-get install -qyf file
