@@ -171,7 +171,7 @@ jobs:
 
     name: Linux
     runs-on: ubuntu-22.04
-    container: tommagnier/chataigne-linux-x64-build
+    container: tommagnier/chataigne-linux-x64-build:debian11
 
     steps:
       - name: Checkout repo
@@ -198,10 +198,6 @@ jobs:
         run: |
           # Most dependencies are already installed in the Docker image. Uncomment the following lines if you need more
           # apt-get update && apt-get install ...
-
-          # Install GCC 11 and make it default (necessary for JUCE 8) (https://forum.juce.com/t/juce-8-linux-issue-with-harfbuzz/61970/3)
-          apt-get update && apt-get install g++-11 gcc-11
-          update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 100 --slave /usr/bin/g++ g++ /usr/bin/g++-11 --slave /usr/bin/gcov gcov /usr/bin/gcov-11
 
           cd $GITHUB_WORKSPACE
           wget "https://github.com/AppImage/AppImageKit/releases/download/13/appimagetool-x86_64.AppImage"

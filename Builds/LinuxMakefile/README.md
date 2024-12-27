@@ -1,4 +1,4 @@
-The Github actions build uses a Docker container based on Debian 9 in order to be compatible with older OS versions.  
+The Github actions build uses a Docker container based on Debian 11 in order to be compatible with older OS versions.  
 
 To build the Docker image, run the following command in this directory : 
 `docker build -t chataigne-linux-x64-build .`
