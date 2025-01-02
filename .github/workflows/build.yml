@@ -169,7 +169,7 @@ jobs:
 
     name: Linux
     runs-on: ubuntu-22.04
-    container: tommagnier/chataigne-linux-x64-build
+    container: tommagnier/chataigne-linux-x64-build:debian9
 
     steps:
       - name: Checkout repo
