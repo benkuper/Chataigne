@@ -67,14 +67,14 @@ void ConsequenceManager::triggerAll(int multiplexIndex)
 		}
 		else
 		{
-			ConsequenceStaggerLauncher::getInstance()->addLaunch(this, multiplexIndex);
+			if (ConsequenceStaggerLauncher::getInstanceWithoutCreating() != nullptr) ConsequenceStaggerLauncher::getInstance()->addLaunch(this, multiplexIndex);
 		}
 	}
 }
 
 void ConsequenceManager::cancelDelayedConsequences(int multiplexIndex)
 {
-	ConsequenceStaggerLauncher::getInstance()->removeLaunchesFor(this, multiplexIndex);
+	if (ConsequenceStaggerLauncher::getInstanceWithoutCreating() != nullptr) ConsequenceStaggerLauncher::getInstance()->removeLaunchesFor(this, multiplexIndex);
 }
 
 void ConsequenceManager::setForceDisabled(bool value, bool force)
@@ -182,24 +182,13 @@ ConsequenceStaggerLauncher::~ConsequenceStaggerLauncher()
 
 void ConsequenceStaggerLauncher::run()
 {
-	Array<Launch*> toRemove;
+	toRemove.clear();
 
 	while (!threadShouldExit())
 	{
-		{
-			GenericScopedLock lock(launches.getLock());
-			for (auto& l : launches)
-			{
-				processLaunch(l);
-				if (l->isFinished()) toRemove.add(l);
-			}
-
-			for (auto& l : toRemove) launches.removeObject(l);
-
-			if (launches.isEmpty()) break;
-		}
-
-		wait(10);
+		MessageManager::callAsync([this] {
+			stopThread(100);
+			});
 	}
 
 }
@@ -247,6 +236,8 @@ void ConsequenceStaggerLauncher::processLaunch(Launch* l)
 
 void ConsequenceStaggerLauncher::addLaunch(ConsequenceManager* csm, int multiplexIndex)
 {
+	if (Engine::mainEngine->isClearing) return;
+
 	launches.add(new Launch(csm, multiplexIndex));
 	if (!isThreadRunning()) startThread();
 	else notify();
@@ -254,14 +245,11 @@ void ConsequenceStaggerLauncher::addLaunch(ConsequenceManager* csm, int multiple
 
 void ConsequenceStaggerLauncher::removeLaunchesFor(ConsequenceManager* manager, int multiplexIndex)
 {
-	GenericScopedLock lock(launches.getLock());
-	Array<Launch*> toRemove;
+	GenericScopedLock lock(toRemove.getLock());
 	for (auto& l : launches)
 	{
 		if (l->manager == manager && (multiplexIndex == -1 || l->multiplexIndex == multiplexIndex)) toRemove.add(l);
 	}
-
-	for (auto& l : toRemove) launches.removeObject(l);
 }
 
 void ConsequenceManager::multiplexPreviewIndexChanged()

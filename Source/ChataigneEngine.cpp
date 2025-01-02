@@ -84,6 +84,7 @@ ChataigneEngine::~ChataigneEngine()
 	MouseHooker::deleteInstance();
 #endif
 
+	ConsequenceStaggerLauncher::deleteInstance();
 
 	ZeroconfManager::deleteInstance();
 	CommunityModuleManager::deleteInstance();
@@ -104,7 +105,6 @@ ChataigneEngine::~ChataigneEngine()
 	InputSystemManager::deleteInstance();
 	StreamDeckManager::deleteInstance();
 
-	ConsequenceStaggerLauncher::deleteInstance();
 
 	ChataigneAssetManager::deleteInstance();
 

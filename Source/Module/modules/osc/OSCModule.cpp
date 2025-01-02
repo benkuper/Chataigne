@@ -9,6 +9,7 @@
 */
 
 #include "Module/ModuleIncludes.h"
+#include "OSCModule.h"
 
 OSCModule::OSCModule(const String& name, int defaultLocalPort, int defaultRemotePort, bool canHaveInput, bool canHaveOutput) :
 	Module(name),
@@ -22,6 +23,8 @@ OSCModule::OSCModule(const String& name, int defaultLocalPort, int defaultRemote
 	setupIOConfiguration(canHaveInput, canHaveOutput);
 	canHandleRouteValues = canHaveOutput;
 
+	networkInterface = new NetworkInterfaceParameter();
+	moduleParams.addParameter(networkInterface);
 
 	//Receive
 	if (canHaveInput)
@@ -96,6 +99,8 @@ OSCModule::~OSCModule()
 void OSCModule::setupReceiver()
 {
 	receiver.disconnect();
+	receiverSocket.reset();
+
 	if (receiveCC == nullptr) return;
 
 	if (!receiveCC->enabled->boolValue())
@@ -105,7 +110,10 @@ void OSCModule::setupReceiver()
 	}
 
 	//DBG("Local port set to : " << localPort->intValue());
-	bool result = receiver.connect(localPort->intValue());
+	receiverSocket.reset(new DatagramSocket());
+	receiverSocket->setEnablePortReuse(false);
+	bool result = receiverSocket->bindToPort(localPort->intValue(), networkInterface->getIP());
+	result &= receiver.connectToSocket(*receiverSocket);
 
 	if (result)
 	{
@@ -212,6 +220,7 @@ void OSCModule::setupModuleFromJSONData(var data)
 
 void OSCModule::itemAdded(OSCOutput* output)
 {
+	output->setModule(this);
 	output->warningResolveInspectable = this;
 }
 
@@ -566,6 +575,11 @@ void OSCModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc, 
 	{
 		if (!isCurrentlyLoadingData) setupReceiver();
 	}
+	else if (c == networkInterface)
+	{
+		if (!isCurrentlyLoadingData) setupReceiver();
+		setupSenders();
+	}
 	else if (OSCOutput* o = c->getParentAs<OSCOutput>())
 	{
 		if (c == o->listenToOutputFeedback)
@@ -643,7 +657,8 @@ OSCOutput::OSCOutput() :
 	BaseItem("OSC Output"),
 	Thread("OSC output"),
 	forceDisabled(false),
-	senderIsConnected(false)
+	senderIsConnected(false),
+	oscModule(nullptr)
 {
 	isSelectable = false;
 
@@ -654,7 +669,6 @@ OSCOutput::OSCOutput() :
 	remotePort = addIntParameter("Remote port", "Port on which the remote host is listening to", 9000, 1, 65535);
 	listenToOutputFeedback = addBoolParameter("Listen to Feedback", "If checked, this will listen to the (randomly set) bound port of this sender. This is useful when some softwares automatically detect incoming host and port to send back messages.", false);
 
-	if (!Engine::mainEngine->isLoadingFile) setupSender();
 
 }
 
@@ -663,11 +677,18 @@ OSCOutput::~OSCOutput()
 	stopThread(1000);
 }
 
+void OSCOutput::setModule(OSCModule* m)
+{
+	oscModule = m;
+	warningResolveInspectable = m;
+	if (!Engine::mainEngine->isLoadingFile) setupSender();
+}
+
 void OSCOutput::setForceDisabled(bool value)
 {
 	if (forceDisabled == value) return;
 	forceDisabled = value;
-	setupSender();
+	if (!Engine::mainEngine->isLoadingFile) setupSender();
 }
 
 void OSCOutput::onContainerParameterChangedInternal(Parameter* p)
@@ -717,7 +738,7 @@ void OSCOutput::setupSender()
 	String targetHost = useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue();
 	socket.reset(new DatagramSocket(true));
 	socket->setEnablePortReuse(true);
-	socket->bindToPort(0);
+	socket->bindToPort(0, oscModule->networkInterface->getIP());
 	senderIsConnected = sender.connectToSocket(*socket, targetHost, remotePort->intValue());
 
 	if (senderIsConnected)

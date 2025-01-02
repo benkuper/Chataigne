@@ -19,6 +19,8 @@ public:
 	NetworkStreamingModule(const String &name = "StreamingModule", bool canHaveInput = true, bool canHaveOutput = true, int defaultLocalPort = 5000, int defaultRemotePort = 5001);
 	virtual ~NetworkStreamingModule();
 
+	NetworkInterfaceParameter* networkInterface;
+
 	//RECEIVE
 	std::unique_ptr<EnablingControllableContainer> receiveCC;
 	IntParameter * localPort;

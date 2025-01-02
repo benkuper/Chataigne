@@ -22,6 +22,10 @@ NetworkStreamingModule::NetworkStreamingModule(const String& name, bool canHaveI
 	setupIOConfiguration(canHaveInput, canHaveOutput);
 
 	//Receive
+
+	networkInterface = new NetworkInterfaceParameter();
+	moduleParams.addParameter(networkInterface);
+
 	receiveFrequency = new IntParameter("Receive Frequency", "The frequency at which to receive data, only change it if you need much high frequency", 100, 1, 1000);
 
 	if (canHaveInput)
@@ -102,6 +106,12 @@ void NetworkStreamingModule::onControllableFeedbackUpdateInternal(ControllableCo
 	else if (c->parentContainer == receiveCC.get() && !c->isControllableFeedbackOnly)
 	{
 		if (!isCurrentlyLoadingData) setupReceiver();
+	}
+	else if (c == networkInterface)
+	{
+		setupSender();
+		setupReceiver();
+
 	}
 
 	if ((receiveCC != nullptr && c == receiveCC->enabled) || (sendCC != nullptr && c == sendCC->enabled))

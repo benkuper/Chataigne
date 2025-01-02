@@ -13,6 +13,8 @@
 #include "servus/servus.h"
 using namespace servus;
 
+class OSCModule;
+
 class OSCOutput :
 	public BaseItem,
 	public Thread
@@ -24,6 +26,8 @@ public:
 	bool forceDisabled;
 	bool senderIsConnected;
 	
+	OSCModule* oscModule;
+
 	//SEND
 	BoolParameter * useLocal;
 	StringParameter * remoteHost;
@@ -33,6 +37,7 @@ public:
 	std::unique_ptr<DatagramSocket> socket;
 
 
+	void setModule(OSCModule* m);
 	void setForceDisabled(bool value);
 
 	virtual void setupSender();
@@ -62,8 +67,11 @@ public:
 	~OSCModule();
 
 
+	NetworkInterfaceParameter* networkInterface;
+
 	//RECEIVE
 	IntParameter * localPort;
+	std::unique_ptr<DatagramSocket> receiverSocket;
 	OSCReceiver receiver;
 	OSCSender genericSender;
 	int defaultRemotePort;

@@ -23,6 +23,7 @@ public:
 	WebSocketClientModule(const String& name = "WebSocket Client", const String &defaultServerPath = "127.0.0.1:8080");
 	virtual ~WebSocketClientModule();
 
+
 	BoolParameter* useSecureConnection;
 	StringParameter* serverPath;
 	BoolParameter* isConnected;

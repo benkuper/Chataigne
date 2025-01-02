@@ -502,10 +502,12 @@ void CustomOSCModule::setupModuleFromJSONData(var data)
 			}
 		}
 	}
+	
+	autoAdd->setValue(false);
+	//autoAdd->hideInEditor = true;
+	//splitArgs->hideInEditor = true;
 
 	OSCModule::setupModuleFromJSONData(data);
-	autoAdd->setValue(false);
-	autoAdd->hideInEditor = true;
-	splitArgs->hideInEditor = true;
+	
 	setupIOConfiguration(hasInput && receiveCC != nullptr && receiveCC->enabled->boolValue(), hasOutput && outputManager != nullptr && outputManager->enabled->boolValue());
 }

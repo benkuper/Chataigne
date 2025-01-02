@@ -1,17 +1,17 @@
 /*
   ==============================================================================
 
-    TCPClientModule.cpp
-    Created: 21 Oct 2017 5:04:54pm
-    Author:  Ben
+	TCPClientModule.cpp
+	Created: 21 Oct 2017 5:04:54pm
+	Author:  Ben
 
   ==============================================================================
 */
 
 #include "Module/ModuleIncludes.h"
 
-TCPClientModule::TCPClientModule(const String & name, int defaultRemotePort, bool autoConnect) :
-	NetworkStreamingModule(name,false, true, 0, defaultRemotePort),
+TCPClientModule::TCPClientModule(const String& name, int defaultRemotePort, bool autoConnect) :
+	NetworkStreamingModule(name, false, true, 0, defaultRemotePort),
 	autoConnect(autoConnect),
 	autoReconnect(true)
 {
@@ -36,9 +36,9 @@ void TCPClientModule::setupSender()
 	clearInternal();
 
 	sendCC->clearWarning();
-	
+
 	if (!enabled->boolValue() || isCurrentlyLoadingData ||
-		sendCC == nullptr || !sendCC->enabled->boolValue() || 
+		sendCC == nullptr || !sendCC->enabled->boolValue() ||
 		(Engine::mainEngine != nullptr && Engine::mainEngine->isClearing))
 	{
 		//if(!sendCC->enabled->boolValue()) sendCC->clearWarning();
@@ -46,7 +46,7 @@ void TCPClientModule::setupSender()
 		return;
 	}
 
-	if(autoConnect) startThread();
+	if (autoConnect) startThread();
 }
 
 void TCPClientModule::initThread()
@@ -68,7 +68,8 @@ void TCPClientModule::initThread()
 			{
 				signalThreadShouldExit();
 				break;
-			}else wait(1000);
+			}
+			else wait(1000);
 		}
 	}
 }
@@ -87,8 +88,8 @@ bool TCPClientModule::checkReceiverIsReady()
 {
 	if (!senderIsConnected->boolValue()) return false;
 	int result = sender.waitUntilReady(true, 100);
-	
-	if(result == -1)
+
+	if (result == -1)
 	{
 		senderIsConnected->setValue(false);
 		return false;
@@ -102,7 +103,7 @@ bool TCPClientModule::isReadyToSend()
 	return !autoConnect || senderIsConnected->boolValue();
 }
 
-void TCPClientModule::sendMessageInternal(const String & message, var)
+void TCPClientModule::sendMessageInternal(const String& message, var)
 {
 	int numBytes = sender.write(message.getCharPointer(), message.length());
 	if (numBytes == -1)
@@ -152,13 +153,14 @@ void TCPClientModule::runInternal()
 		senderIsConnected->setValue(false);
 		wait(1000);
 		if (threadShouldExit()) return;
-		if(autoReconnect) initThread();
+		if (autoReconnect) initThread();
 	}
 }
 
 bool TCPClientModule::connect()
 {
 	String targetHost = useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue();
+	sender.bindToPort(0, networkInterface->getIP());
 	bool result = sender.connect(targetHost, remotePort->intValue(), 200);
 	if (result && autoConnect) NLOG(niceName, "Sender bound to port " << sender.getBoundPort());
 	senderIsConnected->setValue(result);

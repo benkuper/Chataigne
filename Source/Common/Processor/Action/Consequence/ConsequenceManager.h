@@ -18,22 +18,26 @@ class ConsequenceStaggerLauncher :
 public:
 	juce_DeclareSingleton(ConsequenceStaggerLauncher, false)
 
-		ConsequenceStaggerLauncher();
+	ConsequenceStaggerLauncher();
 	~ConsequenceStaggerLauncher();
+
 
 	struct Launch
 	{
 		Launch(ConsequenceManager* c, int multiplexIndex) : manager(c), startTime(Time::getMillisecondCounter()), multiplexIndex(multiplexIndex), triggerIndex(0) {}
 
+
 		ConsequenceManager* manager;
 		uint32 startTime;
 		int multiplexIndex;
 		int triggerIndex;
+		Launch* currentProcessingLaunch;
 
 		bool isFinished();
 	};
 
 	OwnedArray<Launch, juce::CriticalSection> launches;
+	Array<Launch*, juce::CriticalSection> toRemove;
 
 	void run() override;
 	void processLaunch(Launch* l);
