@@ -67,14 +67,14 @@ void ConsequenceManager::triggerAll(int multiplexIndex)
 		}
 		else
 		{
-			ConsequenceStaggerLauncher::getInstance()->addLaunch(this, multiplexIndex);
+			if (ConsequenceStaggerLauncher::getInstanceWithoutCreating() != nullptr) ConsequenceStaggerLauncher::getInstance()->addLaunch(this, multiplexIndex);
 		}
 	}
 }
 
 void ConsequenceManager::cancelDelayedConsequences(int multiplexIndex)
 {
-	ConsequenceStaggerLauncher::getInstance()->removeLaunchesFor(this, multiplexIndex);
+	if (ConsequenceStaggerLauncher::getInstanceWithoutCreating() != nullptr) ConsequenceStaggerLauncher::getInstance()->removeLaunchesFor(this, multiplexIndex);
 }
 
 void ConsequenceManager::setForceDisabled(bool value, bool force)
@@ -252,6 +252,8 @@ void ConsequenceStaggerLauncher::processLaunch(Launch* l)
 
 void ConsequenceStaggerLauncher::addLaunch(ConsequenceManager* csm, int multiplexIndex)
 {
+	if (Engine::mainEngine->isClearing) return;
+
 	launches.add(new Launch(csm, multiplexIndex));
 	if (!isThreadRunning()) startThread();
 	else notify();
