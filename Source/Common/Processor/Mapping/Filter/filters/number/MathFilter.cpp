@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    MathFilter.cpp
-    Created: 4 Jul 2018 2:15:50pm
-    Author:  Ben
+	MathFilter.cpp
+	Created: 4 Jul 2018 2:15:50pm
+	Author:  Ben
 
   ==============================================================================
 */
@@ -15,8 +15,9 @@ MathFilter::MathFilter(var params, Multiplex* multiplex) :
 	operation = filterParams.addEnumParameter("Operation", "The operation to use for this filter");
 	operation->addOption("Offset", OFFSET)
 		->addOption("Multiply", MULTIPLY)->addOption("Divide", DIVIDE)->addOption("Modulo", MODULO)
-		->addOption("Floor", FLOOR)->addOption("Ceil", CEIL)->addOption("Round", ROUND)->addOption("Max",MAX)->addOption("Min",MIN)
-		->addOption("Absolute", ABSOLUTE);
+		->addOption("Floor", FLOOR)->addOption("Ceil", CEIL)->addOption("Round", ROUND)->addOption("Max", MAX)->addOption("Min", MIN)
+		->addOption("Absolute", ABSOLUTE)
+		->addOption("Log", LOG)->addOption("Invert Log", EXPONENTIAL);
 
 	autoSetRange = false;
 	rangeRemapMode = filterParams.addEnumParameter("Range Remap Mode", "How to setup the output range.\nKeep will keep the input's range, adjust will ajdust automatically depending on the operator. \
@@ -58,10 +59,10 @@ void MathFilter::setupParametersInternal(int multiplexIndex, bool rangeOnly)
 			}
 
 			Operation o = operation->getValueDataAsEnum<Operation>();
-			operationValue->setEnabled(o != FLOOR && o != CEIL && o != ROUND && o != ABSOLUTE);
+			operationValue->setEnabled(o != FLOOR && o != CEIL && o != ROUND && o != ABSOLUTE && o != LOG && o != EXPONENTIAL);
 		}
 	}
-	
+
 	updateFilteredParamsRange(multiplexIndex);
 }
 
@@ -73,7 +74,8 @@ MappingFilter::ProcessResult  MathFilter::processSingleParameterInternal(Paramet
 	if (!source->isComplex())
 	{
 		val = getProcessedValue(source->value, -1, multiplexIndex);
-	} else
+	}
+	else
 	{
 		for (int i = 0; i < source->value.size(); ++i)
 		{
@@ -112,7 +114,7 @@ bool MathFilter::updateFilteredParamsRange(int multiplexIndex)
 		if (rm == FREE || !sourceParam->hasRange() || !filteredParamShouldHaveRange())
 		{
 			p->clearRange();
-			hasChanged = true; 
+			hasChanged = true;
 			continue;
 		}
 
@@ -128,7 +130,7 @@ bool MathFilter::updateFilteredParamsRange(int multiplexIndex)
 
 		var newMin = var();
 		var newMax = var();
-		
+
 		Operation o = operation->getValueDataAsEnum<Operation>();
 		switch (o)
 		{
@@ -141,6 +143,16 @@ bool MathFilter::updateFilteredParamsRange(int multiplexIndex)
 		case ABSOLUTE:
 			newMin = 0;
 			newMax = jmax(0.f, (float)sourceParam->maximumValue);
+			break;
+
+		case LOG:
+			newMin = 0;
+			newMax = logf(jmax(1.f, (float)sourceParam->maximumValue));
+			break;
+
+		case EXPONENTIAL:
+			newMin = 0;
+			newMax = expf(jmax(0.f, (float)sourceParam->maximumValue));
 			break;
 
 		default:
@@ -175,7 +187,7 @@ bool MathFilter::updateFilteredParamsRange(int multiplexIndex)
 	return hasChanged;
 }
 
-void MathFilter::filterParamChanged(Parameter * p)
+void MathFilter::filterParamChanged(Parameter* p)
 {
 	if (operationValue == nullptr) return;
 
@@ -186,7 +198,7 @@ void MathFilter::filterParamChanged(Parameter * p)
 	}
 
 	RangeRemapMode rm = rangeRemapMode->getValueDataAsEnum<RangeRemapMode>();
-	if (p == operation || (p == operationValue && rm == RangeRemapMode::AJDUST)|| p == rangeRemapMode)
+	if (p == operation || (p == operationValue && rm == RangeRemapMode::AJDUST) || p == rangeRemapMode)
 	{
 
 		bool hasChanged = updateFilteredParamsRange(-1);
@@ -213,7 +225,7 @@ void MathFilter::parameterControlModeChanged(Parameter* p)
 float MathFilter::getProcessedValue(float val, int index, int multiplexIndex)
 {
 	Operation o = operation->getValueDataAsEnum<Operation>();
-	
+
 	float oVal = 0;
 	if (operationValue != nullptr)
 	{
@@ -231,17 +243,20 @@ float MathFilter::getProcessedValue(float val, int index, int multiplexIndex)
 
 	switch (o)
 	{
-		case OFFSET: return val + oVal;
-		case MULTIPLY: return val * oVal;
-		case DIVIDE: return oVal > 0 ? val / oVal : (val / -oVal)*-1;
-		case MODULO: return fmodf(val, abs(oVal));
+	case OFFSET: return val + oVal;
+	case MULTIPLY: return val * oVal;
+	case DIVIDE: return oVal > 0 ? val / oVal : (val / -oVal) * -1;
+	case MODULO: return fmodf(val, abs(oVal));
 
-		case FLOOR: return floorf(val);
-		case CEIL: return ceilf(val);
-		case ROUND: return roundToInt(val);
-		case MAX: return std::max(oVal, val);
-		case MIN: return std::min(oVal, val);
-		case ABSOLUTE: return std::fabs(val);
+	case FLOOR: return floorf(val);
+	case CEIL: return ceilf(val);
+	case ROUND: return roundToInt(val);
+	case MAX: return std::max(oVal, val);
+	case MIN: return std::min(oVal, val);
+	case ABSOLUTE: return std::fabs(val);
+
+	case LOG: return logf(val);
+	case EXPONENTIAL: return expf(val);
 	}
 
 	return val;

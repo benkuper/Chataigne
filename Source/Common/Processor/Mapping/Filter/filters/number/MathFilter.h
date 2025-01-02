@@ -17,7 +17,7 @@ public:
 	MathFilter(var params, Multiplex* multiplex);
 	~MathFilter();
 
-	enum Operation { OFFSET, MULTIPLY, DIVIDE, MODULO, FLOOR, CEIL, ROUND, MAX, MIN, ABSOLUTE };
+	enum Operation { OFFSET, MULTIPLY, DIVIDE, MODULO, FLOOR, CEIL, ROUND, MAX, MIN, ABSOLUTE, LOG, EXPONENTIAL };
 	enum RangeRemapMode { KEEP, AJDUST, FREE };
 	EnumParameter * operation;
 	Parameter * operationValue;
