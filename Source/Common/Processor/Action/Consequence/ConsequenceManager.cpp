@@ -182,10 +182,11 @@ ConsequenceStaggerLauncher::~ConsequenceStaggerLauncher()
 
 void ConsequenceStaggerLauncher::run()
 {
-	Array<Launch*> toRemove;
+	toRemove.clear();
 
 	while (!threadShouldExit())
 	{
+
 		{
 			GenericScopedLock lock(launches.getLock());
 			for (auto& l : launches)
@@ -193,11 +194,15 @@ void ConsequenceStaggerLauncher::run()
 				processLaunch(l);
 				if (l->isFinished()) toRemove.add(l);
 			}
-
-			for (auto& l : toRemove) launches.removeObject(l);
-
-			if (launches.isEmpty()) break;
 		}
+
+		{
+			GenericScopedLock lock(toRemove.getLock());
+			for (auto& l : toRemove) launches.removeObject(l);
+			toRemove.clear();
+		}
+
+		if (launches.isEmpty()) break;
 
 		wait(10);
 	}
@@ -254,14 +259,11 @@ void ConsequenceStaggerLauncher::addLaunch(ConsequenceManager* csm, int multiple
 
 void ConsequenceStaggerLauncher::removeLaunchesFor(ConsequenceManager* manager, int multiplexIndex)
 {
-	GenericScopedLock lock(launches.getLock());
-	Array<Launch*> toRemove;
+	GenericScopedLock lock(toRemove.getLock());
 	for (auto& l : launches)
 	{
 		if (l->manager == manager && (multiplexIndex == -1 || l->multiplexIndex == multiplexIndex)) toRemove.add(l);
 	}
-
-	for (auto& l : toRemove) launches.removeObject(l);
 }
 
 void ConsequenceManager::multiplexPreviewIndexChanged()
