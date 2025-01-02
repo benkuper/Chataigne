@@ -34,6 +34,8 @@ NumberComparator::NumberComparator(Parameter* sourceParam, Multiplex* multiplex)
 	addCompareOption("Floor <", floorLessId);
 	addCompareOption("Diff >", diffGreaterId);
 	addCompareOption("Diff <", diffLessId);
+	addCompareOption("Dist >", distGreaterId);
+	addCompareOption("Dist <", distLessId);
 	addCompareOption("Range", inRangeId);
 	addCompareOption("Change", changeId);
 }
@@ -89,11 +91,13 @@ bool NumberComparator::compareInternal(Parameter* sourceParam, int multiplexInde
 	else if (currentFunctionId == floorGreaterId)	return (float)value[0] == 0 ? false : floorf(sourceParam->floatValue() / (float)value[0]) >(float)value[1];
 	else if (currentFunctionId == floorLessId)		return (float)value[0] == 0 ? false : floorf(sourceParam->floatValue() / (float)value[0]) < (float)value[1];
 	else if (currentFunctionId == inRangeId)		return sourceParam->floatValue() >= (float)value[0] && sourceParam->floatValue() <= (float)value[1];
-	else if (currentFunctionId == diffGreaterId || currentFunctionId == diffLessId)
+	else if (currentFunctionId == distGreaterId || currentFunctionId == distLessId 
+		|| currentFunctionId == diffGreaterId || currentFunctionId == diffLessId)
 	{
 		prevValues.ensureStorageAllocated(multiplexIndex + 1);
-		float diff = fabsf(sourceParam->floatValue() - prevValues[multiplexIndex]);
-		bool result = currentFunctionId == diffGreaterId ? diff > (float)value : diff < (float)value;
+		float diff = sourceParam->floatValue() - prevValues[multiplexIndex];
+		if (currentFunctionId == distGreaterId || currentFunctionId == distLessId) diff = fabsf(diff);
+		bool result = (currentFunctionId == distGreaterId || currentFunctionId == diffGreaterId) ? diff > (float)value : diff < (float)value;
 		prevValues.set(multiplexIndex, sourceParam->floatValue());
 		return result;
 	}

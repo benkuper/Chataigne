@@ -31,6 +31,8 @@ public:
 	const Identifier floorLessId = "f<"; 
 	const Identifier diffGreaterId = "d>";
 	const Identifier diffLessId = "d<";
+	const Identifier distGreaterId = "ds>";
+	const Identifier distLessId = "ds<";
 	const Identifier inRangeId = "r";
 	const Identifier changeId = "ch";
 
