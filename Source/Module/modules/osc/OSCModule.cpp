@@ -716,6 +716,7 @@ InspectableEditor* OSCOutput::getEditorInternal(bool isRoot, Array<Inspectable*>
 void OSCOutput::setupSender()
 {
 	if (isCurrentlyLoadingData) return;
+	if (oscModule == nullptr) return;
 
 	if (isThreadRunning())
 	{
