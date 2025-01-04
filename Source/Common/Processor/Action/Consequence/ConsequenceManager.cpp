@@ -67,7 +67,7 @@ void ConsequenceManager::triggerAll(int multiplexIndex)
 		}
 		else
 		{
-			if (ConsequenceStaggerLauncher::getInstanceWithoutCreating() != nullptr) ConsequenceStaggerLauncher::getInstance()->addLaunch(this, multiplexIndex);
+			if (!isClearing && !Engine::mainEngine->isClearing) ConsequenceStaggerLauncher::getInstance()->addLaunch(this, multiplexIndex);
 		}
 	}
 }
