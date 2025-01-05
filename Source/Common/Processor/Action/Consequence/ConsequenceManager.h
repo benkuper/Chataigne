@@ -37,6 +37,7 @@ public:
 	};
 
 	OwnedArray<Launch, juce::CriticalSection> launches;
+	Array<Launch*, juce::CriticalSection> toAdd;
 	Array<Launch*, juce::CriticalSection> toRemove;
 
 	void run() override;

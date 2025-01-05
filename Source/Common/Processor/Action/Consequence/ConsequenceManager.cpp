@@ -188,23 +188,18 @@ void ConsequenceStaggerLauncher::run()
 	{
 		{
 			GenericScopedLock lock(launches.getLock());
+
 			for (auto& l : toRemove) launches.removeObject(l);
 			toRemove.clear();
-		}
 
-		{
-			GenericScopedLock lock(launches.getLock());
+			for (auto& l : toAdd) launches.add(l);
+			toAdd.clear();
+
 			for (auto& l : launches)
 			{
 				processLaunch(l);
-				if (l->isFinished()) toRemove.add(l);
+				if (l->isFinished()) toRemove.addIfNotAlreadyThere(l);
 			}
-		}
-
-		{
-			GenericScopedLock lock(launches.getLock());
-			for (auto& l : toRemove) launches.removeObject(l);
-			toRemove.clear();
 		}
 
 		if (launches.isEmpty()) break;
@@ -212,6 +207,8 @@ void ConsequenceStaggerLauncher::run()
 		wait(10);
 	}
 
+
+	for (auto& l : toAdd) delete l; //clean up unprocessed launches
 }
 
 void ConsequenceStaggerLauncher::processLaunch(Launch* l)
@@ -259,7 +256,7 @@ void ConsequenceStaggerLauncher::addLaunch(ConsequenceManager* csm, int multiple
 {
 	if (Engine::mainEngine->isClearing) return;
 
-	launches.add(new Launch(csm, multiplexIndex));
+	toAdd.add(new Launch(csm, multiplexIndex));
 	if (!isThreadRunning()) startThread();
 	else notify();
 }
