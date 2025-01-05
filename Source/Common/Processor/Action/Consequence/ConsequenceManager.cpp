@@ -186,6 +186,11 @@ void ConsequenceStaggerLauncher::run()
 
 	while (!threadShouldExit())
 	{
+		{
+			GenericScopedLock lock(launches.getLock());
+			for (auto& l : toRemove) launches.removeObject(l);
+			toRemove.clear();
+		}
 
 		{
 			GenericScopedLock lock(launches.getLock());
@@ -197,7 +202,7 @@ void ConsequenceStaggerLauncher::run()
 		}
 
 		{
-			GenericScopedLock lock(toRemove.getLock());
+			GenericScopedLock lock(launches.getLock());
 			for (auto& l : toRemove) launches.removeObject(l);
 			toRemove.clear();
 		}
@@ -261,7 +266,7 @@ void ConsequenceStaggerLauncher::addLaunch(ConsequenceManager* csm, int multiple
 
 void ConsequenceStaggerLauncher::removeLaunchesFor(ConsequenceManager* manager, int multiplexIndex)
 {
-	GenericScopedLock lock(toRemove.getLock());
+	GenericScopedLock lock(launches.getLock());
 	for (auto& l : launches)
 	{
 		if (l->manager == manager && (multiplexIndex == -1 || l->multiplexIndex == multiplexIndex)) toRemove.add(l);
