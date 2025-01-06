@@ -1774,7 +1774,7 @@
       </MODULEPATHS>
     </XCODE_MAC>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile" externalLibraries="bluetooth&#10;Servus&#10;curl&#10;SDL2&#10;usb-1.0&#10;hidapi-hidraw&#10;JoyShockLibrary"
-                extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;&#10;-Wl,--as-needed"
+                extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;&#10;-Wl,--as-needed&#10;-Wl,--export-dynamic&#10;-fvisibility=default"
                 smallIcon="nVz6Li" bigIcon="nVz6Li" extraDefs="USE_ABLETONLINK=1&#10;LINK_PLATFORM_LINUX=1&#10;GDK_BACKEND=x11"
                 extraCompilerFlags="-Wno-multichar">
       <CONFIGURATIONS>
@@ -1782,7 +1782,8 @@
                        libraryPath="../../External/servus/lib/linux&#10;../../External/sdl/lib/linux&#10;/usr/lib/x86_64-linux-gnu/&#10;../../External/joycon/lib/linux"
                        isDebug="1"/>
         <CONFIGURATION name="Release" optimisation="3" targetName="Chataigne" linuxArchitecture="-m64"
-                       libraryPath="../../External/servus/lib/linux&#10;../../External/sdl/lib/linux&#10;/usr/lib/x86_64-linux-gnu/&#10;../../External/joycon/lib/linux"/>
+                       libraryPath="../../External/servus/lib/linux&#10;../../External/sdl/lib/linux&#10;/usr/lib/x86_64-linux-gnu/&#10;../../External/joycon/lib/linux"
+                       linkTimeOptimisation="1"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_osc" path="JUCE/modules"/>
@@ -1914,7 +1915,7 @@
       </MODULEPATHS>
     </XCODE_MAC>
     <LINUX_MAKE targetFolder="Builds/Raspberry" smallIcon="nVz6Li" bigIcon="nVz6Li"
-                extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;&#10;-Wl,--as-needed"
+                extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;&#10;-Wl,--as-needed&#10;-Wl,--export-dynamic&#10;-fvisibility=default"
                 externalLibraries="bluetooth&#10;Servus&#10;curl&#10;SDL2&#10;usb-1.0&#10;hidapi-hidraw&#10;pthread&#10;JoyShockLibrary&#10;atomic"
                 extraDefs="USE_ABLETONLINK=1&#10;LINK_PLATFORM_LINUX=1&#10;USE_GPIO=1"
                 extraCompilerFlags="-Wno-multichar">
@@ -1922,7 +1923,7 @@
         <CONFIGURATION name="Debug" headerPath="/usr/include/freetype2" libraryPath="../../External/servus/lib/raspberry&#10;../../External/sdl/lib/raspberry&#10;../../External/joycon/lib/raspberry&#10;/usr/lib/arm-linux-gnueabihf"
                        linuxArchitecture="-march=armv8-a" optimisation="3" isDebug="1"/>
         <CONFIGURATION name="Release" headerPath="/usr/include/freetype2" libraryPath="../../External/servus/lib/raspberry&#10;../../External/sdl/lib/raspberry&#10;../../External/joycon/lib/raspberry&#10;/usr/lib/arm-linux-gnueabihf&#10;"
-                       linuxArchitecture="-march=armv8-a"/>
+                       linuxArchitecture="-march=armv8-a" linkTimeOptimisation="1"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_osc" path="JUCE/modules"/>
@@ -1949,14 +1950,15 @@
       </MODULEPATHS>
     </LINUX_MAKE>
     <LINUX_MAKE targetFolder="Builds/Raspberry64" extraDefs="USE_ABLETONLINK=1&#10;LINK_PLATFORM_LINUX=1&#10;USE_GPIO=1"
-                extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;&#10;-Wl,--as-needed"
+                extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;&#10;-Wl,--as-needed&#10;-Wl,--export-dynamic&#10;-fvisibility=default"
                 externalLibraries="bluetooth&#10;Servus&#10;curl&#10;SDL2&#10;usb-1.0&#10;hidapi-hidraw&#10;pthread&#10;JoyShockLibrary&#10;atomic"
                 smallIcon="nVz6Li" bigIcon="nVz6Li" extraCompilerFlags="-Wno-multichar">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" headerPath="/usr/include/freetype2"
                        libraryPath="../../External/servus/lib/raspberry64&#10;../../External/sdl/lib/raspberry64&#10;../../External/joycon/lib/raspberry64&#10;"/>
         <CONFIGURATION isDebug="0" name="Release" headerPath="/usr/include/freetype2"
-                       libraryPath="../../External/servus/lib/raspberry64&#10;../../External/sdl/lib/raspberry64&#10;../../External/joycon/lib/raspberry64&#10;"/>
+                       libraryPath="../../External/servus/lib/raspberry64&#10;../../External/sdl/lib/raspberry64&#10;../../External/joycon/lib/raspberry64&#10;"
+                       linkTimeOptimisation="1"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_audio_basics" path="JUCE/modules"/>
