@@ -1782,8 +1782,7 @@
                        libraryPath="../../External/servus/lib/linux&#10;../../External/sdl/lib/linux&#10;/usr/lib/x86_64-linux-gnu/&#10;../../External/joycon/lib/linux"
                        isDebug="1"/>
         <CONFIGURATION name="Release" optimisation="3" targetName="Chataigne" linuxArchitecture="-m64"
-                       libraryPath="../../External/servus/lib/linux&#10;../../External/sdl/lib/linux&#10;/usr/lib/x86_64-linux-gnu/&#10;../../External/joycon/lib/linux"
-                       linkTimeOptimisation="1"/>
+                       libraryPath="../../External/servus/lib/linux&#10;../../External/sdl/lib/linux&#10;/usr/lib/x86_64-linux-gnu/&#10;../../External/joycon/lib/linux"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_osc" path="JUCE/modules"/>
@@ -1923,7 +1922,7 @@
         <CONFIGURATION name="Debug" headerPath="/usr/include/freetype2" libraryPath="../../External/servus/lib/raspberry&#10;../../External/sdl/lib/raspberry&#10;../../External/joycon/lib/raspberry&#10;/usr/lib/arm-linux-gnueabihf"
                        linuxArchitecture="-march=armv8-a" optimisation="3" isDebug="1"/>
         <CONFIGURATION name="Release" headerPath="/usr/include/freetype2" libraryPath="../../External/servus/lib/raspberry&#10;../../External/sdl/lib/raspberry&#10;../../External/joycon/lib/raspberry&#10;/usr/lib/arm-linux-gnueabihf&#10;"
-                       linuxArchitecture="-march=armv8-a" linkTimeOptimisation="1"/>
+                       linuxArchitecture="-march=armv8-a"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_osc" path="JUCE/modules"/>
@@ -1957,8 +1956,7 @@
         <CONFIGURATION isDebug="1" name="Debug" headerPath="/usr/include/freetype2"
                        libraryPath="../../External/servus/lib/raspberry64&#10;../../External/sdl/lib/raspberry64&#10;../../External/joycon/lib/raspberry64&#10;"/>
         <CONFIGURATION isDebug="0" name="Release" headerPath="/usr/include/freetype2"
-                       libraryPath="../../External/servus/lib/raspberry64&#10;../../External/sdl/lib/raspberry64&#10;../../External/joycon/lib/raspberry64&#10;"
-                       linkTimeOptimisation="1"/>
+                       libraryPath="../../External/servus/lib/raspberry64&#10;../../External/sdl/lib/raspberry64&#10;../../External/joycon/lib/raspberry64&#10;"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_audio_basics" path="JUCE/modules"/>
