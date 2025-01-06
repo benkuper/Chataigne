@@ -198,7 +198,7 @@ jobs:
           # apt-get update && apt-get install ...
 
           cd $GITHUB_WORKSPACE
-          wget "https://github.com/AppImage/AppImageKit/releases/download/13/appimagetool-x86_64.AppImage"
+          wget "https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage"
           chmod a+x appimagetool-x86_64.AppImage
 
       # - name: Start SSH via ngrok
@@ -231,7 +231,7 @@ jobs:
 
           PKGNAME=${{ env.ProjectName }}-linux-${{ steps.set_variables.outputs.suffix }}.AppImage
           echo "pkg-name=$PKGNAME" >> $GITHUB_OUTPUT
-          $GITHUB_WORKSPACE/appimagetool-x86_64.AppImage --appimage-extract-and-run ${{ env.ProjectName }}.AppDir $PKGNAME
+          ARCH=x86_64 $GITHUB_WORKSPACE/appimagetool-x86_64.AppImage ${{ env.ProjectName }}.AppDir $PKGNAME
         working-directory: ./Builds/LinuxMakefile
 
       - name: Upload
@@ -286,14 +286,8 @@ jobs:
 
       - name: Download and prepare AppImage
         run: |
-          sudo apt-get update
-          sudo apt-get install libfuse2 # required on ubuntu 22.04
-
-          wget "https://github.com/AppImage/AppImageKit/releases/download/13/appimagetool-x86_64.AppImage"
+          wget "https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage"
           chmod a+x appimagetool-x86_64.AppImage
-
-          echo "Downloading AppImage runtime for ${{ matrix.arch }}"
-          wget "https://github.com/AppImage/AppImageKit/releases/download/13/runtime-${{ matrix.arch }}"
 
           mkdir -p ./Builds/${{ matrix.buildFolder }}/${{ env.ProjectName }}.AppDir/usr/bin/
         working-directory: ${{ github.workspace }}
@@ -321,7 +315,7 @@ jobs:
         run: |
           PKGNAME=${{ env.ProjectName }}-linux-${{ steps.set_variables.outputs.suffix }}.AppImage
           echo "pkg-name=$PKGNAME" >> $GITHUB_OUTPUT
-          ${{ github.workspace }}/appimagetool-x86_64.AppImage --runtime-file ${{ github.workspace }}/runtime-${{ matrix.arch }} ${{ env.ProjectName }}.AppDir $PKGNAME
+          ARCH=${{ matrix.arch }} ${{ github.workspace }}/appimagetool-x86_64.AppImage ${{ env.ProjectName }}.AppDir $PKGNAME
         working-directory: ./Builds/${{ matrix.buildFolder }}
 
       - name: Upload
