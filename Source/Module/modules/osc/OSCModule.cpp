@@ -226,7 +226,11 @@ void OSCModule::itemAdded(OSCOutput* output)
 
 void OSCModule::itemsAdded(Array<OSCOutput*> outputs)
 {
-	for (auto& o : outputs) o->warningResolveInspectable = this;
+	for (auto& o : outputs)
+	{
+		o->setModule(this);
+		o->warningResolveInspectable = this;
+	}
 }
 
 void OSCModule::setupSenders()
@@ -716,6 +720,7 @@ InspectableEditor* OSCOutput::getEditorInternal(bool isRoot, Array<Inspectable*>
 void OSCOutput::setupSender()
 {
 	if (isCurrentlyLoadingData) return;
+	if (oscModule == nullptr) return;
 
 	if (isThreadRunning())
 	{
