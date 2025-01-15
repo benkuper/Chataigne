@@ -285,7 +285,7 @@ void SequenceCommand::loadJSONDataInternal(var data)
 	else BaseCommand::loadJSONDataInternal(data);
 }
 
-void SequenceCommand::endLoadFile()
+void SequenceCommand::fileLoaded()
 {
 	//reset data we want to reload
 	if (target != nullptr) target->setValue("", true);

@@ -45,7 +45,7 @@ public:
 	virtual void onContainerParameterChanged(Parameter* p) override;
 
 	virtual void loadJSONDataInternal(var data) override;
-	virtual void endLoadFile() override;
+	virtual void fileLoaded() override;
 
 	static BaseCommand * create(ControllableContainer * module, CommandContext context, var params, Multiplex * multiplex = nullptr);
 };
