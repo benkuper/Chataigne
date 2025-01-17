@@ -105,7 +105,7 @@ void SequenceCommand::triggerInternal(int multiplexIndex)
 
 	if (actionType != STOP_ALL_SEQUENCES && actionType != PLAY_MULTI_SEQUENCES && actionType != PLAY_SEQUENCE_AT)
 	{
-		if (getLinkedTargetContainerAs<ControllableContainer>(target, multiplexIndex) == nullptr) return;
+		if (target == nullptr || getLinkedTargetContainerAs<ControllableContainer>(target, multiplexIndex) == nullptr) return;
 		//if (target->targetContainer.wasObjectDeleted()) return;
 	}
 
