@@ -46,7 +46,6 @@ You can check the tutorials to better understand what and how you can use Chatai
     - Wiimote
     - Joycon
     - Sound card
-    - StreamDeck
     - Loupedeck
     - GPIO (Raspberry only)
     
