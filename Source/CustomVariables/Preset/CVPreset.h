@@ -16,12 +16,12 @@ class ParameterPreset :
 	public ControllableContainer
 {
 public:
-	ParameterPreset(Parameter * p);
+	ParameterPreset(Parameter* p);
 	~ParameterPreset();
 
 	Parameter* parameter;
 
-	enum InterpolationMode { CHANGE_AT_END, CHANGE_AT_START, INTERPOLATE, NONE};
+	enum InterpolationMode { INTERPOLATE, CHANGE_AT_END, CHANGE_AT_START, NONE };
 	EnumParameter* interpolationMode;
 
 	InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables = Array<Inspectable*>()) override;
@@ -37,7 +37,7 @@ public:
 
 	GenericControllableManager* manager;
 	//OwnedArray<ParameterPreset> presets;
-	HashMap<ParameterPreset*,  Parameter*> linkMap;
+	HashMap<ParameterPreset*, Parameter*> linkMap;
 
 	bool keepValuesInSync;
 
@@ -60,7 +60,7 @@ public:
 	void parameterRangeChanged(Parameter*) override;
 	void controllableNameChanged(Controllable*) override;
 
-	ParameterPreset * getParameterPresetForSource(Parameter* p);
+	ParameterPreset* getParameterPresetForSource(Parameter* p);
 
 	//var getJSONData(bool includeNonOverriden = false) override;
 	void loadJSONData(var data, bool createIfNotThere = false) override;
