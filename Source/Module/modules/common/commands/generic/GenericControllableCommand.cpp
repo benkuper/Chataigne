@@ -79,7 +79,7 @@ GenericControllableCommand::~GenericControllableCommand()
 		}
 	}
 
-	if(!isMultiplexed() && targetParam != nullptr && !targetParam.wasObjectDeleted()) targetParam->removeParameterListener(this);
+	if (!isMultiplexed() && targetParam != nullptr && !targetParam.wasObjectDeleted()) targetParam->removeParameterListener(this);
 }
 
 void GenericControllableCommand::updateComponentFromTarget()
@@ -173,7 +173,7 @@ void GenericControllableCommand::updateValueFromTargetAndComponent()
 		}
 
 		targetParam = cTarget;
-		if(!isMultiplexed()) targetParam->addParameterListener(this);
+		if (!isMultiplexed()) targetParam->addParameterListener(this);
 	}
 	else
 	{
@@ -359,7 +359,17 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 
 						if (EnumParameter* ep = dynamic_cast<EnumParameter*>(p))
 						{
-							if (ep->enumValues.size() > 0)
+							if (!ep->setValueWithData(val))
+							{
+								if (!ep->setValueWithKey(val))
+								{
+									if (!ep->setValueAtIndex(val))
+									{
+										NLOGWARNING(niceName, "Could not set enum with provided data : " << val.toString());
+									}
+								}
+							}
+							/*if (ep->enumValues.size() > 0)
 							{
 
 								if (val.isInt() || val.isDouble())
@@ -375,7 +385,7 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 									else ep->setValueWithData(val);
 								}
 								else ep->setValueWithData(val);
-							}
+							}*/
 						}
 					}
 					else if (p->type == Controllable::TARGET)
