@@ -346,6 +346,7 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 			Operator o = valueOperator->getValueDataAsEnum<Operator>();
 			int compOp = componentOperator->getValueData();
 
+
 			if (value != nullptr || o == INVERSE || o == NEXT_ENUM || o == PREV_ENUM)
 			{
 				var val = getLinkedValue(value, multiplexIndex);
@@ -410,13 +411,14 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 					}
 					else
 					{
+						var pVal = p->getValue().clone();
+
 						if (compOp == -1)
 						{
-							if (p->value.size() == val.size()) targetValue = val;
+							if (pVal.size() == val.size()) targetValue = val;
 						}
 						else
 						{
-							var pVal = p->value.clone();
 							if (pVal.isArray() && pVal.size() > compOp)
 							{
 								pVal[compOp] = (float)val;
@@ -435,13 +437,14 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 				case ADD:
 				case SUBTRACT:
 				{
-					targetValue = p->value.clone();
+					var pVal = p->getValue().clone();
+					targetValue = p->getValue().clone();
 
 					if (compOp == -1)
 					{
 						if (!p->isComplex())
 						{
-							targetValue = o == ADD ? p->floatValue() + (float)val : p->floatValue() - (float)val;
+							targetValue = (float)pVal + (float)val * (o == ADD ? 1 : -1);
 							if (p->hasRange() && loop != nullptr && loop->boolValue())
 							{
 								if ((float)targetValue > (float)p->maximumValue) targetValue = p->minimumValue;
@@ -451,9 +454,9 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 						}
 						else
 						{
-							for (int i = 0; i < p->value.size() && val.size(); i++)
+							for (int i = 0; i < pVal.size() && val.size(); i++)
 							{
-								targetValue[i] = o == ADD ? (float)p->value[i] + (float)val[i] : (float)p->value[i] - (float)val[i];
+								targetValue[i] = (float)pVal[i] + (float)val[i] * (o == ADD ? 1 : -1);
 							}
 						}
 					}
@@ -461,7 +464,7 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 					{
 						if (targetValue.isArray())
 						{
-							float targetCompVal = o == ADD ? (float)p->value[compOp] + (float)val : (float)p->value[compOp] - (float)val;
+							float targetCompVal = (float)pVal[compOp] + (float)val[compOp] * (o == ADD ? 1 : -1);
 							if (p->hasRange() && loop != nullptr && loop->boolValue())
 							{
 								if (targetCompVal > (float)p->maximumValue[compOp]) targetValue = p->minimumValue[compOp];
@@ -556,10 +559,11 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 					}
 					else if (p->isComplex())
 					{
+						var pVal = p->getValue().clone();
 						var v;
-						for (int i = 0; i < p->value.size(); i++)
+						for (int i = 0; i < pVal.size(); i++)
 						{
-							float vv = p->value[i];
+							float vv = pVal[i];
 							if (compOp == i || compOp == -1) vv = p->hasRange() ? jmap<float>(r.nextFloat(), p->minimumValue[i], p->maximumValue[i]) : r.nextFloat();
 							v.append(vv);
 						}
