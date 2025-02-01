@@ -13,6 +13,7 @@ CVPresetManager::CVPresetManager(CVGroup * group) :
 	group(group)
 {
 	selectItemWhenCreated = false;
+	canBeCopiedAndPasted = true;
 }
 
 CVPresetManager::~CVPresetManager()
