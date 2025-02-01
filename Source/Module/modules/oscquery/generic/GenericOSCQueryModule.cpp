@@ -133,16 +133,18 @@ void GenericOSCQueryModule::sendOSCForControllable(Controllable* c)
 		if (c->type != Controllable::TRIGGER)
 		{
 			Parameter* p = (Parameter*)c;
-			if (p->value.isArray() && p->type != Controllable::COLOR)
+			var v = p->getValue().clone();
+
+			if (v.isArray() && p->type != Controllable::COLOR)
 			{
-				for (int i = 0; i < p->value.size(); ++i)
+				for (int i = 0; i < v.size(); ++i)
 				{
-					m.addArgument(OSCHelpers::varToArgument(p->value[i], getBoolMode()));
+					m.addArgument(OSCHelpers::varToArgument(v[i], getBoolMode()));
 				}
 			}
 			else
 			{
-				m.addArgument(OSCHelpers::varToArgument(p->value, getBoolMode()));
+				m.addArgument(OSCHelpers::varToArgument(v, getBoolMode()));
 			}
 		}
 		sendOSC(m);
