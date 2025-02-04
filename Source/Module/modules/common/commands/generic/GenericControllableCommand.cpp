@@ -438,7 +438,7 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 				case SUBTRACT:
 				{
 					var pVal = p->getValue().clone();
-					targetValue = p->getValue().clone();
+					targetValue = pVal.clone();
 
 					if (compOp == -1)
 					{
@@ -464,7 +464,8 @@ void GenericControllableCommand::triggerInternal(int multiplexIndex)
 					{
 						if (targetValue.isArray())
 						{
-							float targetCompVal = (float)pVal[compOp] + (float)val[compOp] * (o == ADD ? 1 : -1);
+							float cVal = val.size() > 0 ? val[0] : val;
+							float targetCompVal = (float)pVal[compOp] + cVal * (o == ADD ? 1 : -1);
 							if (p->hasRange() && loop != nullptr && loop->boolValue())
 							{
 								if (targetCompVal > (float)p->maximumValue[compOp]) targetValue = p->minimumValue[compOp];
