@@ -48,11 +48,15 @@
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Chataigne</TargetName>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(LibraryPath);../../External/kinect/lib;../../External/joycon/lib/win;../../External/servus/lib/win/x64/debug;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/hidapi/lib/win/x64;../../External/mosquitto/lib/win;../../External/simpleble/lib/win/debug;..\..\Modules\juce_sharedtexture\libs\VisualStudio2022\$(Platform)\MDd;..\..\Modules\juce_simpleweb\libs\VisualStudio2022\$(Platform)\MDd</LibraryPath>
+    <PreBuildEventUseInBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</PreBuildEventUseInBuild>
+    <PostBuildEventUseInBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</PostBuildEventUseInBuild>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\..\..\Binaries\App\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\App\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Chataigne</TargetName>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(LibraryPath);../../External/kinect/lib;../../External/joycon/lib/win;../../External/servus/lib/win/x64/release;../../External/dnssd/lib;../../External/sdl/lib/win;../../External/hidapi/lib/win/x64;../../External/mosquitto/lib/win;../../External/simpleble/lib/win/release;..\..\Modules\juce_sharedtexture\libs\VisualStudio2022\$(Platform)\MD;..\..\Modules\juce_simpleweb\libs\VisualStudio2022\$(Platform)\MD</LibraryPath>
+    <PreBuildEventUseInBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</PreBuildEventUseInBuild>
+    <PostBuildEventUseInBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</PostBuildEventUseInBuild>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Midl>
@@ -66,7 +70,7 @@
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;D:\Projects\Dev\JUCE\modules;..\..\Modules;../../Source;../../External/wiiuse;../../External/asio;../../External/asiodriver;../../External/kinect/include;../../External/joycon/include;../../External/servus/include;../../External/dnssd/include;../../External/ois/include;../../External/sdl/include;../../External/hidapi/include;../../External/abletonlink/include;../../External/libusb/include/libusb-1.0;../../External/mosquitto/include;../../External/posistagenet/include;../../External/simpleble/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;VST_LOGGING=0;USE_KINECT=1;USE_ABLETONLINK=1;LINK_PLATFORM_WINDOWS=1;BLE_SUPPORT=0;JUCER_VS2022_78A503E=1;JUCE_APP_VERSION=1.9.25b8;JUCE_APP_VERSION_HEX=0x10919;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;JucePlugin_Build_LV2=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;VST_LOGGING=0;USE_KINECT=1;USE_ABLETONLINK=1;LINK_PLATFORM_WINDOWS=1;BLE_SUPPORT=0;JUCER_VS2022_78A503E=1;JUCE_APP_VERSION=1.9.25b9;JUCE_APP_VERSION_HEX=0x10919;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;JucePlugin_Build_LV2=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
@@ -81,7 +85,7 @@
     </ClCompile>
     <ResourceCompile>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;D:\Projects\Dev\JUCE\modules;..\..\Modules;../../Source;../../External/wiiuse;../../External/asio;../../External/asiodriver;../../External/kinect/include;../../External/joycon/include;../../External/servus/include;../../External/dnssd/include;../../External/ois/include;../../External/sdl/include;../../External/hidapi/include;../../External/abletonlink/include;../../External/libusb/include/libusb-1.0;../../External/mosquitto/include;../../External/posistagenet/include;../../External/simpleble/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;VST_LOGGING=0;USE_KINECT=1;USE_ABLETONLINK=1;LINK_PLATFORM_WINDOWS=1;BLE_SUPPORT=0;JUCER_VS2022_78A503E=1;JUCE_APP_VERSION=1.9.25b8;JUCE_APP_VERSION_HEX=0x10919;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;JucePlugin_Build_LV2=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;VST_LOGGING=0;USE_KINECT=1;USE_ABLETONLINK=1;LINK_PLATFORM_WINDOWS=1;BLE_SUPPORT=0;JUCER_VS2022_78A503E=1;JUCE_APP_VERSION=1.9.25b9;JUCE_APP_VERSION_HEX=0x10919;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;JucePlugin_Build_LV2=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <Link>
       <OutputFile>$(OutDir)\Chataigne.exe</OutputFile>
@@ -116,7 +120,7 @@
       <Optimization>Full</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;D:\Projects\Dev\JUCE\modules;..\..\Modules;../../Source;../../External/wiiuse;../../External/asio;../../External/asiodriver;../../External/kinect/include;../../External/joycon/include;../../External/servus/include;../../External/dnssd/include;../../External/ois/include;../../External/sdl/include;../../External/hidapi/include;../../External/abletonlink/include;../../External/libusb/include/libusb-1.0;../../External/mosquitto/include;../../External/posistagenet/include;../../External/simpleble/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;VST_LOGGING=0;USE_KINECT=1;USE_ABLETONLINK=1;LINK_PLATFORM_WINDOWS=1;BLE_SUPPORT=0;JUCER_VS2022_78A503E=1;JUCE_APP_VERSION=1.9.25b8;JUCE_APP_VERSION_HEX=0x10919;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;JucePlugin_Build_LV2=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;VST_LOGGING=0;USE_KINECT=1;USE_ABLETONLINK=1;LINK_PLATFORM_WINDOWS=1;BLE_SUPPORT=0;JUCER_VS2022_78A503E=1;JUCE_APP_VERSION=1.9.25b9;JUCE_APP_VERSION_HEX=0x10919;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;JucePlugin_Build_LV2=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
@@ -131,7 +135,7 @@
     </ClCompile>
     <ResourceCompile>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;D:\Projects\Dev\JUCE\modules;..\..\Modules;../../Source;../../External/wiiuse;../../External/asio;../../External/asiodriver;../../External/kinect/include;../../External/joycon/include;../../External/servus/include;../../External/dnssd/include;../../External/ois/include;../../External/sdl/include;../../External/hidapi/include;../../External/abletonlink/include;../../External/libusb/include/libusb-1.0;../../External/mosquitto/include;../../External/posistagenet/include;../../External/simpleble/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;VST_LOGGING=0;USE_KINECT=1;USE_ABLETONLINK=1;LINK_PLATFORM_WINDOWS=1;BLE_SUPPORT=0;JUCER_VS2022_78A503E=1;JUCE_APP_VERSION=1.9.25b8;JUCE_APP_VERSION_HEX=0x10919;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;JucePlugin_Build_LV2=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;VST_LOGGING=0;USE_KINECT=1;USE_ABLETONLINK=1;LINK_PLATFORM_WINDOWS=1;BLE_SUPPORT=0;JUCER_VS2022_78A503E=1;JUCE_APP_VERSION=1.9.25b9;JUCE_APP_VERSION_HEX=0x10919;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;JucePlugin_Build_LV2=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <Link>
       <OutputFile>$(OutDir)\Chataigne.exe</OutputFile>
@@ -2939,7 +2943,9 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_dmx.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_dsp.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_events.cpp"/>
-    <ClCompile Include="..\..\JuceLibraryCode\include_juce_graphics.cpp"/>
+    <ClCompile Include="..\..\JuceLibraryCode\include_juce_graphics.cpp">
+      <AdditionalOptions> /bigobj %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_gui_basics.cpp">
       <AdditionalOptions> /bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
@@ -5030,7 +5036,7 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets"/>
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="packages\Microsoft.Web.WebView2.1.0.902.49\build\native\Microsoft.Web.WebView2.targets"
-            Condition="Exists('packages\Microsoft.Web.WebView2.1.0.902.49\build\native\Microsoft.Web.WebView2.targets')"/>
+    <Import Project="packages\Microsoft.Web.WebView2.1.0.1901.177\build\native\Microsoft.Web.WebView2.targets"
+            Condition="Exists('packages\Microsoft.Web.WebView2.1.0.1901.177\build\native\Microsoft.Web.WebView2.targets')"/>
   </ImportGroup>
 </Project>
