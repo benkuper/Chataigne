@@ -32,7 +32,7 @@ class PresetParameterContainer :
 	public GenericControllableManager::ManagerListener
 {
 public:
-	PresetParameterContainer(const String& name, GenericControllableManager* manager, bool keepValuesInSync);
+	PresetParameterContainer(const String& name, GenericControllableManager* manager, bool keepValuesInSync, bool doNotBuildValues = false);
 	~PresetParameterContainer();
 
 	GenericControllableManager* manager;
@@ -87,7 +87,7 @@ class CVPreset :
 	public MorphTarget
 {
 public:
-	CVPreset(CVGroup* group = nullptr);
+	CVPreset(CVGroup* group = nullptr, bool isTemporary = false);
 	~CVPreset();
 
 	CVGroup* group;

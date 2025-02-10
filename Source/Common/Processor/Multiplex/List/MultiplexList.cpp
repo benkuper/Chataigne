@@ -115,6 +115,9 @@ void BaseMultiplexList::loadJSONData(var data, bool createIfNotThere)
 
 void BaseMultiplexList::notifyItemUpdated(int multiplexIndex)
 {
+	GenericScopedTryLock lock(notifyLock);
+	if (!lock.isLocked()) return;
+
 	jassert(multiplexIndex >= 0);
 	listListeners.call(&MultiplexListListener::listItemUpdated, multiplexIndex);
 }

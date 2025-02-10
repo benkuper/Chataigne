@@ -10,10 +10,10 @@
 
 #include "CustomVariables/CustomVariablesIncludes.h"
 
-CVPreset::CVPreset(CVGroup* group) :
+CVPreset::CVPreset(CVGroup* group, bool isTemporary) :
 	MorphTarget("Preset"),
 	group(group),
-	values("Values", &group->values, false)
+	values("Values", &group->values, false, isTemporary)
 {
 	jassert(group != nullptr);
 
@@ -98,7 +98,7 @@ InspectableEditor* CVPreset::getEditorInternal(bool isRoot, Array<Inspectable*> 
 	return new CVPresetEditor(this, isRoot);
 }
 
-PresetParameterContainer::PresetParameterContainer(const String& name, GenericControllableManager* manager, bool keepValuesInSync) :
+PresetParameterContainer::PresetParameterContainer(const String& name, GenericControllableManager* manager, bool keepValuesInSync, bool doNotBuildValues) :
 	ControllableContainer(name),
 	manager(manager),
 	keepValuesInSync(keepValuesInSync),
@@ -107,7 +107,7 @@ PresetParameterContainer::PresetParameterContainer(const String& name, GenericCo
 	saveAndLoadRecursiveData = true;
 
 	manager->addBaseManagerListener(this);
-	resetAndBuildValues(keepValuesInSync);
+	if(doNotBuildValues) resetAndBuildValues(keepValuesInSync);
 }
 
 PresetParameterContainer::~PresetParameterContainer()
