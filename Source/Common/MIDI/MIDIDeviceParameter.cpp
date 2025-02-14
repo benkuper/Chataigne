@@ -9,7 +9,6 @@
 */
 
 #include "Common/CommonIncludes.h"
-#include "MIDIDeviceParameter.h"
 
 MIDIDeviceParameter::MIDIDeviceParameter(const String& name, const String& description) :
 	Parameter(CUSTOM, name, "MIDI Devices", description, var(), var()),
