@@ -11,6 +11,7 @@
 FFTAnalyzerManager::FFTAnalyzerManager() :
 	BaseManager("FFT Analysis"),
 	forwardFFT(fftOrder),
+	editor(nullptr),
 	window(fftSize, dsp::WindowingFunction<float>::hann)
 {
 	setCanBeDisabled(true);
@@ -69,6 +70,8 @@ void FFTAnalyzerManager::process(const float* samples, int numSamples)
 
 		nextFFTBlockReady = false;
 	}
+
+	if(editor != nullptr) dynamic_cast<FFTAnalyzerManagerEditor*>(editor)->viz.shouldRepaint = true;
 }
 
 void FFTAnalyzerManager::copyScopeData(float* scopeData, int maxSize) const
@@ -94,7 +97,8 @@ void FFTAnalyzerManager::pushNextSampleIntoFifo(float sample)
 
 InspectableEditor* FFTAnalyzerManager::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
 {
-	return new FFTAnalyzerManagerEditor(this, isRoot);
+	if(editor == nullptr) editor = new FFTAnalyzerManagerEditor(this, isRoot);
+	return editor;
 }
 
 var FFTAnalyzerManager::getFFTDataFromScript(const var::NativeFunctionArgs& a)

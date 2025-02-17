@@ -14,7 +14,7 @@
 
 ActionUI::ActionUI(Action* _action, bool showMiniModeBT) :
 	ProcessorUI(_action, showMiniModeBT),
-	UITimerTarget(ORGANICUI_SLOW_TIMER),
+	UITimerTarget(ORGANICUI_SLOW_TIMER, "ActionUI"),
 	action(_action)
 {
 	acceptedDropTypes.add("Module");
@@ -125,6 +125,8 @@ void ActionUI::paintOverChildren(Graphics& g)
 		g.setColour(GREEN_COLOR.withSaturation(item->forceDisabled?.2f:1));
 		g.drawRoundedRectangle(getMainBounds().toFloat(), rounderCornerSize, 2);
 	}
+
+	validatePaint();
 }
 
 void ActionUI::itemDropped(const SourceDetails& details)

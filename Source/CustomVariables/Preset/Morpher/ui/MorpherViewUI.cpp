@@ -126,9 +126,9 @@ void MorpherPanel::newMessage(const Parameter::ParameterEvent& e)
 
 MorpherViewUI::MorpherViewUI(Morpher* morpher) :
 	BaseManagerViewUI("Morpher", morpher->presetManager),
+	UITimerTarget(ORGANICUI_SLOW_TIMER, "MorpherViewUI"),
 	morpher(morpher),
-	mainTargetUI(&morpher->mainTarget),
-	shouldRepaint(true)
+	mainTargetUI(&morpher->mainTarget)
 {
 	setInterceptsMouseClicks(true, true);
 	setRepaintsOnMouseActivity(true);
@@ -152,8 +152,6 @@ MorpherViewUI::MorpherViewUI(Morpher* morpher) :
 	addAndMakeVisible(mainTargetUI);
 
 	acceptedDropTypes.add("MorphTarget");
-
-	startTimerHz(25);
 
 	addExistingItems();
 }
@@ -483,11 +481,13 @@ void MorpherViewUI::controllableFeedbackUpdateAsync(Controllable* c)
 	}
 }
 
-void MorpherViewUI::timerCallback()
+void MorpherViewUI::handlePaintTimerInternal()
 {
-	if (shouldRepaint)
-	{
-		repaint();
-		shouldRepaint = false;
-	}
+	repaint();
+}
+
+void MorpherViewUI::paintOverChildren(Graphics& g)
+{
+	BaseManagerViewUI<CVPresetManager, CVPreset, CVPresetMorphUI>::paintOverChildren(g);
+	validatePaint();
 }

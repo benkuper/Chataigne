@@ -22,7 +22,7 @@ public:
 
 	class FFTViz :
 		public Component,
-		public Timer
+		public UITimerTarget
 	{
 	public:
 		FFTViz(FFTAnalyzerManager* manager);
@@ -31,7 +31,7 @@ public:
 		FFTAnalyzerManager* analyzerManager;
 
 		void paint(Graphics& g) override;
-		virtual void timerCallback() override;
+		void handlePaintTimerInternal() override;
 	};
 
 	FFTViz viz;

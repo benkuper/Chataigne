@@ -42,6 +42,7 @@ private:
 	bool nextFFTBlockReady = false;       // [9]
 	float scopeData[scopeSize];          // [10]
 	CriticalSection scopeDataMutex;
+	InspectableEditor* editor;
 
 	void pushNextSampleIntoFifo(float sample);
 

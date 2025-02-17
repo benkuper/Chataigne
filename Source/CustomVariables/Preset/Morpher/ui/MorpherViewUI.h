@@ -45,7 +45,7 @@ public:
 class MorpherViewUI :
 	public BaseManagerViewUI<CVPresetManager, CVPreset, CVPresetMorphUI>,
 	public ContainerAsyncListener,
-	public Timer
+	public UITimerTarget
 {
 public:
 	MorpherViewUI(Morpher* morpher);
@@ -55,8 +55,6 @@ public:
 	MorphTargetUI mainTargetUI;
 
 	Image bgImage;
-	
-	bool shouldRepaint;
 
 	void paintBackground(Graphics& g) override;
 
@@ -76,5 +74,6 @@ public:
 	void newMessage(const ContainerAsyncEvent& e) override;
 	void controllableFeedbackUpdateAsync(Controllable* c);
 
-	void timerCallback() override;
+	void handlePaintTimerInternal() override;
+    void paintOverChildren(juce::Graphics& g) override;
 };
