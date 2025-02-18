@@ -386,7 +386,7 @@ void CVGroup::run()
 	Array<var> sourceValues;
 	for (auto& v : values.items) sourceValues.add(((Parameter*)v->controllable)->value);
 
-	CVPreset p2(this);
+	CVPreset p2(this, true);
 	p2.loadJSONData(targetPreset->getJSONData());
 	for (auto& v : p2.values.manager->items)
 	{

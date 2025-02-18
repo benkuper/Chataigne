@@ -123,17 +123,38 @@ ControllableUI* MIDIDeviceParameter::createDefaultUI(Array<Controllable*> contro
 	return createMIDIParameterUI(parameters);
 }
 
+var MIDIDeviceParameter::getJSONDataInternal()
+{
+	var data = Parameter::getJSONDataInternal();
+	if (ghostDeviceNameIn.isNotEmpty()) data.getDynamicObject()->setProperty("inputName", ghostDeviceNameIn);
+	if (ghostDeviceNameOut.isNotEmpty()) data.getDynamicObject()->setProperty("outputName", ghostDeviceNameOut);
+	return data;
+}
+
 void MIDIDeviceParameter::loadJSONDataInternal(var data)
 {
 	Parameter::loadJSONDataInternal(data);
+
+	ghostDeviceNameIn = data.getProperty("inputName", "").toString();
 	setInputDevice(MIDIManager::getInstance()->getInputDeviceWithID(value[0]));
 
+	if (inputDevice == nullptr && ghostDeviceNameIn.isNotEmpty()) setInputDevice(MIDIManager::getInstance()->getInputDeviceWithName(ghostDeviceNameIn));
+	
 	var ghostInputVal = data.getProperty("value", var());
-	if (inputDevice == nullptr) ghostDeviceIn = ghostInputVal.size() > 0?ghostInputVal[0]:"";
+	if (inputDevice == nullptr)
+	{
+		ghostDeviceIn = ghostInputVal.size() > 0 ? ghostInputVal[0] : "";
+	}
 
+	ghostDeviceNameOut = data.getProperty("outputName", "").toString();
 	setOutputDevice(MIDIManager::getInstance()->getOutputDeviceWithID(value[1]));
 
+	if (outputDevice == nullptr && ghostDeviceNameOut.isNotEmpty()) setOutputDevice(MIDIManager::getInstance()->getOutputDeviceWithName(ghostDeviceNameOut));
+
 	var ghostOutputVal = data.getProperty("value", var());
-	if (outputDevice == nullptr) ghostDeviceOut = ghostOutputVal.size()> 1?ghostOutputVal[1]:"";
+	if (outputDevice == nullptr)
+	{
+		ghostDeviceOut = ghostOutputVal.size() > 1 ? ghostOutputVal[1] : "";
+	}
 
 }

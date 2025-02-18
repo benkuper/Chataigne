@@ -27,6 +27,8 @@ public:
 	int listSize;
 	Array<Controllable*> list;
 
+	CriticalSection notifyLock;
+
 	void setSize(int size);
 
 	virtual void updateControllablesSetup();

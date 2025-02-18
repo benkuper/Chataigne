@@ -16,12 +16,12 @@ class ParameterPreset :
 	public ControllableContainer
 {
 public:
-	ParameterPreset(Parameter * p);
+	ParameterPreset(Parameter* p);
 	~ParameterPreset();
 
 	Parameter* parameter;
 
-	enum InterpolationMode { CHANGE_AT_END, CHANGE_AT_START, INTERPOLATE, NONE};
+	enum InterpolationMode { INTERPOLATE, CHANGE_AT_END, CHANGE_AT_START, NONE };
 	EnumParameter* interpolationMode;
 
 	InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables = Array<Inspectable*>()) override;
@@ -32,12 +32,12 @@ class PresetParameterContainer :
 	public GenericControllableManager::ManagerListener
 {
 public:
-	PresetParameterContainer(const String& name, GenericControllableManager* manager, bool keepValuesInSync);
+	PresetParameterContainer(const String& name, GenericControllableManager* manager, bool keepValuesInSync, bool doNotBuildValues = false);
 	~PresetParameterContainer();
 
 	GenericControllableManager* manager;
 	//OwnedArray<ParameterPreset> presets;
-	HashMap<ParameterPreset*,  Parameter*> linkMap;
+	HashMap<ParameterPreset*, Parameter*> linkMap;
 
 	bool keepValuesInSync;
 
@@ -60,7 +60,7 @@ public:
 	void parameterRangeChanged(Parameter*) override;
 	void controllableNameChanged(Controllable*, const String&) override;
 
-	ParameterPreset * getParameterPresetForSource(Parameter* p);
+	ParameterPreset* getParameterPresetForSource(Parameter* p);
 
 	//var getJSONData(bool includeNonOverriden = false) override;
 	void loadJSONData(var data, bool createIfNotThere = false) override;
@@ -87,7 +87,7 @@ class CVPreset :
 	public MorphTarget
 {
 public:
-	CVPreset(CVGroup* group = nullptr);
+	CVPreset(CVGroup* group = nullptr, bool isTemporary = false);
 	~CVPreset();
 
 	CVGroup* group;

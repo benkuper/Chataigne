@@ -30,10 +30,10 @@ void FFTAnalyzerManagerEditor::resizedInternalContent(Rectangle<int>& r)
 	GenericManagerEditor::resizedInternalContent(r);
 }
 
-FFTAnalyzerManagerEditor::FFTViz::FFTViz(FFTAnalyzerManager* manager) : 
+FFTAnalyzerManagerEditor::FFTViz::FFTViz(FFTAnalyzerManager* manager) :
+	UITimerTarget(ORGANICUI_DEFAULT_TIMER, "FFTViz"),
 	analyzerManager(manager) 
 {
-	startTimerHz(30);
 }
 
 void FFTAnalyzerManagerEditor::FFTViz::paint(Graphics& g)
@@ -81,9 +81,11 @@ void FFTAnalyzerManagerEditor::FFTViz::paint(Graphics& g)
 		g.setColour(i->itemColor->getColor().withAlpha(.5f));
 		g.strokePath(path, PathStrokeType(1));
 	}
+
+	validatePaint();
 }
 
-void FFTAnalyzerManagerEditor::FFTViz::timerCallback()
+void FFTAnalyzerManagerEditor::FFTViz::handlePaintTimerInternal()
 {
 	if (isShowing()) repaint();
 }
