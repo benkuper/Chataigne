@@ -599,12 +599,15 @@ bool OSModule::PingThread::icmpPing(const String& host)
 
 	return success;
 
-#elif JUCE_LINUX || JUCE_MAC // UNIX
+#elif JUCE_LINUX
 	int sock = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP);
 	if (sock < 0) {
-		DBG("Socket creation error");
+		DBG("Socket creation error " << sock);
+        osModule->setWarningMessage("Could create socket for ping check : "+String(sock), "ping");
 		return false;
 	}
+    
+    osModule->clearWarning("ping");
 
 	struct timeval tv;
 	tv.tv_sec = timeout_ms / 1000;
@@ -657,6 +660,13 @@ bool OSModule::PingThread::icmpPing(const String& host)
 
 	close(sock);
 	return true; // Placeholder for successful ping
+#elif JUCE_MAC
+    
+    String command = String("ping -c 3 "+host);
+        
+    int result = system(command.toStdString().c_str());
+    
+    return result == 0;
 #else
 	return false; //PLATFORM
 #endif
