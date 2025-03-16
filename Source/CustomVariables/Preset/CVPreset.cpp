@@ -107,7 +107,7 @@ PresetParameterContainer::PresetParameterContainer(const String& name, GenericCo
 	saveAndLoadRecursiveData = true;
 
 	manager->addBaseManagerListener(this);
-	if(doNotBuildValues) resetAndBuildValues(keepValuesInSync);
+	if(!doNotBuildValues) resetAndBuildValues(keepValuesInSync);
 }
 
 PresetParameterContainer::~PresetParameterContainer()
