@@ -27,9 +27,11 @@ MQTTClientModule::MQTTClientModule(const String& name, bool canHaveInput, bool c
 	NLOGWARNING(niceName, "MQTT is only supported on windows right now.");
 #endif
 
+
 	protocol = moduleParams.addEnumParameter("Default Protocol", "How to parse the incoming data");
 	protocol->addOption("JSON", MQTTTopic::JSON)->addOption("Raw", MQTTTopic::RAW);
 
+	clientId = moduleParams.addStringParameter("Client ID", "The client ID to use. Needs to be unique", "Chataigne");
 	host = moduleParams.addStringParameter("Host", "The MQTT Broker's host address", "127.0.0.1");
 	port = moduleParams.addIntParameter("Port", "The MQTT Broker's port", 1883, 1, 65535);
 	keepAlive = moduleParams.addIntParameter("Keep Alive", "The time to keep alive the connection, in seconds", 60, 1);
@@ -92,7 +94,7 @@ void MQTTClientModule::onControllableFeedbackUpdateInternal(ControllableContaine
 
 	if (!isCurrentlyLoadingData)
 	{
-		if (c == host || c == port || c == keepAlive || c == authenticationCC.enabled || c == username || c == pass /* || c == useTLS*/)
+		if (c == host || c == port || c == keepAlive || c == authenticationCC.enabled || c == username || c == pass || c == clientId)
 		{
 			stopClient();
 			if (enabled->boolValue()) startThread();
@@ -267,7 +269,9 @@ void MQTTClientModule::run()
 		disconnect();
 	}
 
-	NLOG(niceName, "Connecting to " << host->stringValue() << ":" << port->intValue() << "...");
+	reinitialise(clientId->stringValue().toStdString().c_str(), true);
+
+	NLOG(niceName, "Connecting to " << host->stringValue() << ":" << port->intValue() << " with id " << clientId->stringValue() << "...");
 
 	if (authenticationCC.enabled->boolValue())
 	{

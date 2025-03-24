@@ -47,7 +47,8 @@ public:
 
 
 	EnumParameter* protocol;
-
+	
+	StringParameter* clientId;
 	StringParameter* host;
 	IntParameter* port;
 
