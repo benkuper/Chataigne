@@ -125,8 +125,6 @@ void ActionUI::paintOverChildren(Graphics& g)
 		g.setColour(GREEN_COLOR.withSaturation(item->forceDisabled?.2f:1));
 		g.drawRoundedRectangle(getMainBounds().toFloat(), rounderCornerSize, 2);
 	}
-
-	validatePaint();
 }
 
 void ActionUI::itemDropped(const SourceDetails& details)
