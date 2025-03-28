@@ -126,7 +126,7 @@ void MorpherPanel::newMessage(const Parameter::ParameterEvent& e)
 
 MorpherViewUI::MorpherViewUI(Morpher* morpher) :
 	BaseManagerViewUI("Morpher", morpher->presetManager),
-	UITimerTarget(ORGANICUI_SLOW_TIMER, "MorpherViewUI"),
+	UITimerTarget(ORGANICUI_SLOW_TIMER, "MorpherViewUI", true),
 	morpher(morpher),
 	mainTargetUI(&morpher->mainTarget)
 {

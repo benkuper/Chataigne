@@ -31,7 +31,7 @@ void FFTAnalyzerManagerEditor::resizedInternalContent(Rectangle<int>& r)
 }
 
 FFTAnalyzerManagerEditor::FFTViz::FFTViz(FFTAnalyzerManager* manager) :
-	UITimerTarget(ORGANICUI_DEFAULT_TIMER, "FFTViz"),
+	UITimerTarget(ORGANICUI_DEFAULT_TIMER, "FFTViz", true),
 	analyzerManager(manager) 
 {
 }
