@@ -34,6 +34,12 @@ FFTAnalyzerManagerEditor::FFTViz::FFTViz(FFTAnalyzerManager* manager) :
 	UITimerTarget(ORGANICUI_DEFAULT_TIMER, "FFTViz", true),
 	analyzerManager(manager) 
 {
+	analyzerManager->addAsyncFFTAnalyzerListener(this);
+}
+
+FFTAnalyzerManagerEditor::FFTViz::~FFTViz()
+{
+	if(analyzerManager != nullptr) analyzerManager->removeAsyncFFTAnalyzerListener(this);
 }
 
 void FFTAnalyzerManagerEditor::FFTViz::paint(Graphics& g)
@@ -88,4 +94,9 @@ void FFTAnalyzerManagerEditor::FFTViz::paint(Graphics& g)
 void FFTAnalyzerManagerEditor::FFTViz::handlePaintTimerInternal()
 {
 	if (isShowing()) repaint();
+}
+
+void FFTAnalyzerManagerEditor::FFTViz::newMessage(const FFTAnalyzerManager::FFTAnalyzerEvent& e)
+{
+	if (e.type == e.DATA_UPDATED) shouldRepaint = true;
 }

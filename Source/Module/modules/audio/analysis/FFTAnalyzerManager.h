@@ -33,6 +33,8 @@ public:
 	void process(const float* samples, int numSamples);
 	void copyScopeData(float* scopeData, int maxSize = scopeSize) const;
 
+
+	DECLARE_ASYNC_EVENT(FFTAnalyzerManager, FFTAnalyzer, fft, ENUM_LIST(DATA_UPDATED), EVENT_INSPECTABLE_CHECK)
 private:
 	dsp::FFT forwardFFT;                  // [4]
 	dsp::WindowingFunction<float> window; // [5]
@@ -42,7 +44,6 @@ private:
 	bool nextFFTBlockReady = false;       // [9]
 	float scopeData[scopeSize];          // [10]
 	CriticalSection scopeDataMutex;
-	InspectableEditor* editor;
 
 	void pushNextSampleIntoFifo(float sample);
 
