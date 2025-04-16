@@ -13,7 +13,7 @@
 juce_ImplementSingleton(StateManager)
 
 StateManager::StateManager() :
-	BaseManager<State>("States"),
+	Manager<State>("States"),
 	stm(this)
 {
 
@@ -24,7 +24,7 @@ StateManager::StateManager() :
 
 	addChildControllableContainer(&stm);
 	stm.hideInEditor = true;
-	stm.addBaseManagerListener(this);
+	stm.addManagerListener(this);
 
 	addChildControllableContainer(&commentManager);
 	Engine::mainEngine->addEngineListener(this);
@@ -44,7 +44,7 @@ void StateManager::clear()
 {
 	stm.clear();
 	commentManager.clear();
-	BaseManager::clear();
+	Manager::clear();
 }
 
 void StateManager::setStateActive(State* s)
@@ -79,7 +79,7 @@ Array<UndoableAction*> StateManager::getRemoveItemUndoableAction(State* item)
 {
 	Array<UndoableAction*> result;
 	result.addArray(stm.getRemoveAllLinkedTransitionsAction(item));
-	result.addArray(BaseManager::getRemoveItemUndoableAction(item));
+	result.addArray(Manager::getRemoveItemUndoableAction(item));
 
 	return result;
 }
@@ -88,7 +88,7 @@ Array<UndoableAction*> StateManager::getRemoveItemsUndoableAction(Array<State*> 
 {
 	Array<UndoableAction*> result;
 	for (auto& i : itemsToRemove) result.addArray(stm.getRemoveAllLinkedTransitionsAction(i));
-	result.addArray(BaseManager::getRemoveItemsUndoableAction(itemsToRemove));
+	result.addArray(Manager::getRemoveItemsUndoableAction(itemsToRemove));
 	return result;
 }
 
@@ -421,7 +421,7 @@ var StateManager::addTransitionFromScript(const var::NativeFunctionArgs& a)
 
 var StateManager::getJSONData(bool includeNonOverriden)
 {
-	var data = BaseManager::getJSONData(includeNonOverriden);
+	var data = Manager::getJSONData(includeNonOverriden);
 
 	var tData = stm.getJSONData();
 	if (!tData.isVoid() && tData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(stm.shortName, tData);
@@ -432,7 +432,7 @@ var StateManager::getJSONData(bool includeNonOverriden)
 
 void StateManager::loadJSONDataManagerInternal(var data)
 {
-	BaseManager::loadJSONDataManagerInternal(data);
+	Manager::loadJSONDataManagerInternal(data);
 
 	stm.loadJSONData(data.getProperty(stm.shortName, var()));
 	commentManager.loadJSONData(data.getProperty(commentManager.shortName, var()));

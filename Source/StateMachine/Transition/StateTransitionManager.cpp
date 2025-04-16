@@ -12,7 +12,7 @@
 #include "StateTransitionManager.h"
 
 StateTransitionManager::StateTransitionManager(StateManager* _sm) :
-	BaseManager("Transitions"),
+	Manager("Transitions"),
 	sm(_sm)
 {
 

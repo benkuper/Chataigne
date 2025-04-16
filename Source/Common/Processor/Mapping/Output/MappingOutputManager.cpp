@@ -11,7 +11,7 @@
 #include "Common/Processor/ProcessorIncludes.h"
 
 MappingOutputManager::MappingOutputManager(Multiplex * multiplex) :
-	BaseManager<MappingOutput>("Outputs"),
+	Manager<MappingOutput>("Outputs"),
 	MultiplexTarget(multiplex),
 	forceDisabled(false),
 	omAsyncNotifier(5)
@@ -28,7 +28,7 @@ MappingOutputManager::~MappingOutputManager()
 void MappingOutputManager::clear()
 {
 	for (auto& o : items) o->removeCommandHandlerListener(this);
-	BaseManager::clear();
+	Manager::clear();
 }
 
 MappingOutput* MappingOutputManager::createItem()

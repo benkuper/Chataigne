@@ -55,7 +55,7 @@ ChataigneSequence::ChataigneSequence() :
 	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", ColorMappingLayer::getTypeStringStatic(), &ColorMappingLayer::create, this));
 	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Sequences", &SequenceBlockLayer::create, this)->addParam("manager", ChataigneSequenceManager::getInstance()->getControlAddress()));
 
-	layerManager->addBaseManagerListener(this);
+	layerManager->addManagerListener(this);
 
 	std::function<TimeCue* (float, TimeCueManager*)> customCreateCueFunc = [](float t, TimeCueManager* m) { return new ChataigneCue(t, m); };
 	cueManager->customCreateCueFunc = customCreateCueFunc;

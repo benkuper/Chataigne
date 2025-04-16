@@ -16,7 +16,7 @@ class StateTransitionManagerUI;
 class CommentManagerViewUI;
 
 class StateMachineView :
-	public BaseManagerShapeShifterViewUI<StateManager, State, StateViewUI>,
+	public ManagerShapeShifterViewUI<StateManager, State, StateViewUI>,
 	public StateViewUI::Listener
 {
 public:

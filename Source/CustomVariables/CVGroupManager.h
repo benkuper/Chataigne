@@ -13,7 +13,7 @@
 class CustomVariablesModule;
 
 class CVGroupManager :
-	public BaseManager<CVGroup>
+	public Manager<CVGroup>
 {
 public:
 	juce_DeclareSingleton(CVGroupManager, true);

@@ -15,7 +15,7 @@ class Action;
 class Multiplex;
 
 class ProcessorManager :
-	public BaseManager<Processor>
+	public Manager<Processor>
 {
 public:
 	ProcessorManager(const String &name, Multiplex * multiplex = nullptr);

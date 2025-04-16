@@ -9,7 +9,7 @@
 */
 
 StateTransitionManagerUI::StateTransitionManagerUI(StateMachineView * sv, StateTransitionManager * stm) :
-	BaseManagerUI("Transitions",stm,false),
+	ManagerUI("Transitions",stm,false),
 	stateView(sv)
 {
 	transparentBG = true;

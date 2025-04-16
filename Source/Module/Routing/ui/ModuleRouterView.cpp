@@ -197,7 +197,7 @@ void ModuleRouterView::buildValueManagerUI()
 	if (managerUI != nullptr) removeChildComponent(managerUI.get());
 	if (currentRouter == nullptr) return;
 
-	managerUI.reset(new BaseManagerUI<BaseManager<ModuleRouterValue>, ModuleRouterValue, ModuleRouterValueEditor>("Values", &currentRouter->sourceValues));
+	managerUI.reset(new ManagerUI<Manager<ModuleRouterValue>, ModuleRouterValue, ModuleRouterValueEditor>("Values", &currentRouter->sourceValues));
 	managerUI->setShowAddButton(false);
 	managerUI->animateItemOnAdd = false;
 	managerUI->addExistingItems(); //force adding, normally we do it in a child classes but as we use the basic ui, we have to do it here

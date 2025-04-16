@@ -38,7 +38,7 @@ public:
 	Label feedbackLabel;
 	Label outParamsLabel;
 
-	std::unique_ptr<BaseManagerUI<BaseManager<ModuleRouterValue>, ModuleRouterValue, ModuleRouterValueEditor>> managerUI;
+	std::unique_ptr<ManagerUI<Manager<ModuleRouterValue>, ModuleRouterValue, ModuleRouterValueEditor>> managerUI;
 
 	void paint(Graphics &g) override;
 	void resized() override;

@@ -12,7 +12,7 @@
 #include "Common/Command/CommandIncludes.h"
 
 CustomValuesCommandArgumentManager::CustomValuesCommandArgumentManager(const String& name, bool _mappingEnabled, bool templateMode, Multiplex* multiplex) :
-	BaseManager(name),
+	Manager(name),
 	MultiplexTarget(multiplex),
 	mappingEnabled(_mappingEnabled),
 	templateMode(templateMode),
@@ -37,7 +37,7 @@ void CustomValuesCommandArgumentManager::linkToTemplate(CustomValuesCommandArgum
 	{
 		if (linkedTemplateManager != nullptr)
 		{
-			linkedTemplateManager->removeBaseManagerListener(this);
+			linkedTemplateManager->removeManagerListener(this);
 		}
 		linkedTemplateManager = nullptr;
 	}
@@ -47,7 +47,7 @@ void CustomValuesCommandArgumentManager::linkToTemplate(CustomValuesCommandArgum
 
 	if (linkedTemplateManager != nullptr)
 	{
-		linkedTemplateManager->addBaseManagerListener(this);
+		linkedTemplateManager->addManagerListener(this);
 		rebuildFromTemplate(true);
 	}
 
@@ -323,7 +323,7 @@ void CustomValuesCommandArgumentManager::itemsRemoved(Array<CustomValuesCommandA
 
 void CustomValuesCommandArgumentManager::loadJSONDataInternal(var data)
 {
-	if (linkedTemplateManager == nullptr || !data.isVoid()) BaseManager::loadJSONDataInternal(data);
+	if (linkedTemplateManager == nullptr || !data.isVoid()) Manager::loadJSONDataInternal(data);
 	rebuildFromTemplate(false); //cannot do without clearing, already cleared by parent method
 }
 

@@ -27,7 +27,7 @@ public:
 	WeakReference<Inspectable> sourceModuleRef;
 	WeakReference<Inspectable> destModuleRef;
 
-	BaseManager<ModuleRouterValue> sourceValues;
+	Manager<ModuleRouterValue> sourceValues;
 	ModuleRouterController * routerController;
 
 	Trigger * selectAllValues;

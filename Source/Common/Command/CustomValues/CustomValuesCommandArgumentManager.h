@@ -11,9 +11,9 @@
 #pragma once
 
 class CustomValuesCommandArgumentManager :
-	public BaseManager<CustomValuesCommandArgument>,
+	public Manager<CustomValuesCommandArgument>,
 	public MultiplexTarget,
-	public BaseManager<CustomValuesCommandArgument>::ManagerListener
+	public Manager<CustomValuesCommandArgument>::ManagerListener
 {
 public:
 	CustomValuesCommandArgumentManager(const String &name, bool _mappingEnabled, bool templateMode = false, Multiplex* multiplex = nullptr);
@@ -47,7 +47,7 @@ public:
 	Array<CustomValuesCommandArgument*> addItemsFromData(var data, bool fromUndoableAction = false) override;
 
 
-	static var addItemWithTypeFromScript(const var::NativeFunctionArgs& a); // will override the "addItem" method from BaseManager
+	static var addItemWithTypeFromScript(const var::NativeFunctionArgs& a); // will override the "addItem" method from Manager
 
 	void autoRenameItems();
 

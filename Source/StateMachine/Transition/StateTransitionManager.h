@@ -13,7 +13,7 @@
 class StateManager;
 
 class StateTransitionManager :
-	public BaseManager<StateTransition>
+	public Manager<StateTransition>
 {
 public:
 	StateTransitionManager(StateManager * sm);

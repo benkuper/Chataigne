@@ -15,7 +15,7 @@
 #include "CustomVariables/CustomVariablesIncludes.h"
 
 ProcessorManagerUI::ProcessorManagerUI(ProcessorManager* _manager, bool useViewport) :
-	BaseManagerUI("Processors", _manager, useViewport)
+	ManagerUI("Processors", _manager, useViewport)
 {
 	drawContour = false;
 
@@ -40,7 +40,7 @@ ProcessorManagerUI::~ProcessorManagerUI()
 
 void ProcessorManagerUI::itemDropped(const SourceDetails& details)
 {
-	BaseManagerUI::itemDropped(details);
+	ManagerUI::itemDropped(details);
 
 	String dataType = details.description.getProperty("dataType", "");
 
@@ -175,7 +175,7 @@ void ProcessorManagerUI::itemDropped(const SourceDetails& details)
 
 void ProcessorManagerUI::addItemFromMenu(Processor* item, bool isFromAddButton, Point<int> mouseDownPos)
 {
-	BaseManagerUI::addItemFromMenu(item, isFromAddButton, mouseDownPos);
+	ManagerUI::addItemFromMenu(item, isFromAddButton, mouseDownPos);
 
 	if (Action* a = dynamic_cast<Action*>(item))
 	{

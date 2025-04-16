@@ -11,7 +11,7 @@
 #pragma once
 
 class MappingOutputManager :
-	public BaseManager<MappingOutput>,
+	public Manager<MappingOutput>,
 	public MultiplexTarget,
 	public CommandHandlerListener
 {

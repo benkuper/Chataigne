@@ -43,7 +43,7 @@ public:
 
 
 class MorpherViewUI :
-	public BaseManagerViewUI<CVPresetManager, CVPreset, CVPresetMorphUI>,
+	public ManagerViewUI<CVPresetManager, CVPreset, CVPresetMorphUI>,
 	public ContainerAsyncListener,
 	public UITimerTarget
 {

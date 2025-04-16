@@ -11,7 +11,7 @@
 #pragma once
 
 class FFTAnalyzerManager :
-	public BaseManager<FFTAnalyzer>
+	public Manager<FFTAnalyzer>
 {
 public:
 	FFTAnalyzerManager();

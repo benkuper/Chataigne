@@ -11,7 +11,7 @@
 #pragma once
 
 class ConvertedParameterManager :
-	public BaseManager<ConvertedParameter>
+	public Manager<ConvertedParameter>
 {
 public:
 	ConvertedParameterManager();

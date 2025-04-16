@@ -11,7 +11,7 @@
 #pragma once
 
 class ModuleManagerUI :
-	public BaseManagerShapeShifterUI<ModuleManager, Module, ModuleUI>
+	public ManagerShapeShifterUI<ModuleManager, Module, ModuleUI>
 {
 public:
 

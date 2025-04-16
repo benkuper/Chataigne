@@ -125,7 +125,7 @@ void MorpherPanel::newMessage(const Parameter::ParameterEvent& e)
 // ---------------- MorpherViewUI
 
 MorpherViewUI::MorpherViewUI(Morpher* morpher) :
-	BaseManagerViewUI("Morpher", morpher->presetManager),
+	ManagerViewUI("Morpher", morpher->presetManager),
 	UITimerTarget(ORGANICUI_SLOW_TIMER, "MorpherViewUI", true),
 	morpher(morpher),
 	mainTargetUI(&morpher->mainTarget)
@@ -168,7 +168,7 @@ void MorpherViewUI::paintBackground(Graphics& g)
 	if (morpher == nullptr) return;
 
 	//not paint checkerboard
-	BaseManagerViewUI::paintBackground(g);
+	ManagerViewUI::paintBackground(g);
 
 	//Voronoi
 	switch (morpher->blendMode)
@@ -378,20 +378,20 @@ void MorpherViewUI::setupBGImage()
 
 void MorpherViewUI::resized()
 {
-	BaseManagerViewUI::resized();
+	ManagerViewUI::resized();
 	updateComponentViewPosition(&mainTargetUI, mainTargetUI.item->viewUIPosition->getPoint(), AffineTransform());
 }
 
 void MorpherViewUI::setViewZoom(float value)
 {
-	BaseManagerViewUI::setViewZoom(value);
+	ManagerViewUI::setViewZoom(value);
 	mainTargetUI.setViewZoom(value);
 	updateComponentViewPosition(&mainTargetUI, mainTargetUI.item->viewUIPosition->getPoint(), AffineTransform());
 }
 
 void MorpherViewUI::mouseDown(const MouseEvent& e)
 {
-	BaseManagerViewUI::mouseDown(e);
+	ManagerViewUI::mouseDown(e);
 	if (e.mods.isLeftButtonDown() && e.mods.isCommandDown())
 	{
 		morpher->mainTarget.viewUIPosition->setPoint(getViewMousePosition().toFloat() / manager->viewZoom);
@@ -400,7 +400,7 @@ void MorpherViewUI::mouseDown(const MouseEvent& e)
 
 void MorpherViewUI::mouseDrag(const MouseEvent& e)
 {
-	BaseManagerViewUI::mouseDrag(e);
+	ManagerViewUI::mouseDrag(e);
 
 	if (e.mods.isLeftButtonDown() && e.mods.isCommandDown())
 	{
@@ -410,7 +410,7 @@ void MorpherViewUI::mouseDrag(const MouseEvent& e)
 
 void MorpherViewUI::mouseDoubleClick(const MouseEvent& e)
 {
-	BaseManagerViewUI::mouseDoubleClick(e);
+	ManagerViewUI::mouseDoubleClick(e);
 
 	manager->addItem(getViewMousePosition().toFloat());
 }
@@ -427,7 +427,7 @@ void MorpherViewUI::itemDragMove(const SourceDetails& details)
 		shouldRepaint = true;
 	}
 
-	BaseManagerViewUI::itemDragMove(details);
+	ManagerViewUI::itemDragMove(details);
 }
 
 void MorpherViewUI::itemDropped(const SourceDetails& details)
@@ -443,7 +443,7 @@ void MorpherViewUI::itemDropped(const SourceDetails& details)
 		updateComponentViewPosition(bui, bui->item->viewUIPosition->getPoint(), AffineTransform());
 	}
 
-	BaseManagerViewUI::itemDropped(details);
+	ManagerViewUI::itemDropped(details);
 	shouldRepaint = true;
 }
 
@@ -488,6 +488,6 @@ void MorpherViewUI::handlePaintTimerInternal()
 
 void MorpherViewUI::paintOverChildren(Graphics& g)
 {
-	BaseManagerViewUI<CVPresetManager, CVPreset, CVPresetMorphUI>::paintOverChildren(g);
+	ManagerViewUI<CVPresetManager, CVPreset, CVPresetMorphUI>::paintOverChildren(g);
 	validatePaint();
 }

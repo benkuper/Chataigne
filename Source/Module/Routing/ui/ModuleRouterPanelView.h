@@ -17,7 +17,7 @@ public:
 	ModuleRouterPanelView(const String &contentName, ModuleRouterManager * manager);
 	~ModuleRouterPanelView();
 
-	BaseManagerUI<ModuleRouterManager, ModuleRouter, BaseItemUI<ModuleRouter>> mui;
+	ManagerUI<ModuleRouterManager, ModuleRouter, BaseItemUI<ModuleRouter>> mui;
 	
 	ModuleRouterView view;
 

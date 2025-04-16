@@ -10,7 +10,7 @@
 #include "StateMachine/StateMachineIncludes.h"
 
 StateMachineView::StateMachineView(const String &contentName, StateManager * _manager) :
-	BaseManagerShapeShifterViewUI(contentName, _manager),
+	ManagerShapeShifterViewUI(contentName, _manager),
 	manager(_manager),
 	stmUI(nullptr),
 	transitionCreationMode(false),
@@ -53,7 +53,7 @@ StateMachineView::~StateMachineView()
 
 void StateMachineView::mouseMove(const MouseEvent & e)
 {
-	BaseManagerViewUI::mouseMove(e);
+	ManagerViewUI::mouseMove(e);
 	if(transitionCreationMode && transitionCreationSourceUI != nullptr) repaint();
 }
 
@@ -65,12 +65,12 @@ void StateMachineView::mouseDown(const MouseEvent & e)
 		return;
 	}
 
-	BaseManagerShapeShifterViewUI::mouseDown(e);
+	ManagerShapeShifterViewUI::mouseDown(e);
 }
 
 void StateMachineView::mouseDoubleClick(const MouseEvent & e)
 {
-	BaseManagerShapeShifterViewUI::mouseDoubleClick(e);
+	ManagerShapeShifterViewUI::mouseDoubleClick(e);
 	if(e.mods.isLeftButtonDown()) manager->addItem(getViewPos(e.getMouseDownPosition()).toFloat());
 }
 
@@ -83,12 +83,12 @@ bool StateMachineView::keyPressed(const KeyPress & e)
 		return true;
 	}
 
-	return BaseManagerShapeShifterViewUI::keyPressed(e);
+	return ManagerShapeShifterViewUI::keyPressed(e);
 }
 
 void StateMachineView::paint(Graphics & g)
 {
-	BaseManagerViewUI::paint(g);
+	ManagerViewUI::paint(g);
 
 	if (transitionCreationMode && transitionCreationSourceUI != nullptr)
 	{
@@ -104,7 +104,7 @@ void StateMachineView::paint(Graphics & g)
 
 void StateMachineView::resized()
 {
-	BaseManagerViewUI::resized();
+	ManagerViewUI::resized();
 
 	if (stmUI != nullptr)
 	{
@@ -122,13 +122,13 @@ void StateMachineView::resized()
 
 void StateMachineView::setViewZoom(float value)
 {
-	BaseManagerViewUI::setViewZoom(value);
+	ManagerViewUI::setViewZoom(value);
 	if(commentManagerUI != nullptr) commentManagerUI->setViewZoom(value);
 }
 
 void StateMachineView::updateItemsVisibility()
 {
-	BaseManagerViewUI::updateItemsVisibility();
+	ManagerViewUI::updateItemsVisibility();
 	if(commentManagerUI != nullptr) commentManagerUI->updateItemsVisibility();
 }
 
@@ -143,7 +143,7 @@ void StateMachineView::showMenuAndAddItem(bool fromAddButton, Point<int> positio
 
 	p.showMenuAsync(PopupMenu::Options(), [this, fromAddButton, position](int result)
 		{
-			if (result == 1)	BaseManagerViewUI::addItemFromMenu(fromAddButton, position);
+			if (result == 1)	ManagerViewUI::addItemFromMenu(fromAddButton, position);
 			else if (result == 2) commentManagerUI->addItemFromMenu(fromAddButton, position);
 			else if (result == 3) startCreateTransition(nullptr);
 			else if (result == 4) enableSnapping = !enableSnapping;
@@ -197,14 +197,14 @@ void StateMachineView::cancelCreateTransition()
 
 void StateMachineView::addItemUIInternal(StateViewUI * se)
 {
-	BaseManagerViewUI::addItemUIInternal(se);
+	ManagerViewUI::addItemUIInternal(se);
 	se->addStateViewUIListener(this);
 }
 
 
 void StateMachineView::removeItemUIInternal(StateViewUI * se)
 {
-	BaseManagerViewUI::removeItemUIInternal(se);
+	ManagerViewUI::removeItemUIInternal(se);
 	se->removeStateViewUIListener(this);
 }
 
@@ -228,5 +228,5 @@ void StateMachineView::itemDropped(const SourceDetails & details)
 		return;
 	}
 
-	BaseManagerViewUI::itemDropped(details);
+	ManagerViewUI::itemDropped(details);
 }

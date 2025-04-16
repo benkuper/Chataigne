@@ -16,7 +16,7 @@ ConversionFilter::ConversionFilter(var params, Multiplex* multiplex) :
 {
 	autoSetRange = false;
 
-	cpm.addBaseManagerListener(this);
+	cpm.addManagerListener(this);
 	addChildControllableContainer(&cpm);
 
 	while (filteredParameters.size() < getMultiplexCount()) filteredParameters.add(new OwnedArray<Parameter>());
@@ -31,7 +31,7 @@ void ConversionFilter::clearItem()
 {
 	DBG("Clear item, links size : " << links.size());
 	links.clear();
-	cpm.removeBaseManagerListener(this);
+	cpm.removeManagerListener(this);
 }
 
 void ConversionFilter::itemAdded(ConvertedParameter* cp)

@@ -11,7 +11,7 @@
 #pragma once
 
 class LoupedeckShapeManager :
-    public BaseManager<LoupedeckShape>
+    public Manager<LoupedeckShape>
 {
 public:
     LoupedeckShapeManager();

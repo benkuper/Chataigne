@@ -14,7 +14,7 @@ class Module;
 class CommandDefinitionManager;
 
 class CommandTemplateManager :
-	public BaseManager<CommandTemplate>,
+	public Manager<CommandTemplate>,
 	public CommandTemplate::TemplateListener
 {
 public:

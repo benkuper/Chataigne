@@ -50,7 +50,7 @@ AudioModule::AudioModule(const String& name) :
 	monitorVolume = monitorParams.addFloatParameter("Monitor Volume", "Volume multiplier for the monitor output. This will affect all the input channels and all the selected output channels", 1, 0, 10);
 
 	moduleParams.addChildControllableContainer(&analyzerManager);
-	analyzerManager.addBaseManagerListener(this);
+	analyzerManager.addManagerListener(this);
 
 
 	//LTC

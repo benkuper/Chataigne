@@ -13,7 +13,7 @@
 class StateMachineView;
 
 class StateTransitionManagerUI :
-	public BaseManagerUI<StateTransitionManager, StateTransition, StateTransitionUI>
+	public ManagerUI<StateTransitionManager, StateTransition, StateTransitionUI>
 {
 public :
 	StateTransitionManagerUI(StateMachineView * stateView, StateTransitionManager *);

@@ -12,7 +12,7 @@
 
 ConditionManager::ConditionManager(Multiplex* multiplex) :
 	MultiplexTarget(multiplex),
-	BaseManager<Condition>("Conditions"),
+	Manager<Condition>("Conditions"),
 	activateDef(nullptr),
 	deactivateDef(nullptr),
 	forceDisabled(false),

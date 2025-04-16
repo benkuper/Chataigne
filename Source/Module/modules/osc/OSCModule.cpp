@@ -55,8 +55,8 @@ OSCModule::OSCModule(const String& name, int defaultLocalPort, int defaultRemote
 	//Send
 	if (canHaveOutput)
 	{
-		outputManager.reset(new BaseManager<OSCOutput>("OSC Outputs"));
-		outputManager->addBaseManagerListener(this);
+		outputManager.reset(new Manager<OSCOutput>("OSC Outputs"));
+		outputManager->addManagerListener(this);
 
 		moduleParams.addChildControllableContainer(outputManager.get());
 

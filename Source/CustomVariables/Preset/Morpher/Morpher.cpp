@@ -28,7 +28,7 @@ Morpher::Morpher(CVPresetManager* presetManager) :
 	showInspectorOnSelect = false;
 
 	presetManager->addControllableContainerListener(this);
-	presetManager->addBaseManagerListener(this);
+	presetManager->addManagerListener(this);
 
 	presetManager->showInspectorOnSelect = false;
 
@@ -74,7 +74,7 @@ Morpher::~Morpher()
 		p->removeControllableContainerListener(this);
 	}
 
-	presetManager->removeBaseManagerListener(this);
+	presetManager->removeManagerListener(this);
 	presetManager->removeControllableContainerListener(this);
 
 	stopThread(100);

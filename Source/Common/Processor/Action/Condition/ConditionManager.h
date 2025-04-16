@@ -12,7 +12,7 @@
 
 class ConditionManager :
 	public MultiplexTarget,
-	public BaseManager<Condition>,
+	public Manager<Condition>,
 	public Condition::ConditionListener,
 	public MultiTimer
 {

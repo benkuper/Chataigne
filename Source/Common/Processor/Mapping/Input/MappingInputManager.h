@@ -11,7 +11,7 @@
 #pragma once
 
 class MappingInputManager :
-	public BaseManager<MappingInput>,
+	public Manager<MappingInput>,
 	public MultiplexTarget
 {
 public:

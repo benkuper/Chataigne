@@ -14,7 +14,7 @@ CustomVariablesModule::CustomVariablesModule(CVGroupManager* manager) :
 	Module("Custom Variables"),
 	manager(manager)
 {
-	manager->addBaseManagerListener(this);
+	manager->addManagerListener(this);
 
 	defManager->add(CommandDefinition::createDef(this, "", "Set Value", &GenericControllableCommand::create, CommandContext::BOTH)
 		->addParam("action", GenericControllableCommand::SET_VALUE)
@@ -41,7 +41,7 @@ CustomVariablesModule::CustomVariablesModule(CVGroupManager* manager) :
 
 CustomVariablesModule::~CustomVariablesModule()
 {
-	manager->removeBaseManagerListener(this);
+	manager->removeManagerListener(this);
 	clearItems();
 }
 
@@ -132,13 +132,13 @@ GenericControllableManagerLinkedContainer::GenericControllableManagerLinkedConta
 	keepValuesInSync(keepValuesInSync),
 	linkedComparator(manager)
 {
-	manager->addBaseManagerListener(this);
+	manager->addManagerListener(this);
 	resetAndBuildValues(keepValuesInSync);
 }
 
 GenericControllableManagerLinkedContainer::~GenericControllableManagerLinkedContainer()
 {
-	manager->removeBaseManagerListener(this);
+	manager->removeManagerListener(this);
 
 	HashMap<Parameter*, Parameter*>::Iterator i(linkMap);
 	while (i.next())

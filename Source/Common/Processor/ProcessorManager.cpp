@@ -9,7 +9,7 @@
 */
 
 ProcessorManager::ProcessorManager(const String& name, Multiplex* multiplex) :
-	BaseManager<Processor>(name),
+	Manager<Processor>(name),
 	forceDisabled(false)
 {
 	isSelectable = false;
@@ -146,7 +146,7 @@ void ProcessorManager::processAllMappings()
 
 void ProcessorManager::loadJSONDataInternal(var data)
 {
-	BaseManager::loadJSONDataInternal(data);
+	Manager::loadJSONDataInternal(data);
 	//setForceDisabled(forceDisabled, true);
 }
 

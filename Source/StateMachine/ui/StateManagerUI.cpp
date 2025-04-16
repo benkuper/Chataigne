@@ -9,7 +9,7 @@
 */
 
 StateManagerUI::StateManagerUI(const String &contentName, StateManager * _manager) :
-	BaseManagerShapeShifterUI<StateManager, State, StateUI>(contentName, _manager)
+	ManagerShapeShifterUI<StateManager, State, StateUI>(contentName, _manager)
 {
 	addItemText = "Add State";
 	noItemText = "Add interaction by creating a State";

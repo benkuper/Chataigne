@@ -52,7 +52,7 @@ Conductor::Conductor(var params, Multiplex* multiplex) :
 	processorManager.factory.defs.clear();
 	processorManager.factory.defs.add(MultiplexTargetDefinition<Processor>::createDef<ConductorCue>("", "Cue", multiplex));
 	processorManager.hideInEditor = true;
-	processorManager.addBaseManagerListener(this);
+	processorManager.addManagerListener(this);
 	addChildControllableContainer(&processorManager);
 
 

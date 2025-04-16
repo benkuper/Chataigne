@@ -12,7 +12,7 @@
 
 
 class MappingFilterManager :
-	public BaseManager<MappingFilter>,
+	public Manager<MappingFilter>,
 	public MultiplexTarget,
 	public MappingFilter::FilterListener
 {

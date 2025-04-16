@@ -10,7 +10,7 @@
 
 
 ConvertedParameterManager::ConvertedParameterManager() :
-	BaseManager("Converted Parameters")
+	Manager("Converted Parameters")
 {
 	managerFactory = &factory;
 	selectItemWhenCreated = false;

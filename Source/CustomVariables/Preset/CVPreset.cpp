@@ -106,13 +106,13 @@ PresetParameterContainer::PresetParameterContainer(const String& name, GenericCo
 {
 	saveAndLoadRecursiveData = true;
 
-	manager->addBaseManagerListener(this);
+	manager->addManagerListener(this);
 	if(!doNotBuildValues) resetAndBuildValues(keepValuesInSync);
 }
 
 PresetParameterContainer::~PresetParameterContainer()
 {
-	manager->removeBaseManagerListener(this);
+	manager->removeManagerListener(this);
 
 	HashMap<ParameterPreset*, Parameter*>::Iterator i(linkMap);
 	while (i.next())

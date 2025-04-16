@@ -90,7 +90,7 @@ void CommandTemplateManagerPanel::inspectableDestroyed(Inspectable* i)
 //ManagerUI
 
 CommandTemplateManagerUI::CommandTemplateManagerUI(CommandTemplateManager* manager, const String& moduleName) :
-	BaseManagerUI("Command Templates for " + moduleName, manager)
+	ManagerUI("Command Templates for " + moduleName, manager)
 {
 	drawContour = true;
 

@@ -16,7 +16,7 @@
 juce_ImplementSingleton(ModuleManager)
 
 ModuleManager::ModuleManager() :
-	BaseManager<Module>("Modules")
+	Manager<Module>("Modules")
 {
 	itemDataType = "Module";
 	helpID = "Modules";

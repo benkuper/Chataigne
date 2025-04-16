@@ -38,7 +38,7 @@ BaseCommandHandler::~BaseCommandHandler()
 void BaseCommandHandler::clearItem()
 {
 	BaseItem::clearItem();
-	if (ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->removeBaseManagerListener(this);
+	if (ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->removeManagerListener(this);
 	setCommand(nullptr);
 }
 
@@ -65,7 +65,7 @@ void BaseCommandHandler::setCommand(CommandDefinition* commandDef)
 
 			if (command->module->templateManager != nullptr && !command->module->isClearing)
 			{
-				command->module->templateManager->removeBaseManagerListener(this);
+				command->module->templateManager->removeManagerListener(this);
 			}
 
 		}
@@ -92,14 +92,14 @@ void BaseCommandHandler::setCommand(CommandDefinition* commandDef)
 
 		command->addCommandListener(this);
 		command->module->addInspectableListener(this);
-		command->module->templateManager->removeBaseManagerListener(this);
+		command->module->templateManager->removeManagerListener(this);
 
 		clearWarning();
 
 		registerLinkedInspectable(command->module);
 
 
-		if (ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->removeBaseManagerListener(this);
+		if (ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->removeManagerListener(this);
 	}
 	else if (ghostModuleName.isNotEmpty() && ghostCommandName.isNotEmpty())
 	{
@@ -171,7 +171,7 @@ void BaseCommandHandler::loadJSONDataInternal(var data)
 
 	if (command == nullptr && ghostModuleName.isNotEmpty() && ModuleManager::getInstanceWithoutCreating() != nullptr)
 	{
-		ModuleManager::getInstance()->addBaseManagerListener(this);
+		ModuleManager::getInstance()->addManagerListener(this);
 	}
 
 	if (command == nullptr && ghostCommandName.isNotEmpty())
@@ -198,8 +198,8 @@ void BaseCommandHandler::commandTemplateDestroyed()
 	{
 		ghostCommandData = command->getJSONData();
 		//DBG("Template destroyed, command data = "+JSON::toString(ghostCommandData));
-		if (command->module != nullptr && command->module->templateManager != nullptr) command->module->templateManager->addBaseManagerListener(this);
-		if (!Engine::mainEngine->isClearing && ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->addBaseManagerListener(this);
+		if (command->module != nullptr && command->module->templateManager != nullptr) command->module->templateManager->addManagerListener(this);
+		if (!Engine::mainEngine->isClearing && ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->addManagerListener(this);
 	}
 	setCommand(nullptr);
 }
@@ -214,7 +214,7 @@ void BaseCommandHandler::inspectableDestroyed(Inspectable*)
 {
 	if (command != nullptr) ghostCommandData = command->getJSONData();
 	setCommand(nullptr);
-	if (!isClearing && !Engine::mainEngine->isClearing && ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->addBaseManagerListener(this);
+	if (!isClearing && !Engine::mainEngine->isClearing && ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->addManagerListener(this);
 }
 
 void BaseCommandHandler::itemAdded(Module* m)

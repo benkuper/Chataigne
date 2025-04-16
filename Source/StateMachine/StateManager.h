@@ -19,7 +19,7 @@
 //class Processor;
 
 class StateManager :
-	public BaseManager<State>,
+	public Manager<State>,
 	public State::StateListener,
 	public StateTransitionManager::ManagerListener,
 	public EngineListener

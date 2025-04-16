@@ -9,7 +9,7 @@
 */
 
 CVPresetManager::CVPresetManager(CVGroup * group) :
-	BaseManager("Presets"),
+	Manager("Presets"),
 	group(group)
 {
 	selectItemWhenCreated = false;

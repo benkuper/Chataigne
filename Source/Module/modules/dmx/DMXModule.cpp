@@ -80,8 +80,8 @@ DMXModule::DMXModule() :
 	thruManager->customUserCreateControllableFunc = &DMXModule::createThruControllable;
 	moduleParams.addChildControllableContainer(thruManager.get());
 
-	inputUniverseManager.addBaseManagerListener(this);
-	outputUniverseManager.addBaseManagerListener(this);
+	inputUniverseManager.addManagerListener(this);
+	outputUniverseManager.addManagerListener(this);
 }
 
 DMXModule::~DMXModule()

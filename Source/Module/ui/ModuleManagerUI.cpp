@@ -10,7 +10,7 @@
 */
 
 ModuleManagerUI::ModuleManagerUI(const String &contentName, ModuleManager * _manager) :
-	BaseManagerShapeShifterUI<ModuleManager, Module, ModuleUI>(contentName, _manager)
+	ManagerShapeShifterUI<ModuleManager, Module, ModuleUI>(contentName, _manager)
 {
 	noItemText = "Start here by adding a module to connect to another software or a physical device.";
 
@@ -29,6 +29,6 @@ ModuleUI* ModuleManagerUI::createUIForItem(Module* item)
 
 void ModuleManagerUI::addItemFromMenu(Module* m, bool fromAddButton, Point<int> pos)
 {
-	BaseManagerShapeShifterUI::addItemFromMenu(m, fromAddButton, pos);
+	ManagerShapeShifterUI::addItemFromMenu(m, fromAddButton, pos);
 	m->setupFromManualCreation();
 }

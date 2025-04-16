@@ -13,7 +13,7 @@
 juce_ImplementSingleton(ConsequenceStaggerLauncher)
 
 ConsequenceManager::ConsequenceManager(const String& name, Multiplex* multiplex) :
-	BaseManager<BaseItem>(name),
+	Manager<BaseItem>(name),
 	MultiplexTarget(multiplex),
 	killDelaysOnTrigger(nullptr),
 	forceDisabled(false),
@@ -102,12 +102,12 @@ void ConsequenceManager::onContainerTriggerTriggered(Trigger* t)
 	//for manual trigger eventually
 	if (t == triggerPreview) triggerAll(getPreviewIndex());
 
-	BaseManager::onContainerTriggerTriggered(t);
+	Manager::onContainerTriggerTriggered(t);
 }
 
 void ConsequenceManager::onContainerParameterChanged(Parameter* p)
 {
-	BaseManager::onContainerParameterChanged(p);
+	Manager::onContainerParameterChanged(p);
 	if (p == delay || p == stagger)
 	{
 		updateKillDelayTrigger();

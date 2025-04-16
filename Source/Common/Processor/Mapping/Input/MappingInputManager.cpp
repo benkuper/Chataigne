@@ -11,7 +11,7 @@
 #include "Common/Processor/ProcessorIncludes.h"
 
 MappingInputManager::MappingInputManager(Multiplex* multiplex) :
-	BaseManager("Inputs"),
+	Manager("Inputs"),
 	MultiplexTarget(multiplex)
 {
 	factory.defs.add(MultiplexTargetDefinition<MappingInput>::createDef<StandardMappingInput>("", StandardMappingInput::getTypeStringStatic(false), multiplex));

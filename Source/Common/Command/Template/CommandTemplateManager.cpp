@@ -11,7 +11,7 @@
 #include "Common/CommonIncludes.h"
 
 CommandTemplateManager::CommandTemplateManager(Module* module) :
-	BaseManager("Templates"),
+	Manager("Templates"),
 	module(module)
 {
 	defManager.reset(new CommandDefinitionManager());
@@ -63,13 +63,13 @@ void CommandTemplateManager::setupDefinitionsFromModule()
 
 void CommandTemplateManager::setItemIndex(CommandTemplate* t, int newIndex, bool addToUndo)
 {
-	BaseManager::setItemIndex(t, newIndex, true);
+	Manager::setItemIndex(t, newIndex, true);
 	if (!addToUndo) reorderDefinitions();
 }
 
 void CommandTemplateManager::reorderItems()
 {
-	BaseManager::reorderItems();
+	Manager::reorderItems();
 	reorderDefinitions();
 }
 
@@ -97,5 +97,5 @@ void CommandTemplateManager::templateNameChanged(CommandTemplate* ct)
 
 void CommandTemplateManager::loadJSONDataManagerInternal(var data)
 {
-	BaseManager::loadJSONDataManagerInternal(data);
+	Manager::loadJSONDataManagerInternal(data);
 }

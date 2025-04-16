@@ -48,7 +48,7 @@ MQTTClientModule::MQTTClientModule(const String& name, bool canHaveInput, bool c
 
 	moduleParams.addChildControllableContainer(&topicsManager);
 	topicsManager.selectItemWhenCreated = false;
-	topicsManager.addBaseManagerListener(this);
+	topicsManager.addManagerListener(this);
 
 	includeValuesInSave = true;
 	valuesCC.saveAndLoadRecursiveData = true;
@@ -61,7 +61,7 @@ MQTTClientModule::MQTTClientModule(const String& name, bool canHaveInput, bool c
 
 MQTTClientModule::~MQTTClientModule()
 {
-	topicsManager.removeBaseManagerListener(this);
+	topicsManager.removeManagerListener(this);
 	stopClient();
 }
 

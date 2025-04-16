@@ -39,7 +39,7 @@ class MQTTClientModule :
 	, public mosqpp::mosquittopp
 #endif
 	, public Thread
-	, public BaseManager<MQTTTopic>::ManagerListener
+	, public Manager<MQTTTopic>::ManagerListener
 {
 public:
 	MQTTClientModule(const String& name = "MQTT Client", bool canHaveInput = true, bool canHaveOutput = true);
@@ -65,7 +65,7 @@ public:
 	HashMap<String, MQTTTopic*> topicItemMap;
 
 	SpinLock updateTopicLock;
-	BaseManager<MQTTTopic> topicsManager;
+	Manager<MQTTTopic> topicsManager;
 
 	
 

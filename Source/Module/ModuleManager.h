@@ -13,7 +13,7 @@
 class ModuleFactory;
 
 class ModuleManager :
-	public BaseManager<Module>
+	public Manager<Module>
 {
 public:
 	juce_DeclareSingleton(ModuleManager, true)

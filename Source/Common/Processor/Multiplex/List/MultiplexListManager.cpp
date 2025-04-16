@@ -11,7 +11,7 @@
 #include "Common/Processor/ProcessorIncludes.h"
 
 MultiplexListManager::MultiplexListManager(Multiplex* mp) :
-    BaseManager("Lists"),
+    Manager("Lists"),
     multiplex(mp)
 {
     factory.defs.add(Factory<BaseMultiplexList>::Definition::createDef<InputValueMultiplexList>("", InputValueMultiplexList::getTypeStringStatic()));

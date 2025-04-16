@@ -9,7 +9,7 @@
 */
 
 CVGroupManagerUI::CVGroupManagerUI(const String & contentName) :
-	BaseManagerShapeShifterUI(contentName, CVGroupManager::getInstance())
+	ManagerShapeShifterUI(contentName, CVGroupManager::getInstance())
 {
 	addItemText = "Add Custom Variable Group";
 	noItemText = "You can manage you own variables by first creating a group here.";

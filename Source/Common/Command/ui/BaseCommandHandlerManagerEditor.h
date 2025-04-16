@@ -17,7 +17,7 @@ class BaseCommandHandlerManagerEditor :
 	public GenericManagerEditor<T>
 {
 public:
-	BaseCommandHandlerManagerEditor(BaseManager<T>* manager, CommandContext context, bool isRoot, bool multiplexMode) :
+	BaseCommandHandlerManagerEditor(Manager<T>* manager, CommandContext context, bool isRoot, bool multiplexMode) :
 		GenericManagerEditor<T>(manager, isRoot),
 		context(context),
 		multiplexMode(multiplexMode)

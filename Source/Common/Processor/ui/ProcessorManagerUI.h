@@ -11,7 +11,7 @@
 #pragma once
 
 class ProcessorManagerUI :
-	public BaseManagerUI<ProcessorManager, Processor, ProcessorUI>
+	public ManagerUI<ProcessorManager, Processor, ProcessorUI>
 {
 public:
 

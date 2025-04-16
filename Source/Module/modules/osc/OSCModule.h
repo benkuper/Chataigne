@@ -60,7 +60,7 @@ class OSCModule :
 	public IOSCSenderModule,
 	public OSCReceiver::Listener<OSCReceiver::RealtimeCallback>,
 	public Thread, //for zeroconf async creation (smoother when creating an OSC module)
-	public BaseManager<OSCOutput>::ManagerListener
+	public Manager<OSCOutput>::ManagerListener
 { 
 public:
 	OSCModule(const String &name = "OSC", int defaultLocalPort = 12000, int defaultRemotePort = 9000, bool canHaveInput = true, bool canHaveOutput = true);
@@ -80,7 +80,7 @@ public:
 	Servus servus;
 
 	std::unique_ptr<EnablingControllableContainer> receiveCC;
-	std::unique_ptr<BaseManager<OSCOutput>> outputManager;
+	std::unique_ptr<Manager<OSCOutput>> outputManager;
 	std::unique_ptr<ControllableContainer> thruManager;
 
 	//Script

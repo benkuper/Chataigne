@@ -11,7 +11,7 @@
 #pragma once
 
 class ModuleRouterManager :
-	public BaseManager<ModuleRouter>
+	public Manager<ModuleRouter>
 {
 public:
 	juce_DeclareSingleton(ModuleRouterManager, true)

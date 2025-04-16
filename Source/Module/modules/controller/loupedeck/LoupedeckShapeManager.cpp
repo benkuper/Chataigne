@@ -9,7 +9,7 @@
 */
 
 LoupedeckShapeManager::LoupedeckShapeManager() :
-    BaseManager("Custom Shapes")
+    Manager("Custom Shapes")
 {
     selectItemWhenCreated = false;
 }

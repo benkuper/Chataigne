@@ -163,7 +163,7 @@ void BaseCommand::setUseCustomValues(bool value)
 		if (customValuesManager == nullptr)
 		{
 			customValuesManager.reset(new CustomValuesCommandArgumentManager("Arguments", context == MAPPING, false, multiplex));
-			customValuesManager->addBaseManagerListener(this);
+			customValuesManager->addManagerListener(this);
 			addChildControllableContainer(customValuesManager.get());
 		}
 
@@ -173,7 +173,7 @@ void BaseCommand::setUseCustomValues(bool value)
 		if (customValuesManager != nullptr)
 		{
 			removeChildControllableContainer(customValuesManager.get());
-			customValuesManager->removeBaseManagerListener(this);
+			customValuesManager->removeManagerListener(this);
 			customValuesManager.reset();
 		}
 	}

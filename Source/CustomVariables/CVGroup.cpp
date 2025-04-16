@@ -52,7 +52,7 @@ Voronoi and Gradient Band (not implemented yet) also locks values but interpolat
 	defaultInterpolation.editorCanBeCollapsed = true;
 	addChildControllableContainer(&defaultInterpolation);
 
-	values.addBaseManagerListener(this);
+	values.addManagerListener(this);
 }
 
 CVGroup::~CVGroup()

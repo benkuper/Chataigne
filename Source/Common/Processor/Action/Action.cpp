@@ -44,7 +44,7 @@ Action::Action(const String& name, var params, Multiplex* multiplex, bool hasCon
 		bool hasActivationDefs = params.getProperty("hasActivationDefinitions", true);
 		cdm->setHasActivationDefinitions(hasActivationDefs, hasActivationDefs);
 		cdm->addConditionManagerListener(this);
-		cdm->addBaseManagerListener(this);
+		cdm->addManagerListener(this);
 		addChildControllableContainer(cdm.get());
 	}
 

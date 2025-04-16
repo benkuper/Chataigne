@@ -12,7 +12,7 @@
 
 
 class StateManagerUI :
-	public BaseManagerShapeShifterUI<StateManager, State, StateUI>
+	public ManagerShapeShifterUI<StateManager, State, StateUI>
 {
 public:
 	StateManagerUI(const String &contentName, StateManager *_manager);

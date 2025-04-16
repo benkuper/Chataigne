@@ -11,7 +11,7 @@
 #include "Common/Processor/ProcessorIncludes.h"
 
 MappingFilterManager::MappingFilterManager(Multiplex* multiplex) :
-	BaseManager<MappingFilter>("Filters"),
+	Manager<MappingFilter>("Filters"),
 	MultiplexTarget(multiplex),
 	isRebuilding(false),
 	needsRebuild(false)
@@ -188,14 +188,14 @@ void MappingFilterManager::removeItemInternal(MappingFilter* f)
 void MappingFilterManager::setItemIndex(MappingFilter* item, int index, bool addToUndo)
 {
 	needsRebuild = true; 
-	BaseManager::setItemIndex(item, index);
+	Manager::setItemIndex(item, index);
 	if (!addToUndo) notifyNeedsRebuild();
 }
 
 void MappingFilterManager::reorderItems()
 {
 	needsRebuild = true;
-	BaseManager::reorderItems();
+	Manager::reorderItems();
 	notifyNeedsRebuild();
 }
 
@@ -226,6 +226,6 @@ void MappingFilterManager::filteredParamRangeChanged(MappingFilter* mf)
 
 void MappingFilterManager::loadJSONDataManagerInternal(var data)
 {
-	BaseManager::loadJSONDataManagerInternal(data);
+	Manager::loadJSONDataManagerInternal(data);
 	notifyNeedsRebuild();
 }

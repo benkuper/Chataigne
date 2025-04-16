@@ -48,7 +48,7 @@ public:
 };
 
 class ConsequenceManager :
-	public BaseManager<BaseItem>,
+	public Manager<BaseItem>,
 	public MultiplexTarget,
 	public Consequence::ConsequenceListener
 {

@@ -13,7 +13,7 @@
 class Multiplex;
 
 class MultiplexListManager :
-    public BaseManager<BaseMultiplexList>
+    public Manager<BaseMultiplexList>
 {
 public:
     MultiplexListManager(Multiplex* multiplex);

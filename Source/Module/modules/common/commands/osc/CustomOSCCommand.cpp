@@ -128,14 +128,14 @@ void CustomOSCCommand::onContainerParameterChanged(Parameter* p)
 			{
 				wildcardsContainer.reset(new CustomValuesCommandArgumentManager("Address Wildcards", context == MAPPING, linkedTemplate != nullptr, multiplex));
 				addChildControllableContainer(wildcardsContainer.get());
-				wildcardsContainer->addBaseManagerListener(this);
+				wildcardsContainer->addManagerListener(this);
 			}
 		}
 		else
 		{
 			if (wildcardsContainer != nullptr)
 			{
-				wildcardsContainer->removeBaseManagerListener(this);
+				wildcardsContainer->removeManagerListener(this);
 				removeChildControllableContainer(wildcardsContainer.get());;
 				wildcardsContainer.reset();
 			}

@@ -11,7 +11,7 @@
 #pragma once
 
 class CVGroupManagerUI :
-	public BaseManagerShapeShifterUI<BaseManager<CVGroup>, CVGroup, CVGroupUI>
+	public ManagerShapeShifterUI<Manager<CVGroup>, CVGroup, CVGroupUI>
 {
 public:
 	CVGroupManagerUI(const String &contentName);

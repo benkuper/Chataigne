@@ -13,7 +13,7 @@
 class CVGroup;
 
 class CVPresetManager :
-	public BaseManager<CVPreset>
+	public Manager<CVPreset>
 {
 public:
 	CVPresetManager(CVGroup * group);

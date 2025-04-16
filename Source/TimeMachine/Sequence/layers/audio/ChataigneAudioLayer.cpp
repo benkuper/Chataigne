@@ -17,7 +17,7 @@ ChataigneAudioLayer::ChataigneAudioLayer(ChataigneSequence* _sequence, var param
 	timeAtStartRecord(0),
 	arm(nullptr)
 {
-	ModuleManager::getInstance()->addBaseManagerListener(this);
+	ModuleManager::getInstance()->addManagerListener(this);
 
 	helpID = "AudioLayer";
 
@@ -36,7 +36,7 @@ ChataigneAudioLayer::~ChataigneAudioLayer()
 void ChataigneAudioLayer::clearItem()
 {
 	AudioLayer::clearItem();
-	if (ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->removeBaseManagerListener(this);
+	if (ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->removeManagerListener(this);
 	setAudioModule(nullptr);
 }
 

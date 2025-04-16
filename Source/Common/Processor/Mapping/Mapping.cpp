@@ -54,7 +54,7 @@ Mapping::Mapping(var params, Multiplex* multiplex, bool canBeDisabled) :
 	addChildControllableContainer(&outValuesCC);
 
 	fm.addFilterManagerListener(this);
-	im.addBaseManagerListener(this);
+	im.addManagerListener(this);
 
 	itemColor->setDefaultValue(MAPPING_COLOR);
 
@@ -477,7 +477,7 @@ void Mapping::clearItem()
 	Processor::clearItem();
 
 	fm.removeFilterManagerListener(this);
-	im.removeBaseManagerListener(this);
+	im.removeManagerListener(this);
 	im.clear();
 }
 
