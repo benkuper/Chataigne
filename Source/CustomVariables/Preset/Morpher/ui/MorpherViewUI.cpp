@@ -176,7 +176,7 @@ void MorpherViewUI::paintBackground(Graphics& g)
 
 	case Morpher::VORONOI:
 	{
-		if (morpher->diagram == nullptr || manager->items.size() == 0) break;
+		if (morpher->diagram == nullptr || manager->getNumItems() == 0) break;
 
 		GenericScopedLock lock(morpher->voronoiLock);
 

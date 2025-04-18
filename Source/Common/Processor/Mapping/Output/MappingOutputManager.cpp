@@ -27,7 +27,7 @@ MappingOutputManager::~MappingOutputManager()
 
 void MappingOutputManager::clear()
 {
-	for (auto& o : items) o->removeCommandHandlerListener(this);
+	callFunctionOnItems([&](auto i) { i->removeCommandHandlerListener(this); });
 	Manager::clear();
 }
 
@@ -41,14 +41,14 @@ MappingOutput* MappingOutputManager::createItem()
 void MappingOutputManager::setForceDisabled(bool value)
 {
 	forceDisabled = value;
-	for (auto& i : items) i->forceDisabled = value;
+	callFunctionOnItems([&](auto i) { i->forceDisabled = value; });
 }
 
 void MappingOutputManager::setOutParams(Array<Parameter *> params, int multiplexIndex)
 {
 	outParams.ensureStorageAllocated(multiplexIndex + 1);
 	outParams.set(multiplexIndex, Array<WeakReference<Parameter>>(params.getRawDataPointer(), params.size()));
-	if(outParams.size() > 0) for (auto &o : items) o->setOutParams(outParams[multiplexIndex], multiplexIndex); //better than this ? should handle all ?
+	if (outParams.size() > 0) callFunctionOnItems([&](auto i) { i->setOutParams(outParams[multiplexIndex], multiplexIndex); }); //better than this ? should handle all ?
 
 	prevMergedValue.ensureStorageAllocated(multiplexIndex+1);
 	prevMergedValue.set(multiplexIndex, getMergedOutValue(multiplexIndex));
@@ -63,7 +63,7 @@ void MappingOutputManager::updateOutputValues(int multiplexIndex, bool sendOnOut
 	if (value.isVoid()) return; //possible if parameters have been deleted in another thread during process
 	if (sendOnOutputChangedOnly && value == prevMergedValue[multiplexIndex]) return;
 
-	for (auto& i : items) i->setValue(value, multiplexIndex);
+	callFunctionOnItems([&](auto i) { i->setValue(value, multiplexIndex); });
 	prevMergedValue.set(multiplexIndex, value);
 }
 
@@ -116,16 +116,16 @@ void MappingOutputManager::removeItemInternal(MappingOutput * o)
 
 void MappingOutputManager::commandChanged(BaseCommandHandler * h)
 {
-	for (auto& o : items) o->updateCommandOutParams();
+	callFunctionOnItems([&](auto i) { i->updateCommandOutParams(); });
 	for (int i = 0; i < getMultiplexCount(); i++)
 	{
-		updateOutputValue(dynamic_cast<MappingOutput *>(h), i);
+		updateOutputValue(dynamic_cast<MappingOutput*>(h), i);
 	}
 }
 
-void MappingOutputManager::commandUpdated(BaseCommandHandler * h)
+void MappingOutputManager::commandUpdated(BaseCommandHandler* h)
 {
-	for (auto& o : items) o->updateCommandOutParams();
+	callFunctionOnItems([&](auto i) { i->updateCommandOutParams(); });
 	for (int i = 0; i < getMultiplexCount(); i++) updateOutputValue(dynamic_cast<MappingOutput *>(h), i);
 }
 

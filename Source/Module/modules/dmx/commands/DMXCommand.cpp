@@ -31,7 +31,7 @@ DMXCommand::DMXCommand(DMXModule* _module, CommandContext context, var params, M
 	dmxUniverse->maxDefaultSearchLevel = 0;
 	dmxUniverse->showParentNameInEditor = false;
 
-	if (dmxModule->outputUniverseManager.items.size() > 0) dmxUniverse->setValueFromTarget(dmxModule->outputUniverseManager.items[0]);
+	if (dmxModule->outputUniverseManager.hasItems()) dmxUniverse->setValueFromTarget(dmxModule->outputUniverseManager.getFirstItem());
 
 	if (dmxAction == SET_VALUE_16BIT || dmxAction == COLOR_16BIT)
 	{
@@ -173,10 +173,11 @@ void DMXCommand::triggerInternal(int multiplexIndex)
 	case SET_CUSTOM:
 	{
 		Array<uint8> values;
-		for (auto& i : customValuesManager->items)
+		customValuesManager->callFunctionOnItems([&] (auto i)
 		{
 			values.add((uint8)(int)i->getLinkedValue(multiplexIndex));
-		}
+		});
+
 		dmxModule->sendDMXRange(u, getLinkedValue(channel, multiplexIndex), values);
 	}
 	break;

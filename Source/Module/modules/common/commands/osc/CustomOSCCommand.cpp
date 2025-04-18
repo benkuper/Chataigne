@@ -51,36 +51,37 @@ void CustomOSCCommand::triggerInternal(int multiplexIndex)
 	{
 		OSCMessage m(addrString);
 
-		for (auto& a : customValuesManager->items)
-		{
-			Parameter* p = a->param;
-			var pVal = a->getLinkedValue(multiplexIndex);
-
-			if (p == nullptr) continue;
-			switch (p->type)
+		customValuesManager->callFunctionOnItems([&](auto a)
 			{
-			case Controllable::BOOL: OSCHelpers::addBoolArgumentToMessage(m, pVal, oscModule->getBoolMode()); break;
-			case Controllable::INT: m.addInt32((int)pVal); break;
-			case Controllable::FLOAT: m.addFloat32((float)pVal); break;
-			case Controllable::STRING: m.addString(pVal.toString()); break;
-			case Controllable::COLOR: OSCHelpers::addColorArgumentToMessage(m, Colour::fromFloatRGBA(pVal[0], pVal[1], pVal[2], pVal[3]), oscModule->getColorMode()); break;
+				Parameter* p = a->param;
+				var pVal = a->getLinkedValue(multiplexIndex);
 
-			case Controllable::POINT2D:
-				m.addFloat32(pVal[0]);
-				m.addFloat32(pVal[1]);
-				break;
-			case Controllable::POINT3D:
-				m.addFloat32(pVal[0]);
-				m.addFloat32(pVal[1]);
-				m.addFloat32(pVal[2]);
-				break;
+				if (p == nullptr) return;
+				switch (p->type)
+				{
+				case Controllable::BOOL: OSCHelpers::addBoolArgumentToMessage(m, pVal, oscModule->getBoolMode()); break;
+				case Controllable::INT: m.addInt32((int)pVal); break;
+				case Controllable::FLOAT: m.addFloat32((float)pVal); break;
+				case Controllable::STRING: m.addString(pVal.toString()); break;
+				case Controllable::COLOR: OSCHelpers::addColorArgumentToMessage(m, Colour::fromFloatRGBA(pVal[0], pVal[1], pVal[2], pVal[3]), oscModule->getColorMode()); break;
 
-			default:
-				//not handle
-				break;
+				case Controllable::POINT2D:
+					m.addFloat32(pVal[0]);
+					m.addFloat32(pVal[1]);
+					break;
+				case Controllable::POINT3D:
+					m.addFloat32(pVal[0]);
+					m.addFloat32(pVal[1]);
+					m.addFloat32(pVal[2]);
+					break;
 
-			}
-		}
+				default:
+					//not handle
+					break;
+
+				}
+			});
+
 		oscModule->sendOSC(m);
 	}
 	catch (const OSCFormatError&)
@@ -172,7 +173,10 @@ void CustomOSCCommand::updateMappingInputValue(var value, int multiplexIndex)
 	OSCCommand::updateMappingInputValue(value, multiplexIndex);
 	if (wildcardsContainer != nullptr)
 	{
-		for (auto& a : wildcardsContainer->items) a->paramLink->updateMappingInputValue(value, multiplexIndex);
+		wildcardsContainer->callFunctionOnItems([&](auto i)
+			{
+				i->paramLink->updateMappingInputValue(value, multiplexIndex);
+			});
 	}
 }
 

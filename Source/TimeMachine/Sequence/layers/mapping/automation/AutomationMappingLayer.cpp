@@ -63,7 +63,7 @@ void AutomationMappingLayer::updateMappingInputValueInternal()
 
 void AutomationMappingLayer::selectAll(bool addToSelection)
 {
-	deselectThis(automation->items.size() == 0);
+	deselectThis(automation->getNumItems() == 0);
 	automation->askForSelectAllItems(addToSelection);
 }
 
@@ -93,18 +93,14 @@ Array<UndoableAction*> AutomationMappingLayer::getRemoveTimespanInternal(float s
 void AutomationMappingLayer::getSnapTimes(Array<float>* arrayToFill)
 {
 	if (automation == nullptr) return;
-	for (auto& i : automation->items)
-	{
-		arrayToFill->addIfNotAlreadyThere(i->position->floatValue());
-	}
+	automation->callFunctionOnItems([&](auto i) { arrayToFill->addIfNotAlreadyThere(i->position->floatValue()); });
 }
 
 void AutomationMappingLayer::getSequenceSnapTimesForAutomation(Array<float>* arrayToFill, AutomationKey* k)
 {
-	int index = automation->items.indexOf(k);
 
-	AutomationKey* k1 = index > 0 ? automation->items[index - 1] : nullptr;
-	AutomationKey* k2 = index < automation->items.size() - 1 ? automation->items[index + 1] : nullptr;
+	AutomationKey* k1 = automation->getItemBefore(k);
+	AutomationKey* k2 = automation->getItemAfter(k);
 
 	float t1 = k1 != nullptr ? k1->position->floatValue() : 0;
 	float t2 = k2 != nullptr ? k2->position->floatValue() : sequence->totalTime->floatValue();

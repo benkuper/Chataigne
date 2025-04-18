@@ -413,10 +413,10 @@ void CVPresetMultiplexList::updateItemList(EnumParameter* p)
 
 	if (CVGroup* group = dynamic_cast<CVGroup*>(cvTarget->targetContainer.get()))
 	{
-		for (auto& preset : group->pm->items)
-		{
-			p->addOption(preset->niceName, preset->shortName);
-		}
+		group->pm->callFunctionOnItems([&](auto preset)
+			{
+				p->addOption(preset->niceName, preset->shortName);
+			});
 	}
 }
 

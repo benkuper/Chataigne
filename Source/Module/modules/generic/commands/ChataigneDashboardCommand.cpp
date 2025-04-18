@@ -52,9 +52,9 @@ void ChataigneDashboardCommand::triggerInternal(int multiplexIndex)
 	case SELECT_DASHBOARD_INDEX:
 	{
 		int index = (int)getLinkedValue(target, multiplexIndex);
-		if (index >= 0 && index < DashboardManager::getInstance()->items.size())
+		if (index >= 0 && index < DashboardManager::getInstance()->getNumItems())
 		{
-			Dashboard* d = DashboardManager::getInstance()->items[index];
+			Dashboard* d = DashboardManager::getInstance()->getItemAt(index);
 			DashboardManager::getInstance()->setCurrentDashboard(d, setInClients->boolValue(), true);
 
 		}

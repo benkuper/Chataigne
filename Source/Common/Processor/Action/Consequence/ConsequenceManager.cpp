@@ -55,15 +55,15 @@ void ConsequenceManager::triggerAll(int multiplexIndex)
 {
 	if (killDelaysOnTrigger->boolValue()) cancelDelayedConsequences(multiplexIndex);
 
-	if (items.size() > 0)
+	if (getNumItems() > 0)
 	{
 		if (delay->floatValue() == 0 && stagger->floatValue() == 0)
 		{
-			for (auto& bi : items)
-			{
-				if (Consequence* c = dynamic_cast<Consequence*>(bi)) c->triggerCommand(multiplexIndex);
-				else if (ConsequenceGroup* g = dynamic_cast<ConsequenceGroup*>(bi))  if (g->enabled->boolValue()) g->csm.triggerAll(multiplexIndex);
-			}
+			callFunctionOnItems([&](auto bi)
+				{
+					if (Consequence* c = dynamic_cast<Consequence*>(bi)) c->triggerCommand(multiplexIndex);
+					else if (ConsequenceGroup* g = dynamic_cast<ConsequenceGroup*>(bi))  if (g->enabled->boolValue()) g->csm.triggerAll(multiplexIndex);
+				});
 		}
 		else
 		{
@@ -81,16 +81,16 @@ void ConsequenceManager::setForceDisabled(bool value, bool force)
 {
 	if (forceDisabled == value && !force) return;
 	forceDisabled = value;
-	for (auto& i : items)
-	{
-		if (Consequence* c = dynamic_cast<Consequence*>(i)) c->forceDisabled = value;
-		else if (ConsequenceGroup* g = dynamic_cast<ConsequenceGroup*>(i)) g->csm.setForceDisabled(value);
-	}
+	callFunctionOnItems([&](auto i)
+		{
+			if (Consequence* c = dynamic_cast<Consequence*>(i)) c->forceDisabled = value;
+			else if (ConsequenceGroup* g = dynamic_cast<ConsequenceGroup*>(i)) g->csm.setForceDisabled(value);
+		});
 }
 
 void ConsequenceManager::updateKillDelayTrigger()
 {
-	bool showKill = items.size() > 1 && (delay->floatValue() > 0 || stagger->floatValue() > 0);
+	bool showKill = getNumItems() > 1 && (delay->floatValue() > 0 || stagger->floatValue() > 0);
 	killDelaysOnTrigger->setEnabled(showKill);
 
 }
@@ -119,9 +119,9 @@ void ConsequenceManager::addItemInternal(BaseItem* bi, var data)
 	if (Consequence* c = dynamic_cast<Consequence*>(bi)) c->forceDisabled = forceDisabled;
 	else if (ConsequenceGroup* g = dynamic_cast<ConsequenceGroup*>(bi)) g->csm.setForceDisabled(forceDisabled);
 
-	//triggerAll->hideInEditor = items.size() == 0;
-	delay->hideInEditor = items.size() == 0;
-	stagger->hideInEditor = items.size() < 2;
+	//triggerAll->hideInEditor = getNumItems() == 0;
+	delay->hideInEditor = getNumItems() == 0;
+	stagger->hideInEditor = getNumItems() < 2;
 	if (!isClearing) csmNotifier.addMessage(new ConsequenceManagerEvent(ConsequenceManagerEvent::STAGGER_CHANGED, this));
 	updateKillDelayTrigger();
 }
@@ -134,33 +134,33 @@ void ConsequenceManager::addItemsInternal(Array<BaseItem*> items, var data)
 		else if (ConsequenceGroup* g = dynamic_cast<ConsequenceGroup*>(bi)) g->csm.setForceDisabled(forceDisabled);
 	}
 
-	//triggerAll->hideInEditor = items.size() == 0;
-	delay->hideInEditor = items.size() == 0;
-	stagger->hideInEditor = items.size() < 2;
+	//triggerAll->hideInEditor = getNumItems() == 0;
+	delay->hideInEditor = getNumItems() == 0;
+	stagger->hideInEditor = getNumItems() < 2;
 	if (!isClearing) csmNotifier.addMessage(new ConsequenceManagerEvent(ConsequenceManagerEvent::STAGGER_CHANGED, this));
 	updateKillDelayTrigger();
 }
 
 void ConsequenceManager::removeItemInternal(BaseItem*)
 {
-	//triggerAll->hideInEditor = items.size() == 0;
-	delay->hideInEditor = items.size() == 0;
-	stagger->hideInEditor = items.size() < 2;
+	//triggerAll->hideInEditor = getNumItems() == 0;
+	delay->hideInEditor = getNumItems() == 0;
+	stagger->hideInEditor = getNumItems() < 2;
 	if (!isClearing) csmNotifier.addMessage(new ConsequenceManagerEvent(ConsequenceManagerEvent::STAGGER_CHANGED, this));
 	updateKillDelayTrigger();
 }
 
 void ConsequenceManager::removeItemsInternal(Array<BaseItem*>)
 {
-	delay->hideInEditor = items.size() == 0;
-	stagger->hideInEditor = items.size() < 2;
+	delay->hideInEditor = getNumItems() == 0;
+	stagger->hideInEditor = getNumItems() < 2;
 	if (!isClearing) csmNotifier.addMessage(new ConsequenceManagerEvent(ConsequenceManagerEvent::STAGGER_CHANGED, this));
 	updateKillDelayTrigger();
 }
 
 void ConsequenceManager::launcherTriggered(int multiplexIndex, int triggerIndex)
 {
-	staggerProgression->setValue((triggerIndex + 1) * 1.0f / items.size());
+	staggerProgression->setValue((triggerIndex + 1) * 1.0f / getNumItems());
 }
 
 
@@ -219,12 +219,12 @@ void ConsequenceStaggerLauncher::processLaunch(Launch* l)
 	uint32 s = (uint32)(csm->stagger->floatValue() * 1000);
 
 	//check if last item
-	if (l->triggerIndex >= csm->items.size()) return;
+	if (l->triggerIndex >= csm->getNumItems()) return;
 
 
 	//get relative trigger index, not taking into account disabled items
 	int relativeIndex = 0;
-	for (int i = 0; i < l->triggerIndex; i++) if (csm->items[i]->enabled->boolValue()) relativeIndex++;
+	for (int i = 0; i < l->triggerIndex; i++) if (csm->getItemAt(i)->enabled->boolValue()) relativeIndex++;
 
 	//Check if should trigger
 	uint32 curTime = Time::getMillisecondCounter();
@@ -234,13 +234,14 @@ void ConsequenceStaggerLauncher::processLaunch(Launch* l)
 
 	//Get first enabled item starting at index
 	{
-		GenericScopedLock lock(csm->items.getLock());
-		BaseItem* bi = csm->items[l->triggerIndex];
+		// GROUP REFACTOR : commented out the lock, is it needed ?
+		//GenericScopedLock lock(csm->items.getLock()); //should have a way to ask for a lock, or maybe not ?
+		BaseItem* bi = csm->getItemAt(l->triggerIndex);
 		while (bi->enabled->boolValue() == false)
 		{
 			l->triggerIndex++;
-			if (l->triggerIndex >= csm->items.size()) return;
-			bi = csm->items[l->triggerIndex];
+			if (l->triggerIndex >= csm->getNumItems()) return;
+			bi = csm->getItemAt(l->triggerIndex);
 		}
 
 
@@ -276,5 +277,5 @@ void ConsequenceManager::multiplexPreviewIndexChanged()
 }
 
 bool ConsequenceStaggerLauncher::Launch::isFinished() {
-	return triggerIndex >= manager->items.size();
+	return triggerIndex >= manager->getNumItems();
 }

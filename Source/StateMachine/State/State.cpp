@@ -76,15 +76,15 @@ void State::handleActiveChanged()
 			t->forceCheck(false); //force setting the valid state even if listeners will trigger it after (avoir listener-order bugs)
 
 			//check for onActivate in transitions
-			for (auto& c : t->cdm->items)
-			{
-				ActivationCondition* ac = dynamic_cast<ActivationCondition*>(c);
-				if (ac != nullptr)
+			t->cdm->callFunctionOnItems([&](auto c)
 				{
-					bool valid = ac->type == ActivationCondition::Type::ON_ACTIVATE && !ac->forceDisabled;
-					for (int i = 0; i < ac->getMultiplexCount(); i++) ac->setValid(i, valid, false);
-				}
-			}
+					ActivationCondition* ac = dynamic_cast<ActivationCondition*>(c);
+					if (ac != nullptr)
+					{
+						bool valid = ac->type == ActivationCondition::Type::ON_ACTIVATE && !ac->forceDisabled;
+						for (int i = 0; i < ac->getMultiplexCount(); i++) ac->setValid(i, valid, false);
+					}
+				});
 
 			if (checkTransitionsOnActivate->boolValue())
 			{
@@ -100,14 +100,14 @@ void State::handleActiveChanged()
 	{
 		for (auto& t : outTransitions)
 		{
-			for (auto& c : t->cdm->items)
-			{
-				ActivationCondition* ac = dynamic_cast<ActivationCondition*>(c);
-				if (ac != nullptr)
+			t->cdm->callFunctionOnItems([&](auto c)
 				{
-					for (int i = 0; i < ac->getMultiplexCount(); i++) ac->setValid(i, false, false);
-				}
-			}
+					ActivationCondition* ac = dynamic_cast<ActivationCondition*>(c);
+					if (ac != nullptr)
+					{
+						for (int i = 0; i < ac->getMultiplexCount(); i++) ac->setValid(i, false, false);
+					}
+				});
 		}
 
 		pm->checkAllDeactivateActions();
@@ -177,6 +177,6 @@ bool State::paste()
 
 void State::selectAll(bool addToSelection)
 {
-	deselectThis(pm->items.size() == 0);
+	deselectThis(pm->getNumItems() == 0);
 	pm->askForSelectAllItems(addToSelection);
 }

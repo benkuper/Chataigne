@@ -80,9 +80,17 @@ Array<UndoableAction*> StateTransitionManager::getRemoveAllLinkedTransitionsActi
 
 StateTransition* StateTransitionManager::getItemForSourceAndDest(State* source, State* dest)
 {
-	for (auto& st : items)
-	{
-		if (st->sourceState == source && st->destState == dest) return st;
-	}
-	return nullptr;
+	StateTransition* result = nullptr;
+	callStoppingFunctionOnItems([&](auto st)
+		{
+			if (st->sourceState == source && st->destState == dest)
+			{
+				result = st;
+				return false;
+			}
+
+			return true;
+		});
+
+	return result;
 }

@@ -27,11 +27,11 @@ CVGroupManager::~CVGroupManager()
 void CVGroupManager::showMenuAndGetContainer(ControllableContainer* startFromCC, std::function<void(ControllableContainer*)> returnFunc)
 {
 	PopupMenu menu;
-	int numItems = CVGroupManager::getInstance()->items.size();
+	int numItems = CVGroupManager::getInstance()->getNumItems();
 
 	for (int i = 0; i < numItems; ++i)
 	{
-		CVGroup* g = CVGroupManager::getInstance()->items[i];
+		CVGroup* g = CVGroupManager::getInstance()->getItemAt(i);
 		menu.addItem(i + 1, g->niceName);
 	}
 
@@ -39,7 +39,7 @@ void CVGroupManager::showMenuAndGetContainer(ControllableContainer* startFromCC,
 		{
 			if (result > 0)
 			{
-				returnFunc(CVGroupManager::getInstance()->items[result - 1]);
+				returnFunc(CVGroupManager::getInstance()->getItemAt(result - 1));
 			}
 		}
 	);
@@ -54,11 +54,11 @@ void CVGroupManager::showMenuAndGetVariable(const StringArray& typeFilters, cons
 	auto getMenuForGroup = [&controllableRefs](CVGroup* g)
 	{
 		PopupMenu sMenu;
-		int numVariables = g->values.items.size();
+		int numVariables = g->values.getNumItems();
 		for (int j = 0; j < numVariables; j++)
 		{
-			controllableRefs.add(g->values.items[j]->controllable);
-			sMenu.addItem(controllableRefs.size(), g->values.items[j]->controllable->niceName);
+			controllableRefs.add(g->values.getItemAt(j)->controllable);
+			sMenu.addItem(controllableRefs.size(), g->values.getItemAt(j)->controllable->niceName);
 		}
 
 		return sMenu;
@@ -66,7 +66,7 @@ void CVGroupManager::showMenuAndGetVariable(const StringArray& typeFilters, cons
 
 
 	if (CVGroup* g = dynamic_cast<CVGroup*>(startFromCC)) menu = getMenuForGroup(g);
-	else for (auto& g : CVGroupManager::getInstance()->items) menu.addSubMenu(g->niceName, getMenuForGroup(g));
+	else CVGroupManager::getInstance()->callFunctionOnItems([&](auto g) { menu.addSubMenu(g->niceName, getMenuForGroup(g)); });
 
 	menu.showMenuAsync(PopupMenu::Options(), [returnFunc, controllableRefs](int result)
 		{
@@ -86,11 +86,11 @@ void CVGroupManager::showMenuAndGetPreset(ControllableContainer* startFromCC, st
 	auto getMenuForGroup = [&presetRefs](CVGroup* g)
 	{
 		PopupMenu sMenu;
-		int numVariables = g->pm->items.size();
+		int numVariables = g->pm->getNumItems();
 		for (int j = 0; j < numVariables; j++)
 		{
-			presetRefs.add(g->pm->items[j]);
-			sMenu.addItem(presetRefs.size(), g->pm->items[j]->niceName);
+			presetRefs.add(g->pm->getItemAt(j));
+			sMenu.addItem(presetRefs.size(), g->pm->getItemAt(j)->niceName);
 		}
 
 		return sMenu;
@@ -98,7 +98,7 @@ void CVGroupManager::showMenuAndGetPreset(ControllableContainer* startFromCC, st
 
 
 	if (CVGroup* g = dynamic_cast<CVGroup*>(startFromCC)) menu = getMenuForGroup(g);
-	else for (auto& g : CVGroupManager::getInstance()->items) menu.addSubMenu(g->niceName, getMenuForGroup(g));
+	else CVGroupManager::getInstance()->callFunctionOnItems([&](auto g) {menu.addSubMenu(g->niceName, getMenuForGroup(g)); });
 
 	menu.showMenuAsync(PopupMenu::Options(), [returnFunc, presetRefs](int result)
 		{
@@ -113,17 +113,17 @@ void CVGroupManager::showMenuAndGetPreset(ControllableContainer* startFromCC, st
 void CVGroupManager::showMenuAndGetGroup(ControllableContainer* startFromCC, std::function<void(ControllableContainer*)> returnFunc)
 {
 	PopupMenu menu;
-	int numItems = CVGroupManager::getInstance()->items.size();
+	int numItems = CVGroupManager::getInstance()->getNumItems();
 	for (int i = 0; i < numItems; ++i)
 	{
-		menu.addItem(i + 1, CVGroupManager::getInstance()->items[i]->niceName);
+		menu.addItem(i + 1, CVGroupManager::getInstance()->getItemAt(i)->niceName);
 	}
 
 	menu.showMenuAsync(PopupMenu::Options(), [returnFunc](int result)
 		{
 			if (result > 0)
 			{
-				returnFunc(CVGroupManager::getInstance()->items[result - 1]);
+				returnFunc(CVGroupManager::getInstance()->getItemAt(result - 1));
 			}
 		}
 	);

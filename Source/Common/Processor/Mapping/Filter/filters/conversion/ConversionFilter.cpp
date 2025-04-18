@@ -132,11 +132,12 @@ void ConversionFilter::itemsReordered()
 
 void ConversionFilter::reorderFilterParameters()
 {
+	int numItems = cpm.getNumItems();
 	for (int mi = 0; mi < filteredParameters.size(); mi++)
 	{
-		for (int i = 0; i < cpm.items.size(); ++i)
+		for (int i = 0; i < numItems; ++i)
 		{
-			filteredParameters[mi]->set(i, cpm.items[i]->outParamReferences[mi], false);
+			filteredParameters[mi]->set(i, cpm.getItemAt(i)->outParamReferences[mi], false);
 		}
 
 		mappingFilterListeners.call(&FilterListener::filteredParamsChanged, this);

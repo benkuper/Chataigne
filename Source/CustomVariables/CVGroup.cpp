@@ -45,7 +45,7 @@ Voronoi and Gradient Band (not implemented yet) also locks values but interpolat
 	defaultInterpolation.isSelectable = false;
 	defaultInterpolation.length->setValue(1);
 	defaultInterpolation.addKey(0, 0, false);
-	defaultInterpolation.items[0]->easingType->setValueWithData(Easing::BEZIER);
+	defaultInterpolation.getFirstItem()->easingType->setValueWithData(Easing::BEZIER);
 	defaultInterpolation.addKey(1, 1, false);
 	defaultInterpolation.selectItemWhenCreated = false;
 	defaultInterpolation.editorIsCollapsed = true;
@@ -75,7 +75,7 @@ void CVGroup::addItemFromParameter(Parameter* source, bool linkAsMaster)
 
 void CVGroup::addItemsFromGroup(CVGroup* source)
 {
-	for (auto& gci : source->values.items) addItemFromParameter(dynamic_cast<Parameter*>(gci->controllable), false);
+	source->values.callFunctionOnItems([&](auto gci) { addItemFromParameter(dynamic_cast<Parameter*>(gci->controllable), false); });
 }
 
 void CVGroup::itemAdded(GenericControllableItem* item)
@@ -92,59 +92,60 @@ void CVGroup::setValuesToPreset(CVPreset* preset)
 {
 	if (!enabled->boolValue()) return;
 
-	for (auto& v : values.items)
-	{
-		Parameter* p = dynamic_cast<Parameter*>(v->controllable);
-		if (p == nullptr) continue;
-		ParameterPreset* pp = preset->values.getParameterPresetForSource(p);
-		if (pp == nullptr) continue;
-		const ParameterPreset::InterpolationMode mode = pp->interpolationMode->getValueDataAsEnum<ParameterPreset::InterpolationMode>();
-		if (mode == ParameterPreset::NONE) continue;
-		p->setValue(pp->parameter->value);
-	}
+	values.callFunctionOnItems([&](auto v)
+		{
+
+			Parameter* p = dynamic_cast<Parameter*>(v->controllable);
+			if (p == nullptr) return;
+			ParameterPreset* pp = preset->values.getParameterPresetForSource(p);
+			if (pp == nullptr) return;
+			const ParameterPreset::InterpolationMode mode = pp->interpolationMode->getValueDataAsEnum<ParameterPreset::InterpolationMode>();
+			if (mode == ParameterPreset::NONE) return;
+			p->setValue(pp->parameter->value);
+		});
 }
 
 void CVGroup::lerpPresets(CVPreset* p1, CVPreset* p2, float weight)
 {
 	if (!enabled->boolValue()) return;
 
-	for (auto& v : values.items)
-	{
-		Parameter* p = dynamic_cast<Parameter*>(v->controllable);
-		if (p == nullptr) continue;
-		ParameterPreset* pp1 = p1->values.getParameterPresetForSource(p);
-		ParameterPreset* pp2 = p2->values.getParameterPresetForSource(p);
-
-		if (pp1 != nullptr && pp2 != nullptr)
+	values.callFunctionOnItems([&](auto v)
 		{
-			ParameterPreset::InterpolationMode mode = pp2->interpolationMode->getValueDataAsEnum<ParameterPreset::InterpolationMode>();
+			Parameter* p = dynamic_cast<Parameter*>(v->controllable);
+			if (p == nullptr) return;
+			ParameterPreset* pp1 = p1->values.getParameterPresetForSource(p);
+			ParameterPreset* pp2 = p2->values.getParameterPresetForSource(p);
 
-			if (mode == ParameterPreset::NONE) continue;
-
-			var tValue;
-			if (weight == 0) tValue = pp1->parameter->value;
-			else if (weight == 1) tValue = pp2->parameter->value;
-			else
+			if (pp1 != nullptr && pp2 != nullptr)
 			{
-				if (mode == ParameterPreset::INTERPOLATE) tValue = pp1->parameter->getLerpValueTo(pp2->parameter->value, weight);
-				else tValue = (mode == ParameterPreset::CHANGE_AT_END ? pp1 : pp2)->parameter->value;
-			}
+				ParameterPreset::InterpolationMode mode = pp2->interpolationMode->getValueDataAsEnum<ParameterPreset::InterpolationMode>();
 
-			p->setValue(tValue);
-		}
-	}
+				if (mode == ParameterPreset::NONE) return;
+
+				var tValue;
+				if (weight == 0) tValue = pp1->parameter->value;
+				else if (weight == 1) tValue = pp2->parameter->value;
+				else
+				{
+					if (mode == ParameterPreset::INTERPOLATE) tValue = pp1->parameter->getLerpValueTo(pp2->parameter->value, weight);
+					else tValue = (mode == ParameterPreset::CHANGE_AT_END ? pp1 : pp2)->parameter->value;
+				}
+
+				p->setValue(tValue);
+			}
+		});
 }
 
 void CVGroup::lerpPresets(Array<var> sourceValues, CVPreset* endPreset, float weight)
 {
-	int numValues = values.items.size();
+	int numValues = values.getNumItems();
 
 	jassert(sourceValues.size() == numValues);
 	if (endPreset == nullptr) return;
 
 	for (int i = 0; i < numValues; i++)
 	{
-		Parameter* p = dynamic_cast<Parameter*>(values.items[i]->controllable);
+		Parameter* p = dynamic_cast<Parameter*>(values.getItemAt(i)->controllable);
 		if (p == nullptr) continue;
 		var startValue = sourceValues[i];
 		ParameterPreset* endParam = endPreset->values.getParameterPresetForSource(p);
@@ -195,39 +196,39 @@ void CVGroup::stopInterpolation()
 
 void CVGroup::randomizeValues()
 {
-	for (auto& v : values.items)
-	{
-		if (Parameter* p = dynamic_cast<Parameter*>(v->controllable))
+	values.callFunctionOnItems([&](auto v)
 		{
-			Random r;
-			if (p->type == Parameter::BOOL) p->setValue(r.nextBool());
-			else if (p->type == Parameter::FLOAT || p->type == Parameter::INT)
+			if (Parameter* p = dynamic_cast<Parameter*>(v->controllable))
 			{
-				if (p->hasRange()) p->setNormalizedValue(r.nextFloat());
-				else p->setValue(p->type == Parameter::INT ? r.nextInt() : r.nextFloat());
-			}
-			else if (p->type == Parameter::COLOR) ((ColorParameter*)p)->setColor(r.nextInt());
-			else if (p->type == Parameter::ENUM)
-			{
-				EnumParameter* ep = (EnumParameter*)p;
-				if (ep->enumValues.size() > 0)
+				Random r;
+				if (p->type == Parameter::BOOL) p->setValue(r.nextBool());
+				else if (p->type == Parameter::FLOAT || p->type == Parameter::INT)
 				{
-					int index = r.nextInt() % ep->enumValues.size();
-					while (index < 0) index += ep->enumValues.size();
-					ep->setValueWithKey((ep->enumValues[index]->key));
+					if (p->hasRange()) p->setNormalizedValue(r.nextFloat());
+					else p->setValue(p->type == Parameter::INT ? r.nextInt() : r.nextFloat());
+				}
+				else if (p->type == Parameter::COLOR) ((ColorParameter*)p)->setColor(r.nextInt());
+				else if (p->type == Parameter::ENUM)
+				{
+					EnumParameter* ep = (EnumParameter*)p;
+					if (ep->enumValues.size() > 0)
+					{
+						int index = r.nextInt() % ep->enumValues.size();
+						while (index < 0) index += ep->enumValues.size();
+						ep->setValueWithKey((ep->enumValues[index]->key));
+					}
+				}
+				else if (p->isComplex())
+				{
+					var v;
+					for (int i = 0; i < p->value.size(); i++)
+					{
+						v.append(jmap<float>(r.nextFloat(), p->minimumValue[i], p->maximumValue[i]));
+					}
+					p->setValue(v);
 				}
 			}
-			else if (p->isComplex())
-			{
-				var v;
-				for (int i = 0; i < p->value.size(); i++)
-				{
-					v.append(jmap<float>(r.nextFloat(), p->minimumValue[i], p->maximumValue[i]));
-				}
-				p->setValue(v);
-			}
-		}
-	}
+		});
 }
 
 void CVGroup::computeValues()
@@ -250,18 +251,18 @@ void CVGroup::computeValues()
 	case GRADIENT_BAND:
 	case WEIGHTS:
 
-		for (auto& v : values.items)
-		{
-			Array<var> pValues;
-			Parameter* vp = static_cast<Parameter*>(v->controllable);
-			for (auto& p : pm->items)
+		values.callFunctionOnItems([&](auto v)
 			{
-				ParameterPreset* spp = p->values.getParameterPresetForSource(vp);
-				if (spp != nullptr) pValues.add(spp->parameter->value);
-			}
+				Array<var> pValues;
+				Parameter* vp = static_cast<Parameter*>(v->controllable);
+				pm->callFunctionOnItems([&](auto p)
+					{
+						ParameterPreset* spp = p->values.getParameterPresetForSource(vp);
+						if (spp != nullptr) pValues.add(spp->parameter->value);
+					});
 
-			if (pValues.size() == weights.size()) vp->setWeightedValue(pValues, weights);
-		}
+				if (pValues.size() == weights.size()) vp->setWeightedValue(pValues, weights);
+			});
 		break;
 
 	default:
@@ -276,17 +277,17 @@ Array<float> CVGroup::getNormalizedPresetWeights()
 	Array<float> normalizedWeights;
 	float totalWeight = 0;
 
-	for (auto& p : pm->items)
-	{
-		totalWeight += p->enabled->boolValue() ? p->weight->floatValue() : 0;
-	}
+	pm->callFunctionOnItems([&](auto p)
+		{
+			totalWeight += p->enabled->boolValue() ? p->weight->floatValue() : 0;
+		});
 
 
-	for (auto& p : pm->items)
-	{
-		float w = p->enabled->boolValue() ? p->weight->floatValue() : 0;
-		normalizedWeights.add(totalWeight > 0 ? w / totalWeight : 0);
-	}
+	pm->callFunctionOnItems([&](auto p)
+		{
+			float w = p->enabled->boolValue() ? p->weight->floatValue() : 0;
+			normalizedWeights.add(totalWeight > 0 ? w / totalWeight : 0);
+		});
 
 	return normalizedWeights;
 }
@@ -309,7 +310,7 @@ void CVGroup::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Co
 	{
 		ControlMode cm = controlMode->getValueDataAsEnum<ControlMode>();
 		//values.setForceItemsFeedbackOnly(cm != FREE); //tmp comment to find a better way to have feedbackOnly but with range change possible. OR maybe leave it editable is ok ?
-		
+
 		bool useMorpher = cm == VORONOI || cm == GRADIENT_BAND;
 
 		if (useMorpher)
@@ -332,10 +333,10 @@ void CVGroup::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Co
 			}
 		}
 
-		for (auto& pr : pm->items)
-		{
-			pr->weight->setControllableFeedbackOnly(useMorpher);
-		}
+		pm->callFunctionOnItems([&](auto pr)
+			{
+				pr->weight->setControllableFeedbackOnly(useMorpher);
+			});
 
 
 		if (cm != FREE) computeValues();
@@ -384,14 +385,17 @@ void CVGroup::run()
 
 
 	Array<var> sourceValues;
-	for (auto& v : values.items) sourceValues.add(((Parameter*)v->controllable)->value);
+	values.callFunctionOnItems([&](auto v)
+		{
+			sourceValues.add(((Parameter*)v->controllable)->value);
+		});
 
 	CVPreset p2(this, true);
 	p2.loadJSONData(targetPreset->getJSONData());
-	for (auto& v : p2.values.manager->items)
-	{
-		if (Parameter* p = dynamic_cast<Parameter*>(v->controllable)) p->isOverriden = true; //force use
-	}
+	p2.values.manager->callFunctionOnItems([&](auto v)
+		{
+			if (Parameter* p = dynamic_cast<Parameter*>(v->controllable)) p->isOverriden = true; //force use
+		});
 
 	Automation a;
 	a.isSelectable = false;
@@ -438,10 +442,12 @@ void CVGroup::ValuesManager::addAllItemsToDashboard(Dashboard* d)
 	if (d != nullptr)
 	{
 		Array<DashboardItem*> itemsToAdd;
-		for (auto& v : items)
-		{
-			itemsToAdd.add(v->controllable->createDashboardItem());
-		}
+
+		callFunctionOnItems([&](auto v)
+			{
+				itemsToAdd.add(v->controllable->createDashboardItem());
+
+			});
 
 		d->itemManager.addItems(itemsToAdd);
 	}

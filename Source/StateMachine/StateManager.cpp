@@ -195,15 +195,15 @@ void StateManager::showMenuAndGetState(ControllableContainer* startFromCC, std::
 {
 	PopupMenu menu;
 	StateManager* sm = StateManager::getInstance();
-	for (int i = 0; i < sm->items.size(); ++i)
+	for (int i = 0; i < sm->getNumItems(); ++i)
 	{
-		menu.addItem(1 + i, sm->items[i]->niceName);
+		menu.addItem(1 + i, sm->getItemAt(i)->niceName);
 	}
 
 	menu.showMenuAsync(PopupMenu::Options(), [sm, returnFunc](int result)
 		{
 			if (result <= 0) return;
-			returnFunc(sm->items[result - 1]);
+			returnFunc(sm->getItemAt(result - 1));
 		}
 	);
 
@@ -219,11 +219,11 @@ void StateManager::showMenuAndGetAction(ControllableContainer* startFromCC, std:
 	if (ProcessorManager* pm = dynamic_cast<ProcessorManager*>(startFromCC)) menu = getProcessorMenuForManager(pm, Processor::ACTION, &actions);
 	else
 	{
-		for (auto& s : sm->items)
-		{
-			PopupMenu sMenu = getProcessorMenuForManager(s->pm.get(), Processor::ACTION, &actions);
-			menu.addSubMenu(s->niceName, sMenu);
-		}
+		sm->callFunctionOnItems([&](auto s)
+			{
+				PopupMenu sMenu = getProcessorMenuForManager(s->pm.get(), Processor::ACTION, &actions);
+				menu.addSubMenu(s->niceName, sMenu);
+			});
 	}
 
 	menu.showMenuAsync(PopupMenu::Options(), [actions, returnFunc](int result)
@@ -244,11 +244,11 @@ void StateManager::showMenuAndGetMapping(ControllableContainer* startFromCC, std
 	if (ProcessorManager* pm = dynamic_cast<ProcessorManager*>(startFromCC)) menu = getProcessorMenuForManager(pm, Processor::MAPPING, &mappings);
 	else
 	{
-		for (auto& s : sm->items)
-		{
-			PopupMenu sMenu = getProcessorMenuForManager(s->pm.get(), Processor::MAPPING, &mappings);
-			menu.addSubMenu(s->niceName, sMenu);
-		}
+		sm->callFunctionOnItems([&](auto s)
+			{
+				PopupMenu sMenu = getProcessorMenuForManager(s->pm.get(), Processor::MAPPING, &mappings);
+				menu.addSubMenu(s->niceName, sMenu);
+			});
 	}
 
 	menu.showMenuAsync(PopupMenu::Options(), [mappings, returnFunc](int result)
@@ -269,11 +269,11 @@ void StateManager::showMenuAndGetConductor(ControllableContainer* startFromCC, s
 	if (ProcessorManager* pm = dynamic_cast<ProcessorManager*>(startFromCC)) menu = getProcessorMenuForManager(pm, Processor::CONDUCTOR, &conductors);
 	else
 	{
-		for (auto& s : sm->items)
-		{
-			PopupMenu sMenu = getProcessorMenuForManager(s->pm.get(), Processor::CONDUCTOR, &conductors);
-			menu.addSubMenu(s->niceName, sMenu);
-		}
+		sm->callFunctionOnItems([&](auto s)
+			{
+				PopupMenu sMenu = getProcessorMenuForManager(s->pm.get(), Processor::CONDUCTOR, &conductors);
+				menu.addSubMenu(s->niceName, sMenu);
+			});
 	}
 
 	menu.showMenuAsync(PopupMenu::Options(), [conductors, returnFunc](int result)
@@ -287,19 +287,19 @@ void StateManager::showMenuAndGetConductor(ControllableContainer* startFromCC, s
 PopupMenu StateManager::getProcessorMenuForManager(ProcessorManager* manager, Processor::ProcessorType type, Array<Processor*>* arrayToFill)
 {
 	PopupMenu result;
-	for (auto& p : manager->items)
-	{
-		if (p->type == type)
+	manager->callFunctionOnItems([&](auto p)
 		{
-			arrayToFill->add(p);
-			result.addItem(arrayToFill->size(), p->niceName);
-		}
-		else if (p->type == Processor::MULTIPLEX)
-		{
-			PopupMenu mp = getProcessorMenuForManager(&((Multiplex*)p)->processorManager, type, arrayToFill);
-			result.addSubMenu(p->niceName, mp);
-		}
-	}
+			if (p->type == type)
+			{
+				arrayToFill->add(p);
+				result.addItem(arrayToFill->size(), p->niceName);
+			}
+			else if (p->type == Processor::MULTIPLEX)
+			{
+				PopupMenu mp = getProcessorMenuForManager(&((Multiplex*)p)->processorManager, type, arrayToFill);
+				result.addSubMenu(p->niceName, mp);
+			}
+		});
 
 	return result;
 }
@@ -311,36 +311,37 @@ void StateManager::showMenuAndGetToggleCondition(ControllableContainer* startFro
 
 	Array<StandardCondition*> conditions;
 
-	for (auto& s : sm->items)
-	{
-		PopupMenu sMenu;
-
-		for (auto& p : s->pm->items)
+	sm->callFunctionOnItems([&](auto s)
 		{
-			if (p->type == Processor::ACTION)
-			{
-				Action* a = (Action*)p;
-				PopupMenu aMenu = getToggleConditionMenuForConditionManager(a->cdm.get(), &conditions);
-				sMenu.addSubMenu(a->niceName, aMenu);
-			}
-			else if (p->type == Processor::MULTIPLEX)
-			{
-				PopupMenu mpMenu;
-				Multiplex* mp = (Multiplex*)p;
-				for (auto& p : mp->processorManager.items)
+			PopupMenu sMenu;
+
+
+			s->pm->callFunctionOnItems([&](auto p)
 				{
 					if (p->type == Processor::ACTION)
 					{
 						Action* a = (Action*)p;
 						PopupMenu aMenu = getToggleConditionMenuForConditionManager(a->cdm.get(), &conditions);
-						mpMenu.addSubMenu(a->niceName, aMenu);
+						sMenu.addSubMenu(a->niceName, aMenu);
 					}
-				}
-				sMenu.addSubMenu(mp->niceName, mpMenu);
-			}
-		}
-		menu.addSubMenu(s->niceName, sMenu);
-	}
+					else if (p->type == Processor::MULTIPLEX)
+					{
+						PopupMenu mpMenu;
+						Multiplex* mp = (Multiplex*)p;
+						mp->processorManager.callFunctionOnItems([&](auto p)
+							{
+								if (p->type == Processor::ACTION)
+								{
+									Action* a = (Action*)p;
+									PopupMenu aMenu = getToggleConditionMenuForConditionManager(a->cdm.get(), &conditions);
+									mpMenu.addSubMenu(a->niceName, aMenu);
+								}
+							});
+						sMenu.addSubMenu(mp->niceName, mpMenu);
+					}
+				});
+			menu.addSubMenu(s->niceName, sMenu);
+		});
 
 	menu.showMenuAsync(PopupMenu::Options(), [conditions, returnFunc](int result)
 		{
@@ -355,22 +356,22 @@ PopupMenu StateManager::getToggleConditionMenuForConditionManager(ConditionManag
 	PopupMenu result;
 	if (cdm == nullptr) return result;
 
-	for (auto& c : cdm->items)
-	{
-		if (StandardCondition* sc = dynamic_cast<StandardCondition*>(c))
+	cdm->callFunctionOnItems([&](auto c)
 		{
-			if (sc->toggleMode->boolValue())
+			if (StandardCondition* sc = dynamic_cast<StandardCondition*>(c))
 			{
-				arrayToFill->add(sc);
-				result.addItem(arrayToFill->size(), sc->niceName);
+				if (sc->toggleMode->boolValue())
+				{
+					arrayToFill->add(sc);
+					result.addItem(arrayToFill->size(), sc->niceName);
+				}
 			}
-		}
-		else if (ConditionGroup* gc = dynamic_cast<ConditionGroup*>(c))
-		{
-			PopupMenu gcMenu = getToggleConditionMenuForConditionManager(&gc->manager, arrayToFill);
-			result.addSubMenu(gc->niceName, gcMenu);
-		}
-	}
+			else if (ConditionGroup* gc = dynamic_cast<ConditionGroup*>(c))
+			{
+				PopupMenu gcMenu = getToggleConditionMenuForConditionManager(&gc->manager, arrayToFill);
+				result.addSubMenu(gc->niceName, gcMenu);
+			}
+		});
 	return result;
 }
 
@@ -410,8 +411,8 @@ var StateManager::addTransitionFromScript(const var::NativeFunctionArgs& a)
 
 	if (source == nullptr || dest == nullptr) return var();
 
-	if(StateTransition* t = sm->stm.getItemForSourceAndDest(source, dest)) return t->scriptObject;
-	
+	if (StateTransition* t = sm->stm.getItemForSourceAndDest(source, dest)) return t->scriptObject;
+
 	StateTransition* t = new StateTransition(source, dest);
 	sm->stm.addItem(t);
 
@@ -437,20 +438,20 @@ void StateManager::loadJSONDataManagerInternal(var data)
 	stm.loadJSONData(data.getProperty(stm.shortName, var()));
 	commentManager.loadJSONData(data.getProperty(commentManager.shortName, var()));
 
-	for (auto& s : items)
-	{
-		State::LoadBehavior b = s->loadActivationBehavior->getValueDataAsEnum<State::LoadBehavior>();
-		if (b == State::ACTIVE)
+	callFunctionOnItems([&](auto s)
 		{
-			s->active->setValue(true);
-			setStateActive(s);
-			checkStartActivationOverlap(s);
-		}
+			State::LoadBehavior b = s->loadActivationBehavior->getValueDataAsEnum<State::LoadBehavior>();
+			if (b == State::ACTIVE)
+			{
+				s->active->setValue(true);
+				setStateActive(s);
+				checkStartActivationOverlap(s);
+			}
 
-	}
+		});
 }
 
 void StateManager::endLoadFile()
 {
-	for (auto& s : items) s->handleLoadActivation();
+	callFunctionOnItems([&](auto s) { s->handleLoadActivation(); });
 }

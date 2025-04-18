@@ -153,15 +153,15 @@ void StateCommand::triggerInternal(int multiplexIndex)
 		break;
 
 	case CANCEL_ALL_DELAYED_CONSEQUENCES:
-		for (auto& s : StateManager::getInstance()->items)
-		{
-			Array<Action*> actions = s->pm->getAllActions();
-			for (auto& a : actions)
+		StateManager::getInstance()->callFunctionOnItems([&](auto s)
 			{
-				if (a->csmOn != nullptr) a->csmOn->cancelDelayedConsequences();
-				if (a->csmOff != nullptr) a->csmOff->cancelDelayedConsequences();
-			}
-		}
+				Array<Action*> actions = s->pm->getAllActions();
+				for (auto& a : actions)
+				{
+					if (a->csmOn != nullptr) a->csmOn->cancelDelayedConsequences();
+					if (a->csmOff != nullptr) a->csmOff->cancelDelayedConsequences();
+				}
+			});
 		break;
 
 	case CONDUCTOR_NEXT_TRIGGER:

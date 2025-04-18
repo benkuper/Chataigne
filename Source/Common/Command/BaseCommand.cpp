@@ -215,10 +215,10 @@ void BaseCommand::updateMappingInputValue(var value, int multiplexIndex)
 	for (auto& pLink : paramLinks) if(pLink != nullptr) pLink->updateMappingInputValue(value, multiplexIndex);
 	if (customValuesManager != nullptr)
 	{
-		for (auto& cv : customValuesManager->items)
-		{
-			if (cv->paramLink != nullptr) cv->paramLink->updateMappingInputValue(value, multiplexIndex);
-		}
+		customValuesManager->callFunctionOnItems([&](auto cv)
+			{
+				if (cv->paramLink != nullptr) cv->paramLink->updateMappingInputValue(value, multiplexIndex);
+			});
 	}
 }
 
@@ -231,8 +231,8 @@ void BaseCommand::setInputNamesFromParams(Array<WeakReference<Parameter>> outPar
 var BaseCommand::getLinkedCustomArgumentValueAt(int argIndex, int multiplexIndex)
 {
 	if (customValuesManager == nullptr) return var();
-	if (argIndex < 0 || argIndex >= customValuesManager->items.size()) return var();
-	return customValuesManager->items[argIndex]->getLinkedValue(multiplexIndex);
+	if (argIndex < 0 || argIndex >= customValuesManager->getNumItems()) return var();
+	return customValuesManager->getItemAt(argIndex)->getLinkedValue(multiplexIndex);
 }
 
 void BaseCommand::loadPreviousCommandData(var data)

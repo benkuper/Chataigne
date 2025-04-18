@@ -107,7 +107,7 @@ PresetParameterContainer::PresetParameterContainer(const String& name, GenericCo
 	saveAndLoadRecursiveData = true;
 
 	manager->addManagerListener(this);
-	if(!doNotBuildValues) resetAndBuildValues(keepValuesInSync);
+	if (!doNotBuildValues) resetAndBuildValues(keepValuesInSync);
 }
 
 PresetParameterContainer::~PresetParameterContainer()
@@ -136,10 +136,10 @@ void PresetParameterContainer::resetAndBuildValues(bool syncValues)
 	clear();
 	linkMap.clear();
 
-	for (auto& gci : manager->items)
-	{
-		addValueFromItem(dynamic_cast<Parameter*>(gci->controllable));
-	}
+	this->manager->callFunctionOnItems([&](auto gci)
+		{
+			addValueFromItem(dynamic_cast<Parameter*>(gci->controllable));
+		});
 }
 
 void PresetParameterContainer::addValueFromItem(Parameter* source)

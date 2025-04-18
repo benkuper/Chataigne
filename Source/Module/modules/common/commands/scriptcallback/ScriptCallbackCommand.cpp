@@ -15,19 +15,19 @@ ScriptCallbackCommand::ScriptCallbackCommand(Module* module, CommandContext cont
 	
 	StringArray avoidMethods{ "exec", "eval", "trace", "charToInt", "parseInt", "typeof", "parseFloat", "Object", "Array", "String", "Math", "JSON", "Integer", "script", "local", "root", "util" };
 	StringArray methods;
-	for(auto &s : module->scriptManager->items)
-	{
-		if (s->state != Script::ScriptState::SCRIPT_LOADED) continue;
-
-		const NamedValueSet props = s->scriptEngine->getRootObjectProperties();
-		for (auto& sp : props)
+	module->scriptManager->callFunctionOnItems([&](auto s)
 		{
-			if ((sp.value.isMethod() || sp.value.isUndefined() || sp.value.isObject()) && !avoidMethods.contains(sp.name) && !methods.contains(sp.name))
+			if (s->state != Script::ScriptState::SCRIPT_LOADED) return;
+
+			const NamedValueSet props = s->scriptEngine->getRootObjectProperties();
+			for (auto& sp : props)
 			{
-				methods.add(sp.name.toString());
+				if ((sp.value.isMethod() || sp.value.isUndefined() || sp.value.isObject()) && !avoidMethods.contains(sp.name) && !methods.contains(sp.name))
+				{
+					methods.add(sp.name.toString());
+				}
 			}
-		}
-	}
+		});
 
 	for (auto& m : methods)
 	{
@@ -44,7 +44,7 @@ ScriptCallbackCommand::~ScriptCallbackCommand()
 void ScriptCallbackCommand::triggerInternal(int multiplexIndex)
 {
 	Array<var> args;
-	for (auto& i : customValuesManager->items) args.add(i->getLinkedValue(multiplexIndex));
+	customValuesManager->callFunctionOnItems([&](auto i) { args.add(i->getLinkedValue(multiplexIndex)); });
 	String mName = moduleMethods->getValueData().toString();
 	if(mName.isNotEmpty()) module->scriptManager->callFunctionOnAllItems(mName, args);
 }

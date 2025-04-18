@@ -39,19 +39,19 @@ void SendStreamValuesCommand::triggerInternal(int multiplexIndex)
 	
 	MemoryOutputStream data;
 
-	for (auto &a : customValuesManager->items)
-	{
-		Parameter * p = a->param;
-		if (p == nullptr) continue;
-		
-		var val = a->getLinkedValue(multiplexIndex);
-
-		switch (p->type)
+	customValuesManager->callFunctionOnItems([&](auto a)
 		{
-		case Controllable::BOOL: data.writeBool(val);
-		case Controllable::INT:
-			switch (a->sendPrecision->getValueDataAsEnum<CustomValuesCommandArgument::IntType>())
+			Parameter* p = a->param;
+			if (p == nullptr) return;
+
+			var val = a->getLinkedValue(multiplexIndex);
+
+			switch (p->type)
 			{
+			case Controllable::BOOL: data.writeBool(val);
+			case Controllable::INT:
+				switch (a->sendPrecision->getValueDataAsEnum<CustomValuesCommandArgument::IntType>())
+				{
 				case CustomValuesCommandArgument::INT16:
 					data.writeShort((int)val);
 					break;
@@ -61,16 +61,16 @@ void SendStreamValuesCommand::triggerInternal(int multiplexIndex)
 				default:
 					data.writeInt(val);
 					break;
-			}
-			break;
-		case Controllable::FLOAT: data.writeFloat(val); break;
-		case Controllable::STRING: data.writeString(val); break;
+				}
+				break;
+			case Controllable::FLOAT: data.writeFloat(val); break;
+			case Controllable::STRING: data.writeString(val); break;
 
-		default:
-			if (val.isArray()) for (int i = 0; i < val.size(); i++) data.writeFloat(val[i]);
-			break;
-		}
-	}
+			default:
+				if (val.isArray()) for (int i = 0; i < val.size(); i++) data.writeFloat(val[i]);
+				break;
+			}
+		});
 
 	Array<uint8> bytes((uint8 *)data.getData(), (int)data.getDataSize());
 	streamingModule->sendBytes(bytes, getCustomParams(multiplexIndex));

@@ -60,7 +60,7 @@ CVCommand::CVCommand(CustomVariablesModule* _module, CommandContext context, var
 			automation->isSelectable = false;
 			automation->length->setValue(1);
 			automation->addKey(0, 0, false);
-			automation->items[0]->easingType->setValueWithData(Easing::BEZIER);
+			automation->getFirstItem()->easingType->setValueWithData(Easing::BEZIER);
 			automation->addKey(1, 1, false);
 			automation->selectItemWhenCreated = false;
 			automation->editorIsCollapsed = true;

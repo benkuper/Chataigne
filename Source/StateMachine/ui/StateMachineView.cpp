@@ -137,7 +137,7 @@ void StateMachineView::showMenuAndAddItem(bool fromAddButton, Point<int> positio
 	PopupMenu p;
 	p.addItem(1, "Add State");
 	p.addItem(2, "Add Comment");
-	p.addItem(3, "Create Transition", manager->items.size() >= 2);
+	p.addItem(3, "Create Transition", manager->getNumItems() >= 2);
 	p.addItem(4, "Snapping",true, enableSnapping);
 	p.addItem(5, showTools ? "Hide Tools" : "Show Tools");
 

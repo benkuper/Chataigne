@@ -18,7 +18,7 @@ class ModuleManager :
 public:
 	juce_DeclareSingleton(ModuleManager, true)
 
-	ModuleManager();
+		ModuleManager();
 	~ModuleManager();
 
 	std::unique_ptr<ModuleFactory> factory;
@@ -39,13 +39,13 @@ public:
 	{
 		PopupMenu menu;
 		Array<Module*> validModules;
-		for (auto& m : ModuleManager::getInstance()->items)
-		{
-			T* mt = dynamic_cast<T*>(m);
-			if (mt == nullptr) continue;
-			validModules.add(m);
-			menu.addItem(validModules.indexOf(m) + 1, m->niceName);
-		}
+		ModuleManager::getInstance()->callFunctionOnItems([&](auto m)
+			{
+				T* mt = dynamic_cast<T*>(m);
+				if (mt == nullptr) return;
+				validModules.add(m);
+				menu.addItem(validModules.indexOf(m) + 1, m->niceName);
+			});
 
 		menu.showMenuAsync(PopupMenu::Options(), [validModules, returnFunc](int result)
 			{

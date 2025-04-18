@@ -49,7 +49,7 @@ var ColorMappingLayer::getValueAtPosition(float position)
 
 void ColorMappingLayer::selectAll(bool addToSelection)
 {
-    deselectThis(colorManager.items.size() == 0);
+    deselectThis(!colorManager.hasItems());
     colorManager.askForSelectAllItems(addToSelection);
 }
 
@@ -90,10 +90,10 @@ bool ColorMappingLayer::paste()
 
 void ColorMappingLayer::getSnapTimes(Array<float>* arrayToFill)
 {
-    for (auto& i : colorManager.items)
-    {
-        arrayToFill->addIfNotAlreadyThere(i->position->floatValue());
-    }
+	colorManager.callFunctionOnItems([&](auto i)
+		{
+			arrayToFill->addIfNotAlreadyThere(i->position->floatValue());
+		});
 }
 
 void ColorMappingLayer::getSequenceSnapTimesForManager(Array<float>* arrayToFill)

@@ -48,29 +48,29 @@ void SendStreamStringValuesCommand::triggerInternal(int multiplexIndex)
 	String s = "";
 	String sepStr = getLinkedValue(separator, multiplexIndex);
 
-	for (auto& a : customValuesManager->items)
-	{
-		if (s.length() > 0) s += sepStr;
-
-		var val = a->getLinkedValue(multiplexIndex);
-		if (val.isVoid()) continue;
-		String ss = "";
-
-		if (val.isArray())
+	customValuesManager->callFunctionOnItems([&](auto a)
 		{
-			for (int i = 0; i < val.size(); ++i)
+			if (s.length() > 0) s += sepStr;
+
+			var val = a->getLinkedValue(multiplexIndex);
+			if (val.isVoid()) return;
+			String ss = "";
+
+			if (val.isArray())
 			{
-				if (i > 0) ss += sepStr;
-				ss += String((float)val[i], 0);
+				for (int i = 0; i < val.size(); ++i)
+				{
+					if (i > 0) ss += sepStr;
+					ss += String((float)val[i], 0);
+				}
 			}
-		}
-		else
-		{
-			ss += val.toString();
-		}
+			else
+			{
+				ss += val.toString();
+			}
 
-		s += ss;
-	}
+			s += ss;
+		});
 
 	s = getLinkedValue(prefix, multiplexIndex).toString() + s + getLinkedValue(suffix, multiplexIndex).toString();
 	if (appendCR != nullptr && (bool)getLinkedValue(appendCR, multiplexIndex)) s += "\r";

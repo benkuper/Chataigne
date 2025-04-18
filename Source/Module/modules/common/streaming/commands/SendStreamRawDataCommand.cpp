@@ -27,7 +27,7 @@ void SendStreamRawDataCommand::triggerInternal(int multiplexIndex)
 	StreamingCommand::triggerInternal(multiplexIndex); //bypass StreamValueCommands to implement our own way
 
 	Array<uint8> data;
-	for (auto &i : customValuesManager->items) data.add((int) i->getLinkedValue(multiplexIndex));
+	customValuesManager->callFunctionOnItems([&](auto i) { data.add((int)i->getLinkedValue(multiplexIndex)); });
 	streamingModule->sendBytes(data, getCustomParams(multiplexIndex));
 }
 

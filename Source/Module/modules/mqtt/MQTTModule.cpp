@@ -171,62 +171,63 @@ void MQTTClientModule::updateTopicSubs()
 	topicItemMap.clear();
 
 
-	for (auto& topic : topicsManager.items)
-	{
-		String s = topic->topic->stringValue();
-		if (s.isEmpty()) continue;
-
-		MQTTTopic::Protocol p = topic->protocol->getValueDataAsEnum<MQTTTopic::Protocol>();
-		if (p == MQTTTopic::DEFAULT) p = protocol->getValueDataAsEnum<MQTTTopic::Protocol>();
-
-		switch (p)
+	topicsManager.callFunctionOnItems([&](auto topic)
 		{
-		case MQTTTopic::JSON:
-		{
-			//cleanup
-			if (Parameter* p = valuesCC.getParameterByName(s, true)) valuesCC.removeControllable(p);
+			String s = topic->topic->stringValue();
+			if (s.isEmpty()) return;
 
-			ControllableContainer* cc = valuesCC.getControllableContainerByName(s, true);
-			if (cc == nullptr)
+			MQTTTopic::Protocol p = topic->protocol->getValueDataAsEnum<MQTTTopic::Protocol>();
+			if (p == MQTTTopic::DEFAULT) p = protocol->getValueDataAsEnum<MQTTTopic::Protocol>();
+
+			switch (p)
 			{
-				cc = new ControllableContainer(s);
-				cc->userCanAddControllables = true;
-				cc->saveAndLoadRecursiveData = true;
-				cc->saveAndLoadName = true;
-				valuesCC.addChildControllableContainer(cc, true);
+			case MQTTTopic::JSON:
+			{
+				//cleanup
+				if (Parameter* p = valuesCC.getParameterByName(s, true)) valuesCC.removeControllable(p);
+
+				ControllableContainer* cc = valuesCC.getControllableContainerByName(s, true);
+				if (cc == nullptr)
+				{
+					cc = new ControllableContainer(s);
+					cc->userCanAddControllables = true;
+					cc->saveAndLoadRecursiveData = true;
+					cc->saveAndLoadName = true;
+					valuesCC.addChildControllableContainer(cc, true);
+				}
 			}
-		}
-		break;
+			break;
 
-		case MQTTTopic::RAW:
-		{
-			//cleanup
-			if (ControllableContainer* cc = valuesCC.getControllableContainerByName(s, true)) valuesCC.removeChildControllableContainer(cc);
+			case MQTTTopic::RAW:
+			{
+				//cleanup
+				if (ControllableContainer* cc = valuesCC.getControllableContainerByName(s, true)) valuesCC.removeChildControllableContainer(cc);
 
-			StringParameter* b = dynamic_cast<StringParameter*>(valuesCC.getParameterByName(s, true));
-			if (b == nullptr) b = valuesCC.addStringParameter(s, "Last received message for this topic", "");
-		}
-		break;
-		}
+				StringParameter* b = dynamic_cast<StringParameter*>(valuesCC.getParameterByName(s, true));
+				if (b == nullptr) b = valuesCC.addStringParameter(s, "Last received message for this topic", "");
+			}
+			break;
+			}
 
 #if JUCE_WINDOWS
-		subscribe(&topic->mid, s.toStdString().c_str());
+			subscribe(&topic->mid, s.toStdString().c_str());
 #endif
-		topicItemMap.set(s, topic);
-	}
+			topicItemMap.set(s, topic);
+		});
 
 	Array<Controllable*> controllablesToRemove;
 	for (auto& c : valuesCC.controllables)
 	{
 		bool found = false;
-		for (auto& top : topicsManager.items)
-		{
-			if (top->topic->stringValue() == c->niceName)
+		topicsManager.callFunctionOnItems([&](auto top)
 			{
-				found = true;
-				break;
-			}
-		}
+				if (top->topic->stringValue() == c->niceName)
+				{
+					found = true;
+					return;
+				}
+			});
+
 		if (!found) controllablesToRemove.add(c);
 	}
 
@@ -234,14 +235,14 @@ void MQTTClientModule::updateTopicSubs()
 	for (auto& cc : valuesCC.controllableContainers)
 	{
 		bool found = false;
-		for (auto& top : topicsManager.items)
-		{
-			if (top->topic->stringValue() == cc->niceName)
+		topicsManager.callFunctionOnItems([&](auto top)
 			{
-				found = true;
-				break;
-			}
-		}
+				if (top->topic->stringValue() == cc->niceName)
+				{
+					found = true;
+					return;
+				}
+			});
 		if (!found) containersToRemove.add(cc);
 	}
 
@@ -343,12 +344,12 @@ void MQTTClientModule::on_connect(int rc)
 	GenericScopedLock lock(updateTopicLock);
 
 	//Subscribe
-	for (auto& t : topicsManager.items)
-	{
-		String topic = t->topic->stringValue();
-		if (topic.isEmpty()) continue;
-		subscribe(&t->mid, topic.toStdString().c_str());
-	}
+	topicsManager.callFunctionOnItems([&](auto top)
+		{
+			String topic = top->topic->stringValue();
+			if (topic.isEmpty()) return;
+			subscribe(&top->mid, topic.toStdString().c_str());
+		});
 }
 
 void MQTTClientModule::on_disconnect(int rc)

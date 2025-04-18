@@ -90,6 +90,7 @@ MappingFilter::ProcessResult MappingFilterManager::processFilters(Array<Paramete
 	Array<Parameter*> fp = inputs;
 	MappingFilter::ProcessResult result = MappingFilter::UNCHANGED;
 
+	auto items = getItems();
 	for (auto& f : items)
 	{
 		if(needsRebuild) return MappingFilter::STOP_HERE;
@@ -118,6 +119,7 @@ bool MappingFilterManager::rebuildFilterChain(MappingFilter* afterThisFilter, in
 
 	bool foundFilter = afterThisFilter == nullptr ? true : false;
 
+	auto items = getItems();
 	for (auto& f : items)
 	{
 		if (f == afterThisFilter)
@@ -202,9 +204,7 @@ void MappingFilterManager::reorderItems()
 void MappingFilterManager::filterStateChanged(MappingFilter* mf)
 {
 	if (isRebuilding) return;
-	int prevFilterIndex = items.indexOf(mf) - 1;
-	MappingFilter* prevFilter = prevFilterIndex >= 0 ? items[prevFilterIndex] : nullptr;
-	notifyNeedsRebuild(prevFilter); //do not specify the filter so the complete chain is rebuild
+	notifyNeedsRebuild(getItemBefore(mf)); //do not specify the filter so the complete chain is rebuild
 }
 
 void MappingFilterManager::filterNeedsProcess(MappingFilter* mf)

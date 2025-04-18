@@ -15,7 +15,7 @@ CurveMapFilter::CurveMapFilter(var params, Multiplex* multiplex) :
 	curve.isSelectable = false;
 	curve.length->setValue(1);
 	curve.addKey(0, 0, false);
-	curve.items[0]->easingType->setValueWithData(Easing::BEZIER);
+	curve.getFirstItem()->easingType->setValueWithData(Easing::BEZIER);
 	curve.addKey(1, 1, false);
 	//curve.enableSnap->setValue(false);
 	curve.selectItemWhenCreated = false;

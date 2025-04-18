@@ -138,9 +138,9 @@ void BasicsGuide::handleStep(int step)
 
 	case EDIT_CONDITION:
 	{
-		for (int i = 0; i < cme->manager->items.size(); ++i)
+		for (int i = 0; i < cme->manager->getNumItems(); ++i)
 		{
-			ce = dynamic_cast<StandardConditionEditor*>(cme->getEditorForInspectable(cme->manager->items[i]));
+			ce = dynamic_cast<StandardConditionEditor*>(cme->getEditorForInspectable(cme->manager->getItemAt(i)));
 			if (ce != nullptr && condition == nullptr) break;
 		}
 		if (ce->comparatorUI != nullptr)
@@ -286,9 +286,9 @@ void BasicsGuide::containerRebuilt(GenericControllableContainerEditor * editor)
 {
 	if (editor == cme && currentStep == ADD_CONDITION)
 	{
-		for (int i = 0; i < cme->manager->items.size(); ++i)
+		for (int i = 0; i < cme->manager->getNumItems(); ++i)
 		{
-			ce = dynamic_cast<StandardConditionEditor *>(cme->getEditorForInspectable(cme->manager->items[i]));
+			ce = dynamic_cast<StandardConditionEditor *>(cme->getEditorForInspectable(cme->manager->getItemAt(i)));
 			if (ce != nullptr && condition == nullptr)
 			{
 				condition = dynamic_cast<StandardCondition *>(ce->condition);
@@ -300,9 +300,9 @@ void BasicsGuide::containerRebuilt(GenericControllableContainerEditor * editor)
 		}
 	} else if (editor == csme && currentStep == ADD_CONSEQUENCE)
 	{
-		for (int i = 0; i < csme->manager->items.size(); ++i)
+		for (int i = 0; i < csme->manager->getNumItems(); ++i)
 		{
-			cse = dynamic_cast<BaseCommandHandlerEditor *>(csme->getEditorForInspectable(csme->manager->items[i]));
+			cse = dynamic_cast<BaseCommandHandlerEditor *>(csme->getEditorForInspectable(csme->manager->getItemAt(i)));
 			if (cse != nullptr && audioFile == nullptr)
 			{
  				PlayAudioFileCommand * cmd = dynamic_cast<PlayAudioFileCommand *>(cse->handler->command.get());

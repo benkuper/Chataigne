@@ -71,14 +71,14 @@ void Action::updateConditionRoles()
 	actionRoles.clear();
 	if (cdm != nullptr)
 	{
-		for (auto& c : cdm->items)
-		{
-			ActivationCondition* ac = dynamic_cast<ActivationCondition*>(c);
-			if (ac != nullptr && ac->enabled->boolValue())
+		cdm->callFunctionOnItems([&](auto c)
 			{
-				actionRoles.addIfNotAlreadyThere((ac->type == ActivationCondition::ON_ACTIVATE) ? ACTIVATE : DEACTIVATE);
-			}
-		}
+				ActivationCondition* ac = dynamic_cast<ActivationCondition*>(c);
+				if (ac != nullptr && ac->enabled->boolValue())
+				{
+					actionRoles.addIfNotAlreadyThere((ac->type == ActivationCondition::ON_ACTIVATE) ? ACTIVATE : DEACTIVATE);
+				}
+			});
 	}
 
 	setHasOffConsequences(!forceNoOffConsequences && !actionRoles.contains(DEACTIVATE));
@@ -151,7 +151,7 @@ void Action::triggerConsequences(bool triggerTrue, int multiplexIndex)
 {
 	if (!enabled->boolValue() || forceDisabled) return;
 	if (isClearing) return;
-	
+
 	if (!forceChecking)
 	{
 		if (triggerTrue) csmOn->triggerAll(multiplexIndex);
@@ -294,9 +294,9 @@ void Action::itemsRemoved(Array<Condition*> items)
 void Action::highlightLinkedInspectables(bool value)
 {
 	Processor::highlightLinkedInspectables(value);
-	if (cdm != nullptr) for (auto& cd : cdm->items) cd->highlightLinkedInspectables(value);
-	if (csmOn != nullptr) for (auto& cs : csmOn->items) cs->highlightLinkedInspectables(value);
-	if (csmOff != nullptr) for (auto& cs : csmOff->items) cs->highlightLinkedInspectables(value);
+	if (cdm != nullptr) cdm->callFunctionOnItems([&](auto cd) {  cd->highlightLinkedInspectables(value); });
+	if (csmOn != nullptr) csmOn->callFunctionOnItems([&](auto cs) {  cs->highlightLinkedInspectables(value); });
+	if (csmOff != nullptr) csmOff->callFunctionOnItems([&](auto cs) { cs->highlightLinkedInspectables(value); });
 }
 
 

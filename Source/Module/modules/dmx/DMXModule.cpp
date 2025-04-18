@@ -160,8 +160,10 @@ void DMXModule::updateDeviceMulticast()
 
 	if (useMulticast->boolValue())
 	{
-		inUniv = Array<DMXUniverse*>(inputUniverseManager.items.getRawDataPointer(), inputUniverseManager.items.size());
-		outUniv = Array<DMXUniverse*>(outputUniverseManager.items.getRawDataPointer(), outputUniverseManager.items.size());
+		Array<DMXUniverseItem*> inUnivTemp = inputUniverseManager.getItems();
+		Array<DMXUniverseItem*> outUnivTemp = outputUniverseManager.getItems();
+		inUniv = Array<DMXUniverse*>(inUnivTemp.getRawDataPointer(), inUnivTemp.size());
+		outUniv = Array<DMXUniverse*>(outUnivTemp.getRawDataPointer(), outUnivTemp.size());
 	}
 
 	dmxDevice->setupMulticast(inUniv, outUniv);
@@ -452,7 +454,7 @@ void DMXModule::dmxDataInChanged(DMXDevice*, int net, int subnet, int universe, 
 
 	u->updateValues(values);
 
-	if (scriptManager->items.size() > 0)
+	if (scriptManager->getNumItems() > 0)
 	{
 		Array<var> args;
 		args.add(net);
@@ -468,7 +470,8 @@ void DMXModule::dmxDataInChanged(DMXDevice*, int net, int subnet, int universe, 
 DMXUniverse* DMXModule::getUniverse(bool isInput, int net, int subnet, int universe,/* int priority, */bool createIfNotThere)
 {
 	DMXUniverseManager* m = isInput ? &inputUniverseManager : &outputUniverseManager;
-	for (auto& u : m->items) if (u->checkSignature(net, subnet, universe)) return u;
+	auto items = m->getItems();
+	for (auto& u : items) if (u->checkSignature(net, subnet, universe)) return u;
 
 	if (!createIfNotThere) return nullptr;
 
@@ -491,12 +494,12 @@ void DMXModule::run()
 			if (dmxDevice == nullptr) return;
 
 			bool sendOnChange = sendOnChangeOnly->boolValue();
-			for (auto& u : outputUniverseManager.items)
-			{
-				if (sendOnChange && !u->isDirty) continue;
-				dmxDevice->setDMXValues(u);
-				u->isDirty = false;
-			}
+			outputUniverseManager.callFunctionOnItems([&](auto u)
+				{
+					if (sendOnChange && !u->isDirty) return;
+					dmxDevice->setDMXValues(u);
+					u->isDirty = false;
+				});
 		}
 		double t2 = Time::getMillisecondCounterHiRes();
 
@@ -631,24 +634,24 @@ void DMXModule::DMXModuleRouterController::triggerTriggered(Trigger* t)
 	if (t == autoSetChannels)
 	{
 		int startChannel = 1;
-		for (auto& mrv : router->sourceValues.items)
-		{
-			if (DMXRouteParams* dp = dynamic_cast<DMXRouteParams*>(mrv->routeParams.get()))
+		router->sourceValues.callFunctionOnItems([&](auto mrv)
 			{
-				dp->channel->setValue(startChannel++);
-			}
-		}
+				if (DMXRouteParams* dp = dynamic_cast<DMXRouteParams*>(mrv->routeParams.get()))
+				{
+					dp->channel->setValue(startChannel++);
+				}
+			});
 	}
 
 	if (t == autoSetUniverse)
 	{
-		for (auto& mrv : router->sourceValues.items)
-		{
-			if (DMXRouteParams* dp = dynamic_cast<DMXRouteParams*>(mrv->routeParams.get()))
+		router->sourceValues.callFunctionOnItems([&](auto mrv)
 			{
-				DMXUniverseManager* universeManager = dynamic_cast<DMXUniverseManager*>(dp->dmxUniverse->rootContainer.get());
-				if (universeManager->items.size() > 0) dp->dmxUniverse->setValueFromTarget(universeManager->items[0]);
-			}
-		}
+				if (DMXRouteParams* dp = dynamic_cast<DMXRouteParams*>(mrv->routeParams.get()))
+				{
+					DMXUniverseManager* universeManager = dynamic_cast<DMXUniverseManager*>(dp->dmxUniverse->rootContainer.get());
+					if (universeManager->hasItems()) dp->dmxUniverse->setValueFromTarget(universeManager->getFirstItem());
+				}
+			});
 	}
 }

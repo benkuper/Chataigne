@@ -40,7 +40,7 @@ void Multiplex::onContainerParameterChangedInternal(Parameter* p)
 	if (p == count)
 	{
 		isChangingCount = true;
-		for (auto& l : listManager.items) l->setSize(count->intValue());
+		listManager.callFunctionOnItems([&](auto l) { l->setSize(count->intValue()); });
 		previewIndex->setRange(1, count->intValue());
 		multiplexListeners.call(&MultiplexListener::multiplexCountChanged);
 		isChangingCount = false;
@@ -59,12 +59,13 @@ void Multiplex::updateDisables(bool force, bool fromActivation)
 void Multiplex::showAndGetList(ControllableContainer* startFromCC, std::function<void(ControllableContainer*)> returnFunc)
 {
 	PopupMenu p;
-	for (int i = 0; i < listManager.items.size(); i++) p.addItem(i + 1, listManager.items[i]->niceName);
+	int numItems = listManager.getNumItems();
+	for (int i = 0; i < numItems; i++) p.addItem(i + 1, listManager.getItemAt(i)->niceName);
 
 	p.showMenuAsync(PopupMenu::Options(), [this, returnFunc](int result)
 		{
 			if (result == 0) return;
-			returnFunc(listManager.items[result - 1]);
+			returnFunc(listManager.getItemAt(result - 1));
 		}
 	);
 }

@@ -110,7 +110,8 @@ void ChataigneSequence::updateTargetAudioLayer(ChataigneAudioLayer* excludeLayer
 {
 	if (masterAudioLayer == nullptr)
 	{
-		for (auto& i : layerManager->items)
+		auto items = layerManager->getItems(true);
+		for (auto& i : items)
 		{
 			if (i == excludeLayer) continue;
 			ChataigneAudioLayer* a = dynamic_cast<ChataigneAudioLayer*>(i);
@@ -207,15 +208,17 @@ void ChataigneSequence::checkForNewAudioLayer(SequenceLayer* layer, bool showMen
 		//if already an audio module, assign it
 		if (!isCurrentlyLoadingData)
 		{
-			for (auto& i : ModuleManager::getInstance()->items)
-			{
-				AudioModule* a = dynamic_cast<AudioModule*>(i);
-				if (a != nullptr)
+			ModuleManager::getInstance()->callStoppingFunctionOnItems([&](auto i)
 				{
-					audioLayer->setAudioModule(a);
-					break;
-				}
-			}
+					AudioModule* a = dynamic_cast<AudioModule*>(i);
+					if (a != nullptr)
+					{
+						audioLayer->setAudioModule(a);
+						return false;
+					}
+
+					return true;
+				});
 
 			if (audioLayer->audioModule == nullptr && showMenuIfNoAudioModule)
 			{

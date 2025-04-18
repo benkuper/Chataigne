@@ -58,9 +58,9 @@ void ProcessorManagerUI::itemDropped(const SourceDetails& details)
 					a->csmOn->addItem(c);
 					c->setCommand(def);
 
-					if (manager->items.size() > 0)
+					if (manager->getNumItems() > 0)
 					{
-						if (currentDropIndex == -1) currentDropIndex = manager->items.size() - 1;
+						if (currentDropIndex == -1) currentDropIndex = manager->getNumItems() - 1;
 						manager->setItemIndex(a, currentDropIndex);
 					}
 				}
@@ -73,9 +73,9 @@ void ProcessorManagerUI::itemDropped(const SourceDetails& details)
 					MappingOutput* o = mapp->om.addItem();
 					o->setCommand(def);
 
-					if (manager->items.size() > 0)
+					if (manager->getNumItems() > 0)
 					{
-						if (currentDropIndex == -1) currentDropIndex = manager->items.size() - 1;
+						if (currentDropIndex == -1) currentDropIndex = manager->getNumItems() - 1;
 						manager->setItemIndex(mapp, currentDropIndex);
 					}
 				}

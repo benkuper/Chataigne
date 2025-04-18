@@ -65,22 +65,22 @@ void FFTAnalyzerManagerEditor::FFTViz::paint(Graphics& g)
 
 	g.addTransform(AffineTransform().translated(r.getPosition()));
 
-	for (auto& i : analyzerManager->items)
-	{
-		Path path;
-		float iPos = i->position->floatValue() * r.getWidth();
-		float iSize = i->size->floatValue() * r.getWidth();
-		path.startNewSubPath({ iPos - iSize / 2, (float)r.getHeight() });
-		path.cubicTo({ iPos - iSize / 4, (float)r.getHeight() }, { iPos - iSize / 4, 0 }, { iPos, 0 });
-		path.cubicTo({ iPos + iSize / 4, 0 }, { iPos + iSize / 4, (float)r.getHeight() }, { iPos + iSize / 2, (float)r.getHeight() });
-		path.closeSubPath();
+	analyzerManager->callFunctionOnItems([&](auto i)
+		{
+			Path path;
+			float iPos = i->position->floatValue() * r.getWidth();
+			float iSize = i->size->floatValue() * r.getWidth();
+			path.startNewSubPath({ iPos - iSize / 2, (float)r.getHeight() });
+			path.cubicTo({ iPos - iSize / 4, (float)r.getHeight() }, { iPos - iSize / 4, 0 }, { iPos, 0 });
+			path.cubicTo({ iPos + iSize / 4, 0 }, { iPos + iSize / 4, (float)r.getHeight() }, { iPos + iSize / 2, (float)r.getHeight() });
+			path.closeSubPath();
 
-		Colour c = i->enabled->boolValue() ? i->itemColor->getColor() : Colours::grey;
-		g.setColour(c.withAlpha(.2f));
-		g.fillPath(path);
-		g.setColour(i->itemColor->getColor().withAlpha(.5f));
-		g.strokePath(path, PathStrokeType(1));
-	}
+			Colour c = i->enabled->boolValue() ? i->itemColor->getColor() : Colours::grey;
+			g.setColour(c.withAlpha(.2f));
+			g.fillPath(path);
+			g.setColour(i->itemColor->getColor().withAlpha(.5f));
+			g.strokePath(path, PathStrokeType(1));
+		});
 
 	validatePaint();
 }

@@ -60,9 +60,8 @@ void CustomValuesCommandArgumentManager::rebuildFromTemplate(bool clearItems)
 
 	if (clearItems) clear();
 
-	for (auto& i : linkedTemplateManager->items)
-	{
-		if (i == nullptr) continue;
+	callFunctionOnItems([&](auto i) {
+		if (i == nullptr) return;
 
 		CustomValuesCommandArgument* a = nullptr;
 		if (clearItems)
@@ -70,7 +69,7 @@ void CustomValuesCommandArgumentManager::rebuildFromTemplate(bool clearItems)
 			a = addItemFromData(i->getJSONData());
 			a->setNiceName(i->niceName);
 		}
-		else a = items[linkedTemplateManager->items.indexOf(i)];
+		else a = getItemAt(linkedTemplateManager->getItemIndex(i));
 
 		jassert(a != nullptr);
 
@@ -80,9 +79,9 @@ void CustomValuesCommandArgumentManager::rebuildFromTemplate(bool clearItems)
 			a->userCanRemove = false;
 			a->userCanDuplicate = false;
 		}
-	}
+		});
 
-	hideInEditor = items.size() == 0;
+	hideInEditor = !hasItems();
 
 }
 
@@ -94,7 +93,7 @@ void CustomValuesCommandArgumentManager::addItemInternal(CustomValuesCommandArgu
 	{
 		if (!isCurrentlyLoadingData)
 		{
-			if (linkedTemplateManager == nullptr && mappingEnabled && items.size() == 1)
+			if (linkedTemplateManager == nullptr && mappingEnabled && getNumItems() == 1)
 			{
 				if (item->paramLink != nullptr)
 				{
@@ -146,7 +145,7 @@ void CustomValuesCommandArgumentManager::removeItemsInternal(Array<CustomValuesC
 
 CustomValuesCommandArgument* CustomValuesCommandArgumentManager::createItemWithParam(Parameter* p)
 {
-	CustomValuesCommandArgument* a = new CustomValuesCommandArgument("#" + String(items.size() + 1), p, mappingEnabled, templateMode, multiplex, enablePrecison);
+	CustomValuesCommandArgument* a = new CustomValuesCommandArgument("#" + String(getNumItems() + 1), p, mappingEnabled, templateMode, multiplex, enablePrecison);
 	return a;
 }
 
@@ -162,7 +161,7 @@ Parameter* CustomValuesCommandArgumentManager::createParameterFromType(Parameter
 {
 	if (!linkedTemplateManagerRef.wasObjectDeleted() && linkedTemplateManager != nullptr) return linkedTemplateManager->createParameterFromType(type);
 
-	String id = String(items.size() + 1);
+	String id = String(getNumItems() + 1);
 
 	Parameter* p = nullptr;
 
@@ -254,9 +253,10 @@ var CustomValuesCommandArgumentManager::addItemWithTypeFromScript(const var::Nat
 
 void CustomValuesCommandArgumentManager::autoRenameItems()
 {
-	for (int i = 0; i < items.size(); ++i)
+	int numItems = getNumItems();
+	for (int i = 0; i < numItems; ++i)
 	{
-		if (items[i]->niceName.startsWithChar('#')) items[i]->setNiceName("#" + String(i + 1));
+		if (getItemAt(i)->niceName.startsWithChar('#')) getItemAt(i)->setNiceName("#" + String(i + 1));
 	}
 }
 
@@ -264,7 +264,7 @@ void CustomValuesCommandArgumentManager::setInputNames(StringArray _inputNames)
 {
 	if (!mappingEnabled) return;
 	inputNames = _inputNames;
-	for (auto& i : items) i->paramLink->inputValueNames = inputNames;
+	callFunctionOnItems([this](auto i) { i->paramLink->inputValueNames = inputNames; });
 }
 
 void CustomValuesCommandArgumentManager::itemAdded(CustomValuesCommandArgument* i)
@@ -285,14 +285,16 @@ void CustomValuesCommandArgumentManager::itemsAdded(Array<CustomValuesCommandArg
 void CustomValuesCommandArgumentManager::itemRemoved(CustomValuesCommandArgument* i)
 {
 	CustomValuesCommandArgument* itemToRemove = nullptr;
-	for (auto& it : items)
-	{
+	callStoppingFunctionOnItems([&i, &itemToRemove](auto it) {
 		if (it->linkedTemplate == i)
 		{
 			itemToRemove = it;
-			break;
+			return false;
 		}
-	}
+
+		return true;
+		});
+
 	if (itemToRemove != nullptr)
 	{
 		if (linkedTemplateManager != nullptr && linkedTemplateManager->isBeingDestroyed) itemToRemove->linkToTemplate(nullptr); //do not sync on template destroy so we can keep ghost data

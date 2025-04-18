@@ -126,9 +126,9 @@ void SequenceCommand::triggerInternal(int multiplexIndex)
 	case SET_EDITING_SEQUENCE_AT:
 	{
 		int index = getLinkedValue(currentSequenceIndex, multiplexIndex);
-		if (index >= 0 && index < ChataigneSequenceManager::getInstance()->items.size())
+		if (index >= 0 && index < ChataigneSequenceManager::getInstance()->getNumItems())
 		{
-			if (Sequence* s = ChataigneSequenceManager::getInstance()->items[index])
+			if (Sequence* s = ChataigneSequenceManager::getInstance()->getItemAt(index))
 			{
 				if (actionType == SET_EDITING_SEQUENCE_AT)
 				{
@@ -152,10 +152,10 @@ void SequenceCommand::triggerInternal(int multiplexIndex)
 
 	case PLAY_MULTI_SEQUENCES:
 	{
-		int numSequences = ChataigneSequenceManager::getInstance()->items.size();
+		int numSequences = ChataigneSequenceManager::getInstance()->getNumItems();
 		if (currentSequenceIndex->intValue() < numSequences)
 		{
-			Sequence* s = ChataigneSequenceManager::getInstance()->items[currentSequenceIndex->intValue()];
+			Sequence* s = ChataigneSequenceManager::getInstance()->getItemAt(currentSequenceIndex->intValue());
 
 			if (getLinkedValue(playFromStart, multiplexIndex)) s->stopTrigger->trigger();
 			s->playTrigger->trigger();

@@ -72,10 +72,11 @@ void MainContentComponent::parameterAddToContextMenu(ControllableUI* ui, PopupMe
 
 	{
 		PopupMenu cvMenu;
-		for (auto& g : CVGroupManager::getInstance()->items)
-		{
-			cvMenu.addItem(g->niceName, [g, ui]() { g->addItemFromParameter((Parameter*)ui->controllable.get()); });
-		}
+		CVGroupManager::getInstance()->callFunctionOnItems([&](auto g)
+			{
+				cvMenu.addItem(g->niceName, [g, ui]() { g->addItemFromParameter((Parameter*)ui->controllable.get()); });
+			});
+
 		m->addSubMenu("Add & Link to Custom Variable...", cvMenu);
 	}
 
@@ -95,53 +96,54 @@ void MainContentComponent::parameterAddToContextMenu(ControllableUI* ui, PopupMe
 			};
 
 		PopupMenu seqMenu;
-		for (auto& sequence : ChataigneSequenceManager::getInstance()->items)
-		{
-			PopupMenu layerMenu;
-			for (auto& layer : sequence->layerManager->items)
+		ChataigneSequenceManager::getInstance()->callFunctionOnItems([&](auto sequence)
 			{
-				MappingLayer* mappingLayer = dynamic_cast<MappingLayer*>(layer);
-				if (mappingLayer)
-				{
-					layerMenu.addItem(layer->niceName, [commandDef, mappingLayer, ui]
-						{
-							addOutput(mappingLayer, commandDef, ui->controllable);
-						});
-				}
-			}
-
-			if (layerMenu.getNumItems() > 0) layerMenu.addSeparator();
-			layerMenu.addItem("Create new Mapping", [commandDef, sequence, ui]
-				{
-					Controllable* controllable = ui->controllable;
-					MappingLayer* mappingLayer = nullptr;
-					if (controllable->type == Controllable::COLOR)
+				PopupMenu layerMenu;
+				sequence->layerManager->callFunctionOnItems([&](auto layer)
 					{
-						mappingLayer = ColorMappingLayer::create(sequence, {});
-					}
-					else
-					{
-						Mapping1DLayer* mapping1DLayer = Mapping1DLayer::create(sequence, {});
-						if (Parameter* parameter = dynamic_cast<Parameter*>(controllable))
+						MappingLayer* mappingLayer = dynamic_cast<MappingLayer*>(layer);
+						if (mappingLayer)
 						{
-							if (parameter->hasRange() &&
-								(dynamic_cast<FloatParameter*>(controllable) || dynamic_cast<IntParameter*>(controllable))
-								)
-							{
-								const Point<float> range{ parameter->minimumValue, parameter->maximumValue };
-								mapping1DLayer->automation->valueRange->setPoint(range);
-								mapping1DLayer->automation->viewValueRange->setPoint(range);
-							}
+							layerMenu.addItem(layer->niceName, [commandDef, mappingLayer, ui]
+								{
+									addOutput(mappingLayer, commandDef, ui->controllable);
+								});
 						}
-						mappingLayer = mapping1DLayer;
-					}
-					mappingLayer->setNiceName(controllable->niceName);
-					sequence->layerManager->addItem(mappingLayer);
-					addOutput(mappingLayer, commandDef, controllable);
-				});
+					});
 
-			seqMenu.addSubMenu(sequence->niceName, layerMenu);
-		}
+				if (layerMenu.getNumItems() > 0) layerMenu.addSeparator();
+				layerMenu.addItem("Create new Mapping", [commandDef, sequence, ui]
+					{
+						Controllable* controllable = ui->controllable;
+						MappingLayer* mappingLayer = nullptr;
+						if (controllable->type == Controllable::COLOR)
+						{
+							mappingLayer = ColorMappingLayer::create(sequence, {});
+						}
+						else
+						{
+							Mapping1DLayer* mapping1DLayer = Mapping1DLayer::create(sequence, {});
+							if (Parameter* parameter = dynamic_cast<Parameter*>(controllable))
+							{
+								if (parameter->hasRange() &&
+									(dynamic_cast<FloatParameter*>(controllable) || dynamic_cast<IntParameter*>(controllable))
+									)
+								{
+									const Point<float> range{ parameter->minimumValue, parameter->maximumValue };
+									mapping1DLayer->automation->valueRange->setPoint(range);
+									mapping1DLayer->automation->viewValueRange->setPoint(range);
+								}
+							}
+							mappingLayer = mapping1DLayer;
+						}
+						mappingLayer->setNiceName(controllable->niceName);
+						sequence->layerManager->addItem(mappingLayer);
+						addOutput(mappingLayer, commandDef, controllable);
+					});
+
+					seqMenu.addSubMenu(sequence->niceName, layerMenu);
+			});
+
 		m->addSubMenu("Add & Link to Sequence...", seqMenu);
 	}
 }

@@ -33,9 +33,9 @@ void ConditionManagerEditor::updateSequentialUI()
 {
 	bool isSequential = conditionManager->conditionOperator->getValueDataAsEnum<ConditionManager::ConditionOperator>() == ConditionManager::SEQUENTIAL;
 
-	for (int i = 0; i < manager->items.size(); i++)
+	for (int i = 0; i < manager->getNumItems(); i++)
 	{
-		if (ConditionEditor * ce = dynamic_cast<ConditionEditor*>(getEditorForInspectable(conditionManager->items[i])))
+		if (ConditionEditor * ce = dynamic_cast<ConditionEditor*>(getEditorForInspectable(conditionManager->getItemAt(i))))
 		{
 			ce->isCurrentInSequential = isSequential && conditionManager->sequentialConditionIndices[conditionManager->getPreviewIndex()] == i;
 			ce->repaint();
@@ -45,12 +45,12 @@ void ConditionManagerEditor::updateSequentialUI()
 
 void ConditionManagerEditor::itemAddedAsync(Condition *)
 {
-	if (manager->items.size() >= 1) resetAndBuild();
+	if (manager->getNumItems() >= 1) resetAndBuild();
 }
 
 void ConditionManagerEditor::itemRemovedAsync(Condition *)
 {
-	if (manager->items.size() <= 1) resetAndBuild();
+	if (manager->getNumItems() <= 1) resetAndBuild();
 }
 
 void ConditionManagerEditor::resetAndBuild()

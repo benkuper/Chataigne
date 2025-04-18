@@ -21,6 +21,6 @@ LoupedeckShapeManager::~LoupedeckShapeManager()
 bool LoupedeckShapeManager::draw(Graphics& g, int screenIndex, const Rectangle<int>& bounds)
 {
     bool hasDrawn = false;
-    for (auto& s : items) hasDrawn |= s->draw(g, screenIndex, bounds);
+    callFunctionOnItems([&](auto s) { hasDrawn |= s->draw(g, screenIndex, bounds); });
     return hasDrawn;
 }

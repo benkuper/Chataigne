@@ -102,16 +102,18 @@ void Mapping::checkFiltersNeedContinuousProcess()
 
 	if (!need)
 	{
-		for (auto& f : fm.items)
-		{
-			if (!f->enabled->boolValue()) continue;
-
-			if (f->processOnSameValue)
+		fm.callStoppingFunctionOnItems([&](auto f)
 			{
-				need = true;
-				break;
-			}
-		}
+				if (!f->enabled->boolValue()) return true;
+
+				if (f->processOnSameValue)
+				{
+					need = true;
+					return false;
+				}
+
+				return true;
+			});
 	}
 
 	updateRate->setEnabled(need);
@@ -235,7 +237,7 @@ void Mapping::multiplexPreviewIndexChanged()
 void Mapping::process(bool sendOutput, int multiplexIndex, bool forceSend)
 {
 	if ((canBeDisabled && !enabled->boolValue()) || forceDisabled) return;
-	if (im.items.size() == 0) return;
+	if (!im.hasItems()) return;
 	if (isCurrentlyLoadingData || isRebuilding || isProcessing || isClearing) return;
 
 	if (multiplexIndex == -1) // -1 makes process all
@@ -519,13 +521,13 @@ void Mapping::highlightLinkedInspectables(bool value)
 {
 	Processor::highlightLinkedInspectables(value);
 
-	for (auto& i : im.items)
-	{
-		i->highlightLinkedInspectables(value);
-	}
+	im.callFunctionOnItems([&](auto i)
+		{
+			i->highlightLinkedInspectables(value);
+		});
 
-	for (auto& o : om.items)
-	{
-		o->highlightLinkedInspectables(value);
-	}
+	om.callFunctionOnItems([&](auto o)
+		{
+			o->highlightLinkedInspectables(value);
+		});
 }

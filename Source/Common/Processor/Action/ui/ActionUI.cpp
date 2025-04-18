@@ -92,7 +92,7 @@ void ActionUI::controllableFeedbackUpdateInternal(Controllable* c)
 
 void ActionUI::updateStaggerUI()
 {
-	bool v = action->csmOn->stagger->floatValue() > 0 && action->csmOn->items.size() > 1;
+	bool v = action->csmOn->stagger->floatValue() > 0 && action->csmOn->getNumItems() > 1;
 	if (staggerUI->isVisible() != v)
 	{
 		staggerUI->setVisible(v);

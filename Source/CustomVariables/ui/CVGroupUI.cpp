@@ -27,7 +27,7 @@ void CVGroupVariablesEditor::addPopupMenuItems(PopupMenu* p)
 
 	int index = -10000;
 	PopupMenu dMenu;
-	for (auto& d : DashboardManager::getInstance()->items) dMenu.addItem(index++, d->niceName);
+	DashboardManager::getInstance()->callFunctionOnItems([&](auto d) { dMenu.addItem(index++, d->niceName); });
 	dMenu.addSeparator();
 	dMenu.addItem(-10001, "Create new Dashboard");
 	p->addSubMenu("Send All Variables to Dashboard", dMenu);
@@ -38,10 +38,10 @@ void CVGroupVariablesEditor::handleMenuSelectedID(int result)
 {
 	GenericManagerEditor::handleMenuSelectedID(result);
 
-	if (result >= -10001 && result + 1000 < DashboardManager::getInstance()->items.size())
+	if (result >= -10001 && result + 1000 < DashboardManager::getInstance()->getNumItems())
 	{
 		Dashboard* d = nullptr;
-		if (result != -10001) d = DashboardManager::getInstance()->items[result + 10000];
+		if (result != -10001) d = DashboardManager::getInstance()->getItemAt(result + 10000);
 		valuesManager->addAllItemsToDashboard(d);
 	}
 }

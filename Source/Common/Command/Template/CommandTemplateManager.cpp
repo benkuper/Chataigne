@@ -26,7 +26,7 @@ CommandTemplateManager::~CommandTemplateManager()
 
 void CommandTemplateManager::addItemInternal(CommandTemplate* item, var)
 {
-	defManager->add(CommandDefinition::createDef(module, menuName, item->niceName, &BaseCommand::create)->addParam("template", item->shortName), items.indexOf(item));
+	defManager->add(CommandDefinition::createDef(module, menuName, item->niceName, &BaseCommand::create)->addParam("template", item->shortName), getItemIndex(item));
 	item->addCommandTemplateListener(this);
 }
 
@@ -76,11 +76,11 @@ void CommandTemplateManager::reorderItems()
 void CommandTemplateManager::reorderDefinitions()
 {
 	int index = 0;
-	for (auto& item : items)
-	{
-		CommandDefinition* d = defManager->getCommandDefinitionFor(menuName, item->niceName);
-		if (d != nullptr) defManager->definitions.move(defManager->definitions.indexOf(d), index++);
-	}
+	callFunctionOnItems([&](auto item)
+		{
+			CommandDefinition* d = defManager->getCommandDefinitionFor(menuName, item->niceName);
+			if (d != nullptr) defManager->definitions.move(defManager->definitions.indexOf(d), index++);
+		});
 }
 
 
@@ -88,7 +88,7 @@ void CommandTemplateManager::templateNameChanged(CommandTemplate* ct)
 {
 	if (isCurrentlyLoadingData || Engine::mainEngine->isLoadingFile || Engine::mainEngine->isClearing) return;
 
-	CommandDefinition* def = defManager->definitions[items.indexOf(ct)];
+	CommandDefinition* def = defManager->definitions[getItemIndex(ct)];
 	jassert(def != nullptr);
 
 	def->commandType = ct->niceName;

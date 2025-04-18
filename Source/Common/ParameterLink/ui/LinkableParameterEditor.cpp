@@ -146,9 +146,10 @@ void LinkableParameterEditor::buttonClicked(Button* b)
 			itMenu.addItem(-3, "Index (1-" + String(link->getMultiplexCount()) + ")", true, link->linkType == link->INDEX);
 			itMenu.addSeparator();
 
-			for (int i = 0; i < link->multiplex->listManager.items.size(); i++)
+			int numItems = link->multiplex->listManager.getNumItems();
+			for (int i = 0; i < numItems; i++)
 			{
-				BaseMultiplexList* bli = link->multiplex->listManager.items[i];
+				BaseMultiplexList* bli = link->multiplex->listManager.getItemAt(i);
 				bool t = link->linkType == link->CV_PRESET_PARAM && link->list == bli;
 				ticked |= t;
 
@@ -167,10 +168,11 @@ void LinkableParameterEditor::buttonClicked(Button* b)
 						{
 							PopupMenu presetMenu;
 
-							for (int j = 0; j < group->values.items.size(); j++)
+							int numValues = group->values.getNumItems();
+							for (int j = 0; j < numValues; j++)
 							{
-								bool pt = link->presetParamName == group->values.items[j]->shortName;
-								presetMenu.addItem(10000 + i * 100 + j, group->values.items[j]->niceName, true, pt);
+								bool pt = link->presetParamName == group->values.getItemAt(j)->shortName;
+								presetMenu.addItem(10000 + i * 100 + j, group->values.getItemAt(j)->niceName, true, pt);
 							}
 
 							itMenu.addSubMenu("Presets : " + pList->niceName, presetMenu, true, Image(), t);
@@ -197,12 +199,12 @@ void LinkableParameterEditor::buttonClicked(Button* b)
 				{
 					int r = result - 10000;
 					int listIndex = floorf(r / 100);
-					if (CVPresetMultiplexList* pList = dynamic_cast<CVPresetMultiplexList*>(link->multiplex->listManager.items[listIndex]))
+					if (CVPresetMultiplexList* pList = dynamic_cast<CVPresetMultiplexList*>(link->multiplex->listManager.getItemAt(listIndex)))
 					{
 						if (CVGroup* group = dynamic_cast<CVGroup*>(pList->cvTarget->targetContainer.get()))
 						{
 							int pIndex = r - listIndex * 100;
-							String pName = group->values.items[pIndex]->shortName;
+							String pName = group->values.getItemAt(pIndex)->shortName;
 							link->setLinkedPresetParam(pList, pName);
 
 						}
@@ -210,7 +212,7 @@ void LinkableParameterEditor::buttonClicked(Button* b)
 				}
 				else if (result >= 1000)
 				{
-					link->setLinkedList(link->multiplex->listManager.items[result - 1000]);
+					link->setLinkedList(link->multiplex->listManager.getItemAt(result - 1000));
 				}
 				else
 				{

@@ -22,11 +22,11 @@ void Mapping2DTimeline::paint(Graphics& g)
 	if (mappingLayer->curve.keySyncMode->boolValue())
 	{
 		g.setColour(bgColor);
-		for (auto& k : mappingLayer->curve.items)
-		{
-			float p = k->curvePosition / mappingLayer->curve.length->floatValue();
-			g.drawHorizontalLine(getHeight() * (1 - p), 0, getWidth());
-		}
+		mappingLayer->curve.callFunctionOnItems([&](auto k)
+			{
+				float p = k->curvePosition / mappingLayer->curve.length->floatValue();
+				g.drawHorizontalLine(getHeight() * (1 - p), 0, getWidth());
+			});
 	}
 
 	if (!mappingLayer->curve.bounds.isEmpty())

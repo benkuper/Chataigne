@@ -129,7 +129,7 @@ void ConditionManager::addItemInternal(Condition* c, var data)
 {
 	c->setForceDisabled(forceDisabled);
 	c->addConditionListener(this);
-	conditionOperator->hideInEditor = items.size() <= 1;
+	conditionOperator->hideInEditor = getNumItems() <= 1;
 	StandardCondition* sc = dynamic_cast<StandardCondition*>(c);
 	if (sc != nullptr)
 	{
@@ -141,7 +141,7 @@ void ConditionManager::addItemInternal(Condition* c, var data)
 void ConditionManager::removeItemInternal(Condition* c)
 {
 	c->removeConditionListener(this);
-	conditionOperator->hideInEditor = items.size() <= 1;
+	conditionOperator->hideInEditor = getNumItems() <= 1;
 
 	sequentialConditionIndices.fill(0);
 	conditionManagerAsyncNotifier.addMessage(new ConditionManagerEvent(ConditionManagerEvent::SEQUENTIAL_CONDITION_INDEX_CHANGED, this));
@@ -162,7 +162,7 @@ void ConditionManager::setForceDisabled(bool value, bool force)
 		isValids.fill(false);
 	}
 
-	for (auto& i : items) i->setForceDisabled(value);
+	callFunctionOnItems([value](auto i) { i->setForceDisabled(value); });
 
 	for (int i = 0; i < getMultiplexCount(); i++) checkAllConditions(i);
 }
@@ -177,13 +177,14 @@ void ConditionManager::setValid(int multiplexIndex, bool value, bool dispatchOnl
 	if (isValids[multiplexIndex] && conditionOperator->getValueDataAsEnum<ConditionOperator>() == SEQUENTIAL)
 	{
 		int nextIndex = sequentialConditionIndices[multiplexIndex] + 1;
-		while (nextIndex < items.size())
+		int numItems = getNumItems();
+		while (nextIndex < numItems)
 		{
-			if (items[nextIndex]->enabled->boolValue()) break;
+			if (getItemAt(nextIndex)->enabled->boolValue()) break;
 			nextIndex++;
 		}
 
-		if (nextIndex == items.size()) nextIndex = 0;
+		if (nextIndex == numItems) nextIndex = 0;
 
 		setSequentialConditionIndices(nextIndex, multiplexIndex);
 		setValid(multiplexIndex, false);
@@ -208,7 +209,7 @@ void ConditionManager::setSequentialConditionIndices(int index, int multiplexInd
 
 void ConditionManager::forceCheck()
 {
-	for (auto& i : items) i->forceCheck();
+	callFunctionOnItems([](auto i) { i->forceCheck(); });
 }
 
 void ConditionManager::checkAllConditions(int multiplexIndex, bool emptyIsValid, bool dispatchOnlyOnValidationChange, int sourceConditionIndex)
@@ -226,11 +227,11 @@ void ConditionManager::checkAllConditions(int multiplexIndex, bool emptyIsValid,
 		break;
 
 	case ConditionOperator::SEQUENTIAL:
-		if (items.size() == 0) valid = emptyIsValid;
+		if (!hasItems()) valid = emptyIsValid;
 		else if (sourceConditionIndex == sequentialConditionIndices[multiplexIndex])
 		{
-			jassert(sequentialConditionIndices[multiplexIndex] < items.size() && items[sequentialConditionIndices[multiplexIndex]]->enabled->boolValue()); //just loop, shoult not happen
-			valid = items[sequentialConditionIndices[multiplexIndex]]->getIsValid(multiplexIndex);
+			jassert(sequentialConditionIndices[multiplexIndex] < getNumItems() && getItemAt(sequentialConditionIndices[multiplexIndex])->enabled->boolValue()); //just loop, shoult not happen
+			valid = getItemAt(sequentialConditionIndices[multiplexIndex])->getIsValid(multiplexIndex);
 		}
 
 	}
@@ -246,12 +247,12 @@ void ConditionManager::checkAllConditions(int multiplexIndex, bool emptyIsValid,
 	}
 	else if (valid != validationTargets[multiplexIndex])
 	{
-		
+
 		if (valid != isValids[multiplexIndex])
 		{
 			setValidationProgress(multiplexIndex, valid ? 0 : 1);
 			validationTargets.set(multiplexIndex, valid);
-			
+
 			prevTimerTimes.set(multiplexIndex, Time::getMillisecondCounterHiRes() / 1000.0);
 			startTimer(multiplexIndex, 20);
 		}
@@ -284,18 +285,20 @@ void ConditionManager::conditionValidationChanged(Condition* c, int multiplexInd
 	if (StandardCondition* sc = dynamic_cast<StandardCondition*>(c))
 	{
 		isCheckingOtherConditionsWithSameSource = true;
-		for (auto& i : items)
-		{
-			if (i == c) continue;
-			if (StandardCondition* otherSC = dynamic_cast<StandardCondition*>(i))
+
+		callFunctionOnItems([&](auto i)
 			{
-				if (sc->sourceControllable == otherSC->sourceControllable) otherSC->checkComparator(multiplexIndex);
-			}
-		}
+				if (i == c) return;
+				if (StandardCondition* otherSC = dynamic_cast<StandardCondition*>(i))
+				{
+					if (sc->sourceControllable == otherSC->sourceControllable) otherSC->checkComparator(multiplexIndex);
+				}
+			});
+
 		isCheckingOtherConditionsWithSameSource = false;
 	}
 
-	checkAllConditions(multiplexIndex, false, dispatchOnChangeOnly, items.indexOf(c));
+	checkAllConditions(multiplexIndex, false, dispatchOnChangeOnly, getItemIndex(c));
 }
 
 void ConditionManager::onContainerParameterChanged(Parameter* p)
@@ -351,9 +354,11 @@ void ConditionManager::afterLoadJSONDataInternal()
 
 bool ConditionManager::areAllConditionsValid(int multiplexIndex, bool emptyIsValid)
 {
-	if (items.size() == 0) return emptyIsValid;
+	if (!hasItems()) return emptyIsValid;
 
 	int conditionsChecked = 0;
+
+	auto items = getItems();
 	for (auto& c : items)
 	{
 		if (!c->enabled->boolValue()) continue;
@@ -367,9 +372,11 @@ bool ConditionManager::areAllConditionsValid(int multiplexIndex, bool emptyIsVal
 
 bool ConditionManager::isAtLeastOneConditionValid(int multiplexIndex, bool emptyIsValid)
 {
-	if (items.size() == 0) return emptyIsValid;
+	if (!hasItems()) return emptyIsValid;
 
 	int conditionsChecked = 0;
+
+	auto items = getItems();
 	for (auto& c : items)
 	{
 		if (!c->enabled->boolValue()) continue;
@@ -384,27 +391,24 @@ bool ConditionManager::isAtLeastOneConditionValid(int multiplexIndex, bool empty
 int ConditionManager::getNumEnabledConditions()
 {
 	int result = 0;
-	for (auto& c : items)
-	{
-		if (c->enabled->boolValue()) result++;
-	}
+	callFunctionOnItems([&](auto c) { if (c->enabled->boolValue()) result++; });
 	return result;
 }
 
 int ConditionManager::getNumValidConditions(int multiplexIndex)
 {
 	int result = 0;
-	for (auto& c : items)
-	{
-		if (!c->enabled->boolValue()) continue;
-		if (c->getIsValid(multiplexIndex)) result++;
-	}
+	callFunctionOnItems([&](auto c)
+		{
+			if (!c->enabled->boolValue()) return;
+			if (c->getIsValid(multiplexIndex)) result++;
+		});
 	return result;
 }
 
 bool ConditionManager::getIsValid(int multiplexIndex, bool emptyIsValid)
 {
-	return (multiplexIndex >= 0 && isValids[multiplexIndex]) || (emptyIsValid && items.size() == 0);
+	return (multiplexIndex >= 0 && isValids[multiplexIndex]) || (emptyIsValid && getNumItems() == 0);
 }
 
 void ConditionManager::dispatchConditionValidationChanged(int multiplexIndex, bool dispatchOnlyOnValidationChange)

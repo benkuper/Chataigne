@@ -72,7 +72,7 @@ void ModuleManager::showAllValuesAndGetControllable(const StringArray& typeFilte
 		Module* m = mList[i];
 		ControllableChooserPopupMenu* vCC = new ControllableChooserPopupMenu(&m->valuesCC, i * maxValuesPerModule, -1, typeFilters, excludeTypeFilters);
 		getInstance()->modulesMenu.add(vCC);
-		if (i == ModuleManager::getInstance()->items.size()) menu.addSeparator(); // Separator between user created module and special modules
+		if (i == ModuleManager::getInstance()->getNumItems()) menu.addSeparator(); // Separator between user created module and special modules
 		menu.addSubMenu(m->niceName, *vCC);
 	}
 
@@ -126,7 +126,8 @@ bool ModuleManager::checkControllableIsAValue(Controllable* c)
 PopupMenu ModuleManager::getAllModulesCommandMenu(CommandContext context, bool multiplexMode)
 {
 	PopupMenu menu;
-	for (int i = 0; i < items.size(); ++i) menu.addSubMenu(items[i]->niceName, items[i]->getCommandMenu(i * 1000, context));
+	int numItems = getNumItems();
+	for (int i = 0; i < numItems; ++i) menu.addSubMenu(getItemAt(i)->niceName, getItemAt(i)->getCommandMenu(i * 1000, context));
 	menu.addSeparator();
 	menu.addSubMenu(StateManager::getInstance()->module->niceName, StateManager::getInstance()->module->getCommandMenu(-1000, context));
 	menu.addSubMenu(ChataigneSequenceManager::getInstance()->module->niceName, ChataigneSequenceManager::getInstance()->module->getCommandMenu(-2000, context));
@@ -175,7 +176,7 @@ CommandDefinition* ModuleManager::getCommandDefinitionForItemID(int itemID, Modu
 	else if (m == nullptr)
 	{
 		int moduleIndex = (int)floor(itemID / 1000);
-		m = items[moduleIndex];
+		m = getItemAt(moduleIndex);
 	}
 
 
@@ -188,7 +189,7 @@ CommandDefinition* ModuleManager::getCommandDefinitionForItemID(int itemID, Modu
 Array<Module*> ModuleManager::getModuleList(bool includeSpecialModules)
 {
 	Array<Module*> mList;
-	for (auto& m : ModuleManager::getInstance()->items) mList.add(m);
+	ModuleManager::getInstance()->callFunctionOnItems([&](auto m) { mList.add(m); });
 
 	if (includeSpecialModules)
 	{

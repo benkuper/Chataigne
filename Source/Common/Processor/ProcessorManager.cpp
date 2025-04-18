@@ -32,7 +32,7 @@ void ProcessorManager::setForceDisabled(bool value, bool force, bool fromActivat
 {
 	if (forceDisabled == value && !force) return;
 	forceDisabled = value;
-	for (auto& i : items) i->setForceDisabled(forceDisabled, force, fromActivation);
+	callFunctionOnItems([&](auto i) { i->setForceDisabled(forceDisabled, force, fromActivation); });
 }
 
 void ProcessorManager::addItemInternal(Processor* item, var data)
@@ -42,7 +42,7 @@ void ProcessorManager::addItemInternal(Processor* item, var data)
 
 void ProcessorManager::addItemsInternal(Array<Processor*> item, var data)
 {
-	for (auto& item : items) item->setForceDisabled(forceDisabled);
+	callFunctionOnItems([&](auto i) { i->setForceDisabled(forceDisabled); });
 }
 
 bool ProcessorManager::canAddItemOfType(const String& typeToCheck)
@@ -53,30 +53,32 @@ bool ProcessorManager::canAddItemOfType(const String& typeToCheck)
 Array<Action*> ProcessorManager::getAllActions(bool includeMultiplexes, bool includeConductors)
 {
 	Array<Action*> result;
-	for (auto& i : items) 
-	{
-		if (i == nullptr) continue;
-		switch (i->type)
+	callFunctionOnItems([&](auto i)
 		{
-		case Processor::ACTION: result.add(dynamic_cast<Action*>(i)); break;
-		case Processor::MULTIPLEX: if (includeMultiplexes) result.addArray(((Multiplex*)i)->processorManager.getAllActions()); break;
-		case Processor::CONDUCTOR: if (includeConductors) result.addArray(((Conductor*)i)->processorManager.getAllActions()); break;
+			if (i == nullptr) return;
+			switch (i->type)
+			{
+			case Processor::ACTION: result.add(dynamic_cast<Action*>(i)); break;
+			case Processor::MULTIPLEX: if (includeMultiplexes) result.addArray(((Multiplex*)i)->processorManager.getAllActions()); break;
+			case Processor::CONDUCTOR: if (includeConductors) result.addArray(((Conductor*)i)->processorManager.getAllActions()); break;
 
-            default:
-                break;
-		}
-	}
+			default:
+				break;
+			}
+		});
+
 	return result;
 }
 
 Array<Mapping*> ProcessorManager::getAllMappings(bool includeMultiplexes)
 {
 	Array<Mapping*> result;
-	for (auto& i : items)
-	{
-		if (i->type == Processor::MAPPING) result.add(static_cast<Mapping*>(i));
-		else if (includeMultiplexes && i->type == Processor::MULTIPLEX) result.addArray(((Multiplex*)i)->processorManager.getAllMappings());
-	}
+	callFunctionOnItems([&](auto i)
+		{
+			if (i->type == Processor::MAPPING) result.add(static_cast<Mapping*>(i));
+			else if (includeMultiplexes && i->type == Processor::MULTIPLEX) result.addArray(((Multiplex*)i)->processorManager.getAllMappings());
+		});
+
 	return result;
 }
 
@@ -87,15 +89,15 @@ void ProcessorManager::checkAllActivateActions()
 	for (auto& a : actions)
 	{
 		if (a->cdm == nullptr) continue;
-		for (auto& c : a->cdm->items)
-		{
-			ActivationCondition* ac = dynamic_cast<ActivationCondition*>(c);
-			if (ac != nullptr)
+		a->cdm->callFunctionOnItems([&](auto i)
 			{
-				bool valid = ac->type == ActivationCondition::Type::ON_ACTIVATE && !ac->forceDisabled;
-				for (int i = 0; i < ac->getMultiplexCount(); i++) ac->setValid(i, valid, false);
-			}
-		}
+				ActivationCondition* ac = dynamic_cast<ActivationCondition*>(i);
+				if (ac != nullptr)
+				{
+					bool valid = ac->type == ActivationCondition::Type::ON_ACTIVATE && !ac->forceDisabled;
+					for (int i = 0; i < ac->getMultiplexCount(); i++) ac->setValid(i, valid, false);
+				}
+			});
 
 		/*
 		if (a->actionRoles.contains(Action::ACTIVATE))
@@ -113,14 +115,15 @@ void ProcessorManager::checkAllDeactivateActions()
 	for (auto& a : actions)
 	{
 		if (a->cdm == nullptr) continue;
-		for (auto& c : a->cdm->items)
-		{
-			ActivationCondition* ac = dynamic_cast<ActivationCondition*>(c);
-			if (ac != nullptr)
+
+		a->cdm->callFunctionOnItems([&](auto i)
 			{
-				for (int i = 0; i < ac->getMultiplexCount(); i++) ac->setValid(i, ac->type == ActivationCondition::Type::ON_DEACTIVATE);
-			}
-		}
+				ActivationCondition* ac = dynamic_cast<ActivationCondition*>(i);
+				if (ac != nullptr)
+				{
+					for (int i = 0; i < ac->getMultiplexCount(); i++) ac->setValid(i, ac->type == ActivationCondition::Type::ON_DEACTIVATE);
+				}
+			});
 
 		/*
 		if (a->actionRoles.contains(Action::DEACTIVATE))

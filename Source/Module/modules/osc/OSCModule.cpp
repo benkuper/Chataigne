@@ -173,7 +173,7 @@ void OSCModule::processMessage(const OSCMessage& msg)
 
 	processMessageInternal(msg);
 
-	if (scriptManager->items.size() > 0)
+	if (scriptManager->getNumItems() > 0)
 	{
 		Array<var> params;
 		params.add(msg.getAddressPattern().toString());
@@ -235,15 +235,15 @@ void OSCModule::itemsAdded(Array<OSCOutput*> outputs)
 
 void OSCModule::setupSenders()
 {
-	for (auto& o : outputManager->items)
-	{
-		o->setupSender();
-		if (o->receiver != nullptr && o->listenToOutputFeedback->boolValue())
+	outputManager->callFunctionOnItems([&](auto o)
 		{
-			NLOG(niceName, "Feedback enabled, listening also on port " << o->socket->getBoundPort());
-			o->receiver->addListener(this);
-		}
-	}
+			o->setupSender();
+			if (o->receiver != nullptr && o->listenToOutputFeedback->boolValue())
+			{
+				NLOG(niceName, "Feedback enabled, listening also on port " << o->socket->getBoundPort());
+				o->receiver->addListener(this);
+			}
+		});
 }
 
 void OSCModule::sendOSC(const OSCMessage& msg)
@@ -275,7 +275,7 @@ void OSCModule::sendOSC(const OSCMessage& msg, String ip, int port)
 	}
 	else
 	{
-		for (auto& o : outputManager->items) o->sendOSC(msg);
+		outputManager->callFunctionOnItems([&](auto o) { o->sendOSC(msg); });
 	}
 }
 
@@ -458,7 +458,7 @@ void OSCModule::createThruControllable(ControllableContainer* cc)
 
 void OSCModule::setupFromManualCreation()
 {
-	if (outputManager != nullptr && outputManager->items.isEmpty())
+	if (outputManager != nullptr && !outputManager->hasItems())
 	{
 		OSCOutput* o = outputManager->addItem(nullptr, var(), false);
 		o->remotePort->setValue(defaultRemotePort);
@@ -562,10 +562,10 @@ void OSCModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc, 
 	{
 		bool rv = receiveCC != nullptr ? receiveCC->enabled->boolValue() : false;
 		bool sv = outputManager->enabled->boolValue();
-		for (auto& o : outputManager->items) o->setForceDisabled(!sv);
+		outputManager->callFunctionOnItems([&](auto o) { o->setForceDisabled(!sv); });
 		setupIOConfiguration(rv, sv);
 
-	}
+			}
 	else if (receiveCC != nullptr && c == receiveCC->enabled)
 	{
 		bool rv = receiveCC->enabled->boolValue();
@@ -598,208 +598,208 @@ void OSCModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc, 
 			}
 		}
 	}
-}
-
-void OSCModule::oscMessageReceived(const OSCMessage& message)
-{
-	if (!enabled->boolValue()) return;
-	processMessage(message);
-}
-
-void OSCModule::oscBundleReceived(const OSCBundle& bundle)
-{
-	if (!enabled->boolValue()) return;
-	for (auto& m : bundle)
-	{
-		processMessage(m.getMessage());
 	}
-}
 
-void OSCModule::run()
-{
-	setupZeroConf();
-}
-
-OSCModule::OSCRouteParams::OSCRouteParams(Module* sourceModule, Controllable* c)
-{
-	bool sourceIsGenericOSC = sourceModule->getTypeString() == "OSC";
-
-	String tAddress;
-
-	if (!sourceIsGenericOSC)
+	void OSCModule::oscMessageReceived(const OSCMessage & message)
 	{
-		tAddress = c->shortName;
+		if (!enabled->boolValue()) return;
+		processMessage(message);
+	}
 
-		ControllableContainer* cc = c->parentContainer;
-		while (cc != nullptr)
+	void OSCModule::oscBundleReceived(const OSCBundle & bundle)
+	{
+		if (!enabled->boolValue()) return;
+		for (auto& m : bundle)
 		{
-			if (cc->shortName != "values")
-			{
-				tAddress = cc->shortName + "/" + tAddress;
-			}
-			Module* m = dynamic_cast<Module*>(cc);
-			if (m != nullptr) break;
-
-			cc = cc->parentContainer;
+			processMessage(m.getMessage());
 		}
 	}
-	else
+
+	void OSCModule::run()
 	{
-		tAddress = c->niceName; //on CustomOSCModule, niceName is the actual address
+		setupZeroConf();
 	}
 
-	if (!tAddress.startsWithChar('/')) tAddress = "/" + tAddress;
-
-	address = addStringParameter("Address", "Route Address", tAddress);
-}
-
-
-
-///// OSC OUTPUT
-
-OSCOutput::OSCOutput() :
-	BaseItem("OSC Output"),
-	Thread("OSC output"),
-	forceDisabled(false),
-	senderIsConnected(false),
-	oscModule(nullptr)
-{
-	isSelectable = false;
-
-	useLocal = addBoolParameter("Local", "Send to Local IP (127.0.0.1). Allow to quickly switch between local and remote IP.", true);
-	remoteHost = addStringParameter("Remote Host", "Remote Host to send to.", "127.0.0.1");
-	remoteHost->autoTrim = true;
-	remoteHost->setEnabled(!useLocal->boolValue());
-	remotePort = addIntParameter("Remote port", "Port on which the remote host is listening to", 9000, 1, 65535);
-	listenToOutputFeedback = addBoolParameter("Listen to Feedback", "If checked, this will listen to the (randomly set) bound port of this sender. This is useful when some softwares automatically detect incoming host and port to send back messages.", false);
-
-
-}
-
-OSCOutput::~OSCOutput()
-{
-	stopThread(1000);
-}
-
-void OSCOutput::setModule(OSCModule* m)
-{
-	oscModule = m;
-	warningResolveInspectable = m;
-	if (!Engine::mainEngine->isLoadingFile) setupSender();
-}
-
-void OSCOutput::setForceDisabled(bool value)
-{
-	if (forceDisabled == value) return;
-	forceDisabled = value;
-	if (!Engine::mainEngine->isLoadingFile) setupSender();
-}
-
-void OSCOutput::onContainerParameterChangedInternal(Parameter* p)
-{
-	if (p == remoteHost || p == remotePort || p == useLocal)
+	OSCModule::OSCRouteParams::OSCRouteParams(Module * sourceModule, Controllable * c)
 	{
-		if (!Engine::mainEngine->isLoadingFile) setupSender();
-		if (p == useLocal) remoteHost->setEnabled(!useLocal->boolValue());
+		bool sourceIsGenericOSC = sourceModule->getTypeString() == "OSC";
+
+		String tAddress;
+
+		if (!sourceIsGenericOSC)
+		{
+			tAddress = c->shortName;
+
+			ControllableContainer* cc = c->parentContainer;
+			while (cc != nullptr)
+			{
+				if (cc->shortName != "values")
+				{
+					tAddress = cc->shortName + "/" + tAddress;
+				}
+				Module* m = dynamic_cast<Module*>(cc);
+				if (m != nullptr) break;
+
+				cc = cc->parentContainer;
+			}
+		}
+		else
+		{
+			tAddress = c->niceName; //on CustomOSCModule, niceName is the actual address
+		}
+
+		if (!tAddress.startsWithChar('/')) tAddress = "/" + tAddress;
+
+		address = addStringParameter("Address", "Route Address", tAddress);
 	}
-	else if (p == enabled)
+
+
+
+	///// OSC OUTPUT
+
+	OSCOutput::OSCOutput() :
+		BaseItem("OSC Output"),
+		Thread("OSC output"),
+		forceDisabled(false),
+		senderIsConnected(false),
+		oscModule(nullptr)
 	{
-		if (!Engine::mainEngine->isLoadingFile) setupSender();
+		isSelectable = false;
+
+		useLocal = addBoolParameter("Local", "Send to Local IP (127.0.0.1). Allow to quickly switch between local and remote IP.", true);
+		remoteHost = addStringParameter("Remote Host", "Remote Host to send to.", "127.0.0.1");
+		remoteHost->autoTrim = true;
+		remoteHost->setEnabled(!useLocal->boolValue());
+		remotePort = addIntParameter("Remote port", "Port on which the remote host is listening to", 9000, 1, 65535);
+		listenToOutputFeedback = addBoolParameter("Listen to Feedback", "If checked, this will listen to the (randomly set) bound port of this sender. This is useful when some softwares automatically detect incoming host and port to send back messages.", false);
+
+
 	}
-	else if (p == listenToOutputFeedback)
-	{
-		setupSender();
-	}
-}
 
-InspectableEditor* OSCOutput::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
-{
-	return new OSCOutputEditor(this, isRoot);
-}
-
-void OSCOutput::setupSender()
-{
-	if (isCurrentlyLoadingData) return;
-	if (oscModule == nullptr) return;
-
-	if (isThreadRunning())
+	OSCOutput::~OSCOutput()
 	{
 		stopThread(1000);
+	}
+
+	void OSCOutput::setModule(OSCModule * m)
+	{
+		oscModule = m;
+		warningResolveInspectable = m;
+		if (!Engine::mainEngine->isLoadingFile) setupSender();
+	}
+
+	void OSCOutput::setForceDisabled(bool value)
+	{
+		if (forceDisabled == value) return;
+		forceDisabled = value;
+		if (!Engine::mainEngine->isLoadingFile) setupSender();
+	}
+
+	void OSCOutput::onContainerParameterChangedInternal(Parameter * p)
+	{
+		if (p == remoteHost || p == remotePort || p == useLocal)
+		{
+			if (!Engine::mainEngine->isLoadingFile) setupSender();
+			if (p == useLocal) remoteHost->setEnabled(!useLocal->boolValue());
+		}
+		else if (p == enabled)
+		{
+			if (!Engine::mainEngine->isLoadingFile) setupSender();
+		}
+		else if (p == listenToOutputFeedback)
+		{
+			setupSender();
+		}
+	}
+
+	InspectableEditor* OSCOutput::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
+	{
+		return new OSCOutputEditor(this, isRoot);
+	}
+
+	void OSCOutput::setupSender()
+	{
+		if (isCurrentlyLoadingData) return;
+		if (oscModule == nullptr) return;
+
+		if (isThreadRunning())
+		{
+			stopThread(1000);
+			// Clear queue
+			const ScopedLock sl(queueLock);
+			while (!messageQueue.empty())
+				messageQueue.pop();
+		}
+
+		senderIsConnected = false;
+		sender.disconnect();
+		socket.reset();
+
+		if (receiver != nullptr) receiver->disconnect();
+		receiver.reset();
+
+		if (!enabled->boolValue() || forceDisabled || Engine::mainEngine->isClearing) return;
+
+		String targetHost = useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue();
+		socket.reset(new DatagramSocket(true));
+		socket->setEnablePortReuse(true);
+		socket->bindToPort(0, oscModule->networkInterface->getIP());
+		senderIsConnected = sender.connectToSocket(*socket, targetHost, remotePort->intValue());
+
+		if (senderIsConnected)
+		{
+			if (listenToOutputFeedback->boolValue())
+			{
+				receiver.reset(new OSCReceiver());
+				receiver->connectToSocket(*socket);
+			}
+			startThread();
+
+			NLOG(niceName, "Now sending to " + targetHost + ":" + remotePort->stringValue());
+			clearWarning();
+		}
+		else
+		{
+			NLOGWARNING(niceName, "Could not connect to " << targetHost << ":" + remotePort->stringValue());
+			setWarningMessage("Could not connect to " + targetHost + ":" + remotePort->stringValue());
+		}
+	}
+
+	void OSCOutput::sendOSC(const OSCMessage & m)
+	{
+		if (!enabled->boolValue() || forceDisabled || !senderIsConnected) return;
+
+		{
+			const ScopedLock sl(queueLock);
+			messageQueue.push(std::make_unique<OSCMessage>(m));
+		}
+		notify();
+	}
+
+
+	void OSCOutput::run()
+	{
+		while (!Engine::mainEngine->isClearing && !threadShouldExit())
+		{
+			std::unique_ptr<OSCMessage> msgToSend;
+
+			{
+				const ScopedLock sl(queueLock);
+				if (!messageQueue.empty())
+				{
+					msgToSend = std::move(messageQueue.front());
+					messageQueue.pop();
+				}
+			}
+
+			if (msgToSend)
+				sender.send(*msgToSend);
+			else
+				wait(1000); // notify() is called when a message is added to the queue
+		}
+
 		// Clear queue
 		const ScopedLock sl(queueLock);
 		while (!messageQueue.empty())
 			messageQueue.pop();
 	}
-
-	senderIsConnected = false;
-	sender.disconnect();
-	socket.reset();
-
-	if (receiver != nullptr) receiver->disconnect();
-	receiver.reset();
-
-	if (!enabled->boolValue() || forceDisabled || Engine::mainEngine->isClearing) return;
-
-	String targetHost = useLocal->boolValue() ? "127.0.0.1" : remoteHost->stringValue();
-	socket.reset(new DatagramSocket(true));
-	socket->setEnablePortReuse(true);
-	socket->bindToPort(0, oscModule->networkInterface->getIP());
-	senderIsConnected = sender.connectToSocket(*socket, targetHost, remotePort->intValue());
-
-	if (senderIsConnected)
-	{
-		if (listenToOutputFeedback->boolValue())
-		{
-			receiver.reset(new OSCReceiver());
-			receiver->connectToSocket(*socket);
-		}
-		startThread();
-
-		NLOG(niceName, "Now sending to " + targetHost + ":" + remotePort->stringValue());
-		clearWarning();
-	}
-	else
-	{
-		NLOGWARNING(niceName, "Could not connect to " << targetHost << ":" + remotePort->stringValue());
-		setWarningMessage("Could not connect to " + targetHost + ":" + remotePort->stringValue());
-	}
-}
-
-void OSCOutput::sendOSC(const OSCMessage& m)
-{
-	if (!enabled->boolValue() || forceDisabled || !senderIsConnected) return;
-
-	{
-		const ScopedLock sl(queueLock);
-		messageQueue.push(std::make_unique<OSCMessage>(m));
-	}
-	notify();
-}
-
-
-void OSCOutput::run()
-{
-	while (!Engine::mainEngine->isClearing && !threadShouldExit())
-	{
-		std::unique_ptr<OSCMessage> msgToSend;
-
-		{
-			const ScopedLock sl(queueLock);
-			if (!messageQueue.empty())
-			{
-				msgToSend = std::move(messageQueue.front());
-				messageQueue.pop();
-			}
-		}
-
-		if (msgToSend)
-			sender.send(*msgToSend);
-		else
-			wait(1000); // notify() is called when a message is added to the queue
-	}
-
-	// Clear queue
-	const ScopedLock sl(queueLock);
-	while (!messageQueue.empty())
-		messageQueue.pop();
-}

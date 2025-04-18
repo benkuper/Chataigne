@@ -328,7 +328,7 @@ void StreamingModule::processDataBytes(Array<uint8_t> data)
 
 	processDataBytesInternal(data);
 
-	if (scriptManager->items.size() > 0)
+	if (scriptManager->getNumItems() > 0)
 	{
 		var args;
 		for (auto& d : data) args.append(d);

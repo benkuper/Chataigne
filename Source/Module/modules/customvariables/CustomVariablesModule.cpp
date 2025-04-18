@@ -159,10 +159,10 @@ void GenericControllableManagerLinkedContainer::resetAndBuildValues(bool syncVal
 	}
 
 	clear();
-	for (auto& gci : manager->items)
+	manager->callFunctionOnItems([&](auto gci)
 	{
 		addValueFromItem(dynamic_cast<Parameter*>(gci->controllable));
-	}
+	});
 }
 
 void GenericControllableManagerLinkedContainer::addValueFromItem(Parameter* source)

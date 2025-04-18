@@ -82,7 +82,7 @@ void SignalModule::onControllableFeedbackUpdateInternal(ControllableContainer* c
 		{
 			customCurve = new Automation("Custom Curve");
 			customCurve->addKey(0, 0, false);
-			customCurve->items[0]->easingType->setValueWithData(Easing::BEZIER);
+			customCurve->getFirstItem()->easingType->setValueWithData(Easing::BEZIER);
 			customCurve->addKey(1, 1, false);
 			moduleParams.addChildControllableContainer(customCurve, true);
 		}

@@ -47,11 +47,12 @@ void MappingInputManager::lockInput(Array<Parameter*> input)
 Array<Parameter*> MappingInputManager::getInputReferences(int multiplexIndex)
 {
 	Array<Parameter*> result;
-	for (auto& i : items)
-	{
-		Parameter* ref = i->getInputAt(multiplexIndex);
-		if (i == nullptr || ref == nullptr) continue;
-		result.add(ref);
-	}
+	callFunctionOnItems([&](auto i)
+		{
+			Parameter* ref = i->getInputAt(multiplexIndex);
+			if (i == nullptr || ref == nullptr) return;
+			result.add(ref);
+		});
+
 	return result;
 }

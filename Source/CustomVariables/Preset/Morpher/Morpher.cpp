@@ -69,10 +69,10 @@ Morpher::Morpher(CVPresetManager* presetManager) :
 
 Morpher::~Morpher()
 {
-	for (auto& p : presetManager->items)
-	{
-		p->removeControllableContainerListener(this);
-	}
+	presetManager->callFunctionOnItems([&](auto p)
+		{
+			p->removeControllableContainerListener(this);
+		});
 
 	presetManager->removeManagerListener(this);
 	presetManager->removeControllableContainerListener(this);
@@ -85,16 +85,19 @@ Morpher::~Morpher()
 Array<Point<float>> Morpher::getNormalizedTargetPoints()
 {
 	Array<Point<float>> result;
-	for (CVPreset* mt : presetManager->items) if (mt->enabled->boolValue()) result.add(mt->viewUIPosition->getPoint());
+	presetManager->callFunctionOnItems([&](auto mt) { if (mt->enabled->boolValue()) result.add(mt->viewUIPosition->getPoint()); });
 	return result;
 }
 
 CVPreset* Morpher::getEnabledTargetAtIndex(int index)
 {
-	ScopedLock lock(presetManager->items.getLock());
+	//GROUP REFACTOR removed lock here, should keep it ?
+	//ScopedLock lock(presetManager->items.getLock());
 
 	int i = 0;
-	for (auto& mt : presetManager->items)
+
+	auto items = presetManager->getItems();
+	for (auto& mt : items)
 	{
 		if (!mt->enabled->boolValue()) continue;
 		if (i == index) return mt;
@@ -165,7 +168,7 @@ void Morpher::computeWeights()
 
 		Point<float> mp = mainTarget.viewUIPosition->getPoint();
 
-		for (CVPreset* mt : presetManager->items) mt->weight->setValue(0);
+		presetManager->callFunctionOnItems([&](auto p) { p->weight->setValue(0); });
 
 		HashMap<CVPreset*, float> rawWeights;
 		float totalRawWeight = 0;
@@ -392,13 +395,13 @@ void Morpher::run()
 		attractionDir.setXY(0, 0);
 		Point<float> mp = mainTarget.viewUIPosition->getPoint();
 		int num = 0;
-		for (auto& t : presetManager->items)
-		{
-			if (!t->enabled->boolValue()) continue;
-			attractionDir += (t->viewUIPosition->getPoint() - mp) * t->attraction->floatValue();
-			t->attraction->setValue(t->attraction->floatValue() - attractionDecay->floatValue() * timeFactor);
-			num++;
-		}
+		presetManager->callFunctionOnItems([&](auto t)
+			{
+				if (!t->enabled->boolValue()) return;
+				attractionDir += (t->viewUIPosition->getPoint() - mp) * t->attraction->floatValue();
+				t->attraction->setValue(t->attraction->floatValue() - attractionDecay->floatValue() * timeFactor);
+				num++;
+			});
 
 		AttractionMode am = attractionMode->getValueDataAsEnum<AttractionMode>();
 		switch (am)

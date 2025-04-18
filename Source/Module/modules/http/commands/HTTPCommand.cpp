@@ -58,7 +58,7 @@ HTTPCommand::~HTTPCommand()
 void HTTPCommand::triggerInternal(int multiplexIndex)
 {
 	StringPairArray requestParams;
-	for (auto& p : customValuesManager->items) requestParams.set(p->niceName, p->getLinkedValue(multiplexIndex));
+	customValuesManager->callFunctionOnItems([&](auto p) { requestParams.set(p->niceName, p->getLinkedValue(multiplexIndex)); });
 
 	StringPairArray headers;
 

@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    FFTAnalyzerManager.cpp
-    Created: 14 May 2019 4:08:37pm
-    Author:  bkupe
+	FFTAnalyzerManager.cpp
+	Created: 14 May 2019 4:08:37pm
+	Author:  bkupe
 
   ==============================================================================
 */
@@ -58,10 +58,10 @@ void FFTAnalyzerManager::process(const float* samples, int numSamples)
 			tmpScopeData[i] = level;                                  // [4]
 		}
 
-		for (auto& i : items)
-		{
-			i->process(tmpScopeData, scopeSize);
-		}
+		callFunctionOnItems([&tmpScopeData](auto i)
+			{
+				i->process(tmpScopeData, scopeSize);
+			});
 
 		{
 			const ScopedLock lock(scopeDataMutex);
@@ -71,7 +71,7 @@ void FFTAnalyzerManager::process(const float* samples, int numSamples)
 		nextFFTBlockReady = false;
 	}
 
-	if(editor != nullptr) dynamic_cast<FFTAnalyzerManagerEditor*>(editor)->viz.shouldRepaint = true;
+	if (editor != nullptr) dynamic_cast<FFTAnalyzerManagerEditor*>(editor)->viz.shouldRepaint = true;
 }
 
 void FFTAnalyzerManager::copyScopeData(float* scopeData, int maxSize) const
@@ -97,7 +97,7 @@ void FFTAnalyzerManager::pushNextSampleIntoFifo(float sample)
 
 InspectableEditor* FFTAnalyzerManager::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
 {
-	if(editor == nullptr) editor = new FFTAnalyzerManagerEditor(this, isRoot);
+	if (editor == nullptr) editor = new FFTAnalyzerManagerEditor(this, isRoot);
 	return editor;
 }
 
@@ -113,7 +113,7 @@ var FFTAnalyzerManager::getFFTDataFromScript(const var::NativeFunctionArgs& a)
 	{
 		result = Array<var>{};
 	}
-	
+
 	Array<var>& resultArray = *result.getArray();
 	resultArray.clearQuick();
 
