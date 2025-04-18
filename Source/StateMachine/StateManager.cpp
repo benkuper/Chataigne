@@ -114,7 +114,7 @@ void StateManager::checkStartActivationOverlap(State* s, Array<State*> statesToA
 	Array<State*> forceActiveStates;
 	for (auto& ss : linkedStates)
 	{
-		if (ss->loadActivationBehavior->getValueDataAsEnum<typename State::LoadBehavior>() == State::ACTIVE) forceActiveStates.add(ss);
+		if (ss->loadActivationBehavior->getValueDataAsEnum<State::LoadBehavior>() == State::ACTIVE) forceActiveStates.add(ss);
 		else ss->clearWarning();
 	}
 
