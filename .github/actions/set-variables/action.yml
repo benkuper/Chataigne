@@ -38,7 +38,7 @@ runs:
       
     - name: Set JUCE branch
       run: |
-        if [[ "${{ github.ref }}" == "refs/heads/juce8" ]]
+        if [[ "${{ github.ref }}" != "refs/heads/master" ]]
         then
           echo "Using JUCE 8 branch"
           echo "juce-branch=juce8_local" >> $GITHUB_ENV
