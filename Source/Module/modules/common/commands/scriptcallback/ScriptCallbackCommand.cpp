@@ -46,7 +46,7 @@ void ScriptCallbackCommand::triggerInternal(int multiplexIndex)
 	Array<var> args;
 	for (auto& i : customValuesManager->items) args.add(i->getLinkedValue(multiplexIndex));
 	String mName = moduleMethods->getValueData().toString();
-	if(mName.isNotEmpty()) module->scriptManager->callFunctionOnAllItems(mName, args);
+	if(mName.isNotEmpty()) module->scriptManager->callFunctionOnAllScripts(mName, args);
 }
 
 var ScriptCallbackCommand::getJSONData(bool includeNonOverriden)

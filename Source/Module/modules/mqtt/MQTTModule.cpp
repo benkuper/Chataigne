@@ -380,7 +380,7 @@ void MQTTClientModule::on_message(const mosquitto_message* message)
 
 	args.add(data);
 	args.add(topic);
-	scriptManager->callFunctionOnAllItems(dataEventId, args);
+	scriptManager->callFunctionOnAllScripts(dataEventId, args);
 
 	inActivityTrigger->trigger();
 

@@ -461,7 +461,7 @@ void DMXModule::dmxDataInChanged(DMXDevice*, int net, int subnet, int universe, 
 		var data;
 		for (auto& v : values) data.append(v);
 		args.add(data);
-		scriptManager->callFunctionOnAllItems(dmxEventId, args);
+		scriptManager->callFunctionOnAllScripts(dmxEventId, args);
 	}
 }
 

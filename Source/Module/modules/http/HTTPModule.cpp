@@ -158,7 +158,7 @@ void HTTPModule::processRequest(Request* request)
 		}
 
 		args.add(request->url.toString(true));
-		scriptManager->callFunctionOnAllItems(dataEventId, args);
+		scriptManager->callFunctionOnAllScripts(dataEventId, args);
 	}
 	else
 	{

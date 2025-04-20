@@ -380,7 +380,7 @@ void PJLinkModule::processClientLine(PJLinkClient* c, const String& message)
 	Array<var> args;
 	args.add(c->id);
 	args.add(message);
-	scriptManager->callFunctionOnAllItems(pjLinkDataReceivedId, args);
+	scriptManager->callFunctionOnAllScripts(pjLinkDataReceivedId, args);
 
 	if (message.contains("PJLINK"))
 	{

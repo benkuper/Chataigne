@@ -146,13 +146,13 @@ void Module::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Con
 	{
 		Array<var> args;
 		args.add(c->getScriptObject());
-		scriptManager->callFunctionOnAllItems("moduleValueChanged", args);
+		scriptManager->callFunctionOnAllScripts("moduleValueChanged", args);
 	}
 	else if (cc == &moduleParams)
 	{
 		Array<var> args;
 		args.add(c->getScriptObject());
-		scriptManager->callFunctionOnAllItems("moduleParameterChanged", args);
+		scriptManager->callFunctionOnAllScripts("moduleParameterChanged", args);
 	}
 
 	if (c->type != Controllable::TRIGGER) processDependencies((Parameter*)c);

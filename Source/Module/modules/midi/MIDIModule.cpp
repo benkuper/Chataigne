@@ -371,7 +371,7 @@ void MIDIModule::noteOnReceived(const int& channel, const int& pitch, const int&
 	oneNoteOn->setValue(true);
 	notePlayed->trigger();
 
-	if (scriptManager->items.size() > 0) scriptManager->callFunctionOnAllItems(noteOnEventId, Array<var>(channel, pitch, velocity));
+	if (scriptManager->items.size() > 0) scriptManager->callFunctionOnAllScripts(noteOnEventId, Array<var>(channel, pitch, velocity));
 }
 
 void MIDIModule::noteOffReceived(const int& channel, const int& pitch, const int& velocity)
@@ -388,7 +388,7 @@ void MIDIModule::noteOffReceived(const int& channel, const int& pitch, const int
 
 	if (useGenericControls) updateValue(channel, noteName, velocity, MIDIValueParameter::NOTE_OFF, pitch);
 
-	if (scriptManager->items.size() > 0) scriptManager->callFunctionOnAllItems(noteOffEventId, Array<var>(channel, pitch, velocity));
+	if (scriptManager->items.size() > 0) scriptManager->callFunctionOnAllScripts(noteOffEventId, Array<var>(channel, pitch, velocity));
 
 }
 
@@ -400,7 +400,7 @@ void MIDIModule::controlChangeReceived(const int& channel, const int& number, co
 
 	if (useGenericControls) updateValue(channel, "CC" + String(number), value, MIDIValueParameter::CONTROL_CHANGE, number);
 
-	if (scriptManager->items.size() > 0) scriptManager->callFunctionOnAllItems(ccEventId, Array<var>(channel, number, value));
+	if (scriptManager->items.size() > 0) scriptManager->callFunctionOnAllScripts(ccEventId, Array<var>(channel, number, value));
 
 }
 
@@ -412,7 +412,7 @@ void MIDIModule::programChangeReceived(const int& channel, const int& value)
 
 	if (useGenericControls) updateValue(channel, "ProgramChange", value, MIDIValueParameter::PROGRAM_CHANGE, 0);
 
-	if (scriptManager->items.size() > 0) scriptManager->callFunctionOnAllItems(programChangeId, Array<var>(channel, value));
+	if (scriptManager->items.size() > 0) scriptManager->callFunctionOnAllScripts(programChangeId, Array<var>(channel, value));
 }
 
 void MIDIModule::sysExReceived(const MidiMessage& msg)
@@ -439,7 +439,7 @@ void MIDIModule::sysExReceived(const MidiMessage& msg)
 	for (auto& d : data) sysexData.append(d);
 	Array<var> args;
 	args.add(sysexData);
-	scriptManager->callFunctionOnAllItems(sysexEventId, args);
+	scriptManager->callFunctionOnAllScripts(sysexEventId, args);
 }
 
 void MIDIModule::fullFrameTimecodeReceived(const MidiMessage& msg)
@@ -466,7 +466,7 @@ void MIDIModule::pitchWheelReceived(const int& channel, const int& value)
 
 	if (useGenericControls) updateValue(channel, "PitchWheel", value, MIDIValueParameter::PITCH_WHEEL, 0);
 
-	if (scriptManager->items.size() > 0) scriptManager->callFunctionOnAllItems(pitchWheelEventId, Array<var>(channel, value));
+	if (scriptManager->items.size() > 0) scriptManager->callFunctionOnAllScripts(pitchWheelEventId, Array<var>(channel, value));
 }
 
 void MIDIModule::channelPressureReceived(const int& channel, const int& value)
@@ -477,7 +477,7 @@ void MIDIModule::channelPressureReceived(const int& channel, const int& value)
 
 	if (useGenericControls) updateValue(channel, "ChannelPressure", value, MIDIValueParameter::CHANNEL_PRESSURE, 0);
 
-	if (scriptManager->items.size() > 0) scriptManager->callFunctionOnAllItems(channelPressureId, Array<var>(channel, value));
+	if (scriptManager->items.size() > 0) scriptManager->callFunctionOnAllScripts(channelPressureId, Array<var>(channel, value));
 }
 
 void MIDIModule::afterTouchReceived(const int& channel, const int& note, const int& value)
@@ -488,7 +488,7 @@ void MIDIModule::afterTouchReceived(const int& channel, const int& note, const i
 
 	if (useGenericControls) updateValue(channel, "AfterTouch " + (usePitchForNoteNames->boolValue() ? "Pitch " + String(note) : MIDIManager::getNoteName(note)), value, MIDIValueParameter::AFTER_TOUCH, note);
 
-	if (scriptManager->items.size() > 0) scriptManager->callFunctionOnAllItems(afterTouchId, Array<var>(channel, note, value));
+	if (scriptManager->items.size() > 0) scriptManager->callFunctionOnAllScripts(afterTouchId, Array<var>(channel, note, value));
 }
 
 void MIDIModule::midiMessageReceived(const MidiMessage& msg)
@@ -596,7 +596,7 @@ void MIDIModule::midiMachineControlCommandReceived(const MidiMessage::MidiMachin
 	inActivityTrigger->trigger();
 	if (logIncomingData->boolValue()) NLOG(niceName, "MMC Command : " << (int)type);
 
-	if (scriptManager->items.size() > 0) scriptManager->callFunctionOnAllItems(machineControlCommandId, Array<var>((int)type));
+	if (scriptManager->items.size() > 0) scriptManager->callFunctionOnAllScripts(machineControlCommandId, Array<var>((int)type));
 }
 
 void MIDIModule::midiMachineControlGotoReceived(const int& hours, const int& minutes, const int& seconds, const int& frames)
@@ -605,7 +605,7 @@ void MIDIModule::midiMachineControlGotoReceived(const int& hours, const int& min
 	inActivityTrigger->trigger();
 	if (logIncomingData->boolValue()) NLOG(niceName, "MMC Goto : " << hours << ":" << minutes << ":" << seconds << "." << frames);
 
-	if (scriptManager->items.size() > 0) scriptManager->callFunctionOnAllItems(machineControlGotoId, Array<var>(hours, minutes, seconds, frames));
+	if (scriptManager->items.size() > 0) scriptManager->callFunctionOnAllScripts(machineControlGotoId, Array<var>(hours, minutes, seconds, frames));
 }
 
 void MIDIModule::mtcStarted()
