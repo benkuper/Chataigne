@@ -3805,6 +3805,9 @@
     <ClCompile Include="..\..\Modules\juce_organicui\manager\GenericControllableManager.cpp">
       <Filter>JUCE Modules\juce_organicui\manager</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\manager\Manager.cpp">
+      <Filter>JUCE Modules\juce_organicui\manager</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\outliner\Outliner.cpp">
       <Filter>JUCE Modules\juce_organicui\outliner</Filter>
     </ClCompile>

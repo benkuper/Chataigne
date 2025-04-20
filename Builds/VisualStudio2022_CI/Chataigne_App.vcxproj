@@ -2535,6 +2535,9 @@
     <ClCompile Include="..\..\Modules\juce_organicui\manager\GenericControllableManager.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\manager\Manager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\outliner\Outliner.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
