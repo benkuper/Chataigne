@@ -2535,12 +2535,6 @@
     <ClCompile Include="..\..\Modules\juce_organicui\manager\GenericControllableManager.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_organicui\manager\ItemGroup.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_organicui\manager\Manager.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\outliner\Outliner.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -3929,6 +3923,7 @@
     <ClInclude Include="..\..\Modules\juce_organicui\manager\ItemGroup.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\Manager.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\ManagerListener.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\manager\NestingManager.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\outliner\Outliner.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\parrot\ui\ParrotPanel.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\parrot\ui\ParrotUI.h"/>
