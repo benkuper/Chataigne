@@ -2529,13 +2529,13 @@
     <ClCompile Include="..\..\Modules\juce_organicui\manager\BaseItem.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\manager\BaseManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\manager\GenericControllableItem.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\manager\GenericControllableManager.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_organicui\manager\Manager.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\outliner\Outliner.cpp">
@@ -3920,6 +3920,7 @@
     <ClInclude Include="..\..\Modules\juce_organicui\manager\ui\ManagerViewUI.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\BaseItem.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\BaseItemListener.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\manager\BaseManager.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\Factory.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\GenericControllableItem.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\GenericControllableManager.h"/>
