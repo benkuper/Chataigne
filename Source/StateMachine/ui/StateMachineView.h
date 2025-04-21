@@ -34,7 +34,6 @@ public:
 
 	void mouseMove(const MouseEvent& e) override;
 	void mouseDown(const MouseEvent& e) override;
-	void mouseDoubleClick(const MouseEvent& e) override;
 	bool keyPressed(const KeyPress& e) override;
 
 

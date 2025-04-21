@@ -193,11 +193,11 @@ void OSCModule::processMessage(const OSCMessage& msg)
 		}
 		params.add(args);
 		params.add(msg.getSenderIPAddress());
-		scriptManager->callFunctionOnAllItems(oscEventId, params);
+		scriptManager->callFunctionOnAllScripts(oscEventId, params);
 
 		for (auto& entry : scriptCallbacks)
 			if (std::get<0>(entry).matches(msg.getAddressPattern().toString()))
-				scriptManager->callFunctionOnAllItems(std::get<1>(entry), params);
+				scriptManager->callFunctionOnAllScripts(std::get<1>(entry), params);
 	}
 
 }

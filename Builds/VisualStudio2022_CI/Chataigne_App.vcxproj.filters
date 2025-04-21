@@ -3799,16 +3799,13 @@
     <ClCompile Include="..\..\Modules\juce_organicui\manager\BaseItem.cpp">
       <Filter>JUCE Modules\juce_organicui\manager</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\manager\BaseManager.cpp">
+      <Filter>JUCE Modules\juce_organicui\manager</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\manager\GenericControllableItem.cpp">
       <Filter>JUCE Modules\juce_organicui\manager</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\manager\GenericControllableManager.cpp">
-      <Filter>JUCE Modules\juce_organicui\manager</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_organicui\manager\ItemGroup.cpp">
-      <Filter>JUCE Modules\juce_organicui\manager</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_organicui\manager\Manager.cpp">
       <Filter>JUCE Modules\juce_organicui\manager</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\outliner\Outliner.cpp">
@@ -7131,6 +7128,9 @@
     <ClInclude Include="..\..\Modules\juce_organicui\manager\BaseItemListener.h">
       <Filter>JUCE Modules\juce_organicui\manager</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\manager\BaseManager.h">
+      <Filter>JUCE Modules\juce_organicui\manager</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\Factory.h">
       <Filter>JUCE Modules\juce_organicui\manager</Filter>
     </ClInclude>
@@ -7147,6 +7147,9 @@
       <Filter>JUCE Modules\juce_organicui\manager</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\ManagerListener.h">
+      <Filter>JUCE Modules\juce_organicui\manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\manager\NestingManager.h">
       <Filter>JUCE Modules\juce_organicui\manager</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\outliner\Outliner.h">

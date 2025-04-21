@@ -13,7 +13,7 @@ juce_ImplementSingleton(Guider)
 Guider::Guider() :
 	guide(nullptr)
 {
-	factory.defs.add(Factory<BaseGuide>::Definition::createDef("", "Getting Started", &BasicsGuide::create));
+	factory.defs.add(BaseFactory<BaseGuide>::Definition::createDef("", "Getting Started", &BasicsGuide::create));
 	DBG("Guider num guides : " << factory.defs.size());
 }
 

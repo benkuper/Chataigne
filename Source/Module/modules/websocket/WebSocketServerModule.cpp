@@ -174,7 +174,7 @@ void WebSocketServerModule::messageReceived(const String& connectionId, const St
 	Array<var> args;
 	args.add(connectionId);
 	args.add(message);
-	scriptManager->callFunctionOnAllItems(wsMessageReceivedId, args);
+	scriptManager->callFunctionOnAllScripts(wsMessageReceivedId, args);
 
 	switch (t)
 	{
@@ -218,7 +218,7 @@ void WebSocketServerModule::dataReceived(const String& connectionId, const Memor
 	var bytesData;
 	for (auto& b : bytes) bytesData.append(b);
 	args.add(bytesData);
-	scriptManager->callFunctionOnAllItems(wsDataReceivedId, args);
+	scriptManager->callFunctionOnAllScripts(wsDataReceivedId, args);
 }
 
 void WebSocketServerModule::onContainerParameterChangedInternal(Parameter* p)

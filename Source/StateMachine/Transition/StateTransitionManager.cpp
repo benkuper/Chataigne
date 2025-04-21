@@ -9,7 +9,6 @@
 */
 
 #include "StateMachine/StateMachineIncludes.h"
-#include "StateTransitionManager.h"
 
 StateTransitionManager::StateTransitionManager(StateManager* _sm) :
 	Manager("Transitions"),
@@ -22,24 +21,7 @@ StateTransitionManager::~StateTransitionManager()
 {
 }
 
-StateTransition* StateTransitionManager::addItemFromData(var data, bool addToUndo)
-{
-	StateTransition* t = createItemFromData(data);
-	if (t == nullptr) return nullptr;
-	return addItem(t, data, addToUndo);
-}
 
-Array<StateTransition*> StateTransitionManager::addItemsFromData(var data, bool addToUndo)
-{
-	Array<StateTransition*> itemsToAdd;
-	for (int i = 0; i < data.size(); i++)
-	{
-		StateTransition* t = createItemFromData(data[i]);
-		if (t != nullptr) itemsToAdd.add(t);
-	}
-
-	return addItems(itemsToAdd, data, addToUndo);
-}
 
 StateTransition* StateTransitionManager::createItemFromData(var data)
 {
