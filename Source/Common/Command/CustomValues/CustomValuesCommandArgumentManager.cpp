@@ -67,7 +67,7 @@ void CustomValuesCommandArgumentManager::rebuildFromTemplate(bool clearItems)
 		CustomValuesCommandArgument* a = nullptr;
 		if (clearItems)
 		{
-			a = addItemFromData(i->getJSONData());
+			a = dynamic_cast<CustomValuesCommandArgument*>(addItemFromData(i->getJSONData()));
 			a->setNiceName(i->niceName);
 		}
 		else a = items[linkedTemplateManager->items.indexOf(i)];
@@ -203,22 +203,9 @@ Parameter* CustomValuesCommandArgumentManager::createParameterFromType(Parameter
 
 CustomValuesCommandArgument* CustomValuesCommandArgumentManager::addItemFromData(var data, bool addToUndo)
 {
-
 	Controllable::Type t = (Controllable::Type)Controllable::typeNames.indexOf(data.getProperty("type", ""));
 	CustomValuesCommandArgument* item = createItemFromType(t);
 	return addItem(item);
-
-	/*if (s.isEmpty()) return nullptr;
-
-	Parameter * p =  (Parameter *)ControllableFactory::createControllable(s);
-	if (p == nullptr)
-	{
-		LOG("Error loading custom argument !");
-		return nullptr;
-	}
-
-	return addItemWithParam(p, data, fromUndoableAction);
-	*/
 }
 
 Array<CustomValuesCommandArgument*> CustomValuesCommandArgumentManager::addItemsFromData(var data, bool addToUndo)
@@ -269,7 +256,7 @@ void CustomValuesCommandArgumentManager::setInputNames(StringArray _inputNames)
 
 void CustomValuesCommandArgumentManager::itemAdded(CustomValuesCommandArgument* i)
 {
-	CustomValuesCommandArgument* a = addItemFromData(i->getJSONData());
+	CustomValuesCommandArgument* a = dynamic_cast<CustomValuesCommandArgument*>(addItemFromData(i->getJSONData()));
 	a->linkToTemplate(i);
 }
 
@@ -277,7 +264,7 @@ void CustomValuesCommandArgumentManager::itemsAdded(Array<CustomValuesCommandArg
 {
 	for (auto& i : items)
 	{
-		CustomValuesCommandArgument* a = addItemFromData(i->getJSONData());
+		CustomValuesCommandArgument* a = dynamic_cast<CustomValuesCommandArgument*>(addItemFromData(i->getJSONData()));
 		a->linkToTemplate(i);
 	}
 }

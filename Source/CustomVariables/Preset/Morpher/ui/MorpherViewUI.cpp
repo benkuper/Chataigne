@@ -408,12 +408,6 @@ void MorpherViewUI::mouseDrag(const MouseEvent& e)
 	}
 }
 
-void MorpherViewUI::mouseDoubleClick(const MouseEvent& e)
-{
-	ManagerViewUI::mouseDoubleClick(e);
-
-	manager->addItem(getViewMousePosition().toFloat());
-}
 
 void MorpherViewUI::itemDragMove(const SourceDetails& details)
 {
