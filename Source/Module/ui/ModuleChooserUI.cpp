@@ -12,8 +12,8 @@ ModuleChooserUI::ModuleChooserUI(bool includeCVModule) :
 	includeCVModule(includeCVModule),
 	filterModuleFunc(nullptr)
 {
-	ModuleManager::getInstance()->addAsyncManagerListener(this);
-	ModuleManager::getInstance()->addAsyncContainerListener(this);
+	RootModuleManager::getInstance()->addAsyncManagerListener(this);
+	RootModuleManager::getInstance()->addAsyncContainerListener(this);
 	if (includeCVModule)
 	{
 		CVGroupManager::getInstance()->addAsyncManagerListener(this);
@@ -27,8 +27,8 @@ ModuleChooserUI::ModuleChooserUI(bool includeCVModule) :
 
 ModuleChooserUI::~ModuleChooserUI()
 {
-	ModuleManager::getInstance()->removeAsyncManagerListener(this);
-	ModuleManager::getInstance()->removeAsyncContainerListener(this);
+	RootModuleManager::getInstance()->removeAsyncManagerListener(this);
+	RootModuleManager::getInstance()->removeAsyncContainerListener(this);
 
 	if (includeCVModule)
 	{
@@ -41,15 +41,15 @@ ModuleChooserUI::~ModuleChooserUI()
 void ModuleChooserUI::buildModuleBox()
 {
 	clear(dontSendNotification);
-	if (ModuleManager::getInstanceWithoutCreating() == nullptr) return; 
-	for (auto &m : ModuleManager::getInstance()->items)
+	if (RootModuleManager::getInstanceWithoutCreating() == nullptr) return; 
+	for (auto &m : RootModuleManager::getInstance()->items)
 	{
 		if (filterModuleFunc != nullptr)
 		{
 			if (!filterModuleFunc(m)) continue;
 		}
 
-		int id = ModuleManager::getInstance()->items.indexOf(m) + 1;
+		int id = RootModuleManager::getInstance()->items.indexOf(m) + 1;
 		addItem(m->niceName, id);
 	}
 
@@ -68,14 +68,14 @@ void ModuleChooserUI::setModuleSelected(Module * m, bool silent)
 {
 	if (m == nullptr) return;
 	if (m == CVGroupManager::getInstance()->module.get()) setSelectedId(1000);
-	else setSelectedId(ModuleManager::getInstance()->items.indexOf(m) + 1, silent ? dontSendNotification:sendNotification);
+	else setSelectedId(RootModuleManager::getInstance()->items.indexOf(m) + 1, silent ? dontSendNotification:sendNotification);
 }
 
 void ModuleChooserUI::comboBoxChanged(ComboBox *)
 {
 	Module* m = nullptr;
 	if (getSelectedId() == 1000) m = CVGroupManager::getInstance()->module.get();
-	else m = ModuleManager::getInstance()->items[getSelectedId() - 1];
+	else m = RootModuleManager::getInstance()->items[getSelectedId() - 1];
 
 	chooserListeners.call(&ChooserListener::selectedModuleChanged, this, m);
 	

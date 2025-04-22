@@ -29,6 +29,9 @@ class ModuleFactory :
 	public Factory<Module>
 {
 public:
+
+	juce_DeclareSingleton(ModuleFactory, false)
+
 	HashMap<String, ModuleDefinition*> customModulesDefMap;
 
 	ModuleFactory();

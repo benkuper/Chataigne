@@ -103,9 +103,9 @@ StandardMappingInput::StandardMappingInput(var params, Multiplex* processor) :
 		inputTarget = addTargetParameter("Input Value", "Parameter to be the input");
 		inputTarget->excludeTypesFilter.add(Trigger::getTypeStringStatic());
 
-		inputTarget->customGetTargetFunc = &ModuleManager::getInstance()->showAllValuesAndGetControllable;
+		inputTarget->customGetTargetFunc = &RootModuleManager::getInstance()->showAllValuesAndGetControllable;
 		inputTarget->customGetControllableLabelFunc = &Module::getTargetLabelForValueControllable;
-		inputTarget->customCheckAssignOnNextChangeFunc = &ModuleManager::checkControllableIsAValue;
+		inputTarget->customCheckAssignOnNextChangeFunc = &RootModuleManager::checkControllableIsAValue;
 	}
 }
 

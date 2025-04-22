@@ -29,7 +29,7 @@ BasicsGuide::~BasicsGuide()
 void BasicsGuide::initInternal()
 {
 
-	if (ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->addAsyncManagerListener(this);
+	if (RootModuleManager::getInstanceWithoutCreating() != nullptr) RootModuleManager::getInstance()->addAsyncManagerListener(this);
 
 	mmui = dynamic_cast<ModuleManagerUI*>(ShapeShifterManager::getInstance()->getContentForName("Modules")->contentComponent);
 	smui = dynamic_cast<StateMachineView*>(ShapeShifterManager::getInstance()->getContentForName("State Machine")->contentComponent);
@@ -46,7 +46,7 @@ void BasicsGuide::initInternal()
 
 void BasicsGuide::clear()
 {
-	if (ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->removeAsyncManagerListener(this);
+	if (RootModuleManager::getInstanceWithoutCreating() != nullptr) RootModuleManager::getInstance()->removeAsyncManagerListener(this);
 	
 	if (smui != nullptr) smui->removeManagerUIListener(this);
 	if (condition != nullptr) condition->removeAsyncConditionListener(this);

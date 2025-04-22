@@ -21,12 +21,12 @@ void CommandFactory::showMenuAndGetCommand(CommandContext context, std::function
 
 PopupMenu CommandFactory::getCommandMenu(CommandContext context, Module* lockedModule, bool multiplexMode)
 {
-	return (lockedModule == nullptr) ? ModuleManager::getInstance()->getAllModulesCommandMenu(context, multiplexMode) : lockedModule->getCommandMenu(0, context);
+	return (lockedModule == nullptr) ? RootModuleManager::getInstance()->getAllModulesCommandMenu(context, multiplexMode) : lockedModule->getCommandMenu(0, context);
 }
 
 CommandDefinition* CommandFactory::getCommandFromResult(int result, Module * lockedModule)
 {
-	if (result != 0) return ModuleManager::getInstance()->getCommandDefinitionForItemID(result, lockedModule);
+	if (result != 0) return RootModuleManager::getInstance()->getCommandDefinitionForItemID(result, lockedModule);
 
 	return nullptr;
 }

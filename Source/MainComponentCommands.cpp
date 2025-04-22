@@ -242,7 +242,7 @@ bool MainContentComponent::perform(const InvocationInfo& info)
 		break;
 
 	case ChataigneCommandIDs::reloadCustomModules:
-		ModuleManager::getInstance()->factory->updateCustomModules();
+		ModuleFactory::getInstance()->updateCustomModules();
 		break;
 
 	case ChataigneCommandIDs::exitGuide:

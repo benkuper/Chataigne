@@ -16,19 +16,34 @@ class ModuleManager :
 	public Manager<Module>
 {
 public:
-	juce_DeclareSingleton(ModuleManager, true)
 
-	ModuleManager();
+	ModuleManager(const String& name = "Items");
 	~ModuleManager();
 
-	std::unique_ptr<ModuleFactory> factory;
 
 	OwnedArray<ControllableChooserPopupMenu> modulesMenu;
 	std::unique_ptr<ControllableChooserPopupMenu> engineMenu;
 
-	Module* getModuleWithName(const String& moduleName);
 
 	void addItemInternal(Module* module, var data) override;
+
+
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ModuleManager)
+
+};
+
+class RootModuleManager :
+	public ModuleManager
+{
+public:
+	juce_DeclareSingleton(RootModuleManager, true);
+
+	RootModuleManager();
+	~RootModuleManager() {}
+
+
+	Array<Module*> getModuleList(bool includeSpecialModules = true);
+	Module* getModuleWithName(const String& moduleName, bool recursive = true);
 
 	//Input values menu
 	static void showAllValuesAndGetControllable(const StringArray& typeFilters, const StringArray& excludeTypeFilters, ControllableContainer* startFromCC, std::function<void(Controllable*)> returnFunc);
@@ -39,7 +54,7 @@ public:
 	{
 		PopupMenu menu;
 		Array<Module*> validModules;
-		for (auto& m : ModuleManager::getInstance()->items)
+		for (auto& m : RootModuleManager::getInstance()->items)
 		{
 			T* mt = dynamic_cast<T*>(m);
 			if (mt == nullptr) continue;
@@ -59,10 +74,4 @@ public:
 	//Command menu
 	PopupMenu getAllModulesCommandMenu(CommandContext context, bool multiplexMode = false);
 	CommandDefinition* getCommandDefinitionForItemID(int itemID, Module* lockedModule);
-
-
-	Array<Module*> getModuleList(bool includeSpecialModules = true);
-
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ModuleManager)
-
 };

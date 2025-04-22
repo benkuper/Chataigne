@@ -548,7 +548,7 @@ void StreamingModule::createThruControllable(ControllableContainer* cc)
 {
 	TargetParameter* p = new TargetParameter(cc->getUniqueNameInContainer("Output module 1"), "Target module to send the raw data to", "");
 	p->targetType = TargetParameter::CONTAINER;
-	p->customGetTargetContainerFunc = &ModuleManager::showAndGetModuleOfType<StreamingModule>;
+	p->customGetTargetContainerFunc = &RootModuleManager::showAndGetModuleOfType<StreamingModule>;
 	p->isRemovableByUser = true;
 	p->canBeDisabledByUser = true;
 	p->saveValueOnly = false;
@@ -675,7 +675,7 @@ void StreamingModule::loadJSONDataInternal(var data)
 			if (TargetParameter* mt = dynamic_cast<TargetParameter*>(c))
 			{
 				mt->targetType = TargetParameter::CONTAINER;
-				mt->customGetTargetContainerFunc = &ModuleManager::showAndGetModuleOfType<StreamingModule>;
+				mt->customGetTargetContainerFunc = &RootModuleManager::showAndGetModuleOfType<StreamingModule>;
 				mt->isRemovableByUser = true;
 				mt->canBeDisabledByUser = true;
 			}

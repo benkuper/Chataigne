@@ -17,7 +17,7 @@ ChataigneAudioLayer::ChataigneAudioLayer(ChataigneSequence* _sequence, var param
 	timeAtStartRecord(0),
 	arm(nullptr)
 {
-	ModuleManager::getInstance()->addManagerListener(this);
+	RootModuleManager::getInstance()->addManagerListener(this);
 
 	helpID = "AudioLayer";
 
@@ -36,7 +36,7 @@ ChataigneAudioLayer::~ChataigneAudioLayer()
 void ChataigneAudioLayer::clearItem()
 {
 	AudioLayer::clearItem();
-	if (ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->removeManagerListener(this);
+	if (RootModuleManager::getInstanceWithoutCreating() != nullptr) RootModuleManager::getInstance()->removeManagerListener(this);
 	setAudioModule(nullptr);
 }
 
@@ -266,7 +266,7 @@ void ChataigneAudioLayer::loadJSONDataInternal(var data)
 {
 	channelsData = data.getProperty("channels", var());
 	AudioLayer::loadJSONDataInternal(data);
-	if (data.getDynamicObject()->hasProperty("audioModule")) setAudioModule(dynamic_cast<AudioModule*>(ModuleManager::getInstance()->getItemWithName(data.getProperty("audioModule", ""))));
+	if (data.getDynamicObject()->hasProperty("audioModule")) setAudioModule(dynamic_cast<AudioModule*>(RootModuleManager::getInstance()->getItemWithName(data.getProperty("audioModule", ""))));
 }
 
 SequenceLayerPanel* ChataigneAudioLayer::getPanel()

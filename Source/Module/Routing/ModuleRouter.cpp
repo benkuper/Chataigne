@@ -145,9 +145,9 @@ void ModuleRouter::loadJSONDataInternal(var data)
 
 	String moduleName = data.getProperty("sourceModule", "");
 	if (moduleName == CVGroupManager::getInstance()->module->shortName) setSourceModule(CVGroupManager::getInstance()->module.get());
-	else setSourceModule(ModuleManager::getInstance()->getItemWithName(moduleName));
+	else setSourceModule(RootModuleManager::getInstance()->getItemWithName(moduleName));
 	
-	setDestModule(ModuleManager::getInstance()->getItemWithName(data.getProperty("destModule", "")));
+	setDestModule(RootModuleManager::getInstance()->getItemWithName(data.getProperty("destModule", "")));
 	
 	if (data.getDynamicObject()->hasProperty("sourceValues")) sourceValues.loadItemsData(data.getProperty("sourceValues", var()));
 }

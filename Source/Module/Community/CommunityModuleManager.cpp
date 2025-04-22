@@ -55,7 +55,7 @@ void CommunityModuleManager::finished(URL::DownloadTask* task, bool success)
 	}
 
 	File moduleFile = getDownloadFilePath(installingModuleName);
-	File modulesDir = ModuleManager::getInstance()->factory->getCustomModulesFolder();
+	File modulesDir = ModuleFactory::getInstance()->getCustomModulesFolder();
 
 	File moduleFolder = modulesDir.getChildFile(installingModuleName);
 	if (moduleFolder.exists()) moduleFolder.deleteRecursively();
@@ -63,8 +63,8 @@ void CommunityModuleManager::finished(URL::DownloadTask* task, bool success)
 	ZipFile zip(moduleFile);
 	zip.uncompressTo(modulesDir);
 
-	ModuleManager::getInstance()->factory->updateCustomModules();
-	moduleFolder = ModuleManager::getInstance()->factory->getFolderForCustomModule(installingModuleName);
+	ModuleFactory::getInstance()->updateCustomModules();
+	moduleFolder = ModuleFactory::getInstance()->getFolderForCustomModule(installingModuleName);
 }
 
 void CommunityModuleManager::progress(URL::DownloadTask* /*task*/, int64 /*bytesDownloaded*/, int64 /*totalLength*/)

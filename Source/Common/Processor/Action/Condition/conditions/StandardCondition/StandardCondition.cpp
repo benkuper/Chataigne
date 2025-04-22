@@ -29,9 +29,9 @@ StandardCondition::StandardCondition(var params, Multiplex* processor) :
 	}
 	else
 	{
-		sourceTarget->customGetTargetFunc = &ModuleManager::showAllValuesAndGetControllable;
+		sourceTarget->customGetTargetFunc = &RootModuleManager::showAllValuesAndGetControllable;
 		sourceTarget->customGetControllableLabelFunc = &Module::getTargetLabelForValueControllable;
-		sourceTarget->customCheckAssignOnNextChangeFunc = &ModuleManager::checkControllableIsAValue;
+		sourceTarget->customCheckAssignOnNextChangeFunc = &RootModuleManager::checkControllableIsAValue;
 	}
 
 	sourceTarget->hideInEditor = true;

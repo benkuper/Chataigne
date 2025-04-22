@@ -38,7 +38,7 @@ BaseCommandHandler::~BaseCommandHandler()
 void BaseCommandHandler::clearItem()
 {
 	BaseItem::clearItem();
-	if (ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->removeManagerListener(this);
+	if (RootModuleManager::getInstanceWithoutCreating() != nullptr) RootModuleManager::getInstance()->removeManagerListener(this);
 	setCommand(nullptr);
 }
 
@@ -99,7 +99,7 @@ void BaseCommandHandler::setCommand(CommandDefinition* commandDef)
 		registerLinkedInspectable(command->module);
 
 
-		if (ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->removeManagerListener(this);
+		if (RootModuleManager::getInstanceWithoutCreating() != nullptr) RootModuleManager::getInstance()->removeManagerListener(this);
 	}
 	else if (ghostModuleName.isNotEmpty() && ghostCommandName.isNotEmpty())
 	{
@@ -152,7 +152,7 @@ void BaseCommandHandler::loadJSONDataInternal(var data)
 
 	if (data.getDynamicObject()->hasProperty("commandModule"))
 	{
-		Module* m = ModuleManager::getInstance()->getModuleWithName(data.getProperty("commandModule", ""));
+		Module* m = RootModuleManager::getInstance()->getModuleWithName(data.getProperty("commandModule", ""));
 		if (m != nullptr)
 		{
 			String menuPath = data.getProperty("commandPath", "");
@@ -169,9 +169,9 @@ void BaseCommandHandler::loadJSONDataInternal(var data)
 		}
 	}
 
-	if (command == nullptr && ghostModuleName.isNotEmpty() && ModuleManager::getInstanceWithoutCreating() != nullptr)
+	if (command == nullptr && ghostModuleName.isNotEmpty() && RootModuleManager::getInstanceWithoutCreating() != nullptr)
 	{
-		ModuleManager::getInstance()->addManagerListener(this);
+		RootModuleManager::getInstance()->addManagerListener(this);
 	}
 
 	if (command == nullptr && ghostCommandName.isNotEmpty())
@@ -199,7 +199,7 @@ void BaseCommandHandler::commandTemplateDestroyed()
 		ghostCommandData = command->getJSONData();
 		//DBG("Template destroyed, command data = "+JSON::toString(ghostCommandData));
 		if (command->module != nullptr && command->module->templateManager != nullptr) command->module->templateManager->addManagerListener(this);
-		if (!Engine::mainEngine->isClearing && ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->addManagerListener(this);
+		if (!Engine::mainEngine->isClearing && RootModuleManager::getInstanceWithoutCreating() != nullptr) RootModuleManager::getInstance()->addManagerListener(this);
 	}
 	setCommand(nullptr);
 }
@@ -214,7 +214,7 @@ void BaseCommandHandler::inspectableDestroyed(Inspectable*)
 {
 	if (command != nullptr) ghostCommandData = command->getJSONData();
 	setCommand(nullptr);
-	if (!isClearing && !Engine::mainEngine->isClearing && ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->addManagerListener(this);
+	if (!isClearing && !Engine::mainEngine->isClearing && RootModuleManager::getInstanceWithoutCreating() != nullptr) RootModuleManager::getInstance()->addManagerListener(this);
 }
 
 void BaseCommandHandler::itemAdded(Module* m)
@@ -241,7 +241,7 @@ void BaseCommandHandler::itemAdded(CommandTemplate* t)
 {
 	if (command == nullptr && ghostCommandMenuPath == "Templates" && t->niceName == ghostCommandName)
 	{
-		Module* m = ModuleManager::getInstance()->getItemWithName(ghostModuleName);
+		Module* m = RootModuleManager::getInstance()->getItemWithName(ghostModuleName);
 		if (m != nullptr) setCommand(m->getCommandDefinitionFor(ghostCommandMenuPath, ghostCommandName));
 	}
 }
@@ -252,7 +252,7 @@ void BaseCommandHandler::itemsAdded(Array<CommandTemplate*> templates)
 	{
 		if (command == nullptr && ghostCommandMenuPath == "Templates" && t->niceName == ghostCommandName)
 		{
-			Module* m = ModuleManager::getInstance()->getItemWithName(ghostModuleName);
+			Module* m = RootModuleManager::getInstance()->getItemWithName(ghostModuleName);
 			if (m != nullptr)
 			{
 				setCommand(m->getCommandDefinitionFor(ghostCommandMenuPath, ghostCommandName));
@@ -269,7 +269,7 @@ var BaseCommandHandler::setCommandFromScript(const var::NativeFunctionArgs& a)
 	if (h == nullptr) return var();
 	if (!checkNumArgs("Command", a, 3)) return var();
 
-	Module* m = ModuleManager::getInstance()->getModuleWithName(a.arguments[0].toString());
+	Module* m = RootModuleManager::getInstance()->getModuleWithName(a.arguments[0].toString());
 	if (m != nullptr)
 	{
 		String menuPath = a.arguments[1].toString();

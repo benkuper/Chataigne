@@ -9,7 +9,8 @@
 */
 
 #include "Module/ModuleIncludes.h"
-#include "ModuleFactory.h"
+
+juce_ImplementSingleton(ModuleFactory)
 
 ModuleFactory::ModuleFactory() {
 

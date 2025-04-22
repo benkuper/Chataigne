@@ -917,7 +917,7 @@ void MIDIModule::createThruControllable(ControllableContainer* cc)
 {
 	TargetParameter* p = new TargetParameter(cc->getUniqueNameInContainer("Output module 1"), "Target module to send the raw data to", "");
 	p->targetType = TargetParameter::CONTAINER;
-	p->customGetTargetContainerFunc = &ModuleManager::showAndGetModuleOfType<MIDIModule>;
+	p->customGetTargetContainerFunc = &RootModuleManager::showAndGetModuleOfType<MIDIModule>;
 	p->isRemovableByUser = true;
 	p->canBeDisabledByUser = true;
 	p->saveValueOnly = false;
@@ -949,7 +949,7 @@ void MIDIModule::loadJSONDataInternal(var data)
 			if (TargetParameter* mt = dynamic_cast<TargetParameter*>(c))
 			{
 				mt->targetType = TargetParameter::CONTAINER;
-				mt->customGetTargetContainerFunc = &ModuleManager::showAndGetModuleOfType<MIDIModule>;
+				mt->customGetTargetContainerFunc = &RootModuleManager::showAndGetModuleOfType<MIDIModule>;
 				mt->isRemovableByUser = true;
 				mt->canBeDisabledByUser = true;
 			}

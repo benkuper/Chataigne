@@ -28,7 +28,7 @@ ChataigneSequence::ChataigneSequence() :
 	mtcFPS->addOption("30", MidiMessage::fps30)->addOption("30 drop", MidiMessage::fps30drop)->addOption("25", MidiMessage::fps25)->addOption("24", MidiMessage::fps24);
 
 
-	ltcModuleTarget = addTargetParameter("LTC Sync Module", "Choose an Audio Module to use as LTC Sync for this sequence", ModuleManager::getInstance(), false);
+	ltcModuleTarget = addTargetParameter("LTC Sync Module", "Choose an Audio Module to use as LTC Sync for this sequence", RootModuleManager::getInstance(), false);
 	ltcModuleTarget->canBeDisabledByUser = true;
 	ltcModuleTarget->targetType = TargetParameter::CONTAINER;
 	ltcModuleTarget->maxDefaultSearchLevel = 0;
@@ -207,7 +207,7 @@ void ChataigneSequence::checkForNewAudioLayer(SequenceLayer* layer, bool showMen
 		//if already an audio module, assign it
 		if (!isCurrentlyLoadingData)
 		{
-			for (auto& i : ModuleManager::getInstance()->items)
+			for (auto& i : RootModuleManager::getInstance()->items)
 			{
 				AudioModule* a = dynamic_cast<AudioModule*>(i);
 				if (a != nullptr)
@@ -230,7 +230,7 @@ void ChataigneSequence::checkForNewAudioLayer(SequenceLayer* layer, bool showMen
 						if (result == 1)
 						{
 							AudioModule* m = AudioModule::create();
-							ModuleManager::getInstance()->addItem(m);
+							RootModuleManager::getInstance()->addItem(m);
 							audioLayer->setAudioModule(m);
 						}
 

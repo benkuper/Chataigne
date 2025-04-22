@@ -14,7 +14,7 @@
 CommunityModulePanel::CommunityModulePanel(const String& name) :
 	ShapeShifterContentComponent(name)
 {
-	var initInfo = ModuleManager::getInstance()->factory->getCustomModulesInfo();
+	var initInfo = ModuleFactory::getInstance()->getCustomModulesInfo();
 	webComp.reset(new WebComp(initInfo));
 	webComp->modulesURL = "https://benjamin.kuperberg.fr/chataigne/modules_browser/"; // http://localhost:5173/";
 	webComp->goToURL(webComp->modulesURL + "?inApp=1");
@@ -61,7 +61,7 @@ CommunityModulePanel::WebComp::WebComp(var initData)
 				String version = moduleInfo["version"];
 
 				int status = 0; //0 = not installed, 1 = installed and up to date, 2 = update available
-				var moduleData = ModuleManager::getInstance()->factory->getCustomModuleInfo(moduleName);
+				var moduleData = ModuleFactory::getInstance()->getCustomModuleInfo(moduleName);
 				String localVersion = moduleData.getProperty("version", "0");
 				if (moduleData.isVoid() || localVersion == "0")
 				{
@@ -69,7 +69,7 @@ CommunityModulePanel::WebComp::WebComp(var initData)
 				}else if (version > localVersion)
 				{
 					status = 2;
-					ModuleManager::getInstance()->factory->setModuleNewVersionAvailable(moduleName, true);
+					ModuleFactory::getInstance()->setModuleNewVersionAvailable(moduleName, true);
 				}
 				else
 				{

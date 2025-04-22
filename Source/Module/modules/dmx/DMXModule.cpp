@@ -363,7 +363,7 @@ void DMXModule::loadJSONDataInternal(var data)
 			if (TargetParameter* mt = dynamic_cast<TargetParameter*>(c))
 			{
 				mt->targetType = TargetParameter::CONTAINER;
-				mt->customGetTargetContainerFunc = &ModuleManager::showAndGetModuleOfType<DMXModule>;
+				mt->customGetTargetContainerFunc = &RootModuleManager::showAndGetModuleOfType<DMXModule>;
 				mt->isRemovableByUser = true;
 				mt->canBeDisabledByUser = true;
 			}
@@ -513,7 +513,7 @@ void DMXModule::createThruControllable(ControllableContainer* cc)
 {
 	TargetParameter* p = new TargetParameter(cc->getUniqueNameInContainer("Output module 1"), "Target module to send the raw data to", "");
 	p->targetType = TargetParameter::CONTAINER;
-	p->customGetTargetContainerFunc = &ModuleManager::showAndGetModuleOfType<DMXModule>;
+	p->customGetTargetContainerFunc = &RootModuleManager::showAndGetModuleOfType<DMXModule>;
 	p->isRemovableByUser = true;
 	p->canBeDisabledByUser = true;
 	p->saveValueOnly = false;

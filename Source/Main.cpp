@@ -58,7 +58,7 @@ void ChataigneApplication::afterInit()
 void ChataigneApplication::shutdown()
 {   
 	if (isInitialising()) return;
-	for (auto& m : ModuleManager::getInstance()->getItemsWithType<OSModule>())
+	for (auto& m : RootModuleManager::getInstance()->getItemsWithType<OSModule>())
 	{
 		m->terminateTrigger->trigger();
 	}
@@ -76,7 +76,7 @@ void ChataigneApplication::shutdown()
 
 void ChataigneApplication::handleCrashed()
 {
-	for (auto& m : ModuleManager::getInstance()->getItemsWithType<OSModule>())
+	for (auto& m : RootModuleManager::getInstance()->getItemsWithType<OSModule>())
 	{
 		m->crashedTrigger->trigger();
 	}

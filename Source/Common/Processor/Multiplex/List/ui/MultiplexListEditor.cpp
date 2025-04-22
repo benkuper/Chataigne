@@ -249,7 +249,7 @@ void InputValueListEditor::handleFillMenuResult(int result)
 		ControllableContainer* cc = nullptr;
 		PopupMenu cp;
 		int offset = 0;
-		Array<Module*> modules = ModuleManager::getInstance()->getModuleList();
+		Array<Module*> modules = RootModuleManager::getInstance()->getModuleList();
 		OwnedArray<ContainerChooserPopupMenu>* choosers = new OwnedArray<ContainerChooserPopupMenu>();
 		for (auto& m : modules)
 		{

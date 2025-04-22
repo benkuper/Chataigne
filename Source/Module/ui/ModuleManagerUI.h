@@ -21,7 +21,7 @@ public:
 	ModuleUI* createUIForItem(Module* item) override;
 	void addItemFromMenu(Module* m, bool fromAddButton, Point<int> pos) override;
 
-	static ModuleManagerUI * create(const String &contentName) { return new ModuleManagerUI(contentName, ModuleManager::getInstance()); }
+	static ModuleManagerUI * create(const String &contentName) { return new ModuleManagerUI(contentName, RootModuleManager::getInstance()); }
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ModuleManagerUI)
 };

@@ -37,9 +37,9 @@ Sequence* ChataigneSequenceManager::createItem()
 
 void ChataigneSequenceManager::createSequenceFromAudioFile(File f)
 {
-	if (ModuleManager::getInstance()->getItemsWithType<AudioModule>().size() == 0) {
+	if (RootModuleManager::getInstance()->getItemsWithType<AudioModule>().size() == 0) {
 		AudioModule* m = new AudioModule();
-		ModuleManager::getInstance()->addItem(m);
+		RootModuleManager::getInstance()->addItem(m);
 	}
 
 	ChataigneSequence* seq = new ChataigneSequence();

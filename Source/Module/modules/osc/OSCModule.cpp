@@ -448,7 +448,7 @@ void OSCModule::createThruControllable(ControllableContainer* cc)
 {
 	TargetParameter* p = new TargetParameter(cc->getUniqueNameInContainer("Output Module 1"), "Target module to send the raw data to", "");
 	p->targetType = TargetParameter::CONTAINER;
-	p->customGetTargetContainerFunc = &ModuleManager::showAndGetModuleOfType<OSCModule>;
+	p->customGetTargetContainerFunc = &RootModuleManager::showAndGetModuleOfType<OSCModule>;
 	p->isRemovableByUser = true;
 	p->canBeDisabledByUser = true;
 	p->saveValueOnly = false;
@@ -476,7 +476,7 @@ void OSCModule::loadJSONDataInternal(var data)
 			if (TargetParameter* mt = dynamic_cast<TargetParameter*>(c))
 			{
 				mt->targetType = TargetParameter::CONTAINER;
-				mt->customGetTargetContainerFunc = &ModuleManager::showAndGetModuleOfType<OSCModule>;
+				mt->customGetTargetContainerFunc = &RootModuleManager::showAndGetModuleOfType<OSCModule>;
 				mt->isRemovableByUser = true;
 				mt->canBeDisabledByUser = true;
 			}

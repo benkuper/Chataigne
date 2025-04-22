@@ -16,9 +16,9 @@ AutomationMappingLayer::AutomationMappingLayer(const String& name, Sequence* s, 
 	recordSendMode = addEnumParameter("Record Send Mode", "Choose what to do when recording");
 	recordSendMode->addOption("Do not send", DONOTSEND)->addOption("Send original value", SEND_ORIGINAL)->addOption("Send new value", SEND_NEW);
 
-	recorder.input->customGetTargetFunc = &ModuleManager::showAllValuesAndGetControllable;
+	recorder.input->customGetTargetFunc = &RootModuleManager::showAllValuesAndGetControllable;
 	recorder.input->customGetControllableLabelFunc = &Module::getTargetLabelForValueControllable;
-	recorder.input->customCheckAssignOnNextChangeFunc = &ModuleManager::checkControllableIsAValue;
+	recorder.input->customCheckAssignOnNextChangeFunc = &RootModuleManager::checkControllableIsAValue;
 	recorder.editorIsCollapsed = true;
 	addChildControllableContainer(&recorder, false, 0);
 

@@ -169,9 +169,9 @@ void InputValueMultiplexList::updateControllablesSetup()
 	while (list.size() < listSize)
 	{
 		TargetParameter* tp = addTargetParameter("#" + String(list.size() + 1), "Input Value Target");
-		tp->customGetTargetFunc = &ModuleManager::showAllValuesAndGetControllable;
+		tp->customGetTargetFunc = &RootModuleManager::showAllValuesAndGetControllable;
 		tp->customGetControllableLabelFunc = &Module::getTargetLabelForValueControllable;
-		tp->customCheckAssignOnNextChangeFunc = &ModuleManager::checkControllableIsAValue;
+		tp->customCheckAssignOnNextChangeFunc = &RootModuleManager::checkControllableIsAValue;
 
 		list.add(tp);
 		inputControllables.add(nullptr);

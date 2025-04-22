@@ -39,7 +39,7 @@ ChataigneEngine::ChataigneEngine() :
 
 	//init here
 	Engine::mainEngine = this;
-	addChildControllableContainer(ModuleManager::getInstance());
+	addChildControllableContainer(RootModuleManager::getInstance());
 	addChildControllableContainer(StateManager::getInstance());
 	addChildControllableContainer(ChataigneSequenceManager::getInstance());
 	addChildControllableContainer(ModuleRouterManager::getInstance());
@@ -92,7 +92,8 @@ ChataigneEngine::~ChataigneEngine()
 
 	ChataigneSequenceManager::deleteInstance();
 	StateManager::deleteInstance();
-	ModuleManager::deleteInstance();
+	RootModuleManager::deleteInstance();
+	ModuleFactory::deleteInstance();
 
 	MIDIManager::deleteInstance();
 	DMXManager::deleteInstance();
@@ -122,7 +123,7 @@ void ChataigneEngine::clearInternal()
 	ChataigneSequenceManager::getInstance()->clear();
 
 	ModuleRouterManager::getInstance()->clear();
-	ModuleManager::getInstance()->clear();
+	RootModuleManager::getInstance()->clear();
 	CVGroupManager::getInstance()->clear();
 }
 
@@ -130,8 +131,8 @@ var ChataigneEngine::getJSONData(bool includeNonOverriden)
 {
 	var data = Engine::getJSONData(includeNonOverriden);
 
-	var mData = ModuleManager::getInstance()->getJSONData();
-	if (!mData.isVoid() && mData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(ModuleManager::getInstance()->shortName, mData);
+	var mData = RootModuleManager::getInstance()->getJSONData();
+	if (!mData.isVoid() && mData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(RootModuleManager::getInstance()->shortName, mData);
 
 	var cvData = CVGroupManager::getInstance()->getJSONData();
 	if (!cvData.isVoid() && cvData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(CVGroupManager::getInstance()->shortName, cvData);
@@ -156,10 +157,10 @@ void ChataigneEngine::loadJSONDataInternalEngine(var data, ProgressTask* loading
 	ProgressTask* sequenceTask = loadingTask->addTask("Sequences");
 	ProgressTask* routerTask = loadingTask->addTask("Router");
 
-	ModuleManager::getInstance()->factory->updateCustomModules(false);
+	ModuleFactory::getInstance()->updateCustomModules(false);
 
 	moduleTask->start();
-	ModuleManager::getInstance()->loadJSONData(data.getProperty(ModuleManager::getInstance()->shortName, var()));
+	RootModuleManager::getInstance()->loadJSONData(data.getProperty(RootModuleManager::getInstance()->shortName, var()));
 	moduleTask->setProgress(1);
 	moduleTask->end();
 
@@ -219,7 +220,7 @@ void ChataigneEngine::importSelection(File f)
 	var data = JSON::parse(f);
 	if (!data.isObject()) return;
 
-	ModuleManager::getInstance()->addItemsFromData(data.getProperty(ModuleManager::getInstance()->shortName, var()));
+	RootModuleManager::getInstance()->addItemsFromData(data.getProperty(RootModuleManager::getInstance()->shortName, var()));
 	CVGroupManager::getInstance()->addItemsFromData(data.getProperty(CVGroupManager::getInstance()->shortName, var()));
 	StateManager::getInstance()->addItemsFromData(data.getProperty(StateManager::getInstance()->shortName, var()));
 	ChataigneSequenceManager::getInstance()->addItemsFromData(data.getProperty(ChataigneSequenceManager::getInstance()->shortName, var()));
@@ -230,7 +231,7 @@ void ChataigneEngine::exportSelection()
 {
 	var data(new DynamicObject());
 
-	data.getDynamicObject()->setProperty(ModuleManager::getInstance()->shortName, ModuleManager::getInstance()->getExportSelectionData());
+	data.getDynamicObject()->setProperty(RootModuleManager::getInstance()->shortName, RootModuleManager::getInstance()->getExportSelectionData());
 	data.getDynamicObject()->setProperty(CVGroupManager::getInstance()->shortName, CVGroupManager::getInstance()->getExportSelectionData());
 	data.getDynamicObject()->setProperty(StateManager::getInstance()->shortName, StateManager::getInstance()->getExportSelectionData());
 	data.getDynamicObject()->setProperty(ChataigneSequenceManager::getInstance()->shortName, ChataigneSequenceManager::getInstance()->getExportSelectionData());
