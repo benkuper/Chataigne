@@ -9,7 +9,7 @@
 */
 
 StateTransitionUI::StateTransitionUI(StateTransition * st, StateViewUI * _sourceSUI, StateViewUI * _destSUI) :
-	BaseItemMinimalUI(st),
+	ItemMinimalUI(st),
 	sourceSUI(_sourceSUI),
 	destSUI(_destSUI)
 {
@@ -50,7 +50,7 @@ void StateTransitionUI::updateBounds()
 
 void StateTransitionUI::mouseDown(const MouseEvent & e)
 {
-	BaseItemMinimalUI::mouseDown(e);
+	ItemMinimalUI::mouseDown(e);
 
 	if (e.mods.isRightButtonDown())
 	{
@@ -86,7 +86,7 @@ bool StateTransitionUI::keyPressed(const KeyPress & e)
 		}
 	}
 	
-	return BaseItemMinimalUI::keyPressed(e);
+	return ItemMinimalUI::keyPressed(e);
 }
 
 
@@ -205,12 +205,12 @@ bool StateTransitionUI::hitTest(int x, int y)
 	return dist  < 10;
 }
 
-void StateTransitionUI::itemUIMiniModeChanged(BaseItemUI<State> *)
+void StateTransitionUI::itemUIMiniModeChanged(BaseItemUI *)
 {
 	updateBounds();
 }
 
-void StateTransitionUI::itemUIViewPositionChanged(BaseItemMinimalUI<State>*)
+void StateTransitionUI::itemUIViewPositionChanged(BaseItemMinimalUI*)
 {
 	updateBounds();
 }

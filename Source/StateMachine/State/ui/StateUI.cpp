@@ -9,7 +9,7 @@
 */
 
 StateUI::StateUI(State * state) :
-	BaseItemUI<State>(state)
+	ItemUI<State>(state)
 {
 	activeUI.reset(item->active->createToggle());
 	showInViewBT.reset(AssetManager::getInstance()->getFileBT());
@@ -31,12 +31,12 @@ void StateUI::resizedInternalHeader(Rectangle<int>& r)
 	showInViewBT->setBounds(r.removeFromRight(r.getHeight()));
 	r.removeFromRight(4);
 
-	BaseItemUI::resizedInternalHeader(r);
+	ItemUI::resizedInternalHeader(r);
 }
 
 void StateUI::buttonClicked(Button * b)
 {
-	BaseItemUI::buttonClicked(b);
+	ItemUI::buttonClicked(b);
 	if (b == showInViewBT.get())
 	{
 		StateMachineView * smv = ShapeShifterManager::getInstance()->getContentForType<StateMachineView>();

@@ -13,7 +13,7 @@
 class ProcessorManagerUI;
 
 class StateViewUI :
-	public BaseItemUI<State>,
+	public ItemUI<State>,
 	public ProcessorUI::ProcessorUIListener,
 	public ProcessorManagerUI::ManagerUIListener
 {

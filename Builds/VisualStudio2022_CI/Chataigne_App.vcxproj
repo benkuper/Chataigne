@@ -2523,6 +2523,15 @@
     <ClCompile Include="..\..\Modules\juce_organicui\manager\ui\BaseItemEditor.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\manager\ui\BaseItemMinimalUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\manager\ui\BaseItemUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\manager\ui\BaseManagerUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\manager\ui\GenericControllableItemEditor.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -3912,8 +3921,10 @@
     <ClInclude Include="..\..\Modules\juce_organicui\manager\ui\BaseItemEditor.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\ui\BaseItemMinimalUI.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\ui\BaseItemUI.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\manager\ui\BaseManagerUI.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\ui\GenericControllableItemEditor.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\ui\GenericManagerEditor.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\manager\ui\ItemUI.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\ui\ManagerShapeShifterUI.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\ui\ManagerUI.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\ui\ManagerViewMiniPane.h"/>

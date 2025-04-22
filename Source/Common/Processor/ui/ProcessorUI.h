@@ -11,7 +11,7 @@
 #pragma once
 
 class ProcessorUI :
-	public BaseItemUI<Processor>,
+	public ItemUI<Processor>,
 	public Processor::AsyncListener
 {
 public:

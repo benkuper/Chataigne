@@ -11,7 +11,7 @@
 #pragma once
 
 class StateTransitionUI :
-	public BaseItemMinimalUI<StateTransition>,
+	public ItemMinimalUI<StateTransition>,
 	public StateViewUI::Listener,
 	public StateViewUI::ItemUIListener,
 	public StateViewUI::ItemMinimalUIListener
@@ -37,7 +37,7 @@ public:
 
 	bool hitTest(int x, int y) override;
 
-	void itemUIMiniModeChanged(BaseItemUI<State>  *) override;
-	void itemUIViewPositionChanged(BaseItemMinimalUI<State>*) override;
+	void itemUIMiniModeChanged(BaseItemUI  *) override;
+	void itemUIViewPositionChanged(BaseItemMinimalUI*) override;
 	void editorSelectionChanged(StateViewUI *) override;
 };

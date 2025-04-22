@@ -13,7 +13,7 @@
 class Module;
 
 class CommandTemplateManagerUI :
-	public ManagerUI<CommandTemplateManager, CommandTemplate, BaseItemUI<CommandTemplate>>
+	public ManagerUI<CommandTemplateManager, CommandTemplate, ItemUI<CommandTemplate>>
 {
 public:
 	CommandTemplateManagerUI(CommandTemplateManager * manager, const String &moduleName);

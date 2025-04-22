@@ -47,7 +47,7 @@ void CVGroupVariablesEditor::handleMenuSelectedID(int result)
 }
 
 CVGroupUI::CVGroupUI(CVGroup* item) :
-	BaseItemUI(item)
+	ItemUI(item)
 {
 	acceptedDropTypes.add(CVGroup::getTypeStringStatic());
 
@@ -63,13 +63,13 @@ CVGroupUI::~CVGroupUI()
 
 void CVGroupUI::resizedInternalHeader(Rectangle<int>& r)
 {
-	BaseItemUI::resizedInternalHeader(r);
+	ItemUI::resizedInternalHeader(r);
 	presetProgressionUI->setBounds(r.removeFromRight(80).reduced(0, 4));
 }
 
 void CVGroupUI::controllableFeedbackUpdateInternal(Controllable* c)
 {
-	BaseItemUI::controllableFeedbackUpdateInternal(c);
+	ItemUI::controllableFeedbackUpdateInternal(c);
 	if (c == item->interpolationProgress)
 	{
 		presetProgressionUI->setVisible(item->interpolationProgress->floatValue() > 0);
@@ -80,7 +80,7 @@ void CVGroupUI::itemDropped(const DragAndDropTarget::SourceDetails& details)
 {
 	String type = details.description.getProperty("type", "").toString();
 
-	BaseItemUI::itemDropped(details);
+	ItemUI::itemDropped(details);
 
 	if (CVGroupUI* gui = dynamic_cast<CVGroupUI*>(details.sourceComponent.get()))
 	{

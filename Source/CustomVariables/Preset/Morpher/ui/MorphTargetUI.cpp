@@ -9,7 +9,7 @@
 */
 
 MorphTargetUI::MorphTargetUI(MorphTarget* mt) :
-	BaseItemMinimalUI(mt)
+	ItemMinimalUI(mt)
 {
 	autoDrawContourWhenSelected = false;
 	setSize(50, 50);

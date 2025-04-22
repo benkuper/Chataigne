@@ -144,7 +144,7 @@ void ProcessorManagerUI::itemDropped(const SourceDetails& details)
 	}
 	else if (dataType == "CommandTemplate")
 	{
-		BaseItemUI<CommandTemplate>* tui = dynamic_cast<BaseItemUI<CommandTemplate> *>(details.sourceComponent.get());
+		ItemUI<CommandTemplate>* tui = dynamic_cast<ItemUI<CommandTemplate> *>(details.sourceComponent.get());
 		if (tui != nullptr)
 		{
 			PopupMenu pm;
