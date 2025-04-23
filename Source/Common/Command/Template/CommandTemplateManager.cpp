@@ -43,11 +43,11 @@ CommandTemplate* CommandTemplateManager::addItemFromData(var data, bool addToUnd
 	return addItem(ct, data, addToUndo);
 }
 
-Array<CommandTemplate*> CommandTemplateManager::addItemsFromData(var data, bool addToUndo)
+Array<BaseItem*> CommandTemplateManager::addItemsFromData(var data, bool addToUndo)
 {
-	Array<CommandTemplate*> itemsToAdd;
+	Array<BaseItem*> itemsToAdd;
 	for (int i = 0; i < data.size(); i++) itemsToAdd.add(new CommandTemplate(module, data[i]));
-	return addItems(itemsToAdd, data, addToUndo);
+	return BaseManager::addItems(itemsToAdd, data, addToUndo);
 }
 
 void CommandTemplateManager::setupDefinitionsFromModule()

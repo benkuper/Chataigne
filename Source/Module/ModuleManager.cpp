@@ -99,8 +99,11 @@ void RootModuleManager::showAllValuesAndGetControllable(const StringArray& typeF
 		Module* m = mList[i];
 		ControllableChooserPopupMenu* vCC = new ControllableChooserPopupMenu(&m->valuesCC, i * maxValuesPerModule, -1, typeFilters, excludeTypeFilters);
 		getInstance()->modulesMenu.add(vCC);
-		if (i == RootModuleManager::getInstance()->items.size()) menu.addSeparator(); // Separator between user created module and special modules
-		menu.addSubMenu(m->niceName, *vCC);
+
+		if(m == StateManager::getInstance()->module.get()) menu.addSeparator(); // Separator between user created module and special modules
+
+		String crumb = m->getBreadCrumb().joinIntoString(" > ");
+		menu.addSubMenu(crumb, *vCC);
 	}
 
 	getInstance()->engineMenu.reset(new ControllableChooserPopupMenu(Engine::mainEngine, -10000000, -1, typeFilters, excludeTypeFilters));
@@ -154,7 +157,7 @@ PopupMenu RootModuleManager::getAllModulesCommandMenu(CommandContext context, bo
 {
 	PopupMenu menu;
 	Array<Module*> mList = RootModuleManager::getInstance()->getModuleList(false);
-	for (int i = 0; i < mList.size(); ++i) menu.addSubMenu(mList[i]->niceName, mList[i]->getCommandMenu(i * 1000, context));
+	for (int i = 0; i < mList.size(); ++i) menu.addSubMenu(mList[i]->getBreadCrumb().joinIntoString(" > "), mList[i]->getCommandMenu(i * 1000, context));
 
 	menu.addSeparator();
 

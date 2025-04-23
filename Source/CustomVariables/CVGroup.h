@@ -20,7 +20,7 @@ class CVGroup :
 	public GenericControllableManager::ManagerListener
 {
 public:
-	CVGroup(const String &name = "Group");
+	CVGroup(const String &name = "Custom Variables");
 	~CVGroup();
 
 	ControllableContainer params;

@@ -170,7 +170,7 @@ void State::afterLoadJSONDataInternal()
 
 bool State::paste()
 {
-	Array<Processor*> p = pm->addItemsFromClipboard(false);
+	Array<BaseItem*> p = pm->addItemsFromClipboard(false);
 	if (p.isEmpty()) return BaseItem::paste();
 	return true;
 }
