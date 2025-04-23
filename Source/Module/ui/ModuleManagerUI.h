@@ -11,17 +11,29 @@
 #pragma once
 
 class ModuleManagerUI :
-	public ManagerShapeShifterUI<ModuleManager, Module, ModuleUI>
+	public ManagerUI<ModuleManager, Module, ModuleUI, ItemBaseGroup<Module>, ModuleGroupUI>
 {
 public:
 
-	ModuleManagerUI(const String &contentName, ModuleManager *_manager);
-	~ModuleManagerUI();
+	ModuleManagerUI(const String& contentName, ModuleManager* _manager);
+	virtual ~ModuleManagerUI();
 
 	ModuleUI* createUIForItem(Module* item) override;
 	void addItemFromMenu(Module* m, bool fromAddButton, Point<int> pos) override;
 
-	static ModuleManagerUI * create(const String &contentName) { return new ModuleManagerUI(contentName, RootModuleManager::getInstance()); }
+};
 
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ModuleManagerUI)
+class RootModuleManagerUI :
+	public ModuleManagerUI,
+	public ShapeShifterContent
+{
+public:
+
+	RootModuleManagerUI(const String &contentName, ModuleManager *_manager);
+	~RootModuleManagerUI();
+
+	static RootModuleManagerUI* create(const String& contentName) { return new RootModuleManagerUI(contentName, RootModuleManager::getInstance()); }
+
+
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(RootModuleManagerUI)
 };

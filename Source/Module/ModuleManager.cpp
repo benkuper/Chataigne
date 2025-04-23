@@ -33,6 +33,10 @@ ModuleManager::~ModuleManager()
 }
 
 
+ItemBaseGroup<Module>* ModuleManager::createGroup() {
+	return new ItemBaseGroup<Module>(new ModuleManager("Items"));
+}
+
 void ModuleManager::addItemInternal(Module* module, var data)
 {
 	module->templateManager->setupDefinitionsFromModule();
@@ -48,7 +52,7 @@ RootModuleManager::RootModuleManager() :
 
 Array<Module*> RootModuleManager::getModuleList(bool includeSpecialModules)
 {
-	Array<Module*> mList;
+	Array<Module*> mList = RootModuleManager::getInstance()->getItems(false, true);
 	for (auto& m : RootModuleManager::getInstance()->items) mList.add(m);
 
 	if (includeSpecialModules)

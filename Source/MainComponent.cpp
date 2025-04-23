@@ -27,7 +27,7 @@ MainContentComponent::~MainContentComponent()
 void MainContentComponent::init()
 {
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Module Router", &ModuleRouterPanelView::create, StateMachineView::getPanelName()));
-	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Modules", &ModuleManagerUI::create));
+	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Modules", &RootModuleManagerUI::create));
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition(CommunityModulePanel::getPanelName(), &CommunityModulePanel::create, StateMachineView::getPanelName()));
 
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Custom Variables", &CVGroupManagerUI::create));

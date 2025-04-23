@@ -35,3 +35,16 @@ public:
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ModuleUI)
 };
+
+class ModuleGroupUI :
+	public ItemGroupUI<Module>
+{
+public:
+	ModuleGroupUI(ItemBaseGroup<Module>* group);
+	virtual ~ModuleGroupUI();
+
+	void resizedInternalHeader(Rectangle<int>& r) override;
+	BaseManagerUI* createGroupManagerUI() override;
+
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ModuleGroupUI)
+};

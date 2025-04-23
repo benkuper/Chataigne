@@ -10,6 +10,7 @@
 
 #include "Module/ModuleIncludes.h"
 #include "UI/ChataigneAssetManager.h"
+#include "ModuleUI.h"
 
 ModuleUI::ModuleUI(Module* module) :
 	ItemUI<Module>(module)
@@ -124,4 +125,31 @@ void ModuleUI::controllableFeedbackUpdateInternal(Controllable* c)
 {
 	ItemUI::controllableFeedbackUpdateInternal(c);
 	if (c == item->logIncomingData || c == item->logOutgoingData) repaint();
+}
+
+ModuleGroupUI::ModuleGroupUI(ItemBaseGroup<Module>* group) :
+	ItemGroupUI<Module>(group)
+{
+	this->setSize(100, 150);
+	this->setShowGroupManager(true);
+}
+
+ModuleGroupUI::~ModuleGroupUI()
+{
+}
+
+void ModuleGroupUI::resizedInternalHeader(Rectangle<int>& r)
+{
+	groupManagerUI->addItemBT->setBounds(r.removeFromRight(r.getHeight()));
+}
+
+BaseManagerUI* ModuleGroupUI::createGroupManagerUI()
+{
+	auto m =  new ModuleManagerUI("Items", (ModuleManager*)group->manager);
+	
+	m->setShowAddButton(false);
+	m->setShowSearchBar(false);
+	m->headerSize = 10;
+	addAndMakeVisible(m->addItemBT.get());
+	return m;
 }
