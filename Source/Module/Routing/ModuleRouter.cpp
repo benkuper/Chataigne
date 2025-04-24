@@ -31,7 +31,7 @@ ModuleRouter::~ModuleRouter()
 	setDestModule(nullptr);
 }
 
-void ModuleRouter::setSourceModule(Module * m)
+void ModuleRouter::setSourceModule(Module* m)
 {
 	if (m == sourceModule) return;
 
@@ -46,7 +46,7 @@ void ModuleRouter::setSourceModule(Module * m)
 		sourceModuleRef = nullptr;
 		sourceValues.clear();
 	}
-	
+
 	sourceModule = m;
 
 	if (sourceModule != nullptr)
@@ -59,9 +59,9 @@ void ModuleRouter::setSourceModule(Module * m)
 
 		Array<WeakReference<Controllable>> values = sourceModule->valuesCC.getAllControllables(true);
 		int index = 0;
-		for (auto &c : values)
+		for (auto& c : values)
 		{
-			ModuleRouterValue * mrv = new ModuleRouterValue(c, index++);
+			ModuleRouterValue* mrv = new ModuleRouterValue(c, index++);
 			sourceValues.addItem(mrv, var(), false);
 			mrv->forceDisabled = !enabled->boolValue();
 			mrv->setSourceAndOutModule(sourceModule, destModule);
@@ -71,7 +71,7 @@ void ModuleRouter::setSourceModule(Module * m)
 	routerListeners.call(&RouterListener::sourceModuleChanged, this);
 }
 
-void ModuleRouter::setDestModule(Module * m)
+void ModuleRouter::setDestModule(Module* m)
 {
 	if (m == destModule) return;
 
@@ -90,7 +90,7 @@ void ModuleRouter::setDestModule(Module * m)
 
 	if (!sourceModuleRef.wasObjectDeleted())
 	{
-		for (auto &mrv : sourceValues.items)
+		for (auto& mrv : sourceValues.items)
 		{
 			mrv->setSourceAndOutModule(sourceModule, destModule);
 			mrv->forceDisabled = !enabled->boolValue();
@@ -131,10 +131,10 @@ var ModuleRouter::getJSONData(bool includeNonOverriden)
 	var data = BaseItem::getJSONData(includeNonOverriden);
 	if (sourceModule != nullptr)
 	{
-		data.getDynamicObject()->setProperty("sourceModule", sourceModule->shortName);
+		data.getDynamicObject()->setProperty("sourceModule", RootModuleManager::getInstance()->getItemPath(sourceModule));
 		data.getDynamicObject()->setProperty("sourceValues", sourceValues.getJSONData());
 	}
-	if(destModule != nullptr) data.getDynamicObject()->setProperty("destModule", destModule->shortName);
+	if (destModule != nullptr) data.getDynamicObject()->setProperty("destModule", RootModuleManager::getInstance()->getItemPath(destModule));
 
 	return data;
 }
@@ -143,16 +143,16 @@ void ModuleRouter::loadJSONDataInternal(var data)
 {
 	BaseItem::loadJSONDataInternal(data);
 
-	String moduleName = data.getProperty("sourceModule", "");
-	if (moduleName == CVGroupManager::getInstance()->module->shortName) setSourceModule(CVGroupManager::getInstance()->module.get());
-	else setSourceModule(RootModuleManager::getInstance()->getItemWithName(moduleName));
-	
-	setDestModule(RootModuleManager::getInstance()->getItemWithName(data.getProperty("destModule", "")));
-	
+	String modulePath = data.getProperty("sourceModule", "");
+	if (modulePath == CVGroupManager::getInstance()->module->shortName) setSourceModule(CVGroupManager::getInstance()->module.get());
+	else setSourceModule(RootModuleManager::getInstance()->getItemWithPath(modulePath));
+
+	setDestModule(RootModuleManager::getInstance()->getItemWithPath(data.getProperty("destModule", "")));
+
 	if (data.getDynamicObject()->hasProperty("sourceValues")) sourceValues.loadItemsData(data.getProperty("sourceValues", var()));
 }
 
-void ModuleRouter::newMessage(const ContainerAsyncEvent & e)
+void ModuleRouter::newMessage(const ContainerAsyncEvent& e)
 {
 	if (e.type == e.ChildStructureChanged)
 	{
@@ -163,9 +163,9 @@ void ModuleRouter::newMessage(const ContainerAsyncEvent & e)
 	}
 }
 
-ModuleRouterValue * ModuleRouter::getRouterValueForControllable(Controllable * c)
+ModuleRouterValue* ModuleRouter::getRouterValueForControllable(Controllable* c)
 {
-	for (auto &v : sourceValues.items)
+	for (auto& v : sourceValues.items)
 	{
 		if (v->sourceValue == c) return v;
 	}
@@ -173,19 +173,19 @@ ModuleRouterValue * ModuleRouter::getRouterValueForControllable(Controllable * c
 	return nullptr;
 }
 
-void ModuleRouter::onContainerParameterChangedInternal(Parameter * p)
+void ModuleRouter::onContainerParameterChangedInternal(Parameter* p)
 {
 	if (p == enabled)
 	{
-		for (auto &mrv : sourceValues.items) mrv->forceDisabled = !enabled->boolValue();
+		for (auto& mrv : sourceValues.items) mrv->forceDisabled = !enabled->boolValue();
 	}
 }
 
-void ModuleRouter::onContainerTriggerTriggered(Trigger * t)
+void ModuleRouter::onContainerTriggerTriggered(Trigger* t)
 {
 	if (t == selectAllValues || t == deselectAllValues)
 	{
-		for (auto &sv : sourceValues.items)
+		for (auto& sv : sourceValues.items)
 		{
 			sv->enabled->setValue(t == selectAllValues);
 		}
@@ -202,7 +202,7 @@ void ModuleRouter::onContainerTriggerTriggered(Trigger * t)
 	}
 }
 
-void ModuleRouter::inspectableDestroyed(Inspectable * i)
+void ModuleRouter::inspectableDestroyed(Inspectable* i)
 {
 	if (i == sourceModule) setSourceModule(nullptr);
 	else if (i == destModule) setDestModule(nullptr);

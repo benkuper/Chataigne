@@ -24,8 +24,7 @@ ModuleManager::ModuleManager(const String& name) :
 
 	managerFactory = ModuleFactory::getInstance();
 
-	ControllableFactory::getInstance()->controllableDefs.add(new ControllableDefinition(MIDIValueParameter::getTypeStringStatic(), &MIDIValueParameter::create, true));
-	ControllableFactory::getInstance()->controllableDefs.add(new ControllableDefinition(DMXValueParameter::getTypeStringStatic(), &DMXValueParameter::create, true));
+
 }
 
 ModuleManager::~ModuleManager()
@@ -47,12 +46,14 @@ void ModuleManager::addItemInternal(Module* module, var data)
 RootModuleManager::RootModuleManager() :
 	ModuleManager("Modules")
 {
+	ControllableFactory::getInstance()->controllableDefs.add(new ControllableDefinition(MIDIValueParameter::getTypeStringStatic(), &MIDIValueParameter::create, true));
+	ControllableFactory::getInstance()->controllableDefs.add(new ControllableDefinition(DMXValueParameter::getTypeStringStatic(), &DMXValueParameter::create, true));
 }
 
 
 Array<Module*> RootModuleManager::getModuleList(bool includeSpecialModules)
 {
-	Array<Module*> mList = RootModuleManager::getInstance()->getItems(false, true);
+	Array<Module*> mList = RootModuleManager::getInstance()->getItems();
 	for (auto& m : RootModuleManager::getInstance()->items) mList.add(m);
 
 	if (includeSpecialModules)

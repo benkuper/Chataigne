@@ -56,7 +56,7 @@ void CommandTemplateManager::setupDefinitionsFromModule()
 	for (auto& d : module->defManager->definitions)
 	{
 		factory.defs.add(Factory<CommandTemplate>::Definition::createDef(d->menuPath, d->commandType, CommandTemplate::create)
-			->addParam("module", module->shortName)
+			->addParam("module", RootModuleManager::getInstance()->getItemPath(module))
 			->addParam("menuPath", d->menuPath)->addParam("commandType", d->commandType));
 	}
 }

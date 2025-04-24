@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    ModuleChooserUI.cpp
-    Created: 13 Mar 2017 4:22:50pm
-    Author:  Ben-Portable
+	ModuleChooserUI.cpp
+	Created: 13 Mar 2017 4:22:50pm
+	Author:  Ben-Portable
 
   ==============================================================================
 */
@@ -41,47 +41,58 @@ ModuleChooserUI::~ModuleChooserUI()
 void ModuleChooserUI::buildModuleBox()
 {
 	clear(dontSendNotification);
-	if (RootModuleManager::getInstanceWithoutCreating() == nullptr) return; 
-	for (auto &m : RootModuleManager::getInstance()->items)
+	if (RootModuleManager::getInstanceWithoutCreating() == nullptr) return;
+
+	auto items = RootModuleManager::getInstance()->getItems();
+	int id = 0;
+	for (auto& m : items)
 	{
+		id++;
 		if (filterModuleFunc != nullptr)
 		{
 			if (!filterModuleFunc(m)) continue;
 		}
 
-		int id = RootModuleManager::getInstance()->items.indexOf(m) + 1;
-		addItem(m->niceName, id);
+		addItem(m->getBreadCrumb().joinIntoString(" > "), id);
 	}
 
 	if (includeCVModule)
 	{
 		if (filterModuleFunc == nullptr || filterModuleFunc(CVGroupManager::getInstance()->module.get())) addItem("Custom Variables", 1000);
 	}
-	
+
 	setInterceptsMouseClicks(getNumItems() > 0, false);
 	//repaint();
 
 	chooserListeners.call(&ChooserListener::moduleListChanged, this);
 }
 
-void ModuleChooserUI::setModuleSelected(Module * m, bool silent)
+void ModuleChooserUI::setModuleSelected(Module* m, bool silent)
 {
 	if (m == nullptr) return;
 	if (m == CVGroupManager::getInstance()->module.get()) setSelectedId(1000);
-	else setSelectedId(RootModuleManager::getInstance()->items.indexOf(m) + 1, silent ? dontSendNotification:sendNotification);
+	else
+	{
+		auto items = RootModuleManager::getInstance()->getItems();
+		setSelectedId(items.indexOf(m) + 1, silent ? dontSendNotification : sendNotification);
+	}
 }
 
-void ModuleChooserUI::comboBoxChanged(ComboBox *)
+void ModuleChooserUI::comboBoxChanged(ComboBox*)
 {
 	Module* m = nullptr;
 	if (getSelectedId() == 1000) m = CVGroupManager::getInstance()->module.get();
-	else m = RootModuleManager::getInstance()->items[getSelectedId() - 1];
+	else
+	{
+		auto items = RootModuleManager::getInstance()->getItems();
+		m = items[getSelectedId() - 1];
+	}
 
 	chooserListeners.call(&ChooserListener::selectedModuleChanged, this, m);
-	
+
 }
 
-void ModuleChooserUI::newMessage(const ModuleManager::ManagerEvent &)
+void ModuleChooserUI::newMessage(const ModuleManager::ManagerEvent&)
 {
 	//Rebuild module for any type of manager event
 	buildModuleBox();
@@ -94,7 +105,7 @@ void ModuleChooserUI::newMessage(const CVGroupManager::ManagerEvent&)
 	buildModuleBox();
 }
 
-void ModuleChooserUI::newMessage(const ContainerAsyncEvent & e)
+void ModuleChooserUI::newMessage(const ContainerAsyncEvent& e)
 {
 	if (e.type == ContainerAsyncEvent::ChildStructureChanged) buildModuleBox();
 }

@@ -77,15 +77,16 @@ ModuleFactory::~ModuleFactory()
 
 void ModuleFactory::addCustomModules(bool log)
 {
+	File modulesFolder = getCustomModulesFolder();
+	modulesFolder.createDirectory();
+
 	File f = Engine::mainEngine->getFile();
 	if (f.existsAsFile())
 	{
 		File mf = Engine::mainEngine->getFile().getParentDirectory().getChildFile("modules");
-		if (mf.isDirectory()) addCustomModulesInFolder(mf, true, log);
+		if (mf.isDirectory() && mf != modulesFolder) addCustomModulesInFolder(mf, true, log);
 	}
-
-	File modulesFolder = getCustomModulesFolder();
-	modulesFolder.createDirectory();
+	
 	addCustomModulesInFolder(modulesFolder, false, log);
 }
 
@@ -98,7 +99,7 @@ void ModuleFactory::addCustomModulesInFolder(File folder, bool isLocal, bool log
 		File moduleFile = m.getChildFile("module.json");
 		if (!moduleFile.existsAsFile())
 		{
-			LOGWARNING("Folder " << m.getFileName() << "does not contain a module.json file, skipping");
+			if (log) LOGWARNING("Folder " << m.getFileName() << "does not contain a module.json file, skipping");
 			continue;
 		}
 
@@ -106,7 +107,7 @@ void ModuleFactory::addCustomModulesInFolder(File folder, bool isLocal, bool log
 
 		if (!moduleData.isObject())
 		{
-			LOGWARNING("Module " << m.getFileName() << " has an invalid module.json file, skipping");
+			if (log) LOGWARNING("Module " << m.getFileName() << " has an invalid module.json file, skipping");
 			continue;
 		}
 
@@ -118,7 +119,7 @@ void ModuleFactory::addCustomModulesInFolder(File folder, bool isLocal, bool log
 
 		if (customModulesDefMap.contains(moduleName))
 		{
-			LOGWARNING("Custom Module with name " << moduleName << " already found, skipping");
+			if(log) LOGWARNING("Custom Module with name " << moduleName << " already found, skipping");
 			continue;
 		}
 

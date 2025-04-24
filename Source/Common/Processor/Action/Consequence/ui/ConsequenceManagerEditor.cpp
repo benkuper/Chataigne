@@ -9,7 +9,6 @@
 */
 
 #include "Common/Processor/ProcessorIncludes.h"
-#include "ConsequenceManagerEditor.h"
 
 ConsequenceManagerEditor::ConsequenceManagerEditor(ConsequenceManager* csm, CommandContext context, bool isRoot, bool multiplexMode) :
 	BaseCommandHandlerManagerEditor(csm, context, isRoot, multiplexMode),
@@ -21,12 +20,12 @@ ConsequenceManagerEditor::ConsequenceManagerEditor(ConsequenceManager* csm, Comm
 
 	for (auto& f : csm->factory.defs) acceptedDropTypes.add(f->type);
 
-	csm->addAsyncManagerListener(this);
+	csm->addAsyncConsequenceManagerListener(this);
 }
 
 ConsequenceManagerEditor::~ConsequenceManagerEditor()
 {
-	if (!inspectable.wasObjectDeleted()) csm->removeAsyncManagerListener(this);
+	if (!inspectable.wasObjectDeleted()) csm->removeAsyncConsequenceManagerListener(this);
 }
 
 void ConsequenceManagerEditor::resizedInternalHeader(Rectangle<int>& r)

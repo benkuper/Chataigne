@@ -241,7 +241,7 @@ void BaseCommandHandler::itemAdded(CommandTemplate* t)
 {
 	if (command == nullptr && ghostCommandMenuPath == "Templates" && t->niceName == ghostCommandName)
 	{
-		Module* m = RootModuleManager::getInstance()->getItemWithName(ghostModuleName);
+		Module* m = RootModuleManager::getInstance()->getItemWithPath(ghostModuleName);
 		if (m != nullptr) setCommand(m->getCommandDefinitionFor(ghostCommandMenuPath, ghostCommandName));
 	}
 }
@@ -252,7 +252,7 @@ void BaseCommandHandler::itemsAdded(Array<CommandTemplate*> templates)
 	{
 		if (command == nullptr && ghostCommandMenuPath == "Templates" && t->niceName == ghostCommandName)
 		{
-			Module* m = RootModuleManager::getInstance()->getItemWithName(ghostModuleName);
+			Module* m = RootModuleManager::getInstance()->getItemWithPath(ghostModuleName);
 			if (m != nullptr)
 			{
 				setCommand(m->getCommandDefinitionFor(ghostCommandMenuPath, ghostCommandName));
@@ -269,7 +269,7 @@ var BaseCommandHandler::setCommandFromScript(const var::NativeFunctionArgs& a)
 	if (h == nullptr) return var();
 	if (!checkNumArgs("Command", a, 3)) return var();
 
-	Module* m = RootModuleManager::getInstance()->getModuleWithName(a.arguments[0].toString());
+	Module* m = RootModuleManager::getInstance()->getItemWithPath(a.arguments[0].toString());
 	if (m != nullptr)
 	{
 		String menuPath = a.arguments[1].toString();

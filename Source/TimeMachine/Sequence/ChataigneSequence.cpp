@@ -31,7 +31,8 @@ ChataigneSequence::ChataigneSequence() :
 	ltcModuleTarget = addTargetParameter("LTC Sync Module", "Choose an Audio Module to use as LTC Sync for this sequence", RootModuleManager::getInstance(), false);
 	ltcModuleTarget->canBeDisabledByUser = true;
 	ltcModuleTarget->targetType = TargetParameter::CONTAINER;
-	ltcModuleTarget->maxDefaultSearchLevel = 0;
+	ltcModuleTarget->defaultContainerTypeCheckFunc = [](ControllableContainer* cc) { return dynamic_cast<AudioModule*>(cc) != nullptr; };
+
 	ltcMode = addEnumParameter("LTC Mode", "Either receiving or sending LTC", 0);
 	ltcMode->addOption("Receive", RECEIVE)->addOption("Send", SEND)->addOption("Both", BOTH);
 	ltcSendFPS = addEnumParameter("Send FPS", "The framerate to use to send LTC");
