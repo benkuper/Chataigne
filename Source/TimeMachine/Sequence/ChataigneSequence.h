@@ -15,6 +15,30 @@ class ChataigneAudioLayer;
 class AudioModule;
 class MTCSender;
 class MIDIDeviceParameter;
+class ChataigneSequenceLayerManager;
+
+//class ChataigneSequenceLayerGroup :
+//	public SequenceLayerGroup
+//{
+//public:
+//	ChataigneSequenceLayerGroup(ChataigneSequenceLayerManager* _manager);
+//	~ChataigneSequenceLayerGroup() {}
+//};
+
+class ChataigneSequenceLayerManager :
+	public SequenceLayerManager
+{
+public:
+	ChataigneSequenceLayerManager(Sequence* _sequence);
+	~ChataigneSequenceLayerManager() {}
+
+	Sequence* sequence;
+
+	ItemBaseGroup<SequenceLayer>* createGroup() override;
+
+};
+
+
 
 class ChataigneSequence :
 	public Sequence,

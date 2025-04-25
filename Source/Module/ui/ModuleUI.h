@@ -43,8 +43,7 @@ public:
 	ModuleGroupUI(ItemBaseGroup<Module>* group);
 	virtual ~ModuleGroupUI();
 
-	void resizedInternalHeader(Rectangle<int>& r) override;
-	BaseManagerUI* createGroupManagerUI() override;
+	BaseManagerUI* createGroupManagerUIInternal() override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ModuleGroupUI)
 };

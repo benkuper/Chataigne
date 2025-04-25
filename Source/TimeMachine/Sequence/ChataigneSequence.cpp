@@ -12,7 +12,7 @@
 #include "ChataigneSequence.h"
 
 ChataigneSequence::ChataigneSequence() :
-	Sequence(),
+	Sequence(new ChataigneSequenceLayerManager(this)),
 	masterAudioModule(nullptr),
 	masterAudioLayer(nullptr),
 	ltcAudioModule(nullptr),
@@ -49,12 +49,7 @@ ChataigneSequence::ChataigneSequence() :
 	std::function<bool(ControllableContainer*)> typeCheckFunc = [](ControllableContainer* cc) { return dynamic_cast<AudioModule*>(cc) != nullptr; };
 	ltcModuleTarget->defaultContainerTypeCheckFunc = typeCheckFunc;
 
-	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Trigger", &ChataigneTriggerLayer::create, this));
-	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", Mapping1DLayer::getTypeStringStatic(), &Mapping1DLayer::create, this));
-	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", Mapping2DLayer::getTypeStringStatic(), &Mapping2DLayer::create, this));
-	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Audio", &ChataigneAudioLayer::create, this, true));
-	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", ColorMappingLayer::getTypeStringStatic(), &ColorMappingLayer::create, this));
-	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Sequences", &SequenceBlockLayer::create, this)->addParam("manager", ChataigneSequenceManager::getInstance()->getControlAddress()));
+
 
 	layerManager->addManagerListener(this);
 
@@ -487,3 +482,22 @@ void ChataigneSequence::mtcTimeUpdated(bool isFullFrame)
 	if (mtcReceiver->isPlaying && !isPlaying->boolValue() && time >= 0 && time < totalTime->floatValue()) playTrigger->trigger();
 	setCurrentTime(time, isJump, seekMode);
 }
+
+ChataigneSequenceLayerManager::ChataigneSequenceLayerManager(Sequence* _sequence) :
+	SequenceLayerManager(_sequence),
+	sequence(_sequence)
+{
+	//setName("Layers");
+	factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Trigger", &ChataigneTriggerLayer::create, sequence));
+	factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", Mapping1DLayer::getTypeStringStatic(), &Mapping1DLayer::create, sequence));
+	factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", Mapping2DLayer::getTypeStringStatic(), &Mapping2DLayer::create, sequence));
+	factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Audio", &ChataigneAudioLayer::create, sequence, true));
+	factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", ColorMappingLayer::getTypeStringStatic(), &ColorMappingLayer::create, sequence));
+	factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Sequences", &SequenceBlockLayer::create, sequence)->addParam("manager", ChataigneSequenceManager::getInstance()->getControlAddress()));
+}
+
+ItemBaseGroup<SequenceLayer>* ChataigneSequenceLayerManager::createGroup()
+{
+	return new ItemBaseGroup<SequenceLayer>(new ChataigneSequenceLayerManager(sequence));
+}
+

@@ -4237,6 +4237,9 @@
     <ClCompile Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\SequenceLayer.cpp">
       <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\SequenceLayerGroup.cpp">
+      <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\SequenceLayerManager.cpp">
       <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer</Filter>
     </ClCompile>
@@ -10333,6 +10336,9 @@
       <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\SequenceLayer.h">
+      <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\SequenceLayerGroup.h">
       <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\SequenceLayerManager.h">

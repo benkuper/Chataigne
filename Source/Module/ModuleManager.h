@@ -12,6 +12,8 @@
 
 class ModuleFactory;
 
+
+
 class ModuleManager :
 	public Manager<Module, ItemBaseGroup<Module>>
 {

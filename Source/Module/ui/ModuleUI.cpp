@@ -130,26 +130,14 @@ void ModuleUI::controllableFeedbackUpdateInternal(Controllable* c)
 ModuleGroupUI::ModuleGroupUI(ItemBaseGroup<Module>* group) :
 	ItemGroupUI<Module>(group)
 {
-	this->setSize(100, 150);
-	this->setShowGroupManager(true);
+	setShowGroupManager(true);
 }
 
 ModuleGroupUI::~ModuleGroupUI()
 {
 }
 
-void ModuleGroupUI::resizedInternalHeader(Rectangle<int>& r)
+BaseManagerUI* ModuleGroupUI::createGroupManagerUIInternal()
 {
-	groupManagerUI->addItemBT->setBounds(r.removeFromRight(r.getHeight()));
-}
-
-BaseManagerUI* ModuleGroupUI::createGroupManagerUI()
-{
-	auto m =  new ModuleManagerUI("Items", (ModuleManager*)group->manager);
-	
-	m->setShowAddButton(false);
-	m->setShowSearchBar(false);
-	m->headerSize = 10;
-	addAndMakeVisible(m->addItemBT.get());
-	return m;
+	return new ModuleManagerUI("Items", (ModuleManager*)group->manager);
 }

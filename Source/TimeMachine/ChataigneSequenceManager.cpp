@@ -1,6 +1,4 @@
-#include "JuceHeader.h"
 #include "TimeMachineIncludes.h"
-#include "ChataigneSequenceManager.h"
 /*
   ==============================================================================
 
