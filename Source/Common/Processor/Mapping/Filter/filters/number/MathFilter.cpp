@@ -235,7 +235,8 @@ float MathFilter::getProcessedValue(float val, int index, int multiplexIndex)
 		}
 		else
 		{
-			oVal = (float)operationValue->value[(index + operationValue->value.size()) % operationValue->value.size()];
+			var lVal = filterParams.getLinkedValue(operationValue, multiplexIndex);
+			oVal = (float)lVal[(index + lVal.size()) % lVal.size()];
 		}
 	}
 
