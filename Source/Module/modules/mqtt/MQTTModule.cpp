@@ -53,6 +53,9 @@ MQTTClientModule::MQTTClientModule(const String& name, bool canHaveInput, bool c
 	includeValuesInSave = true;
 	valuesCC.saveAndLoadRecursiveData = true;
 
+	//Script
+	scriptObject.getDynamicObject()->setMethod("publish", MQTTClientModule::publishMessageFromScript);
+
 	defManager->add(CommandDefinition::createDef(this, "", "Publish", &MQTTCommand::create));
 
 	setupIOConfiguration(true, true);
@@ -329,6 +332,48 @@ void MQTTClientModule::stopClient()
 	disconnect();
 #endif
 	stopThread(1000);
+}
+
+/**
+ * @brief Publishes a message to an MQTT topic from a script.
+ *
+ * This method retrieves the MQTTClientModule object from the JavaScript arguments,
+ * checks if the module is enabled, validates the number of arguments provided,
+ * extracts the topic and message from the arguments, and then calls the
+ * internal publishMessage method.
+ *
+ * @param args The arguments passed from the JavaScript script. It expects two
+ * arguments:
+ * - The first argument is the topic to publish to (String).
+ * - The second argument is the message to publish (String).
+ * @return var Returns an empty var object upon successful execution or if the
+ * module is disabled. Returns an empty var object after logging an
+ * error if the number of arguments is incorrect.
+ *
+ * @note If more than two arguments are provided, a warning is logged, and the
+ * extra arguments are discarded.
+ */
+var MQTTClientModule::publishMessageFromScript(const var::NativeFunctionArgs& args)
+{
+	MQTTClientModule* m = getObjectFromJS<MQTTClientModule>(args);
+	if (!m->enabled->boolValue()) return var();
+
+	if (args.numArguments < 2)
+	{
+		NLOGERROR(m->niceName, "Error, function takes 2 arguments, got " + String(args.numArguments));
+		return var();
+	}
+
+	if (args.numArguments > 2)
+	{
+		NLOGWARNING(m->niceName, "Warning, function takes 2 arguments, got " + String(args.numArguments) + ". Last arguments will be discarded.");
+	}
+
+	String topic = args.arguments[0].toString();
+	String message = args.arguments[1].toString();
+	m->publishMessage(topic, message);
+
+	return var();
 }
 
 #if JUCE_WINDOWS

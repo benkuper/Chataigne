@@ -1821,6 +1821,9 @@
     <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_ContentSharer_ios.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_Direct2DHwndContext_windows.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_DragAndDrop_linux.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -3372,6 +3375,7 @@
     <ClInclude Include="..\..\JUCE\modules\juce_core\containers\juce_SparseSet.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_core\containers\juce_Variant.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_core\detail\juce_CallbackListenerList.h"/>
+    <ClInclude Include="..\..\JUCE\modules\juce_core\detail\juce_LruCache.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_core\detail\juce_NativeFileHandle.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_core\files\juce_AndroidDocument.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_core\files\juce_common_MimeTypes.h"/>
@@ -3679,6 +3683,7 @@
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_UIAWindowProvider_windows.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_WindowsUIAWrapper_windows.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\juce_CGMetalLayerRenderer_mac.h"/>
+    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\juce_Direct2DHwndContext_windows.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\juce_MultiTouchMapper.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\juce_NativeModalWrapperComponent_ios.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\juce_PerScreenDisplayLinks_mac.h"/>

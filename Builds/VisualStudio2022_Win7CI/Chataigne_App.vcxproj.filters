@@ -3037,6 +3037,9 @@
     <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_ContentSharer_ios.cpp">
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_Direct2DHwndContext_windows.cpp">
+      <Filter>JUCE Modules\juce_gui_basics\native</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_DragAndDrop_linux.cpp">
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClCompile>
@@ -5460,6 +5463,9 @@
     <ClInclude Include="..\..\JUCE\modules\juce_core\detail\juce_CallbackListenerList.h">
       <Filter>JUCE Modules\juce_core\detail</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_core\detail\juce_LruCache.h">
+      <Filter>JUCE Modules\juce_core\detail</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_core\detail\juce_NativeFileHandle.h">
       <Filter>JUCE Modules\juce_core\detail</Filter>
     </ClInclude>
@@ -6379,6 +6385,9 @@
       <Filter>JUCE Modules\juce_gui_basics\native\accessibility</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\juce_CGMetalLayerRenderer_mac.h">
+      <Filter>JUCE Modules\juce_gui_basics\native</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\juce_Direct2DHwndContext_windows.h">
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\juce_MultiTouchMapper.h">

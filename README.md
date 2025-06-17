@@ -53,6 +53,8 @@ You can check the tutorials to better understand what and how you can use Chatai
     - Resolume
     - Madmapper
     - Millumin
+    - TouchDesigner
+    - Unity
     - QLab
     - HeavyM
     - D::Light

@@ -91,6 +91,9 @@ public:
 
 	void stopClient();
 
+	//Script
+	static var publishMessageFromScript(const var::NativeFunctionArgs& args);
+
 	//mosquitto
 #if JUCE_WINDOWS
 	void on_connect(int rc) override;
