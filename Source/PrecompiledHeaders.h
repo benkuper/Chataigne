@@ -12,4 +12,4 @@
 
 #include <JuceHeader.h>
 
-/* We can add here any header that may be frequently used to get PCH benefits here too ! */
+/* We can add here any headers that may be frequently used to get PCH benefits here too! */
