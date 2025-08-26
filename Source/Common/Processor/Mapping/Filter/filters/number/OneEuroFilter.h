@@ -21,13 +21,13 @@ public:
 	FloatParameter* beta_;
 	FloatParameter* mincutoff;
 
-	float freq;
-	float dcutoff;
+	double freq;
+	double dcutoff;
 
 	HashMap<Parameter*, OneEuroFilter*> filtersMap;
 	OwnedArray<OneEuroFilter> allFilters;
 
-	float alpha(float cutoff);
+	double alpha(double cutoff);
 
 	virtual void setupParametersInternal(int multiplexIndex, bool rangeOnly = false) override;
 	Parameter* setupSingleParameterInternal(Parameter* source, int multiplexIndex, bool rangeOnly) override;

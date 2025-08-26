@@ -27,10 +27,10 @@ OneEuroMappingFilter::~OneEuroMappingFilter()
 {
 }
 
-float OneEuroMappingFilter::alpha(float cutoff)
+double OneEuroMappingFilter::alpha(double cutoff)
 {
-	float te = 1.0f / freq;
-	float tau = 1.0f / (2 * MathConstants<float>::pi * cutoff);
+	double te = 1.0f / freq;
+	double tau = 1.0f / (2 * MathConstants<double>::pi * cutoff);
 	return 1.0f / (1.0f + tau / te);
 }
 
@@ -79,9 +79,6 @@ MappingFilter::ProcessResult OneEuroMappingFilter::processSingleParameterTimeInt
 
 	if (source->checkValueIsTheSame(oldVal, newVal)) return UNCHANGED;
 
-
-
-
 	//jassert(filtersMap.contains(source) && filtersMap[source] != nullptr);
 	if (!filtersMap.contains(source) || filtersMap[source] == nullptr)
 	{
@@ -89,16 +86,18 @@ MappingFilter::ProcessResult OneEuroMappingFilter::processSingleParameterTimeInt
 		return STOP_HERE;
 	}
 
+
 	OneEuroFilter* f = filtersMap[source];
 
 	f->freq = freq;
 	f->derivativeCutOff = dcutoff;
-	f->minCutOff = mincutoff->floatValue();
-	f->beta = beta_->floatValue();
+	f->minCutOff = mincutoff->doubleValue();
+	f->beta = beta_->doubleValue();
 
 	var val = f->filter(oldVal, newVal, deltaTime);
-
+	
 	out->setValue(out->isComplex() ? val : val[0]);
+
 
 	return CHANGED;
 }

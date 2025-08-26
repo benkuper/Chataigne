@@ -12,23 +12,23 @@
 
 class LowPassFilter {
 
-	float y, a, s;
+	double y, a, s;
 	bool initialized;
 
-	void setAlpha(float alpha) {
-		a = juce::jlimit<float>(0, 1, alpha);
+	void setAlpha(double alpha) {
+		a = juce::jlimit<double>(0, 1, alpha);
 	}
 
 public:
 
-	LowPassFilter(float alpha = 0, float initval = 0.0f) {
+	LowPassFilter(double alpha = 0, double initval = 0.0f) {
 		y = s = initval;
 		setAlpha(alpha);
 		initialized = false;
 	}
 
-	float filter(float value) {
-		float result;
+	double filter(double value) {
+		double result;
 		if (initialized)
 			result = a * value + (1.0f - a) * s;
 		else {
@@ -40,7 +40,7 @@ public:
 		return result;
 	}
 
-	float filterWithAlpha(float value, float alpha) {
+	double filterWithAlpha(double value, double alpha) {
 		setAlpha(alpha);
 		return filter(value);
 	}
@@ -49,7 +49,7 @@ public:
 		return initialized;
 	}
 
-	float lastRawValue(void) {
+	double lastRawValue(void) {
 		return y;
 	}
 };
@@ -62,16 +62,16 @@ public:
 	~OneEuroFilter();
 
 	int dimensions;
-	float freq;
-	float minCutOff;
-	float beta;
-	float derivativeCutOff;
+	double freq;
+	double minCutOff;
+	double beta;
+	double derivativeCutOff;
 
 	juce::OwnedArray<LowPassFilter> x;
 	juce::OwnedArray<LowPassFilter> dx;
 
-	float alpha(float cutoff);
-	juce::Array<float> filter(juce::Array<float> oldValues, juce::Array<float>  newValue, double deltaTime);
+	double alpha(double cutoff);
+	juce::Array<double> filter(juce::Array<double> oldValues, juce::Array<double>  newValue, double deltaTime);
 	juce::var filter(juce::var oldValue, juce::var newValue, double deltaTime);
 
 };
@@ -85,6 +85,6 @@ public:
 	OneEuroFloatFilter();
 	~OneEuroFloatFilter();
 
-	float filter(float oldValue, float newValue, double deltaTime);
+	double filter(double oldValue, double newValue, double deltaTime);
 };
 

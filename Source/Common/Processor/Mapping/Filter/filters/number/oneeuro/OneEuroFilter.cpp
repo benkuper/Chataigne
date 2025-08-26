@@ -29,26 +29,26 @@ OneEuroFilter::~OneEuroFilter()
 {
 }
 
-float OneEuroFilter::alpha(float cutoff)
+double OneEuroFilter::alpha(double cutoff)
 {
-	float te = 1.0f / freq;
-	float tau = 1.0f / (2 * MathConstants<float>::pi * cutoff);
+	double te = 1.0f / freq;
+	double tau = 1.0f / (2 * MathConstants<double>::pi * cutoff);
 	return 1.0f / (1.0f + tau / te);
 }
 
 
-Array<float> OneEuroFilter::filter(Array<float> oldValues, Array<float> newValues, double deltaTime)
+Array<double> OneEuroFilter::filter(Array<double> oldValues, Array<double> newValues, double deltaTime)
 {
 	freq = 1.0 / deltaTime;
 
-	Array<float> result;
+	Array<double> result;
 
 	for (int i = 0; i < dimensions; i++)
 	{
-		float deltaP = (newValues[i] - oldValues[i]) * freq;
+		double deltaP = (newValues[i] - oldValues[i]) * freq;
 
-		float edvalue = dx[i]->filterWithAlpha(deltaP, alpha(derivativeCutOff));
-		float cutoff = minCutOff + beta * fabs(edvalue);
+		double edvalue = dx[i]->filterWithAlpha(deltaP, alpha(derivativeCutOff));
+		double cutoff = minCutOff + beta * fabs(edvalue);
 		result.add(x[i]->filterWithAlpha(newValues[i], alpha(cutoff)));
 	}
 
@@ -58,13 +58,14 @@ Array<float> OneEuroFilter::filter(Array<float> oldValues, Array<float> newValue
 
 var OneEuroFilter::filter(var oldPos, var newPos, double deltaTime)
 {
-	Array<float> oldValues;
-	Array<float> newValues;
+	Array<double> oldValues;
+	Array<double> newValues;
 
 	if (newPos.isArray())
 	{
 		for (int i = 0; i < newPos.size(); i++)
 		{
+			jassert(!isnan((double)newPos[i]));
 			oldValues.add(oldPos[i]);
 			newValues.add(newPos[i]);
 		}
@@ -75,14 +76,10 @@ var OneEuroFilter::filter(var oldPos, var newPos, double deltaTime)
 		newValues.add(newPos);
 	}
 
-	jassert(oldValues.size() == newValues.size());
-
-	Array<float> p = filter(oldValues, newValues, deltaTime);
+	Array<double> p = filter(oldValues, newValues, deltaTime);
 
 	var result;
 	for (int i = 0; i < p.size(); i++) result.append(p[i]);
-
-	jassert(result.size() == oldValues.size());
 
 	return result;
 }
@@ -97,8 +94,8 @@ OneEuroFloatFilter::~OneEuroFloatFilter()
 {
 }
 
-float OneEuroFloatFilter::filter(float oldValue, float newValue, double deltaTime)
+double OneEuroFloatFilter::filter(double oldValue, double newValue, double deltaTime)
 {
-	Array<float> p = OneEuroFilter::filter(Array<float>{ oldValue }, Array<float>{ newValue }, deltaTime);
+	Array<double> p = OneEuroFilter::filter(Array<double>{ oldValue }, Array<double>{ newValue }, deltaTime);
 	return p[0];
 }
