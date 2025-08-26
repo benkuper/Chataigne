@@ -107,7 +107,7 @@ void OSExecCommand::triggerInternal(int multiplexIndex)
 
 		String command = "osascript -e 'tell application \"Terminal\""
 			+ String("\nactivate")
-			+ "\ndo script \"cd " + dir + " && " + launchPrefix + "\\\"" + f.getFileName() + "\\\"\""
+			+ "\ndo script \"cd " + "\\\"" + dir + "\\\"" + " && " + launchPrefix + "\\\"" + f.getFileName() + "\\\"\""
 			+ "\nend tell'";
 
 		//"osascript -e 'tell application \"Terminal\" to do script \"cd "+ dir +" && "+launchPrefix + f.getFileName()+"\"'";
