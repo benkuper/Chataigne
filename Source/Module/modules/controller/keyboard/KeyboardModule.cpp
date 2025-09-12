@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "Module/ModuleIncludes.h"
+
 OrganicApplication::MainWindow* getMainWindow();
 
 #if JUCE_WINDOWS
@@ -101,6 +103,17 @@ KeyboardModule::~KeyboardModule()
 void KeyboardModule::sendKeyDown(int keyID)
 {
 	if (!enabled->boolValue()) return;
+
+	if (!MessageManager::getInstance()->isThisTheMessageThread())
+	{
+		MessageManager::getInstance()->callAsync([this, keyID]()
+			{
+				sendKeyDown(keyID);
+			}
+		);
+		return;
+	}
+
 	outActivityTrigger->trigger();
 
 	MessageManagerLock mmLock;
@@ -124,6 +137,17 @@ void KeyboardModule::sendKeyDown(int keyID)
 void KeyboardModule::sendKeyUp(int keyID)
 {
 	if (!enabled->boolValue()) return;
+
+	if (!MessageManager::getInstance()->isThisTheMessageThread())
+	{
+		MessageManager::getInstance()->callAsync([this, keyID]()
+			{
+				sendKeyUp(keyID);
+			}
+		);
+		return;
+	}
+
 	outActivityTrigger->trigger();
 
 	MessageManagerLock mmLock;
@@ -148,6 +172,16 @@ void KeyboardModule::sendKeyUp(int keyID)
 void KeyboardModule::sendKeyHit(int keyID, bool ctrlPressed, bool altPressed, bool shiftPressed)
 {
 	if (!enabled->boolValue()) return;
+
+	if (!MessageManager::getInstance()->isThisTheMessageThread())
+	{
+		MessageManager::getInstance()->callAsync([this, keyID, ctrlPressed, altPressed, shiftPressed]()
+			{
+				sendKeyHit(keyID, ctrlPressed, altPressed, shiftPressed);
+			}
+		);
+		return;
+	}
 
 	if (ctrlPressed) sendKeyDown(KEY_CTRL);
 	if (altPressed) sendKeyDown(KEY_ALT);
