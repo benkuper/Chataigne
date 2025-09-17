@@ -9,6 +9,7 @@
 */
 
 #include "Common/CommonIncludes.h"
+#include "CommandTemplateManager.h"
 
 CommandTemplateManager::CommandTemplateManager(Module* module) :
 	Manager("Templates"),
@@ -43,11 +44,11 @@ CommandTemplate* CommandTemplateManager::addItemFromData(var data, bool addToUnd
 	return addItem(ct, data, addToUndo);
 }
 
-Array<BaseItem*> CommandTemplateManager::addItemsFromData(var data, bool addToUndo)
+Array<CommandTemplate*> CommandTemplateManager::addItemsFromData(var data, bool addToUndo)
 {
-	Array<BaseItem*> itemsToAdd;
+	Array<CommandTemplate*> itemsToAdd;
 	for (int i = 0; i < data.size(); i++) itemsToAdd.add(new CommandTemplate(module, data[i]));
-	return BaseManager::addItems(itemsToAdd, data, addToUndo);
+	return Manager::addItems(itemsToAdd, data, addToUndo);
 }
 
 void CommandTemplateManager::setupDefinitionsFromModule()
@@ -56,12 +57,12 @@ void CommandTemplateManager::setupDefinitionsFromModule()
 	for (auto& d : module->defManager->definitions)
 	{
 		factory.defs.add(Factory<CommandTemplate>::Definition::createDef(d->menuPath, d->commandType, CommandTemplate::create)
-			->addParam("module", RootModuleManager::getInstance()->getItemPath(module))
+			->addParam("module", module->shortName)
 			->addParam("menuPath", d->menuPath)->addParam("commandType", d->commandType));
 	}
 }
 
-void CommandTemplateManager::setItemIndex(BaseItem* t, int newIndex, bool addToUndo)
+void CommandTemplateManager::setItemIndex(CommandTemplate* t, int newIndex, bool addToUndo)
 {
 	Manager::setItemIndex(t, newIndex, true);
 	if (!addToUndo) reorderDefinitions();

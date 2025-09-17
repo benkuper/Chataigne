@@ -11,7 +11,7 @@
 #pragma once
 
 class ModuleUI :
-	public ItemUI<Module>,
+	public BaseItemUI<Module>,
 	public Module::ModuleListener
 {
 public:
@@ -34,16 +34,4 @@ public:
 	void controllableFeedbackUpdateInternal(Controllable* c) override;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ModuleUI)
-};
-
-class ModuleGroupUI :
-	public ItemGroupUI<Module>
-{
-public:
-	ModuleGroupUI(ItemBaseGroup<Module>* group);
-	virtual ~ModuleGroupUI();
-
-	BaseManagerUI* createGroupManagerUIInternal() override;
-
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ModuleGroupUI)
 };

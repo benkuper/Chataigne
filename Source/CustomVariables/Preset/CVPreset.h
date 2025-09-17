@@ -72,8 +72,8 @@ public:
 		GenericControllableManager* manager;
 		int compareElements(Controllable* c1, Controllable* c2)
 		{
-			int i1 = manager->baseItems.indexOf(manager->getItemWithName(c1->shortName));
-			int i2 = manager->baseItems.indexOf(manager->getItemWithName(c2->shortName));
+			int i1 = manager->items.indexOf(manager->getItemWithName(c1->shortName));
+			int i2 = manager->items.indexOf(manager->getItemWithName(c2->shortName));
 			if (i1 == i2) return 0;
 			return i1 > i2 ? 1 : -1;
 		}

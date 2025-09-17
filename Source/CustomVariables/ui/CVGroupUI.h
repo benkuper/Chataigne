@@ -10,7 +10,7 @@
 
 #pragma once
 class CVGroupUI :
-	public ItemUI<CVGroup>
+	public BaseItemUI<CVGroup>
 {
 public:
 	CVGroupUI(CVGroup* item);

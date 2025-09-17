@@ -11,10 +11,10 @@
 #pragma once
 
 class StateTransitionUI :
-	public ItemMinimalUI<StateTransition>,
+	public BaseItemMinimalUI<StateTransition>,
 	public StateViewUI::Listener,
-	public StateViewUI::ItemUIListener,
-	public StateViewUI::ItemMinimalUIListener
+	public StateViewUI::BaseItemUIListener,
+	public StateViewUI::BaseItemMinimalUIListener
 {
 public:
 	StateTransitionUI(StateTransition * st, StateViewUI * sourceSUI = nullptr, StateViewUI * destSUI = nullptr);

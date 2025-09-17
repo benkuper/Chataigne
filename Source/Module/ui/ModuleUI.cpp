@@ -13,7 +13,7 @@
 #include "ModuleUI.h"
 
 ModuleUI::ModuleUI(Module* module) :
-	ItemUI<Module>(module)
+	BaseItemUI<Module>(module)
 {
 	headerHeight = 20;
 
@@ -63,7 +63,7 @@ void ModuleUI::resizedHeader(Rectangle<int>& r)
 {
 	if (iconUI.getImage().isValid()) iconUI.setBounds(r.removeFromLeft(r.getHeight()).reduced(1));
 
-	ItemUI::resizedHeader(r);
+	BaseItemUI::resizedHeader(r);
 
 	outActivityUI->setBounds(r.removeFromRight(r.getHeight()));
 	inActivityUI->setBounds(r.removeFromRight(r.getHeight()));
@@ -74,7 +74,7 @@ void ModuleUI::resizedHeader(Rectangle<int>& r)
 
 void ModuleUI::mouseDown(const MouseEvent& e)
 {
-	ItemUI::mouseDown(e);
+	BaseItemUI::mouseDown(e);
 	if (e.eventComponent == inActivityUI.get()) item->logIncomingData->setValue(!item->logIncomingData->boolValue());
 	else if (e.eventComponent == outActivityUI.get()) item->logOutgoingData->setValue(!item->logOutgoingData->boolValue());
 }
@@ -83,7 +83,7 @@ void ModuleUI::paintOverChildren(Graphics& g)
 {
 	if (inspectable.wasObjectDeleted()) return;
 
-	ItemUI::paintOverChildren(g);
+	BaseItemUI::paintOverChildren(g);
 
 	if (item->logIncomingData != nullptr && item->logIncomingData->boolValue())
 	{
@@ -123,21 +123,6 @@ void ModuleUI::updateConnectionFeedbackRef()
 
 void ModuleUI::controllableFeedbackUpdateInternal(Controllable* c)
 {
-	ItemUI::controllableFeedbackUpdateInternal(c);
+	BaseItemUI::controllableFeedbackUpdateInternal(c);
 	if (c == item->logIncomingData || c == item->logOutgoingData) repaint();
-}
-
-ModuleGroupUI::ModuleGroupUI(ItemBaseGroup<Module>* group) :
-	ItemGroupUI<Module>(group)
-{
-	setShowGroupManager(true);
-}
-
-ModuleGroupUI::~ModuleGroupUI()
-{
-}
-
-BaseManagerUI* ModuleGroupUI::createGroupManagerUIInternal()
-{
-	return new ModuleManagerUI("Items", (ModuleManager*)group->manager);
 }

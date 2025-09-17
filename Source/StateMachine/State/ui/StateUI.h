@@ -11,7 +11,7 @@
 #pragma once
 
 class StateUI :
-	public ItemUI<State>
+	public BaseItemUI<State>
 {
 public:
 	StateUI(State * output);

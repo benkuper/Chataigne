@@ -272,7 +272,7 @@ void BasicsGuide::currentInspectableChanged(Inspector *)
 	}
 }
 
-void BasicsGuide::itemUIAdded(StateViewUI * _svui)
+void BasicsGuide::BaseItemUIAdded(StateViewUI * _svui)
 {
 	if (currentStep == ADD_STATE)
 	{

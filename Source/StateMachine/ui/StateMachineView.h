@@ -51,8 +51,8 @@ public:
 	void finishCreateTransition(StateViewUI* destUI);
 	void cancelCreateTransition();
 
-	void addItemUIInternal(StateViewUI* s) override;
-	void removeItemUIInternal(StateViewUI* s) override;
+	void addBaseItemUIInternal(StateViewUI* s) override;
+	void removeBaseItemUIInternal(StateViewUI* s) override;
 
 	//From StateViewUI listener
 	void askCreateTransitionFromUI(StateViewUI* se) override;

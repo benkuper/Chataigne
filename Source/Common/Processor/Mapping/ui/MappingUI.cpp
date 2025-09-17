@@ -33,7 +33,7 @@ MappingUI::~MappingUI()
 
 void MappingUI::paint(Graphics& g)
 {
-	ItemUI::paint(g);
+	BaseItemUI::paint(g);
 
 	if (isDraggingOver)
 	{
@@ -87,7 +87,7 @@ void MappingUI::resizedInternalHeader(Rectangle<int>& r)
 
 void MappingUI::itemDropped(const SourceDetails& details)
 {
-	ItemUI::itemDropped(details);
+	BaseItemUI::itemDropped(details);
 
 	String dataType = details.description.getProperty("dataType", "");
 	CommandDefinition* def = nullptr;
@@ -129,7 +129,7 @@ void MappingUI::itemDropped(const SourceDetails& details)
 	}
 	else if (dataType == "CommandTemplate")
 	{
-		ItemUI<CommandTemplate>* tui = dynamic_cast<ItemUI<CommandTemplate> *>(details.sourceComponent.get());
+		BaseItemUI<CommandTemplate>* tui = dynamic_cast<BaseItemUI<CommandTemplate> *>(details.sourceComponent.get());
 		if (tui != nullptr)
 		{
 			CommandTemplateManager* ctm = dynamic_cast<CommandTemplateManager*>(tui->item->parentContainer.get());

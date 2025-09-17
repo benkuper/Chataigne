@@ -68,7 +68,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <DebugInformationFormat>OldStyle</DebugInformationFormat>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\JUCE\modules;..\..\Modules;../../Source;../../External/wiiuse;../../External/asio;../../External/asiodriver;../../External/kinect/include;../../External/joycon/include;../../External/servus/include;../../External/dnssd/include;../../External/ois/include;../../External/sdl/include;../../External/hidapi/include;../../External/abletonlink/include;../../External/libusb/include/libusb-1.0;../../External/mosquitto/include;../../External/posistagenet/include;../../External/simpleble/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;VST_LOGGING=0;USE_KINECT=0;USE_ABLETONLINK=0;BLE_SUPPORT=0;PING_SUPPORT=0;OS_SYSINFO_SUPPORT=0;JUCER_VS2022_BA4A4C2=1;JUCE_APP_VERSION=2.0.0b1;JUCE_APP_VERSION_HEX=0x20000;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;JucePlugin_Build_LV2=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -118,7 +118,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Full</Optimization>
-      <DebugInformationFormat>OldStyle</DebugInformationFormat>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\JUCE\modules;..\..\Modules;../../Source;../../External/wiiuse;../../External/asio;../../External/asiodriver;../../External/kinect/include;../../External/joycon/include;../../External/servus/include;../../External/dnssd/include;../../External/ois/include;../../External/sdl/include;../../External/hidapi/include;../../External/abletonlink/include;../../External/libusb/include/libusb-1.0;../../External/mosquitto/include;../../External/posistagenet/include;../../External/simpleble/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;VST_LOGGING=0;USE_KINECT=0;USE_ABLETONLINK=0;BLE_SUPPORT=0;PING_SUPPORT=0;OS_SYSINFO_SUPPORT=0;JUCER_VS2022_BA4A4C2=1;JUCE_APP_VERSION=2.0.0b1;JUCE_APP_VERSION_HEX=0x20000;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;JucePlugin_Build_LV2=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -162,6 +162,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\PrecompiledHeaders.cpp"/>
     <ClCompile Include="..\..\Source\Guider\guides\BasicsGuide.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2526,28 +2527,22 @@
     <ClCompile Include="..\..\Modules\juce_organicui\manager\ui\BaseItemEditor.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_organicui\manager\ui\BaseItemMinimalUI.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_organicui\manager\ui\BaseItemUI.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_organicui\manager\ui\BaseManagerUI.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\manager\ui\GenericControllableItemEditor.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\manager\BaseItem.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_organicui\manager\BaseManager.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\manager\GenericControllableItem.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\manager\GenericControllableManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\manager\ItemGroup.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\manager\Manager.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\outliner\Outliner.cpp">
@@ -2970,6 +2965,9 @@
     <ClCompile Include="..\..\Modules\juce_timeline\juce_timeline.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_timeline\juce_timeline2.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_timeline\TimelineAppCommands.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -3014,8 +3012,10 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_simpleweb.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_simpleweb2.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_timeline.cpp"/>
+    <ClCompile Include="..\..\JuceLibraryCode\include_juce_timeline2.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\PrecompiledHeaders.h"/>
     <ClInclude Include="..\..\Source\Guider\guides\BasicsGuide.h"/>
     <ClInclude Include="..\..\Source\Guider\BaseGuide.h"/>
     <ClInclude Include="..\..\Source\Guider\GuideComponents.h"/>
@@ -3422,6 +3422,7 @@
     <ClInclude Include="..\..\JUCE\modules\juce_core\misc\juce_EnumHelpers.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_core\misc\juce_Functional.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_core\misc\juce_OptionsHelpers.h"/>
+    <ClInclude Include="..\..\JUCE\modules\juce_core\misc\juce_OrderedContainerHelpers.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_core\misc\juce_Result.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_core\misc\juce_RuntimePermissions.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_core\misc\juce_ScopeGuard.h"/>
@@ -3929,24 +3930,20 @@
     <ClInclude Include="..\..\Modules\juce_organicui\manager\ui\BaseItemEditor.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\ui\BaseItemMinimalUI.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\ui\BaseItemUI.h"/>
-    <ClInclude Include="..\..\Modules\juce_organicui\manager\ui\BaseManagerUI.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\ui\GenericControllableItemEditor.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\ui\GenericManagerEditor.h"/>
-    <ClInclude Include="..\..\Modules\juce_organicui\manager\ui\ItemUI.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\ui\ManagerShapeShifterUI.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\ui\ManagerUI.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\ui\ManagerViewMiniPane.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\ui\ManagerViewUI.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\BaseItem.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\BaseItemListener.h"/>
-    <ClInclude Include="..\..\Modules\juce_organicui\manager\BaseManager.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\Factory.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\GenericControllableItem.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\GenericControllableManager.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\ItemGroup.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\Manager.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\ManagerListener.h"/>
-    <ClInclude Include="..\..\Modules\juce_organicui\manager\NestingManager.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\outliner\Outliner.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\parrot\ui\ParrotPanel.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\parrot\ui\ParrotUI.h"/>

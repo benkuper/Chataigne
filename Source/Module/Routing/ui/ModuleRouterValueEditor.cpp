@@ -9,7 +9,7 @@
 */
 
 ModuleRouterValueEditor::ModuleRouterValueEditor(ModuleRouterValue * mrv) :
-	ItemUI<ModuleRouterValue>(mrv)
+	BaseItemUI<ModuleRouterValue>(mrv)
 {
 	item->addValueListener(this);
 
@@ -55,7 +55,7 @@ void ModuleRouterValueEditor::buildRouteParamsUI()
 void ModuleRouterValueEditor::resizedHeader(Rectangle<int>& r)
 {
 	Rectangle<int> lr = r.removeFromLeft(100);
-	ItemUI::resizedHeader(lr);
+	BaseItemUI::resizedHeader(lr);
 
 	Rectangle<int> rr = r.removeFromRight(r.getWidth() - 350);
 	Rectangle<int> tr = r.removeFromRight(r.getWidth() - 100);

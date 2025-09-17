@@ -11,7 +11,7 @@
 #pragma once
 
 class ModuleRouterValueEditor : 
-	public ItemUI<ModuleRouterValue>,
+	public BaseItemUI<ModuleRouterValue>,
 	public ModuleRouterValue::ValueListener
 {
 public:

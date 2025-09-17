@@ -68,7 +68,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <DebugInformationFormat>OldStyle</DebugInformationFormat>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;D:\Projects\Dev\JUCE\modules;..\..\Modules;../../Source;../../External/wiiuse;../../External/asio;../../External/asiodriver;../../External/kinect/include;../../External/joycon/include;../../External/servus/include;../../External/dnssd/include;../../External/ois/include;../../External/sdl/include;../../External/hidapi/include;../../External/abletonlink/include;../../External/libusb/include/libusb-1.0;../../External/mosquitto/include;../../External/posistagenet/include;../../External/simpleble/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;VST_LOGGING=0;USE_KINECT=1;USE_ABLETONLINK=1;LINK_PLATFORM_WINDOWS=1;BLE_SUPPORT=0;JUCER_VS2022_78A503E=1;JUCE_APP_VERSION=2.0.0b1;JUCE_APP_VERSION_HEX=0x20000;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;JucePlugin_Build_LV2=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -162,6 +162,28 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include=".\JucePrecompiledHeader_Debug.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">JucePrecompiledHeader_Debug.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\JucePrecompiledHeader.pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">JucePrecompiledHeader_Debug.h</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include=".\JucePrecompiledHeader_Release.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">JucePrecompiledHeader_Release.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\JucePrecompiledHeader.pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">JucePrecompiledHeader_Release.h</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\PrecompiledHeaders.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">JucePrecompiledHeader_Debug.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\JucePrecompiledHeader.pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">JucePrecompiledHeader_Debug.h</ForcedIncludeFiles>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">JucePrecompiledHeader_Release.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\JucePrecompiledHeader.pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">JucePrecompiledHeader_Release.h</ForcedIncludeFiles>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Guider\guides\BasicsGuide.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -174,7 +196,16 @@
     <ClCompile Include="..\..\Source\Guider\Guider.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Guider\GuiderIncludes.cpp"/>
+    <ClCompile Include="..\..\Source\Guider\GuiderIncludes.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">JucePrecompiledHeader_Debug.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\JucePrecompiledHeader.pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">JucePrecompiledHeader_Debug.h</ForcedIncludeFiles>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">JucePrecompiledHeader_Release.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\JucePrecompiledHeader.pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">JucePrecompiledHeader_Release.h</ForcedIncludeFiles>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Analytics\MatomoAnalytics.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -202,9 +233,36 @@
     <ClCompile Include="..\..\Source\Common\LTC\timecode.c">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Common\CommonIncludes.cpp"/>
-    <ClCompile Include="..\..\Source\Common\ParameterLink\ui\LinkableParameterEditor.cpp"/>
-    <ClCompile Include="..\..\Source\Common\ParameterLink\ParameterLink.cpp"/>
+    <ClCompile Include="..\..\Source\Common\CommonIncludes.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">JucePrecompiledHeader_Debug.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\JucePrecompiledHeader.pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">JucePrecompiledHeader_Debug.h</ForcedIncludeFiles>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">JucePrecompiledHeader_Release.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\JucePrecompiledHeader.pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">JucePrecompiledHeader_Release.h</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\ParameterLink\ui\LinkableParameterEditor.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">JucePrecompiledHeader_Debug.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\JucePrecompiledHeader.pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">JucePrecompiledHeader_Debug.h</ForcedIncludeFiles>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">JucePrecompiledHeader_Release.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\JucePrecompiledHeader.pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">JucePrecompiledHeader_Release.h</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\ParameterLink\ParameterLink.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">JucePrecompiledHeader_Debug.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\JucePrecompiledHeader.pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">JucePrecompiledHeader_Debug.h</ForcedIncludeFiles>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">JucePrecompiledHeader_Release.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\JucePrecompiledHeader.pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">JucePrecompiledHeader_Release.h</ForcedIncludeFiles>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\Zeroconf\ZeroconfManager.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -214,7 +272,16 @@
     <ClCompile Include="..\..\Source\Common\InputSystem\InputSystemManager.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Common\Command\CommandIncludes.cpp"/>
+    <ClCompile Include="..\..\Source\Common\Command\CommandIncludes.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">JucePrecompiledHeader_Debug.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\JucePrecompiledHeader.pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">JucePrecompiledHeader_Debug.h</ForcedIncludeFiles>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">JucePrecompiledHeader_Release.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\JucePrecompiledHeader.pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">JucePrecompiledHeader_Release.h</ForcedIncludeFiles>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\Command\CustomValues\ui\CustomValuesCommandArgumentEditor.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -230,7 +297,16 @@
     <ClCompile Include="..\..\Source\Common\Command\ui\BaseCommandEditor.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Common\Command\ui\BaseCommandHandlerEditor.cpp"/>
+    <ClCompile Include="..\..\Source\Common\Command\ui\BaseCommandHandlerEditor.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">JucePrecompiledHeader_Debug.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\JucePrecompiledHeader.pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">JucePrecompiledHeader_Debug.h</ForcedIncludeFiles>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">JucePrecompiledHeader_Release.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\JucePrecompiledHeader.pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">JucePrecompiledHeader_Release.h</ForcedIncludeFiles>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\Command\ui\CommandChooserUI.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -255,7 +331,16 @@
     <ClCompile Include="..\..\Source\Common\Command\BaseCommand.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Common\Command\BaseCommandHandler.cpp"/>
+    <ClCompile Include="..\..\Source\Common\Command\BaseCommandHandler.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">JucePrecompiledHeader_Debug.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\JucePrecompiledHeader.pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">JucePrecompiledHeader_Debug.h</ForcedIncludeFiles>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">JucePrecompiledHeader_Release.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\JucePrecompiledHeader.pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">JucePrecompiledHeader_Release.h</ForcedIncludeFiles>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\Command\CommandDefinition.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -529,8 +614,26 @@
     <ClCompile Include="..\..\Source\Common\Processor\Processor.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Common\Processor\ProcessorIncludes.cpp"/>
-    <ClCompile Include="..\..\Source\Common\Processor\ProcessorIncludes2.cpp"/>
+    <ClCompile Include="..\..\Source\Common\Processor\ProcessorIncludes.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">JucePrecompiledHeader_Debug.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\JucePrecompiledHeader.pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">JucePrecompiledHeader_Debug.h</ForcedIncludeFiles>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">JucePrecompiledHeader_Release.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\JucePrecompiledHeader.pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">JucePrecompiledHeader_Release.h</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\ProcessorIncludes2.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">JucePrecompiledHeader_Debug.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\JucePrecompiledHeader.pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">JucePrecompiledHeader_Debug.h</ForcedIncludeFiles>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">JucePrecompiledHeader_Release.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\JucePrecompiledHeader.pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">JucePrecompiledHeader_Release.h</ForcedIncludeFiles>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\ProcessorManager.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -564,7 +667,16 @@
     <ClCompile Include="..\..\Source\CustomVariables\ui\CVGroupUI.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\Source\CustomVariables\CustomVariablesIncludes.cpp"/>
+    <ClCompile Include="..\..\Source\CustomVariables\CustomVariablesIncludes.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">JucePrecompiledHeader_Debug.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\JucePrecompiledHeader.pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">JucePrecompiledHeader_Debug.h</ForcedIncludeFiles>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">JucePrecompiledHeader_Release.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\JucePrecompiledHeader.pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">JucePrecompiledHeader_Release.h</ForcedIncludeFiles>
+    </ClCompile>
     <ClCompile Include="..\..\Source\CustomVariables\CVGroup.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -992,9 +1104,36 @@
     <ClCompile Include="..\..\Source\Module\ModuleFactory.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Module\ModuleIncludes.cpp"/>
-    <ClCompile Include="..\..\Source\Module\ModuleIncludes2.cpp"/>
-    <ClCompile Include="..\..\Source\Module\ModuleIncludes3.cpp"/>
+    <ClCompile Include="..\..\Source\Module\ModuleIncludes.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">JucePrecompiledHeader_Debug.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\JucePrecompiledHeader.pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">JucePrecompiledHeader_Debug.h</ForcedIncludeFiles>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">JucePrecompiledHeader_Release.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\JucePrecompiledHeader.pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">JucePrecompiledHeader_Release.h</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\ModuleIncludes2.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">JucePrecompiledHeader_Debug.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\JucePrecompiledHeader.pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">JucePrecompiledHeader_Debug.h</ForcedIncludeFiles>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">JucePrecompiledHeader_Release.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\JucePrecompiledHeader.pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">JucePrecompiledHeader_Release.h</ForcedIncludeFiles>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\ModuleIncludes3.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">JucePrecompiledHeader_Debug.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\JucePrecompiledHeader.pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">JucePrecompiledHeader_Debug.h</ForcedIncludeFiles>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">JucePrecompiledHeader_Release.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\JucePrecompiledHeader.pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">JucePrecompiledHeader_Release.h</ForcedIncludeFiles>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Module\ModuleManager.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1025,7 +1164,16 @@
     <ClCompile Include="..\..\Source\StateMachine\ui\StateManagerUI.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\Source\StateMachine\StateMachineIncludes.cpp"/>
+    <ClCompile Include="..\..\Source\StateMachine\StateMachineIncludes.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">JucePrecompiledHeader_Debug.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\JucePrecompiledHeader.pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">JucePrecompiledHeader_Debug.h</ForcedIncludeFiles>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">JucePrecompiledHeader_Release.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\JucePrecompiledHeader.pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">JucePrecompiledHeader_Release.h</ForcedIncludeFiles>
+    </ClCompile>
     <ClCompile Include="..\..\Source\StateMachine\StateManager.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1095,7 +1243,16 @@
     <ClCompile Include="..\..\Source\TimeMachine\ChataigneSequenceManager.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\Source\TimeMachine\TimeMachineIncludes.cpp"/>
+    <ClCompile Include="..\..\Source\TimeMachine\TimeMachineIncludes.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">JucePrecompiledHeader_Debug.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\JucePrecompiledHeader.pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">JucePrecompiledHeader_Debug.h</ForcedIncludeFiles>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">JucePrecompiledHeader_Release.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\JucePrecompiledHeader.pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">JucePrecompiledHeader_Release.h</ForcedIncludeFiles>
+    </ClCompile>
     <ClCompile Include="..\..\Source\UI\AboutWindow.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1105,11 +1262,29 @@
     <ClCompile Include="..\..\Source\UI\WelcomeScreen.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\Source\MainIncludes.cpp"/>
+    <ClCompile Include="..\..\Source\MainIncludes.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">JucePrecompiledHeader_Debug.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\JucePrecompiledHeader.pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">JucePrecompiledHeader_Debug.h</ForcedIncludeFiles>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">JucePrecompiledHeader_Release.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\JucePrecompiledHeader.pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">JucePrecompiledHeader_Release.h</ForcedIncludeFiles>
+    </ClCompile>
     <ClCompile Include="..\..\Source\ChataigneEngine.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Main.cpp"/>
+    <ClCompile Include="..\..\Source\Main.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">JucePrecompiledHeader_Debug.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\JucePrecompiledHeader.pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">JucePrecompiledHeader_Debug.h</ForcedIncludeFiles>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">JucePrecompiledHeader_Release.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\JucePrecompiledHeader.pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">JucePrecompiledHeader_Release.h</ForcedIncludeFiles>
+    </ClCompile>
     <ClCompile Include="..\..\Source\MainComponent.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2526,28 +2701,22 @@
     <ClCompile Include="..\..\Modules\juce_organicui\manager\ui\BaseItemEditor.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_organicui\manager\ui\BaseItemMinimalUI.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_organicui\manager\ui\BaseItemUI.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_organicui\manager\ui\BaseManagerUI.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\manager\ui\GenericControllableItemEditor.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\manager\BaseItem.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_organicui\manager\BaseManager.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\manager\GenericControllableItem.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\manager\GenericControllableManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\manager\ItemGroup.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\manager\Manager.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\outliner\Outliner.cpp">
@@ -2970,6 +3139,9 @@
     <ClCompile Include="..\..\Modules\juce_timeline\juce_timeline.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_timeline\juce_timeline2.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_timeline\TimelineAppCommands.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -3014,8 +3186,10 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_simpleweb.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_simpleweb2.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_timeline.cpp"/>
+    <ClCompile Include="..\..\JuceLibraryCode\include_juce_timeline2.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\PrecompiledHeaders.h"/>
     <ClInclude Include="..\..\Source\Guider\guides\BasicsGuide.h"/>
     <ClInclude Include="..\..\Source\Guider\BaseGuide.h"/>
     <ClInclude Include="..\..\Source\Guider\GuideComponents.h"/>
@@ -3422,6 +3596,7 @@
     <ClInclude Include="..\..\..\JUCE\modules\juce_core\misc\juce_EnumHelpers.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_core\misc\juce_Functional.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_core\misc\juce_OptionsHelpers.h"/>
+    <ClInclude Include="..\..\..\JUCE\modules\juce_core\misc\juce_OrderedContainerHelpers.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_core\misc\juce_Result.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_core\misc\juce_RuntimePermissions.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_core\misc\juce_ScopeGuard.h"/>
@@ -3929,24 +4104,20 @@
     <ClInclude Include="..\..\Modules\juce_organicui\manager\ui\BaseItemEditor.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\ui\BaseItemMinimalUI.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\ui\BaseItemUI.h"/>
-    <ClInclude Include="..\..\Modules\juce_organicui\manager\ui\BaseManagerUI.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\ui\GenericControllableItemEditor.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\ui\GenericManagerEditor.h"/>
-    <ClInclude Include="..\..\Modules\juce_organicui\manager\ui\ItemUI.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\ui\ManagerShapeShifterUI.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\ui\ManagerUI.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\ui\ManagerViewMiniPane.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\ui\ManagerViewUI.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\BaseItem.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\BaseItemListener.h"/>
-    <ClInclude Include="..\..\Modules\juce_organicui\manager\BaseManager.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\Factory.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\GenericControllableItem.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\GenericControllableManager.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\ItemGroup.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\Manager.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\ManagerListener.h"/>
-    <ClInclude Include="..\..\Modules\juce_organicui\manager\NestingManager.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\outliner\Outliner.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\parrot\ui\ParrotPanel.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\parrot\ui\ParrotUI.h"/>

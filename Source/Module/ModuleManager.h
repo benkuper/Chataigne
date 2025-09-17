@@ -15,7 +15,7 @@ class ModuleFactory;
 
 
 class ModuleManager :
-	public Manager<Module, ItemBaseGroup<Module>>
+	public Manager<Module>
 {
 public:
 
@@ -25,8 +25,6 @@ public:
 
 	OwnedArray<ControllableChooserPopupMenu> modulesMenu;
 	std::unique_ptr<ControllableChooserPopupMenu> engineMenu;
-
-	ItemBaseGroup<Module>* createGroup() override;
 
 	void addItemInternal(Module* module, var data) override;
 

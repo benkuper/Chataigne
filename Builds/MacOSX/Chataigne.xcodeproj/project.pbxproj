@@ -10,6 +10,7 @@
 		0B13BF87D171A99EA87757C1 /* command.c */ = {isa = PBXBuildFile; fileRef = 9820E02666CCFA688707B1F4; };
 		0B711A96469657F81C4C9FA8 /* CoreAudio.framework */ = {isa = PBXBuildFile; fileRef = 48D6B341F756699DA2054362; };
 		14B03BE884B82BE8EC264AE9 /* include_juce_simpleweb.cpp */ = {isa = PBXBuildFile; fileRef = A344ECDA05A5372A32341886; };
+		1DED07E758D84B4A4F8E0A6D /* include_juce_timeline2.cpp */ = {isa = PBXBuildFile; fileRef = 61C67EBD20029E66DAE36FB1; };
 		1E38E7F8E4ECF0F020101DF4 /* include_juce_audio_processors_lv2_libs.cpp */ = {isa = PBXBuildFile; fileRef = DE62E8E7E1EBB5191F56029B; };
 		212B67A3534DE8B8475EFD36 /* include_juce_organicui2.cpp */ = {isa = PBXBuildFile; fileRef = 03B34F65CD67AA62113F23C3; };
 		216A21D06E923B13A5B3E6B5 /* include_juce_graphics_Sheenbidi.c */ = {isa = PBXBuildFile; fileRef = B6DACF38E3774C2D798157C4; };
@@ -35,6 +36,7 @@
 		5543461C198B589786255629 /* DiscRecording.framework */ = {isa = PBXBuildFile; fileRef = 2EF4541423C08B373926C946; };
 		56A3A435A695E8A3A4E6D156 /* ir.c */ = {isa = PBXBuildFile; fileRef = 89F9438672D70B382A25E5C9; };
 		582D3ABD6F3CBEE78AA46DAD /* guitar_hero_3.c */ = {isa = PBXBuildFile; fileRef = 063AB806516476558D9F032C; };
+		5FEC75E40D889437ED4551D4 /* PrecompiledHeaders.cpp */ = {isa = PBXBuildFile; fileRef = A269643C4A221397D972937C; };
 		61E67DC16A98E630727391F8 /* ProcessorIncludes.cpp */ = {isa = PBXBuildFile; fileRef = 980F0059A08F3731FE4468C3; };
 		655D68933C616C6C3D3C9534 /* ModuleIncludes3.cpp */ = {isa = PBXBuildFile; fileRef = AD0CD784B99C500D3CEE664A; };
 		6778D3B561B8796EC3F344CC /* CoreMIDI.framework */ = {isa = PBXBuildFile; fileRef = 8BD13F2A50FC3588DC036461; };
@@ -422,6 +424,7 @@
 		5FAFCDEFF94F762D189E98EF /* LoupedeckShapeManager.cpp */ /* LoupedeckShapeManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LoupedeckShapeManager.cpp; path = ../../Source/Module/modules/controller/loupedeck/LoupedeckShapeManager.cpp; sourceTree = SOURCE_ROOT; };
 		60C2F429971AA38584B05844 /* ScriptFilter.cpp */ /* ScriptFilter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ScriptFilter.cpp; path = ../../Source/Common/Processor/Mapping/Filter/filters/ScriptFilter.cpp; sourceTree = SOURCE_ROOT; };
 		619FE26D927D040CE08081F5 /* QLabModule.h */ /* QLabModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = QLabModule.h; path = ../../Source/Module/modules/osc/qlab/QLabModule.h; sourceTree = SOURCE_ROOT; };
+		61C67EBD20029E66DAE36FB1 /* include_juce_timeline2.cpp */ /* include_juce_timeline2.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_juce_timeline2.cpp; path = ../../JuceLibraryCode/include_juce_timeline2.cpp; sourceTree = SOURCE_ROOT; };
 		6230645BD65E4BCC4132F171 /* CustomOSCCommand.cpp */ /* CustomOSCCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CustomOSCCommand.cpp; path = ../../Source/Module/modules/common/commands/osc/CustomOSCCommand.cpp; sourceTree = SOURCE_ROOT; };
 		6289E76712F09C66C8822260 /* WatchoutModule.h */ /* WatchoutModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WatchoutModule.h; path = ../../Source/Module/modules/tcp/tcpclient/watchout/WatchoutModule.h; sourceTree = SOURCE_ROOT; };
 		6313EC26291DA0D987B28559 /* ColorShiftFilter.cpp */ /* ColorShiftFilter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ColorShiftFilter.cpp; path = ../../Source/Common/Processor/Mapping/Filter/filters/color/ColorShiftFilter.cpp; sourceTree = SOURCE_ROOT; };
@@ -477,6 +480,7 @@
 		70E1471749F3AF5353951EC5 /* Reaper.png */ /* Reaper.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Reaper.png; path = ../../Resources/Modules/Reaper.png; sourceTree = SOURCE_ROOT; };
 		70E432BF3298C3CB1C29AC5D /* ModuleRouterView.h */ /* ModuleRouterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ModuleRouterView.h; path = ../../Source/Module/Routing/ui/ModuleRouterView.h; sourceTree = SOURCE_ROOT; };
 		712B39A79176F387DC023DCF /* MappingUI.cpp */ /* MappingUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MappingUI.cpp; path = ../../Source/Common/Processor/Mapping/ui/MappingUI.cpp; sourceTree = SOURCE_ROOT; };
+		712CDB41F91E0C9A6EC1F69F /* PrecompiledHeaders.h */ /* PrecompiledHeaders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PrecompiledHeaders.h; path = ../../Source/PrecompiledHeaders.h; sourceTree = SOURCE_ROOT; };
 		719A771F1A0FFD9A6C5B1447 /* ConversionSourceParameterUI.h */ /* ConversionSourceParameterUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ConversionSourceParameterUI.h; path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConversionSourceParameterUI.h; sourceTree = SOURCE_ROOT; };
 		72033BE2F3301B810214240C /* PosiStageNetCommand.cpp */ /* PosiStageNetCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PosiStageNetCommand.cpp; path = ../../Source/Module/modules/posistagenet/commands/PosiStageNetCommand.cpp; sourceTree = SOURCE_ROOT; };
 		722557AC1AA50559314AAC74 /* StateMachineView.h */ /* StateMachineView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StateMachineView.h; path = ../../Source/StateMachine/ui/StateMachineView.h; sourceTree = SOURCE_ROOT; };
@@ -632,6 +636,7 @@
 		A186172EC33A3E8B18084A46 /* GuiderIncludes.cpp */ /* GuiderIncludes.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = GuiderIncludes.cpp; path = ../../Source/Guider/GuiderIncludes.cpp; sourceTree = SOURCE_ROOT; };
 		A18B69298A0A42084F375802 /* ModuleRouterPanelView.cpp */ /* ModuleRouterPanelView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ModuleRouterPanelView.cpp; path = ../../Source/Module/Routing/ui/ModuleRouterPanelView.cpp; sourceTree = SOURCE_ROOT; };
 		A25CA35206B001BEC52F35AE /* FFTAnalyzer.h */ /* FFTAnalyzer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FFTAnalyzer.h; path = ../../Source/Module/modules/audio/analysis/FFTAnalyzer.h; sourceTree = SOURCE_ROOT; };
+		A269643C4A221397D972937C /* PrecompiledHeaders.cpp */ /* PrecompiledHeaders.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PrecompiledHeaders.cpp; path = ../../Source/PrecompiledHeaders.cpp; sourceTree = SOURCE_ROOT; };
 		A2FF815E7046151034E93B19 /* ConditionFilter.h */ /* ConditionFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ConditionFilter.h; path = ../../Source/Common/Processor/Mapping/Filter/filters/condition/ConditionFilter.h; sourceTree = SOURCE_ROOT; };
 		A31E5A4F4FE61056FEA565BD /* CustomVariablesModule.h */ /* CustomVariablesModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CustomVariablesModule.h; path = ../../Source/Module/modules/customvariables/CustomVariablesModule.h; sourceTree = SOURCE_ROOT; };
 		A330B89FF4A3660791C566A1 /* SDL2.framework */ /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../External/sdl/lib/osx/SDL2.framework; sourceTree = "<group>"; };
@@ -1388,6 +1393,7 @@
 				A344ECDA05A5372A32341886,
 				BF6D9D661141F04A04FFE925,
 				4D147E8D071C0C93CB433813,
+				61C67EBD20029E66DAE36FB1,
 				0DD04E60A5E6174F61924D04,
 			);
 			name = "JUCE Library Code";
@@ -2586,6 +2592,8 @@
 		A6036FD6B54D8D748F9FA2C3 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				A269643C4A221397D972937C,
+				712CDB41F91E0C9A6EC1F69F,
 				35FD7B8838F4A0B49CE24427,
 				9C36D31E3E718DBE09A0C37C,
 				77E313CFAABA49104A328F3F,
@@ -3625,6 +3633,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5FEC75E40D889437ED4551D4,
 				8E4BF978DC12E47F3F886891,
 				E0AA64D538AA9C2130C98D5C,
 				9B5065AA8C19C8DF58253515,
@@ -3694,6 +3703,7 @@
 				14B03BE884B82BE8EC264AE9,
 				D9D175B4BD9D9E379D7B0842,
 				6FB44A657258A9A5ACB8BE85,
+				1DED07E758D84B4A4F8E0A6D,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

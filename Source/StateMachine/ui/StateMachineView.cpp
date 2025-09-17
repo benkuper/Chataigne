@@ -190,16 +190,16 @@ void StateMachineView::cancelCreateTransition()
 	repaint();
 }
 
-void StateMachineView::addItemUIInternal(StateViewUI * se)
+void StateMachineView::addBaseItemUIInternal(StateViewUI * se)
 {
-	ManagerViewUI::addItemUIInternal(se);
+	ManagerViewUI::addBaseItemUIInternal(se);
 	se->addStateViewUIListener(this);
 }
 
 
-void StateMachineView::removeItemUIInternal(StateViewUI * se)
+void StateMachineView::removeBaseItemUIInternal(StateViewUI * se)
 {
-	ManagerViewUI::removeItemUIInternal(se);
+	ManagerViewUI::removeBaseItemUIInternal(se);
 	se->removeStateViewUIListener(this);
 }
 

@@ -16,7 +16,7 @@
 juce_ImplementSingleton(RootModuleManager)
 
 ModuleManager::ModuleManager(const String& name) :
-	Manager<Module>(name, true)
+	Manager<Module>(name)
 {
 	itemDataType = "Module";
 	helpID = "Modules";
@@ -31,10 +31,6 @@ ModuleManager::~ModuleManager()
 {
 }
 
-
-ItemBaseGroup<Module>* ModuleManager::createGroup() {
-	return new ItemBaseGroup<Module>(new ModuleManager("Items"));
-}
 
 void ModuleManager::addItemInternal(Module* module, var data)
 {
@@ -53,8 +49,8 @@ RootModuleManager::RootModuleManager() :
 
 Array<Module*> RootModuleManager::getModuleList(bool includeSpecialModules)
 {
-	Array<Module*> mList = RootModuleManager::getInstance()->getItems();
-	for (auto& m : RootModuleManager::getInstance()->items) mList.add(m);
+	Array<Module*> mList;
+	mList.addArray(RootModuleManager::getInstance()->items);
 
 	if (includeSpecialModules)
 	{
@@ -103,8 +99,7 @@ void RootModuleManager::showAllValuesAndGetControllable(const StringArray& typeF
 
 		if(m == StateManager::getInstance()->module.get()) menu.addSeparator(); // Separator between user created module and special modules
 
-		String crumb = m->getBreadCrumb().joinIntoString(" > ");
-		menu.addSubMenu(crumb, *vCC);
+		menu.addSubMenu(m->niceName, *vCC);
 	}
 
 	getInstance()->engineMenu.reset(new ControllableChooserPopupMenu(Engine::mainEngine, -10000000, -1, typeFilters, excludeTypeFilters));
@@ -158,7 +153,7 @@ PopupMenu RootModuleManager::getAllModulesCommandMenu(CommandContext context, bo
 {
 	PopupMenu menu;
 	Array<Module*> mList = RootModuleManager::getInstance()->getModuleList(false);
-	for (int i = 0; i < mList.size(); ++i) menu.addSubMenu(mList[i]->getBreadCrumb().joinIntoString(" > "), mList[i]->getCommandMenu(i * 1000, context));
+	for (int i = 0; i < mList.size(); ++i) menu.addSubMenu(mList[i]->niceName, mList[i]->getCommandMenu(i * 1000, context));
 
 	menu.addSeparator();
 

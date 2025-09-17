@@ -11,7 +11,7 @@
 #pragma once
 
 class CVPresetMorphUI :
-	public ItemMinimalUI<CVPreset>
+	public BaseItemMinimalUI<CVPreset>
 {
 public:
 	CVPresetMorphUI(CVPreset * preset);

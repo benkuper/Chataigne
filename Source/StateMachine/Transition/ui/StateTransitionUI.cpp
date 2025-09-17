@@ -9,7 +9,7 @@
 */
 
 StateTransitionUI::StateTransitionUI(StateTransition * st, StateViewUI * _sourceSUI, StateViewUI * _destSUI) :
-	ItemMinimalUI(st),
+	BaseItemMinimalUI(st),
 	sourceSUI(_sourceSUI),
 	destSUI(_destSUI)
 {
@@ -18,11 +18,11 @@ StateTransitionUI::StateTransitionUI(StateTransition * st, StateViewUI * _source
 	setWantsKeyboardFocus(true);
 
 	sourceSUI->addStateViewUIListener(this);
-	sourceSUI->addItemUIListener(this);
-	sourceSUI->addItemMinimalUIListener(this);
+	sourceSUI->addBaseItemUIListener(this);
+	sourceSUI->addBaseItemMinimalUIListener(this);
 	destSUI->addStateViewUIListener(this);
-	destSUI->addItemUIListener(this);
-	destSUI->addItemMinimalUIListener(this);
+	destSUI->addBaseItemUIListener(this);
+	destSUI->addBaseItemMinimalUIListener(this);
 	setRepaintsOnMouseActivity(true);
 
 	dragAndDropEnabled = false;
@@ -33,11 +33,11 @@ StateTransitionUI::StateTransitionUI(StateTransition * st, StateViewUI * _source
 StateTransitionUI::~StateTransitionUI()
 {
 	sourceSUI->removeStateViewUIListener(this);
-	sourceSUI->removeItemUIListener(this);
-	sourceSUI->removeItemMinimalUIListener(this);
+	sourceSUI->removeBaseItemUIListener(this);
+	sourceSUI->removeBaseItemMinimalUIListener(this);
 	destSUI->removeStateViewUIListener(this);
-	destSUI->removeItemUIListener(this);
-	destSUI->removeItemMinimalUIListener(this);
+	destSUI->removeBaseItemUIListener(this);
+	destSUI->removeBaseItemMinimalUIListener(this);
 }
 
 void StateTransitionUI::updateBounds()
@@ -50,7 +50,7 @@ void StateTransitionUI::updateBounds()
 
 void StateTransitionUI::mouseDown(const MouseEvent & e)
 {
-	ItemMinimalUI::mouseDown(e);
+	BaseItemMinimalUI::mouseDown(e);
 
 	if (e.mods.isRightButtonDown())
 	{
@@ -86,7 +86,7 @@ bool StateTransitionUI::keyPressed(const KeyPress & e)
 		}
 	}
 	
-	return ItemMinimalUI::keyPressed(e);
+	return BaseItemMinimalUI::keyPressed(e);
 }
 
 
@@ -205,12 +205,12 @@ bool StateTransitionUI::hitTest(int x, int y)
 	return dist  < 10;
 }
 
-void StateTransitionUI::itemUIMiniModeChanged(BaseItemUI *)
+void StateTransitionUI::baseItemUIMiniModeChanged(BaseItemUI *)
 {
 	updateBounds();
 }
 
-void StateTransitionUI::itemUIViewPositionChanged(BaseItemMinimalUI*)
+void StateTransitionUI::baseItemUIViewPositionChanged(BaseItemMinimalUI*)
 {
 	updateBounds();
 }

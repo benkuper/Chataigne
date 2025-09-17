@@ -9,7 +9,7 @@
 */
 
 CVPresetMorphUI::CVPresetMorphUI(CVPreset* preset) :
-	ItemMinimalUI(preset)
+	BaseItemMinimalUI(preset)
 {
 	autoDrawContourWhenSelected = false;
 	setSize(50, 50);

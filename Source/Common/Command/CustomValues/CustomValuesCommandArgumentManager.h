@@ -43,8 +43,8 @@ public:
 	CustomValuesCommandArgument* createItemWithParam(Parameter* p);
 	CustomValuesCommandArgument* createItemFromType(Parameter::Type type);
 	Parameter* createParameterFromType(Parameter::Type type);
-	BaseItem* addItemFromData(var data, bool fromUndoableAction = false) override;
-	Array<BaseItem*> addItemsFromData(var data, bool fromUndoableAction = false) override;
+	CustomValuesCommandArgument* addItemFromData(var data, bool fromUndoableAction = false) override;
+	Array<CustomValuesCommandArgument*> addItemsFromData(var data, bool fromUndoableAction = false) override;
 
 
 	static var addItemWithTypeFromScript(const var::NativeFunctionArgs& a); // will override the "addItem" method from Manager

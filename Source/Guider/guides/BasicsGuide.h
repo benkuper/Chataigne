@@ -74,7 +74,7 @@ public:
 
 	void currentInspectableChanged(Inspector *) override;
 
-	void itemUIAdded(StateViewUI * svui) override;
+	void BaseItemUIAdded(StateViewUI * svui) override;
 
 	void containerRebuilt(GenericControllableContainerEditor * editor) override;
 

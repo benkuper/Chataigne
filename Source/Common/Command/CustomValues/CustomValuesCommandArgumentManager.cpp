@@ -201,16 +201,16 @@ Parameter* CustomValuesCommandArgumentManager::createParameterFromType(Parameter
 	return p;
 }
 
-BaseItem* CustomValuesCommandArgumentManager::addItemFromData(var data, bool addToUndo)
+CustomValuesCommandArgument* CustomValuesCommandArgumentManager::addItemFromData(var data, bool addToUndo)
 {
 	Controllable::Type t = (Controllable::Type)Controllable::typeNames.indexOf(data.getProperty("type", ""));
 	CustomValuesCommandArgument* item = createItemFromType(t);
 	return addItem(item);
 }
 
-Array<BaseItem*> CustomValuesCommandArgumentManager::addItemsFromData(var data, bool addToUndo)
+Array<CustomValuesCommandArgument*> CustomValuesCommandArgumentManager::addItemsFromData(var data, bool addToUndo)
 {
-	Array<BaseItem*> itemsToAdd;
+	Array<CustomValuesCommandArgument*> itemsToAdd;
 	for (int i = 0; i < data.size(); i++)
 	{
 		Controllable::Type t = (Controllable::Type)Controllable::typeNames.indexOf(data[i].getProperty("type", ""));
@@ -218,7 +218,7 @@ Array<BaseItem*> CustomValuesCommandArgumentManager::addItemsFromData(var data, 
 		itemsToAdd.add(item);
 	}
 
-	return BaseManager::addItems(itemsToAdd, data, addToUndo);
+	return Manager::addItems(itemsToAdd, data, addToUndo);
 }
 
 var CustomValuesCommandArgumentManager::addItemWithTypeFromScript(const var::NativeFunctionArgs& a)

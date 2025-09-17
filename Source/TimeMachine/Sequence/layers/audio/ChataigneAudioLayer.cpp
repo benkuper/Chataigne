@@ -311,18 +311,24 @@ void ChataigneAudioLayerProcessor::startRecording()
 
 		recordingFile = f.getNonexistentChildFile("recorded", ".wav", false);
 
-		if (auto fileStream = std::unique_ptr<FileOutputStream>(recordingFile.createOutputStream()))
+		if (std::unique_ptr<OutputStream> fileStream = std::unique_ptr<FileOutputStream>(recordingFile.createOutputStream()))
 		{
 			// Now create a WAV writer object that writes to our output stream...
 			WavAudioFormat wavFormat;
 
-			if (auto writer = wavFormat.createWriterFor(fileStream.get(), sampleRate, 1, 16, {}, 0))
+			AudioFormatWriterOptions options = AudioFormatWriterOptions().withSampleRate(sampleRate)
+				.withNumChannels(1)
+				.withBitsPerSample(16)
+				.withQualityOptionIndex(0);
+
+
+			if (auto writer = wavFormat.createWriterFor(fileStream, options))
 			{
 				fileStream.release(); // (passes responsibility for deleting the stream to the writer object that is now using it)
 
 				// Now we'll create one of these helper objects which will act as a FIFO buffer, and will
 				// write the data to disk on our background thread.
-				threadedWriter.reset(new AudioFormatWriter::ThreadedWriter(writer, backgroundThread, 32768));
+				threadedWriter.reset(new AudioFormatWriter::ThreadedWriter(writer.get(), backgroundThread, 32768));
 
 				recorderListeners.call(&RecorderListener::recordingStarted, numInputChannels, getSampleRate());
 

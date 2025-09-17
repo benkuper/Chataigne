@@ -11,7 +11,7 @@
 #pragma once
 
 class ModuleManagerUI :
-	public ManagerUI<ModuleManager, Module, ModuleUI, ItemBaseGroup<Module>, ModuleGroupUI>
+	public ManagerUI<ModuleManager, Module, ModuleUI>
 {
 public:
 

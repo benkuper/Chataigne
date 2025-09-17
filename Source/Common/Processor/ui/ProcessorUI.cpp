@@ -9,7 +9,7 @@
 */
 
 ProcessorUI::ProcessorUI(Processor * processor, bool showMiniModeBT) :
-	ItemUI<Processor>(processor, NONE, showMiniModeBT)
+	BaseItemUI<Processor>(processor, NONE, showMiniModeBT)
 {
 	item->addAsyncProcessorListener(this);
 
@@ -32,7 +32,7 @@ void ProcessorUI::updateBGColor()
 void ProcessorUI::controllableFeedbackUpdateInternal(Controllable* c)
 {
 	if (c == item->itemColor) updateBGColor();
-	else ItemUI::controllableFeedbackUpdateInternal(c);
+	else BaseItemUI::controllableFeedbackUpdateInternal(c);
 }
 
 void ProcessorUI::newMessage(const Processor::ProcessorEvent & e)

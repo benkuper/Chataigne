@@ -72,6 +72,7 @@ ifeq ($(CONFIG),Release)
 endif
 
 OBJECTS_APP := \
+  $(JUCE_OBJDIR)/PrecompiledHeaders_a9e2313b.o \
   $(JUCE_OBJDIR)/GuiderIncludes_fc55989b.o \
   $(JUCE_OBJDIR)/CommonIncludes_97d07afb.o \
   $(JUCE_OBJDIR)/LinkableParameterEditor_ed91bbd8.o \
@@ -138,6 +139,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/include_juce_simpleweb_acec7570.o \
   $(JUCE_OBJDIR)/include_juce_simpleweb2_f0c24e8c.o \
   $(JUCE_OBJDIR)/include_juce_timeline_e6183ffd.o \
+  $(JUCE_OBJDIR)/include_juce_timeline2_dd0fd59f.o \
 
 .PHONY: clean all strip
 
@@ -151,6 +153,11 @@ $(JUCE_OUTDIR)/$(JUCE_TARGET_APP) : $(OBJECTS_APP) $(JUCE_OBJDIR)/execinfo.cmd $
 	-$(V_AT)mkdir -p $(JUCE_LIBDIR)
 	-$(V_AT)mkdir -p $(JUCE_OUTDIR)
 	$(V_AT)$(CXX) -o $(JUCE_OUTDIR)/$(JUCE_TARGET_APP) $(OBJECTS_APP) $(JUCE_LDFLAGS) $(shell cat $(JUCE_OBJDIR)/execinfo.cmd) $(JUCE_LDFLAGS_APP) $(RESOURCES) $(TARGET_ARCH)
+
+$(JUCE_OBJDIR)/PrecompiledHeaders_a9e2313b.o: ../../Source/PrecompiledHeaders.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling PrecompiledHeaders.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/GuiderIncludes_fc55989b.o: ../../Source/Guider/GuiderIncludes.cpp
 	-$(V_AT)mkdir -p $(@D)
@@ -480,6 +487,11 @@ $(JUCE_OBJDIR)/include_juce_simpleweb2_f0c24e8c.o: ../../JuceLibraryCode/include
 $(JUCE_OBJDIR)/include_juce_timeline_e6183ffd.o: ../../JuceLibraryCode/include_juce_timeline.cpp
 	-$(V_AT)mkdir -p $(@D)
 	@echo "Compiling include_juce_timeline.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/include_juce_timeline2_dd0fd59f.o: ../../JuceLibraryCode/include_juce_timeline2.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling include_juce_timeline2.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/execinfo.cmd:

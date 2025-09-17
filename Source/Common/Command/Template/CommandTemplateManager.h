@@ -32,11 +32,11 @@ public:
 	void removeItemInternal(CommandTemplate* item) override;
 
 	CommandTemplate* addItemFromData(var data, bool addToUndo = true) override;
-	Array<BaseItem*> addItemsFromData(var data, bool addToUndo = true) override;
+	Array<CommandTemplate*> addItemsFromData(var data, bool addToUndo = true) override;
 
 	void setupDefinitionsFromModule();
 
-	void setItemIndex(BaseItem* t, int newIndex, bool addToUndo = false) override;
+	void setItemIndex(CommandTemplate* t, int newIndex, bool addToUndo = false) override;
 	void reorderItems() override;
 	void reorderDefinitions();
 

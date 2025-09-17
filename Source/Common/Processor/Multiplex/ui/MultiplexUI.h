@@ -29,8 +29,8 @@ public:
 
 	void updateProcessorManagerBounds();
 
-	void itemUIAdded(ProcessorUI* pui) override;
-	void itemUIRemoved(ProcessorUI* pui) override;
+	void BaseItemUIAdded(ProcessorUI* pui) override;
+	void BaseItemUIRemoved(ProcessorUI* pui) override;
 
 	void childBoundsChanged(Component* c) override;
 

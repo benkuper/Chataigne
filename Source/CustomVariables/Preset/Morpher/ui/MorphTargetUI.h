@@ -11,7 +11,7 @@
 #pragma once
 
 class MorphTargetUI :
-	public ItemMinimalUI<MorphTarget>
+	public BaseItemMinimalUI<MorphTarget>
 {
 public:
 	MorphTargetUI(MorphTarget* mt);
