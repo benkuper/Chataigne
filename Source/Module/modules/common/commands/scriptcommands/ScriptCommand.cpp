@@ -24,7 +24,7 @@ ScriptCommand::ScriptCommand(Module* module, CommandContext context, var params,
 		createControllablesForContainer(pData, this);
 
 		String setupCallback = commandData.getProperty("setupCallback", "");
-		if (setupCallback.isNotEmpty()) module->scriptManager->callFunctionOnAllScripts(setupCallback, getScriptObject());
+		if (setupCallback.isNotEmpty()) module->scriptManager->callFunctionOnAllItems(setupCallback, getScriptObject());
 	}
 
 
@@ -144,7 +144,7 @@ void ScriptCommand::triggerInternal(int multiplexIndex)
 	}
 
 
-	if (module != nullptr) module->scriptManager->callFunctionOnAllScripts(callback, args);
+	if (module != nullptr) module->scriptManager->callFunctionOnAllItems(callback, args);
 }
 
 

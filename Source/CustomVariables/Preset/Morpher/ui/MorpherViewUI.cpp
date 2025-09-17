@@ -144,7 +144,7 @@ MorpherViewUI::MorpherViewUI(Morpher* morpher) :
 	//manager->addMorpherListener(this);
 
 	//mainTargetUI.setHandleColor(Colours::transparentBlack);
-	//mainTargetUI.addBaseItemUIListener(this);
+	//mainTargetUI.addItemUIListener(this);
 	//mainTargetUI.removeBT->setVisible(false);
 	//mainTargetUI.enabledBT->setVisible(false);
 	mainTargetUI.setViewZoom(manager->viewZoom);
@@ -411,7 +411,7 @@ void MorpherViewUI::mouseDrag(const MouseEvent& e)
 
 void MorpherViewUI::itemDragMove(const SourceDetails& details)
 {
-	BaseItemMinimalUI<MorphTarget>* bui = dynamic_cast<BaseItemMinimalUI<MorphTarget>*>(details.sourceComponent.get());
+	ItemMinimalUI<MorphTarget>* bui = dynamic_cast<ItemMinimalUI<MorphTarget>*>(details.sourceComponent.get());
 
 	if (bui != nullptr && bui == &mainTargetUI)
 	{
@@ -428,7 +428,7 @@ void MorpherViewUI::itemDropped(const SourceDetails& details)
 {
 	//String type = details.description.getProperty("type", "").toString();
 
-	BaseItemMinimalUI<MorphTarget>* bui = dynamic_cast<BaseItemMinimalUI<MorphTarget>*>(details.sourceComponent.get());
+	ItemMinimalUI<MorphTarget>* bui = dynamic_cast<ItemMinimalUI<MorphTarget>*>(details.sourceComponent.get());
 
 	if (bui != nullptr && bui == &mainTargetUI)
 	{

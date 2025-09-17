@@ -39,7 +39,7 @@ StateTransitionUI * StateTransitionManagerUI::createUIForItem(StateTransition * 
 	return new StateTransitionUI(s, sourceUI, destUI);
 }
 
-void StateTransitionManagerUI::addBaseItemUIInternal(StateTransitionUI * sui)
+void StateTransitionManagerUI::addItemUIInternal(StateTransitionUI * sui)
 {
 	sui->updateBounds();
 }

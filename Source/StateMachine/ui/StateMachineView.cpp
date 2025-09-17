@@ -68,6 +68,11 @@ void StateMachineView::mouseDown(const MouseEvent & e)
 	ManagerShapeShifterViewUI::mouseDown(e);
 }
 
+void StateMachineView::mouseDoubleClick(const MouseEvent& e)
+{
+	ManagerShapeShifterViewUI::mouseDoubleClick(e);
+	if (e.mods.isLeftButtonDown()) manager->addItem(getViewPos(e.getMouseDownPosition()).toFloat());
+}
 
 bool StateMachineView::keyPressed(const KeyPress & e)
 {
@@ -190,16 +195,16 @@ void StateMachineView::cancelCreateTransition()
 	repaint();
 }
 
-void StateMachineView::addBaseItemUIInternal(StateViewUI * se)
+void StateMachineView::addItemUIInternal(StateViewUI * se)
 {
-	ManagerViewUI::addBaseItemUIInternal(se);
+	ManagerViewUI::addItemUIInternal(se);
 	se->addStateViewUIListener(this);
 }
 
 
-void StateMachineView::removeBaseItemUIInternal(StateViewUI * se)
+void StateMachineView::removeItemUIInternal(StateViewUI * se)
 {
-	ManagerViewUI::removeBaseItemUIInternal(se);
+	ManagerViewUI::removeItemUIInternal(se);
 	se->removeStateViewUIListener(this);
 }
 

@@ -185,10 +185,10 @@ void MappingFilterManager::removeItemInternal(MappingFilter* f)
 	notifyNeedsRebuild();
 }
 
-void MappingFilterManager::setItemIndex(BaseItem* item, int index, bool addToUndo)
+void MappingFilterManager::setItemIndex(MappingFilter* item, int index, bool addToUndo)
 {
 	needsRebuild = true; 
-	Manager::setItemIndex(item, index);
+	Manager::setItemIndex(item, index, addToUndo);
 	if (!addToUndo) notifyNeedsRebuild();
 }
 

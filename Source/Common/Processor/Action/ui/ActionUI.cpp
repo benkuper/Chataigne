@@ -61,7 +61,7 @@ ActionUI::~ActionUI()
 
 void ActionUI::paint(Graphics& g)
 {
-	BaseItemUI::paint(g);
+	ItemUI::paint(g);
 
 	if (isDraggingOver)
 	{
@@ -119,7 +119,7 @@ void ActionUI::resizedInternalHeader(Rectangle<int>& r)
 
 void ActionUI::paintOverChildren(Graphics& g)
 {
-	BaseItemUI::paintOverChildren(g);
+	ItemUI::paintOverChildren(g);
 	if (action->cdm != nullptr && action->cdm->getIsValid(action->getPreviewIndex()) && action->actionRoles.size() == 0) //no special roles like activate or deactivate
 	{
 		g.setColour(GREEN_COLOR.withSaturation(item->forceDisabled?.2f:1));
@@ -129,7 +129,7 @@ void ActionUI::paintOverChildren(Graphics& g)
 
 void ActionUI::itemDropped(const SourceDetails& details)
 {
-	BaseItemUI::itemDropped(details);
+	ItemUI::itemDropped(details);
 
 	String dataType = details.description.getProperty("dataType", "");
 
@@ -197,7 +197,7 @@ void ActionUI::itemDropped(const SourceDetails& details)
 				{
 					bool isConsequenceTrue = result == 1;
 
-					BaseItemUI<CommandTemplate>* tui = dynamic_cast<BaseItemUI<CommandTemplate> *>(details.sourceComponent.get());
+					ItemUI<CommandTemplate>* tui = dynamic_cast<ItemUI<CommandTemplate> *>(details.sourceComponent.get());
 					if (tui != nullptr)
 					{
 						CommandTemplateManager* ctm = dynamic_cast<CommandTemplateManager*>(tui->item->parentContainer.get());

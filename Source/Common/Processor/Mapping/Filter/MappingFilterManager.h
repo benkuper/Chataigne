@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    MappingFilterManager.h
-    Created: 28 Oct 2016 8:08:47pm
-    Author:  bkupe
+	MappingFilterManager.h
+	Created: 28 Oct 2016 8:08:47pm
+	Author:  bkupe
 
   ==============================================================================
 */
@@ -17,7 +17,7 @@ class MappingFilterManager :
 	public MappingFilter::FilterListener
 {
 public:
-	MappingFilterManager(Multiplex * multiplex = nullptr);
+	MappingFilterManager(Multiplex* multiplex = nullptr);
 	~MappingFilterManager();
 
 	Array<Array<Parameter*>> inputSources;
@@ -28,21 +28,21 @@ public:
 	bool needsRebuild;
 	bool isRebuilding;
 
-	bool setupSources(Array<Parameter *> sources, int multiplexIndex);
-	bool rebuildFilterChain(MappingFilter * afterThisFilter = nullptr, int multiplexIndex = -1, bool rangeOnly = false);
+	bool setupSources(Array<Parameter*> sources, int multiplexIndex);
+	bool rebuildFilterChain(MappingFilter* afterThisFilter = nullptr, int multiplexIndex = -1, bool rangeOnly = false);
 	void notifyNeedsRebuild(MappingFilter* afterThisFilter = nullptr, bool rangeOnly = false);
 
 	WeakReference<MappingFilter> getLastEnabledFilter() { return lastEnabledFilter; }
-	Array<Parameter *> getLastFilteredParameters(int multiplexIndex);
+	Array<Parameter*> getLastFilteredParameters(int multiplexIndex);
 
-	MappingFilter::ProcessResult processFilters(Array<Parameter *> inputs, int multiplexIndex = 0);
+	MappingFilter::ProcessResult processFilters(Array<Parameter*> inputs, int multiplexIndex = 0);
 
-	void addItemInternal(MappingFilter * m, var data) override;
-	void removeItemInternal(MappingFilter *) override;
-	
-	void setItemIndex(BaseItem* item, int index, bool addToUndo = true) override;
+	void addItemInternal(MappingFilter* m, var data) override;
+	void removeItemInternal(MappingFilter*) override;
+
+	void setItemIndex(MappingFilter* item, int index, bool addToUndo = true) override;
 	void reorderItems() override;
-	
+
 	void filterStateChanged(MappingFilter* mf) override;
 	void filterNeedsProcess(MappingFilter* mf) override;
 	void filteredParamsChanged(MappingFilter* mf) override;

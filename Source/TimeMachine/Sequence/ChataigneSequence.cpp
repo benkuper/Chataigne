@@ -495,9 +495,3 @@ ChataigneSequenceLayerManager::ChataigneSequenceLayerManager(Sequence* _sequence
 	factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", ColorMappingLayer::getTypeStringStatic(), &ColorMappingLayer::create, sequence));
 	factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Sequences", &SequenceBlockLayer::create, sequence)->addParam("manager", ChataigneSequenceManager::getInstance()->getControlAddress()));
 }
-
-ItemBaseGroup<SequenceLayer>* ChataigneSequenceLayerManager::createGroup()
-{
-	return new ItemBaseGroup<SequenceLayer>(new ChataigneSequenceLayerManager(sequence));
-}
-

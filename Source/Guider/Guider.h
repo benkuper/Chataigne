@@ -19,7 +19,7 @@ public:
 	Guider(); 
 	~Guider();
 	
-	BaseFactory<BaseGuide> factory;
+	Factory<BaseGuide> factory;
 
 	std::unique_ptr<BaseGuide> guide;
 	void setCurrentGuide(BaseGuide * guide);

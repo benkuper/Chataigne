@@ -24,5 +24,5 @@ public :
 	void resized() override;
 	
 	StateTransitionUI * createUIForItem(StateTransition *) override;
-	void addBaseItemUIInternal(StateTransitionUI * sui) override;
+	void addItemUIInternal(StateTransitionUI * sui) override;
 };

@@ -69,13 +69,13 @@ void ConductorUI::updateProcessorManagerBounds()
     }
 }
 
-void ConductorUI::BaseItemUIAdded(ProcessorUI* pui)
+void ConductorUI::ItemUIAdded(ProcessorUI* pui)
 {
     //updateProcessorManagerBounds();
     pui->addProcessorUIListener(this);
 }
 
-void ConductorUI::BaseItemUIRemoved(ProcessorUI* pui)
+void ConductorUI::ItemUIRemoved(ProcessorUI* pui)
 {
     //updateProcessorManagerBounds();
     pui->removeProcessorUIListener(this);

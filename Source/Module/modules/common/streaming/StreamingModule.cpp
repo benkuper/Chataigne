@@ -134,7 +134,7 @@ void StreamingModule::processDataLine(const String& msg)
 
 	processDataLineInternal(message);
 
-	scriptManager->callFunctionOnAllScripts(dataEventId, message);
+	scriptManager->callFunctionOnAllItems(dataEventId, message);
 
 	MessageStructure s = messageStructure->getValueDataAsEnum<MessageStructure>();
 	StringArray valuesString;
@@ -332,7 +332,7 @@ void StreamingModule::processDataBytes(Array<uint8_t> data)
 	{
 		var args;
 		for (auto& d : data) args.append(d);
-		scriptManager->callFunctionOnAllScripts(dataEventId, args);
+		scriptManager->callFunctionOnAllItems(dataEventId, args);
 	}
 
 

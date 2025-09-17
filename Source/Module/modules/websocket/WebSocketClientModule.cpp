@@ -94,7 +94,7 @@ void WebSocketClientModule::connectionError(const String& errorMessage)
 void WebSocketClientModule::messageReceived(const String& message)
 {
 	if (!enabled->boolValue()) return;
-	scriptManager->callFunctionOnAllScripts(wsMessageReceivedId, message);
+	scriptManager->callFunctionOnAllItems(wsMessageReceivedId, message);
 
 	StreamingType t = streamingType->getValueDataAsEnum<StreamingType>();
 	switch (t)
@@ -145,7 +145,7 @@ void WebSocketClientModule::dataReceived(const MemoryBlock& data)
 	var bytesData;
 	for (auto& b : bytes) bytesData.append(b);
 	args.add(bytesData);
-	scriptManager->callFunctionOnAllScripts(wsDataReceivedId, args);
+	scriptManager->callFunctionOnAllItems(wsDataReceivedId, args);
 }
 
 void WebSocketClientModule::onContainerParameterChangedInternal(Parameter* p)

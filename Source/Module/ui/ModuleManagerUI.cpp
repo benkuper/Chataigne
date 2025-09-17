@@ -11,7 +11,7 @@
 #include "Module/ModuleIncludes.h"
 
 ModuleManagerUI::ModuleManagerUI(const String& contentName, ModuleManager* _manager) :
-	ManagerUI<ModuleManager, Module, ModuleUI, ItemBaseGroup<Module>, ModuleGroupUI>(contentName, _manager, _manager == RootModuleManager::getInstance())
+	ManagerUI<ModuleManager, Module, ModuleUI>(contentName, _manager)
 {
 	noItemText = "Start here by adding a module to connect to another software or a physical device.";
 

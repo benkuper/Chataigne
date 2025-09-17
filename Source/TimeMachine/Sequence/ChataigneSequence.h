@@ -33,9 +33,6 @@ public:
 	~ChataigneSequenceLayerManager() {}
 
 	Sequence* sequence;
-
-	ItemBaseGroup<SequenceLayer>* createGroup() override;
-
 };
 
 

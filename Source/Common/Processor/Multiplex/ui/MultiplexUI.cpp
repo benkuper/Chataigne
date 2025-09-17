@@ -57,13 +57,13 @@ void MultiplexUI::updateProcessorManagerBounds()
     }
 }
 
-void MultiplexUI::BaseItemUIAdded(ProcessorUI* pui)
+void MultiplexUI::ItemUIAdded(ProcessorUI* pui)
 {
     //updateProcessorManagerBounds();
     pui->addProcessorUIListener(this);
 }
 
-void MultiplexUI::BaseItemUIRemoved(ProcessorUI* pui)
+void MultiplexUI::ItemUIRemoved(ProcessorUI* pui)
 {
     //updateProcessorManagerBounds();
     pui->removeProcessorUIListener(this);

@@ -50,7 +50,7 @@ CommandTemplate::CommandTemplate(var params) :
 {
 	showInspectorOnSelect = false;
 
-	Module * m = RootModuleManager::getInstance()->getItemWithPath(params.getProperty("module",""));
+	Module * m = RootModuleManager::getInstance()->getItemWithName(params.getProperty("module",""));
 	Array<CommandDefinition * > defs = m->getCommands(false);
 
 	triggerTrigger = addTrigger("Trigger", "Trigger a command from this template");

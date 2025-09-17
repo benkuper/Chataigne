@@ -11,7 +11,7 @@
 #pragma once
 
 class ModuleUI :
-	public BaseItemUI<Module>,
+	public ItemUI<Module>,
 	public Module::ModuleListener
 {
 public:

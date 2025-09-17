@@ -131,10 +131,10 @@ var ModuleRouter::getJSONData(bool includeNonOverriden)
 	var data = BaseItem::getJSONData(includeNonOverriden);
 	if (sourceModule != nullptr)
 	{
-		data.getDynamicObject()->setProperty("sourceModule", RootModuleManager::getInstance()->getItemPath(sourceModule));
+		data.getDynamicObject()->setProperty("sourceModule", sourceModule->shortName);
 		data.getDynamicObject()->setProperty("sourceValues", sourceValues.getJSONData());
 	}
-	if (destModule != nullptr) data.getDynamicObject()->setProperty("destModule", RootModuleManager::getInstance()->getItemPath(destModule));
+	if (destModule != nullptr) data.getDynamicObject()->setProperty("destModule", destModule->shortName);
 
 	return data;
 }
@@ -145,9 +145,9 @@ void ModuleRouter::loadJSONDataInternal(var data)
 
 	String modulePath = data.getProperty("sourceModule", "");
 	if (modulePath == CVGroupManager::getInstance()->module->shortName) setSourceModule(CVGroupManager::getInstance()->module.get());
-	else setSourceModule(RootModuleManager::getInstance()->getItemWithPath(modulePath));
+	else setSourceModule(RootModuleManager::getInstance()->getItemWithName(modulePath));
 
-	setDestModule(RootModuleManager::getInstance()->getItemWithPath(data.getProperty("destModule", "")));
+	setDestModule(RootModuleManager::getInstance()->getItemWithName(data.getProperty("destModule", "")));
 
 	if (data.getDynamicObject()->hasProperty("sourceValues")) sourceValues.loadItemsData(data.getProperty("sourceValues", var()));
 }

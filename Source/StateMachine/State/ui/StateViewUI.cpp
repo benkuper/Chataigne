@@ -12,7 +12,7 @@
 
 
 StateViewUI::StateViewUI(State * state) :
-	BaseItemUI<State>(state, Direction::ALL, true),
+	ItemUI<State>(state, Direction::ALL, true),
 	transitionReceptionMode(NONE)
 {
 	pmui.reset(new ProcessorManagerUI(state->pm.get()));
@@ -50,7 +50,7 @@ void StateViewUI::setTransitionReceptionMode(TransitionReceptionMode value)
 void StateViewUI::mouseDown(const MouseEvent & e)
 {
 	if (dynamic_cast<ProcessorUI*>(e.eventComponent) != nullptr) return;
-	BaseItemUI::mouseDown(e);
+	ItemUI::mouseDown(e);
 
 
 	if (transitionReceptionMode == START)
@@ -105,7 +105,7 @@ void StateViewUI::mouseDown(const MouseEvent & e)
 
 void StateViewUI::mouseDoubleClick(const MouseEvent& e)
 {
-	BaseItemUI::mouseDoubleClick(e);
+	ItemUI::mouseDoubleClick(e);
 
 	if (e.originalComponent == this)
 	{
@@ -121,7 +121,7 @@ bool StateViewUI::isUsingMouseWheel()
 
 void StateViewUI::paint(Graphics & g)
 {
-	BaseItemUI::paint(g);
+	ItemUI::paint(g);
 	if (item->active->boolValue())
 	{
 		g.setColour(FEEDBACK_COLOR);
@@ -132,7 +132,7 @@ void StateViewUI::paint(Graphics & g)
 
 void StateViewUI::paintOverChildren(Graphics & g)
 {
-	BaseItemUI::paintOverChildren(g);
+	ItemUI::paintOverChildren(g);
 
 
 	if (transitionReceptionMode && isMouseOver(true))
@@ -155,13 +155,13 @@ void StateViewUI::resizedInternalContent(Rectangle<int>& r)
 
 void StateViewUI::childBoundsChanged(Component * c)
 {
-	BaseItemUI::childBoundsChanged(c);
+	ItemUI::childBoundsChanged(c);
 	resized();
 }
 
 void StateViewUI::controllableFeedbackUpdateInternal(Controllable * c)
 {
-	BaseItemUI::controllableFeedbackUpdateInternal(c);
+	ItemUI::controllableFeedbackUpdateInternal(c);
 
 	if (c == item->active)
 	{
@@ -170,12 +170,12 @@ void StateViewUI::controllableFeedbackUpdateInternal(Controllable * c)
 	}
 }
 
-void StateViewUI::BaseItemUIAdded(ProcessorUI* pui)
+void StateViewUI::ItemUIAdded(ProcessorUI* pui)
 {
 	pui->addProcessorUIListener(this);
 }
 
-void StateViewUI::BaseItemUIRemoved(ProcessorUI* pui)
+void StateViewUI::ItemUIRemoved(ProcessorUI* pui)
 {
 	pui->removeProcessorUIListener(this);
 }
@@ -194,7 +194,7 @@ void StateViewUI::processorAskForFocus(ProcessorUI* pui)
 
 void StateViewUI::inspectableSelectionChanged(Inspectable * i)
 {
-	BaseItemUI::inspectableSelectionChanged(i);
+	ItemUI::inspectableSelectionChanged(i);
 	stateEditorListeners.call(&StateViewUI::Listener::editorSelectionChanged, this);
 }
 

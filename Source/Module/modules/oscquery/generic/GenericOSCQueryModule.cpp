@@ -620,7 +620,7 @@ void GenericOSCQueryModule::requestStructure()
 
 			Array<var> args;
 			args.add(data);
-			scriptManager->callFunctionOnAllScripts(dataStructureEventId, args);
+			scriptManager->callFunctionOnAllItems(dataStructureEventId, args);
 		}
 	}
 	else

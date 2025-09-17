@@ -43,9 +43,8 @@ void ModuleChooserUI::buildModuleBox()
 	clear(dontSendNotification);
 	if (RootModuleManager::getInstanceWithoutCreating() == nullptr) return;
 
-	auto items = RootModuleManager::getInstance()->getItems();
 	int id = 0;
-	for (auto& m : items)
+	for (auto& m : RootModuleManager::getInstance()->items)
 	{
 		id++;
 		if (filterModuleFunc != nullptr)
@@ -53,7 +52,7 @@ void ModuleChooserUI::buildModuleBox()
 			if (!filterModuleFunc(m)) continue;
 		}
 
-		addItem(m->getBreadCrumb().joinIntoString(" > "), id);
+		addItem(m->niceName, id);
 	}
 
 	if (includeCVModule)
@@ -73,8 +72,7 @@ void ModuleChooserUI::setModuleSelected(Module* m, bool silent)
 	if (m == CVGroupManager::getInstance()->module.get()) setSelectedId(1000);
 	else
 	{
-		auto items = RootModuleManager::getInstance()->getItems();
-		setSelectedId(items.indexOf(m) + 1, silent ? dontSendNotification : sendNotification);
+		setSelectedId(RootModuleManager::getInstance()->items.indexOf(m) + 1, silent ? dontSendNotification : sendNotification);
 	}
 }
 
@@ -84,8 +82,7 @@ void ModuleChooserUI::comboBoxChanged(ComboBox*)
 	if (getSelectedId() == 1000) m = CVGroupManager::getInstance()->module.get();
 	else
 	{
-		auto items = RootModuleManager::getInstance()->getItems();
-		m = items[getSelectedId() - 1];
+		m = RootModuleManager::getInstance()->items[getSelectedId() - 1];
 	}
 
 	chooserListeners.call(&ChooserListener::selectedModuleChanged, this, m);

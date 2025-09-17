@@ -498,7 +498,7 @@ void OSModule::run()
 				Array<var> args;
 				args.add(s);
 				args.add(command);
-				scriptManager->callFunctionOnAllScripts("processDataReceived", args);
+				scriptManager->callFunctionOnAllItems("processDataReceived", args);
 			}
 		}
 
