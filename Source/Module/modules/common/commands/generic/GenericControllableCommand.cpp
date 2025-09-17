@@ -607,7 +607,7 @@ void GenericControllableCommand::linkUpdated(ParameterLink* pLink)
 {
 	if (pLink->parameter == target)
 	{
-		if (!isCurrentlyLoadingData) updateComponentFromTarget();
+		updateComponentFromTarget();
 	}
 }
 
@@ -615,7 +615,7 @@ void GenericControllableCommand::loadJSONDataInternal(var data)
 {
 	BaseCommand::loadJSONDataInternal(data);
 
-	if (target->target == nullptr)
+	if (getTargetControllableAtIndex(0) == nullptr) //check for either target or multiplex
 	{
 		ghostData = data;
 		if (Engine::mainEngine->isLoadingFile) Engine::mainEngine->addEngineListener(this);
