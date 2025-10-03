@@ -147,40 +147,40 @@ namespace BinaryData
     const int            Wiimote_pngSize = 2124;
 
     extern const char*   commandScriptTemplate_js;
-    const int            commandScriptTemplate_jsSize = 895;
+    const int            commandScriptTemplate_jsSize = 875;
 
     extern const char*   conditionScriptTemplate_js;
-    const int            conditionScriptTemplate_jsSize = 5536;
+    const int            conditionScriptTemplate_jsSize = 5455;
 
     extern const char*   filterScriptTemplate_js;
-    const int            filterScriptTemplate_jsSize = 1373;
+    const int            filterScriptTemplate_jsSize = 1343;
 
     extern const char*   genericScriptTemplate_js;
-    const int            genericScriptTemplate_jsSize = 5706;
+    const int            genericScriptTemplate_jsSize = 5618;
 
     extern const char*   httpScriptTemplate_js;
-    const int            httpScriptTemplate_jsSize = 2477;
+    const int            httpScriptTemplate_jsSize = 2420;
 
     extern const char*   midiScriptTemplate_js;
-    const int            midiScriptTemplate_jsSize = 1853;
+    const int            midiScriptTemplate_jsSize = 1789;
 
     extern const char*   moduleScriptTemplate_js;
-    const int            moduleScriptTemplate_jsSize = 1415;
+    const int            moduleScriptTemplate_jsSize = 1379;
 
     extern const char*   oscScriptTemplate_js;
-    const int            oscScriptTemplate_jsSize = 798;
+    const int            oscScriptTemplate_jsSize = 775;
 
     extern const char*   pjlinkScriptTemplate_js;
-    const int            pjlinkScriptTemplate_jsSize = 381;
+    const int            pjlinkScriptTemplate_jsSize = 371;
 
     extern const char*   streamingScriptTemplate_js;
-    const int            streamingScriptTemplate_jsSize = 1078;
+    const int            streamingScriptTemplate_jsSize = 1051;
 
     extern const char*   wsClientScriptTemplate_js;
-    const int            wsClientScriptTemplate_jsSize = 546;
+    const int            wsClientScriptTemplate_jsSize = 528;
 
     extern const char*   wsServerScriptTemplate_js;
-    const int            wsServerScriptTemplate_jsSize = 694;
+    const int            wsServerScriptTemplate_jsSize = 675;
 
     extern const char*   about_png;
     const int            about_pngSize = 36971;

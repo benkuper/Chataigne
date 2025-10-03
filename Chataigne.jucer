@@ -1723,7 +1723,8 @@
         <CONFIGURATION isDebug="1" name="Debug" libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib/win&#10;../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/hidapi/lib/win/x64&#10;../../External/mosquitto/lib/win&#10;../../External/simpleble/lib/win/debug"
                        binaryPath="Binaries/Debug" usePrecompiledHeaderFile="1" precompiledHeaderFile="Source\PrecompiledHeaders.h"/>
         <CONFIGURATION isDebug="0" name="Release" binaryPath="Binaries" libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib/win&#10;../../External/servus/lib/win/x64/release&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/hidapi/lib/win/x64&#10;../../External/mosquitto/lib/win&#10;../../External/simpleble/lib/win/release"
-                       alwaysGenerateDebugSymbols="1" debugInformationFormat="ProgramDatabase" usePrecompiledHeaderFile="1" precompiledHeaderFile="Source\PrecompiledHeaders.h"/>
+                       alwaysGenerateDebugSymbols="1" debugInformationFormat="ProgramDatabase"
+                       usePrecompiledHeaderFile="1" precompiledHeaderFile="Source\PrecompiledHeaders.h"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_audio_basics"/>

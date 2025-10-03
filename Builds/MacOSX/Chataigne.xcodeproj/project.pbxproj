@@ -33,6 +33,7 @@
 		5543461C198B589786255629 /* DiscRecording.framework */ = {isa = PBXBuildFile; fileRef = 2EF4541423C08B373926C946; };
 		56A3A435A695E8A3A4E6D156 /* ir.c */ = {isa = PBXBuildFile; fileRef = 89F9438672D70B382A25E5C9; };
 		582D3ABD6F3CBEE78AA46DAD /* guitar_hero_3.c */ = {isa = PBXBuildFile; fileRef = 063AB806516476558D9F032C; };
+		5FEC75E40D889437ED4551D4 /* PrecompiledHeaders.cpp */ = {isa = PBXBuildFile; fileRef = A269643C4A221397D972937C; };
 		61E67DC16A98E630727391F8 /* ProcessorIncludes.cpp */ = {isa = PBXBuildFile; fileRef = 980F0059A08F3731FE4468C3; };
 		655D68933C616C6C3D3C9534 /* ModuleIncludes3.cpp */ = {isa = PBXBuildFile; fileRef = AD0CD784B99C500D3CEE664A; };
 		6778D3B561B8796EC3F344CC /* CoreMIDI.framework */ = {isa = PBXBuildFile; fileRef = 8BD13F2A50FC3588DC036461; };
@@ -470,6 +471,7 @@
 		70E1471749F3AF5353951EC5 /* Reaper.png */ /* Reaper.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Reaper.png; path = ../../Resources/Modules/Reaper.png; sourceTree = SOURCE_ROOT; };
 		70E432BF3298C3CB1C29AC5D /* ModuleRouterView.h */ /* ModuleRouterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ModuleRouterView.h; path = ../../Source/Module/Routing/ui/ModuleRouterView.h; sourceTree = SOURCE_ROOT; };
 		712B39A79176F387DC023DCF /* MappingUI.cpp */ /* MappingUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MappingUI.cpp; path = ../../Source/Common/Processor/Mapping/ui/MappingUI.cpp; sourceTree = SOURCE_ROOT; };
+		712CDB41F91E0C9A6EC1F69F /* PrecompiledHeaders.h */ /* PrecompiledHeaders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PrecompiledHeaders.h; path = ../../Source/PrecompiledHeaders.h; sourceTree = SOURCE_ROOT; };
 		719A771F1A0FFD9A6C5B1447 /* ConversionSourceParameterUI.h */ /* ConversionSourceParameterUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ConversionSourceParameterUI.h; path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConversionSourceParameterUI.h; sourceTree = SOURCE_ROOT; };
 		72033BE2F3301B810214240C /* PosiStageNetCommand.cpp */ /* PosiStageNetCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PosiStageNetCommand.cpp; path = ../../Source/Module/modules/posistagenet/commands/PosiStageNetCommand.cpp; sourceTree = SOURCE_ROOT; };
 		722557AC1AA50559314AAC74 /* StateMachineView.h */ /* StateMachineView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StateMachineView.h; path = ../../Source/StateMachine/ui/StateMachineView.h; sourceTree = SOURCE_ROOT; };
@@ -626,6 +628,7 @@
 		A186172EC33A3E8B18084A46 /* GuiderIncludes.cpp */ /* GuiderIncludes.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = GuiderIncludes.cpp; path = ../../Source/Guider/GuiderIncludes.cpp; sourceTree = SOURCE_ROOT; };
 		A18B69298A0A42084F375802 /* ModuleRouterPanelView.cpp */ /* ModuleRouterPanelView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ModuleRouterPanelView.cpp; path = ../../Source/Module/Routing/ui/ModuleRouterPanelView.cpp; sourceTree = SOURCE_ROOT; };
 		A25CA35206B001BEC52F35AE /* FFTAnalyzer.h */ /* FFTAnalyzer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FFTAnalyzer.h; path = ../../Source/Module/modules/audio/analysis/FFTAnalyzer.h; sourceTree = SOURCE_ROOT; };
+		A269643C4A221397D972937C /* PrecompiledHeaders.cpp */ /* PrecompiledHeaders.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PrecompiledHeaders.cpp; path = ../../Source/PrecompiledHeaders.cpp; sourceTree = SOURCE_ROOT; };
 		A2FF815E7046151034E93B19 /* ConditionFilter.h */ /* ConditionFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ConditionFilter.h; path = ../../Source/Common/Processor/Mapping/Filter/filters/condition/ConditionFilter.h; sourceTree = SOURCE_ROOT; };
 		A31E5A4F4FE61056FEA565BD /* CustomVariablesModule.h */ /* CustomVariablesModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CustomVariablesModule.h; path = ../../Source/Module/modules/customvariables/CustomVariablesModule.h; sourceTree = SOURCE_ROOT; };
 		A330B89FF4A3660791C566A1 /* SDL2.framework */ /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../External/sdl/lib/osx/SDL2.framework; sourceTree = "<group>"; };
@@ -2577,6 +2580,8 @@
 		A6036FD6B54D8D748F9FA2C3 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				A269643C4A221397D972937C,
+				712CDB41F91E0C9A6EC1F69F,
 				35FD7B8838F4A0B49CE24427,
 				9C36D31E3E718DBE09A0C37C,
 				77E313CFAABA49104A328F3F,
@@ -3615,6 +3620,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5FEC75E40D889437ED4551D4,
 				8E4BF978DC12E47F3F886891,
 				E0AA64D538AA9C2130C98D5C,
 				9B5065AA8C19C8DF58253515,

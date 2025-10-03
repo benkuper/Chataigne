@@ -1237,6 +1237,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\PrecompiledHeaders.cpp">
+      <Filter>Chataigne\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Guider\guides\BasicsGuide.cpp">
       <Filter>Chataigne\Source\Guider\guides</Filter>
     </ClCompile>
@@ -4296,6 +4299,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\PrecompiledHeaders.h">
+      <Filter>Chataigne\Source</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Guider\guides\BasicsGuide.h">
       <Filter>Chataigne\Source\Guider\guides</Filter>
     </ClInclude>

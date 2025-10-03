@@ -250,7 +250,7 @@ void DMXModule::sendFromPassTrough(int net, int subnet, int universe, /*int prio
 {
 	if (!enabled->boolValue()) return;
 	if (dmxDevice == nullptr) return;
-	dmxDevice->sendDMXValues(net, subnet, universe,/* priority,*/ values.getRawDataPointer(), values.size());
+	dmxDevice->setDMXValues(net, subnet, universe,/* priority,*/ values.getRawDataPointer(), values.size());
 	outActivityTrigger->trigger();
 	if (logOutgoingData->boolValue()) NLOG(niceName, "Send DMX from pass-through to Net " << net << ", Subnet " << subnet << ", Universe " << universe);
 }
@@ -494,7 +494,7 @@ void DMXModule::run()
 			for (auto& u : outputUniverseManager.items)
 			{
 				if (sendOnChange && !u->isDirty) continue;
-				dmxDevice->sendDMXValues(u);
+				dmxDevice->setDMXValues(u);
 				u->isDirty = false;
 			}
 		}
