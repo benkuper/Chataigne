@@ -1745,6 +1745,7 @@
         <MODULEPATH id="juce_dmx" path="Modules"/>
         <MODULEPATH id="juce_serial" path="Modules"/>
         <MODULEPATH id="juce_javascript"/>
+        <MODULEPATH id="juce_audio_processors_headless"/>
       </MODULEPATHS>
     </VS2022>
     <XCODE_MAC targetFolder="Builds/MacOSX" smallIcon="nVz6Li" bigIcon="nVz6Li"
@@ -1790,6 +1791,7 @@
         <MODULEPATH id="juce_dmx" path="Modules"/>
         <MODULEPATH id="juce_serial" path="Modules"/>
         <MODULEPATH id="juce_javascript"/>
+        <MODULEPATH id="juce_audio_processors_headless"/>
       </MODULEPATHS>
     </XCODE_MAC>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile" externalLibraries="bluetooth&#10;Servus&#10;curl&#10;SDL2&#10;usb-1.0&#10;hidapi-hidraw&#10;JoyShockLibrary"
@@ -1826,6 +1828,7 @@
         <MODULEPATH id="juce_dmx" path="Modules"/>
         <MODULEPATH id="juce_serial" path="Modules"/>
         <MODULEPATH id="juce_javascript" path="JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors_headless" path="JUCE/modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
     <VS2022 targetFolder="Builds/VisualStudio2022_CI" extraDefs="USE_KINECT=1&#10;USE_ABLETONLINK=1&#10;LINK_PLATFORM_WINDOWS=1&#10;BLE_SUPPORT=0"
@@ -1861,6 +1864,7 @@
         <MODULEPATH id="juce_dmx" path="Modules"/>
         <MODULEPATH id="juce_serial" path="Modules"/>
         <MODULEPATH id="juce_javascript" path="JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors_headless" path="JUCE/modules"/>
       </MODULEPATHS>
     </VS2022>
     <VS2022 targetFolder="Builds/VisualStudio2022_Win7CI" extraDefs="USE_KINECT=0&#10;USE_ABLETONLINK=0&#10;BLE_SUPPORT=0&#10;PING_SUPPORT=0&#10;OS_SYSINFO_SUPPORT=0"
@@ -1896,6 +1900,7 @@
         <MODULEPATH id="juce_dmx" path="Modules"/>
         <MODULEPATH id="juce_serial" path="Modules"/>
         <MODULEPATH id="juce_javascript" path="JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors_headless" path="JUCE/modules"/>
       </MODULEPATHS>
     </VS2022>
     <XCODE_MAC targetFolder="Builds/MacOSX_CI" externalLibraries="Servus&#10;hidapi&#10;JoyShockLibrary"
@@ -1934,6 +1939,7 @@
         <MODULEPATH id="juce_dmx" path="Modules"/>
         <MODULEPATH id="juce_serial" path="Modules"/>
         <MODULEPATH id="juce_javascript" path="JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors_headless" path="JUCE/modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
     <LINUX_MAKE targetFolder="Builds/Raspberry" smallIcon="nVz6Li" bigIcon="nVz6Li"
@@ -1970,6 +1976,7 @@
         <MODULEPATH id="juce_dmx" path="Modules"/>
         <MODULEPATH id="juce_serial" path="Modules"/>
         <MODULEPATH id="juce_javascript" path="JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors_headless" path="JUCE/modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
     <LINUX_MAKE targetFolder="Builds/Raspberry64" extraDefs="USE_ABLETONLINK=1&#10;LINK_PLATFORM_LINUX=1&#10;USE_GPIO=1"
@@ -2005,6 +2012,7 @@
         <MODULEPATH id="juce_dmx" path="Modules"/>
         <MODULEPATH id="juce_serial" path="Modules"/>
         <MODULEPATH id="juce_javascript" path="JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors_headless" path="JUCE/modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
   </EXPORTFORMATS>
@@ -2013,6 +2021,8 @@
     <MODULE id="juce_audio_devices" showAllCode="0" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_audio_formats" showAllCode="0" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_audio_processors" showAllCode="0" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_audio_processors_headless" showAllCode="1" useLocalCopy="0"
+            useGlobalPath="0"/>
     <MODULE id="juce_audio_utils" showAllCode="0" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_cryptography" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>

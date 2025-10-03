@@ -20,31 +20,32 @@
 
 // [END_USER_CODE_SECTION]
 
-#define JUCE_PROJUCER_VERSION 0x80009
+#define JUCE_PROJUCER_VERSION 0x8000a
 
 //==============================================================================
-#define JUCE_MODULE_AVAILABLE_juce_audio_basics          1
-#define JUCE_MODULE_AVAILABLE_juce_audio_devices         1
-#define JUCE_MODULE_AVAILABLE_juce_audio_formats         1
-#define JUCE_MODULE_AVAILABLE_juce_audio_processors      1
-#define JUCE_MODULE_AVAILABLE_juce_audio_utils           1
-#define JUCE_MODULE_AVAILABLE_juce_core                  1
-#define JUCE_MODULE_AVAILABLE_juce_cryptography          1
-#define JUCE_MODULE_AVAILABLE_juce_data_structures       1
-#define JUCE_MODULE_AVAILABLE_juce_dmx                   1
-#define JUCE_MODULE_AVAILABLE_juce_dsp                   1
-#define JUCE_MODULE_AVAILABLE_juce_events                1
-#define JUCE_MODULE_AVAILABLE_juce_graphics              1
-#define JUCE_MODULE_AVAILABLE_juce_gui_basics            1
-#define JUCE_MODULE_AVAILABLE_juce_gui_extra             1
-#define JUCE_MODULE_AVAILABLE_juce_javascript            1
-#define JUCE_MODULE_AVAILABLE_juce_opengl                1
-#define JUCE_MODULE_AVAILABLE_juce_organicui             1
-#define JUCE_MODULE_AVAILABLE_juce_osc                   1
-#define JUCE_MODULE_AVAILABLE_juce_serial                1
-#define JUCE_MODULE_AVAILABLE_juce_sharedtexture         1
-#define JUCE_MODULE_AVAILABLE_juce_simpleweb             1
-#define JUCE_MODULE_AVAILABLE_juce_timeline              1
+#define JUCE_MODULE_AVAILABLE_juce_audio_basics                   1
+#define JUCE_MODULE_AVAILABLE_juce_audio_devices                  1
+#define JUCE_MODULE_AVAILABLE_juce_audio_formats                  1
+#define JUCE_MODULE_AVAILABLE_juce_audio_processors               1
+#define JUCE_MODULE_AVAILABLE_juce_audio_processors_headless      1
+#define JUCE_MODULE_AVAILABLE_juce_audio_utils                    1
+#define JUCE_MODULE_AVAILABLE_juce_core                           1
+#define JUCE_MODULE_AVAILABLE_juce_cryptography                   1
+#define JUCE_MODULE_AVAILABLE_juce_data_structures                1
+#define JUCE_MODULE_AVAILABLE_juce_dmx                            1
+#define JUCE_MODULE_AVAILABLE_juce_dsp                            1
+#define JUCE_MODULE_AVAILABLE_juce_events                         1
+#define JUCE_MODULE_AVAILABLE_juce_graphics                       1
+#define JUCE_MODULE_AVAILABLE_juce_gui_basics                     1
+#define JUCE_MODULE_AVAILABLE_juce_gui_extra                      1
+#define JUCE_MODULE_AVAILABLE_juce_javascript                     1
+#define JUCE_MODULE_AVAILABLE_juce_opengl                         1
+#define JUCE_MODULE_AVAILABLE_juce_organicui                      1
+#define JUCE_MODULE_AVAILABLE_juce_osc                            1
+#define JUCE_MODULE_AVAILABLE_juce_serial                         1
+#define JUCE_MODULE_AVAILABLE_juce_sharedtexture                  1
+#define JUCE_MODULE_AVAILABLE_juce_simpleweb                      1
+#define JUCE_MODULE_AVAILABLE_juce_timeline                       1
 
 #define JUCE_GLOBAL_MODULE_SETTINGS_INCLUDED 1
 
@@ -53,6 +54,10 @@
 
 #ifndef    JUCE_USE_WINRT_MIDI
  #define   JUCE_USE_WINRT_MIDI 0
+#endif
+
+#ifndef    JUCE_USE_WINDOWS_MIDI_SERVICES
+ //#define JUCE_USE_WINDOWS_MIDI_SERVICES 0
 #endif
 
 #ifndef    JUCE_ASIO
@@ -73,10 +78,6 @@
 
 #ifndef    JUCE_JACK
  //#define JUCE_JACK 0
-#endif
-
-#ifndef    JUCE_BELA
- //#define JUCE_BELA 0
 #endif
 
 #ifndef    JUCE_USE_ANDROID_OBOE
@@ -119,7 +120,7 @@
 #endif
 
 //==============================================================================
-// juce_audio_processors flags:
+// juce_audio_processors_headless flags:
 
 #ifndef    JUCE_PLUGINHOST_VST
  //#define JUCE_PLUGINHOST_VST 0
