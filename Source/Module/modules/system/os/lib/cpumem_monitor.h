@@ -131,16 +131,13 @@ public:
 		return static_cast<double>(usedMem) / static_cast<double>(totalMem);
 
 #elif JUCE_MAC
-		int mib[2];
-		int64_t totalMemory, freeMemory;
-		size_t length = sizeof(int64_t);
-		mib[0] = CTL_HW;
-		mib[1] = HW_MEMSIZE;
-		sysctl(mib, 2, &totalMemory, &length);
-
+        long mpages = sysconf(_SC_PHYS_PAGES);
+        long mpage_size = sysconf(_SC_PAGE_SIZE);
+        long long totalMemory = static_cast<unsigned long long>(mpages) * static_cast<unsigned long long>(mpage_size);
+    
 		vm_size_t page_size;
 		mach_port_t mach_port;
-		mach_msg_type_number_t count;
+        mach_msg_type_number_t count;
 		vm_statistics64_data_t vm_stats;
 		mach_port = mach_host_self();
 		count = sizeof(vm_stats) / sizeof(natural_t);

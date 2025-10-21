@@ -97,7 +97,10 @@ void CVGroup::setValuesToPreset(CVPreset* preset)
 		Parameter* p = dynamic_cast<Parameter*>(v->controllable);
 		if (p == nullptr) continue;
 		ParameterPreset* pp = preset->values.getParameterPresetForSource(p);
-		if (pp != nullptr) p->setValue(pp->parameter->value);
+		if (pp == nullptr) continue;
+		const ParameterPreset::InterpolationMode mode = pp->interpolationMode->getValueDataAsEnum<ParameterPreset::InterpolationMode>();
+		if (mode == ParameterPreset::NONE) continue;
+		p->setValue(pp->parameter->value);
 	}
 }
 
@@ -346,9 +349,9 @@ void CVGroup::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Co
 	}
 }
 
-var CVGroup::getJSONData()
+var CVGroup::getJSONData(bool includeNonOverriden)
 {
-	var data = BaseItem::getJSONData();
+	var data = BaseItem::getJSONData(includeNonOverriden);
 	data.getDynamicObject()->setProperty("params", params.getJSONData()); //keep "params" to avoid conflict with container's parameter
 	data.getDynamicObject()->setProperty(values.shortName, values.getJSONData());
 	data.getDynamicObject()->setProperty(pm->shortName, pm->getJSONData());
@@ -383,7 +386,7 @@ void CVGroup::run()
 	Array<var> sourceValues;
 	for (auto& v : values.items) sourceValues.add(((Parameter*)v->controllable)->value);
 
-	CVPreset p2(this);
+	CVPreset p2(this, true);
 	p2.loadJSONData(targetPreset->getJSONData());
 	for (auto& v : p2.values.manager->items)
 	{

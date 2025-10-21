@@ -27,13 +27,11 @@ public:
 
     void onContainerParameterChangedInternal(Parameter* p) override;
 
-    void updateDisables(bool force) override;
+    void updateDisables(bool force, bool fromActivation = false) override;
 
     void showAndGetList(ControllableContainer* startFromCC, std::function<void(ControllableContainer *)> returnFunc);
 
-    ListenerList<MultiplexListener> multiplexListeners;
-    void addMultiplexListener(MultiplexListener* newListener) { multiplexListeners.add(newListener); }
-    void removeMultiplexListener(MultiplexListener* listener) { multiplexListeners.remove(listener); }
+    DECLARE_INSPECTACLE_CRITICAL_LISTENER(Multiplex, multiplex);
 
     ProcessorUI* getUI() override;
     

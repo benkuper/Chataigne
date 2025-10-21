@@ -15,7 +15,7 @@ using namespace juce;
 class KeyboardModule :
 	public Module
 #if JUCE_WINDOWS
-	,public WindowsHooker::Listener
+	,public KeyboardHooker::Listener
 #else
 	,public KeyListener
 #endif
@@ -27,6 +27,7 @@ public:
 	TopLevelWindow * window;
 
 	StringParameter* lastKey;
+	IntParameter* lastKeyCode;
 	StringParameter * combination;
 	BoolParameter * ctrl;
 	BoolParameter * shift;

@@ -188,11 +188,10 @@ void JoyConModule::updateController(int controller)
 			lastRightAccelX = motion.accelX;
 			lastRightAccelY = motion.accelY;
 			lastRightAccelZ = motion.accelZ;
-
-			leftAccel->setVector(motion.accelX, motion.accelY, motion.accelZ);
+      rightAccel->setVector(motion.accelX, motion.accelY, motion.accelZ);
 		}
 		else if (!useJitterThreshold->getValue()) {
-			leftAccel->setVector(motion.accelX, motion.accelY, motion.accelZ);
+      rightAccel->setVector(motion.accelX, motion.accelY, motion.accelZ);
 		}
 
 		tmpDeltaX = abs(lastRightOrientationX - motion.gravX);

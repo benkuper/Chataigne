@@ -44,7 +44,7 @@ public:
 
 	void updateConditionRoles();
 	void setHasOffConsequences(bool value);
-	virtual void updateDisables(bool force = false) override;
+	virtual void updateDisables(bool force = false, bool fromActivation = false) override;
 
 	void forceCheck(bool triggerIfChanged);
 
@@ -67,9 +67,8 @@ public:
 
 	virtual void highlightLinkedInspectables(bool value) override;
 
-	virtual var getJSONData() override;
+	virtual var getJSONData(bool includeNonOverriden = false) override;
 	virtual void loadJSONDataItemInternal(var data) override;
-	virtual void endLoadFile() override;
 
 	virtual ProcessorUI* getUI() override;
 

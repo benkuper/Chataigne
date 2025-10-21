@@ -9,6 +9,7 @@
 */
 
 #include "Common/Command/CommandIncludes.h"
+#include "CustomValuesCommandArgument.h"
 
 CustomValuesCommandArgument::CustomValuesCommandArgument(const String& name, Parameter* _p, bool _mappingEnabled, bool templateMode, Multiplex* multiplex, bool enablePrecison) :
 	BaseItem(name, false),
@@ -56,6 +57,10 @@ CustomValuesCommandArgument::CustomValuesCommandArgument(const String& name, Par
 		paramLink.reset(new ParameterLink(param, multiplex));
 	}
 
+	scriptObject.getDynamicObject()->setMethod("linkToMappingIndex", &CustomValuesCommandArgument::linkToMappingIndexFromScript);
+	scriptObject.getDynamicObject()->setMethod("setLink", &CustomValuesCommandArgument::setLinkFromScript);
+	scriptObject.getDynamicObject()->setMethod("unlink", &CustomValuesCommandArgument::unlinkFromScript);
+
 	param->hideInEditor = true;
 }
 
@@ -65,9 +70,48 @@ CustomValuesCommandArgument::~CustomValuesCommandArgument()
 }
 
 
-var CustomValuesCommandArgument::getJSONData()
+var CustomValuesCommandArgument::linkToMappingIndexFromScript(const var::NativeFunctionArgs& a)
 {
-	var data = BaseItem::getJSONData();
+	if (!checkNumArgs("linkToMappingIndex", a, 1)) return var();
+
+	if (CustomValuesCommandArgument* c = getObjectFromJS<CustomValuesCommandArgument>(a))
+	{
+		if (c->paramLink != nullptr && c->paramLink->canLinkToMapping)
+		{
+			int index = jmax((int)a.arguments[0] - 1, 0);
+			c->paramLink->setLinkType(ParameterLink::MAPPING_INPUT);
+			c->paramLink->mappingValueIndex = index;
+		}
+		return true;
+	}
+	return false;
+}
+
+var CustomValuesCommandArgument::setLinkFromScript(const var::NativeFunctionArgs& a)
+{
+	if (!checkNumArgs("setLink", a, 1)) return false;
+
+	if (CustomValuesCommandArgument* c = getObjectFromJS<CustomValuesCommandArgument>(a))
+	{
+		if (c->paramLink != nullptr) c->paramLink->setLinkFromScript(a.arguments[0]);
+		return true;
+	}
+	return false;
+}
+
+var CustomValuesCommandArgument::unlinkFromScript(const var::NativeFunctionArgs& a)
+{
+	if (CustomValuesCommandArgument* c = getObjectFromJS<CustomValuesCommandArgument>(a))
+	{
+		if (c->paramLink != nullptr) c->paramLink->setLinkType(ParameterLink::NONE);
+		return true;
+	}
+	return false;
+}
+
+var CustomValuesCommandArgument::getJSONData(bool includeNonOverriden)
+{
+	var data = BaseItem::getJSONData(includeNonOverriden);
 	data.getDynamicObject()->setProperty("param", param->getJSONData());
 	if (paramLink != nullptr) data.getDynamicObject()->setProperty("paramLink", paramLink->getJSONData());
 	return data;

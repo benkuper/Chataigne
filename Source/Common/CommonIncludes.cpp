@@ -30,6 +30,8 @@
 #include "InputSystem/InputSystemManager.cpp"
 #include "InputSystem/InputDeviceHelpers.cpp"
 
+#include "OSHelpers/KeyboardMouseHooker.cpp"
+
 #if BLE_SUPPORT
 #include "BLE/BLEDevice.cpp"
 #include "BLE/BLEManager.cpp"

@@ -51,9 +51,9 @@ void Multiplex::onContainerParameterChangedInternal(Parameter* p)
 	}
 }
 
-void Multiplex::updateDisables(bool force)
+void Multiplex::updateDisables(bool force, bool fromActivation)
 {
-	processorManager.setForceDisabled(!enabled->boolValue() || forceDisabled);
+	processorManager.setForceDisabled(!enabled->boolValue() || forceDisabled, force, fromActivation);
 }
 
 void Multiplex::showAndGetList(ControllableContainer* startFromCC, std::function<void(ControllableContainer*)> returnFunc)

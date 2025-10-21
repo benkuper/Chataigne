@@ -10,10 +10,10 @@
 
 #include "CustomVariables/CustomVariablesIncludes.h"
 
-CVPreset::CVPreset(CVGroup* group) :
+CVPreset::CVPreset(CVGroup* group, bool isTemporary) :
 	MorphTarget("Preset"),
 	group(group),
-	values("Values", &group->values, false)
+	values("Values", &group->values, false, isTemporary)
 {
 	jassert(group != nullptr);
 
@@ -44,9 +44,9 @@ CVPreset::~CVPreset()
 {
 }
 
-var CVPreset::getJSONData()
+var CVPreset::getJSONData(bool includeNonOverriden)
 {
-	var data = MorphTarget::getJSONData();
+	var data = MorphTarget::getJSONData(includeNonOverriden);
 	data.getDynamicObject()->setProperty(values.shortName, values.getJSONData());
 	return data;
 }
@@ -60,9 +60,14 @@ void CVPreset::loadJSONDataInternal(var data)
 var CVPreset::getValuesAsJSON()
 {
 	var data = new DynamicObject();
-	Array<WeakReference<Parameter>> params = values.getAllParameters();
-	for (auto& p : params) data.getDynamicObject()->setProperty(p->shortName, p->value);
+	for (auto& cc : values.controllableContainers)
+	{
+		if (ParameterPreset* pp = dynamic_cast<ParameterPreset*>(cc.get()))
+		{
+			data.getDynamicObject()->setProperty(pp->shortName, pp->parameter->value);
 
+		}
+	}
 	return data;
 }
 
@@ -77,8 +82,7 @@ void CVPreset::loadValuesFromJSON(var data)
 	NamedValueSet props = data.getDynamicObject()->getProperties();
 	for (auto& nv : props)
 	{
-		Parameter* p = values.getParameterByName(nv.name.toString());
-		if (p != nullptr) p->setValue(nv.value);
+		if (ParameterPreset* pp = dynamic_cast<ParameterPreset*>(values.getControllableContainerByName(nv.name.toString()))) pp->parameter->setValue(nv.value);
 	}
 }
 
@@ -94,7 +98,7 @@ InspectableEditor* CVPreset::getEditorInternal(bool isRoot, Array<Inspectable*> 
 	return new CVPresetEditor(this, isRoot);
 }
 
-PresetParameterContainer::PresetParameterContainer(const String& name, GenericControllableManager* manager, bool keepValuesInSync) :
+PresetParameterContainer::PresetParameterContainer(const String& name, GenericControllableManager* manager, bool keepValuesInSync, bool doNotBuildValues) :
 	ControllableContainer(name),
 	manager(manager),
 	keepValuesInSync(keepValuesInSync),
@@ -103,7 +107,7 @@ PresetParameterContainer::PresetParameterContainer(const String& name, GenericCo
 	saveAndLoadRecursiveData = true;
 
 	manager->addBaseManagerListener(this);
-	resetAndBuildValues(keepValuesInSync);
+	if(!doNotBuildValues) resetAndBuildValues(keepValuesInSync);
 }
 
 PresetParameterContainer::~PresetParameterContainer()

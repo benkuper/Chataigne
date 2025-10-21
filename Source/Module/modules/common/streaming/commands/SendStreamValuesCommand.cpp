@@ -20,9 +20,9 @@ SendStreamValuesCommand::~SendStreamValuesCommand()
 {
 }
 
-var SendStreamValuesCommand::getJSONData()
+var SendStreamValuesCommand::getJSONData(bool includeNonOverriden)
 {
-	var data = StreamingCommand::getJSONData();
+	var data = StreamingCommand::getJSONData(includeNonOverriden);
 	data.getDynamicObject()->setProperty("argManager", customValuesManager->getJSONData());
 	return data;
 }

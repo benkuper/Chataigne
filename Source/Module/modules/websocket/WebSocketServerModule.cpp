@@ -11,6 +11,9 @@
 WebSocketServerModule::WebSocketServerModule(const String& name, int defaultRemotePort) :
 	StreamingModule(name)
 {
+	networkInterface = new NetworkInterfaceParameter();
+	moduleParams.addParameter(networkInterface);
+
 	localPort = moduleParams.addIntParameter("Local Port", "Port to bind to listen to incoming data", defaultRemotePort, 1, 65535);
 	useSecureConnection = moduleParams.addBoolParameter("Use Secure Connection", "If checked, you will be able to access this webserver through secure, wss:// connection.", false);
 	isConnected = moduleParams.addBoolParameter("Connected", "Is the socket sucessfully bound and listening", false);
@@ -77,7 +80,7 @@ void WebSocketServerModule::setupServer()
 	else server.reset(new SimpleWebSocketServer());
 
 	server->addWebSocketListener(this);
-	server->start(localPort->intValue());
+	server->start(localPort->intValue(), "", networkInterface->getIP());
 
 	isConnected->setValue(true);
 

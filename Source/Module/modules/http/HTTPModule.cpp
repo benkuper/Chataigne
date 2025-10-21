@@ -246,6 +246,7 @@ void HTTPModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc,
 	if (c == clearValues)
 	{
 		valuesCC.clear();
+		valuesCC.queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, &valuesCC));
 	}
 	else if (c == authenticationCC.enabled || c == username || c == pass)
 	{

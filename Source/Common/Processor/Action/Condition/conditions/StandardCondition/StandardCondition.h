@@ -42,12 +42,12 @@ public:
 	virtual void setValid(int multiplexIndex, bool value, bool dispatchOnChangeOnly = true) override;
 	void forceToggleState(bool value);
 
-	void listReferenceUpdated() override;
+	void listReferenceUpdated(int multiplexIndex) override;
 	void listItemUpdated(int multiplexIndex) override;
 	//void updateSourceControllablesFromTarget();
 
 	void updateSourceFromTarget();
-	void updateComparatorFromSource();
+	void updateComparatorFromSource(int multiplexIndex = -1);
 
 	Controllable* getSourceControllableAt(int multiplexIndex);
 
@@ -62,7 +62,7 @@ public:
 	void onExternalParameterRangeChanged(Parameter* p) override;
 	void onExternalTriggerTriggered(Trigger* t) override;
 
-	var getJSONData() override;
+	var getJSONData(bool includeNonOverriden = false) override;
 	void loadJSONDataInternal(var data) override;
 	void afterLoadJSONDataInternal() override;
 

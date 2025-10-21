@@ -44,7 +44,11 @@ public:
 
 	var getLinkedValue(int multiplexIndex);
 
-	var getJSONData() override;
+	static var linkToMappingIndexFromScript(const var::NativeFunctionArgs& a);
+	static var setLinkFromScript(const var::NativeFunctionArgs& a);
+	static var unlinkFromScript(const var::NativeFunctionArgs& a);
+
+	var getJSONData(bool includeNonOverriden = false) override;
 	void loadJSONDataInternal(var data) override;
 
 	virtual String getTypeString() const override;

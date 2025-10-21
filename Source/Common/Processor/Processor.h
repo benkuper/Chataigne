@@ -26,10 +26,10 @@ public:
 	bool forceDisabled;
 
 	virtual  void onContainerParameterChangedInternal(Parameter* p) override;
-	virtual void setForceDisabled(bool value, bool force = false);
-	virtual void updateDisables(bool force = false) {}
+	virtual void setForceDisabled(bool value, bool force = false, bool fromActivation = false);
+	virtual void updateDisables(bool force = false, bool fromActivation = false) {}
 
-	DECLARE_ASYNC_EVENT(Processor, Processor, processor, { FORCE_DISABLED_CHANGED })
+	DECLARE_ASYNC_EVENT(Processor, Processor, processor, { FORCE_DISABLED_CHANGED }, EVENT_ITEM_CHECK)
 
 	virtual ProcessorUI * getUI();
 };

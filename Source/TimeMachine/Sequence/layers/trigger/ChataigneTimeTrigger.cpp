@@ -36,9 +36,9 @@ void ChataigneTimeTrigger::triggerInternal()
 	csm->triggerAll();
 }
 
-var ChataigneTimeTrigger::getJSONData()
+var ChataigneTimeTrigger::getJSONData(bool includeNonOverriden)
 {
-	var data = TimeTrigger::getJSONData();
+	var data = TimeTrigger::getJSONData(includeNonOverriden);
 	data.getDynamicObject()->setProperty("consequences", csm->getJSONData());
 	return data;
 }

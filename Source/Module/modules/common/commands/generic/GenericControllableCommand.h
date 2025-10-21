@@ -26,6 +26,8 @@ public:
 	Action action;
 	TargetParameter* target;
 
+	WeakReference<Parameter> targetParam; //for range check
+
 	EnumParameter* valueOperator;
 	EnumParameter* componentOperator;
 	BoolParameter* loop;
@@ -33,7 +35,9 @@ public:
 
 	WeakReference<Parameter> value;
 	var dataToLoad;
-	var ghostValueData; // to keep when target is lost
+    var ghostData;
+    var ghostValueData; // to keep when target is lost
+	var ghostValueParamLinkData;
 	var ghostOperator;
 	var ghostComponent;
 
@@ -55,6 +59,8 @@ public:
 
 	virtual void linkUpdated(ParameterLink* pLink) override;
 	virtual void onContainerParameterChanged(Parameter*) override;
+
+	virtual void parameterRangeChanged(Parameter* p) override;
 
 	virtual void loadJSONDataInternal(var data) override;
 	virtual void endLoadFile() override;

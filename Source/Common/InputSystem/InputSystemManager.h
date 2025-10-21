@@ -93,13 +93,14 @@ public:
 	~InputSystemManager();
 
 	bool isInit;
+	bool isBeingDestroyed;
 
 	//OwnedArray<Joystick, CriticalSection> joysticks;
 	OwnedArray<Gamepad, CriticalSection> gamepads;
 
 	void checkDevices();
 
-	Gamepad* addGamepad(Gamepad * controller);
+	Gamepad* addGamepad(Gamepad* controller);
 	void removeGamepad(Gamepad* g);
 	//Gamepad* addJoystick(SDL_Joystick * sdlJ);
 	//void removeJoystick(Gamepad * j);
@@ -123,7 +124,7 @@ public:
 
 	ListenerList<InputManagerListener> inputListeners;
 	void addInputManagerListener(InputManagerListener* newListener) { inputListeners.add(newListener); }
-	void removeInputManagerListener(InputManagerListener* listener) { inputListeners.remove(listener); }
+	void removeInputManagerListener(InputManagerListener* listener) { if (!isBeingDestroyed) inputListeners.remove(listener); }
 
 
 	class  InputSystemEvent
@@ -144,5 +145,5 @@ public:
 
 	void addAsyncInputListener(AsyncListener* newListener) { inputQueuedNotifier.addListener(newListener); }
 	void addAsyncCoalescedInputListener(AsyncListener* newListener) { inputQueuedNotifier.addAsyncCoalescedListener(newListener); }
-	void removeAsyncInputListener(AsyncListener* listener) { inputQueuedNotifier.removeListener(listener); }
+	void removeAsyncInputListener(AsyncListener* listener) { if (!isBeingDestroyed) inputQueuedNotifier.removeListener(listener); }
 };

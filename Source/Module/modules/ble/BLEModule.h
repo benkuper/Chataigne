@@ -59,7 +59,7 @@ public:
 	virtual void bleDeviceAdded(BLEDevice* device) override;
 	virtual void bleDeviceRemoved(BLEDevice* device) override;
 
-	virtual var getJSONData() override;
+	virtual var getJSONData(bool includeNonOverriden = false) override;
 	virtual void loadJSONDataInternal(var data) override;
 
 	virtual void setupModuleFromJSONData(var data) override;

@@ -95,9 +95,9 @@ void ColorRemapFilter::filterParamChanged(Parameter* p)
 	}
 }
 
-var ColorRemapFilter::getJSONData()
+var ColorRemapFilter::getJSONData(bool includeNonOverriden)
 {
-	var data = MappingFilter::getJSONData();
+	var data = MappingFilter::getJSONData(includeNonOverriden);
 	data.getDynamicObject()->setProperty("gradient", gradientManager.getJSONData());
 	return data;
 }

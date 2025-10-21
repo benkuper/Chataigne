@@ -13,6 +13,7 @@
 UDPModule::UDPModule(const String& name, bool canHaveInput, bool canHaveOutput, int defaultLocalPort, int defaultRemotePort) :
 	NetworkStreamingModule(name, canHaveInput, canHaveOutput, defaultLocalPort, defaultRemotePort)
 {
+
 	multicastMode = moduleParams.addBoolParameter("Multicast Mode", "If check, instead of binding and connecting, it will try to join a multicast network.", false);
 
 	scriptObject.getDynamicObject()->setMethod("sendTo", &UDPModule::sendMessageToFromScript);
@@ -48,7 +49,7 @@ void UDPModule::setupReceiver()
 	bool syncSenderPort = sender != nullptr && sendCC != nullptr && sendCC->enabled->boolValue() && listenToOutputFeedback->boolValue();
 	receiver->setEnablePortReuse(syncSenderPort);
 
-	receiver->bindToPort(localPort->intValue());
+	receiver->bindToPort(localPort->intValue(), networkInterface->getIP());
 	receiverIsBound->setValue(receiver->getBoundPort() != -1);
 
 	if (receiverIsBound->boolValue())
@@ -91,7 +92,9 @@ void UDPModule::setupSender()
 	if (sendCC == nullptr) return;
 	if (!sendCC->enabled->boolValue()) return;
 
+
 	sender.reset(new DatagramSocket(!multicastMode->boolValue()));
+	
 
 	bool syncReceiverPort = receiver != nullptr && receiveCC != nullptr && receiveCC->enabled->boolValue() && receiverIsBound->boolValue() && listenToOutputFeedback->boolValue();
 
@@ -122,11 +125,11 @@ void UDPModule::setupSender()
 	else if (syncReceiverPort)
 	{
 		sender->setEnablePortReuse(true);
-		sender->bindToPort(receiver->getBoundPort());
+		sender->bindToPort(receiver->getBoundPort(), networkInterface->getIP());
 	}
 	else
 	{
-		sender->bindToPort(0);
+		sender->bindToPort(0, networkInterface->getIP());
 	}
 
 

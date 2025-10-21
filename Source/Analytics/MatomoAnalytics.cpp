@@ -118,14 +118,14 @@ void MatomoAnalytics::run()
 
 	if (stream != nullptr)
 	{
-		String content = stream->readEntireStreamAsString();
+		//String content = stream->readEntireStreamAsString();
 		//DBG("Got analytics data " << content);
 		//DBG("Analytics sent : " << actionToLog);
 	}
 	else
 	{
-		if(!hasAlreadyShownWarning) NLOGWARNING("Matomo Analytics", "Error with request, status code : " << statusCode << ", url : " << url.toString(true));
-		hasAlreadyShownWarning = true;
+		//if(!hasAlreadyShownWarning) NLOGWARNING("Matomo Analytics", "Error with request, status code : " << statusCode << ", url : " << url.toString(true));
+		//hasAlreadyShownWarning = true;
 	}
 }
 

@@ -50,7 +50,7 @@ StandardCondition::~StandardCondition()
 void StandardCondition::clearItem()
 {
 	BaseItem::clearItem();
-	if (sourceList != nullptr) sourceList->removeListListener(this);
+	if (sourceList != nullptr) sourceList->removeMultiplexListListener(this);
 	if (sourceControllable != nullptr)
 	{
 		if (sourceControllable->type == Controllable::TRIGGER) ((Trigger*)sourceControllable.get())->removeTriggerListener(this);
@@ -87,14 +87,14 @@ void StandardCondition::updateSourceFromTarget()
 	{
 		if (sourceList != nullptr)
 		{
-			sourceList->removeListListener(this);
+			sourceList->removeMultiplexListListener(this);
 		}
 
 		sourceList = dynamic_cast<BaseMultiplexList*>(sourceTarget->targetContainer.get());
 
 		if (sourceList != nullptr)
 		{
-			sourceList->addListListener(this);
+			sourceList->addMultiplexListListener(this);
 		}
 	}
 	else
@@ -120,8 +120,10 @@ void StandardCondition::updateSourceFromTarget()
 	conditionAsyncNotifier.addMessage(new ConditionEvent(ConditionEvent::SOURCE_CHANGED, this));
 }
 
-void StandardCondition::updateComparatorFromSource()
+void StandardCondition::updateComparatorFromSource(int multiplexIndex)
 {
+	if (isMultiplexed() && multiplexIndex > 0) return;
+
 	if (Controllable* c = getSourceControllableAt(0))
 	{
 		bool rebuildComparator = comparator == nullptr || c->type != comparator->reference->type;
@@ -208,9 +210,9 @@ void StandardCondition::forceToggleState(bool value)
 	}
 }
 
-void StandardCondition::listReferenceUpdated()
+void StandardCondition::listReferenceUpdated(int multiplexIndex)
 {
-	updateComparatorFromSource();
+	updateComparatorFromSource(multiplexIndex);
 }
 
 void StandardCondition::listItemUpdated(int multiplexIndex)
@@ -261,9 +263,9 @@ void StandardCondition::onExternalTriggerTriggered(Trigger* t)
 	}
 }
 
-var StandardCondition::getJSONData()
+var StandardCondition::getJSONData(bool includeNonOverriden)
 {
-	var data = Condition::getJSONData();
+	var data = Condition::getJSONData(includeNonOverriden);
 	if (comparator != nullptr) data.getDynamicObject()->setProperty("comparator", comparator->getJSONData());
 	return data;
 }

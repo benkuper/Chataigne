@@ -16,6 +16,7 @@ ParameterLink::ParameterLink(WeakReference<Parameter> p, Multiplex* multiplex) :
 	MultiplexTarget(multiplex),
 	isLinkable(true),
 	canLinkToMapping(true),
+	isLinkBeingDestroyed(false),
 	linkType(NONE),
 	parameter(p),
 	mappingValueIndex(0),
@@ -29,9 +30,14 @@ ParameterLink::ParameterLink(WeakReference<Parameter> p, Multiplex* multiplex) :
 
 ParameterLink::~ParameterLink()
 {
+	masterReference.clear();
+	isLinkBeingDestroyed = true;
+
+	paramLinkNotifier.cancelPendingUpdate();
+
 	if (list != nullptr && !listRef.wasObjectDeleted())
 	{
-		list->removeListListener(this);
+		list->removeMultiplexListListener(this);
 	}
 }
 
@@ -58,7 +64,7 @@ void ParameterLink::setLinkType(LinkType type)
 	{
 		if (list != nullptr && !listRef.wasObjectDeleted())
 		{
-			list->removeListListener(this);
+			list->removeMultiplexListListener(this);
 			list = nullptr;
 			listRef = nullptr;
 		}
@@ -67,7 +73,7 @@ void ParameterLink::setLinkType(LinkType type)
 	if (linkType != CV_PRESET_PARAM) presetParamName = "";
 
 
-	if(parameter != nullptr && !parameter.wasObjectDeleted()) parameter->setControllableFeedbackOnly(linkType != NONE);
+	if (parameter != nullptr && !parameter.wasObjectDeleted()) parameter->setControllableFeedbackOnly(linkType != NONE);
 
 	notifyLinkUpdated();
 }
@@ -164,12 +170,9 @@ WeakReference<ControllableContainer> ParameterLink::getLinkedTargetContainer(int
 
 		if (linkType == MULTIPLEX_LIST)
 		{
-			if (fullPresetSelectMode)
+			if (CVPresetMultiplexList* pList = dynamic_cast<CVPresetMultiplexList*>(list))
 			{
-				if (CVPresetMultiplexList* pList = dynamic_cast<CVPresetMultiplexList*>(list))
-				{
-					return pList->getPresetAt(multiplexIndex);
-				}
+				return pList->getPresetAt(multiplexIndex);
 			}
 			else
 			{
@@ -188,7 +191,7 @@ void ParameterLink::setLinkedList(BaseMultiplexList* _list)
 
 	if (list != nullptr)
 	{
-		list->removeListListener(this);
+		list->removeMultiplexListListener(this);
 	}
 
 	list = _list;
@@ -200,7 +203,7 @@ void ParameterLink::setLinkedList(BaseMultiplexList* _list)
 		setLinkType(MULTIPLEX_LIST);
 		list = _list;
 		listRef = _list;;
-		list->addListListener(this);
+		list->addMultiplexListListener(this);
 
 		if (shouldNotify) notifyLinkUpdated();
 	}
@@ -216,7 +219,7 @@ void ParameterLink::setLinkedPresetParam(CVPresetMultiplexList* _list, const Str
 
 	if (list != nullptr)
 	{
-		list->removeListListener(this);
+		list->removeMultiplexListListener(this);
 	}
 
 	list = _list;
@@ -228,7 +231,7 @@ void ParameterLink::setLinkedPresetParam(CVPresetMultiplexList* _list, const Str
 		list = _list;
 		listRef = _list;
 		presetParamName = paramName;
-		list->addListListener(this);
+		list->addMultiplexListListener(this);
 	}
 	else
 	{
@@ -293,10 +296,22 @@ String ParameterLink::getReplacementString(int multiplexIndex)
 					{
 						if (BaseMultiplexList* curList = multiplex->listManager.getItemWithName(dotSplit[1]))
 						{
-
 							if (Parameter* lp = dynamic_cast<Parameter*>(curList->list[multiplexIndex]))
 							{
-								result += lp->stringValue();
+								if (lp->type == Controllable::TARGET)
+								{
+									if (Parameter* ltp = dynamic_cast<Parameter*>(((TargetParameter*)lp)->getTargetControllable()))
+									{
+										result += ltp->stringValue();
+									}
+									else
+									{
+										result += lp->stringValue();
+									}
+								}else
+								{
+									result += lp->stringValue();
+								}
 							}
 							else
 							{
@@ -364,13 +379,76 @@ void ParameterLink::notifyLinkUpdated()
 }
 
 
-var ParameterLink::getJSONData()
+void ParameterLink::setLinkFromScript(var data)
+{
+	if (!data.isObject())
+	{
+		NLOGWARNING("setLink", "Argument must be an object containing a \"type\" property and a \"value\" property");
+	}
+	else
+	{
+		if (!data.hasProperty("type") || !data.hasProperty("value"))
+		{
+			NLOGWARNING("setLink", "Argument must be an object containing a \"type\" property and a \"value\" property");
+		}
+		else
+		{
+			String type = data.getProperty("type", "");
+			if (type == "input")
+			{
+				if (canLinkToMapping)
+				{
+					setLinkType(MAPPING_INPUT);
+					mappingValueIndex = jmax<int>((int)data.getProperty("value", 0) - 1, 0);
+				}
+				else
+				{
+					NLOGWARNING("setLink", "Cannot set link type to input for non-mapping parameter");
+				}
+			}
+			else if (type == "index" || type == "index0")
+			{
+				if (isMultiplexed())
+				{
+					setLinkType(type == "index" ? INDEX : INDEX_ZERO);
+				}
+				else
+				{
+					NLOGWARNING("setLink", "Cannot set link type to index for non-multiplexed parameter");
+				}
+			}
+			else if (type == "list")
+			{
+				if (isMultiplexed())
+				{
+					String targetList = data.getProperty("value", "").toString();
+					BaseMultiplexList* l = multiplex->listManager.getItemWithName(data.getProperty("value", ""));
+					if (l != nullptr) setLinkedList(l);
+					else
+					{
+						NLOGWARNING("setLink", "Invalid list name: " + targetList);
+					}
+				}
+				else
+				{
+					NLOGWARNING("setLink", "Cannot set link type to list for non-multiplexed parameter");
+				}
+			}
+			else
+			{
+				NLOGWARNING("setLink", "Invalid link type: " + type);
+			}
+		}
+	}
+}
+
+var ParameterLink::getJSONData(bool includeNonOverriden)
 {
 	var data(new DynamicObject());
 	if (isLinkable)
 	{
 		data.getDynamicObject()->setProperty("linkType", linkType);
-		if (linkType == MAPPING_INPUT) data.getDynamicObject()->setProperty("mappingValueIndex", jmax<int>(mappingValueIndex,0));
+		if (linkType == MAPPING_INPUT) data.getDynamicObject()->setProperty("mappingValueIndex", jmax<int>(mappingValueIndex, 0));
 		else if ((linkType == MULTIPLEX_LIST || linkType == CV_PRESET_PARAM) && list != nullptr && !listRef.wasObjectDeleted())
 		{
 			data.getDynamicObject()->setProperty("list", list->shortName);
@@ -426,9 +504,11 @@ ParamLinkContainer::ParamLinkContainer(const String& name, Multiplex* multiplex)
 	MultiplexTarget(multiplex),
 	paramsCanBeLinked(true),
 	canLinkToMapping(true),
-	ghostData(new DynamicObject())
+	linksGhostData(new DynamicObject())
 {
 	scriptObject.getDynamicObject()->setMethod("linkParamToMappingIndex", &ParamLinkContainer::linkParamToMappingIndexFromScript);
+	scriptObject.getDynamicObject()->setMethod("setParamLink", &ParamLinkContainer::setParamLinkFromScript);
+	scriptObject.getDynamicObject()->setMethod("unlinkParam", &ParamLinkContainer::unlinkParamFromScript);
 }
 
 ParamLinkContainer::~ParamLinkContainer()
@@ -452,9 +532,9 @@ void ParamLinkContainer::onControllableAdded(Controllable* c)
 		paramLinkMap.set(p, pLink);
 		linkParamMap.set(pLink, p);
 
-		if (ghostData.hasProperty(pLink->parameter->shortName))
+		if (linksGhostData.hasProperty(pLink->parameter->shortName))
 		{
-			pLink->loadJSONData(ghostData.getProperty(pLink->parameter->shortName, var()));
+			pLink->loadJSONData(linksGhostData.getProperty(pLink->parameter->shortName, var()));
 		}
 	}
 }
@@ -468,8 +548,8 @@ void ParamLinkContainer::onControllableRemoved(Controllable* c)
 		{
 			if (ParameterLink* pLink = paramLinkMap[p])
 			{
-				if (ghostData.isVoid()) ghostData = new DynamicObject();
-				ghostData.getDynamicObject()->setProperty(pLink->parameter->shortName, pLink->getJSONData());
+				if (linksGhostData.isVoid()) linksGhostData = new DynamicObject();
+				linksGhostData.getDynamicObject()->setProperty(pLink->parameter->shortName, pLink->getJSONData());
 
 				pLink->removeParameterLinkListener(this);
 
@@ -524,8 +604,45 @@ void ParamLinkContainer::linkParamToMappingIndex(Parameter* p, int mappingIndex)
 
 var ParamLinkContainer::linkParamToMappingIndexFromScript(const var::NativeFunctionArgs& a)
 {
-	if (!checkNumArgs("linkToMappingIndex", a, 2)) return false;
+	if (!checkNumArgs("linkParamToMappingIndex", a, 2)) return false;
 
+	if (ParameterLink* link = getLinkedParamFromScript(a))
+	{
+		if (link->canLinkToMapping)
+		{
+			link->setLinkType(ParameterLink::MAPPING_INPUT);
+			link->mappingValueIndex = jmax((int)a.arguments[1] - 1, 0);
+			return true;
+		}
+	}
+
+	return false;
+}
+
+var ParamLinkContainer::setParamLinkFromScript(const var::NativeFunctionArgs& a)
+{
+	if (!checkNumArgs("setParamLink", a, 2)) return false;
+	if (ParameterLink* link = getLinkedParamFromScript(a))
+	{
+		link->setLinkFromScript(a.arguments[1]);
+		return true;
+	}
+	return false;
+}
+
+var ParamLinkContainer::unlinkParamFromScript(const var::NativeFunctionArgs& a)
+{
+	if (!checkNumArgs("unlinkParam", a, 1)) return false;
+	if (ParameterLink* link = getLinkedParamFromScript(a))
+	{
+		link->setLinkType(ParameterLink::NONE);
+		return true;
+	}
+	return false;
+}
+
+ParameterLink* ParamLinkContainer::getLinkedParamFromScript(const var::NativeFunctionArgs& a)
+{
 	if (ParamLinkContainer* linkC = getObjectFromJS<ParamLinkContainer>(a))
 	{
 		var targetPData = a.arguments[0];
@@ -535,19 +652,14 @@ var ParamLinkContainer::linkParamToMappingIndexFromScript(const var::NativeFunct
 
 		if (p == nullptr)
 		{
-			LOGWARNING("Set target from script, Target not found " << targetPData.toString());
-			return false;
+			LOGWARNING("Link to mapping Index, Target not found " << targetPData.toString());
+			return nullptr;
 		}
 
-		int index = jmax((int)a.arguments[1] - 1, 0);
-		linkC->linkParamToMappingIndex(p, index);
-	}
-	else
-	{
-		return false;
+		return linkC->getLinkedParam(p);
 	}
 
-	return true;
+	return nullptr;
 }
 
 void ParamLinkContainer::setInputNamesFromParams(Array<WeakReference<Parameter>> outParams)
@@ -575,9 +687,9 @@ void ParamLinkContainer::setInputNamesFromParams(Array<WeakReference<Parameter>>
 	}
 }
 
-var ParamLinkContainer::getJSONData()
+var ParamLinkContainer::getJSONData(bool includeNonOverriden)
 {
-	var data = ControllableContainer::getJSONData();
+	var data = ControllableContainer::getJSONData(includeNonOverriden);
 
 	var pLinkData(new DynamicObject());
 	for (auto& pLink : paramLinks)
@@ -593,15 +705,15 @@ var ParamLinkContainer::getJSONData()
 
 void ParamLinkContainer::loadJSONDataInternal(var data)
 {
-	ghostData = data.getProperty("paramLinks", var()).clone();
+	linksGhostData = data.getProperty("paramLinks", var()).clone();
 	for (auto& pLink : paramLinks)
 	{
 		if (pLink->parameter == nullptr || pLink->parameter.wasObjectDeleted()) continue;
 
-		if (ghostData.isObject() && ghostData.hasProperty(pLink->parameter->shortName))
+		if (linksGhostData.isObject() && linksGhostData.hasProperty(pLink->parameter->shortName))
 		{
-			pLink->loadJSONData(ghostData.getProperty(pLink->parameter->shortName, var()));
-			ghostData.getDynamicObject()->removeProperty(pLink->parameter->shortName);
+			pLink->loadJSONData(linksGhostData.getProperty(pLink->parameter->shortName, var()));
+			linksGhostData.getDynamicObject()->removeProperty(pLink->parameter->shortName);
 		}
 		else
 		{

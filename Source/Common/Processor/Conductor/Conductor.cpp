@@ -17,6 +17,7 @@ Conductor::Conductor(var params, Multiplex* multiplex) :
 	uiCC("UI Settings"),
 	processorManager("Processors", multiplex)
 {
+	processorManager.itemDataType = "Cue";
 	saveAndLoadRecursiveData = true;
 	type = CONDUCTOR;
 
@@ -69,10 +70,10 @@ void Conductor::onContainerParameterChangedInternal(Parameter* p)
 	if (p == nextCueIndex) updateNextCue();
 }
 
-void Conductor::updateDisables(bool force)
+void Conductor::updateDisables(bool force, bool fromActivation)
 {
-	Action::updateDisables(force);
-	processorManager.setForceDisabled(!enabled->boolValue() || forceDisabled);
+	Action::updateDisables(force, fromActivation);
+	processorManager.setForceDisabled(!enabled->boolValue() || forceDisabled, force, fromActivation);
 }
 
 void Conductor::itemAdded(Processor* p)
@@ -270,7 +271,7 @@ void Conductor::updateNextCue()
 	nextCueName->setValue(nextName);
 }
 
-var Conductor::getJSONData()
+var Conductor::getJSONData(bool includeNonOverriden)
 {
 	return Processor::getJSONData(); //bypass action
 }

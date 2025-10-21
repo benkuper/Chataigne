@@ -21,6 +21,8 @@ StreamingModule::StreamingModule(const String& name) :
 
 	autoAdd = moduleParams.addBoolParameter("Auto Add", "If checked, incoming data will be parsed depending on the Message Structure parameter, and if eligible will be added as values", true);
 	messageStructure = moduleParams.addEnumParameter("Message Structure", "The expected structure of a message, determining how it should be interpreted to auto create values from it");
+	customSeparator = moduleParams.addStringParameter("Custom Separator", "Custom Separator to use to split the message", "|", false);
+
 	firstValueIsTheName = moduleParams.addBoolParameter("First value is the name", "If checked, the first value of a parsed message will be used to name the value, otherwise each values will be named by their index", true);
 	buildMessageStructureOptions();
 
@@ -63,6 +65,7 @@ void StreamingModule::setAutoAddAvailable(bool value)
 	autoAdd->hideInEditor = !value;
 	streamingType->hideInEditor = !value;
 	messageStructure->hideInEditor = !value;
+	customSeparator->hideInEditor = !value;
 	firstValueIsTheName->hideInEditor = !value;
 }
 
@@ -83,6 +86,7 @@ void StreamingModule::buildMessageStructureOptions()
 			->addOption("Colon (:) separated", LINES_COLON)
 			->addOption("Semicolon (;) separated", LINES_SEMICOLON)
 			->addOption("Equals (=) separated", LINES_EQUALS)
+			->addOption("Custom character", LINES_CUSTOM)
 			->addOption("No separation (will create only one parameter)", NO_SEPARATION);
 	}
 	break;
@@ -143,6 +147,7 @@ void StreamingModule::processDataLine(const String& msg)
 	case LINES_EQUALS: separator = "="; break;
 	case LINES_COLON: separator = ":"; break;
 	case LINES_SEMICOLON: separator = ";"; break;
+	case LINES_CUSTOM: separator = customSeparator->stringValue(); break;
 	default:
 		break;
 	}
@@ -649,6 +654,11 @@ void StreamingModule::onControllableFeedbackUpdateInternal(ControllableContainer
 	if (c == streamingType)
 	{
 		buildMessageStructureOptions();
+	}
+
+	if (c == messageStructure)
+	{
+		customSeparator->setEnabled(messageStructure->getValueDataAsEnum<MessageStructure>() == LINES_CUSTOM);
 	}
 }
 

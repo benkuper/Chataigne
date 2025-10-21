@@ -20,25 +20,27 @@ public:
 	virtual ~State();
 
 	//
-	BoolParameter * active;
+	BoolParameter* active;
 
 	enum LoadBehavior { KEEP, ACTIVE, NONACTIVE };
-	EnumParameter * loadActivationBehavior;
+	EnumParameter* loadActivationBehavior;
 
 	BoolParameter* checkTransitionsOnActivate;
 	BoolParameter* focusOnLastActionTriggered;
 
 	//Transition
-	Array<StateTransition *> inTransitions;
-	Array<StateTransition *> outTransitions;
+	Array<StateTransition*> inTransitions;
+	Array<StateTransition*> outTransitions;
 
 	std::unique_ptr<ProcessorManager> pm;
 
 	void handleLoadActivation();
 
-	void onContainerParameterChangedInternal(Parameter *) override;
+	void handleActiveChanged();
 
-	var getJSONData() override;
+	void onContainerParameterChangedInternal(Parameter*) override;
+
+	var getJSONData(bool includeNonOverriden = false) override;
 	void loadJSONDataInternal(var data) override;
 	void afterLoadJSONDataInternal() override;
 
@@ -52,14 +54,10 @@ public:
 	public:
 		virtual ~StateListener() {}
 		virtual void stateActivationChanged(State*) {}
-		virtual void stateStartActivationChanged(State *) {}
+		virtual void stateStartActivationChanged(State*) {}
 	};
 
-	ListenerList<StateListener> stateListeners;
-	void addStateListener(StateListener* newListener) { stateListeners.add(newListener); }
-	void removeStateListener(StateListener* listener) { stateListeners.remove(listener); }
-
-
+	DECLARE_INSPECTACLE_CRITICAL_LISTENER(State, state)
 
 private:
 	WeakReference<State>::Master masterReference;

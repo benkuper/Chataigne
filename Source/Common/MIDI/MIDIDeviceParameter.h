@@ -40,6 +40,7 @@ public:
 	MIDIDeviceParameterUI* createMIDIParameterUI(Array<MIDIDeviceParameter*> parameters = {});
 	ControllableUI * createDefaultUI(Array<Controllable*> controllables = {}) override;
 
+	var getJSONDataInternal() override;
 	void loadJSONDataInternal(var data) override;
 
 	String getTypeString() const override { return "MIDIDevice"; }

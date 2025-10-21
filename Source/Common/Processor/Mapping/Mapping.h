@@ -50,17 +50,17 @@ public:
 	void lockInputTo(Array<Parameter*> lockParam);
 	void checkFiltersNeedContinuousProcess();
 
-	void updateMappingChain(MappingFilter * afterThisFilter = nullptr, bool processAfter = true, bool rangeOnly = false, bool afterProcessSendOutput = true); //will host warnings and type change checks
+	void updateMappingChain(MappingFilter * afterThisFilter = nullptr, bool processAfter = true, bool rangeOnly = false, bool afterProcessSendOutput = true, int multiplexIndex = -1); //will host warnings and type change checks
 	virtual void multiplexCountChanged() override;
 	virtual void multiplexPreviewIndexChanged() override;
 
-	void process(bool sendOutput = true, int multiplexIndex = -1);
+	void process(bool sendOutput = true, int multiplexIndex = -1, bool forceSend = false);
 
 	void updateContinuousProcess();
 
-	void setForceDisabled(bool value, bool force = false) override;
+	void setForceDisabled(bool value, bool force = false, bool fromActivation = false) override;
 
-	var getJSONData() override;
+	var getJSONData(bool includeNonOverriden = false) override;
 	void loadJSONDataInternal(var data) override;
 	void afterLoadJSONDataInternal() override;
 
@@ -70,7 +70,7 @@ public:
 	void itemsRemoved(Array<MappingInput*>) override;
 	void itemsReordered() override; //MappingInput
 
-	void inputReferenceChanged(MappingInput*) override;
+	void inputReferenceChanged(MappingInput*, int multiplexIndex) override;
 	void inputParameterValueChanged(MappingInput*, int multiplexIndex) override;
 	void inputParameterRangeChanged(MappingInput*) override;
 
@@ -87,7 +87,7 @@ public:
 
 	ProcessorUI* getUI() override;
 
-	DECLARE_ASYNC_EVENT(Mapping, Mapping, mapping, { OUTPUT_TYPE_CHANGED } )
+	DECLARE_ASYNC_EVENT(Mapping, Mapping, mapping, { OUTPUT_TYPE_CHANGED }, EVENT_ITEM_CHECK )
 
 	DECLARE_TYPE("Mapping")
 };

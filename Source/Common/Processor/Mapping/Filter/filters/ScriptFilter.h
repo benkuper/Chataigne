@@ -24,7 +24,7 @@ public:
 
 	ProcessResult processInternal(Array<Parameter *> inputs, int multiplexIndex) override;
 
-	var getJSONData() override;
+	var getJSONData(bool includeNonOverriden = false) override;
 	void loadJSONDataInternal(var data) override;
 
 	virtual String getTypeString() const override { return "Script"; }

@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "Module/ModuleIncludes.h"
+
 OrganicApplication::MainWindow* getMainWindow();
 
 #if JUCE_WINDOWS
@@ -31,24 +33,27 @@ OrganicApplication::MainWindow* getMainWindow();
 KeyboardModule::KeyboardModule() :
 	Module(getDefaultTypeString()),
 	window(nullptr),
-    lastKey(nullptr),
-    ctrl(nullptr),
-    shift(nullptr),
-    command(nullptr),
+	lastKey(nullptr),
+	ctrl(nullptr),
+	shift(nullptr),
+	command(nullptr),
 	combination(nullptr),
-    keysCC("Keys")
-	
+	keysCC("Keys")
+
 {
 	setupIOConfiguration(true, true);
 
 	lastKey = valuesCC.addStringParameter("Last Key", "Last Key pressed", "");
+	lastKey->alwaysNotify = true;
+	lastKeyCode = valuesCC.addIntParameter("Last Key Code", "Last Key code pressed", 0);
+	lastKeyCode->alwaysNotify = true;
 
 #if JUCE_WINDOWS
-	WindowsHooker::getInstance()->addListener(this);
+	KeyboardHooker::getInstance()->addListener(this);
 
 	for (int i = 0; i <= 255; i++)
 	{
-		String s = WindowsHooker::getInstance()->getKeyName(i);
+		String s = KeyboardHooker::getInstance()->getKeyName(i);
 		if (s.isEmpty()) continue;
 		String sn = "key" + String(i);
 		BoolParameter* p = new BoolParameter(s, "Is this key pressed ?", false);
@@ -89,7 +94,7 @@ KeyboardModule::~KeyboardModule()
 {
 
 #if JUCE_WINDOWS
-	if (WindowsHooker::getInstanceWithoutCreating() != nullptr) WindowsHooker::getInstance()->removeListener(this);
+	if (KeyboardHooker::getInstanceWithoutCreating() != nullptr) KeyboardHooker::getInstance()->removeListener(this);
 #else
 	if (TopLevelWindow::getActiveTopLevelWindow() == window) window->removeKeyListener(this);
 #endif
@@ -98,6 +103,17 @@ KeyboardModule::~KeyboardModule()
 void KeyboardModule::sendKeyDown(int keyID)
 {
 	if (!enabled->boolValue()) return;
+
+	if (!MessageManager::getInstance()->isThisTheMessageThread())
+	{
+		MessageManager::getInstance()->callAsync([this, keyID]()
+			{
+				sendKeyDown(keyID);
+			}
+		);
+		return;
+	}
+
 	outActivityTrigger->trigger();
 
 	MessageManagerLock mmLock;
@@ -121,6 +137,17 @@ void KeyboardModule::sendKeyDown(int keyID)
 void KeyboardModule::sendKeyUp(int keyID)
 {
 	if (!enabled->boolValue()) return;
+
+	if (!MessageManager::getInstance()->isThisTheMessageThread())
+	{
+		MessageManager::getInstance()->callAsync([this, keyID]()
+			{
+				sendKeyUp(keyID);
+			}
+		);
+		return;
+	}
+
 	outActivityTrigger->trigger();
 
 	MessageManagerLock mmLock;
@@ -146,6 +173,16 @@ void KeyboardModule::sendKeyHit(int keyID, bool ctrlPressed, bool altPressed, bo
 {
 	if (!enabled->boolValue()) return;
 
+	if (!MessageManager::getInstance()->isThisTheMessageThread())
+	{
+		MessageManager::getInstance()->callAsync([this, keyID, ctrlPressed, altPressed, shiftPressed]()
+			{
+				sendKeyHit(keyID, ctrlPressed, altPressed, shiftPressed);
+			}
+		);
+		return;
+	}
+
 	if (ctrlPressed) sendKeyDown(KEY_CTRL);
 	if (altPressed) sendKeyDown(KEY_ALT);
 	if (shiftPressed) sendKeyDown(KEY_SHIFT);
@@ -166,17 +203,20 @@ void KeyboardModule::sendKeyHit(int keyID, bool ctrlPressed, bool altPressed, bo
 void KeyboardModule::keyChanged(int keyCode, bool pressed)
 {
 	if (!enabled->boolValue()) return;
-	
-	String kn = WindowsHooker::getInstance()->getKeyName(keyCode);
+
+	String kn = KeyboardHooker::getInstance()->getKeyName(keyCode);
 	inActivityTrigger->trigger();
 	if (logIncomingData->boolValue())
 	{
 		NLOG(niceName, "Key " << String(pressed ? "pressed" : "released") << " : " << kn << " (keyCode : " << keyCode << ")");
 	}
-	
+
 	lastKey->setValue(pressed ? kn : "");
+	lastKeyCode->setValue(pressed ? keyCode : -1);
+
 	if (keyMap.contains(keyCode)) keyMap[keyCode]->setValue(pressed);
 }
+
 #else
 
 bool KeyboardModule::keyPressed(const KeyPress& key, juce::Component* originatingComponent)
@@ -186,6 +226,7 @@ bool KeyboardModule::keyPressed(const KeyPress& key, juce::Component* originatin
 	char k = (char)key.getTextCharacter();
 	String ks = String::fromUTF8(&k, 1);
 	lastKey->setValue(ks.toLowerCase());
+	lastKeyCode->setValue(key.getKeyCode());
 
 	shift->setValue(key.getModifiers().isShiftDown());
 	ctrl->setValue(key.getModifiers().isCtrlDown());
@@ -215,6 +256,7 @@ bool KeyboardModule::keyStateChanged(bool isKeyDown, juce::Component* originatin
 	if (!isKeyDown)
 	{
 		lastKey->setValue("");
+		lastKeyCode->setValue(-1);
 		combination->setValue("");
 		ctrl->setValue(false);
 		shift->setValue(false);

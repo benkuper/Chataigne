@@ -18,7 +18,7 @@ SerialModule::SerialModule(const String& name) :
 	portParam->openOnSet = false;
 
 	moduleParams.addParameter(portParam);
-	baudRate = moduleParams.addIntParameter("Baud Rate", "The connection speed. Common values are 9600, 57600, 115200", 115200, 9600);
+	baudRate = moduleParams.addIntParameter("Baud Rate", "The connection speed. Common values are 9600, 57600, 115200", 115200, 1);
 	dtr = moduleParams.addBoolParameter("DTR", "Data Terminal Ready", false);
 	rts = moduleParams.addBoolParameter("RTS", "Request To Send", false);
 	portParam->setBaudrate(baudRate->intValue());
@@ -226,9 +226,9 @@ void SerialModule::serialDataReceived(SerialDevice*, const var& data)
 	}
 }
 
-var SerialModule::getJSONData()
+var SerialModule::getJSONData(bool includeNonOverriden)
 {
-	var data = StreamingModule::getJSONData();
+	var data = StreamingModule::getJSONData(includeNonOverriden);
 	data.getDynamicObject()->setProperty("portID", lastOpenedPortID);
 	return data;
 }

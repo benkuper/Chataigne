@@ -16,14 +16,12 @@ String getAppVersion();
 //==============================================================================
 MainContentComponent::MainContentComponent()
 {
-	getCommandManager().registerAllCommandsForTarget(this);
 }
 
 
 MainContentComponent::~MainContentComponent()
 {
 	SharedTextureManager::deleteInstance();
-	ActionUITimers::deleteInstance();
 }
 
 void MainContentComponent::init()

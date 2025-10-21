@@ -28,7 +28,7 @@ public:
 	
 	void clearInternal() override;
 
-	var getJSONData() override;
+	var getJSONData(bool includeNonOverriden = false) override;
 	void loadJSONDataInternalEngine(var data, ProgressTask * loadingTask) override;
 
 	void childStructureChanged(ControllableContainer * cc) override;

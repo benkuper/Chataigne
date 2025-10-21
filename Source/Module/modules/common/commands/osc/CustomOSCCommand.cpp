@@ -182,9 +182,9 @@ void CustomOSCCommand::setInputNamesFromParams(Array<WeakReference<Parameter>> o
 	if (wildcardsContainer != nullptr) wildcardsContainer->setInputNames(inputNames);
 }
 
-var CustomOSCCommand::getJSONData()
+var CustomOSCCommand::getJSONData(bool includeNonOverriden)
 {
-	var data = BaseCommand::getJSONData(); //do not inherit OSC:Command to avoid saving "arguments"
+	var data = BaseCommand::getJSONData(includeNonOverriden); //do not inherit OSC:Command to avoid saving "arguments"
 	var customValuesData = customValuesManager->getJSONData();
 	if (!customValuesData.isVoid()) data.getDynamicObject()->setProperty("argManager", customValuesData);
 	if (wildcardsContainer != nullptr) data.getDynamicObject()->setProperty(wildcardsContainer->shortName, wildcardsContainer->getJSONData());

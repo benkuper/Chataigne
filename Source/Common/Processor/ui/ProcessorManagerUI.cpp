@@ -24,6 +24,8 @@ ProcessorManagerUI::ProcessorManagerUI(ProcessorManager* _manager, bool useViewp
 	acceptedDropTypes.add("Action");
 	acceptedDropTypes.add("Mapping");
 	acceptedDropTypes.add("Module");
+	acceptedDropTypes.add("Multiplex");
+	acceptedDropTypes.add("Conductor");
 	acceptedDropTypes.add("CommandTemplate");
 	//acceptedDropTypes.add("CVGroup"); 
 

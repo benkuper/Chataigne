@@ -628,9 +628,9 @@ String LoupedeckModule::getLoupedeckServerPath() const
 }
 
 
-var LoupedeckModule::getJSONData()
+var LoupedeckModule::getJSONData(bool includeNonOverriden)
 {
-	var data = SerialModule::getJSONData();
+	var data = SerialModule::getJSONData(includeNonOverriden);
 	data.getDynamicObject()->setProperty("shapeManager", shapeManager.getJSONData());
 	return data;
 }

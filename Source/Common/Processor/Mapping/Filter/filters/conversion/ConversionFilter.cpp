@@ -242,9 +242,9 @@ void ConversionFilter::askForRemove(ConversionParamValueLink* link)
 	removeLink(link);
 }
 
-var ConversionFilter::getJSONData()
+var ConversionFilter::getJSONData(bool includeNonOverriden)
 {
-	var data = MappingFilter::getJSONData();
+	var data = MappingFilter::getJSONData(includeNonOverriden);
 	data.getDynamicObject()->setProperty(cpm.shortName, cpm.getJSONData());
 
 	var linkData;

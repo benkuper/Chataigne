@@ -46,7 +46,7 @@ CVCommand::CVCommand(CustomVariablesModule* _module, CommandContext context, var
 		targetPreset->targetType = TargetParameter::CONTAINER;
 		targetPreset->customGetTargetContainerFunc = &CVGroupManager::showMenuAndGetPreset;
 		targetPreset->defaultParentLabelLevel = 2;
-		if(ParameterLink * pl = getLinkedParam(targetPreset)) pl->fullPresetSelectMode = true;
+		if (ParameterLink* pl = getLinkedParam(targetPreset)) pl->fullPresetSelectMode = true;
 
 		switch (type)
 		{
@@ -93,6 +93,7 @@ CVCommand::CVCommand(CustomVariablesModule* _module, CommandContext context, var
 		case SAVE_PRESET:
 		{
 			presetFile = addFileParameter("File", "The file to save/load the preset to/from");
+			presetFile->saveMode = type == SAVE_PRESET;
 		}
 		break;
 
@@ -219,6 +220,7 @@ void CVCommand::triggerInternal(int multiplexIndex)
 				if (f.exists()) f.deleteFile();
 
 				var data = p->getValuesAsJSON();
+				DBG(JSON::toString(data));
 				std::unique_ptr<OutputStream> os(f.createOutputStream());
 				JSON::writeToStream(*os, data);
 				os->flush();

@@ -97,7 +97,12 @@ bool Point2DComparator::compareInternal(Parameter* sourceParam, int multiplexInd
 	Point<float> p = ((Point2DParameter*)sourceParam)->getPoint();
 	var value = isMultiplexed() ? refLink->getLinkedValue(multiplexIndex) : reference->getValue();
 
-	if (currentFunctionId == equalsId)				return p == Point<float>(value[0], value[1]);
+	if (currentFunctionId == equalsId)
+	{
+		//jassert(value.size() >= 2);
+		if (value.size() < 2) return false;
+		return p == Point<float>(value[0], value[1]);
+	}
 	else if (currentFunctionId == magnGreaterId)	return p.getDistanceFromOrigin() > (float)value;
 	else if (currentFunctionId == magnLessId)		return p.getDistanceFromOrigin() < (float)value;
 	else if (currentFunctionId == xGreaterId)	return p.x > (float)value;

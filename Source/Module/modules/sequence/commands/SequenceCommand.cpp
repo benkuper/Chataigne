@@ -105,7 +105,7 @@ void SequenceCommand::triggerInternal(int multiplexIndex)
 
 	if (actionType != STOP_ALL_SEQUENCES && actionType != PLAY_MULTI_SEQUENCES && actionType != PLAY_SEQUENCE_AT)
 	{
-		if (getLinkedTargetContainerAs<ControllableContainer>(target, multiplexIndex) == nullptr) return;
+		if (target == nullptr || getLinkedTargetContainerAs<ControllableContainer>(target, multiplexIndex) == nullptr) return;
 		//if (target->targetContainer.wasObjectDeleted()) return;
 	}
 
@@ -132,14 +132,11 @@ void SequenceCommand::triggerInternal(int multiplexIndex)
 			{
 				if (actionType == SET_EDITING_SEQUENCE_AT)
 				{
-					if (Sequence* s = getLinkedTargetContainerAs<Sequence>(target, multiplexIndex))
+					if (ShapeShifterManager* sm = ShapeShifterManager::getInstanceWithoutCreating())
 					{
-						if (ShapeShifterManager* sm = ShapeShifterManager::getInstanceWithoutCreating())
+						if (TimeMachineView* se = sm->getContentForType<TimeMachineView>())
 						{
-							if (TimeMachineView* se = sm->getContentForType<TimeMachineView>())
-							{
-								se->setSequence(s);
-							}
+							se->setSequence(s);
 						}
 					}
 				}
@@ -191,7 +188,7 @@ void SequenceCommand::triggerInternal(int multiplexIndex)
 	case TOGGLE_SEQUENCE:
 		if (Sequence* s = getLinkedTargetContainerAs<Sequence>(target, multiplexIndex))
 		{
-			if (getLinkedValue(playFromStart, multiplexIndex) && !s->isPlaying->boolValue()) s->setCurrentTime(0);
+			if (getLinkedValue(playFromStart, multiplexIndex) && !s->isPlaying->boolValue()) s->setCurrentTime(0, true, true);
 			s->togglePlayTrigger->trigger();
 		}
 		break;
@@ -257,6 +254,7 @@ void SequenceCommand::triggerInternal(int multiplexIndex)
 				}
 			}
 		}
+		break;
 	}
 }
 
@@ -285,7 +283,7 @@ void SequenceCommand::loadJSONDataInternal(var data)
 	else BaseCommand::loadJSONDataInternal(data);
 }
 
-void SequenceCommand::endLoadFile()
+void SequenceCommand::fileLoaded()
 {
 	//reset data we want to reload
 	if (target != nullptr) target->setValue("", true);

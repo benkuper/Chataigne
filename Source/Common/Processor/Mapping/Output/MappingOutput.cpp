@@ -31,7 +31,7 @@ void MappingOutput::setOutParams(Array<WeakReference<Parameter>> mOutParams, int
 	outParams.ensureStorageAllocated(multiplexIndex + 1);
 	outParams.set(multiplexIndex, mOutParams);
 	
-	updateCommandOutParams();
+	if(multiplexIndex == 0) updateCommandOutParams();
 }
 
 void MappingOutput::updateCommandOutParams()

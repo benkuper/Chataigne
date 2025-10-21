@@ -99,9 +99,9 @@ InspectableEditor* BaseMultiplexList::getNumberListEditor(bool isFloat, bool isR
 }
 
 
-var BaseMultiplexList::getJSONData()
+var BaseMultiplexList::getJSONData(bool includeNonOverriden)
 {
-	var data = BaseItem::getJSONData();
+	var data = BaseItem::getJSONData(includeNonOverriden);
 	data.getDynamicObject()->setProperty("listSize", listSize);
 	return data;
 }
@@ -115,6 +115,9 @@ void BaseMultiplexList::loadJSONData(var data, bool createIfNotThere)
 
 void BaseMultiplexList::notifyItemUpdated(int multiplexIndex)
 {
+	GenericScopedTryLock lock(notifyLock);
+	if (!lock.isLocked()) return;
+
 	jassert(multiplexIndex >= 0);
 	listListeners.call(&MultiplexListListener::listItemUpdated, multiplexIndex);
 }
@@ -212,14 +215,15 @@ void InputValueMultiplexList::onContainerParameterChangedInternal(Parameter* p)
 
 		}
 
-		listListeners.call(&MultiplexListListener::listReferenceUpdated);
+		listListeners.call(&MultiplexListListener::listReferenceUpdated, index);
 		notifyItemUpdated(index);
 	}
 }
 
 void InputValueMultiplexList::onExternalParameterRangeChanged(Parameter* p)
 {
-	if (inputControllables.indexOf(p) != -1) listListeners.call(&MultiplexListListener::listReferenceUpdated);
+	int index = inputControllables.indexOf(p) != -1;
+	if (index) listListeners.call(&MultiplexListListener::listReferenceUpdated, index);
 }
 
 void InputValueMultiplexList::onExternalParameterValueChanged(Parameter* p)
@@ -273,7 +277,9 @@ void EnumMultiplexList::updateControllablesSetup()
 	for (auto& c : list)
 	{
 		EnumParameter* ep = (EnumParameter*)c;
-		ep->setOptions(Array<EnumParameter::EnumValue*>(referenceOptions.getRawDataPointer(), referenceOptions.size()));
+		Array<EnumParameter::EnumValue> options;
+		for (auto& ev : referenceOptions) options.add(EnumParameter::EnumValue(ev->key, ev->value));
+		ep->setOptions(options);
 	}
 }
 
@@ -292,9 +298,9 @@ InspectableEditor* EnumMultiplexList::getEditorInternal(bool isRoot, Array<Inspe
 	return new EnumMultiplexListEditor(this, isRoot);
 }
 
-var EnumMultiplexList::getJSONData()
+var EnumMultiplexList::getJSONData(bool includeNonOverriden)
 {
-	var data = MultiplexList::getJSONData();
+	var data = MultiplexList::getJSONData(includeNonOverriden);
 	var enumOptions(new DynamicObject());
 	for (auto& ev : referenceOptions) enumOptions.getDynamicObject()->setProperty(ev->key, ev->value);
 	data.getDynamicObject()->setProperty("enumOptions", enumOptions);
@@ -356,9 +362,9 @@ InspectableEditor* TargetMultiplexList::getEditorInternal(bool isRoot, Array<Ins
 	return new TargetMultiplexListEditor(this, isRoot);
 }
 
-var TargetMultiplexList::getJSONData()
+var TargetMultiplexList::getJSONData(bool includeNonOverriden)
 {
-	var data = MultiplexList::getJSONData();
+	var data = MultiplexList::getJSONData(includeNonOverriden);
 	data.getDynamicObject()->setProperty("containerMode", containerMode);
 	return data;
 }

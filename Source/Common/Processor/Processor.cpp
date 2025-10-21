@@ -32,11 +32,11 @@ void Processor::onContainerParameterChangedInternal(Parameter* p)
 	}
 }
 
-void Processor::setForceDisabled(bool value, bool force)
+void Processor::setForceDisabled(bool value, bool force, bool fromActivation)
 {
 	if (forceDisabled == value && !force) return;
 	forceDisabled = value;
-	updateDisables();
+	updateDisables(force, fromActivation);
 	processorNotifier.addMessage(new ProcessorEvent(ProcessorEvent::FORCE_DISABLED_CHANGED, this));
 }
 

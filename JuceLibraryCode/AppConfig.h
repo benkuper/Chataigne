@@ -36,14 +36,14 @@
 // BEGIN SECTION A
 
 #ifndef JUCE_DISPLAY_SPLASH_SCREEN
- #define JUCE_DISPLAY_SPLASH_SCREEN 0
+ #define JUCE_DISPLAY_SPLASH_SCREEN 1
 #endif
 
 // END SECTION A
 
 #define JUCE_USE_DARK_SPLASH_SCREEN 1
 
-#define JUCE_PROJUCER_VERSION 0x7000a
+#define JUCE_PROJUCER_VERSION 0x7000c
 
 //==============================================================================
 #define JUCE_MODULE_AVAILABLE_juce_audio_basics          1
@@ -339,6 +339,34 @@
  #define   ORGANICUI_USE_WEBSERVER 1
 #endif
 
+#ifndef    ORGANICUI_USE_DASHBOARDPANEL
+ //#define ORGANICUI_USE_DASHBOARDPANEL 1
+#endif
+
+#ifndef    ORGANICUI_USE_PARROTPANEL
+ //#define ORGANICUI_USE_PARROTPANEL 1
+#endif
+
+#ifndef    ORGANICUI_USE_DETECTIVEPANEL
+ //#define ORGANICUI_USE_DETECTIVEPANEL 1
+#endif
+
+#ifndef    ORGANICUI_USE_HELPPANEL
+ //#define ORGANICUI_USE_HELPPANEL 1
+#endif
+
+#ifndef    ORGANICUI_USE_LOGGERPANEL
+ //#define ORGANICUI_USE_LOGGERPANEL 1
+#endif
+
+#ifndef    ORGANICUI_USE_WARNINGPANEL
+ //#define ORGANICUI_USE_WARNINGPANEL 1
+#endif
+
+#ifndef    ORGANICUI_USE_OUTLINERPANEL
+ //#define ORGANICUI_USE_OUTLINERPANEL 1
+#endif
+
 //==============================================================================
 // juce_osc flags:
 
@@ -356,6 +384,13 @@
 
 #ifndef    JUCE_IP_AND_PORT_DETECTION
  #define   JUCE_IP_AND_PORT_DETECTION 1
+#endif
+
+//==============================================================================
+// juce_sharedtexture flags:
+
+#ifndef    SHAREDTEXTURE_USE_CPU_IMAGE
+ //#define SHAREDTEXTURE_USE_CPU_IMAGE 1
 #endif
 
 //==============================================================================

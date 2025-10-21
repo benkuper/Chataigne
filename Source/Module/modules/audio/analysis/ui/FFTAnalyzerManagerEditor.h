@@ -22,16 +22,19 @@ public:
 
 	class FFTViz :
 		public Component,
-		public Timer
+		public FFTAnalyzerManager::AsyncListener,
+		public UITimerTarget
 	{
 	public:
 		FFTViz(FFTAnalyzerManager* manager);
-		~FFTViz() {}
+		~FFTViz();
 
 		FFTAnalyzerManager* analyzerManager;
 
 		void paint(Graphics& g) override;
-		virtual void timerCallback() override;
+		void handlePaintTimerInternal() override;
+
+		void newMessage(const FFTAnalyzerManager::FFTAnalyzerEvent& e) override;
 	};
 
 	FFTViz viz;

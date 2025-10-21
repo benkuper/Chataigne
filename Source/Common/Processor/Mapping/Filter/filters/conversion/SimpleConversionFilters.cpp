@@ -56,8 +56,6 @@ Parameter* SimpleConversionFilter::setupSingleParameterInternal(Parameter* sourc
 
 	if (multiplexIndex != 0) return p; //only setup for 1st if multiplex multiplex
 
-
-
 	int ghostData = !retargetComponent->getValueData().isVoid() ? retargetComponent->getValueData() : ghostOptions.getProperty("retarget", 0);
 	retargetComponent->clearOptions();
 
@@ -84,23 +82,22 @@ Parameter* SimpleConversionFilter::setupSingleParameterInternal(Parameter* sourc
 
 		addExtraRetargetOptions();
 
+		if (dynamic_cast<ColorParameter*>(retargetP) != nullptr) retargetComponent->addOption("Hue", HUE)->addOption("Saturation", SATURATION)->addOption("Brightness", BRIGHTNESS);
 		if (transferType == EXTRACT) retargetComponent->addOption("Min", MIN)->addOption("Max", MAX)->addOption("Average", AVERAGE)->addOption("Length", LENGTH)->addOption("Area", AREA);
-
 
 		if (useBaseValue)
 		{
 			if (transferType == TARGET)
 			{
-				if (baseValue != nullptr && baseValue->type != p->type)
+				bool needsToRecreate = baseValue == nullptr || baseValue->type != p->type;
+				if (needsToRecreate)
 				{
-					filterParams.removeControllable(baseValue);
-					baseValue = nullptr;
+					if (baseValue != nullptr) filterParams.removeControllable(baseValue);
+					baseValue = ControllableFactory::createParameterFrom(p, false, false);
+					baseValue->setNiceName("Base Value");
+					baseValue->description = "Base value for components that are not set by the conversion";
+					filterParams.addParameter(baseValue);
 				}
-
-				baseValue = ControllableFactory::createParameterFrom(p, false, false);
-				baseValue->setNiceName("Base Value");
-				baseValue->description = "Base value for components that are not set by the conversion";
-				filterParams.addParameter(baseValue);
 			}
 			else
 			{
@@ -275,6 +272,27 @@ MappingFilter::ProcessResult SimpleConversionFilter::processSingleParameterInter
 			val = 1;
 			for (int i = 0; i < source->value.size(); i++) val = (float)val * (float)source->value[i];
 			break;
+			
+		case HUE: 
+			{
+			ColorParameter* colorParam = dynamic_cast<ColorParameter*>(source);
+			val = colorParam->getColor().getHue();
+			break;
+			}
+
+		case SATURATION: 
+			{
+			ColorParameter* colorParam = dynamic_cast<ColorParameter*>(source);
+			val = colorParam->getColor().getSaturation();
+			break;
+			}
+
+		case BRIGHTNESS:
+			{
+			ColorParameter* colorParam = dynamic_cast<ColorParameter*>(source);
+			val = colorParam->getColor().getBrightness();
+			break;
+			}
 
 		default:
 			if (targetData < source->value.size()) val = source->value[targetData];
@@ -308,9 +326,9 @@ MappingFilter::ProcessResult SimpleConversionFilter::processSingleParameterInter
 	return CHANGED;
 }
 
-var SimpleConversionFilter::getJSONData()
+var SimpleConversionFilter::getJSONData(bool includeNonOverriden)
 {
-	var data = MappingFilter::getJSONData();
+	var data = MappingFilter::getJSONData(includeNonOverriden);
 
 	var goData = ghostOptions.isObject() ? ghostOptions.clone() : var(new DynamicObject());
 	goData.getDynamicObject()->setProperty("retarget", retargetComponent->getValueData());
@@ -321,7 +339,7 @@ var SimpleConversionFilter::getJSONData()
 void SimpleConversionFilter::loadJSONDataItemInternal(var data)
 {
 	ghostOptions = data.getProperty("ghostOptions", var());
-	DBG(JSON::toString(ghostOptions));
+	if (ghostLinkData.isVoid()) ghostLinkData = data.getProperty("filterParams", var()).getProperty("paramLinks", var());
 	MappingFilter::loadJSONDataItemInternal(data);
 }
 
@@ -415,7 +433,6 @@ void ToStringFilter::setupParametersInternal(int multiplexIndex, bool rangeOnly)
 		{
 			enumConvertMode = filterParams.addEnumParameter("Convert Mode", "What to convert in the enum");
 			enumConvertMode->addOption("Key", KEY)->addOption("Value", VALUE);
-			DBG(JSON::toString(ghostOptions));
 			if (ghostOptions.hasProperty("convertMode")) enumConvertMode->setValueWithData(ghostOptions.getDynamicObject()->getProperty("convertMode"));
 		}
 	}
@@ -508,9 +525,9 @@ void ToStringFilter::filterParamChanged(Parameter* p)
 	SimpleConversionFilter::filterParamChanged(p);
 }
 
-var ToStringFilter::getJSONData()
+var ToStringFilter::getJSONData(bool includeNonOverriden)
 {
-	var data = SimpleConversionFilter::getJSONData();
+	var data = SimpleConversionFilter::getJSONData(includeNonOverriden);
 	if (enumConvertMode != nullptr) data.getProperty("ghostOptions", var()).getDynamicObject()->setProperty("convertMode", enumConvertMode->getValueData());
 	return data;
 }
@@ -549,9 +566,9 @@ ToColorFilter::~ToColorFilter()
 {
 }
 
-var ToColorFilter::getJSONData()
+var ToColorFilter::getJSONData(bool includeNonOverriden)
 {
-	var data = SimpleConversionFilter::getJSONData();
+	var data = SimpleConversionFilter::getJSONData(includeNonOverriden);
 	if (baseColor != nullptr) data.getProperty("ghostOptions", var()).getDynamicObject()->setProperty("color", baseColor->getValue());
 	return data;
 }
@@ -584,8 +601,15 @@ void ToColorFilter::setupParametersInternal(int multiplexIndex, bool rangeOnly)
 	if (ghostOptions.isObject() && baseColor != nullptr)
 	{
 		if (ghostOptions.hasProperty("color")) baseColor->setValue(ghostOptions.getDynamicObject()->getProperty("color"));
+		if (ParameterLink* pLink = filterParams.getLinkedParam(baseColor))
+		{
+			var pLinkGhostData = ghostLinkData.getProperty("baseColor", var());
+			if (!pLinkGhostData.isVoid()) pLink->loadJSONData(pLinkGhostData);
+
+		}
 		ghostOptions = var();
 	}
+
 }
 
 void ToColorFilter::addExtraRetargetOptions()

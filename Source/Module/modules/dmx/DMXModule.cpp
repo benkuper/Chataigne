@@ -10,6 +10,7 @@
 */
 
 #include "Module/ModuleIncludes.h"
+#include "DMXModule.h"
 
 DMXModule::DMXModule() :
 	Module("DMX"),
@@ -245,6 +246,15 @@ void DMXModule::send16BitDMXRange(DMXUniverse* u, int startChannel, Array<int> v
 	}
 }
 
+void DMXModule::sendFromPassTrough(int net, int subnet, int universe, /*int priority,*/ Array<uint8> values)
+{
+	if (!enabled->boolValue()) return;
+	if (dmxDevice == nullptr) return;
+	dmxDevice->setDMXValues(net, subnet, universe,/* priority,*/ values.getRawDataPointer(), values.size());
+	outActivityTrigger->trigger();
+	if (logOutgoingData->boolValue()) NLOG(niceName, "Send DMX from pass-through to Net " << net << ", Subnet " << subnet << ", Universe " << universe);
+}
+
 var DMXModule::sendDMXFromScript(const var::NativeFunctionArgs& args)
 {
 	DMXModule* m = getObjectFromJS<DMXModule>(args);
@@ -310,9 +320,9 @@ void DMXModule::clearItem()
 	setCurrentDMXDevice(nullptr);
 }
 
-var DMXModule::getJSONData()
+var DMXModule::getJSONData(bool includeNonOverriden)
 {
-	var data = Module::getJSONData();
+	var data = Module::getJSONData(includeNonOverriden);
 	if (dmxDevice != nullptr) data.getDynamicObject()->setProperty("device", dmxDevice->getJSONData());
 
 	var channelTypes;
@@ -409,7 +419,7 @@ void DMXModule::dmxDeviceSetupChanged(DMXDevice*)
 	connectionFeedbackRef = dmxDevice->isConnected;
 
 }
-void DMXModule::dmxDataInChanged(DMXDevice*, int net, int subnet, int universe, int priority, Array<uint8> values, const String& sourceName)
+void DMXModule::dmxDataInChanged(DMXDevice*, int net, int subnet, int universe, /*int priority,*/ Array<uint8> values, const String& sourceName)
 {
 	if (isClearing || !enabled->boolValue()) return;
 	if (logIncomingData->boolValue())
@@ -431,10 +441,7 @@ void DMXModule::dmxDataInChanged(DMXDevice*, int net, int subnet, int universe, 
 				if (!mt->enabled) continue;
 				if (DMXModule* m = (DMXModule*)(mt->targetContainer.get()))
 				{
-					if (m->dmxDevice != nullptr)
-					{
-						m->dmxDevice->sendDMXValues(net, subnet, universe, priority, values.getRawDataPointer());
-					}
+					m->sendFromPassTrough(net, subnet, universe,/* priority,*/ values);
 				}
 			}
 		}
@@ -458,7 +465,7 @@ void DMXModule::dmxDataInChanged(DMXDevice*, int net, int subnet, int universe, 
 	}
 }
 
-DMXUniverse* DMXModule::getUniverse(bool isInput, int net, int subnet, int universe, int priority, bool createIfNotThere)
+DMXUniverse* DMXModule::getUniverse(bool isInput, int net, int subnet, int universe,/* int priority, */bool createIfNotThere)
 {
 	DMXUniverseManager* m = isInput ? &inputUniverseManager : &outputUniverseManager;
 	for (auto& u : m->items) if (u->checkSignature(net, subnet, universe)) return u;
@@ -469,7 +476,7 @@ DMXUniverse* DMXModule::getUniverse(bool isInput, int net, int subnet, int unive
 	u->netParam->setValue(net);
 	u->subnetParam->setValue(subnet);
 	u->universeParam->setValue(universe);
-	u->priorityParam->setValue(priority);
+	//u->priorityParam->setValue(priority);
 
 	return m->addItem(u);
 }
@@ -487,7 +494,7 @@ void DMXModule::run()
 			for (auto& u : outputUniverseManager.items)
 			{
 				if (sendOnChange && !u->isDirty) continue;
-				dmxDevice->sendDMXValues(u);
+				dmxDevice->setDMXValues(u);
 				u->isDirty = false;
 			}
 		}

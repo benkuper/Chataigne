@@ -70,9 +70,9 @@ MappingFilter::ProcessResult  ScriptFilter::processInternal(Array<Parameter*> in
 	return CHANGED;
 }
 
-var ScriptFilter::getJSONData()
+var ScriptFilter::getJSONData(bool includeNonOverriden)
 {
-	var data = MappingFilter::getJSONData();
+	var data = MappingFilter::getJSONData(includeNonOverriden);
 	data.getDynamicObject()->setProperty("script",script.getJSONData());
 	return data;
 }

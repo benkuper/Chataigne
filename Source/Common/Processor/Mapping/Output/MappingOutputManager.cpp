@@ -134,7 +134,7 @@ void MappingOutputManager::multiplexPreviewIndexChanged()
 	omAsyncNotifier.addMessage(new OutputManagerEvent(OutputManagerEvent::OUTPUT_CHANGED));
 }
 
-InspectableEditor * MappingOutputManager::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
+InspectableEditor * MappingOutputManager::getEditorInternal(bool _isRoot, Array<Inspectable*> inspectables)
 {
-	return new MappingOutputManagerEditor(this, isRoot);
+	return new MappingOutputManagerEditor(this, _isRoot);
 }

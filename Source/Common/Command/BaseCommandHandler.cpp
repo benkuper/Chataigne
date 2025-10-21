@@ -120,9 +120,9 @@ void BaseCommandHandler::setCommand(CommandDefinition* commandDef)
 }
 
 
-var BaseCommandHandler::getJSONData()
+var BaseCommandHandler::getJSONData(bool includeNonOverriden)
 {
-	var data = BaseItem::getJSONData();
+	var data = BaseItem::getJSONData(includeNonOverriden);
 	if (command != nullptr && !commandDefinition.wasObjectDeleted())
 	{
 		if (command->module != nullptr) data.getDynamicObject()->setProperty("commandModule", command->module->shortName);
@@ -274,8 +274,15 @@ var BaseCommandHandler::setCommandFromScript(const var::NativeFunctionArgs& a)
 	{
 		String menuPath = a.arguments[1].toString();
 		String commandType = a.arguments[2].toString();
-		h->setCommand(m->getCommandDefinitionFor(menuPath, commandType));
-		return h->command->getScriptObject();
+		CommandDefinition* def = m->getCommandDefinitionFor(menuPath, commandType);
+		if (def == nullptr)
+		{
+			DBG("Command not found : " << a.arguments[0].toString() << " > " << a.arguments[1].toString() << ":" << a.arguments[2].toString());
+			return var();
+		}
+
+		h->setCommand(def);
+		if (h->command != nullptr) return h->command->getScriptObject();
 	}
 
 	return var();

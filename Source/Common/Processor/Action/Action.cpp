@@ -61,9 +61,10 @@ Action::~Action()
 {
 }
 
+
 void Action::updateConditionRoles()
 {
-	if (Engine::mainEngine->isClearing) return;
+	if (Engine::mainEngine->isClearing || isClearing) return;
 
 	if (cdm != nullptr && !cdm->hasActivationDefinitions()) return;
 
@@ -110,7 +111,7 @@ void Action::setHasOffConsequences(bool value)
 	{
 		if (csmOff == nullptr)
 		{
-			if(triggerOff != nullptr) removeControllable(triggerOff);
+			if (triggerOff != nullptr) removeControllable(triggerOff);
 			triggerOff = nullptr;
 			csmOff.reset(new ConsequenceManager("Consequences : FALSE", multiplex));
 			addChildControllableContainer(csmOff.get());
@@ -127,9 +128,9 @@ void Action::setHasOffConsequences(bool value)
 	}
 }
 
-void Action::updateDisables(bool force)
+void Action::updateDisables(bool force, bool fromActivation)
 {
-	Processor::updateDisables();
+	Processor::updateDisables(force, fromActivation);
 
 	bool en = enabled->boolValue() && !forceDisabled;
 	if (triggerOn != nullptr) triggerOn->setEnabled(en);
@@ -149,7 +150,8 @@ void Action::forceCheck(bool triggerIfChanged)
 void Action::triggerConsequences(bool triggerTrue, int multiplexIndex)
 {
 	if (!enabled->boolValue() || forceDisabled) return;
-
+	if (isClearing) return;
+	
 	if (!forceChecking)
 	{
 		if (triggerTrue) csmOn->triggerAll(multiplexIndex);
@@ -159,9 +161,9 @@ void Action::triggerConsequences(bool triggerTrue, int multiplexIndex)
 	}
 }
 
-var Action::getJSONData()
+var Action::getJSONData(bool includeNonOverriden)
 {
-	var data = Processor::getJSONData();
+	var data = Processor::getJSONData(includeNonOverriden);
 	if (cdm != nullptr) data.getDynamicObject()->setProperty("conditions", cdm->getJSONData());
 	data.getDynamicObject()->setProperty("consequences", csmOn->getJSONData());
 	if (hasOffConsequences) data.getDynamicObject()->setProperty("consequencesOff", csmOff->getJSONData());
@@ -182,14 +184,6 @@ void Action::loadJSONDataItemInternal(var data)
 	if (hasOffConsequences) csmOff->loadJSONData(data.getProperty("consequencesOff", var()));
 }
 
-void Action::endLoadFile()
-{
-	Engine::mainEngine->removeEngineListener(this);
-	if (actionRoles.contains(Role::ACTIVATE) && cdm != nullptr)
-	{
-		for (int i = 0; i < getMultiplexCount(); i++) if (cdm->getIsValid(i, false)) triggerConsequences(true, i);
-	}
-}
 
 void Action::onContainerTriggerTriggered(Trigger* t)
 {
@@ -246,6 +240,7 @@ void Action::notifyActionTriggered(bool triggerTrue, int multiplexIndex)
 void Action::conditionManagerValidationChanged(ConditionManager*, int multiplexIndex, bool dispatchOnChangeOnly)
 {
 	if (forceChecking) return;
+	if (isClearing) return;
 
 	if (autoTriggerWhenAllConditionAreActives)
 	{

@@ -12,7 +12,7 @@ public:
 	void start(double position = 0);
 	void pause(bool resumeIfAlreadyPaused = true);
 	void stop();
-	void setPosition(double position, bool fullFrame = false);
+	void setPosition(double position, bool fullFrame = true);
 	void setSpeedFactor(float speed);
 	void setFPS(MidiMessage::SmpteTimecodeType val);
 

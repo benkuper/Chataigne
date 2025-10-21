@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "Common/Processor/ProcessorIncludes.h"
+
 MappingFilterEditor::MappingFilterEditor(MappingFilter * m, bool isRoot) :
 	BaseItemEditor(m,isRoot),
 	filter(m),
@@ -30,7 +32,7 @@ MappingFilterEditor::~MappingFilterEditor()
 
 void MappingFilterEditor::resizedInternalHeaderItemInternal(Rectangle<int>& r)
 {
-	if (filteredUI != nullptr) filteredUI->setBounds(r.removeFromRight(140).reduced(2));
+	if (filteredUI != nullptr) filteredUI->setBounds(r.removeFromRight(160).reduced(2));
 
     if (channelEdit != nullptr)
     {
@@ -63,6 +65,7 @@ void MappingFilterEditor::updateFilteredUI()
             if (DoubleSliderUI* dui = dynamic_cast<DoubleSliderUI*>(filteredUI.get())) dui->canShowExtendedEditor = false;
         }
 		filteredUI->showLabel = false;
+        filteredUI->updateUIParams();
 		addAndMakeVisible(filteredUI.get());
 	}
 

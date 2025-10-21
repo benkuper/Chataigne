@@ -29,6 +29,7 @@ public:
 
     bool isLinkable;
     bool canLinkToMapping;
+    bool isLinkBeingDestroyed;
 
     LinkType linkType;
     WeakReference<Parameter> parameter;
@@ -73,7 +74,10 @@ public:
 
     void notifyLinkUpdated();
 
-    var getJSONData();
+
+    void setLinkFromScript(var data);
+
+    var getJSONData(bool includeNonOverriden = false);
     void loadJSONData(var data);
 
     class ParameterLinkListener
@@ -84,11 +88,14 @@ public:
         virtual void listItemUpdated(ParameterLink * pLink, int multiplexIndex) {}
     };
 
-    ListenerList<ParameterLinkListener> parameterLinkListeners;
+    ListenerList<ParameterLinkListener, Array<ParameterLinkListener*, CriticalSection>> parameterLinkListeners;
     void addParameterLinkListener(ParameterLinkListener* newListener) { parameterLinkListeners.add(newListener); }
-    void removeParameterLinkListener(ParameterLinkListener* listener) { parameterLinkListeners.remove(listener); }
+    void removeParameterLinkListener(ParameterLinkListener* listener) { if(!isLinkBeingDestroyed) parameterLinkListeners.remove(listener); }
 
-    DECLARE_ASYNC_EVENT(ParameterLink, ParameterLink, paramLink, ENUM_LIST(LINK_UPDATED, PREVIEW_UPDATED, INPUT_VALUE_UPDATED, LIST_ITEM_UPDATED))
+    DECLARE_ASYNC_EVENT(ParameterLink, ParameterLink, paramLink, ENUM_LIST(LINK_UPDATED, PREVIEW_UPDATED, INPUT_VALUE_UPDATED, LIST_ITEM_UPDATED), !isLinkBeingDestroyed)
+
+    juce::WeakReference<ParameterLink>::Master masterReference;
+
 };
 
 
@@ -109,7 +116,7 @@ public:
     bool paramsCanBeLinked;
     bool canLinkToMapping;
 
-    var ghostData;
+    var linksGhostData;
 
     virtual void onControllableAdded(Controllable* c) override;
     virtual void onControllableRemoved(Controllable* c) override;
@@ -148,6 +155,10 @@ public:
     virtual void linkParamToMappingIndex(Parameter* p, int mappingIndex);
 
     static var linkParamToMappingIndexFromScript(const var::NativeFunctionArgs& a);
+    static var setParamLinkFromScript(const var::NativeFunctionArgs& a);
+    static var unlinkParamFromScript(const var::NativeFunctionArgs& a);
+
+    static ParameterLink* getLinkedParamFromScript(const var::NativeFunctionArgs& a);
 
     virtual void setInputNamesFromParams(Array<WeakReference<Parameter>> outParams);
 
@@ -160,12 +171,11 @@ public:
     };
 
 
-    ListenerList<ParamLinkContainerListener> paramLinkContainerListeners;
-    void addParamLinkContainerListener(ParamLinkContainerListener* newListener) { paramLinkContainerListeners.add(newListener); }
-    void removeParamLinkContainerListener(ParamLinkContainerListener* listener) { paramLinkContainerListeners.remove(listener); }
+    DECLARE_INSPECTACLE_CRITICAL_LISTENER(ParamLinkContainer, paramLinkContainer);
 
-    virtual var getJSONData() override;
+    virtual var getJSONData(bool includeNonOverriden = false) override;
     virtual void loadJSONDataInternal(var data) override;
 
     virtual InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables = Array<Inspectable*>()) override;
+
 };

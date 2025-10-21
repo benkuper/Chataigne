@@ -12,7 +12,11 @@
 
 class MouseModule :
 	public Module,
+#if JUCE_WINDOWS
+	public MouseHooker::Listener,
+#else
 	public MouseListener,
+#endif
 	public Timer
 {
 public:
@@ -35,6 +39,8 @@ public:
 	Trigger* wheelYData;
 	FloatParameter* wheelXDelta;
 	Trigger* wheelXData;
+	BoolParameter* extraButton1;
+	BoolParameter* extraButton2;
 
 
 	void setCursorPosition(Point<float>& pos, bool isRelative);
@@ -45,9 +51,17 @@ public:
 
 	void sendButtonEvent(int buttonEvent);
 
+
+#if JUCE_WINDOWS
+	void mouseButtonChanged(int button, bool pressed);
+#else
+
 	void mouseDown(const MouseEvent& e) override;
 	void mouseUp(const MouseEvent& e) override;
 	void mouseWheelMove(const MouseEvent& e, const MouseWheelDetails& d) override;
+#endif
+
+
 
 	void onContainerParameterChangedInternal(Parameter* p) override;
 

@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    LagFilter.cpp
-    Created: 4 Feb 2017 5:39:47pm
-    Author:  Ben
+	LagFilter.cpp
+	Created: 4 Feb 2017 5:39:47pm
+	Author:  Ben
 
   ==============================================================================
 */
@@ -12,54 +12,39 @@ LagFilter::LagFilter(var params, Multiplex* multiplex) :
 	MappingFilter(getTypeString(), params, multiplex, true)
 {
 	frequency = filterParams.addFloatParameter("Frequency", "Lag frequency in Hz", 5, .01f, 50);
-	startTimer(1000 / frequency->floatValue());
 
 	processOnSameValue = true;
 }
 
 LagFilter::~LagFilter()
 {
-
 }
 
 void LagFilter::setupParametersInternal(int multiplexIndex, bool rangeOnly)
 {
-	if(!rangeOnly) paramTempValueMap.clear();
-	MappingFilter::setupParametersInternal(multiplexIndex, rangeOnly);
-}
-
-Parameter* LagFilter::setupSingleParameterInternal(Parameter* source, int multiplexIndex, bool rangeOnly)
-{
-	if (!rangeOnly)
+	if (lastSendTime.size() != getMultiplexCount())
 	{
-		var tmpVal = var(source->getValue()); //shoud maybe copy the values or is it enough ?
-		paramTempValueMap.set(source, tmpVal);
+		lastSendTime.resize(getMultiplexCount());
+		lastSendTime.fill(Time::getMillisecondCounterHiRes());
 	}
-	return MappingFilter::setupSingleParameterInternal(source, multiplexIndex, rangeOnly);
+	MappingFilter::setupParametersInternal(multiplexIndex, rangeOnly);
 }
 
 MappingFilter::ProcessResult  LagFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
 {
-	if (!paramTempValueMap.contains(source)) return UNCHANGED;
-	if (paramTempValueMap[source] == out->getValue()) return UNCHANGED;
-	
-	out->setValue(paramTempValueMap[source]);
+	double lastTime = lastSendTime[multiplexIndex];
+	double currentTime = Time::getMillisecondCounterHiRes();
+	double msToWait = 1000.0 / frequency->doubleValue();
+
+
+	if (currentTime - lastTime < msToWait) return UNCHANGED;
+	out->setValue(source->getValue());
+
+	lastSendTime.set(multiplexIndex, currentTime);
+
 	return CHANGED;
 }
 
-void LagFilter::filterParamChanged(Parameter * p)
+void LagFilter::filterParamChanged(Parameter* p)
 {
-	if(p == frequency) startTimer(1000 / frequency->floatValue());
-}
-
-void LagFilter::hiResTimerCallback()
-{
-	for (auto& mSourceParams : sourceParams)
-	{
-		for (auto& s : mSourceParams)
-		{
-			if (s == nullptr) continue;
-			paramTempValueMap.set(s, var(s->value));
-		}
-	}
 }

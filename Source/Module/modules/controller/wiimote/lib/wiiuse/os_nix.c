@@ -54,6 +54,7 @@
 #include <stdbool.h>
 
 static int wiiuse_os_connect_single(struct wiimote_t* wm, char* address);
+int wiiuse_os_read(struct wiimote_t* wm, byte* buf, int len);
 
 int wiiuse_os_find(struct wiimote_t** wm, int max_wiimotes, int timeout) {
 	int device_id;

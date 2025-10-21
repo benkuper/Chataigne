@@ -23,6 +23,9 @@
     <Filter Include="Chataigne\Source\Analytics">
       <UniqueIdentifier>{BFFB54F9-F042-7395-56B9-D0358B5F6ED9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Common\OSHelpers">
+      <UniqueIdentifier>{88EA9146-FF05-BD31-505C-6DB3FAB26669}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Common\BLE">
       <UniqueIdentifier>{31057B66-59D5-3FE4-C446-D12488975085}</UniqueIdentifier>
     </Filter>
@@ -131,8 +134,14 @@
     <Filter Include="Chataigne\Source\Common\Processor\Mapping\Filter\ui">
       <UniqueIdentifier>{B217B4E4-2048-83FE-B510-336E0B934F98}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Common\Processor\Mapping\Filter\filters\string">
+      <UniqueIdentifier>{951F887D-E2BF-9EC4-4DC3-D7BC6D83AEAD}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Common\Processor\Mapping\Filter\filters\condition">
       <UniqueIdentifier>{7B8865FC-7D21-02DD-FD97-2DF8A95BE617}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Common\Processor\Mapping\Filter\filters\number\oneeuro">
+      <UniqueIdentifier>{5CAF8FEC-8E34-789E-7699-BFD59608A76D}</UniqueIdentifier>
     </Filter>
     <Filter Include="Chataigne\Source\Common\Processor\Mapping\Filter\filters\number">
       <UniqueIdentifier>{A2546497-8314-1FDA-2D15-28E04DA32C12}</UniqueIdentifier>
@@ -1228,6 +1237,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\PrecompiledHeaders.cpp">
+      <Filter>Chataigne\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Guider\guides\BasicsGuide.cpp">
       <Filter>Chataigne\Source\Guider\guides</Filter>
     </ClCompile>
@@ -1245,6 +1257,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Analytics\MatomoAnalytics.cpp">
       <Filter>Chataigne\Source\Analytics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\OSHelpers\KeyboardMouseHooker.cpp">
+      <Filter>Chataigne\Source\Common\OSHelpers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\BLE\BLEDevice.cpp">
       <Filter>Chataigne\Source\Common\BLE</Filter>
@@ -1429,6 +1444,9 @@
     <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\ui\ConditionManagerEditor.cpp">
       <Filter>Chataigne\Source\Common\Processor\Action\Condition\ui</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\Condition.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Action\Condition</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\ConditionManager.cpp">
       <Filter>Chataigne\Source\Common\Processor\Action\Condition</Filter>
     </ClCompile>
@@ -1459,6 +1477,9 @@
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\ui\MappingFilterEditor.cpp">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\ui</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\string\StringFilter.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\string</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\DelayFilter.cpp">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters</Filter>
     </ClCompile>
@@ -1467,6 +1488,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\condition\ConditionFilter.cpp">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\condition</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\oneeuro\OneEuroFilter.cpp">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\number\oneeuro</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\CropFilter.cpp">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\number</Filter>
@@ -1787,9 +1811,6 @@
       <Filter>Chataigne\Source\Module\modules\controller\keyboard\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\controller\keyboard\KeyboardModule.cpp">
-      <Filter>Chataigne\Source\Module\modules\controller\keyboard</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\controller\keyboard\WindowsHooker.cpp">
       <Filter>Chataigne\Source\Module\modules\controller\keyboard</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\controller\kinect\KinectV2Module.cpp">
@@ -3667,6 +3688,9 @@
     <ClCompile Include="..\..\Modules\juce_organicui\helpers\crypto\hmac\SHA1.cpp">
       <Filter>JUCE Modules\juce_organicui\helpers\crypto\hmac</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\helpers\NetworkHelpers.cpp">
+      <Filter>JUCE Modules\juce_organicui\helpers</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\helpers\OSCHelpers.cpp">
       <Filter>JUCE Modules\juce_organicui\helpers</Filter>
     </ClCompile>
@@ -3907,6 +3931,9 @@
     <ClCompile Include="..\..\Modules\juce_organicui\ui\LookAndFeelOO.cpp">
       <Filter>JUCE Modules\juce_organicui\ui</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\ui\UITimers.cpp">
+      <Filter>JUCE Modules\juce_organicui\ui</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\undo\UndoMaster.cpp">
       <Filter>JUCE Modules\juce_organicui\undo</Filter>
     </ClCompile>
@@ -3998,6 +4025,9 @@
       <Filter>JUCE Modules\juce_serial</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_sharedtexture\juce_sharedtexture.cpp">
+      <Filter>JUCE Modules\juce_sharedtexture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_sharedtexture\juce_sharedtexture.mm">
       <Filter>JUCE Modules\juce_sharedtexture</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_sharedtexture\SharedTexture.cpp">
@@ -4269,6 +4299,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\PrecompiledHeaders.h">
+      <Filter>Chataigne\Source</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Guider\guides\BasicsGuide.h">
       <Filter>Chataigne\Source\Guider\guides</Filter>
     </ClInclude>
@@ -4286,6 +4319,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Analytics\MatomoAnalytics.h">
       <Filter>Chataigne\Source\Analytics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\OSHelpers\KeyboardMouseHooker.h">
+      <Filter>Chataigne\Source\Common\OSHelpers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\BLE\BLEDevice.h">
       <Filter>Chataigne\Source\Common\BLE</Filter>
@@ -4518,6 +4554,9 @@
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\ui\MappingFilterEditor.h">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\ui</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\string\StringFilter.h">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\string</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\DelayFilter.h">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters</Filter>
     </ClInclude>
@@ -4526,6 +4565,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\condition\ConditionFilter.h">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\condition</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\oneeuro\OneEuroFilter.h">
+      <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\number\oneeuro</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\CropFilter.h">
       <Filter>Chataigne\Source\Common\Processor\Mapping\Filter\filters\number</Filter>
@@ -4864,9 +4906,6 @@
       <Filter>Chataigne\Source\Module\modules\controller\keyboard</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\controller\keyboard\KeyboardModule.h">
-      <Filter>Chataigne\Source\Module\modules\controller\keyboard</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Module\modules\controller\keyboard\WindowsHooker.h">
       <Filter>Chataigne\Source\Module\modules\controller\keyboard</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\controller\kinect\KinectV2Module.h">
@@ -5745,7 +5784,7 @@
     <ClInclude Include="..\..\JUCE\modules\juce_core\zip\juce_ZipFile.h">
       <Filter>JUCE Modules\juce_core\zip</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_core\juce_core.h">
+    <ClInclude Include="..\..\..\JUCE\modules\juce_core\juce_core.h">
       <Filter>JUCE Modules\juce_core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_cryptography\encryption\juce_BlowFish.h">
@@ -5766,7 +5805,7 @@
     <ClInclude Include="..\..\JUCE\modules\juce_cryptography\hashing\juce_Whirlpool.h">
       <Filter>JUCE Modules\juce_cryptography\hashing</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_cryptography\juce_cryptography.h">
+    <ClInclude Include="..\..\..\JUCE\modules\juce_cryptography\juce_cryptography.h">
       <Filter>JUCE Modules\juce_cryptography</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_dmx\device\sacn\e131.h">
@@ -6414,7 +6453,7 @@
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\windows\juce_WindowUtils.h">
       <Filter>JUCE Modules\juce_gui_basics\windows</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\juce_gui_basics.h">
+    <ClInclude Include="..\..\..\JUCE\modules\juce_gui_basics\juce_gui_basics.h">
       <Filter>JUCE Modules\juce_gui_basics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_extra\code_editor\juce_CodeDocument.h">
@@ -6498,7 +6537,7 @@
     <ClInclude Include="..\..\JUCE\modules\juce_gui_extra\native\juce_NSViewFrameWatcher_mac.h">
       <Filter>JUCE Modules\juce_gui_extra\native</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_extra\juce_gui_extra.h">
+    <ClInclude Include="..\..\..\JUCE\modules\juce_gui_extra\juce_gui_extra.h">
       <Filter>JUCE Modules\juce_gui_extra</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\app\CrashHandler.h">
@@ -7092,6 +7131,9 @@
     <ClInclude Include="..\..\Modules\juce_organicui\ui\Style.h">
       <Filter>JUCE Modules\juce_organicui\ui</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\ui\UITimers.h">
+      <Filter>JUCE Modules\juce_organicui\ui</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\undo\UndoMaster.h">
       <Filter>JUCE Modules\juce_organicui\undo</Filter>
     </ClInclude>
@@ -7137,7 +7179,7 @@
     <ClInclude Include="..\..\JUCE\modules\juce_osc\osc\juce_OSCTypes.h">
       <Filter>JUCE Modules\juce_osc\osc</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_osc\juce_osc.h">
+    <ClInclude Include="..\..\..\JUCE\modules\juce_osc\juce_osc.h">
       <Filter>JUCE Modules\juce_osc</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_serial\lib\cobs\cobs.h">
@@ -10221,6 +10263,9 @@
       <Filter>Chataigne\Resources\Modules</Filter>
     </None>
     <None Include="..\..\Resources\Modules\Gamepad.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\GPIO.png">
       <Filter>Chataigne\Resources\Modules</Filter>
     </None>
     <None Include="..\..\Resources\Modules\HeavyM.png">

@@ -34,12 +34,12 @@ public:
 	public:
 		/** Destructor. */
 		virtual ~Listener() {}
-		virtual void inputReferenceChanged(MappingInput*) {};
+		virtual void inputReferenceChanged(MappingInput*, int multiplexIndex) {};
 		virtual void inputParameterValueChanged(MappingInput*, int multiplexIndex) {};
 		virtual void inputParameterRangeChanged(MappingInput*) {};
 	};
 
-	ListenerList<Listener> mappinginputListeners;
+	ListenerList<Listener, Array<Listener*, CriticalSection>> mappinginputListeners;
 	void addMappingInputListener(Listener* newListener) { mappinginputListeners.add(newListener); }
 	void removeMappingInputListener(Listener* listener) { mappinginputListeners.remove(listener); }
 
@@ -85,7 +85,7 @@ public:
 	void onContainerParameterChangedInternal(Parameter* p) override;
 	virtual void onExternalParameterValueChanged(Parameter* p) override;
 
-	void listReferenceUpdated() override;
+	void listReferenceUpdated(int multiplexIndex) override;
 	void listItemUpdated(int multiplexIndex) override;
 
 	void multiplexPreviewIndexChanged() override;

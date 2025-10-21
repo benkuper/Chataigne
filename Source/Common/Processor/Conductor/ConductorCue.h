@@ -44,10 +44,10 @@ public:
 
     ProcessorUI* getUI() override;
 
-    virtual var getJSONData() override;
+    virtual var getJSONData(bool includeNonOverriden = false) override;
     virtual void loadJSONDataItemInternal(var data) override;
     
     String getTypeString() const override { return "Cue"; }
 
-    DECLARE_ASYNC_EVENT(ConductorCue, ConductorCue, conductorCue, ENUM_LIST(CURRENT_CHANGED, NEXT_CHANGED, INDEX_CHANGED));
+    DECLARE_ASYNC_EVENT(ConductorCue, ConductorCue, conductorCue, ENUM_LIST(CURRENT_CHANGED, NEXT_CHANGED, INDEX_CHANGED), EVENT_ITEM_CHECK);
 };

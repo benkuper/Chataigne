@@ -21,6 +21,7 @@ public:
 	String outTypeString;
 
 	var ghostOptions;
+	var ghostLinkData;
 	bool autoLoadDataOnSetup;
 
 	EnumParameter* retargetComponent;
@@ -29,15 +30,15 @@ public:
 
 	var convertModeData; //ghost loading
 
-	var getJSONData() override;
+	var getJSONData(bool includeNonOverriden = false) override;
 	void loadJSONDataItemInternal(var data) override;
 	
 	enum TransferType { DIRECT, EXTRACT, MERGE, TARGET};
 	TransferType transferType;
 
-	enum ExtractOption { MIN = 100, MAX = 101, AVERAGE = 102, LENGTH = 103, AREA = 104 };
+	enum ExtractOption { MIN = 100, MAX = 101, AVERAGE = 102, LENGTH = 103, AREA = 104, HUE = 105, SATURATION = 106, BRIGHTNESS = 107 };
 
-	virtual void setupParametersInternal(int mutiplexIndex, bool rangeOnly = false) override;
+	virtual void setupParametersInternal(int multiplexIndex, bool rangeOnly = false) override;
 	virtual Parameter* setupSingleParameterInternal(Parameter* source, int multiplexIndex, bool rangeOnly) override;
 	virtual void addExtraRetargetOptions() {}
 
@@ -115,7 +116,7 @@ public:
 	var convertValue(Parameter * source, var sourceValue, int multiplexIndex) override;
 	String getCasedString(const String& value);
 
-	var getJSONData() override;
+	var getJSONData(bool includeNonOverriden = false) override;
 
 	void filterParamChanged(Parameter*) override;
 
@@ -165,7 +166,7 @@ public:
 	enum RetargetMode { HUE = -1, SAT = -2, VAL = -3};
 	ColorParameter* baseColor;
 
-	var getJSONData() override;
+	var getJSONData(bool includeNonOverriden = false) override;
 
 	void setupParametersInternal(int multiplexIndex, bool rangeOnly) override;
 	virtual void addExtraRetargetOptions() override;

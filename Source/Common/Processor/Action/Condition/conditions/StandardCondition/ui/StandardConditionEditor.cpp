@@ -132,5 +132,5 @@ void StandardConditionEditor::updateVisibility()
 void StandardConditionEditor::childBoundsChanged(Component* c)
 {
 	ConditionEditor::childBoundsChanged(c);
-	if (c == targetUI.get()) resized();
+	if (c == targetUI.get() || c == comparatorUI.get()) resized();
 }

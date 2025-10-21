@@ -47,7 +47,7 @@ public:
 
     void onContainerParameterChangedInternal(Parameter* p) override;
 
-    void updateDisables(bool force) override;
+    void updateDisables(bool force, bool fromActivation) override;
 
     void itemAdded(Processor* p) override;
     void itemsAdded(Array<Processor*> p) override;
@@ -69,7 +69,7 @@ public:
 
     void updateNextCue();
 
-    virtual var getJSONData() override;
+    virtual var getJSONData(bool includeNonOverriden = false) override;
     virtual void loadJSONDataItemInternal(var data) override;
     void afterLoadJSONDataInternal() override;
 

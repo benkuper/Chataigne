@@ -13,7 +13,9 @@ juce_ImplementSingleton(ModuleRouterManager)
 ModuleRouterManager::ModuleRouterManager() :
 	BaseManager("Routers")
 {
-	
+	hideInRemoteControl = true;
+	defaultHideInRemoteControl = true;
+
 	selectItemWhenCreated = true;
 }
 

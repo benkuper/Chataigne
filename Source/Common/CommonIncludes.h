@@ -46,3 +46,6 @@ using namespace SimpleBLE;
 #include "InputSystem/InputSystemManager.h"
 #include "InputSystem/InputDeviceHelpers.h"
 
+#include "OSHelpers/KeyboardMouseHooker.h"
+
+

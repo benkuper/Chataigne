@@ -73,9 +73,9 @@ void ConditionFilter::updateConditionsLinks(Array<Parameter*> inputs, int multip
     }
 }
 
-var ConditionFilter::getJSONData()
+var ConditionFilter::getJSONData(bool includeNonOverriden)
 {
-    var data = MappingFilter::getJSONData();
+    var data = MappingFilter::getJSONData(includeNonOverriden);
     data.getDynamicObject()->setProperty("conditions", cdm.getJSONData());
     return data;
 }

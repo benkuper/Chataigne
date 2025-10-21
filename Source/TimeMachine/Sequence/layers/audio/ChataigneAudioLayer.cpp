@@ -14,7 +14,8 @@ ChataigneAudioLayer::ChataigneAudioLayer(ChataigneSequence* _sequence, var param
 	AudioLayer(_sequence, params),
 	audioModule(nullptr),
 	chataigneSequence(_sequence),
-	timeAtStartRecord(0)
+	timeAtStartRecord(0),
+	arm(nullptr)
 {
 	ModuleManager::getInstance()->addBaseManagerListener(this);
 
@@ -52,6 +53,7 @@ void ChataigneAudioLayer::setAudioModule(AudioModule* newModule)
 	{
 		setAudioProcessorGraph(&audioModule->graph, AUDIO_OUTPUTMIXER_GRAPH_ID);
 		audioModule->addAudioModuleListener(this);
+
 	}
 	else
 	{
@@ -61,6 +63,40 @@ void ChataigneAudioLayer::setAudioModule(AudioModule* newModule)
 	updateSelectedOutChannels();
 
 	audioLayerListeners.call(&ChataigneAudioLayerListener::targetAudioModuleChanged, this);
+}
+
+void ChataigneAudioLayer::updateSelectedOutChannelsInternal()
+{
+	updateInputConnections(false);
+}
+
+void ChataigneAudioLayer::updateInputConnections(bool updatePlayConfig)
+{
+	if (audioModule != nullptr)
+	{
+		for (auto& c : inputConnections) audioModule->graph.removeConnection(c);
+		inputConnections.clear();
+
+
+		if (arm != nullptr && arm->boolValue())
+		{
+			int numInputChannels = audioModule->graph.getTotalNumInputChannels();
+			for (int i = 0; i < numInputChannels; i++)
+			{
+				AudioProcessorGraph::Connection c = { {AUDIO_INPUTMIXER_GRAPH_ID, i}, { graphID, i } };
+				inputConnections.add(c);
+				audioModule->graph.addConnection(c);
+			}
+		}
+
+		numActiveInputs = inputConnections.size();
+	}
+	else
+	{
+		numActiveInputs = 0;
+	}
+
+	if (updatePlayConfig) updatePlayConfigDetails();
 }
 
 AudioLayerProcessor* ChataigneAudioLayer::createAudioLayerProcessor()
@@ -174,6 +210,13 @@ void ChataigneAudioLayer::exportRMS(bool toNewMappingLayer, bool toClipboard, bo
 	}
 }
 
+void ChataigneAudioLayer::onContainerParameterChanged(Parameter* p)
+{
+	AudioLayer::onContainerParameterChanged(p);
+
+	//if (p == arm) updateSelectedOutChannels();
+}
+
 void ChataigneAudioLayer::sequenceCurrentTimeChanged(Sequence* s, float prevTime, bool evaluateSkippedData)
 {
 	AudioLayer::sequenceCurrentTimeChanged(s, prevTime, evaluateSkippedData);
@@ -186,6 +229,7 @@ void ChataigneAudioLayer::sequencePlayStateChanged(Sequence* s)
 	{
 		if (arm->boolValue() && currentProcessor != nullptr)
 		{
+			updateSelectedOutChannels();
 			timeAtStartRecord = sequence->currentTime->floatValue();
 			((ChataigneAudioLayerProcessor*)currentProcessor)->startRecording();
 		}
@@ -211,9 +255,9 @@ void ChataigneAudioLayer::audioSetupChanged()
 	updateSelectedOutChannels();
 }
 
-var ChataigneAudioLayer::getJSONData()
+var ChataigneAudioLayer::getJSONData(bool includeNonOverriden)
 {
-	var data = AudioLayer::getJSONData();
+	var data = AudioLayer::getJSONData(includeNonOverriden);
 	if (audioModule != nullptr) data.getDynamicObject()->setProperty("audioModule", audioModule->shortName);
 	return data;
 }
@@ -333,6 +377,7 @@ void ChataigneAudioLayerProcessor::processBlock(AudioBuffer<float>& buffer, Midi
 		{
 			const GenericScopedLock sl(writerLock);
 			activeWriter.load()->write(buffer.getArrayOfReadPointers(), buffer.getNumSamples());
+			LOG("Input rms :" << buffer.getMagnitude(0, 0, buffer.getNumSamples()));
 		}
 
 		recorderListeners.call(&RecorderListener::recordingUpdated, buffer, buffer.getNumSamples());

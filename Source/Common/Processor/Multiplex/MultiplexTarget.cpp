@@ -19,7 +19,7 @@ MultiplexTarget::MultiplexTarget(Multiplex* mp) :
 
 MultiplexTarget::~MultiplexTarget()
 {
-    if (multiplex != nullptr) multiplex->removeMultiplexListener(this);
+    if (multiplex != nullptr && !multiplex->isClearing) multiplex->removeMultiplexListener(this);
 }
 
 bool MultiplexTarget::isMultiplexed() const

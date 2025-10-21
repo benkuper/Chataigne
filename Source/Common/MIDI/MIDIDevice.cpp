@@ -1,3 +1,4 @@
+#include "MIDIDevice.h"
 /*
   ==============================================================================
 
@@ -16,7 +17,7 @@ MIDIDevice::MIDIDevice(const MidiDeviceInfo& info, Type t) :
 
 
 
-MIDIInputDevice::MIDIInputDevice(const MidiDeviceInfo & info) :
+MIDIInputDevice::MIDIInputDevice(const MidiDeviceInfo& info) :
 	MIDIDevice(info, MIDI_IN)
 {
 }
@@ -25,7 +26,7 @@ MIDIInputDevice::~MIDIInputDevice()
 {
 }
 
-void MIDIInputDevice::addMIDIInputListener(MIDIInputListener * newListener)
+void MIDIInputDevice::addMIDIInputListener(MIDIInputListener* newListener)
 {
 	inputListeners.add(newListener);
 	if (inputListeners.size() == 1)
@@ -38,14 +39,16 @@ void MIDIInputDevice::addMIDIInputListener(MIDIInputListener * newListener)
 		{
 			device->start();
 			LOG("MIDI In " << device->getName() << " opened");
-		} else
+		}
+		else
 		{
 			LOG("MIDI In " << name << " open error !");
 		}
 	}
 }
 
-void MIDIInputDevice::removeMIDIInputListener(MIDIInputListener * listener) {
+void MIDIInputDevice::removeMIDIInputListener(MIDIInputListener* listener)
+{
 	inputListeners.remove(listener);
 	if (inputListeners.size() == 0)
 	{
@@ -55,7 +58,7 @@ void MIDIInputDevice::removeMIDIInputListener(MIDIInputListener * listener) {
 	}
 }
 
-void MIDIInputDevice::handleIncomingMidiMessage(MidiInput * source, const MidiMessage & message)
+void MIDIInputDevice::handleIncomingMidiMessage(MidiInput* source, const MidiMessage& message)
 {
 	if (source != device.get())
 	{
@@ -68,7 +71,7 @@ void MIDIInputDevice::handleIncomingMidiMessage(MidiInput * source, const MidiMe
 	if (message.isNoteOn()) inputListeners.call(&MIDIInputListener::noteOnReceived, message.getChannel(), message.getNoteNumber(), message.getVelocity());
 	else if (message.isNoteOff()) inputListeners.call(&MIDIInputListener::noteOffReceived, message.getChannel(), message.getNoteNumber(), 0); //force note off to velocity 0
 	else if (message.isController()) inputListeners.call(&MIDIInputListener::controlChangeReceived, message.getChannel(), message.getControllerNumber(), message.getControllerValue());
-  else if (message.isProgramChange()) inputListeners.call(&MIDIInputListener::programChangeReceived, message.getChannel(), message.getProgramChangeNumber());
+	else if (message.isProgramChange()) inputListeners.call(&MIDIInputListener::programChangeReceived, message.getChannel(), message.getProgramChangeNumber());
 	else if (message.isFullFrame()) inputListeners.call(&MIDIInputListener::fullFrameTimecodeReceived, message);
 	else if (message.isQuarterFrame()) inputListeners.call(&MIDIInputListener::quarterFrameTimecodeReceived, message);
 	else if (message.isPitchWheel()) inputListeners.call(&MIDIInputListener::pitchWheelReceived, message.getChannel(), message.getPitchWheelValue());
@@ -99,7 +102,7 @@ void MIDIInputDevice::handleIncomingMidiMessage(MidiInput * source, const MidiMe
 //*****************   MIDI OUTPUT
 
 
-MIDIOutputDevice::MIDIOutputDevice(const MidiDeviceInfo & info) :
+MIDIOutputDevice::MIDIOutputDevice(const MidiDeviceInfo& info) :
 	MIDIDevice(info, MIDI_OUT),
 	usageCount(0)
 {}
@@ -119,7 +122,8 @@ void MIDIOutputDevice::open()
 		if (device != nullptr)
 		{
 			LOG("MIDI Out " << device->getName() << " opened");
-		} else
+		}
+		else
 		{
 			LOGERROR("MIDI Out " << name << " open error");
 		}
@@ -174,7 +178,7 @@ void MIDIOutputDevice::sendFullframeTimecode(int hours, int minutes, int seconds
 
 void MIDIOutputDevice::sendQuarterframe(int piece, int value)
 {
-	if (device == nullptr) return; 
+	if (device == nullptr) return;
 	device->sendMessageNow(MidiMessage::quarterFrame(piece, value));
 }
 
@@ -206,4 +210,10 @@ void MIDIOutputDevice::sendAfterTouch(int channel, int note, int value)
 {
 	if (device == nullptr) return;
 	device->sendMessageNow(MidiMessage::aftertouchChange(channel, note, value));
+}
+
+void MIDIOutputDevice::sendMessageNow(const MidiMessage& message)
+{
+	if (device == nullptr) return;
+	device->sendMessageNow(message);
 }

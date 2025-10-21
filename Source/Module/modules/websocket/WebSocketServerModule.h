@@ -19,6 +19,7 @@ public:
 	WebSocketServerModule(const String& name = "WebSocket Server", int defaultRemotePort = 8080);
 	virtual ~WebSocketServerModule();
 
+	NetworkInterfaceParameter* networkInterface;
 	IntParameter* localPort;
 	BoolParameter* useSecureConnection;
 

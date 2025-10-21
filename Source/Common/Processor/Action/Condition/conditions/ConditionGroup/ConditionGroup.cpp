@@ -25,9 +25,9 @@ void ConditionGroup::conditionManagerValidationChanged(ConditionManager *, int m
 	setValid(multiplexIndex, manager.getIsValid(multiplexIndex, false), dispatchOnChangeOnly);
 }
 
-var ConditionGroup::getJSONData()
+var ConditionGroup::getJSONData(bool includeNonOverriden)
 {
-	var data = Condition::getJSONData();
+	var data = Condition::getJSONData(includeNonOverriden);
 	data.getDynamicObject()->setProperty("manager", manager.getJSONData());
 	return data;
 }

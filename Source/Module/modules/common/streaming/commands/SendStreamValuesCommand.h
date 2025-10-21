@@ -17,7 +17,7 @@ public:
 	SendStreamValuesCommand(StreamingModule * output, CommandContext context, var params, Multiplex* multiplex = nullptr);
 	virtual ~SendStreamValuesCommand();
 
-	var getJSONData() override;
+	var getJSONData(bool includeNonOverriden = false) override;
 	void loadJSONDataInternal(var data) override;
 
 	void triggerInternal(int multiplexIndex) override;

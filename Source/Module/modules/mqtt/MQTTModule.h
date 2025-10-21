@@ -47,7 +47,8 @@ public:
 
 
 	EnumParameter* protocol;
-
+	
+	StringParameter* clientId;
 	StringParameter* host;
 	IntParameter* port;
 
@@ -89,6 +90,9 @@ public:
 	void run() override;
 
 	void stopClient();
+
+	//Script
+	static var publishMessageFromScript(const var::NativeFunctionArgs& args);
 
 	//mosquitto
 #if JUCE_WINDOWS

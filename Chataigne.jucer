@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.18b2"
-              bundleIdentifier="benkuper.Chataigne" includeBinaryInAppConfig="1"
-              companyName="Ben Kuper" companyWebsite="http://benjamin.kuperberg.fr"
-              companyEmail="benjamin@kuperberg.fr" defines="VST_LOGGING=0"
-              splashScreenColour="Dark" cppLanguageStandard="17" companyCopyright="Ben Kuper"
-              headerPath="../../Source&#10;../../External/wiiuse&#10;../../External/asio&#10;../../External/asiodriver&#10;../../External/kinect/include&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/ois/include&#10;../../External/sdl/include&#10;../../External/hidapi/include&#10;../../External/abletonlink/include&#10;../../External/libusb/include/libusb-1.0&#10;../../External/mosquitto/include&#10;../../External/posistagenet/include&#10;../../External/simpleble/include"
-              projectLineFeed="&#10;" jucerFormatVersion="1">
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.9.25b13"
+              bundleIdentifier="benkuper.Chataigne" companyName="Ben Kuper"
+              companyWebsite="http://benjamin.kuperberg.fr/chataigne" companyEmail="benjamin@kuperberg.fr"
+              defines="VST_LOGGING=0" splashScreenColour="Dark" cppLanguageStandard="17"
+              companyCopyright="Ben Kuper" headerPath="../../Source&#10;../../External/wiiuse&#10;../../External/asio&#10;../../External/asiodriver&#10;../../External/kinect/include&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/ois/include&#10;../../External/sdl/include&#10;../../External/hidapi/include&#10;../../External/abletonlink/include&#10;../../External/libusb/include/libusb-1.0&#10;../../External/mosquitto/include&#10;../../External/posistagenet/include&#10;../../External/simpleble/include"
+              projectLineFeed="&#10;" jucerFormatVersion="1" displaySplashScreen="1">
   <MAINGROUP id="EDDVhd" name="Chataigne">
     <GROUP id="{E61F6705-4C4B-3F04-F742-20CC91F590E4}" name="Resources">
       <FILE id="J10iXd" name="process.png" compile="0" resource="1" file="Resources/process.png"/>
@@ -30,6 +29,7 @@
         <FILE id="kdkONp" name="DMX.png" compile="0" resource="1" file="Resources/Modules/DMX.png"/>
         <FILE id="eqnFj9" name="Empty.png" compile="0" resource="1" file="Resources/Modules/Empty.png"/>
         <FILE id="yfJH3x" name="Gamepad.png" compile="0" resource="1" file="Resources/Modules/Gamepad.png"/>
+        <FILE id="dJmafw" name="GPIO.png" compile="0" resource="1" file="Resources/Modules/GPIO.png"/>
         <FILE id="I0DSTK" name="HeavyM.png" compile="0" resource="1" file="Resources/Modules/HeavyM.png"/>
         <FILE id="OrCxSg" name="HTTP.png" compile="0" resource="1" file="Resources/Modules/HTTP.png"/>
         <FILE id="jWmnHY" name="JoyCon.png" compile="0" resource="1" file="Resources/Modules/JoyCon.png"/>
@@ -119,6 +119,10 @@
       <FILE id="xbqvN3" name="tray_icon.png" compile="0" resource="1" file="Resources/tray_icon.png"/>
     </GROUP>
     <GROUP id="{31908E9E-F626-E2D6-1A6D-E188C9D72C25}" name="Source">
+      <FILE id="ah4ZzR" name="PrecompiledHeaders.cpp" compile="1" resource="0"
+            file="Source/PrecompiledHeaders.cpp"/>
+      <FILE id="ELGbdJ" name="PrecompiledHeaders.h" compile="0" resource="0"
+            file="Source/PrecompiledHeaders.h"/>
       <GROUP id="{F784235F-A65F-E1E7-A5F1-8414A8D681B3}" name="Guider">
         <GROUP id="{48A8CB31-FB6F-D3BB-9B53-BCE38E8AF3B4}" name="guides">
           <FILE id="zczlRA" name="BasicsGuide.cpp" compile="0" resource="0" file="Source/Guider/guides/BasicsGuide.cpp"/>
@@ -145,6 +149,12 @@
               file="Source/Analytics/MatomoAnalytics.h"/>
       </GROUP>
       <GROUP id="{6C7DFFF7-D47E-97B5-FE74-27F24C7A349F}" name="Common">
+        <GROUP id="{D49E231C-ADD0-09C8-3F30-1D993C9DBD37}" name="OSHelpers">
+          <FILE id="MUIzQg" name="KeyboardMouseHooker.cpp" compile="0" resource="0"
+                file="Source/Common/OSHelpers/KeyboardMouseHooker.cpp"/>
+          <FILE id="zYfyiH" name="KeyboardMouseHooker.h" compile="0" resource="0"
+                file="Source/Common/OSHelpers/KeyboardMouseHooker.h"/>
+        </GROUP>
         <GROUP id="{7EA63998-1B48-26A4-FBAD-A9E3C0A981D3}" name="BLE">
           <FILE id="SUr3In" name="BLEDevice.cpp" compile="0" resource="0" file="Source/Common/BLE/BLEDevice.cpp"/>
           <FILE id="lvTRDP" name="BLEDevice.h" compile="0" resource="0" file="Source/Common/BLE/BLEDevice.h"/>
@@ -436,7 +446,7 @@
                       file="Source/Common/Processor/Action/Condition/ui/ConditionManagerEditor.h"/>
               </GROUP>
               <FILE id="e9mchF" name="Condition.cpp" compile="0" resource="0" file="Source/Common/Processor/Action/Condition/Condition.cpp"
-                    xcodeResource="1"/>
+                    xcodeResource="0"/>
               <FILE id="o9Hby1" name="Condition.h" compile="0" resource="0" file="Source/Common/Processor/Action/Condition/Condition.h"/>
               <FILE id="J9ywhw" name="ConditionManager.cpp" compile="0" resource="0"
                     file="Source/Common/Processor/Action/Condition/ConditionManager.cpp"
@@ -488,6 +498,11 @@
                       file="Source/Common/Processor/Mapping/Filter/ui/MappingFilterEditor.h"/>
               </GROUP>
               <GROUP id="{B0B4810E-8573-A36C-4561-1CE52F06C6BA}" name="filters">
+                <GROUP id="{8F9F1D85-4A15-F5C6-3DA8-D7D63D54413A}" name="string">
+                  <FILE id="I55elm" name="StringFilter.cpp" compile="0" resource="0"
+                        file="Source/Common/Processor/Mapping/Filter/filters/string/StringFilter.cpp"/>
+                  <FILE id="udG1n5" name="StringFilter.h" compile="0" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/string/StringFilter.h"/>
+                </GROUP>
                 <FILE id="OpwaC4" name="DelayFilter.cpp" compile="0" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/DelayFilter.cpp"/>
                 <FILE id="KOqEaF" name="DelayFilter.h" compile="0" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/DelayFilter.h"/>
                 <FILE id="H0vd9c" name="TimeFilter.cpp" compile="0" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/TimeFilter.cpp"/>
@@ -499,6 +514,11 @@
                         file="Source/Common/Processor/Mapping/Filter/filters/condition/ConditionFilter.h"/>
                 </GROUP>
                 <GROUP id="{641D0121-A8E2-C0FE-FB59-BF396A67A40C}" name="number">
+                  <GROUP id="{9F458A50-526A-5D47-E35E-A44C46ED2AB1}" name="oneeuro">
+                    <FILE id="KZui0t" name="OneEuroFilter.cpp" compile="0" resource="0"
+                          file="Source/Common/Processor/Mapping/Filter/filters/number/oneeuro/OneEuroFilter.cpp"/>
+                    <FILE id="WfqGyO" name="OneEuroFilter.h" compile="0" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/number/oneeuro/OneEuroFilter.h"/>
+                  </GROUP>
                   <FILE id="A56EOa" name="CropFilter.cpp" compile="0" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/number/CropFilter.cpp"/>
                   <FILE id="Y1uilS" name="CropFilter.h" compile="0" resource="0" file="Source/Common/Processor/Mapping/Filter/filters/number/CropFilter.h"/>
                   <FILE id="BvilMR" name="CurveMapFilter.cpp" compile="0" resource="0"
@@ -991,9 +1011,6 @@
                     file="Source/Module/modules/controller/keyboard/KeyboardModule.cpp"/>
               <FILE id="CYr9Wv" name="KeyboardModule.h" compile="0" resource="0"
                     file="Source/Module/modules/controller/keyboard/KeyboardModule.h"/>
-              <FILE id="KPN1AM" name="WindowsHooker.cpp" compile="0" resource="0"
-                    file="Source/Module/modules/controller/keyboard/WindowsHooker.cpp"/>
-              <FILE id="UGSpnr" name="WindowsHooker.h" compile="0" resource="0" file="Source/Module/modules/controller/keyboard/WindowsHooker.h"/>
             </GROUP>
             <GROUP id="{122191F4-B849-F53D-521E-9F1E09A3A5C0}" name="kinect">
               <FILE id="vmVn7s" name="KinectV2Module.cpp" compile="0" resource="0"
@@ -1005,25 +1022,39 @@
               <GROUP id="{EB8DE141-947F-6061-BC9C-3DFD7641DEAA}" name="lib">
                 <GROUP id="{6B522148-E63B-E5F9-7369-556C4A6537CD}" name="wiiuse">
                   <GROUP id="{E9550E04-7BD2-2AE4-2E54-601BBD8E21E4}" name="os_mac">
-                    <FILE id="j4Yotu" name="os_mac.c" compile="1" resource="0" file="Source/Module/modules/controller/wiimote/lib/wiiuse/os_mac/os_mac.c"/>
+                    <FILE id="j4Yotu" name="os_mac.c" compile="1" resource="0" file="Source/Module/modules/controller/wiimote/lib/wiiuse/os_mac/os_mac.c"
+                          skipPCH="1"/>
                     <FILE id="tZWjTk" name="os_mac.m" compile="1" resource="0" file="Source/Module/modules/controller/wiimote/lib/wiiuse/os_mac/os_mac.m"/>
                     <FILE id="c71lMt" name="os_mac_find.m" compile="1" resource="0" file="Source/Module/modules/controller/wiimote/lib/wiiuse/os_mac/os_mac_find.m"/>
                     <FILE id="W8zdF3" name="os_mac_interface.m" compile="1" resource="0"
                           file="Source/Module/modules/controller/wiimote/lib/wiiuse/os_mac/os_mac_interface.m"/>
                   </GROUP>
-                  <FILE id="x4CFfR" name="classic.c" compile="1" resource="0" file="Source/Module/modules/controller/wiimote/lib/wiiuse/classic.c"/>
-                  <FILE id="HbnRJY" name="dynamics.c" compile="1" resource="0" file="Source/Module/modules/controller/wiimote/lib/wiiuse/dynamics.c"/>
-                  <FILE id="Qhc04H" name="events.c" compile="1" resource="0" file="Source/Module/modules/controller/wiimote/lib/wiiuse/events.c"/>
-                  <FILE id="IdcLOI" name="guitar_hero_3.c" compile="1" resource="0" file="Source/Module/modules/controller/wiimote/lib/wiiuse/guitar_hero_3.c"/>
-                  <FILE id="b2e9Xl" name="io.c" compile="1" resource="0" file="Source/Module/modules/controller/wiimote/lib/wiiuse/io.c"/>
-                  <FILE id="XG9Wxb" name="ir.c" compile="1" resource="0" file="Source/Module/modules/controller/wiimote/lib/wiiuse/ir.c"/>
-                  <FILE id="r7IZwJ" name="motion_plus.c" compile="1" resource="0" file="Source/Module/modules/controller/wiimote/lib/wiiuse/motion_plus.c"/>
-                  <FILE id="lCKnUT" name="nunchuk.c" compile="1" resource="0" file="Source/Module/modules/controller/wiimote/lib/wiiuse/nunchuk.c"/>
-                  <FILE id="dIhYWM" name="os_nix.c" compile="1" resource="0" file="Source/Module/modules/controller/wiimote/lib/wiiuse/os_nix.c"/>
-                  <FILE id="uujEEn" name="os_win.c" compile="1" resource="0" file="Source/Module/modules/controller/wiimote/lib/wiiuse/os_win.c"/>
-                  <FILE id="df0Z9O" name="util.c" compile="1" resource="0" file="Source/Module/modules/controller/wiimote/lib/wiiuse/util.c"/>
-                  <FILE id="xyFPbL" name="wiiboard.c" compile="1" resource="0" file="Source/Module/modules/controller/wiimote/lib/wiiuse/wiiboard.c"/>
-                  <FILE id="HD6A7F" name="wiiuse.c" compile="1" resource="0" file="Source/Module/modules/controller/wiimote/lib/wiiuse/wiiuse.c"/>
+                  <FILE id="x4CFfR" name="classic.c" compile="1" resource="0" file="Source/Module/modules/controller/wiimote/lib/wiiuse/classic.c"
+                        skipPCH="1"/>
+                  <FILE id="HbnRJY" name="dynamics.c" compile="1" resource="0" file="Source/Module/modules/controller/wiimote/lib/wiiuse/dynamics.c"
+                        skipPCH="1"/>
+                  <FILE id="Qhc04H" name="events.c" compile="1" resource="0" file="Source/Module/modules/controller/wiimote/lib/wiiuse/events.c"
+                        skipPCH="1"/>
+                  <FILE id="IdcLOI" name="guitar_hero_3.c" compile="1" resource="0" file="Source/Module/modules/controller/wiimote/lib/wiiuse/guitar_hero_3.c"
+                        skipPCH="1"/>
+                  <FILE id="b2e9Xl" name="io.c" compile="1" resource="0" file="Source/Module/modules/controller/wiimote/lib/wiiuse/io.c"
+                        skipPCH="1"/>
+                  <FILE id="XG9Wxb" name="ir.c" compile="1" resource="0" file="Source/Module/modules/controller/wiimote/lib/wiiuse/ir.c"
+                        skipPCH="1"/>
+                  <FILE id="r7IZwJ" name="motion_plus.c" compile="1" resource="0" file="Source/Module/modules/controller/wiimote/lib/wiiuse/motion_plus.c"
+                        skipPCH="1"/>
+                  <FILE id="lCKnUT" name="nunchuk.c" compile="1" resource="0" file="Source/Module/modules/controller/wiimote/lib/wiiuse/nunchuk.c"
+                        skipPCH="1"/>
+                  <FILE id="dIhYWM" name="os_nix.c" compile="1" resource="0" file="Source/Module/modules/controller/wiimote/lib/wiiuse/os_nix.c"
+                        skipPCH="1"/>
+                  <FILE id="uujEEn" name="os_win.c" compile="1" resource="0" file="Source/Module/modules/controller/wiimote/lib/wiiuse/os_win.c"
+                        skipPCH="1"/>
+                  <FILE id="df0Z9O" name="util.c" compile="1" resource="0" file="Source/Module/modules/controller/wiimote/lib/wiiuse/util.c"
+                        skipPCH="1"/>
+                  <FILE id="xyFPbL" name="wiiboard.c" compile="1" resource="0" file="Source/Module/modules/controller/wiimote/lib/wiiuse/wiiboard.c"
+                        skipPCH="1"/>
+                  <FILE id="HD6A7F" name="wiiuse.c" compile="1" resource="0" file="Source/Module/modules/controller/wiimote/lib/wiiuse/wiiuse.c"
+                        skipPCH="1"/>
                 </GROUP>
               </GROUP>
               <FILE id="dICXsz" name="WiimoteManager.cpp" compile="0" resource="0"
@@ -1372,9 +1403,11 @@
               <FILE id="LoBh0H" name="GPIOCommands.h" compile="0" resource="0" file="Source/Module/modules/gpio/commands/GPIOCommands.h"/>
             </GROUP>
             <GROUP id="{7B5E3E04-8EDE-0C67-646E-0C0431F577F3}" name="pigpio">
-              <FILE id="bsQNw1" name="command.c" compile="1" resource="0" file="Source/Module/modules/gpio/pigpio/command.c"/>
+              <FILE id="bsQNw1" name="command.c" compile="1" resource="0" file="Source/Module/modules/gpio/pigpio/command.c"
+                    skipPCH="1"/>
               <FILE id="o02GiJ" name="command.h" compile="0" resource="0" file="Source/Module/modules/gpio/pigpio/command.h"/>
-              <FILE id="LsucgL" name="pigpio.c" compile="1" resource="0" file="Source/Module/modules/gpio/pigpio/pigpio.c"/>
+              <FILE id="LsucgL" name="pigpio.c" compile="1" resource="0" file="Source/Module/modules/gpio/pigpio/pigpio.c"
+                    skipPCH="1"/>
               <FILE id="cJkWSq" name="pigpio.h" compile="0" resource="0" file="Source/Module/modules/gpio/pigpio/pigpio.h"/>
             </GROUP>
             <FILE id="r5gPbq" name="GPIOModule.cpp" compile="0" resource="0" file="Source/Module/modules/gpio/GPIOModule.cpp"/>
@@ -1688,9 +1721,10 @@
             smallIcon="nVz6Li" bigIcon="nVz6Li" extraCompilerFlags="/bigobj">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib/win&#10;../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/hidapi/lib/win/x64&#10;../../External/mosquitto/lib/win&#10;../../External/simpleble/lib/win/debug"
-                       binaryPath="Binaries/Debug"/>
+                       binaryPath="Binaries/Debug" usePrecompiledHeaderFile="1" precompiledHeaderFile="Source\PrecompiledHeaders.h"/>
         <CONFIGURATION isDebug="0" name="Release" binaryPath="Binaries" libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib/win&#10;../../External/servus/lib/win/x64/release&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/hidapi/lib/win/x64&#10;../../External/mosquitto/lib/win&#10;../../External/simpleble/lib/win/release"
-                       alwaysGenerateDebugSymbols="1" debugInformationFormat="ProgramDatabase"/>
+                       alwaysGenerateDebugSymbols="1" debugInformationFormat="ProgramDatabase"
+                       usePrecompiledHeaderFile="1" precompiledHeaderFile="Source\PrecompiledHeaders.h"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_audio_basics"/>
@@ -1722,8 +1756,8 @@
                externalLibraries="Servus&#10;hidapi&#10;JoyShockLibrary" microphonePermissionNeeded="1"
                hardenedRuntimeOptions="com.apple.security.cs.allow-jit,com.apple.security.device.audio-input"
                extraDefs="JUCE_SUPPORT_CARBON=0&#10;JUCE_COREGRAPHICS_DRAW_ASYNC=1&#10;USE_ABLETONLINK=1&#10;LINK_PLATFORM_MACOSX=1"
-               xcodeValidArchs="arm64,x86_64" embeddedFrameworks="../../External/sdl/lib/osx/SDL2.framework"
-               frameworkSearchPaths="../../External/sdl/lib/osx">
+               xcodeValidArchs="arm64,x86_64" embeddedFrameworks="../../External/sdl/lib/osx/SDL2.framework&#10;../../External/syphon/Syphon.framework"
+               frameworkSearchPaths="../../External/sdl/lib/osx&#10;../../External/syphon">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="Chataigne"
                        cppLanguageStandard="c++11" cppLibType="libc++" enablePluginBinaryCopyStep="1"
@@ -1761,7 +1795,7 @@
       </MODULEPATHS>
     </XCODE_MAC>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile" externalLibraries="bluetooth&#10;Servus&#10;curl&#10;SDL2&#10;usb-1.0&#10;hidapi-hidraw&#10;JoyShockLibrary"
-                extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;&#10;-Wl,--as-needed"
+                extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;&#10;-Wl,--as-needed&#10;-Wl,--export-dynamic&#10;-fvisibility=default"
                 smallIcon="nVz6Li" bigIcon="nVz6Li" extraDefs="USE_ABLETONLINK=1&#10;LINK_PLATFORM_LINUX=1&#10;GDK_BACKEND=x11"
                 extraCompilerFlags="-Wno-multichar">
       <CONFIGURATIONS>
@@ -1867,9 +1901,9 @@
                smallIcon="nVz6Li" bigIcon="nVz6Li" hardenedRuntimeOptions="com.apple.security.cs.allow-jit"
                customPList="&lt;plist&gt;&#10;&lt;dict&gt;&#10;&lt;key&gt;NSAppTransportSecurity&lt;/key&gt;&#10;&#9;&lt;dict&gt;&#10;&#9;&#9;&lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;&#10;&#9;&#9;&lt;true/&gt;&#10;&#9;&lt;/dict&gt;&#10;&lt;/dict&gt;&#10;&lt;/plist&gt;"
                microphonePermissionNeeded="1" extraFrameworks="IOBluetooth, ForceFeedback, IOKit"
-               documentExtensions="noisette" extraDefs="JUCE_SUPPORT_CARBON=0&#10;JUCE_COREGRAPHICS_DRAW_ASYNC=1&#10;USE_ABLETONLINK=1&#10;LINK_PLATFORM_MACOSX=1&#10;OS_SYSINFO_SUPPORT=0"
-               xcodeValidArchs="arm64,x86_64" frameworkSearchPaths="../../External/sdl/lib/osx"
-               embeddedFrameworks="../../External/sdl/lib/osx/SDL2.framework">
+               documentExtensions="noisette" extraDefs="JUCE_SUPPORT_CARBON=0&#10;JUCE_COREGRAPHICS_DRAW_ASYNC=1&#10;USE_ABLETONLINK=1&#10;LINK_PLATFORM_MACOSX=1"
+               xcodeValidArchs="arm64,x86_64" frameworkSearchPaths="../../External/sdl/lib/osx&#10;../../External/syphon"
+               embeddedFrameworks="../../External/sdl/lib/osx/SDL2.framework&#10;../../External/syphon/Syphon.framework">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="0" name="Release" libraryPath="../../External/servus/lib/osx/release&#10;../../External/joycon/lib/osx"
                        osxCompatibility="10.10 SDK" macOSDeploymentTarget="10.10" binaryPath="Release"/>
@@ -1901,7 +1935,7 @@
       </MODULEPATHS>
     </XCODE_MAC>
     <LINUX_MAKE targetFolder="Builds/Raspberry" smallIcon="nVz6Li" bigIcon="nVz6Li"
-                extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;&#10;-Wl,--as-needed"
+                extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;&#10;-Wl,--as-needed&#10;-Wl,--export-dynamic&#10;-fvisibility=default"
                 externalLibraries="bluetooth&#10;Servus&#10;curl&#10;SDL2&#10;usb-1.0&#10;hidapi-hidraw&#10;pthread&#10;JoyShockLibrary&#10;atomic"
                 extraDefs="USE_ABLETONLINK=1&#10;LINK_PLATFORM_LINUX=1&#10;USE_GPIO=1"
                 extraCompilerFlags="-Wno-multichar">
@@ -1936,7 +1970,7 @@
       </MODULEPATHS>
     </LINUX_MAKE>
     <LINUX_MAKE targetFolder="Builds/Raspberry64" extraDefs="USE_ABLETONLINK=1&#10;LINK_PLATFORM_LINUX=1&#10;USE_GPIO=1"
-                extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;&#10;-Wl,--as-needed"
+                extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;&#10;-Wl,--as-needed&#10;-Wl,--export-dynamic&#10;-fvisibility=default"
                 externalLibraries="bluetooth&#10;Servus&#10;curl&#10;SDL2&#10;usb-1.0&#10;hidapi-hidraw&#10;pthread&#10;JoyShockLibrary&#10;atomic"
                 smallIcon="nVz6Li" bigIcon="nVz6Li" extraCompilerFlags="-Wno-multichar">
       <CONFIGURATIONS>

@@ -46,7 +46,6 @@ You can check the tutorials to better understand what and how you can use Chatai
     - Wiimote
     - Joycon
     - Sound card
-    - StreamDeck
     - Loupedeck
     - GPIO (Raspberry only)
     
@@ -54,6 +53,8 @@ You can check the tutorials to better understand what and how you can use Chatai
     - Resolume
     - Madmapper
     - Millumin
+    - TouchDesigner
+    - Unity
     - QLab
     - HeavyM
     - D::Light
@@ -123,7 +124,29 @@ Chataigne is using a modified version of JUCE. So you first need to compile the 
   - Build the solution from your IDE and compile it or make in linux
   - Check the dependency section below if you have dependency problems when running Chataigne
   - Enjoy !
-  
+
+### Linux specific tips
+You'll need to build this lib to run the app:
+https://github.com/HBPVIS/servus
+
+You'll need at least these libs to compile the app:
+```bash
+apt-get install build-essential libbluetooth-dev libcurl4-gnutls-dev  libfreetype-dev libfreetype6 libfreetype6-dev libwebkit2gtk-4.0-dev libhidapi-dev
+```
+
+Compile it with the JUCE modules specified:
+```bash
+Chataigne/Builds/LinuxMakefile$ CXXFLAGS="-I../../../JUCE/modules -I" make -j8
+```
+
+To start the built binary:
+```bash
+LD_LIBRARY_PATH=/path/to/Servus/build/lib/:$LD_LIBRARY_PATH ./build/Chataigne
+```
+
+Alternatively put `export LD_LIBRARY_PATH=/path/to/Servus/build/lib/:$LD_LIBRARY_PATH` into your .bashrc, and open a new terminal to make it work.
+
+
 
 ### Setting JUCE Global Paths
   
@@ -185,7 +208,7 @@ I do this on my own free time, feel free to buy me a beer :)
 
 [![Donate](https://benjamin.kuperberg.fr/chataigne/user/images/paypal_qr.png)](https://www.paypal.com/donate/?hosted_button_id=VCCTD7P9EG27Q)
 
-Donate with Metamask ! Public key : 0x2773f9E037f1cfA97FA218456330dc7BB9464cea
+Donate with Metamask ! Public key : 0x236F32251cD85745006353f9C61b49519412D5d5
 
 Are you using Chataigne on a regular basis ? Then why not support me accordingly, so I can have a more stable way to work on it !
 

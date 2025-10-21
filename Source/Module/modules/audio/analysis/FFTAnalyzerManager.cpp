@@ -11,6 +11,7 @@
 FFTAnalyzerManager::FFTAnalyzerManager() :
 	BaseManager("FFT Analysis"),
 	forwardFFT(fftOrder),
+	fftNotifier(2),
 	window(fftSize, dsp::WindowingFunction<float>::hann)
 {
 	setCanBeDisabled(true);
@@ -69,6 +70,8 @@ void FFTAnalyzerManager::process(const float* samples, int numSamples)
 
 		nextFFTBlockReady = false;
 	}
+
+	fftNotifier.addMessage(new FFTAnalyzerEvent(FFTAnalyzerEvent::DATA_UPDATED, this));
 }
 
 void FFTAnalyzerManager::copyScopeData(float* scopeData, int maxSize) const

@@ -43,7 +43,7 @@ public:
 	bool filterParamsAreDirty; //This is use to force processing even if input has not changed when a filterParam has been changed
 
 	virtual bool setupSources(Array<Parameter*> sources, int multiplexIndex, bool rangeOnly = false);
-	virtual void setupParametersInternal(int mutiplexIndex, bool rangeOnly = false);
+	virtual void setupParametersInternal(int multiplexIndex, bool rangeOnly = false);
 	virtual Parameter* setupSingleParameterInternal(Parameter* source, int multiplexIndex, bool rangeOnly = false);
 
 	ProcessResult process(Array<Parameter*> inputs, int multiplexIndex);
@@ -63,7 +63,7 @@ public:
 
 	virtual void clearItem() override;
 
-	virtual var getJSONData() override;
+	virtual var getJSONData(bool includeNonOverriden = false) override;
 	virtual void loadJSONDataInternal(var data) override;
 
 	InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables = Array<Inspectable*>()) override;
@@ -81,7 +81,7 @@ public:
 		virtual void filteredParamRangeChanged(MappingFilter*) {}
 	};
 
-	ListenerList<FilterListener> mappingFilterListeners;
+	ListenerList<FilterListener, Array<FilterListener*, CriticalSection>> mappingFilterListeners;
 	void addMappingFilterListener(FilterListener* newListener) { mappingFilterListeners.add(newListener); }
 	void removeMappingFilterListener(FilterListener* listener) { mappingFilterListeners.remove(listener); }
 

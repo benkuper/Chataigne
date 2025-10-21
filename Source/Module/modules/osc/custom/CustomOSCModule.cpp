@@ -29,6 +29,8 @@ CustomOSCModule::CustomOSCModule() :
 	boolMode = moduleParams.addEnumParameter("Boolean Send Mode", "The way to send boolean arguments.\nInt will send a 'i' argument with the value to 0 or 1\nFloat will send a 'f' argument with the value to 0.0 or 1.0\nT-F will send T or F arguments for True or False");
 	boolMode->addOption("Int", OSCHelpers::Int)->addOption("Float", OSCHelpers::Float)->addOption("T-F", OSCHelpers::TF);
 
+	clearValues = moduleParams.addTrigger("Clear Values", "Clear all values in the module");
+
 	valuesCC.userCanAddControllables = true;
 	valuesCC.customUserCreateControllableFunc = &CustomOSCModule::showMenuAndCreateValue;
 
@@ -418,6 +420,11 @@ void CustomOSCModule::onControllableFeedbackUpdateInternal(ControllableContainer
 
 			updateControllableAddressMap();
 		}
+	}else if (c == clearValues)
+	{
+		valuesCC.clear();
+		updateControllableAddressMap();
+		valuesCC.queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, &valuesCC));
 	}
 }
 
@@ -495,10 +502,12 @@ void CustomOSCModule::setupModuleFromJSONData(var data)
 			}
 		}
 	}
+	
+	autoAdd->setValue(false);
+	//autoAdd->hideInEditor = true;
+	//splitArgs->hideInEditor = true;
 
 	OSCModule::setupModuleFromJSONData(data);
-	autoAdd->setValue(false);
-	autoAdd->hideInEditor = true;
-	splitArgs->hideInEditor = true;
+	
 	setupIOConfiguration(hasInput && receiveCC != nullptr && receiveCC->enabled->boolValue(), hasOutput && outputManager != nullptr && outputManager->enabled->boolValue());
 }

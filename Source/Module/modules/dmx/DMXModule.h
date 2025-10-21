@@ -59,14 +59,16 @@ public:
 	void send16BitDMXValue(DMXUniverse* u, int channel, int value, DMXByteOrder byteOrder);
 	void send16BitDMXRange(DMXUniverse* u, int startChannel, Array<int> values, DMXByteOrder byteOrder);
 
+	void sendFromPassTrough(int net, int subnet, int universe, /*int priority,*/ Array<uint8> values);
 
 	//Script
 	static var sendDMXFromScript(const var::NativeFunctionArgs& args);
 	static var sendDMXUniverseFromScript(const var::NativeFunctionArgs& args);
 
+
 	virtual void clearItem() override;
 
-	var getJSONData() override;
+	var getJSONData(bool includeNonOverriden = false) override;
 	void loadJSONDataInternal(var data) override;
 	void afterLoadJSONDataInternal() override;
 
@@ -75,9 +77,9 @@ public:
 
 	void dmxDeviceSetupChanged(DMXDevice*) override;
 
-	void dmxDataInChanged(DMXDevice*, int net, int subnet, int universe,int priority, Array<uint8> values, const String& sourceName = "") override;
+	void dmxDataInChanged(DMXDevice*, int net, int subnet, int universe,/*int priority,*/ Array<uint8> values, const String& sourceName = "") override;
 
-	DMXUniverse* getUniverse(bool isInput, int net, int subnet, int universe, int priority, bool createIfNotThere = true);
+	DMXUniverse* getUniverse(bool isInput, int net, int subnet, int universe, /*int priority,*/ bool createIfNotThere = true);
 
 	void run() override;
 

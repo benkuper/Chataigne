@@ -55,7 +55,7 @@ void MappingInput::setInput(Parameter* _input)
 		if (m != nullptr) registerLinkedInspectable(m);
 	}
 
-	mappinginputListeners.call(&MappingInput::Listener::inputReferenceChanged, this);
+	mappinginputListeners.call(&MappingInput::Listener::inputReferenceChanged, this, -1);
 	mappingInputAsyncNotifier.addMessage(new MappingInputEvent(MappingInputEvent::INPUT_REFERENCE_CHANGED, this));
 }
 
@@ -113,13 +113,13 @@ StandardMappingInput::StandardMappingInput(var params, Multiplex* processor) :
 
 StandardMappingInput::~StandardMappingInput()
 {
-	if (list != nullptr) list->removeListListener(this);
+	if (list != nullptr && !list->isClearing) list->removeMultiplexListListener(this);
 }
 
 void StandardMappingInput::lockInput(Parameter* input)
 {
 	setInput(input);
-	if (input != nullptr) inputTarget->setEnabled(false);
+	if (input != nullptr && (list == nullptr || !list->isClearing)) inputTarget->setEnabled(false);
 }
 
 
@@ -127,26 +127,26 @@ void StandardMappingInput::setList(BaseMultiplexList* newList)
 {
 	if (newList == list) return;
 
-	if (list != nullptr)
+	if (list != nullptr && !list->isClearing)
 	{
-		list->removeListListener(this);
+		list->removeMultiplexListListener(this);
 	}
 
 	list = newList;
 
-	if (list != nullptr)
+	if (list != nullptr && !list->isClearing)
 	{
-		list->addListListener(this);
+		list->addMultiplexListListener(this);
 	}
 
-	mappinginputListeners.call(&StandardMappingInput::Listener::inputReferenceChanged, this);
+	mappinginputListeners.call(&StandardMappingInput::Listener::inputReferenceChanged, this, -1);
 	mappingInputAsyncNotifier.addMessage(new MappingInputEvent(MappingInputEvent::INPUT_REFERENCE_CHANGED, this));
 }
 
 Parameter* StandardMappingInput::getInputAt(int multiplexIndex)
 {
 	if (!multiplexListMode) return MappingInput::getInputAt(multiplexIndex);
-	return dynamic_cast<Parameter*>(list != nullptr ? list->getTargetControllableAt(multiplexIndex) : nullptr);
+	return dynamic_cast<Parameter*>(list != nullptr && !list->isClearing ? list->getTargetControllableAt(multiplexIndex) : nullptr);
 }
 
 
@@ -167,9 +167,9 @@ void StandardMappingInput::onExternalParameterValueChanged(Parameter* p)
 	MappingInput::onExternalParameterValueChanged(p);
 }
 
-void StandardMappingInput::listReferenceUpdated()
+void StandardMappingInput::listReferenceUpdated(int multiplexIndex)
 {
-	mappinginputListeners.call(&StandardMappingInput::Listener::inputReferenceChanged, this);
+	mappinginputListeners.call(&StandardMappingInput::Listener::inputReferenceChanged, this, multiplexIndex);
 	mappingInputAsyncNotifier.addMessage(new MappingInputEvent(MappingInputEvent::INPUT_REFERENCE_CHANGED, this));
 }
 

@@ -25,6 +25,7 @@ public:
 	CriticalSection filterLock;
 
 	Factory<MappingFilter> factory;
+	bool needsRebuild;
 	bool isRebuilding;
 
 	bool setupSources(Array<Parameter *> sources, int multiplexIndex);
@@ -58,7 +59,7 @@ public:
 		virtual void filterManagerNeedsProcess() {}
 	};
 
-	ListenerList<FilterManagerListener> filterManagerListeners;
+	ListenerList<FilterManagerListener, Array<FilterManagerListener*, CriticalSection>> filterManagerListeners;
 	void addFilterManagerListener(FilterManagerListener* newListener) { filterManagerListeners.add(newListener); }
 	void removeFilterManagerListener(FilterManagerListener* listener) { filterManagerListeners.remove(listener); }
 

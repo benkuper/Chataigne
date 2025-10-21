@@ -12,6 +12,7 @@ juce_ImplementSingleton(InputSystemManager)
 
 InputSystemManager::InputSystemManager() :
 	Thread("ISM"),
+	isBeingDestroyed(false),
 	inputQueuedNotifier(10)
 {
 
@@ -31,6 +32,7 @@ InputSystemManager::InputSystemManager() :
 
 InputSystemManager::~InputSystemManager()
 {
+	isBeingDestroyed = true;
 	stopTimer();
 	stopThread(1000);
 	SDL_Quit();

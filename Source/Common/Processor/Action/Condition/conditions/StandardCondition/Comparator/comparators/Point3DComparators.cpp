@@ -99,7 +99,11 @@ bool Point3DComparator::compareInternal(Parameter* sourceParam, int multiplexInd
 	Vector3D<float> p = ((Point3DParameter*)sourceParam)->getVector();
 	var value = isMultiplexed() ? refLink->getLinkedValue(multiplexIndex) : reference->getValue();
 
-	if (currentFunctionId == equalsId)				return p.x == (float)value[0] && p.y == (float)value[1] && p.z == (float)value[2];
+	if (currentFunctionId == equalsId)
+	{
+		if (value.size() < 3) return false;
+		return p.x == (float)value[0] && p.y == (float)value[1] && p.z == (float)value[2];
+	}
 	else if (currentFunctionId == magnGreaterId)	return p.length() > (float)value;
 	else if (currentFunctionId == magnLessId)		return p.length() < (float)value;
 	else if (currentFunctionId == xGreaterId)	return p.x > (float)value;

@@ -1,12 +1,14 @@
 /*
   ==============================================================================
 
-    TCPServerConnectionManager.cpp
-    Created: 4 Jul 2019 11:34:50am
-    Author:  bkupe
+	TCPServerConnectionManager.cpp
+	Created: 4 Jul 2019 11:34:50am
+	Author:  bkupe
 
   ==============================================================================
 */
+
+#include "Module/ModuleIncludes.h"
 
 TCPServerConnectionManager::TCPServerConnectionManager() :
 	Thread("TCP Server Connections"),
@@ -20,10 +22,11 @@ TCPServerConnectionManager::~TCPServerConnectionManager()
 	close();
 }
 
-void TCPServerConnectionManager::setupReceiver(int port)
+void TCPServerConnectionManager::setupReceiver(int port, const String& address)
 {
 	close();
 	portToBind = port;
+	addressToBind = address;
 	startThread();
 }
 
@@ -51,7 +54,7 @@ void TCPServerConnectionManager::close()
 
 void TCPServerConnectionManager::run()
 {
-	bool result = receiver.createListener(portToBind);
+	bool result = receiver.createListener(portToBind, addressToBind);
 	connectionManagerListeners.call(&ConnectionManagerListener::receiverBindChanged, result);
 
 	if (result)

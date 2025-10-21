@@ -25,8 +25,8 @@ public:
     bool showMappingOptions;
 
 
-    Array<ParameterLink*> links;
-    ParameterLink* link;
+    //Array<WeakReference<ParameterLink>> links;
+    WeakReference<ParameterLink> link;
     std::unique_ptr<ParameterEditor> paramEditor;
     std::unique_ptr<ImageButton> linkBT;
 

@@ -66,7 +66,7 @@
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\JUCE\modules;..\..\Modules;../../Source;../../External/wiiuse;../../External/asio;../../External/asiodriver;../../External/kinect/include;../../External/joycon/include;../../External/servus/include;../../External/dnssd/include;../../External/ois/include;../../External/sdl/include;../../External/hidapi/include;../../External/abletonlink/include;../../External/libusb/include/libusb-1.0;../../External/mosquitto/include;../../External/posistagenet/include;../../External/simpleble/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;VST_LOGGING=0;USE_KINECT=0;USE_ABLETONLINK=0;BLE_SUPPORT=0;PING_SUPPORT=0;OS_SYSINFO_SUPPORT=0;JUCER_VS2022_BA4A4C2=1;JUCE_APP_VERSION=1.9.18b2;JUCE_APP_VERSION_HEX=0x10912;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;JucePlugin_Build_LV2=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;VST_LOGGING=0;USE_KINECT=0;USE_ABLETONLINK=0;BLE_SUPPORT=0;PING_SUPPORT=0;OS_SYSINFO_SUPPORT=0;JUCER_VS2022_BA4A4C2=1;JUCE_APP_VERSION=1.9.25b13;JUCE_APP_VERSION_HEX=0x10919;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;JucePlugin_Build_LV2=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
@@ -81,7 +81,7 @@
     </ClCompile>
     <ResourceCompile>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\JUCE\modules;..\..\Modules;../../Source;../../External/wiiuse;../../External/asio;../../External/asiodriver;../../External/kinect/include;../../External/joycon/include;../../External/servus/include;../../External/dnssd/include;../../External/ois/include;../../External/sdl/include;../../External/hidapi/include;../../External/abletonlink/include;../../External/libusb/include/libusb-1.0;../../External/mosquitto/include;../../External/posistagenet/include;../../External/simpleble/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;VST_LOGGING=0;USE_KINECT=0;USE_ABLETONLINK=0;BLE_SUPPORT=0;PING_SUPPORT=0;OS_SYSINFO_SUPPORT=0;JUCER_VS2022_BA4A4C2=1;JUCE_APP_VERSION=1.9.18b2;JUCE_APP_VERSION_HEX=0x10912;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;JucePlugin_Build_LV2=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;VST_LOGGING=0;USE_KINECT=0;USE_ABLETONLINK=0;BLE_SUPPORT=0;PING_SUPPORT=0;OS_SYSINFO_SUPPORT=0;JUCER_VS2022_BA4A4C2=1;JUCE_APP_VERSION=1.9.25b13;JUCE_APP_VERSION_HEX=0x10919;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;JucePlugin_Build_LV2=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <Link>
       <OutputFile>$(OutDir)\Chataigne.exe</OutputFile>
@@ -115,7 +115,7 @@
     <ClCompile>
       <Optimization>Full</Optimization>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\JUCE\modules;..\..\Modules;../../Source;../../External/wiiuse;../../External/asio;../../External/asiodriver;../../External/kinect/include;../../External/joycon/include;../../External/servus/include;../../External/dnssd/include;../../External/ois/include;../../External/sdl/include;../../External/hidapi/include;../../External/abletonlink/include;../../External/libusb/include/libusb-1.0;../../External/mosquitto/include;../../External/posistagenet/include;../../External/simpleble/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;VST_LOGGING=0;USE_KINECT=0;USE_ABLETONLINK=0;BLE_SUPPORT=0;PING_SUPPORT=0;OS_SYSINFO_SUPPORT=0;JUCER_VS2022_BA4A4C2=1;JUCE_APP_VERSION=1.9.18b2;JUCE_APP_VERSION_HEX=0x10912;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;JucePlugin_Build_LV2=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;VST_LOGGING=0;USE_KINECT=0;USE_ABLETONLINK=0;BLE_SUPPORT=0;PING_SUPPORT=0;OS_SYSINFO_SUPPORT=0;JUCER_VS2022_BA4A4C2=1;JUCE_APP_VERSION=1.9.25b13;JUCE_APP_VERSION_HEX=0x10919;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;JucePlugin_Build_LV2=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
@@ -130,7 +130,7 @@
     </ClCompile>
     <ResourceCompile>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\JUCE\modules;..\..\Modules;../../Source;../../External/wiiuse;../../External/asio;../../External/asiodriver;../../External/kinect/include;../../External/joycon/include;../../External/servus/include;../../External/dnssd/include;../../External/ois/include;../../External/sdl/include;../../External/hidapi/include;../../External/abletonlink/include;../../External/libusb/include/libusb-1.0;../../External/mosquitto/include;../../External/posistagenet/include;../../External/simpleble/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;VST_LOGGING=0;USE_KINECT=0;USE_ABLETONLINK=0;BLE_SUPPORT=0;PING_SUPPORT=0;OS_SYSINFO_SUPPORT=0;JUCER_VS2022_BA4A4C2=1;JUCE_APP_VERSION=1.9.18b2;JUCE_APP_VERSION_HEX=0x10912;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;JucePlugin_Build_LV2=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;VST_LOGGING=0;USE_KINECT=0;USE_ABLETONLINK=0;BLE_SUPPORT=0;PING_SUPPORT=0;OS_SYSINFO_SUPPORT=0;JUCER_VS2022_BA4A4C2=1;JUCE_APP_VERSION=1.9.25b13;JUCE_APP_VERSION_HEX=0x10919;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;JucePlugin_Build_LV2=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <Link>
       <OutputFile>$(OutDir)\Chataigne.exe</OutputFile>
@@ -157,6 +157,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\PrecompiledHeaders.cpp"/>
     <ClCompile Include="..\..\Source\Guider\guides\BasicsGuide.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -171,6 +172,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Guider\GuiderIncludes.cpp"/>
     <ClCompile Include="..\..\Source\Analytics\MatomoAnalytics.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\OSHelpers\KeyboardMouseHooker.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\BLE\BLEDevice.cpp">
@@ -344,6 +348,9 @@
     <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\ui\ConditionManagerEditor.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\Condition.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Action\Condition\ConditionManager.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -374,6 +381,9 @@
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\ui\MappingFilterEditor.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\string\StringFilter.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\DelayFilter.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -381,6 +391,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\condition\ConditionFilter.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\oneeuro\OneEuroFilter.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\CropFilter.cpp">
@@ -696,9 +709,6 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\controller\keyboard\KeyboardModule.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\controller\keyboard\WindowsHooker.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\controller\kinect\KinectV2Module.cpp">
@@ -2431,6 +2441,9 @@
     <ClCompile Include="..\..\Modules\juce_organicui\helpers\crypto\hmac\SHA1.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\helpers\NetworkHelpers.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\helpers\OSCHelpers.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2630,6 +2643,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\ui\LookAndFeelOO.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\ui\UITimers.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\undo\UndoMaster.cpp">
@@ -2942,12 +2958,14 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_timeline.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\PrecompiledHeaders.h"/>
     <ClInclude Include="..\..\Source\Guider\guides\BasicsGuide.h"/>
     <ClInclude Include="..\..\Source\Guider\BaseGuide.h"/>
     <ClInclude Include="..\..\Source\Guider\GuideComponents.h"/>
     <ClInclude Include="..\..\Source\Guider\Guider.h"/>
     <ClInclude Include="..\..\Source\Guider\GuiderIncludes.h"/>
     <ClInclude Include="..\..\Source\Analytics\MatomoAnalytics.h"/>
+    <ClInclude Include="..\..\Source\Common\OSHelpers\KeyboardMouseHooker.h"/>
     <ClInclude Include="..\..\Source\Common\BLE\BLEDevice.h"/>
     <ClInclude Include="..\..\Source\Common\BLE\BLEDeviceParameter.h"/>
     <ClInclude Include="..\..\Source\Common\BLE\BLEManager.h"/>
@@ -3025,9 +3043,11 @@
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\MappingFilter.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\MappingFilterManager.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\ui\MappingFilterEditor.h"/>
+    <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\string\StringFilter.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\DelayFilter.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\TimeFilter.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\condition\ConditionFilter.h"/>
+    <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\oneeuro\OneEuroFilter.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\CropFilter.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\CurveMapFilter.h"/>
     <ClInclude Include="..\..\Source\Common\Processor\Mapping\Filter\filters\number\DampingFilter.h"/>
@@ -3141,7 +3161,6 @@
     <ClInclude Include="..\..\Source\Module\modules\controller\keyboard\commands\KeyboardModuleCommands.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\keyboard\KeyboardMacFunctions.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\keyboard\KeyboardModule.h"/>
-    <ClInclude Include="..\..\Source\Module\modules\controller\keyboard\WindowsHooker.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\kinect\KinectV2Module.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\wiimote\WiimoteManager.h"/>
     <ClInclude Include="..\..\Source\Module\modules\controller\wiimote\WiimoteModule.h"/>
@@ -3434,14 +3453,14 @@
     <ClInclude Include="..\..\JUCE\modules\juce_core\zip\juce_GZIPCompressorOutputStream.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_core\zip\juce_GZIPDecompressorInputStream.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_core\zip\juce_ZipFile.h"/>
-    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_core\juce_core.h"/>
+    <ClInclude Include="..\..\..\JUCE\modules\juce_core\juce_core.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_cryptography\encryption\juce_BlowFish.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_cryptography\encryption\juce_Primes.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_cryptography\encryption\juce_RSAKey.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_cryptography\hashing\juce_MD5.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_cryptography\hashing\juce_SHA256.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_cryptography\hashing\juce_Whirlpool.h"/>
-    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_cryptography\juce_cryptography.h"/>
+    <ClInclude Include="..\..\..\JUCE\modules\juce_cryptography\juce_cryptography.h"/>
     <ClInclude Include="..\..\Modules\juce_dmx\device\sacn\e131.h"/>
     <ClInclude Include="..\..\Modules\juce_dmx\device\DMXArtNetDevice.h"/>
     <ClInclude Include="..\..\Modules\juce_dmx\device\DMXDevice.h"/>
@@ -3657,7 +3676,7 @@
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\windows\juce_TopLevelWindow.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\windows\juce_VBlankAttachment.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\windows\juce_WindowUtils.h"/>
-    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_basics\juce_gui_basics.h"/>
+    <ClInclude Include="..\..\..\JUCE\modules\juce_gui_basics\juce_gui_basics.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_extra\code_editor\juce_CodeDocument.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_extra\code_editor\juce_CodeEditorComponent.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_extra\code_editor\juce_CodeTokeniser.h"/>
@@ -3685,7 +3704,7 @@
     <ClInclude Include="..\..\JUCE\modules\juce_gui_extra\misc\juce_SystemTrayIconComponent.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_extra\misc\juce_WebBrowserComponent.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_extra\native\juce_NSViewFrameWatcher_mac.h"/>
-    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_extra\juce_gui_extra.h"/>
+    <ClInclude Include="..\..\..\JUCE\modules\juce_gui_extra\juce_gui_extra.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\app\CrashHandler.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\app\OrganicApplication.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\app\OrganicMainComponent.h"/>
@@ -3883,6 +3902,7 @@
     <ClInclude Include="..\..\Modules\juce_organicui\ui\Grabber.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\ui\LookAndFeelOO.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\ui\Style.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\ui\UITimers.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\undo\UndoMaster.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\updater\AppUpdater.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\warning\ui\WarningReporterPanel.h"/>
@@ -3898,7 +3918,7 @@
     <ClInclude Include="..\..\JUCE\modules\juce_osc\osc\juce_OSCSender.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_osc\osc\juce_OSCTimeTag.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_osc\osc\juce_OSCTypes.h"/>
-    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_osc\juce_osc.h"/>
+    <ClInclude Include="..\..\..\JUCE\modules\juce_osc\juce_osc.h"/>
     <ClInclude Include="..\..\Modules\juce_serial\lib\cobs\cobs.h"/>
     <ClInclude Include="..\..\Modules\juce_serial\serial\impl\unix.h"/>
     <ClInclude Include="..\..\Modules\juce_serial\serial\impl\win.h"/>
@@ -4928,6 +4948,7 @@
     <None Include="..\..\Resources\Modules\DMX.png"/>
     <None Include="..\..\Resources\Modules\Empty.png"/>
     <None Include="..\..\Resources\Modules\Gamepad.png"/>
+    <None Include="..\..\Resources\Modules\GPIO.png"/>
     <None Include="..\..\Resources\Modules\HeavyM.png"/>
     <None Include="..\..\Resources\Modules\HTTP.png"/>
     <None Include="..\..\Resources\Modules\JoyCon.png"/>
