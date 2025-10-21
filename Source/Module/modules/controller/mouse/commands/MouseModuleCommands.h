@@ -19,12 +19,14 @@ public:
 
 	MouseModule* mouseModule;
 
-	enum Type { SET_CURSOR_POSITION, BUTTON_DOWN, BUTTON_UP, BUTTON_CLICK };
+	enum Type { SET_CURSOR_POSITION, BUTTON_DOWN, BUTTON_UP, BUTTON_CLICK, MOUSE_WHEEL };
 	Type type;
 
 	Point2DParameter* position;
 	EnumParameter* buttonID;
 	BoolParameter* isRelative;
+	EnumParameter* orientation;
+	FloatParameter* wheelDelta;
 
 	void triggerInternal(int multiplexIndex) override;
 

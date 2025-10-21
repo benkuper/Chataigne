@@ -35,11 +35,16 @@ public:
 	BoolParameter* leftButtonDown;
 	BoolParameter* middleButtonDown;
 	BoolParameter* rightButtonDown;
+	FloatParameter* wheelYDelta;
+	Trigger* wheelYData;
+	FloatParameter* wheelXDelta;
+	Trigger* wheelXData;
 	BoolParameter* extraButton1;
 	BoolParameter* extraButton2;
 
 
 	void setCursorPosition(Point<float>& pos, bool isRelative);
+	void setWheelData(float wheelDelta, int orientation);
 	void setButtonDown(int buttonID);
 	void setButtonUp(int buttonID);
 	void setButtonClick(int buttonID);
@@ -53,6 +58,7 @@ public:
 
 	void mouseDown(const MouseEvent& e) override;
 	void mouseUp(const MouseEvent& e) override;
+	void mouseWheelMove(const MouseEvent& e, const MouseWheelDetails& d) override;
 #endif
 
 

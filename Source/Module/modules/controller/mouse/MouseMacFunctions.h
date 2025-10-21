@@ -51,4 +51,11 @@ namespace mousemac {
 #endif
         
     }
+
+    void sendScrollWheelEvent(int32 scrollX, int32 scrollY) {
+#if JUCE_SUPPORT_CARBON
+        CGEventRef scrollEvent = CGEventCreateScrollWheelEvent(NULL, CGScrollEventUnit.line, 2, scrollY, scrollX)
+#endif
+
+    }
 }
