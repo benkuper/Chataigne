@@ -207,7 +207,6 @@ void MouseModule::mouseUp(const MouseEvent& e)
 	middleButtonDown->setValue(false);
 	rightButtonDown->setValue(false);
 }
-#endif
 
 void MouseModule::mouseWheelMove(const MouseEvent& e, const MouseWheelDetails& d)
 {
@@ -227,6 +226,7 @@ void MouseModule::mouseWheelMove(const MouseEvent& e, const MouseWheelDetails& d
 		if (logIncomingData->boolValue()) NLOG(niceName, "X Delta " << d.deltaX << " received. Reversed: " << revStr);
 	}
 }
+#endif
 
 void MouseModule::onContainerParameterChangedInternal(Parameter* p)
 {
