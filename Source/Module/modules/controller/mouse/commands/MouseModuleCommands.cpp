@@ -13,7 +13,8 @@ MouseModuleCommands::MouseModuleCommands(MouseModule* _module, CommandContext co
 	mouseModule(_module),
 	position(nullptr),
 	buttonID(nullptr),
-	isRelative(nullptr)
+	isRelative(nullptr),
+	wheelDelta(nullptr)
 {
 	type = (Type)(int)params.getProperty("type", SET_CURSOR_POSITION);
 	switch (type)
@@ -34,6 +35,13 @@ MouseModuleCommands::MouseModuleCommands(MouseModule* _module, CommandContext co
 		buttonID->addOption("Left", 0)->addOption("Middle", 1)->addOption("Right", 2);
 	}
 	break;
+
+	case MOUSE_WHEEL:
+	{
+		orientation = addEnumParameter("Wheel Orientation", "horizontal or vertical wheel movement");
+		orientation->addOption("Vertical", 1)->addOption("Horizontal", 2);
+		wheelDelta = addFloatParameter("Wheel Delta", "The amount to move the wheel, negative for down or right", .234, -2, 2);
+	}
 	}
 }
 
@@ -46,12 +54,12 @@ void MouseModuleCommands::triggerInternal(int multiplexIndex)
 	switch (type)
 	{
 	case SET_CURSOR_POSITION:
-    {
+	{
 		var pVal = getLinkedValue(position, multiplexIndex);
 		Point<float> p(pVal[0], pVal[1]);
 		mouseModule->setCursorPosition(p, getLinkedValue(isRelative, multiplexIndex));
-    }
-    break;
+	}
+	break;
 
 	case BUTTON_DOWN:
 		mouseModule->setButtonDown(getLinkedValue(buttonID, multiplexIndex));
@@ -63,6 +71,10 @@ void MouseModuleCommands::triggerInternal(int multiplexIndex)
 
 	case BUTTON_CLICK:
 		mouseModule->setButtonClick(getLinkedValue(buttonID, multiplexIndex));
+		break;
+
+	case MOUSE_WHEEL:
+		mouseModule->setWheelData(getLinkedValue(wheelDelta, multiplexIndex), getLinkedValue(orientation, multiplexIndex));
 		break;
 	}
 }
