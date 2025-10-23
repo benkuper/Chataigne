@@ -119,7 +119,7 @@ public:
 
 	EnablingControllableContainer ltcParamsCC;
 	EnumParameter* ltcFPS;
-	int curLTCFPS; //avoid accessing enum in audio thread
+	double curLTCFPS; //avoid accessing enum in audio thread
 	IntParameter* ltcChannel;
 	BoolParameter* ltcUseDate;
 

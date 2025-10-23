@@ -33,6 +33,8 @@ ChataigneSequence::ChataigneSequence() :
 	ltcModuleTarget->targetType = TargetParameter::CONTAINER;
 	ltcModuleTarget->maxDefaultSearchLevel = 0;
 	ltcSyncTolerance = addFloatParameter("LTC Sync Tolerance", "The maximum time difference (in seconds) allowed between the LTC time and the sequence time before a jump is made", 0.25f, 0.05f, 1.0f);
+	ltcOutOfRangeMode = addEnumParameter("LTC Out of Range Mode", "Behavior when LTC time is out of the sequence time range");
+	ltcOutOfRangeMode->addOption("Do Nothing", DO_NOTHING)->addOption("Jump to Closest", JUMP_TO_CLOSEST)->addOption("Jump to 0", JUMP_TO_START)->addOption("Jump to End", JUMP_TO_END);
 	ltcMode = addEnumParameter("LTC Mode", "Either receiving or sending LTC", 0);
 	ltcMode->addOption("Receive", RECEIVE)->addOption("Send", SEND)->addOption("Both", BOTH);
 	ltcSendFPS = addEnumParameter("Send FPS", "The framerate to use to send LTC");
@@ -458,7 +460,29 @@ void ChataigneSequence::onExternalParameterValueChanged(Parameter* p)
 			{
 				double time = ltcAudioModule->ltcTime->floatValue() + (syncOffset->floatValue() * (reverseOffset->boolValue() ? -1 : 1));
 				double diff = fabs(currentTime->floatValue() - time);
-				if (diff > ltcSyncTolerance->floatValue()) setCurrentTime(time, true, true);
+				if (time >= 0 && time < totalTime->floatValue()) // if in range
+				{
+					if (diff > ltcSyncTolerance->floatValue()) setCurrentTime(time, true, true); // only jump if over tolerance
+					if (isPlaying->boolValue() == false && ltcAudioModule->ltcPlaying->boolValue()) playTrigger->trigger();
+				}
+				else { // out of range, check what to do
+					switch (ltcOutOfRangeMode->getValueDataAsEnum<LTCOutOfRangeMode>())
+					{
+						default:
+						case DO_NOTHING:
+							break;
+						case JUMP_TO_CLOSEST:
+							if (time < 0) setCurrentTime(0, true, true);
+							else if (time >= totalTime->floatValue()) setCurrentTime(totalTime->floatValue() - 0.001);
+							break;
+						case JUMP_TO_START:
+							setCurrentTime(0);
+							break;
+						case JUMP_TO_END:
+							setCurrentTime(totalTime->floatValue() - 0.001);
+							break;
+					}
+				}
 			}
 		}
 	}
