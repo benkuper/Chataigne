@@ -38,6 +38,8 @@ public:
 	AudioModule* ltcAudioModule;
 	TargetParameter* ltcModuleTarget;
 	FloatParameter* ltcSyncTolerance;
+	enum LTCOutOfRangeMode { DO_NOTHING, JUMP_TO_CLOSEST, JUMP_TO_START, JUMP_TO_END };
+	EnumParameter* ltcOutOfRangeMode;
 	enum LTCSyncMode { RECEIVE, SEND, BOTH};
 	EnumParameter* ltcMode;
 	EnumParameter* ltcSendFPS;
