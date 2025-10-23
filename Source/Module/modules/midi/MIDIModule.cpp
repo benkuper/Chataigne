@@ -259,6 +259,10 @@ void MIDIModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc,
 				case MIDIValueParameter::NOTE_ON: sendNoteOn(mvp->channel, mvp->pitchOrNumber, mvp->intValue()); break;
 				case MIDIValueParameter::NOTE_OFF: sendNoteOff(mvp->channel, mvp->pitchOrNumber); break;
 				case MIDIValueParameter::CONTROL_CHANGE: sendControlChange(mvp->channel, mvp->pitchOrNumber, mvp->intValue()); break;
+				case MIDIValueParameter::PITCH_WHEEL: sendPitchWheel(mvp->channel, mvp->intValue()); break;
+				case MIDIValueParameter::CHANNEL_PRESSURE: sendChannelPressure(mvp->channel, mvp->intValue()); break;
+				case MIDIValueParameter::AFTER_TOUCH: sendAfterTouch(mvp->channel, mvp->pitchOrNumber, mvp->intValue()); break;
+				case MIDIValueParameter::PROGRAM_CHANGE: sendProgramChange(mvp->channel, mvp->intValue()); break;
 
 				default:
 					break;

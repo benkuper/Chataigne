@@ -58,6 +58,7 @@ public:
 
 	AudioModule* ltcAudioModule;
 	TargetParameter* ltcModuleTarget;
+	FloatParameter* ltcSyncTolerance;
 	enum LTCSyncMode { RECEIVE, SEND, BOTH};
 	EnumParameter* ltcMode;
 	EnumParameter* ltcSendFPS;
