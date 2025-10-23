@@ -57,7 +57,7 @@ AudioModule::AudioModule(const String& name) :
 	ltcParamsCC.enabled->setValue(false);
 	moduleParams.addChildControllableContainer(&ltcParamsCC);
 	ltcFPS = ltcParamsCC.addEnumParameter("FPS", "The framerate to use to decode LTC");
-	ltcFPS->addOption("24", 24)->addOption("25", 25)->addOption("30", 30);
+	ltcFPS->addOption("24", 24)->addOption("25", 25)->addOption("29.97", 29.97)->addOption("30", 30);
 	ltcFPS->setDefaultValue(30);
 	curLTCFPS = ltcFPS->getValueData();
 
@@ -296,7 +296,7 @@ void AudioModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc
 	}
 	else if (c == ltcFPS)
 	{
-		curLTCFPS = (int)ltcFPS->getValueData();
+		curLTCFPS = (double)ltcFPS->getValueData();
 	}
 	else if (c == ltcParamsCC.enabled)
 	{
@@ -444,9 +444,9 @@ void AudioModule::audioDeviceIOCallbackWithContext(const float* const* inputChan
 					SMPTETimecode stime;
 					ltc_frame_to_time(&stime, &frame.ltc, (ltcUseDate->boolValue() ? 1 : 0));
 
-					float time = stime.days * 3600 * 24 + stime.hours * 3600 + stime.mins * 60 + stime.secs + stime.frame * 1.0f / curLTCFPS;
+ 					float time = stime.days * 3600 * 24 + stime.hours * 3600 + stime.mins * 60 + stime.secs + stime.frame * 1.0f / (float)curLTCFPS;
 					ltcTime->setValue(time);
-					hasLTC = true;
+ 					hasLTC = true;
 				}
 
 				if (!hasLTC)
