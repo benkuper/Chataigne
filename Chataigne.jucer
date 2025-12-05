@@ -1944,13 +1944,13 @@
     </XCODE_MAC>
     <LINUX_MAKE targetFolder="Builds/Raspberry" smallIcon="nVz6Li" bigIcon="nVz6Li"
                 extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;&#10;-Wl,--as-needed&#10;-Wl,--export-dynamic&#10;-fvisibility=default"
-                externalLibraries="bluetooth&#10;Servus&#10;curl&#10;SDL2&#10;usb-1.0&#10;hidapi-hidraw&#10;pthread&#10;JoyShockLibrary&#10;atomic"
+                externalLibraries="bluetooth&#10;Servus&#10;curl&#10;SDL2&#10;usb-1.0&#10;hidapi-hidraw&#10;pthread&#10;JoyShockLibrary&#10;atomic&#10;mosquitto&#10;mosquittopp"
                 extraDefs="USE_ABLETONLINK=1&#10;LINK_PLATFORM_LINUX=1&#10;USE_GPIO=1"
                 extraCompilerFlags="-Wno-multichar">
       <CONFIGURATIONS>
-        <CONFIGURATION name="Debug" headerPath="/usr/include/freetype2" libraryPath="../../External/servus/lib/raspberry&#10;../../External/sdl/lib/raspberry&#10;../../External/joycon/lib/raspberry&#10;/usr/lib/arm-linux-gnueabihf"
+        <CONFIGURATION name="Debug" headerPath="/usr/include/freetype2" libraryPath="../../External/servus/lib/raspberry&#10;../../External/sdl/lib/raspberry&#10;../../External/joycon/lib/raspberry&#10;/usr/lib/arm-linux-gnueabihf&#10;../../External/mosquitto/lib/rpi/armhf"
                        linuxArchitecture="-march=armv8-a" optimisation="3" isDebug="1"/>
-        <CONFIGURATION name="Release" headerPath="/usr/include/freetype2" libraryPath="../../External/servus/lib/raspberry&#10;../../External/sdl/lib/raspberry&#10;../../External/joycon/lib/raspberry&#10;/usr/lib/arm-linux-gnueabihf&#10;"
+        <CONFIGURATION name="Release" headerPath="/usr/include/freetype2" libraryPath="../../External/servus/lib/raspberry&#10;../../External/sdl/lib/raspberry&#10;../../External/joycon/lib/raspberry&#10;/usr/lib/arm-linux-gnueabihf&#10;../../External/mosquitto/lib/rpi/armhf&#10;"
                        linuxArchitecture="-march=armv8-a"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
@@ -1981,13 +1981,13 @@
     </LINUX_MAKE>
     <LINUX_MAKE targetFolder="Builds/Raspberry64" extraDefs="USE_ABLETONLINK=1&#10;LINK_PLATFORM_LINUX=1&#10;USE_GPIO=1"
                 extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;&#10;-Wl,--as-needed&#10;-Wl,--export-dynamic&#10;-fvisibility=default"
-                externalLibraries="bluetooth&#10;Servus&#10;curl&#10;SDL2&#10;usb-1.0&#10;hidapi-hidraw&#10;pthread&#10;JoyShockLibrary&#10;atomic"
+                externalLibraries="bluetooth&#10;Servus&#10;curl&#10;SDL2&#10;usb-1.0&#10;hidapi-hidraw&#10;pthread&#10;JoyShockLibrary&#10;atomic&#10;mosquitto&#10;mosquittopp"
                 smallIcon="nVz6Li" bigIcon="nVz6Li" extraCompilerFlags="-Wno-multichar">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" headerPath="/usr/include/freetype2"
-                       libraryPath="../../External/servus/lib/raspberry64&#10;../../External/sdl/lib/raspberry64&#10;../../External/joycon/lib/raspberry64&#10;"/>
+                       libraryPath="../../External/servus/lib/raspberry64&#10;../../External/sdl/lib/raspberry64&#10;../../External/joycon/lib/raspberry64&#10;../../External/mosquitto/lib/rpi/aarch64"/>
         <CONFIGURATION isDebug="0" name="Release" headerPath="/usr/include/freetype2"
-                       libraryPath="../../External/servus/lib/raspberry64&#10;../../External/sdl/lib/raspberry64&#10;../../External/joycon/lib/raspberry64&#10;"/>
+                       libraryPath="../../External/servus/lib/raspberry64&#10;../../External/sdl/lib/raspberry64&#10;../../External/joycon/lib/raspberry64&#10;../../External/mosquitto/lib/rpi/aarch64"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_audio_basics" path="JUCE/modules"/>
