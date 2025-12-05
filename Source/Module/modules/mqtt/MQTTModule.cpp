@@ -13,14 +13,14 @@
 MQTTClientModule::MQTTClientModule(const String& name, bool canHaveInput, bool canHaveOutput) :
 	Module(name),
 	Thread("MQTT"),
-#if JUCE_WINDOWS
+#ifdef MOSQUITTO_SUPPORTED
 	mosquittopp("Chataigne"),
 #endif
 	authenticationCC("Authentication"),
 	topicsManager("Topics")
 {
 
-#if JUCE_WINDOWS
+#ifdef MOSQUITTO_SUPPORTED
 	mosqpp::lib_init();
 	threaded_set(true);
 #else
@@ -72,7 +72,7 @@ void MQTTClientModule::clearItem()
 {
 	Module::clearItem();
 
-#if JUCE_WINDOWS
+#ifdef MOSQUITTO_SUPPORTED
 	mosqpp::lib_cleanup();
 #endif
 }
@@ -120,7 +120,7 @@ void MQTTClientModule::publishMessage(const String& topic, const String& message
 {
 	if (!enabled->boolValue()) return;
 
-#if JUCE_WINDOWS
+#ifdef MOSQUITTO_SUPPORTED
 	if (!isConnected->boolValue())
 	{
 		NLOGWARNING(niceName, "Not connected, not sending");
@@ -150,7 +150,7 @@ void MQTTClientModule::itemRemoved(MQTTTopic* item)
 {
 	if (isCurrentlyLoadingData) return;
 
-#if JUCE_WINDOWS
+#ifdef MOSQUITTO_SUPPORTED
 	unsubscribe(&item->mid, item->topic->stringValue().toStdString().c_str());
 #endif
 	updateTopicSubs();
@@ -160,7 +160,7 @@ void MQTTClientModule::itemsRemoved(Array<MQTTTopic*> items)
 {
 	if (isCurrentlyLoadingData) return;
 
-#if JUCE_WINDOWS
+#ifdef MOSQUITTO_SUPPORTED
 	for (auto& item : items) unsubscribe(&item->mid, item->topic->stringValue().toStdString().c_str());
 #endif
 	updateTopicSubs();
@@ -212,7 +212,7 @@ void MQTTClientModule::updateTopicSubs()
 		break;
 		}
 
-#if JUCE_WINDOWS
+#ifdef MOSQUITTO_SUPPORTED
 		subscribe(&topic->mid, s.toStdString().c_str());
 #endif
 		topicItemMap.set(s, topic);
@@ -265,7 +265,7 @@ void MQTTClientModule::run()
 {
 	wait(100);
 
-#if JUCE_WINDOWS
+#ifdef MOSQUITTO_SUPPORTED
 	if (isConnected->boolValue())
 	{
 		isConnected->setValue(false);
@@ -327,7 +327,7 @@ void MQTTClientModule::run()
 
 void MQTTClientModule::stopClient()
 {
-#if JUCE_WINDOWS
+#ifdef MOSQUITTO_SUPPORTED
 	loop_stop();
 	disconnect();
 #endif
@@ -376,7 +376,7 @@ var MQTTClientModule::publishMessageFromScript(const var::NativeFunctionArgs& ar
 	return var();
 }
 
-#if JUCE_WINDOWS
+#ifdef MOSQUITTO_SUPPORTED
 void MQTTClientModule::on_connect(int rc)
 {
 	//LOG("MQTT Connected : " << rc);
