@@ -46,7 +46,12 @@ ChataigneSequence::ChataigneSequence() :
 	reverseOffset = addBoolParameter("Reverse Offset", "This allows negative offset", false);
 	resetTimeOnMTCStopped = addBoolParameter("Reset on MTC Stop", "If checked, sequence will stop and reset time when MTC doesn't send data anymore. If not checked, sequence will just keep its current time", false);
 
+	artnetTimecodeRemoteIP = addStringParameter("Artnet TC remote","Send artnet TC to this host", "127.0.0.1",false);
+	artnetTimecodeRemoteIP->canBeDisabledByUser = true;
 
+	artnetFrameRate = addEnumParameter("Artnet TC framerate","Framerate of artnet tc");
+	artnetFrameRate->addOption("Film24", 0)->addOption("EBU25", 1)->addOption("DF2997", 2)->addOption("SMPTE30", 3);
+	artnetStreamId = addIntParameter("Artnet stream ID", "Stream id of timecode to send",0,0,255);
 
 	std::function<bool(ControllableContainer*)> typeCheckFunc = [](ControllableContainer* cc) { return dynamic_cast<AudioModule*>(cc) != nullptr; };
 	ltcModuleTarget->defaultContainerTypeCheckFunc = typeCheckFunc;
@@ -395,6 +400,10 @@ void ChataigneSequence::onContainerParameterChangedInternal(Parameter* p)
 		if (ltcModuleTarget->enabled) setLTCAudioModule((AudioModule*)ltcModuleTarget->targetContainer.get());
 		else setLTCAudioModule(nullptr);
 	}
+
+	if (p == currentTime && artnetTimecodeRemoteIP->enabled) {
+		sendArtnetTimecode();
+	}
 }
 
 void ChataigneSequence::onControllableStateChanged(Controllable* c)
@@ -510,4 +519,45 @@ void ChataigneSequence::mtcTimeUpdated(bool isFullFrame)
 	bool seekMode = isJump || !mtcReceiver->isPlaying;
 	if (mtcReceiver->isPlaying && !isPlaying->boolValue() && time >= 0 && time < totalTime->floatValue()) playTrigger->trigger();
 	setCurrentTime(time, isJump, seekMode);
+}
+
+void ChataigneSequence::sendArtnetTimecode()
+{
+	uint8_t p[19] = {};
+
+	const char id[8] = { 'A','r','t','-','N','e','t','\0' };
+	std::memcpy(p, id, 8);
+
+	// 2) OpCode = OpTimeCode = 0x9700, low byte first 
+	p[8] = 0x00; // low
+	p[9] = 0x97; // high
+
+	// 3) ProtVerHi / ProtVerLo (current value 14 => 0x000e) 
+	p[10] = 0x00; // ProtVerHi
+	p[11] = 0x0E; // ProtVerLo
+
+	// 4) Filler1 (0)
+	p[12] = 0x00;
+
+	// 5) StreamId (0 = master)
+	p[13] = artnetStreamId->intValue();
+
+	float time = currentTime->floatValue();
+	float frames = 30;
+	switch (artnetFrameRate->intValue()) {
+	case 0: frames = 24; break;
+	case 1: frames = 25; break;
+	case 2: frames = 29.9; break;
+	case 3: frames = 30; break;
+	}
+
+	// 6) Time fields 
+	p[14] = fmodf(time, 1.0) * frames;                // Frames
+	p[15] = int(floor(time)) % 60;               // Seconds
+	p[16] = int(floor(time) / 60) % 60;;               // Minutes
+	p[17] = int(floor(time) / 3600) % 24;                 // Hours
+
+	p[18] = artnetFrameRate->intValue();; // Type
+
+	artnetSocket.write(artnetTimecodeRemoteIP->stringValue(), 6454, p, (int)sizeof(p));
 }
