@@ -50,12 +50,6 @@ public:
 	FloatParameter* syncOffset;
 	BoolParameter* reverseOffset;
 
-	StringParameter* artnetTimecodeRemoteIP;
-	EnumParameter* artnetFrameRate;
-	IntParameter* artnetStreamId;
-	juce::DatagramSocket artnetSocket;
-
-
 	virtual void clearItem() override;
 
 	void setMasterAudioModule(AudioModule * module);
@@ -102,8 +96,6 @@ public:
 	virtual void mtcStarted() override;
 	virtual void mtcStopped() override;
 	virtual void mtcTimeUpdated(bool isFullFrame) override;
-
-	void sendArtnetTimecode();
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ChataigneSequence)
 };
