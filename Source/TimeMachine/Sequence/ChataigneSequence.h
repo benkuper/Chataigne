@@ -50,6 +50,12 @@ public:
 	FloatParameter* syncOffset;
 	BoolParameter* reverseOffset;
 
+	StringParameter* artnetTimecodeRemoteIP;
+	EnumParameter* artnetFrameRate;
+	IntParameter* artnetStreamId;
+	juce::DatagramSocket artnetSocket;
+
+
 	virtual void clearItem() override;
 
 	void setMasterAudioModule(AudioModule * module);
