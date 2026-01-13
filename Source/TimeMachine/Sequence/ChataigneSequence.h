@@ -103,6 +103,8 @@ public:
 	virtual void mtcStopped() override;
 	virtual void mtcTimeUpdated(bool isFullFrame) override;
 
+	void sendArtnetTimecode();
+
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ChataigneSequence)
 };
 
