@@ -245,20 +245,20 @@ jobs:
     # if: false # tmp disable
 
     name: Raspberry Pi
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     strategy:
       matrix:
         include:
         - arch: armhf
           cpu: arm1176 #suitable for all Pi versions
-          base_image: raspios_lite:latest
+          base_image: raspios_lite:2023-05-03
           cpu_info: raspberrypi_zero_w
           buildFolder: "Raspberry"
           buildConfig: "Release"
           
         - arch: aarch64
           cpu: cortex-a53
-          base_image: raspios_lite_arm64:latest
+          base_image: raspios_lite_arm64:2023-05-03
           cpu_info: raspberrypi_zero2_w_arm64_w
           buildFolder: "Raspberry64"
           buildConfig: "Release"
@@ -269,7 +269,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v2
         with:
-          submodules: 'recursive' 
+          submodules: 'recursive'
 
       - name: Checkout JUCE
         uses: actions/checkout@v2
