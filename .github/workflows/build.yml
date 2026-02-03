@@ -164,9 +164,10 @@ jobs:
           url: ${{ secrets.UPLOADURL }}
           pass: ${{ secrets.UPLOADPASS }}
           
-  llinux:
+  linux:
     name: Linux (x64)
     runs-on: ubuntu-22.04
+    
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -190,14 +191,17 @@ jobs:
             libxrandr-dev libxrender-dev libwebkit2gtk-4.0-dev \
             libglu1-mesa-dev mesa-common-dev libcurl4-openssl-dev \
             libssl-dev libmosquitto-dev libmosquittopp-dev libbluetooth-dev \
-            libusb-1.0-0-dev libhidapi-dev
+            libusb-1.0-0-dev libhidapi-dev libsdl2-dev
           
           wget "https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage"
           chmod a+x appimagetool-x86_64.AppImage
 
       - name: Build
         run: |
+          # Clean incompatible blobs to force system linking
           rm -rf External/mosquitto/lib/linux/
+          rm -rf External/sdl/lib/linux/
+          
           cd Builds/LinuxMakefile
           make -j$(nproc) CONFIG=Release
 
@@ -205,43 +209,56 @@ jobs:
         id: create_package
         run: |
           APPDIR=${{ env.ProjectName }}.AppDir
+          # Ensure structure exists
           mkdir -p $APPDIR/usr/bin
           mkdir -p $APPDIR/usr/lib
           
           # 1. Copy Executable
-          cp build/${{ env.ProjectName }} $APPDIR/usr/bin/
+          cp Builds/LinuxMakefile/build/${{ env.ProjectName }} $APPDIR/usr/bin/
           
-          # 2. Bundle Dependencies (x86_64)
-          # We prefer copying the specific versions we linked against
-          cp -d /usr/lib/x86_64-linux-gnu/libmosquitto.so* $APPDIR/usr/lib/ || true
-          cp -d /usr/lib/x86_64-linux-gnu/libmosquittopp.so* $APPDIR/usr/lib/ || true
-          cp -d /usr/lib/x86_64-linux-gnu/libssl.so* $APPDIR/usr/lib/ || true
-          cp -d /usr/lib/x86_64-linux-gnu/libcrypto.so* $APPDIR/usr/lib/ || true
-          cp -d /usr/lib/x86_64-linux-gnu/libbluetooth.so* $APPDIR/usr/lib/ || true
-          cp -d /usr/lib/x86_64-linux-gnu/libusb-1.0.so* $APPDIR/usr/lib/ || true
-          cp -d /usr/lib/x86_64-linux-gnu/libhidapi-hidraw.so* $APPDIR/usr/lib/ || true
+          # 2. Bundle System Libraries (x64)
+          LIB_PATH=/usr/lib/x86_64-linux-gnu
+          echo "Bundling libs from $LIB_PATH..."
+          
+          # Copy dependencies (-d preserves symlinks like libssl.so -> libssl.so.3)
+          cp -d $LIB_PATH/libmosquitto.so* $APPDIR/usr/lib/ || true
+          cp -d $LIB_PATH/libmosquittopp.so* $APPDIR/usr/lib/ || true
+          cp -d $LIB_PATH/libssl.so* $APPDIR/usr/lib/ || true
+          cp -d $LIB_PATH/libcrypto.so* $APPDIR/usr/lib/ || true
+          cp -d $LIB_PATH/libbluetooth.so* $APPDIR/usr/lib/ || true
+          cp -d $LIB_PATH/libusb-1.0.so* $APPDIR/usr/lib/ || true
+          cp -d $LIB_PATH/libhidapi-hidraw.so* $APPDIR/usr/lib/ || true
+          cp -d $LIB_PATH/libSDL2-2.0.so* $APPDIR/usr/lib/ || true
 
           # 3. Create AppRun Script
-          # This script ensures the app looks in the bundled 'lib' folder first
-          echo '#!/bin/sh' > $APPDIR/AppRun
-          echo 'HERE="$(dirname "$(readlink -f "${0}")")"' >> $APPDIR/AppRun
-          echo 'export LD_LIBRARY_PATH="$HERE/usr/lib:$LD_LIBRARY_PATH"' >> $APPDIR/AppRun
-          echo 'exec "$HERE/usr/bin/${{ env.ProjectName }}" "$@"' >> $APPDIR/AppRun
-          chmod +x $APPDIR/AppRun
+          # This forces the app to look in local usr/lib before system paths
+          if [ ! -f "$APPDIR/AppRun" ]; then
+             echo '#!/bin/sh' > $APPDIR/AppRun
+             echo 'HERE="$(dirname "$(readlink -f "${0}")")"' >> $APPDIR/AppRun
+             echo 'export LD_LIBRARY_PATH="$HERE/usr/lib:$LD_LIBRARY_PATH"' >> $APPDIR/AppRun
+             echo 'exec "$HERE/usr/bin/${{ env.ProjectName }}" "$@"' >> $APPDIR/AppRun
+             chmod +x $APPDIR/AppRun
+          fi
 
-          # 4. Generate AppImage
-          # (Assuming you have a desktop file and icon in your repo root or elsewhere; 
-          # usually appimagetool needs them. If they are missing, create dummy ones here)
-          
+          # 4. Desktop File Check (Vital for AppImageTool)
+          count=$(find $APPDIR -maxdepth 1 -name "*.desktop" | wc -l)
+          if [ "$count" -eq "0" ]; then
+            echo "::warning::No .desktop file found in $APPDIR root! Copying one if available..."
+            # Try to copy from repo if it exists, e.g.:
+            # cp Platform/Linux/${{ env.ProjectName }}.desktop $APPDIR/ || true
+          fi
+
+          # 5. Generate
           PKGNAME=${{ env.ProjectName }}-linux-x64.AppImage
           echo "pkg-name=$PKGNAME" >> $GITHUB_OUTPUT
+          
           ./appimagetool-x86_64.AppImage --no-appstream $APPDIR $PKGNAME
-        working-directory: ./Builds/LinuxMakefile
+        working-directory: ${{ github.workspace }}
 
       - name: Upload
         uses: ./.github/actions/upload
         with:
-          pkg-name: ./Builds/LinuxMakefile/${{ steps.create_package.outputs.pkg-name }}
+          pkg-name: ${{ steps.create_package.outputs.pkg-name }}
           url: ${{ secrets.UPLOADURL }}
           pass: ${{ secrets.UPLOADPASS }}
 
@@ -255,7 +272,7 @@ jobs:
           - name: "RPi 64-bit"
             arch_name: aarch64
             deb_arch: arm64
-            gnu_type: aarch64-linux-gnu   # Added this helper variable
+            gnu_type: aarch64-linux-gnu
             buildFolder: "Raspberry64"
             buildConfig: "Release"
             arch_flags: "-march=armv8-a"
@@ -263,7 +280,7 @@ jobs:
           - name: "RPi 32-bit"
             arch_name: armhf
             deb_arch: armhf
-            gnu_type: arm-linux-gnueabihf # Added this helper variable
+            gnu_type: arm-linux-gnueabihf
             buildFolder: "Raspberry"
             buildConfig: "Release"
             arch_flags: "-march=armv7-a -mfpu=neon-vfpv4 -mfloat-abi=hard"
@@ -286,17 +303,19 @@ jobs:
           sudo dpkg --add-architecture ${{ matrix.deb_arch }}
           sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
           
+          # Add standard repos
           echo "deb [arch=amd64] http://archive.ubuntu.com/ubuntu jammy main universe restricted multiverse" | sudo tee /etc/apt/sources.list
           echo "deb [arch=amd64] http://archive.ubuntu.com/ubuntu jammy-updates main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
           echo "deb [arch=amd64] http://archive.ubuntu.com/ubuntu jammy-security main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
           
+          # Add ports for ARM
           echo "deb [arch=${{ matrix.deb_arch }}] http://ports.ubuntu.com/ubuntu-ports jammy main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
           echo "deb [arch=${{ matrix.deb_arch }}] http://ports.ubuntu.com/ubuntu-ports jammy-updates main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
           echo "deb [arch=${{ matrix.deb_arch }}] http://ports.ubuntu.com/ubuntu-ports jammy-security main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
-
+          
           sudo apt-get update
 
-      - name: Install Cross-Compiler and ARM Libraries
+      - name: Install Cross-Compiler and Libraries
         run: |
           sudo apt-get install -y crossbuild-essential-${{ matrix.deb_arch }}
           
@@ -321,7 +340,8 @@ jobs:
             libmosquittopp-dev:${{ matrix.deb_arch }} \
             libbluetooth-dev:${{ matrix.deb_arch }} \
             libusb-1.0-0-dev:${{ matrix.deb_arch }} \
-            libhidapi-dev:${{ matrix.deb_arch }}
+            libhidapi-dev:${{ matrix.deb_arch }} \
+            libsdl2-dev:${{ matrix.deb_arch }}
 
       - name: Set Suffix
         id: set_variables
@@ -331,12 +351,14 @@ jobs:
 
       - name: Build
         run: |
+          # 1. Clean External blobs to force system linking
           rm -rf External/mosquitto/lib/linux/
           rm -rf External/mosquitto/lib/rpi/
+          rm -rf External/sdl/lib/raspberry64/
+          rm -rf External/sdl/lib/raspberry/
           rm -rf Modules/juce_simpleweb/libs/Linux/x86_64/
-          
-          cd Builds/${{ matrix.buildFolder }}
 
+          cd Builds/${{ matrix.buildFolder }}
           export PKG_CONFIG_PATH=/usr/lib/${{ matrix.gnu_type }}/pkgconfig
           
           make -j$(nproc) \
@@ -362,12 +384,11 @@ jobs:
           # 1. Copy Executable
           cp Builds/${{ matrix.buildFolder }}/build/${{ env.ProjectName }} $APPDIR/usr/bin/
           
-          # 2. Bundle ARM Dependencies
-          # We define the path to the cross-architecture libs we installed
+          # 2. Bundle System Libraries (ARM)
+          # We copy from the Cross-Arch system paths
           LIB_PATH=/usr/lib/${{ matrix.gnu_type }}
-          
-          # Use -d to preserve symlinks (e.g. libssl.so -> libssl.so.3)
-          # We use "|| true" to prevent the build from failing if a specific lib is missing or static
+          echo "Bundling libs from $LIB_PATH..."
+
           cp -d $LIB_PATH/libmosquitto.so* $APPDIR/usr/lib/ || true
           cp -d $LIB_PATH/libmosquittopp.so* $APPDIR/usr/lib/ || true
           cp -d $LIB_PATH/libssl.so* $APPDIR/usr/lib/ || true
@@ -375,15 +396,26 @@ jobs:
           cp -d $LIB_PATH/libbluetooth.so* $APPDIR/usr/lib/ || true
           cp -d $LIB_PATH/libusb-1.0.so* $APPDIR/usr/lib/ || true
           cp -d $LIB_PATH/libhidapi-hidraw.so* $APPDIR/usr/lib/ || true
-          
-          # 3. Create AppRun Script
-          echo '#!/bin/sh' > $APPDIR/AppRun
-          echo 'HERE="$(dirname "$(readlink -f "${0}")")"' >> $APPDIR/AppRun
-          echo 'export LD_LIBRARY_PATH="$HERE/usr/lib:$LD_LIBRARY_PATH"' >> $APPDIR/AppRun
-          echo 'exec "$HERE/usr/bin/${{ env.ProjectName }}" "$@"' >> $APPDIR/AppRun
-          chmod +x $APPDIR/AppRun
+          cp -d $LIB_PATH/libSDL2-2.0.so* $APPDIR/usr/lib/ || true
 
-          # 4. Generate AppImage
+          # 3. Create AppRun Script
+          if [ ! -f "$APPDIR/AppRun" ]; then
+             echo '#!/bin/sh' > $APPDIR/AppRun
+             echo 'HERE="$(dirname "$(readlink -f "${0}")")"' >> $APPDIR/AppRun
+             echo 'export LD_LIBRARY_PATH="$HERE/usr/lib:$LD_LIBRARY_PATH"' >> $APPDIR/AppRun
+             echo 'exec "$HERE/usr/bin/${{ env.ProjectName }}" "$@"' >> $APPDIR/AppRun
+             chmod +x $APPDIR/AppRun
+          fi
+          
+          # 4. Desktop File Check
+          count=$(find $APPDIR -maxdepth 1 -name "*.desktop" | wc -l)
+          if [ "$count" -eq "0" ]; then
+             echo "::error::No .desktop file found in $APPDIR! AppImageTool will fail."
+             # cp Platform/Linux/${{ env.ProjectName }}.desktop $APPDIR/ || true
+             exit 1
+          fi
+
+          # 5. Generate
           PKGNAME=${{ env.ProjectName }}-linux-${{ steps.set_variables.outputs.suffix }}.AppImage
           echo "pkg-name=$PKGNAME" >> $GITHUB_OUTPUT
           export ARCH=${{ matrix.arch_name }}
