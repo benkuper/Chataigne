@@ -196,7 +196,7 @@ jobs:
             libxcomposite-dev libxcursor-dev libxinerama-dev libxext-dev \
             libxrandr-dev libxrender-dev libwebkit2gtk-4.0-dev \
             libglu1-mesa-dev mesa-common-dev libcurl4-openssl-dev \
-            libssl-dev libmosquitto-dev
+            libssl-dev libmosquitto-dev libbluetooth-dev
           
           wget "https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage"
           chmod a+x appimagetool-x86_64.AppImage
