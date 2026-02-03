@@ -10,10 +10,13 @@
 
 #pragma once
 
-#if JUCE_WINDOWS
-#include <mosquittopp.h>
+#if JUCE_WINDOWS || JUCE_LINUX
+#define MOSQUITTO_SUPPORTED
 #endif
 
+#ifdef MOSQUITTO_SUPPORTED
+#include <mosquittopp.h>
+#endif
 
 class MQTTTopic :
 	public BaseItem
@@ -35,7 +38,7 @@ public:
 
 class MQTTClientModule :
 	public Module
-#if JUCE_WINDOWS
+#ifdef MOSQUITTO_SUPPORTED
 	, public mosqpp::mosquittopp
 #endif
 	, public Thread
@@ -95,7 +98,7 @@ public:
 	static var publishMessageFromScript(const var::NativeFunctionArgs& args);
 
 	//mosquitto
-#if JUCE_WINDOWS
+#ifdef MOSQUITTO_SUPPORTED
 	void on_connect(int rc) override;
 	virtual void on_connect_with_flags(int /*rc*/, int /*flags*/) override { return; }
 	virtual void on_disconnect(int rc) override;
