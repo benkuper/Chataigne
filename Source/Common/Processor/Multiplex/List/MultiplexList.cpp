@@ -92,6 +92,11 @@ Controllable* BaseMultiplexList::createListControllable()
 	return ControllableFactory::createControllable(getTypeString());
 }
 
+InspectableEditor* BaseMultiplexList::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
+{
+	return new BaseMultiplexListEditor(this, isRoot);
+}
+
 InspectableEditor* BaseMultiplexList::getNumberListEditor(bool isFloat, bool isRoot, Array<Inspectable*> inspectable)
 {
 	if (isFloat) return new NumberListEditor((MultiplexList<FloatParameter> *)this, isRoot);

@@ -104,6 +104,7 @@ EnumMultiplexListEditor::~EnumMultiplexListEditor()
 
 void EnumMultiplexListEditor::resizedInternalHeaderItemInternal(Rectangle<int>& r)
 {
+	BaseMultiplexListEditor::resizedInternalHeaderItemInternal(r);
 	optionsBT.setBounds(r.removeFromRight(80).reduced(2));
 }
 

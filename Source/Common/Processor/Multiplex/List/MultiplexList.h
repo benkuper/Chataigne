@@ -45,6 +45,7 @@ public:
 
 	void notifyItemUpdated(int multiplexIndex);
 
+	InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables = Array<Inspectable*>()) override;
 	InspectableEditor* getNumberListEditor(bool isFloat, bool isRoot, Array<Inspectable*> inspectables = Array<Inspectable*>());
 
 
