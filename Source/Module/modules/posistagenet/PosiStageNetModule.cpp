@@ -19,7 +19,7 @@ PosiStageNetModule::PosiStageNetModule() :
 	multiCastPort = moduleParams.addIntParameter("Multicast port", "Port to communicate. PosiStageNet default is 56565", 56565);
 	loopback = moduleParams.addBoolParameter("Loopback Enabled", "If checked, messages sent from the module will also be received by the module", false);
 
-	numSlots = moduleParams.addIntParameter("Num Slots", "Number of slots to use", 10, 1, 128);
+	numSlots = moduleParams.addIntParameter("Num Slots", "Number of slots to use", 10, 1, 1024);
 
 	sendMode = moduleParams.addBoolParameter("Send Mode", "If check, this will act as a server and send data, otherwise this will listen to external data", false);
 
