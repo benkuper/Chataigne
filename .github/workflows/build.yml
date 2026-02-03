@@ -241,7 +241,7 @@ jobs:
           
         - arch: aarch64
           cpu: cortex-a72 # RPi 4 base, works perfectly on RPi 5
-          base_image: raspios_lite_arm64:2023-10-10 # Debian Bookworm
+          base_image: raspi_4_bookworm:20231109 # Debian Bookworm
           buildFolder: "Raspberry64"
           buildConfig: "Release"
       fail-fast: false
@@ -281,11 +281,13 @@ jobs:
           copy_artifact_dest: Builds/${{ matrix.buildFolder }}/${{ env.ProjectName }}.AppDir/usr/bin/
           commands: |
             apt-get update
-            apt-get install -qyf libcurl4-gnutls-dev libfreetype6-dev libx11-dev \
-              libxinerama-dev libxrandr-dev libxcursor-dev libxcomposite-dev \
-              mesa-common-dev libasound2-dev libjack-dev libbluetooth-dev \
-              libgtk-3-dev libwebkit2gtk-4.0-dev libusb-1.0-0-dev libssl-dev libhidapi-dev \
-              libmosquitto-dev make g++
+            apt-get install -qyf \
+              libcurl4-gnutls-dev libfreetype6-dev libx11-dev \
+              libxinerama-dev libxrandr-dev libxcursor-dev \
+              libxcomposite-dev mesa-common-dev libasound2-dev \
+              libjack-dev libbluetooth-dev libgtk-3-dev \
+              libwebkit2gtk-4.0-dev libssl-dev libmosquitto-dev \
+              libusb-1.0-0-dev libhidapi-dev make g++
             
             cd Builds/${{ matrix.buildFolder }}
             make -j2 CONFIG=${{ matrix.buildConfig }}
