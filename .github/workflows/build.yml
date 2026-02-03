@@ -233,23 +233,27 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # Raspberry Pi 3, 4, 5 (64-bit)
+          # RPi 3, 4, 5 (64-bit)
           - name: "RPi 64-bit"
             arch_name: aarch64
             deb_arch: arm64
             pkg_config_path: /usr/lib/aarch64-linux-gnu/pkgconfig
             cross_cc: aarch64-linux-gnu-gcc
             cross_cxx: aarch64-linux-gnu-g++
+            # Ensure we target generic ARMv8-A. This works on Pi 3, 4, and 5.
+            arch_flags: "-march=armv8-a" 
             buildFolder: "Raspberry64"
             buildConfig: "Release"
 
-          # Raspberry Pi Zero 2, 3, 4 (32-bit)
+          # RPi 2, 3, 4, Zero 2 (32-bit)
           - name: "RPi 32-bit"
             arch_name: armhf
             deb_arch: armhf
             pkg_config_path: /usr/lib/arm-linux-gnueabihf/pkgconfig
             cross_cc: arm-linux-gnueabihf-gcc
             cross_cxx: arm-linux-gnueabihf-g++
+            # CRITICAL FIX: Explicitly set ARMv7 + NEON FPU so -mfloat-abi=hard is valid
+            arch_flags: "-march=armv7-a -mfpu=neon-vfpv4 -mfloat-abi=hard"
             buildFolder: "Raspberry"
             buildConfig: "Release"
 
@@ -268,18 +272,15 @@ jobs:
 
       - name: Setup Multi-Arch Apt
         run: |
-          # 1. Add the target architecture (arm64 or armhf) to dpkg
           sudo dpkg --add-architecture ${{ matrix.deb_arch }}
-
-          # 2. Update sources.list to look for ARM packages in Ubuntu Ports
-          # (Standard GitHub runners only look in x86 archives by default)
           sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
           
+          # Add standard Ubuntu repositories for amd64
           echo "deb [arch=amd64] http://archive.ubuntu.com/ubuntu jammy main universe restricted multiverse" | sudo tee /etc/apt/sources.list
           echo "deb [arch=amd64] http://archive.ubuntu.com/ubuntu jammy-updates main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
           echo "deb [arch=amd64] http://archive.ubuntu.com/ubuntu jammy-security main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
           
-          # Add the ports URL for ARM architectures
+          # Add Ubuntu Ports for ARM architectures
           echo "deb [arch=${{ matrix.deb_arch }}] http://ports.ubuntu.com/ubuntu-ports jammy main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
           echo "deb [arch=${{ matrix.deb_arch }}] http://ports.ubuntu.com/ubuntu-ports jammy-updates main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
           echo "deb [arch=${{ matrix.deb_arch }}] http://ports.ubuntu.com/ubuntu-ports jammy-security main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
@@ -288,11 +289,9 @@ jobs:
 
       - name: Install Cross-Compiler and ARM Libraries
         run: |
-          # Install the cross-compiler toolchain
           sudo apt-get install -y crossbuild-essential-${{ matrix.deb_arch }}
-
-          # Install the Target Libraries (note the :${{ matrix.deb_arch }} suffix)
-          # This installs the ARM version of the libs side-by-side with the Intel ones
+          
+          # Install ARM versions of dependencies
           sudo apt-get install -y \
             libasound2-dev:${{ matrix.deb_arch }} \
             libjack-jackd2-dev:${{ matrix.deb_arch }} \
@@ -323,22 +322,21 @@ jobs:
 
       - name: Build
         run: |
-          # Clean external blobs to force using the ARM system libs we just installed
           rm -rf External/mosquitto/lib/linux/
           rm -rf External/mosquitto/lib/rpi/
           
           cd Builds/${{ matrix.buildFolder }}
 
-          # Point pkg-config to the ARM folders so it finds the right .so files
           export PKG_CONFIG_PATH=${{ matrix.pkg_config_path }}
           
-          # Run Make with Cross-Compiler overrides
+          # We pass the new `arch_flags` into TARGET_ARCH so they are applied to every file compilation
           make -j$(nproc) \
             CONFIG=${{ matrix.buildConfig }} \
             CC=${{ matrix.cross_cc }} \
             CXX=${{ matrix.cross_cxx }} \
             AR=${{ matrix.deb_arch }}-linux-gnu-ar \
-            STRIP=${{ matrix.deb_arch }}-linux-gnu-strip
+            STRIP=${{ matrix.deb_arch }}-linux-gnu-strip \
+            TARGET_ARCH="${{ matrix.arch_flags }}"
 
       - name: Prepare AppImage Tool
         run: |
@@ -349,17 +347,10 @@ jobs:
       - name: Create AppImage
         id: create_package
         run: |
-          # Copy the compiled binary
           cp Builds/${{ matrix.buildFolder }}/build/${{ env.ProjectName }} Builds/${{ matrix.buildFolder }}/${{ env.ProjectName }}.AppDir/usr/bin/
-          
           PKGNAME=${{ env.ProjectName }}-linux-${{ steps.set_variables.outputs.suffix }}.AppImage
           echo "pkg-name=$PKGNAME" >> $GITHUB_OUTPUT
-          
-          # ARCH flag tells appimagetool which arch metadata to write
           export ARCH=${{ matrix.arch_name }}
-          
-          # Note: We run appimagetool with --no-appstream because we can't execute 
-          # the ARM binary on this Intel runner to extract metadata.
           ./appimagetool-x86_64.AppImage --no-appstream Builds/${{ matrix.buildFolder }}/${{ env.ProjectName }}.AppDir $PKGNAME
         working-directory: ${{ github.workspace }}
 
