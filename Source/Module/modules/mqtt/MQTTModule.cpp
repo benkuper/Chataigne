@@ -127,7 +127,11 @@ void MQTTClientModule::publishMessage(const String& topic, const String& message
 		return;
 	}
 
-	int result = publish(NULL, topic.toStdString().c_str(), message.length(), message.toStdString().c_str(), 2);
+	int result = 0;
+	{
+		GenericScopedLock lock(mosquittoLock);
+		result = publish(NULL, topic.toStdString().c_str(), message.length(), message.toStdString().c_str(), 2);
+	}
 
 	if (logOutgoingData->boolValue())
 	{
@@ -151,7 +155,10 @@ void MQTTClientModule::itemRemoved(MQTTTopic* item)
 	if (isCurrentlyLoadingData) return;
 
 #ifdef MOSQUITTO_SUPPORTED
-	unsubscribe(&item->mid, item->topic->stringValue().toStdString().c_str());
+	{
+		GenericScopedLock mosqLock(mosquittoLock);
+		unsubscribe(&item->mid, item->topic->stringValue().toStdString().c_str());
+	}
 #endif
 	updateTopicSubs();
 }
@@ -161,6 +168,7 @@ void MQTTClientModule::itemsRemoved(Array<MQTTTopic*> items)
 	if (isCurrentlyLoadingData) return;
 
 #ifdef MOSQUITTO_SUPPORTED
+	GenericScopedLock mosqLock(mosquittoLock);
 	for (auto& item : items) unsubscribe(&item->mid, item->topic->stringValue().toStdString().c_str());
 #endif
 	updateTopicSubs();
@@ -213,7 +221,10 @@ void MQTTClientModule::updateTopicSubs()
 		}
 
 #ifdef MOSQUITTO_SUPPORTED
-		subscribe(&topic->mid, s.toStdString().c_str());
+		{
+			GenericScopedLock mosqLock(mosquittoLock);
+			subscribe(&topic->mid, s.toStdString().c_str());
+		}
 #endif
 		topicItemMap.set(s, topic);
 	}
@@ -266,24 +277,29 @@ void MQTTClientModule::run()
 	wait(100);
 
 #ifdef MOSQUITTO_SUPPORTED
-	if (isConnected->boolValue())
+	int result = 0;
 	{
+		GenericScopedLock mosqLock(mosquittoLock);
+		if (isConnected->boolValue())
+		{
+			isConnected->setValue(false);
+			disconnect();
+		}
+
+		reinitialise(clientId->stringValue().toStdString().c_str(), true);
+
+		NLOG(niceName, "Connecting to " << host->stringValue() << ":" << port->intValue() << " with id " << clientId->stringValue() << "...");
+
+		if (authenticationCC.enabled->boolValue())
+		{
+			username_pw_set(username->stringValue().toStdString().c_str(), pass->stringValue().toStdString().c_str());
+			//add tls here
+		}
+		else username_pw_set(NULL);
+
 		isConnected->setValue(false);
-		disconnect();
+		result = connect(host->stringValue().toStdString().c_str(), port->intValue(), keepAlive->intValue());
 	}
-
-	reinitialise(clientId->stringValue().toStdString().c_str(), true);
-
-	NLOG(niceName, "Connecting to " << host->stringValue() << ":" << port->intValue() << " with id " << clientId->stringValue() << "...");
-
-	if (authenticationCC.enabled->boolValue())
-	{
-		username_pw_set(username->stringValue().toStdString().c_str(), pass->stringValue().toStdString().c_str());
-		//add tls here
-	}
-	else username_pw_set(NULL);
-
-	int result = connect(host->stringValue().toStdString().c_str(), port->intValue(), keepAlive->intValue());
 
 	if (result == 0)
 	{
@@ -293,11 +309,13 @@ void MQTTClientModule::run()
 	else
 	{
 		NLOGERROR(niceName, "Connection error (" << result << ")");
+		isConnected->setValue(false);
 		return;
 	}
 
 
-	loop_forever();
+	reconnect_delay_set(1, 10, true);
+	loop_forever(-1, 1000);
 
 
 	while (!threadShouldExit())
@@ -318,18 +336,24 @@ void MQTTClientModule::run()
 		wait(2);
 	}
 
-	loop_stop();
-
-	isConnected->setValue(false);
-	disconnect();
+	{
+		GenericScopedLock mosqLock(mosquittoLock);
+		loop_stop();
+		isConnected->setValue(false);
+		disconnect();
+	}
 #endif
 }
 
 void MQTTClientModule::stopClient()
 {
 #ifdef MOSQUITTO_SUPPORTED
-	loop_stop();
-	disconnect();
+	{
+		GenericScopedLock mosqLock(mosquittoLock);
+		loop_stop();
+		disconnect();
+		isConnected->setValue(false);
+	}
 #endif
 	stopThread(1000);
 }
@@ -383,24 +407,34 @@ void MQTTClientModule::on_connect(int rc)
 	//DBG("MQTT Connected event reveiced " << rc);
 	isConnected->setValue(rc == 0);
 
-	if (rc != 0) return;
+	if (rc != 0) {
+		return;
+	}
 
 	GenericScopedLock lock(updateTopicLock);
 
 	//Subscribe
-	for (auto& t : topicsManager.items)
 	{
-		String topic = t->topic->stringValue();
-		if (topic.isEmpty()) continue;
-		subscribe(&t->mid, topic.toStdString().c_str());
+		GenericScopedLock mosqLock(mosquittoLock);
+		for (auto& t : topicsManager.items)
+		{
+			String topic = t->topic->stringValue();
+			if (topic.isEmpty()) continue;
+			subscribe(&t->mid, topic.toStdString().c_str());
+		}
 	}
 }
 
 void MQTTClientModule::on_disconnect(int rc)
 {
-	if (rc != 14) LOG("MQTT Disconnected : " << rc); //14 is loop disconnection, autoreconnect
 	isConnected->setValue(false);
-	if (rc != 0) reconnect();
+
+	if (rc == 0) {
+		NLOG(niceName, "MQTT disconnected cleanly");
+		return;
+	}
+
+	NLOGWARNING(niceName, "MQTT disconnected (rc=" << rc << ")");
 }
 
 void MQTTClientModule::on_publish(int mid)
@@ -487,6 +521,7 @@ void MQTTClientModule::on_log(int level, const char* str)
 void MQTTClientModule::on_error()
 {
 	NLOGERROR(niceName, "Error !");
+	isConnected->setValue(false);
 }
 #endif
 

@@ -67,7 +67,8 @@ public:
 	//BoolParameter* useTLS;
 	HashMap<String, MQTTTopic*> topicItemMap;
 
-	SpinLock updateTopicLock;
+	CriticalSection updateTopicLock;
+	CriticalSection mosquittoLock;
 	BaseManager<MQTTTopic> topicsManager;
 
 
