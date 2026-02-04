@@ -10,7 +10,7 @@
 
 #pragma once
 
-#if JUCE_WINDOWS || JUCE_LINUX
+#if JUCE_WINDOWS || JUCE_LINUX || JUCE_MAC
 #define MOSQUITTO_SUPPORTED
 #endif
 
