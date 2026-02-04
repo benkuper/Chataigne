@@ -173,6 +173,8 @@ jobs:
           # 4. Copy Dylibs
           cp External/mosquitto/lib/osx/libmosquitto.dylib "$FRAMEWORKS_DIR/"
           cp External/mosquitto/lib/osx/libmosquittopp.dylib "$FRAMEWORKS_DIR/"
+          cp /usr/local/opt/openssl/lib/libssl.dylib "$FRAMEWORKS_DIR/"
+          cp /usr/local/opt/openssl/lib/libcrypto.dylib "$FRAMEWORKS_DIR/"
           
           # 5. Fix Library IDs
           install_name_tool -id @rpath/libmosquitto.dylib "$FRAMEWORKS_DIR/libmosquitto.dylib"
