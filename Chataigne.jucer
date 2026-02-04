@@ -1753,22 +1753,22 @@
     <XCODE_MAC targetFolder="Builds/MacOSX" smallIcon="nVz6Li" bigIcon="nVz6Li"
                extraFrameworks="IOBluetooth, ForceFeedback, IOKit" documentExtensions="noisette"
                customPList="&lt;plist&gt;&#10;&lt;dict&gt;&#10;&lt;key&gt;NSAppTransportSecurity&lt;/key&gt;&#10;&#9;&lt;dict&gt;&#10;&#9;&#9;&lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;&#10;&#9;&#9;&lt;true/&gt;&#10;&#9;&lt;/dict&gt;&#10;&lt;/dict&gt;&#10;&lt;/plist&gt;"
-               externalLibraries="Servus&#10;hidapi&#10;JoyShockLibrary" microphonePermissionNeeded="1"
-               hardenedRuntimeOptions="com.apple.security.cs.allow-jit,com.apple.security.device.audio-input"
+               externalLibraries="Servus&#10;hidapi&#10;JoyShockLibrary&#10;mosquitto&#10;mosquittopp"
+               microphonePermissionNeeded="1" hardenedRuntimeOptions="com.apple.security.cs.allow-jit,com.apple.security.device.audio-input"
                extraDefs="JUCE_SUPPORT_CARBON=0&#10;JUCE_COREGRAPHICS_DRAW_ASYNC=1&#10;USE_ABLETONLINK=1&#10;LINK_PLATFORM_MACOSX=1"
                xcodeValidArchs="arm64,x86_64" embeddedFrameworks="../../External/sdl/lib/osx/SDL2.framework&#10;../../External/syphon/Syphon.framework"
                frameworkSearchPaths="../../External/sdl/lib/osx&#10;../../External/syphon">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="Chataigne"
                        cppLanguageStandard="c++11" cppLibType="libc++" enablePluginBinaryCopyStep="1"
-                       libraryPath="../../External/servus/lib/osx/debug&#10;../../External/joycon/lib/osx"/>
+                       libraryPath="../../External/servus/lib/osx/debug&#10;../../External/joycon/lib/osx&#10;../../External/mosquitto/lib/osx"/>
         <CONFIGURATION name="Release" optimisation="3" targetName="Chataigne" enablePluginBinaryCopyStep="1"
-                       libraryPath="../../External/servus/lib/osx/release&#10;../../External/joycon/lib/osx"/>
+                       libraryPath="../../External/servus/lib/osx/release&#10;../../External/joycon/lib/osx&#10;../../External/mosquitto/lib/osx"/>
         <CONFIGURATION name="DebugSilicon" isDebug="1" optimisation="1" targetName="Chataigne"
                        cppLanguageStandard="c++11" cppLibType="libc++" enablePluginBinaryCopyStep="1"
-                       libraryPath="../../External/servus/lib/silicon/debug&#10;../../External/joycon/lib/silicon"/>
+                       libraryPath="../../External/servus/lib/silicon/debug&#10;../../External/joycon/lib/silicon&#10;../../External/mosquitto/lib/osx"/>
         <CONFIGURATION name="ReleaseSilicon" optimisation="3" targetName="Chataigne"
-                       enablePluginBinaryCopyStep="1" libraryPath="../../External/servus/lib/silicon/release&#10;../../External/joycon/lib/silicon"/>
+                       enablePluginBinaryCopyStep="1" libraryPath="../../External/servus/lib/silicon/release&#10;../../External/joycon/lib/silicon&#10;../../External/mosquitto/lib/osx"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_osc"/>
@@ -1897,7 +1897,7 @@
         <MODULEPATH id="juce_serial" path="Modules"/>
       </MODULEPATHS>
     </VS2022>
-    <XCODE_MAC targetFolder="Builds/MacOSX_CI" externalLibraries="Servus&#10;hidapi&#10;JoyShockLibrary"
+    <XCODE_MAC targetFolder="Builds/MacOSX_CI" externalLibraries="Servus&#10;hidapi&#10;JoyShockLibrary&#10;mosquitto&#10;mosquittopp"
                smallIcon="nVz6Li" bigIcon="nVz6Li" hardenedRuntimeOptions="com.apple.security.cs.allow-jit"
                customPList="&lt;plist&gt;&#10;&lt;dict&gt;&#10;&lt;key&gt;NSAppTransportSecurity&lt;/key&gt;&#10;&#9;&lt;dict&gt;&#10;&#9;&#9;&lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;&#10;&#9;&#9;&lt;true/&gt;&#10;&#9;&lt;/dict&gt;&#10;&lt;/dict&gt;&#10;&lt;/plist&gt;"
                microphonePermissionNeeded="1" extraFrameworks="IOBluetooth, ForceFeedback, IOKit"
@@ -1905,9 +1905,9 @@
                xcodeValidArchs="arm64,x86_64" frameworkSearchPaths="../../External/sdl/lib/osx&#10;../../External/syphon"
                embeddedFrameworks="../../External/sdl/lib/osx/SDL2.framework&#10;../../External/syphon/Syphon.framework">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="0" name="Release" libraryPath="../../External/servus/lib/osx/release&#10;../../External/joycon/lib/osx"
+        <CONFIGURATION isDebug="0" name="Release" libraryPath="../../External/servus/lib/osx/release&#10;../../External/joycon/lib/osx&#10;../../External/mosquitto/lib/osx"
                        osxCompatibility="10.10 SDK" macOSDeploymentTarget="10.10" binaryPath="Release"/>
-        <CONFIGURATION isDebug="0" name="ReleaseSilicon" libraryPath="../../External/servus/lib/silicon/release&#10;../../External/joycon/lib/silicon"
+        <CONFIGURATION isDebug="0" name="ReleaseSilicon" libraryPath="../../External/servus/lib/silicon/release&#10;../../External/joycon/lib/silicon&#10;../../External/mosquitto/lib/osx"
                        osxCompatibility="10.10 SDK" macOSDeploymentTarget="10.10" binaryPath="Release"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
