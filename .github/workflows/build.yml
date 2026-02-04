@@ -148,6 +148,39 @@ jobs:
           configuration: ${{ matrix.config }}
           use-xcpretty: true
 
+      - name: Bundle Libraries
+        if: ${{ matrix.arch == 'arm64' }}
+        run: |
+          # 1. Define Paths
+          APP_PATH="Builds/MacOSX_CI/build/${{ matrix.config }}/${{ env.ProjectName }}.app"
+          FRAMEWORKS_DIR="$APP_PATH/Contents/Frameworks"
+          EXECUTABLE="$APP_PATH/Contents/MacOS/${{ env.ProjectName }}"
+          
+          echo "Bundling libs into $FRAMEWORKS_DIR"
+          
+          # 2. Create Frameworks directory
+          mkdir -p "$FRAMEWORKS_DIR"
+          
+          # 3. Copy Dylibs
+          cp External/mosquitto/lib/osx/libmosquitto.dylib "$FRAMEWORKS_DIR/"
+          cp External/mosquitto/lib/osx/libmosquittopp.dylib "$FRAMEWORKS_DIR/"
+          
+          # 4. Fix Library IDs (This ensures the libs know they are loaded via rpath)
+          install_name_tool -id @rpath/libmosquitto.dylib "$FRAMEWORKS_DIR/libmosquitto.dylib"
+          install_name_tool -id @rpath/libmosquittopp.dylib "$FRAMEWORKS_DIR/libmosquittopp.dylib"
+          
+          # 5. Fix dependency path in libmosquittopp (It likely points to a hardcoded path for the C lib)
+          # We try updating both common variations just in case
+          install_name_tool -change /usr/local/lib/libmosquitto.dylib @rpath/libmosquitto.dylib "$FRAMEWORKS_DIR/libmosquittopp.dylib" || true
+          install_name_tool -change libmosquitto.dylib @rpath/libmosquitto.dylib "$FRAMEWORKS_DIR/libmosquittopp.dylib" || true
+
+          # 6. Add RPATH to Executable (Tells the app to look in Contents/Frameworks)
+          install_name_tool -add_rpath @executable_path/../Frameworks "$EXECUTABLE" || true
+          
+          # 7. Re-sign the app (Modifying the binary invalidates signature; required for Apple Silicon)
+          codesign --force --deep --sign - "$APP_PATH"
+      # --- NEW STEP ENDS HERE ---
+
       - name: Create Package
         id: create_package
         run:  |
@@ -163,7 +196,7 @@ jobs:
           pkg-name: ./Package/${{ steps.create_package.outputs.pkg-name }}
           url: ${{ secrets.UPLOADURL }}
           pass: ${{ secrets.UPLOADPASS }}
-          
+
   linux:
     name: Linux (x64)
     runs-on: ubuntu-22.04
