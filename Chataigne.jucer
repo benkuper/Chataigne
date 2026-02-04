@@ -1897,7 +1897,7 @@
         <MODULEPATH id="juce_serial" path="Modules"/>
       </MODULEPATHS>
     </VS2022>
-    <XCODE_MAC targetFolder="Builds/MacOSX_CI" externalLibraries="Servus&#10;hidapi&#10;JoyShockLibrary&#10;mosquitto&#10;mosquittopp"
+    <XCODE_MAC targetFolder="Builds/MacOSX_CI" externalLibraries="Servus&#10;hidapi&#10;JoyShockLibrary"
                smallIcon="nVz6Li" bigIcon="nVz6Li" hardenedRuntimeOptions="com.apple.security.cs.allow-jit"
                customPList="&lt;plist&gt;&#10;&lt;dict&gt;&#10;&lt;key&gt;NSAppTransportSecurity&lt;/key&gt;&#10;&#9;&lt;dict&gt;&#10;&#9;&#9;&lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;&#10;&#9;&#9;&lt;true/&gt;&#10;&#9;&lt;/dict&gt;&#10;&lt;/dict&gt;&#10;&lt;/plist&gt;"
                microphonePermissionNeeded="1" extraFrameworks="IOBluetooth, ForceFeedback, IOKit"
@@ -1908,7 +1908,8 @@
         <CONFIGURATION isDebug="0" name="Release" libraryPath="../../External/servus/lib/osx/release&#10;../../External/joycon/lib/osx"
                        osxCompatibility="10.10 SDK" macOSDeploymentTarget="10.10" binaryPath="Release"/>
         <CONFIGURATION isDebug="0" name="ReleaseSilicon" libraryPath="../../External/servus/lib/silicon/release&#10;../../External/joycon/lib/silicon&#10;../../External/mosquitto/lib/osx"
-                       osxCompatibility="10.10 SDK" macOSDeploymentTarget="10.10" binaryPath="Release"/>
+                       osxCompatibility="10.10 SDK" macOSDeploymentTarget="10.10" binaryPath="Release"
+                       extraLinkerFlags="-lmosquitto&#10;-lmosquittopp"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_timeline" path="Modules"/>
