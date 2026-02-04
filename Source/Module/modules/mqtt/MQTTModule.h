@@ -10,7 +10,7 @@
 
 #pragma once
 
-#if JUCE_WINDOWS || JUCE_LINUX || JUCE_MAC
+#if JUCE_WINDOWS || JUCE_LINUX || ( JUCE_MAC && (defined(__arm64__) || defined(__aarch64__)))
 #define MOSQUITTO_SUPPORTED
 #endif
 
@@ -50,7 +50,7 @@ public:
 
 
 	EnumParameter* protocol;
-	
+
 	StringParameter* clientId;
 	StringParameter* host;
 	IntParameter* port;
@@ -70,7 +70,7 @@ public:
 	SpinLock updateTopicLock;
 	BaseManager<MQTTTopic> topicsManager;
 
-	
+
 
 	const Identifier dataEventId = "dataEvent";
 

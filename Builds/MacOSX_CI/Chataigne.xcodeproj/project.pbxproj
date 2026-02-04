@@ -3938,7 +3938,6 @@
 					"$(inherited)",
 					"\"../../External/servus/lib/osx/release\"",
 					"\"../../External/joycon/lib/osx\"",
-					"\"../../External/mosquitto/lib/osx\"",
 					"\"../../Modules/juce_serial/libs/MacOSX\"",
 					"\"../../Modules/juce_serial/libs/MacOSX/${CURRENT_ARCH}\"",
 					"\"../../Modules/juce_simpleweb/libs/MacOSX\"",
