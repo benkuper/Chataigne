@@ -173,8 +173,8 @@ jobs:
           # 4. Copy Dylibs
           cp External/mosquitto/lib/osx/libmosquitto.dylib "$FRAMEWORKS_DIR/"
           cp External/mosquitto/lib/osx/libmosquittopp.dylib "$FRAMEWORKS_DIR/"
-          cp /usr/local/opt/openssl/lib/libssl.dylib "$FRAMEWORKS_DIR/"
-          cp /usr/local/opt/openssl/lib/libcrypto.dylib "$FRAMEWORKS_DIR/"
+          cp External/mosquitto/lib/osx/libssl.dylib "$FRAMEWORKS_DIR/"
+          cp External/mosquitto/lib/osx/libcrypto.dylib "$FRAMEWORKS_DIR/"
           
           # 5. Fix Library IDs
           install_name_tool -id @rpath/libmosquitto.dylib "$FRAMEWORKS_DIR/libmosquitto.dylib"
@@ -185,8 +185,8 @@ jobs:
           # 6. Fix dependency path in libmosquittopp
           install_name_tool -change /usr/local/lib/libmosquitto.dylib @rpath/libmosquitto.dylib "$FRAMEWORKS_DIR/libmosquittopp.dylib" || true
           install_name_tool -change libmosquitto.dylib @rpath/libmosquitto.dylib "$FRAMEWORKS_DIR/libmosquittopp.dylib" || true
-          install_name_tool -change /usr/local/lib/libssl.dylib @rpath/libssl.dylib "$FRAMEWORKS_DIR/libmosquittopp.dylib" || true
-          install_name_tool -change /usr/local/lib/libcrypto.dylib @rpath/libcrypto.dylib "$FRAMEWORKS_DIR/libmosquittopp.dylib" || true
+          install_name_tool -change libssl.dylib @rpath/libssl.dylib "$FRAMEWORKS_DIR/libmosquittopp.dylib" || true
+          install_name_tool -change libcrypto.dylib @rpath/libcrypto.dylib "$FRAMEWORKS_DIR/libmosquittopp.dylib" || true
 
           # 7. Add RPATH to Executable
           install_name_tool -add_rpath @executable_path/../Frameworks "$EXECUTABLE" || true
