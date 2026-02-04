@@ -148,36 +148,60 @@ jobs:
           configuration: ${{ matrix.config }}
           use-xcpretty: true
 
-      - name: Bundle Libraries
+      - name: Bundle Libraries (Silicon Only)
         if: ${{ matrix.arch == 'arm64' }}
+        shell: bash
         run: |
-          # 1. Define Paths
-          APP_PATH="Builds/MacOSX_CI/build/${{ matrix.config }}/${{ env.ProjectName }}.app"
+          # 0. Stop on errors
+          set -e
+
+          # 1. Dynamically find the .app path
+          # We look inside Builds/MacOSX_CI/build for any folder ending in .app
+          echo "Looking for ${{ env.ProjectName }}.app..."
+          APP_PATH=$(find Builds/MacOSX_CI/build -name "${{ env.ProjectName }}.app" | head -n 1)
+
+          if [ -z "$APP_PATH" ]; then
+            echo "::error::Could not find ${{ env.ProjectName }}.app in Builds/MacOSX_CI/build. Listing directory:"
+            ls -R Builds/MacOSX_CI/build
+            exit 1
+          fi
+
+          echo "Found App at: $APP_PATH"
+
+          # 2. Define internal paths based on the found APP_PATH
           FRAMEWORKS_DIR="$APP_PATH/Contents/Frameworks"
           EXECUTABLE="$APP_PATH/Contents/MacOS/${{ env.ProjectName }}"
           
-          echo "Bundling libs into $FRAMEWORKS_DIR"
-          
-          # 2. Create Frameworks directory
+          # 3. Create Frameworks directory
           mkdir -p "$FRAMEWORKS_DIR"
           
-          # 3. Copy Dylibs
+          # 4. Copy Dylibs
+          echo "Copying libs..."
           cp External/mosquitto/lib/osx/libmosquitto.dylib "$FRAMEWORKS_DIR/"
           cp External/mosquitto/lib/osx/libmosquittopp.dylib "$FRAMEWORKS_DIR/"
           
-          # 4. Fix Library IDs (This ensures the libs know they are loaded via rpath)
+          # 5. Fix Library IDs
+          echo "Fixing Library IDs..."
           install_name_tool -id @rpath/libmosquitto.dylib "$FRAMEWORKS_DIR/libmosquitto.dylib"
           install_name_tool -id @rpath/libmosquittopp.dylib "$FRAMEWORKS_DIR/libmosquittopp.dylib"
           
-          # 5. Fix dependency path in libmosquittopp (It likely points to a hardcoded path for the C lib)
-          # We try updating both common variations just in case
+          # 6. Fix dependency path in libmosquittopp
+          # We ignore errors (|| true) here in case the library was already linked correctly, 
+          # but we log the attempt.
           install_name_tool -change /usr/local/lib/libmosquitto.dylib @rpath/libmosquitto.dylib "$FRAMEWORKS_DIR/libmosquittopp.dylib" || true
           install_name_tool -change libmosquitto.dylib @rpath/libmosquitto.dylib "$FRAMEWORKS_DIR/libmosquittopp.dylib" || true
 
-          # 6. Add RPATH to Executable (Tells the app to look in Contents/Frameworks)
-          install_name_tool -add_rpath @executable_path/../Frameworks "$EXECUTABLE" || true
+          # 7. Add RPATH to Executable
+          echo "Adding RPATH to executable..."
+          if [ -f "$EXECUTABLE" ]; then
+            install_name_tool -add_rpath @executable_path/../Frameworks "$EXECUTABLE" || true
+          else
+            echo "::error::Executable not found at $EXECUTABLE"
+            exit 1
+          fi
           
-          # 7. Re-sign the app (Modifying the binary invalidates signature; required for Apple Silicon)
+          # 8. Re-sign
+          echo "Signing..."
           codesign --force --deep --sign - "$APP_PATH"
       # --- NEW STEP ENDS HERE ---
 
