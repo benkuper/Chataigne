@@ -290,7 +290,9 @@ jobs:
           cp -d $LIB_PATH/libngtcp2.so* $APPDIR/usr/lib/ || true
           cp -d $LIB_PATH/libngtcp2_crypto_ossl.so* $APPDIR/usr/lib/ || true
           cp -d $LIB_PATH/libldap.so* $APPDIR/usr/lib/ || true
+          cp -d $LIB_PATH/libldap-2.5.so* $APPDIR/usr/lib/ || true
           cp -d $LIB_PATH/liblber.so* $APPDIR/usr/lib/ || true
+          cp -d $LIB_PATH/liblber-2.5.so* $APPDIR/usr/lib/ || true
           cp -d $LIB_PATH/libsasl2.so* $APPDIR/usr/lib/ || true
 
           # 3. Generate AppImage
@@ -450,7 +452,9 @@ jobs:
           cp -d $LIB_PATH/libngtcp2.so* $APPDIR/usr/lib/ || true
           cp -d $LIB_PATH/libngtcp2_crypto_ossl.so* $APPDIR/usr/lib/ || true
           cp -d $LIB_PATH/libldap.so* $APPDIR/usr/lib/ || true
+          cp -d $LIB_PATH/libldap-2.5.so* $APPDIR/usr/lib/ || true
           cp -d $LIB_PATH/liblber.so* $APPDIR/usr/lib/ || true
+          cp -d $LIB_PATH/liblber-2.5.so* $APPDIR/usr/lib/ || true
           cp -d $LIB_PATH/libsasl2.so* $APPDIR/usr/lib/ || true
 
           # 3. Generate AppImage
