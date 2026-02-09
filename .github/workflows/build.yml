@@ -227,6 +227,12 @@ jobs:
           ref: develop-local
           path: JUCE
 
+      - name: Set Suffix
+        id: set_variables
+        uses: ./.github/actions/set-suffix
+        with:
+          os: linux-x64
+
       - name: Installing dependencies
         run: |
           sudo apt-get update
@@ -267,15 +273,25 @@ jobs:
           LIB_PATH=/usr/lib/x86_64-linux-gnu
           cp -d $LIB_PATH/libmosquitto.so* $APPDIR/usr/lib/ || true
           cp -d $LIB_PATH/libmosquittopp.so* $APPDIR/usr/lib/ || true
+          cp -d $LIB_PATH/libcurl.so* $APPDIR/usr/lib/ || true
           cp -d $LIB_PATH/libssl.so* $APPDIR/usr/lib/ || true
           cp -d $LIB_PATH/libcrypto.so* $APPDIR/usr/lib/ || true
           cp -d $LIB_PATH/libbluetooth.so* $APPDIR/usr/lib/ || true
           cp -d $LIB_PATH/libusb-1.0.so* $APPDIR/usr/lib/ || true
           cp -d $LIB_PATH/libhidapi-hidraw.so* $APPDIR/usr/lib/ || true
           cp -d $LIB_PATH/libSDL2-2.0.so* $APPDIR/usr/lib/ || true
+          cp -d $LIB_PATH/libnghttp2.so* $APPDIR/usr/lib/ || true
+          cp -d $LIB_PATH/libidn2.so* $APPDIR/usr/lib/ || true
+          cp -d $LIB_PATH/libpsl.so* $APPDIR/usr/lib/ || true
+          cp -d $LIB_PATH/libz.so* $APPDIR/usr/lib/ || true
+          cp -d $LIB_PATH/libbrotlidec.so* $APPDIR/usr/lib/ || true
+          cp -d $LIB_PATH/libbrotlicommon.so* $APPDIR/usr/lib/ || true
+          cp -d $LIB_PATH/libssh2.so* $APPDIR/usr/lib/ || true
+          cp -d $LIB_PATH/libngtcp2.so* $APPDIR/usr/lib/ || true
+          cp -d $LIB_PATH/libngtcp2_crypto_ossl.so* $APPDIR/usr/lib/ || true
 
           # 3. Generate AppImage
-          PKGNAME=${{ env.ProjectName }}-linux-x64.AppImage
+          PKGNAME=${{ env.ProjectName }}-${{ steps.set_variables.outputs.suffix }}.AppImage
           echo "pkg-name=$PKGNAME" >> $GITHUB_OUTPUT
           
           ./appimagetool-x86_64.AppImage --no-appstream $APPDIR $PKGNAME
@@ -414,12 +430,22 @@ jobs:
           
           cp -d $LIB_PATH/libmosquitto.so* $APPDIR/usr/lib/ || true
           cp -d $LIB_PATH/libmosquittopp.so* $APPDIR/usr/lib/ || true
+          cp -d $LIB_PATH/libcurl.so* $APPDIR/usr/lib/ || true
           cp -d $LIB_PATH/libssl.so* $APPDIR/usr/lib/ || true
           cp -d $LIB_PATH/libcrypto.so* $APPDIR/usr/lib/ || true
           cp -d $LIB_PATH/libbluetooth.so* $APPDIR/usr/lib/ || true
           cp -d $LIB_PATH/libusb-1.0.so* $APPDIR/usr/lib/ || true
           cp -d $LIB_PATH/libhidapi-hidraw.so* $APPDIR/usr/lib/ || true
           cp -d $LIB_PATH/libSDL2-2.0.so* $APPDIR/usr/lib/ || true
+          cp -d $LIB_PATH/libnghttp2.so* $APPDIR/usr/lib/ || true
+          cp -d $LIB_PATH/libidn2.so* $APPDIR/usr/lib/ || true
+          cp -d $LIB_PATH/libpsl.so* $APPDIR/usr/lib/ || true
+          cp -d $LIB_PATH/libz.so* $APPDIR/usr/lib/ || true
+          cp -d $LIB_PATH/libbrotlidec.so* $APPDIR/usr/lib/ || true
+          cp -d $LIB_PATH/libbrotlicommon.so* $APPDIR/usr/lib/ || true
+          cp -d $LIB_PATH/libssh2.so* $APPDIR/usr/lib/ || true
+          cp -d $LIB_PATH/libngtcp2.so* $APPDIR/usr/lib/ || true
+          cp -d $LIB_PATH/libngtcp2_crypto_ossl.so* $APPDIR/usr/lib/ || true
 
           # 3. Generate AppImage
           PKGNAME=${{ env.ProjectName }}-linux-${{ steps.set_variables.outputs.suffix }}.AppImage
