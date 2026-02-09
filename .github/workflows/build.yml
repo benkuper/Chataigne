@@ -432,30 +432,36 @@ jobs:
           # 2. Copy Libs (ONLY copying, no other manipulation)
           # We select the path based on the matrix gnu_type (arm-linux-gnueabihf or aarch64-linux-gnu)
           LIB_PATH=/usr/lib/${{ matrix.gnu_type }}
-          
-          cp -d $LIB_PATH/libmosquitto.so* $APPDIR/usr/lib/ || true
-          cp -d $LIB_PATH/libmosquittopp.so* $APPDIR/usr/lib/ || true
-          cp -d $LIB_PATH/libcurl.so* $APPDIR/usr/lib/ || true
-          cp -d $LIB_PATH/libssl.so* $APPDIR/usr/lib/ || true
-          cp -d $LIB_PATH/libcrypto.so* $APPDIR/usr/lib/ || true
-          cp -d $LIB_PATH/libbluetooth.so* $APPDIR/usr/lib/ || true
-          cp -d $LIB_PATH/libusb-1.0.so* $APPDIR/usr/lib/ || true
-          cp -d $LIB_PATH/libhidapi-hidraw.so* $APPDIR/usr/lib/ || true
-          cp -d $LIB_PATH/libSDL2-2.0.so* $APPDIR/usr/lib/ || true
-          cp -d $LIB_PATH/libnghttp2.so* $APPDIR/usr/lib/ || true
-          cp -d $LIB_PATH/libidn2.so* $APPDIR/usr/lib/ || true
-          cp -d $LIB_PATH/libpsl.so* $APPDIR/usr/lib/ || true
-          cp -d $LIB_PATH/libz.so* $APPDIR/usr/lib/ || true
-          cp -d $LIB_PATH/libbrotlidec.so* $APPDIR/usr/lib/ || true
-          cp -d $LIB_PATH/libbrotlicommon.so* $APPDIR/usr/lib/ || true
-          cp -d $LIB_PATH/libssh2.so* $APPDIR/usr/lib/ || true
-          cp -d $LIB_PATH/libngtcp2.so* $APPDIR/usr/lib/ || true
-          cp -d $LIB_PATH/libngtcp2_crypto_ossl.so* $APPDIR/usr/lib/ || true
-          cp -d $LIB_PATH/libldap.so* $APPDIR/usr/lib/ || true
-          cp -d $LIB_PATH/libldap-2.5.so* $APPDIR/usr/lib/ || true
-          cp -d $LIB_PATH/liblber.so* $APPDIR/usr/lib/ || true
-          cp -d $LIB_PATH/liblber-2.5.so* $APPDIR/usr/lib/ || true
-          cp -d $LIB_PATH/libsasl2.so* $APPDIR/usr/lib/ || true
+
+          copy_glob() {
+            if compgen -G "$1" > /dev/null; then
+              cp -d $1 "$APPDIR/usr/lib/"
+            fi
+          }
+
+          copy_glob "$LIB_PATH/libmosquitto.so*"
+          copy_glob "$LIB_PATH/libmosquittopp.so*"
+          copy_glob "$LIB_PATH/libcurl.so*"
+          copy_glob "$LIB_PATH/libssl.so*"
+          copy_glob "$LIB_PATH/libcrypto.so*"
+          copy_glob "$LIB_PATH/libbluetooth.so*"
+          copy_glob "$LIB_PATH/libusb-1.0.so*"
+          copy_glob "$LIB_PATH/libhidapi-hidraw.so*"
+          copy_glob "$LIB_PATH/libSDL2-2.0.so*"
+          copy_glob "$LIB_PATH/libnghttp2.so*"
+          copy_glob "$LIB_PATH/libidn2.so*"
+          copy_glob "$LIB_PATH/libpsl.so*"
+          copy_glob "$LIB_PATH/libz.so*"
+          copy_glob "$LIB_PATH/libbrotlidec.so*"
+          copy_glob "$LIB_PATH/libbrotlicommon.so*"
+          copy_glob "$LIB_PATH/libssh2.so*"
+          copy_glob "$LIB_PATH/libngtcp2.so*"
+          copy_glob "$LIB_PATH/libngtcp2_crypto_ossl.so*"
+          copy_glob "$LIB_PATH/libldap.so*"
+          copy_glob "$LIB_PATH/libldap-2.5.so*"
+          copy_glob "$LIB_PATH/liblber.so*"
+          copy_glob "$LIB_PATH/liblber-2.5.so*"
+          copy_glob "$LIB_PATH/libsasl2.so*"
 
           # 3. Generate AppImage
           PKGNAME=${{ env.ProjectName }}-linux-${{ steps.set_variables.outputs.suffix }}.AppImage
