@@ -286,22 +286,20 @@ jobs:
           set -euo pipefail
           for IMAGE in ubuntu:22.04 ubuntu:24.04 debian:bookworm debian:trixie; do
             echo "\n=== ABI check in $IMAGE ==="
-            docker run --rm -v "${GITHUB_WORKSPACE}:/ws" "$IMAGE" bash <<'EOF'
+            docker run --rm -v "${GITHUB_WORKSPACE}:/ws" "$IMAGE" bash -lc '
               set -euo pipefail
               apt-get update >/dev/null
               apt-get install -y --no-install-recommends binutils >/dev/null
-
               BIN=/ws/Builds/LinuxMakefile/build/${{ env.ProjectName }}
-              MAX_GLIBC=$(objdump -T "$BIN" | grep -o 'GLIBC_[0-9.]\+' | sed 's/GLIBC_//' | sort -V | tail -1)
+              MAX_GLIBC=$(objdump -T "$BIN" | grep -o "GLIBC_[0-9.]\\+" | sed "s/GLIBC_//" | sort -V | tail -1)
               echo "Max GLIBC symbol: $MAX_GLIBC"
               dpkg --compare-versions "$MAX_GLIBC" le "2.35"
-
-              NEEDED=$(readelf -d "$BIN" | awk '/NEEDED/ {print $5}' | tr -d '[]')
-              if echo "$NEEDED" | grep -E 'libssl\.so\.1\.1|libcrypto\.so\.1\.1' >/dev/null; then
+              NEEDED=$(readelf -d "$BIN" | awk "/NEEDED/ {print \\$5}" | tr -d "[]")
+              if echo "$NEEDED" | grep -E "libssl\\.so\\.1\\.1|libcrypto\\.so\\.1\\.1" >/dev/null; then
                 echo "OpenSSL 1.1 dependency detected"
                 exit 1
               fi
-            EOF
+            '
           done
 
       - name: Prepare AppImage Tool
@@ -337,12 +335,12 @@ jobs:
             fi
           }
 
-          cp -d $LIB_PATH/libmosquitto.so* $APPDIR/usr/lib/ || true
-          cp -d $LIB_PATH/libmosquittopp.so* $APPDIR/usr/lib/ || true
-          cp -d $LIB_PATH/libbluetooth.so* $APPDIR/usr/lib/ || true
-          cp -d $LIB_PATH/libusb-1.0.so* $APPDIR/usr/lib/ || true
-          cp -d $LIB_PATH/libhidapi-hidraw.so* $APPDIR/usr/lib/ || true
-          cp -d $LIB_PATH/libSDL2-2.0.so* $APPDIR/usr/lib/ || true
+          copy_glob "$LIB_PATH/libmosquitto.so*"
+          copy_glob "$LIB_PATH/libmosquittopp.so*"
+          copy_glob "$LIB_PATH/libbluetooth.so*"
+          copy_glob "$LIB_PATH/libusb-1.0.so*"
+          copy_glob "$LIB_PATH/libhidapi-hidraw.so*"
+          copy_glob "$LIB_PATH/libSDL2-2.0.so*"
           copy_glob "External/servus/lib/linux/libServus.so*"
 
           # Never bundle glibc/libstdc++/OpenSSL/libcurl
