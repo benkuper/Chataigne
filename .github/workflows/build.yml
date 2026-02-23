@@ -213,7 +213,7 @@ jobs:
   linux:
     name: Linux (x64)
     runs-on: ubuntu-22.04
-    
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -244,61 +244,119 @@ jobs:
             libglu1-mesa-dev mesa-common-dev libcurl4-openssl-dev \
             libssl-dev libmosquitto-dev libmosquittopp-dev libbluetooth-dev \
             libusb-1.0-0-dev libhidapi-dev libsdl2-dev
-          
+
       - name: Build
         run: |
           # Clean blobs to force system linking
           rm -rf External/mosquitto/lib/linux/
           rm -rf External/sdl/lib/linux/
-          
+
           cd Builds/LinuxMakefile
           make -j$(nproc) CONFIG=Release
+
+      - name: ABI Baseline Audit (glibc/OpenSSL)
+        run: |
+          set -euo pipefail
+          BIN=Builds/LinuxMakefile/build/${{ env.ProjectName }}
+
+          if [ ! -f "$BIN" ]; then
+            echo "::error::Binary not found at $BIN"
+            exit 1
+          fi
+
+          MAX_GLIBC=$(objdump -T "$BIN" | grep -o 'GLIBC_[0-9.]\+' | sed 's/GLIBC_//' | sort -V | tail -1)
+          echo "Detected max GLIBC symbol: $MAX_GLIBC"
+
+          if dpkg --compare-versions "$MAX_GLIBC" gt "2.35"; then
+            echo "::error::GLIBC baseline too new ($MAX_GLIBC). Must stay <= 2.35 for Ubuntu 22.04 baseline compatibility."
+            exit 1
+          fi
+
+          NEEDED=$(readelf -d "$BIN" | awk '/NEEDED/ {print $5}' | tr -d '[]')
+          echo "Detected NEEDED libs:"
+          echo "$NEEDED"
+
+          if echo "$NEEDED" | grep -E 'libssl\.so\.1\.1|libcrypto\.so\.1\.1' >/dev/null; then
+            echo "::error::Binary links against OpenSSL 1.1, which is not acceptable for Bookworm/Trixie/Ubuntu 24.04 targets."
+            exit 1
+          fi
+
+      - name: Validate ABI Across Target Distros
+        run: |
+          set -euo pipefail
+          for IMAGE in ubuntu:22.04 ubuntu:24.04 debian:bookworm debian:trixie; do
+            echo "\n=== ABI check in $IMAGE ==="
+            docker run --rm -v "${GITHUB_WORKSPACE}:/ws" "$IMAGE" bash <<'EOF'
+              set -euo pipefail
+              apt-get update >/dev/null
+              apt-get install -y --no-install-recommends binutils >/dev/null
+
+              BIN=/ws/Builds/LinuxMakefile/build/${{ env.ProjectName }}
+              MAX_GLIBC=$(objdump -T "$BIN" | grep -o 'GLIBC_[0-9.]\+' | sed 's/GLIBC_//' | sort -V | tail -1)
+              echo "Max GLIBC symbol: $MAX_GLIBC"
+              dpkg --compare-versions "$MAX_GLIBC" le "2.35"
+
+              NEEDED=$(readelf -d "$BIN" | awk '/NEEDED/ {print $5}' | tr -d '[]')
+              if echo "$NEEDED" | grep -E 'libssl\.so\.1\.1|libcrypto\.so\.1\.1' >/dev/null; then
+                echo "OpenSSL 1.1 dependency detected"
+                exit 1
+              fi
+            EOF
+          done
 
       - name: Prepare AppImage Tool
         run: |
           wget "https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage"
           chmod a+x appimagetool-x86_64.AppImage
-          mkdir -p ./Builds/LinuxMakefile/${{ env.ProjectName }}.AppDir/usr/bin/
-          mkdir -p ./Builds/LinuxMakefile/${{ env.ProjectName }}.AppDir/usr/lib/
+          APPDIR=./Builds/LinuxMakefile/${{ env.ProjectName }}.AppDir
+          mkdir -p "$APPDIR/usr/bin" "$APPDIR/usr/lib"
+
+          # Keep template metadata/resources, but reset dynamic libs and stale binary.
+          find "$APPDIR/usr/lib" -mindepth 1 ! -name 'exec_wrapper.so' -delete
+          rm -f "$APPDIR/usr/bin/${{ env.ProjectName }}"
+
+          # Ensure expected AppImage metadata files are present.
+          test -f "$APPDIR/AppRun"
+          test -f "$APPDIR/chataigne.desktop"
+          test -f "$APPDIR/chataigne.png"
 
       - name: Create AppImage
         id: create_package
         run: |
+          set -euo pipefail
           APPDIR=./Builds/LinuxMakefile/${{ env.ProjectName }}.AppDir
-          
+
           # 1. Copy Executable
           cp Builds/LinuxMakefile/build/${{ env.ProjectName }} $APPDIR/usr/bin/
-          
-          # 2. Copy Libs (ONLY copying, no other manipulation)
+
+          # 2. Copy app-specific libs only
           LIB_PATH=/usr/lib/x86_64-linux-gnu
+          copy_glob() {
+            if compgen -G "$1" > /dev/null; then
+              cp -d $1 "$APPDIR/usr/lib/"
+            fi
+          }
+
           cp -d $LIB_PATH/libmosquitto.so* $APPDIR/usr/lib/ || true
           cp -d $LIB_PATH/libmosquittopp.so* $APPDIR/usr/lib/ || true
-          cp -d $LIB_PATH/libcurl.so* $APPDIR/usr/lib/ || true
-          cp -d $LIB_PATH/libssl.so* $APPDIR/usr/lib/ || true
-          cp -d $LIB_PATH/libcrypto.so* $APPDIR/usr/lib/ || true
           cp -d $LIB_PATH/libbluetooth.so* $APPDIR/usr/lib/ || true
           cp -d $LIB_PATH/libusb-1.0.so* $APPDIR/usr/lib/ || true
           cp -d $LIB_PATH/libhidapi-hidraw.so* $APPDIR/usr/lib/ || true
           cp -d $LIB_PATH/libSDL2-2.0.so* $APPDIR/usr/lib/ || true
-          cp -d $LIB_PATH/libnghttp2.so* $APPDIR/usr/lib/ || true
-          cp -d $LIB_PATH/libidn2.so* $APPDIR/usr/lib/ || true
-          cp -d $LIB_PATH/libpsl.so* $APPDIR/usr/lib/ || true
-          cp -d $LIB_PATH/libz.so* $APPDIR/usr/lib/ || true
-          cp -d $LIB_PATH/libbrotlidec.so* $APPDIR/usr/lib/ || true
-          cp -d $LIB_PATH/libbrotlicommon.so* $APPDIR/usr/lib/ || true
-          cp -d $LIB_PATH/libssh2.so* $APPDIR/usr/lib/ || true
-          cp -d $LIB_PATH/libngtcp2.so* $APPDIR/usr/lib/ || true
-          cp -d $LIB_PATH/libngtcp2_crypto_ossl.so* $APPDIR/usr/lib/ || true
-          cp -d $LIB_PATH/libldap.so* $APPDIR/usr/lib/ || true
-          cp -d $LIB_PATH/libldap-2.5.so* $APPDIR/usr/lib/ || true
-          cp -d $LIB_PATH/liblber.so* $APPDIR/usr/lib/ || true
-          cp -d $LIB_PATH/liblber-2.5.so* $APPDIR/usr/lib/ || true
-          cp -d $LIB_PATH/libsasl2.so* $APPDIR/usr/lib/ || true
+          copy_glob "External/servus/lib/linux/libServus.so*"
+
+          # Never bundle glibc/libstdc++/OpenSSL/libcurl
+          for FORBIDDEN in libc.so libm.so libpthread.so librt.so libdl.so libgcc_s.so libstdc++.so libssl.so libcrypto.so libcurl.so; do
+            if compgen -G "$APPDIR/usr/lib/${FORBIDDEN}*" > /dev/null; then
+              echo "::error::Forbidden bundled runtime detected: ${FORBIDDEN}"
+              exit 1
+            fi
+          done
 
           # 3. Generate AppImage
           PKGNAME=${{ env.ProjectName }}-${{ steps.set_variables.outputs.suffix }}.AppImage
           echo "pkg-name=$PKGNAME" >> $GITHUB_OUTPUT
-          
+
           ./appimagetool-x86_64.AppImage --no-appstream $APPDIR $PKGNAME
         working-directory: ${{ github.workspace }}
 
@@ -349,21 +407,21 @@ jobs:
         run: |
           sudo dpkg --add-architecture ${{ matrix.deb_arch }}
           sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
-          
+
           echo "deb [arch=amd64] http://archive.ubuntu.com/ubuntu jammy main universe restricted multiverse" | sudo tee /etc/apt/sources.list
           echo "deb [arch=amd64] http://archive.ubuntu.com/ubuntu jammy-updates main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
           echo "deb [arch=amd64] http://archive.ubuntu.com/ubuntu jammy-security main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
-          
+
           echo "deb [arch=${{ matrix.deb_arch }}] http://ports.ubuntu.com/ubuntu-ports jammy main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
           echo "deb [arch=${{ matrix.deb_arch }}] http://ports.ubuntu.com/ubuntu-ports jammy-updates main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
           echo "deb [arch=${{ matrix.deb_arch }}] http://ports.ubuntu.com/ubuntu-ports jammy-security main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
-          
+
           sudo apt-get update
 
       - name: Install Cross-Compiler and Libraries
         run: |
           sudo apt-get install -y crossbuild-essential-${{ matrix.deb_arch }}
-          
+
           sudo apt-get install -y \
             libasound2-dev:${{ matrix.deb_arch }} \
             libjack-jackd2-dev:${{ matrix.deb_arch }} \
@@ -405,7 +463,7 @@ jobs:
 
           cd Builds/${{ matrix.buildFolder }}
           export PKG_CONFIG_PATH=/usr/lib/${{ matrix.gnu_type }}/pkgconfig
-          
+
           make -j$(nproc) \
             CONFIG=${{ matrix.buildConfig }} \
             CC=${{ matrix.gnu_type }}-gcc \
@@ -414,23 +472,59 @@ jobs:
             STRIP=${{ matrix.gnu_type }}-strip \
             TARGET_ARCH="${{ matrix.arch_flags }}"
 
+      - name: ABI Baseline Audit (RPi ${{ matrix.arch_name }})
+        run: |
+          set -euo pipefail
+          BIN=Builds/${{ matrix.buildFolder }}/build/${{ env.ProjectName }}
+
+          if [ ! -f "$BIN" ]; then
+            echo "::error::Binary not found at $BIN"
+            exit 1
+          fi
+
+          MAX_GLIBC=$(${{ matrix.gnu_type }}-objdump -T "$BIN" | grep -o 'GLIBC_[0-9.]\+' | sed 's/GLIBC_//' | sort -V | tail -1)
+          echo "Detected max GLIBC symbol: $MAX_GLIBC"
+
+          if dpkg --compare-versions "$MAX_GLIBC" gt "2.35"; then
+            echo "::error::RPi GLIBC baseline too new ($MAX_GLIBC). Must stay <= 2.35."
+            exit 1
+          fi
+
+          NEEDED=$(${{ matrix.gnu_type }}-readelf -d "$BIN" | awk '/NEEDED/ {print $5}' | tr -d '[]')
+          echo "Detected NEEDED libs:"
+          echo "$NEEDED"
+
+          if echo "$NEEDED" | grep -E 'libssl\.so\.1\.1|libcrypto\.so\.1\.1' >/dev/null; then
+            echo "::error::RPi binary links against OpenSSL 1.1, which is not acceptable for Bookworm/Trixie generation systems."
+            exit 1
+          fi
+
       - name: Prepare AppImage Tool
         run: |
           wget "https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage"
           chmod a+x appimagetool-x86_64.AppImage
-          mkdir -p ./Builds/${{ matrix.buildFolder }}/${{ env.ProjectName }}.AppDir/usr/bin/
-          mkdir -p ./Builds/${{ matrix.buildFolder }}/${{ env.ProjectName }}.AppDir/usr/lib/
+          APPDIR=./Builds/${{ matrix.buildFolder }}/${{ env.ProjectName }}.AppDir
+          mkdir -p "$APPDIR/usr/bin" "$APPDIR/usr/lib"
+
+          # Keep template metadata/resources, but reset dynamic libs and stale binary.
+          find "$APPDIR/usr/lib" -mindepth 1 -delete
+          rm -f "$APPDIR/usr/bin/${{ env.ProjectName }}"
+
+          # Ensure expected AppImage metadata files are present.
+          test -f "$APPDIR/AppRun"
+          test -f "$APPDIR/chataigne.desktop"
+          test -f "$APPDIR/chataigne.png"
 
       - name: Create AppImage
         id: create_package
         run: |
+          set -euo pipefail
           APPDIR=./Builds/${{ matrix.buildFolder }}/${{ env.ProjectName }}.AppDir
-          
+
           # 1. Copy Executable
           cp Builds/${{ matrix.buildFolder }}/build/${{ env.ProjectName }} $APPDIR/usr/bin/
-          
-          # 2. Copy Libs (ONLY copying, no other manipulation)
-          # We select the path based on the matrix gnu_type (arm-linux-gnueabihf or aarch64-linux-gnu)
+
+          # 2. Copy app-specific libs only
           LIB_PATH=/usr/lib/${{ matrix.gnu_type }}
 
           copy_glob() {
@@ -441,33 +535,30 @@ jobs:
 
           copy_glob "$LIB_PATH/libmosquitto.so*"
           copy_glob "$LIB_PATH/libmosquittopp.so*"
-          copy_glob "$LIB_PATH/libcurl.so*"
-          copy_glob "$LIB_PATH/libssl.so*"
-          copy_glob "$LIB_PATH/libcrypto.so*"
           copy_glob "$LIB_PATH/libbluetooth.so*"
           copy_glob "$LIB_PATH/libusb-1.0.so*"
           copy_glob "$LIB_PATH/libhidapi-hidraw.so*"
           copy_glob "$LIB_PATH/libSDL2-2.0.so*"
-          copy_glob "$LIB_PATH/libnghttp2.so*"
-          copy_glob "$LIB_PATH/libidn2.so*"
-          copy_glob "$LIB_PATH/libpsl.so*"
-          copy_glob "$LIB_PATH/libz.so*"
-          copy_glob "$LIB_PATH/libbrotlidec.so*"
-          copy_glob "$LIB_PATH/libbrotlicommon.so*"
-          copy_glob "$LIB_PATH/libssh2.so*"
-          copy_glob "$LIB_PATH/libngtcp2.so*"
-          copy_glob "$LIB_PATH/libngtcp2_crypto_ossl.so*"
-          copy_glob "$LIB_PATH/libldap.so*"
-          copy_glob "$LIB_PATH/libldap-2.5.so*"
-          copy_glob "$LIB_PATH/liblber.so*"
-          copy_glob "$LIB_PATH/liblber-2.5.so*"
-          copy_glob "$LIB_PATH/libsasl2.so*"
+
+          if [ "${{ matrix.arch_name }}" = "aarch64" ]; then
+            copy_glob "External/servus/lib/raspberry64/libServus.so*"
+          else
+            copy_glob "External/servus/lib/raspberry/libServus.so*"
+          fi
+
+          # Never bundle glibc/libstdc++/OpenSSL/libcurl
+          for FORBIDDEN in libc.so libm.so libpthread.so librt.so libdl.so libgcc_s.so libstdc++.so libssl.so libcrypto.so libcurl.so; do
+            if compgen -G "$APPDIR/usr/lib/${FORBIDDEN}*" > /dev/null; then
+              echo "::error::Forbidden bundled runtime detected: ${FORBIDDEN}"
+              exit 1
+            fi
+          done
 
           # 3. Generate AppImage
           PKGNAME=${{ env.ProjectName }}-linux-${{ steps.set_variables.outputs.suffix }}.AppImage
           echo "pkg-name=$PKGNAME" >> $GITHUB_OUTPUT
           export ARCH=${{ matrix.arch_name }}
-          
+
           ./appimagetool-x86_64.AppImage --no-appstream $APPDIR $PKGNAME
         working-directory: ${{ github.workspace }}
 
