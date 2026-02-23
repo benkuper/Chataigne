@@ -441,7 +441,7 @@ jobs:
             docker run --rm -v "${GITHUB_WORKSPACE}:/ws" "$IMAGE" bash -lc '
               set -euo pipefail
               apt-get update >/dev/null
-              apt-get install -y --no-install-recommends xvfb file >/dev/null
+              apt-get install -y --no-install-recommends xvfb xauth file >/dev/null
 
               # AppImage payload intentionally relies on host-provided libcurl/libpulse.
               install_any_pkg() {
