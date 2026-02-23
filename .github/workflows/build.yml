@@ -323,11 +323,12 @@ jobs:
         run: |
           set -euo pipefail
           APPDIR=./Builds/LinuxMakefile/${{ env.ProjectName }}.AppDir
+          BIN=$APPDIR/usr/bin/${{ env.ProjectName }}
 
           # 1. Copy Executable
-          cp Builds/LinuxMakefile/build/${{ env.ProjectName }} $APPDIR/usr/bin/
+          cp Builds/LinuxMakefile/build/${{ env.ProjectName }} "$BIN"
 
-          # 2. Copy app-specific libs only
+          # 2. Copy app-specific libs (seed set)
           LIB_PATH=/usr/lib/x86_64-linux-gnu
           copy_glob() {
             if compgen -G "$1" > /dev/null; then
@@ -343,6 +344,36 @@ jobs:
           copy_glob "$LIB_PATH/libSDL2-2.0.so*"
           copy_glob "External/servus/lib/linux/libServus.so*"
 
+          # 3. Auto-bundle direct+transitive runtime deps from ldd, except forbidden core libs.
+          is_forbidden_lib() {
+            case "$1" in
+              libc.so*|libm.so*|libpthread.so*|librt.so*|libdl.so*|libgcc_s.so*|libstdc++.so*|libssl.so*|libcrypto.so*|libcurl.so*|ld-linux*.so*|libresolv.so*|libnss_*.so*|libanl.so*|libutil.so*)
+                return 0
+                ;;
+              *)
+                return 1
+                ;;
+            esac
+          }
+
+          collect_and_copy_deps() {
+            local TARGET="$1"
+            ldd "$TARGET" | awk '/=> \/|^\// { for (i=1;i<=NF;i++) if ($i ~ /^\//) print $i }' | while read -r DEP; do
+              [ -e "$DEP" ] || continue
+              local BASE
+              BASE=$(basename "$DEP")
+              if is_forbidden_lib "$BASE"; then
+                continue
+              fi
+              copy_glob "$(dirname "$DEP")/${BASE%.*}*"
+            done
+          }
+
+          collect_and_copy_deps "$BIN"
+          while read -r LIBFILE; do
+            collect_and_copy_deps "$LIBFILE"
+          done < <(find "$APPDIR/usr/lib" -maxdepth 1 \( -type f -o -type l \))
+
           # Never bundle glibc/libstdc++/OpenSSL/libcurl
           for FORBIDDEN in libc.so libm.so libpthread.so librt.so libdl.so libgcc_s.so libstdc++.so libssl.so libcrypto.so libcurl.so; do
             if compgen -G "$APPDIR/usr/lib/${FORBIDDEN}*" > /dev/null; then
@@ -351,12 +382,49 @@ jobs:
             fi
           done
 
-          # 3. Generate AppImage
+          # 4. Generate AppImage
           PKGNAME=${{ env.ProjectName }}-${{ steps.set_variables.outputs.suffix }}.AppImage
           echo "pkg-name=$PKGNAME" >> $GITHUB_OUTPUT
 
           ./appimagetool-x86_64.AppImage --no-appstream $APPDIR $PKGNAME
         working-directory: ${{ github.workspace }}
+
+      - name: Smoke Test Linux AppImage
+        run: |
+          set -euo pipefail
+          PKG=${{ steps.create_package.outputs.pkg-name }}
+          APP=/ws/squashfs-root/usr/bin/${{ env.ProjectName }}
+
+          for IMAGE in ubuntu:22.04 ubuntu:24.04 debian:bookworm debian:trixie; do
+            echo "\n=== AppImage smoke test in $IMAGE ==="
+            docker run --rm -v "${GITHUB_WORKSPACE}:/ws" "$IMAGE" bash -lc '
+              set -euo pipefail
+              apt-get update >/dev/null
+              apt-get install -y --no-install-recommends xvfb file >/dev/null
+              cd /ws
+              chmod +x '"$PKG"'
+              rm -rf squashfs-root
+              ./'"$PKG"' --appimage-extract >/dev/null
+
+              # Dependency closure check inside target distro
+              if find squashfs-root/usr -type f \( -name "${{ env.ProjectName }}" -o -name "*.so*" \) -exec ldd {} \; | grep -q "not found"; then
+                echo "Missing runtime deps detected in AppImage payload"
+                find squashfs-root/usr -type f \( -name "${{ env.ProjectName }}" -o -name "*.so*" \) -exec ldd {} \;
+                exit 1
+              fi
+
+              # Startup smoke test (timeout means app started and stayed alive)
+              set +e
+              timeout 20s xvfb-run -a '"$APP"' --help >/tmp/chataigne-smoke.log 2>&1
+              RC=$?
+              set -e
+              if [ "$RC" -ne 0 ] && [ "$RC" -ne 124 ]; then
+                echo "App startup failed (rc=$RC)"
+                cat /tmp/chataigne-smoke.log
+                exit 1
+              fi
+            '
+          done
 
       - name: Upload
         uses: ./.github/actions/upload
@@ -518,9 +586,10 @@ jobs:
         run: |
           set -euo pipefail
           APPDIR=./Builds/${{ matrix.buildFolder }}/${{ env.ProjectName }}.AppDir
+          BIN=$APPDIR/usr/bin/${{ env.ProjectName }}
 
           # 1. Copy Executable
-          cp Builds/${{ matrix.buildFolder }}/build/${{ env.ProjectName }} $APPDIR/usr/bin/
+          cp Builds/${{ matrix.buildFolder }}/build/${{ env.ProjectName }} "$BIN"
 
           # 2. Copy app-specific libs only
           LIB_PATH=/usr/lib/${{ matrix.gnu_type }}
@@ -544,6 +613,101 @@ jobs:
             copy_glob "External/servus/lib/raspberry/libServus.so*"
           fi
 
+          # 3. Auto-bundle direct+transitive runtime deps using cross-readelf (works for foreign arch binaries).
+          SEARCH_DIRS=("$LIB_PATH" "/lib/${{ matrix.gnu_type }}" "/usr/lib/${{ matrix.gnu_type }}")
+
+          is_forbidden_lib() {
+            case "$1" in
+              libc.so*|libm.so*|libpthread.so*|librt.so*|libdl.so*|libgcc_s.so*|libstdc++.so*|libssl.so*|libcrypto.so*|libcurl.so*|ld-linux*.so*|libresolv.so*|libnss_*.so*|libanl.so*|libutil.so*)
+                return 0
+                ;;
+              *)
+                return 1
+                ;;
+            esac
+          }
+
+          find_matching_so_path() {
+            local SONAME="$1"
+            local DIR
+            for DIR in "${SEARCH_DIRS[@]}"; do
+              if [ -e "$DIR/$SONAME" ]; then
+                echo "$DIR/$SONAME"
+                return 0
+              fi
+            done
+
+            for DIR in "${SEARCH_DIRS[@]}"; do
+              local CANDIDATE
+              CANDIDATE=$(find "$DIR" -maxdepth 1 -name "$SONAME*" 2>/dev/null | head -n 1 || true)
+              if [ -n "$CANDIDATE" ]; then
+                echo "$CANDIDATE"
+                return 0
+              fi
+            done
+
+            return 1
+          }
+
+          copy_needed_from_target() {
+            local TARGET="$1"
+            ${{ matrix.gnu_type }}-readelf -d "$TARGET" | awk '/NEEDED/ {print $5}' | tr -d '[]' | while read -r SONAME; do
+              [ -n "$SONAME" ] || continue
+
+              if is_forbidden_lib "$SONAME"; then
+                continue
+              fi
+
+              if compgen -G "$APPDIR/usr/lib/$SONAME*" > /dev/null; then
+                continue
+              fi
+
+              local RESOLVED
+              RESOLVED=$(find_matching_so_path "$SONAME" || true)
+              if [ -n "$RESOLVED" ]; then
+                copy_glob "$(dirname "$RESOLVED")/$SONAME*"
+              else
+                echo "::warning::Could not resolve dependency $SONAME from $TARGET"
+              fi
+            done
+          }
+
+          # Multiple passes to resolve transitive dependencies.
+          for _ in 1 2 3; do
+            copy_needed_from_target "$BIN"
+            find "$APPDIR/usr/lib" \( -type f -o -type l \) | while read -r LIBFILE; do
+              copy_needed_from_target "$LIBFILE"
+            done
+          done
+
+          # 4. Verify dependency closure for bundled payload (excluding intentionally forbidden system libs).
+          verify_target_needed() {
+            local TARGET="$1"
+            local MISSING=0
+            while read -r SONAME; do
+              [ -n "$SONAME" ] || continue
+              if is_forbidden_lib "$SONAME"; then
+                continue
+              fi
+
+              if compgen -G "$APPDIR/usr/lib/$SONAME*" > /dev/null; then
+                continue
+              fi
+
+              if ! find_matching_so_path "$SONAME" >/dev/null; then
+                echo "::error::Unresolved dependency for $(basename "$TARGET"): $SONAME"
+                MISSING=1
+              fi
+            done < <(${{ matrix.gnu_type }}-readelf -d "$TARGET" | awk '/NEEDED/ {print $5}' | tr -d '[]')
+
+            return $MISSING
+          }
+
+          verify_target_needed "$BIN"
+          while read -r LIBFILE; do
+            verify_target_needed "$LIBFILE"
+          done < <(find "$APPDIR/usr/lib" \( -type f -o -type l \))
+
           # Never bundle glibc/libstdc++/OpenSSL/libcurl
           for FORBIDDEN in libc.so libm.so libpthread.so librt.so libdl.so libgcc_s.so libstdc++.so libssl.so libcrypto.so libcurl.so; do
             if compgen -G "$APPDIR/usr/lib/${FORBIDDEN}*" > /dev/null; then
@@ -552,13 +716,70 @@ jobs:
             fi
           done
 
-          # 3. Generate AppImage
+          # 5. Generate AppImage
           PKGNAME=${{ env.ProjectName }}-linux-${{ steps.set_variables.outputs.suffix }}.AppImage
           echo "pkg-name=$PKGNAME" >> $GITHUB_OUTPUT
           export ARCH=${{ matrix.arch_name }}
 
           ./appimagetool-x86_64.AppImage --no-appstream $APPDIR $PKGNAME
         working-directory: ${{ github.workspace }}
+
+      - name: Smoke Test Raspberry Payload
+        run: |
+          set -euo pipefail
+          APPDIR=./Builds/${{ matrix.buildFolder }}/${{ env.ProjectName }}.AppDir
+          BIN=$APPDIR/usr/bin/${{ env.ProjectName }}
+          SEARCH_DIRS=("$APPDIR/usr/lib" "/lib/${{ matrix.gnu_type }}" "/usr/lib/${{ matrix.gnu_type }}")
+
+          if [ ! -f "$BIN" ]; then
+            echo "::error::Payload binary missing: $BIN"
+            exit 1
+          fi
+
+          is_forbidden_lib() {
+            case "$1" in
+              libc.so*|libm.so*|libpthread.so*|librt.so*|libdl.so*|libgcc_s.so*|libstdc++.so*|libssl.so*|libcrypto.so*|libcurl.so*|ld-linux*.so*|libresolv.so*|libnss_*.so*|libanl.so*|libutil.so*)
+                return 0
+                ;;
+              *)
+                return 1
+                ;;
+            esac
+          }
+
+          has_dep() {
+            local SONAME="$1"
+            local DIR
+            for DIR in "${SEARCH_DIRS[@]}"; do
+              if compgen -G "$DIR/$SONAME*" > /dev/null; then
+                return 0
+              fi
+            done
+            return 1
+          }
+
+          verify_target_needed() {
+            local TARGET="$1"
+            local MISSING=0
+            while read -r SONAME; do
+              [ -n "$SONAME" ] || continue
+              if is_forbidden_lib "$SONAME"; then
+                continue
+              fi
+              if ! has_dep "$SONAME"; then
+                echo "::error::Smoke test unresolved dependency for $(basename "$TARGET"): $SONAME"
+                MISSING=1
+              fi
+            done < <(${{ matrix.gnu_type }}-readelf -d "$TARGET" | awk '/NEEDED/ {print $5}' | tr -d '[]')
+            return $MISSING
+          }
+
+          verify_target_needed "$BIN"
+          while read -r LIBFILE; do
+            verify_target_needed "$LIBFILE"
+          done < <(find "$APPDIR/usr/lib" \( -type f -o -type l \))
+
+          echo "Raspberry payload smoke test passed for ${{ matrix.arch_name }}"
 
       - name: Upload
         uses: ./.github/actions/upload
