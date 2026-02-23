@@ -405,6 +405,20 @@ jobs:
               set -euo pipefail
               apt-get update >/dev/null
               apt-get install -y --no-install-recommends xvfb file >/dev/null
+
+              # AppImage payload intentionally relies on host-provided libcurl/libpulse.
+              install_any_pkg() {
+                for PKG in "$@"; do
+                  if apt-cache show "$PKG" >/dev/null 2>&1; then
+                    apt-get install -y --no-install-recommends "$PKG" >/dev/null
+                    return 0
+                  fi
+                done
+                echo "::error::None of the package alternatives are available: $*"
+                exit 1
+              }
+              install_any_pkg libcurl4 libcurl4t64
+              install_any_pkg libpulse0 libpulse0t64
               cd /ws
               chmod +x '"$PKG"'
               rm -rf squashfs-root
