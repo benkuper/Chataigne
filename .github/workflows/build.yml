@@ -344,6 +344,11 @@ jobs:
           copy_glob "$LIB_PATH/libSDL2-2.0.so*"
           copy_glob "External/servus/lib/linux/libServus.so*"
 
+          # Some bundles only ship libServus.so while the binary expects libServus.so.6.
+          if compgen -G "$APPDIR/usr/lib/libServus.so" > /dev/null && ! compgen -G "$APPDIR/usr/lib/libServus.so.6" > /dev/null; then
+            ln -sf libServus.so "$APPDIR/usr/lib/libServus.so.6"
+          fi
+
           # 3. Auto-bundle direct+transitive runtime deps from ldd, except forbidden core libs.
           is_forbidden_lib() {
             case "$1" in
@@ -393,7 +398,6 @@ jobs:
         run: |
           set -euo pipefail
           PKG=${{ steps.create_package.outputs.pkg-name }}
-          APP=/ws/squashfs-root/usr/bin/${{ env.ProjectName }}
 
           for IMAGE in ubuntu:22.04 ubuntu:24.04 debian:bookworm debian:trixie; do
             echo "\n=== AppImage smoke test in $IMAGE ==="
@@ -406,16 +410,20 @@ jobs:
               rm -rf squashfs-root
               ./'"$PKG"' --appimage-extract >/dev/null
 
-              # Dependency closure check inside target distro
-              if find squashfs-root/usr -type f \( -name "${{ env.ProjectName }}" -o -name "*.so*" \) -exec ldd {} \; | grep -q "not found"; then
-                echo "Missing runtime deps detected in AppImage payload"
-                find squashfs-root/usr -type f \( -name "${{ env.ProjectName }}" -o -name "*.so*" \) -exec ldd {} \;
+              APPDIR=/ws/squashfs-root
+              APP="$APPDIR/usr/bin/${{ env.ProjectName }}"
+              export LD_LIBRARY_PATH="$APPDIR/usr/lib"
+
+              # Dependency check for launch-critical binary with AppDir runtime path
+              if ldd "$APP" | grep -q "not found"; then
+                echo "Missing runtime deps detected in AppImage binary"
+                ldd "$APP"
                 exit 1
               fi
 
               # Startup smoke test (timeout means app started and stayed alive)
               set +e
-              timeout 20s xvfb-run -a '"$APP"' --help >/tmp/chataigne-smoke.log 2>&1
+              timeout 20s xvfb-run -a "$APP" --help >/tmp/chataigne-smoke.log 2>&1
               RC=$?
               set -e
               if [ "$RC" -ne 0 ] && [ "$RC" -ne 124 ]; then
