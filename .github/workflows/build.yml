@@ -440,6 +440,7 @@ jobs:
             echo "\n=== AppImage smoke test in $IMAGE ==="
             docker run --rm -v "${GITHUB_WORKSPACE}:/ws" "$IMAGE" bash -lc '
               set -euo pipefail
+              export DEBIAN_FRONTEND=noninteractive
               apt-get update >/dev/null
               apt-get install -y --no-install-recommends xvfb xauth file >/dev/null
 
@@ -456,6 +457,7 @@ jobs:
               }
               install_any_pkg libcurl4 libcurl4t64
               install_any_pkg libpulse0 libpulse0t64
+              install_any_pkg libgcrypt20 libgcrypt20t64
               cd /ws
               chmod +x '"$PKG"'
               rm -rf squashfs-root
