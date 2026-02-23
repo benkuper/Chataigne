@@ -349,7 +349,9 @@ jobs:
             ln -sf libServus.so "$APPDIR/usr/lib/libServus.so.6"
           fi
 
-          # 3. Auto-bundle direct+transitive runtime deps from ldd, except forbidden core libs.
+          # 3. Auto-bundle runtime deps from direct NEEDED entries, excluding forbidden core libs.
+          SEARCH_DIRS=("$LIB_PATH" "/lib/x86_64-linux-gnu" "/usr/lib/x86_64-linux-gnu")
+
           is_forbidden_lib() {
             case "$1" in
               libc.so*|libm.so*|libpthread.so*|librt.so*|libdl.so*|libgcc_s.so*|libstdc++.so*|libssl.so*|libcrypto.so*|libcurl.so*|libpulse.so*|libpulsecommon*.so*|ld-linux*.so*|libresolv.so*|libnss_*.so*|libanl.so*|libutil.so*)
@@ -361,23 +363,58 @@ jobs:
             esac
           }
 
-          collect_and_copy_deps() {
+          find_matching_so_path() {
+            local SONAME="$1"
+            local DIR
+            for DIR in "${SEARCH_DIRS[@]}"; do
+              if [ -e "$DIR/$SONAME" ]; then
+                echo "$DIR/$SONAME"
+                return 0
+              fi
+            done
+
+            for DIR in "${SEARCH_DIRS[@]}"; do
+              local CANDIDATE
+              CANDIDATE=$(find "$DIR" -maxdepth 1 -name "$SONAME*" 2>/dev/null | head -n 1 || true)
+              if [ -n "$CANDIDATE" ]; then
+                echo "$CANDIDATE"
+                return 0
+              fi
+            done
+
+            return 1
+          }
+
+          copy_needed_from_target() {
             local TARGET="$1"
-            ldd "$TARGET" | awk '/=> \/|^\// { for (i=1;i<=NF;i++) if ($i ~ /^\//) print $i }' | while read -r DEP; do
-              [ -e "$DEP" ] || continue
-              local BASE
-              BASE=$(basename "$DEP")
-              if is_forbidden_lib "$BASE"; then
+            readelf -d "$TARGET" | awk '/NEEDED/ {print $5}' | tr -d '[]' | while read -r SONAME; do
+              [ -n "$SONAME" ] || continue
+
+              if is_forbidden_lib "$SONAME"; then
                 continue
               fi
-              copy_glob "$(dirname "$DEP")/${BASE%.*}*"
+
+              if compgen -G "$APPDIR/usr/lib/$SONAME*" > /dev/null; then
+                continue
+              fi
+
+              local RESOLVED
+              RESOLVED=$(find_matching_so_path "$SONAME" || true)
+              if [ -n "$RESOLVED" ]; then
+                copy_glob "$(dirname "$RESOLVED")/$SONAME*"
+              else
+                echo "::warning::Could not resolve dependency $SONAME from $TARGET"
+              fi
             done
           }
 
-          collect_and_copy_deps "$BIN"
-          while read -r LIBFILE; do
-            collect_and_copy_deps "$LIBFILE"
-          done < <(find "$APPDIR/usr/lib" -maxdepth 1 \( -type f -o -type l \))
+          # Multiple passes resolve transitive dependencies of bundled libraries only.
+          for _ in 1 2 3; do
+            copy_needed_from_target "$BIN"
+            while read -r LIBFILE; do
+              copy_needed_from_target "$LIBFILE"
+            done < <(find "$APPDIR/usr/lib" -maxdepth 1 \( -type f -o -type l \))
+          done
 
           # Never bundle glibc/libstdc++/OpenSSL/libcurl/libpulse
           for FORBIDDEN in libc.so libm.so libpthread.so librt.so libdl.so libgcc_s.so libstdc++.so libssl.so libcrypto.so libcurl.so libpulse.so libpulsecommon; do
