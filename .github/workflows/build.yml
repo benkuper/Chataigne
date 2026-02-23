@@ -294,7 +294,7 @@ jobs:
               MAX_GLIBC=$(objdump -T "$BIN" | grep -o "GLIBC_[0-9.]\\+" | sed "s/GLIBC_//" | sort -V | tail -1)
               echo "Max GLIBC symbol: $MAX_GLIBC"
               dpkg --compare-versions "$MAX_GLIBC" le "2.35"
-              NEEDED=$(readelf -d "$BIN" | awk "/NEEDED/ {print \\$5}" | tr -d "[]")
+              NEEDED=$(readelf -d "$BIN" | sed -n "s/.*Shared library: \[\(.*\)\]/\1/p")
               if echo "$NEEDED" | grep -E "libssl\\.so\\.1\\.1|libcrypto\\.so\\.1\\.1" >/dev/null; then
                 echo "OpenSSL 1.1 dependency detected"
                 exit 1
@@ -347,7 +347,7 @@ jobs:
           # 3. Auto-bundle direct+transitive runtime deps from ldd, except forbidden core libs.
           is_forbidden_lib() {
             case "$1" in
-              libc.so*|libm.so*|libpthread.so*|librt.so*|libdl.so*|libgcc_s.so*|libstdc++.so*|libssl.so*|libcrypto.so*|libcurl.so*|ld-linux*.so*|libresolv.so*|libnss_*.so*|libanl.so*|libutil.so*)
+              libc.so*|libm.so*|libpthread.so*|librt.so*|libdl.so*|libgcc_s.so*|libstdc++.so*|libssl.so*|libcrypto.so*|libcurl.so*|libpulse.so*|libpulsecommon*.so*|ld-linux*.so*|libresolv.so*|libnss_*.so*|libanl.so*|libutil.so*)
                 return 0
                 ;;
               *)
@@ -374,8 +374,8 @@ jobs:
             collect_and_copy_deps "$LIBFILE"
           done < <(find "$APPDIR/usr/lib" -maxdepth 1 \( -type f -o -type l \))
 
-          # Never bundle glibc/libstdc++/OpenSSL/libcurl
-          for FORBIDDEN in libc.so libm.so libpthread.so librt.so libdl.so libgcc_s.so libstdc++.so libssl.so libcrypto.so libcurl.so; do
+          # Never bundle glibc/libstdc++/OpenSSL/libcurl/libpulse
+          for FORBIDDEN in libc.so libm.so libpthread.so librt.so libdl.so libgcc_s.so libstdc++.so libssl.so libcrypto.so libcurl.so libpulse.so libpulsecommon; do
             if compgen -G "$APPDIR/usr/lib/${FORBIDDEN}*" > /dev/null; then
               echo "::error::Forbidden bundled runtime detected: ${FORBIDDEN}"
               exit 1
@@ -613,12 +613,17 @@ jobs:
             copy_glob "External/servus/lib/raspberry/libServus.so*"
           fi
 
+          # Some bundles only ship libServus.so while the binary expects libServus.so.6.
+          if compgen -G "$APPDIR/usr/lib/libServus.so" > /dev/null && ! compgen -G "$APPDIR/usr/lib/libServus.so.6" > /dev/null; then
+            ln -sf libServus.so "$APPDIR/usr/lib/libServus.so.6"
+          fi
+
           # 3. Auto-bundle direct+transitive runtime deps using cross-readelf (works for foreign arch binaries).
           SEARCH_DIRS=("$LIB_PATH" "/lib/${{ matrix.gnu_type }}" "/usr/lib/${{ matrix.gnu_type }}")
 
           is_forbidden_lib() {
             case "$1" in
-              libc.so*|libm.so*|libpthread.so*|librt.so*|libdl.so*|libgcc_s.so*|libstdc++.so*|libssl.so*|libcrypto.so*|libcurl.so*|ld-linux*.so*|libresolv.so*|libnss_*.so*|libanl.so*|libutil.so*)
+              libc.so*|libm.so*|libpthread.so*|librt.so*|libdl.so*|libgcc_s.so*|libstdc++.so*|libssl.so*|libcrypto.so*|libcurl.so*|libpulse.so*|libpulsecommon*.so*|ld-linux*.so*|libresolv.so*|libnss_*.so*|libanl.so*|libutil.so*)
                 return 0
                 ;;
               *)
@@ -708,8 +713,8 @@ jobs:
             verify_target_needed "$LIBFILE"
           done < <(find "$APPDIR/usr/lib" \( -type f -o -type l \))
 
-          # Never bundle glibc/libstdc++/OpenSSL/libcurl
-          for FORBIDDEN in libc.so libm.so libpthread.so librt.so libdl.so libgcc_s.so libstdc++.so libssl.so libcrypto.so libcurl.so; do
+          # Never bundle glibc/libstdc++/OpenSSL/libcurl/libpulse
+          for FORBIDDEN in libc.so libm.so libpthread.so librt.so libdl.so libgcc_s.so libstdc++.so libssl.so libcrypto.so libcurl.so libpulse.so libpulsecommon; do
             if compgen -G "$APPDIR/usr/lib/${FORBIDDEN}*" > /dev/null; then
               echo "::error::Forbidden bundled runtime detected: ${FORBIDDEN}"
               exit 1
@@ -738,7 +743,7 @@ jobs:
 
           is_forbidden_lib() {
             case "$1" in
-              libc.so*|libm.so*|libpthread.so*|librt.so*|libdl.so*|libgcc_s.so*|libstdc++.so*|libssl.so*|libcrypto.so*|libcurl.so*|ld-linux*.so*|libresolv.so*|libnss_*.so*|libanl.so*|libutil.so*)
+              libc.so*|libm.so*|libpthread.so*|librt.so*|libdl.so*|libgcc_s.so*|libstdc++.so*|libssl.so*|libcrypto.so*|libcurl.so*|libpulse.so*|libpulsecommon*.so*|ld-linux*.so*|libresolv.so*|libnss_*.so*|libanl.so*|libutil.so*)
                 return 0
                 ;;
               *)
