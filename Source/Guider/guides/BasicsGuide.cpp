@@ -54,6 +54,9 @@ void BasicsGuide::clear()
 	if (audioFile != nullptr) audioFile->removeAsyncParameterListener(this);
 	if (inspector != nullptr) inspector->removeInspectorListener(this);
 
+	juce::Component::SafePointer<GenericControllableContainerEditor> cme;
+	juce::Component::SafePointer<GenericControllableContainerEditor> csme;
+
 	if (cme != nullptr) cme->removeContainerEditorListener(this);
 	if (csme != nullptr) csme->removeContainerEditorListener(this);
 }

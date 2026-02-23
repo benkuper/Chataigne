@@ -424,7 +424,11 @@ void MIDIModule::sysExReceived(const MidiMessage& msg)
 	if (!enabled->boolValue() && !manualAddMode) return;
 	inActivityTrigger->trigger();
 
-	Array<uint8> data(msg.getSysExData(), msg.getSysExDataSize());
+	const auto* sysExDataPtr = msg.getSysExData();
+	const int sysExSize = msg.getSysExDataSize();
+	if (sysExDataPtr == nullptr || sysExSize <= 0) return;
+
+	Array<uint8> data(sysExDataPtr, sysExSize);
 
 
 
