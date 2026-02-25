@@ -612,11 +612,13 @@ void GenericOSCQueryModule::requestStructure()
 		{
 			//if (logIncomingData->boolValue()) NLOG(niceName, "Received structure :\n" << JSON::toString(data));
 
-			updateTreeFromData(data);
+			MessageManager::callAsync([this, data]()
+				{
+					updateTreeFromData(data);
 
-			Array<var> args;
-			args.add(data);
-			scriptManager->callFunctionOnAllItems(dataStructureEventId, args);
+					Array<var> args;
+					args.add(data);
+					scriptManager->callFunctionOnAllItems(dataStructureEventId, args); });
 		}
 	}
 	else
