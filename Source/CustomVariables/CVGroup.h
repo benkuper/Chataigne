@@ -54,6 +54,8 @@ public:
 	float interpolationTime;
 	FloatParameter* interpolationProgress;
 
+	CriticalSection interpolationLock;
+
 	void addItemFromParameter(Parameter* source, bool linkAsMaster = true);
 	void addItemsFromGroup(CVGroup* source);
 

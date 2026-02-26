@@ -171,8 +171,13 @@ void CVGroup::lerpPresets(Array<var> sourceValues, CVPreset* endPreset, float we
 
 void CVGroup::goToPreset(CVPreset* p, float time, Automation* curve)
 {
+	if (targetPreset == p) return;
+
+	GenericScopedLock lock(interpolationLock);
+
 	if (time == 0)
 	{
+		stopThread(1000);
 		setValuesToPreset(p);
 		return;
 	}
@@ -191,6 +196,7 @@ void CVGroup::goToPreset(CVPreset* p, float time, Automation* curve)
 void CVGroup::stopInterpolation()
 {
 	stopThread(1000);
+	targetPreset = nullptr;
 }
 
 void CVGroup::randomizeValues()
@@ -309,7 +315,7 @@ void CVGroup::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Co
 	{
 		ControlMode cm = controlMode->getValueDataAsEnum<ControlMode>();
 		//values.setForceItemsFeedbackOnly(cm != FREE); //tmp comment to find a better way to have feedbackOnly but with range change possible. OR maybe leave it editable is ok ?
-		
+
 		bool useMorpher = cm == VORONOI || cm == GRADIENT_BAND;
 
 		if (useMorpher)
@@ -383,8 +389,10 @@ void CVGroup::run()
 	if (targetPreset == nullptr || interpolationTime <= 0) return;
 
 
+	interpolationLock.enter();
 	Array<var> sourceValues;
 	for (auto& v : values.items) sourceValues.add(((Parameter*)v->controllable)->value);
+
 
 	CVPreset p2(this, true);
 	p2.loadJSONData(targetPreset->getJSONData());
@@ -393,6 +401,7 @@ void CVGroup::run()
 		if (Parameter* p = dynamic_cast<Parameter*>(v->controllable)) p->isOverriden = true; //force use
 	}
 
+
 	Automation a;
 	a.isSelectable = false;
 	a.hideInEditor = true;
@@ -400,8 +409,10 @@ void CVGroup::run()
 
 	interpolationProgress->setValue(0);
 
-	double timeAtStart = Time::getMillisecondCounter() / 1000.0;
+	interpolationLock.exit();
 
+
+	double timeAtStart = Time::getMillisecondCounter() / 1000.0;
 	while (!threadShouldExit())
 	{
 		double curTime = Time::getMillisecondCounter() / 1000.0;
@@ -417,6 +428,7 @@ void CVGroup::run()
 		wait(20); //50fps
 	}
 
+	targetPreset = nullptr;
 	interpolationProgress->setValue(0);
 	interpolationAutomation = nullptr;
 }
