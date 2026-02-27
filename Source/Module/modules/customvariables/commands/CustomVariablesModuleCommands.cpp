@@ -201,6 +201,13 @@ void CVCommand::triggerInternal(int multiplexIndex)
 		if (CVPreset* p = getLinkedTargetContainerAs<CVPreset>(targetPreset, multiplexIndex))
 		{
 			File f = presetFile->getFile();
+			if (isMultiplexed())
+			{
+				String s = getLinkedValue(presetFile, multiplexIndex).toString();
+				f = File::isAbsolutePath(s) ? File(s) : File(Engine::mainEngine->getFile().getParentDirectory().getFullPathName() + File::getSeparatorString() + s);
+			}
+
+
 			if (type == LOAD_PRESET)
 			{
 				if (f.exists())
@@ -211,7 +218,7 @@ void CVCommand::triggerInternal(int multiplexIndex)
 				}
 				else
 				{
-					NLOGWARNING(niceName, "Preset file does not exist or is not a valid JSON preset file");
+					NLOGWARNING(niceName, "Preset file does not exist or is not a valid JSON preset file : " << f.getFullPathName());
 				}
 			}
 			else if (type == SAVE_PRESET)
