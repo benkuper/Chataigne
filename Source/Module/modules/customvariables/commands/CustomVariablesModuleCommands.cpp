@@ -9,7 +9,6 @@
 */
 
 #include "CustomVariables/CustomVariablesIncludes.h"
-#include "CustomVariablesModuleCommands.h"
 
 CVCommand::CVCommand(CustomVariablesModule* _module, CommandContext context, var params, Multiplex* multiplex) :
 	BaseCommand(_module, context, params, multiplex),

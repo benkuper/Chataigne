@@ -64,7 +64,10 @@ var CVPreset::getValuesAsJSON()
 	{
 		if (ParameterPreset* pp = dynamic_cast<ParameterPreset*>(cc.get()))
 		{
-			data.getDynamicObject()->setProperty(pp->shortName, pp->parameter->value);
+			var ppData(new DynamicObject());
+			ppData.getDynamicObject()->setProperty("value", pp->parameter->value);
+			ppData.getDynamicObject()->setProperty("interpolationMode", pp->interpolationMode->getValueKey());
+			data.getDynamicObject()->setProperty(pp->shortName, ppData);
 
 		}
 	}
@@ -82,7 +85,18 @@ void CVPreset::loadValuesFromJSON(var data)
 	NamedValueSet props = data.getDynamicObject()->getProperties();
 	for (auto& nv : props)
 	{
-		if (ParameterPreset* pp = dynamic_cast<ParameterPreset*>(values.getControllableContainerByName(nv.name.toString()))) pp->parameter->setValue(nv.value);
+		if (ParameterPreset* pp = dynamic_cast<ParameterPreset*>(values.getControllableContainerByName(nv.name.toString())))
+		{
+			if (nv.value.isObject() && nv.value.hasProperty("value"))
+			{
+				pp->parameter->setValue(nv.value.getProperty("value", var()));
+				pp->interpolationMode->setValueWithKey(nv.value.getProperty("interpolationMode", var()));
+			}
+			else
+			{
+				pp->parameter->setValue(nv.value);
+			}
+		}
 	}
 }
 
@@ -107,7 +121,7 @@ PresetParameterContainer::PresetParameterContainer(const String& name, GenericCo
 	saveAndLoadRecursiveData = true;
 
 	manager->addBaseManagerListener(this);
-	if(!doNotBuildValues) resetAndBuildValues(keepValuesInSync);
+	if (!doNotBuildValues) resetAndBuildValues(keepValuesInSync);
 }
 
 PresetParameterContainer::~PresetParameterContainer()
