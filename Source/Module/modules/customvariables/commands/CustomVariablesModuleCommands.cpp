@@ -112,8 +112,8 @@ void CVCommand::onContainerParameterChanged(Parameter* p)
 {
 	if (p == targetPreset || p == targetPreset2)
 	{
-		CVPreset* p1 = static_cast<CVPreset*>(targetPreset->targetContainer.get());
-		CVPreset* p2 = static_cast<CVPreset*>(targetPreset->targetContainer.get());
+		CVPreset* p1 = targetPreset != nullptr ? static_cast<CVPreset*>(targetPreset->targetContainer.get()) : nullptr;
+		CVPreset* p2 = targetPreset2 != nullptr ? static_cast<CVPreset*>(targetPreset2->targetContainer.get()) : nullptr;
 		if (p1 != nullptr && p2 != nullptr && p1->group != p2->group)
 		{
 			LOGWARNING("The 2 presets are not from the same group !\nThis command won't have any effect until you choose presets from the same group.");
@@ -131,7 +131,7 @@ void CVCommand::triggerInternal(int multiplexIndex)
 	{
 		if (CVPreset* p = getLinkedTargetContainerAs<CVPreset>(targetPreset, multiplexIndex))
 		{
-			if (p != nullptr) p->group->setValuesToPreset(p);
+			if (p->group != nullptr) p->group->setValuesToPreset(p);
 		}
 	}
 	break;
@@ -140,17 +140,22 @@ void CVCommand::triggerInternal(int multiplexIndex)
 	{
 		if (CVPreset* p = getLinkedTargetContainerAs<CVPreset>(targetPreset, multiplexIndex))
 		{
-			p->group->goToPreset(p, time->enabled ? time->floatValue() : p->defaultLoadTime->floatValue(), automation->enabled->boolValue() ? automation : &p->group->defaultInterpolation);
+			if (p->group != nullptr)
+			{
+				const float interpolationTime = (time != nullptr && time->enabled) ? time->floatValue() : p->defaultLoadTime->floatValue();
+				Automation* interpolationAutomation = (automation != nullptr && automation->enabled->boolValue()) ? automation : &p->group->defaultInterpolation;
+				p->group->goToPreset(p, interpolationTime, interpolationAutomation);
+			}
 		}
 	}
 	break;
 
 	case KILL_GO_TO_PRESET:
 	{
-		if (!target->targetContainer.wasObjectDeleted() && target->targetContainer != nullptr)
+		if (target != nullptr && !target->targetContainer.wasObjectDeleted() && target->targetContainer != nullptr)
 		{
 			CVGroup* g = dynamic_cast<CVGroup*>(target->targetContainer.get());
-			g->stopInterpolation();
+			if (g != nullptr) g->stopInterpolation();
 		}
 	}
 	break;
@@ -185,9 +190,9 @@ void CVCommand::triggerInternal(int multiplexIndex)
 
 	case SET_2DTARGET:
 	{
-		if (!target->targetContainer.wasObjectDeleted() && target->targetContainer != nullptr)
+		if (target != nullptr && !target->targetContainer.wasObjectDeleted() && target->targetContainer != nullptr)
 		{
-			CVGroup* g = static_cast<CVGroup*>(target->targetContainer.get());
+			CVGroup* g = dynamic_cast<CVGroup*>(target->targetContainer.get());
 			var val = getLinkedValue(value, multiplexIndex);
 			Point<float> f(val[0], val[1]);
 			if (g != nullptr && g->morpher != nullptr) g->morpher->targetPosition->setPoint(f);
@@ -200,6 +205,8 @@ void CVCommand::triggerInternal(int multiplexIndex)
 	{
 		if (CVPreset* p = getLinkedTargetContainerAs<CVPreset>(targetPreset, multiplexIndex))
 		{
+			if (presetFile == nullptr) break;
+
 			File f = presetFile->getFile();
 			if (isMultiplexed())
 			{
@@ -210,11 +217,18 @@ void CVCommand::triggerInternal(int multiplexIndex)
 
 			if (type == LOAD_PRESET)
 			{
-				if (f.exists())
+				if (f.existsAsFile())
 				{
 					std::unique_ptr<InputStream> is(f.createInputStream());
-					var data = JSON::fromString(is->readEntireStreamAsString());
-					p->loadValuesFromJSON(data);
+					if (is != nullptr)
+					{
+						var data = JSON::fromString(is->readEntireStreamAsString());
+						p->loadValuesFromJSON(data);
+					}
+					else
+					{
+						NLOGWARNING(niceName, "Could not open preset file for reading : " << f.getFullPathName());
+					}
 				}
 				else
 				{
@@ -223,13 +237,20 @@ void CVCommand::triggerInternal(int multiplexIndex)
 			}
 			else if (type == SAVE_PRESET)
 			{
-				if (f.exists()) f.deleteFile();
+				if (f.existsAsFile()) f.deleteFile();
 
 				var data = p->getValuesAsJSON();
 				DBG(JSON::toString(data));
 				std::unique_ptr<OutputStream> os(f.createOutputStream());
-				JSON::writeToStream(*os, data);
-				os->flush();
+				if (os != nullptr)
+				{
+					JSON::writeToStream(*os, data);
+					os->flush();
+				}
+				else
+				{
+					NLOGWARNING(niceName, "Could not open preset file for writing : " << f.getFullPathName());
+				}
 			}
 		}
 	}
@@ -237,10 +258,10 @@ void CVCommand::triggerInternal(int multiplexIndex)
 
 	case RANDOMIZE:
 	{
-		if (!target->targetContainer.wasObjectDeleted() && target->targetContainer != nullptr)
+		if (target != nullptr && !target->targetContainer.wasObjectDeleted() && target->targetContainer != nullptr)
 		{
 			CVGroup* g = dynamic_cast<CVGroup*>(target->targetContainer.get());
-			g->randomizeValues();
+			if (g != nullptr) g->randomizeValues();
 		}
 	}
 	break;
