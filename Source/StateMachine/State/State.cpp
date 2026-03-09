@@ -49,18 +49,21 @@ State::State() :
 
 State::~State()
 {
+	isClearing = true;
 	masterReference.clear();
 }
 
 
 void State::handleLoadActivation()
 {
+	if (isClearing) return;
 	if (!active->boolValue() || !enabled->boolValue()) return;
 	handleActiveChanged();
 }
 
 void State::handleActiveChanged()
 {
+	if (isClearing || pm == nullptr) return;
 	if (!enabled->boolValue()) return;
 
 	if (active->boolValue())
@@ -118,6 +121,8 @@ void State::handleActiveChanged()
 
 void State::onContainerParameterChangedInternal(Parameter* p)
 {
+	if (isClearing || pm == nullptr) return;
+
 	if (p == active || p == enabled)
 	{
 		if (!isCurrentlyLoadingData)

@@ -41,10 +41,10 @@ InputSystemManager::~InputSystemManager()
 void InputSystemManager::checkDevices()
 {
 #if JUCE_MAC
-    SDL_JoystickUpdate();
+	SDL_JoystickUpdate();
 #endif
-    
-    int numDevices = SDL_NumJoysticks();
+
+	int numDevices = SDL_NumJoysticks();
 	for (int i = 0; i < numDevices; ++i)
 	{
 		if (SDL_IsGameController(i))
@@ -87,7 +87,7 @@ void InputSystemManager::checkDevices()
 	for (auto& g : gamepadsToRemove) removeGamepad(g);
 }
 
-Gamepad* InputSystemManager::addGamepad(Gamepad * g)
+Gamepad* InputSystemManager::addGamepad(Gamepad* g)
 {
 	gamepads.add(g);
 	LOG("Gamepad added : " << g->getName());
@@ -100,9 +100,9 @@ void InputSystemManager::removeGamepad(Gamepad* g)
 {
 	if (!gamepads.contains(g)) return;
 	gamepads.removeObject(g, false);
-	
+
 	LOG("Gamepad removed : " << g->getName());
-	
+
 	inputListeners.call(&InputManagerListener::gamepadRemoved, g);
 	inputQueuedNotifier.addMessage(new InputSystemEvent(InputSystemEvent::GAMEPAD_REMOVED, g));
 	SDL_GameControllerClose(g->gamepad);
@@ -126,7 +126,7 @@ Gamepad* InputSystemManager::getGamepadForID(SDL_JoystickGUID id)
 {
 	for (auto& g : gamepads)
 	{
-		SDL_JoystickGUID guid = g->joystick != nullptr?SDL_JoystickGetGUID(g->joystick): SDL_JoystickGetGUID(SDL_GameControllerGetJoystick(g->gamepad));
+		SDL_JoystickGUID guid = g->joystick != nullptr ? SDL_JoystickGetGUID(g->joystick) : SDL_JoystickGetGUID(SDL_GameControllerGetJoystick(g->gamepad));
 		bool isTheSame = true;
 		for (int i = 0; i < 16; ++i) if (guid.data[i] != id.data[i]) isTheSame = false;;
 		if (isTheSame) return g;
@@ -148,16 +148,16 @@ void InputSystemManager::run()
 		wait(20); //50fps
 
 		if (Engine::mainEngine->isClearing || Engine::mainEngine->isLoadingFile) continue;
-        
-       // MessageManager::getInstance()->callFunctionOnMessageThread([](void *)->void*{SDL_Event e; SDL_PollEvent(&e); return nullptr;}, nullptr);
-        
-        int numDevices = SDL_NumJoysticks();
-        if(numDevices != gamepads.size())
-        {
-            DBG("Gamepad num change !");
-            continue;
-        }
-        SDL_JoystickUpdate();
+
+		// MessageManager::getInstance()->callFunctionOnMessageThread([](void *)->void*{SDL_Event e; SDL_PollEvent(&e); return nullptr;}, nullptr);
+
+		int numDevices = SDL_NumJoysticks();
+		if (numDevices != gamepads.size())
+		{
+			DBG("Gamepad num change !");
+			continue;
+		}
+		SDL_JoystickUpdate();
 		SDL_GameControllerUpdate();
 
 		gamepads.getLock().enter();
@@ -171,7 +171,7 @@ void InputSystemManager::run()
 
 void InputSystemManager::timerCallback()
 {
-    checkDevices();
+	checkDevices();
 }
 
 Gamepad::Gamepad(SDL_GameController* gamepad) :
@@ -190,6 +190,7 @@ Gamepad::Gamepad(SDL_Joystick* joystick) :
 Gamepad::~Gamepad()
 {
 	masterReference.clear();
+
 }
 
 void Gamepad::update()
@@ -212,7 +213,14 @@ void Gamepad::update()
 		buttons.add(val);
 	}
 
-	gamepadListeners.call(&GamepadListener::gamepadValuesUpdated, axes, buttons);
+	auto safeThis = WeakReference<Gamepad>(this);
+	MessageManager::callAsync([safeThis, axes, buttons]()
+		{
+			if (safeThis == nullptr)
+				return;
+
+			safeThis->gamepadListeners.call(&GamepadListener::gamepadValuesUpdated, axes, buttons);
+		});
 }
 
 SDL_JoystickID Gamepad::getDevID()
@@ -250,6 +258,8 @@ GamepadParameter::GamepadParameter(const String& name, const String& description
 
 GamepadParameter::~GamepadParameter()
 {
+
+
 }
 
 void GamepadParameter::setGamepad(Gamepad* j)
@@ -303,7 +313,7 @@ void GamepadParameter::loadJSONDataInternal(var data)
 	}
 }
 
-ControllableUI* GamepadParameter::createDefaultUI(Array<Controllable *> controllables)
+ControllableUI* GamepadParameter::createDefaultUI(Array<Controllable*> controllables)
 {
 	Array<GamepadParameter*> parameters = Inspectable::getArrayAs<Controllable, GamepadParameter>(controllables);
 	if (parameters.size() == 0) parameters.add(this);
