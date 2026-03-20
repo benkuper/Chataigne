@@ -33,6 +33,15 @@ void ChataigneApplication::initialiseInternal(const String &)
 	ShapeShifterManager::getInstance()->setDefaultFileData(BinaryData::default_chalayout);
 	ShapeShifterManager::getInstance()->setLayoutInformations("chalayout", "Chataigne/layouts");
 
+	// Set default font to support Chinese characters
+	// On macOS, use PingFang SC which supports Chinese
+	// On Windows, use Microsoft YaHei which supports Chinese
+	#if JUCE_MAC
+		LookAndFeel::getDefaultLookAndFeel().setDefaultSansSerifTypefaceName("PingFang SC");
+	#elif JUCE_WINDOWS
+		LookAndFeel::getDefaultLookAndFeel().setDefaultSansSerifTypefaceName("Microsoft YaHei");
+	#endif
+
 }
 
 
