@@ -398,7 +398,7 @@ void GenericOSCQueryModule::connectionClosed(int status, const String& reason)
 	isConnected->setValue(false);
 }
 
-void GenericOSCQueryModule::connectionError(const String& errorMessage)
+void GenericOSCQueryModule::connectionError(int status, const String& errorMessage)
 {
 	NLOGERROR(niceName, "Connection error " << errorMessage);
 	isConnected->setValue(false);

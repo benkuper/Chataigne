@@ -43,7 +43,7 @@ public:
 
 	virtual void connectionOpened() override;
 	virtual void connectionClosed(int status, const String& reason) override;
-	virtual void connectionError(const String& errorMessage) override;
+	virtual void connectionError(int  status, const String& errorMessage) override;
 
 	virtual void messageReceived(const String& message) override;
 	virtual void dataReceived(const MemoryBlock& data) override;

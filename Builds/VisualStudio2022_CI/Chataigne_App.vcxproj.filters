@@ -3670,6 +3670,9 @@
     <ClCompile Include="..\..\Modules\juce_organicui\dashboard\SharedTextureDashboardItem.cpp">
       <Filter>JUCE Modules\juce_organicui\dashboard</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\engine\AppVersion.cpp">
+      <Filter>JUCE Modules\juce_organicui\engine</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\engine\Engine.cpp">
       <Filter>JUCE Modules\juce_organicui\engine</Filter>
     </ClCompile>
@@ -6884,6 +6887,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\dashboard\SharedTextureDashboardItem.h">
       <Filter>JUCE Modules\juce_organicui\dashboard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\engine\AppVersion.h">
+      <Filter>JUCE Modules\juce_organicui\engine</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\engine\Engine.h">
       <Filter>JUCE Modules\juce_organicui\engine</Filter>

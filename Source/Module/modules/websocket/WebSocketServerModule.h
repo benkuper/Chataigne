@@ -40,7 +40,7 @@ public:
 
 	void connectionOpened(const String &connectionId) override;
 	void connectionClosed(const String &connectionId, int status, const String &reason) override;
-	void connectionError(const String& connectionId, const String& errorMessage) override;
+	void connectionError(const String& connectionId, int status, const String& errorMessage) override;
 
 	virtual void messageReceived(const String& connectionId, const String& message) override;
 	virtual void dataReceived(const String& connectionId, const MemoryBlock &data) override;

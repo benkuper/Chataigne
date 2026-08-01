@@ -84,7 +84,7 @@ public:
 
 	void connectionOpened() override;
 	void connectionClosed(int status, const String& reason) override;
-	void connectionError(const String& errorMessage) override;
+	void connectionError(int status, const String& errorMessage) override;
 
 	void dataReceived(const MemoryBlock& data) override;
 	void processOSCMessage(const OSCMessage& m);

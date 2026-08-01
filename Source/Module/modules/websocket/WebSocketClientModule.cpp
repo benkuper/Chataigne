@@ -84,7 +84,7 @@ void WebSocketClientModule::connectionClosed(int status, const String& reason)
 	isConnected->setValue(false);
 }
 
-void WebSocketClientModule::connectionError(const String& errorMessage)
+void WebSocketClientModule::connectionError(int status, const String& errorMessage)
 {
 	if (enabled->boolValue() && connectFirstTry) NLOGERROR(niceName, "Connection error " << errorMessage);
 	isConnected->setValue(false);

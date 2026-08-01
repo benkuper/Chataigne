@@ -160,7 +160,7 @@ void WebSocketServerModule::connectionClosed(const String& connectionId, int sta
 	numClients->setValue(server->getNumActiveConnections());
 }
 
-void WebSocketServerModule::connectionError(const String& connectionId, const String& errorMessage)
+void WebSocketServerModule::connectionError(const String& connectionId, int status, const String& errorMessage)
 {
 	if (enabled->boolValue()) NLOGERROR(niceName, "Connection error from : " << connectionId << " : " << errorMessage);
 

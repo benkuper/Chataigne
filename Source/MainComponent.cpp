@@ -21,7 +21,6 @@ MainContentComponent::MainContentComponent()
 
 MainContentComponent::~MainContentComponent()
 {
-	SharedTextureManager::deleteInstance();
 }
 
 void MainContentComponent::init()
