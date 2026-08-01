@@ -14,6 +14,7 @@ BasicsGuide::BasicsGuide() :
 	audioModule(nullptr),
 	state(nullptr),
 	condition(nullptr),
+	conditionRef(nullptr),
 	conditionReference(nullptr),
 	audioFile(nullptr),
 	cme(nullptr),
@@ -49,16 +50,26 @@ void BasicsGuide::clear()
 	if (ModuleManager::getInstanceWithoutCreating() != nullptr) ModuleManager::getInstance()->removeAsyncManagerListener(this);
 	
 	if (smui != nullptr) smui->removeManagerUIListener(this);
-	if (condition != nullptr) condition->removeAsyncConditionListener(this);
-	if (conditionReference != nullptr) conditionReference->removeAsyncParameterListener(this);
-	if (audioFile != nullptr) audioFile->removeAsyncParameterListener(this);
+	if (condition != nullptr && conditionRef != nullptr && !conditionRef.wasObjectDeleted()) condition->removeAsyncConditionListener(this);
+	if (conditionReference != nullptr && !conditionReference.wasObjectDeleted()) conditionReference->removeAsyncParameterListener(this);
+	if (audioFile != nullptr && !audioFile.wasObjectDeleted()) audioFile->removeAsyncParameterListener(this);
 	if (inspector != nullptr) inspector->removeInspectorListener(this);
-
-	juce::Component::SafePointer<GenericControllableContainerEditor> cme;
-	juce::Component::SafePointer<GenericControllableContainerEditor> csme;
 
 	if (cme != nullptr) cme->removeContainerEditorListener(this);
 	if (csme != nullptr) csme->removeContainerEditorListener(this);
+
+	condition = nullptr;
+	conditionRef = nullptr;
+	conditionReference = nullptr;
+	audioFile = nullptr;
+	inspector = nullptr;
+	smui = nullptr;
+	mmui = nullptr;
+	svui = nullptr;
+	cme = nullptr;
+	csme = nullptr;
+	ce = nullptr;
+	cse = nullptr;
 }
 
 void BasicsGuide::handleStep(int step)
@@ -295,7 +306,8 @@ void BasicsGuide::containerRebuilt(GenericControllableContainerEditor * editor)
 			if (ce != nullptr && condition == nullptr)
 			{
 				condition = dynamic_cast<StandardCondition *>(ce->condition);
-				condition->addAsyncConditionListener(this);
+				conditionRef = condition;
+				if (condition != nullptr) condition->addAsyncConditionListener(this);
 				auto nsFunc = std::bind(&BasicsGuide::nextStep, this);
 				Timer::callAfterDelay(500, nsFunc);
 				break;

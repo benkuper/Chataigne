@@ -96,7 +96,7 @@ KeyboardModule::~KeyboardModule()
 #if JUCE_WINDOWS
 	if (KeyboardHooker::getInstanceWithoutCreating() != nullptr) KeyboardHooker::getInstance()->removeListener(this);
 #else
-	if (TopLevelWindow::getActiveTopLevelWindow() == window) window->removeKeyListener(this);
+	if (window != nullptr) window->removeKeyListener(this);
 #endif
 }
 
@@ -106,9 +106,10 @@ void KeyboardModule::sendKeyDown(int keyID)
 
 	if (!MessageManager::getInstance()->isThisTheMessageThread())
 	{
-		MessageManager::getInstance()->callAsync([this, keyID]()
+		WeakReference<Inspectable> moduleRef(this);
+		MessageManager::getInstance()->callAsync([moduleRef, keyID]()
 			{
-				sendKeyDown(keyID);
+				if (KeyboardModule* module = dynamic_cast<KeyboardModule*>(moduleRef.get())) module->sendKeyDown(keyID);
 			}
 		);
 		return;
@@ -140,9 +141,10 @@ void KeyboardModule::sendKeyUp(int keyID)
 
 	if (!MessageManager::getInstance()->isThisTheMessageThread())
 	{
-		MessageManager::getInstance()->callAsync([this, keyID]()
+		WeakReference<Inspectable> moduleRef(this);
+		MessageManager::getInstance()->callAsync([moduleRef, keyID]()
 			{
-				sendKeyUp(keyID);
+				if (KeyboardModule* module = dynamic_cast<KeyboardModule*>(moduleRef.get())) module->sendKeyUp(keyID);
 			}
 		);
 		return;
@@ -175,9 +177,11 @@ void KeyboardModule::sendKeyHit(int keyID, bool ctrlPressed, bool altPressed, bo
 
 	if (!MessageManager::getInstance()->isThisTheMessageThread())
 	{
-		MessageManager::getInstance()->callAsync([this, keyID, ctrlPressed, altPressed, shiftPressed]()
+		WeakReference<Inspectable> moduleRef(this);
+		MessageManager::getInstance()->callAsync([moduleRef, keyID, ctrlPressed, altPressed, shiftPressed]()
 			{
-				sendKeyHit(keyID, ctrlPressed, altPressed, shiftPressed);
+				if (KeyboardModule* module = dynamic_cast<KeyboardModule*>(moduleRef.get()))
+					module->sendKeyHit(keyID, ctrlPressed, altPressed, shiftPressed);
 			}
 		);
 		return;
@@ -249,8 +253,11 @@ bool KeyboardModule::keyStateChanged(bool isKeyDown, juce::Component* originatin
 		int index = i - 33;
 		if (i >= 97 && i <= 122) continue;
 		if (i > 122) index -= 26;
-		BoolParameter* bp = (BoolParameter*)keysCC.controllables[index];
-		bp->setValue(KeyPress::createFromDescription(bp->niceName).isCurrentlyDown());
+		if (BoolParameter* bp = isPositiveAndBelow(index, keysCC.controllables.size())
+			? dynamic_cast<BoolParameter*>(keysCC.controllables[index]) : nullptr)
+		{
+			bp->setValue(KeyPress::createFromDescription(bp->niceName).isCurrentlyDown());
+		}
 	}
 
 	if (!isKeyDown)

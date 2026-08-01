@@ -186,36 +186,56 @@ void LinkableParameterEditor::buttonClicked(Button* b)
 		p.addItem(-1, "Unlink", link->linkType != link->NONE);
 
 
-		p.showMenuAsync(PopupMenu::Options(), [this](int result)
+		Component::SafePointer<LinkableParameterEditor> safeThis(this);
+		p.showMenuAsync(PopupMenu::Options(), [safeThis](int result)
 			{
-				if (result == 0) return;
+				if (safeThis == nullptr || result == 0) return;
 
-				if (result == -1) link->setLinkType(link->NONE);
-				else if (result == -2) link->setLinkType(link->INDEX_ZERO);
-				else if (result == -3) link->setLinkType(link->INDEX);
+				auto linkRef = safeThis->link;
+				if (linkRef == nullptr || linkRef.wasObjectDeleted()) return;
+
+				ParameterLink* currentLink = linkRef.get();
+
+				if (result == -1) currentLink->setLinkType(currentLink->NONE);
+				else if (result == -2) currentLink->setLinkType(currentLink->INDEX_ZERO);
+				else if (result == -3) currentLink->setLinkType(currentLink->INDEX);
 				else if (result >= 10000)
 				{
+					if (currentLink->multiplex == nullptr) return;
+
 					int r = result - 10000;
 					int listIndex = floorf(r / 100);
-					if (CVPresetMultiplexList* pList = dynamic_cast<CVPresetMultiplexList*>(link->multiplex->listManager.items[listIndex]))
+					if (!isPositiveAndBelow(listIndex, currentLink->multiplex->listManager.items.size())) return;
+
+					if (CVPresetMultiplexList* pList = dynamic_cast<CVPresetMultiplexList*>(currentLink->multiplex->listManager.items[listIndex]))
 					{
 						if (CVGroup* group = dynamic_cast<CVGroup*>(pList->cvTarget->targetContainer.get()))
 						{
 							int pIndex = r - listIndex * 100;
+							if (!isPositiveAndBelow(pIndex, group->values.items.size())
+								|| group->values.items[pIndex] == nullptr) return;
+
 							String pName = group->values.items[pIndex]->shortName;
-							link->setLinkedPresetParam(pList, pName);
+							currentLink->setLinkedPresetParam(pList, pName);
 
 						}
 					}
 				}
 				else if (result >= 1000)
 				{
-					link->setLinkedList(link->multiplex->listManager.items[result - 1000]);
+					if (currentLink->multiplex == nullptr) return;
+
+					const int listIndex = result - 1000;
+					if (!isPositiveAndBelow(listIndex, currentLink->multiplex->listManager.items.size())) return;
+					currentLink->setLinkedList(currentLink->multiplex->listManager.items[listIndex]);
 				}
 				else
 				{
-					link->mappingValueIndex = result - 1;
-					link->setLinkType(link->MAPPING_INPUT);
+					const int mappingIndex = result - 1;
+					if (!isPositiveAndBelow(mappingIndex, currentLink->inputValueNames.size())) return;
+
+					currentLink->mappingValueIndex = mappingIndex;
+					currentLink->setLinkType(currentLink->MAPPING_INPUT);
 				}
 			}
 		);

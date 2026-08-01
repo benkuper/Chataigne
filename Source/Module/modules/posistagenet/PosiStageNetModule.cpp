@@ -41,6 +41,8 @@ PosiStageNetModule::~PosiStageNetModule()
 
 void PosiStageNetModule::setupSlots()
 {
+	GenericScopedLock lock(slotLock);
+
 	while (slotValues.size() < numSlots->intValue())
 	{
 		String sid = String(slotValues.size());
@@ -50,7 +52,10 @@ void PosiStageNetModule::setupSlots()
 
 		SlotValue* s = new SlotValue(slotValues.size(), cc, pos);
 		psn::tracker tracker = psn::tracker(slotValues.size(), ("Slot " + sid).toStdString());
-		trackers[slotValues.size()] = tracker;
+		{
+			GenericScopedLock trackerScopedLock(trackerLock);
+			trackers[slotValues.size()] = tracker;
+		}
 
 		p3dSlotMap.set(pos, s);
 		slotValues.add(s);
@@ -60,18 +65,22 @@ void PosiStageNetModule::setupSlots()
 	{
 		p3dSlotMap.remove(slotValues[slotValues.size() - 1]->position);
 		valuesCC.removeChildControllableContainer(slotValues[slotValues.size() - 1]->container);
-		trackers.erase(slotValues.size() - 1);
+		{
+			GenericScopedLock trackerScopedLock(trackerLock);
+			trackers.erase(slotValues.size() - 1);
+		}
 		slotValues.removeLast();
 	}
 }
 
 void PosiStageNetModule::setupMulticast()
 {
+	signalThreadShouldExit();
+	stopThread(1000);
+
 	GenericScopedLock lock(udpLock);
 
 	if (udp != nullptr) udp.reset();
-
-	stopThread(1000);
 
 	if (!enabled->boolValue()) return;
 
@@ -116,8 +125,10 @@ void PosiStageNetModule::setupMulticast()
 
 void PosiStageNetModule::setPositionAt(int slotID, Vector3D<float> pos)
 {
-	if (slotID < 0 || slotID >= slotValues.size() - 1) return;
+	GenericScopedLock lock(slotLock);
+	if (!isPositiveAndBelow(slotID, slotValues.size())) return;
 	SlotValue* s = slotValues[slotID];
+	if (s == nullptr || s->position == nullptr) return;
 	s->position->setVector(pos);
 }
 
@@ -135,6 +146,7 @@ void PosiStageNetModule::sendSlotsData(long timestamp)
 	if (logOutgoingData->boolValue()) NLOG(niceName, "Sending PSN_DATA_PACKET, Frame Id =  " << (int)psn_encoder.get_last_info_frame_id() << ", Packet Count : " << (int)data_packets.size());
 
 	GenericScopedLock lock(udpLock);
+	if (udp == nullptr) return;
 	for (auto it = data_packets.begin(); it != data_packets.end(); ++it)
 	{
 		udp->write(multiCastAddress->value, multiCastPort->value, it->c_str(), (int)it->size());
@@ -155,6 +167,7 @@ void PosiStageNetModule::sendSlotsInfo(long timestamp)
 	if (logOutgoingData->boolValue())  NLOG(niceName, "Sending PSN_INFO_PACKET, Frame Id =  " << (int)psn_encoder.get_last_info_frame_id() << ", Packet Count : " << (int)info_packets.size());
 
 	GenericScopedLock lock(udpLock);
+	if (udp == nullptr) return;
 	for (auto it = info_packets.begin(); it != info_packets.end(); ++it)
 		udp->write(multiCastAddress->value, multiCastPort->value, it->c_str(), (int)it->size());
 }
@@ -178,11 +191,13 @@ void PosiStageNetModule::onControllableFeedbackUpdateInternal(ControllableContai
 		if (Point3DParameter* p3d = dynamic_cast<Point3DParameter*>(c))
 		{
 			Vector3D<float> pos = p3d->getVector();
-			GenericScopedLock lock(trackerLock);
+			GenericScopedLock slotScopedLock(slotLock);
 			if (p3dSlotMap.contains(p3d))
 			{
 				SlotValue* s = p3dSlotMap[p3d];
-				jassert(s != nullptr);
+				if (s == nullptr) return;
+
+				GenericScopedLock trackerScopedLock(trackerLock);
 				trackers[s->id].set_pos(psn::float3(pos.x, pos.y, pos.z));
 				trackers[s->id].set_timestamp(timestamp);
 			}
@@ -235,8 +250,10 @@ void PosiStageNetModule::run()
 
 					int trackerID = tracker.get_id();
 
-					if (trackerID < 0 || trackerID >= numSlots->intValue()) continue;
+					GenericScopedLock slotScopedLock(slotLock);
+					if (!isPositiveAndBelow(trackerID, slotValues.size())) continue;
 					SlotValue* s = slotValues[trackerID];
+					if (s == nullptr || s->position == nullptr) continue;
 					if (tracker.is_pos_set())
 					{
 						psn::float3 p = tracker.get_pos();

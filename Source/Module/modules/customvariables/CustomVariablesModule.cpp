@@ -143,9 +143,14 @@ GenericControllableManagerLinkedContainer::~GenericControllableManagerLinkedCont
 	HashMap<Parameter*, Parameter*>::Iterator i(linkMap);
 	while (i.next())
 	{
-		i.getValue()->removeControllableListener(this);
-		i.getValue()->removeParameterListener(this);
+		Parameter* source = i.getValue();
+		if (source == nullptr) continue;
+
+		source->removeControllableListener(this);
+		source->removeParameterListener(this);
+		if (source->type == source->ENUM) ((EnumParameter*)source)->removeEnumParameterListener(this);
 	}
+	linkMap.clear();
 
 }
 
@@ -154,10 +159,15 @@ void GenericControllableManagerLinkedContainer::resetAndBuildValues(bool syncVal
 	HashMap<Parameter*, Parameter*>::Iterator i(linkMap);
 	while (i.next())
 	{
-		i.getValue()->removeControllableListener(this);
-		i.getValue()->removeParameterListener(this);
+		Parameter* source = i.getValue();
+		if (source == nullptr) continue;
+
+		source->removeControllableListener(this);
+		source->removeParameterListener(this);
+		if (source->type == source->ENUM) ((EnumParameter*)source)->removeEnumParameterListener(this);
 	}
 
+	linkMap.clear();
 	clear();
 	for (auto& gci : manager->items)
 	{
@@ -171,7 +181,11 @@ void GenericControllableManagerLinkedContainer::addValueFromItem(Parameter* sour
 
 	Controllable* c = ControllableFactory::createControllable(source->getTypeString());
 	Parameter* p = dynamic_cast<Parameter*>(c);
-
+	if (p == nullptr)
+	{
+		delete c;
+		return;
+	}
 
 	linkMap.set(p, source);
 	source->addControllableListener(this);
@@ -184,6 +198,8 @@ void GenericControllableManagerLinkedContainer::addValueFromItem(Parameter* sour
 
 void GenericControllableManagerLinkedContainer::syncItem(Parameter* p, Parameter* source, bool syncValue)
 {
+	if (p == nullptr || source == nullptr) return;
+
 	p->setNiceName(source->niceName);
 
 	if (source->hasRange()) p->setRange(source->minimumValue, source->maximumValue);
@@ -217,25 +233,32 @@ void GenericControllableManagerLinkedContainer::syncItems(bool syncValues)
 	Array<WeakReference<Parameter>> pList = getAllParameters();
 	for (auto& p : pList)
 	{
-		syncItem(p, linkMap[p], syncValues);
+		if (p == nullptr || p.wasObjectDeleted()) continue;
+		syncItem(p.get(), linkMap.contains(p.get()) ? linkMap[p.get()] : nullptr, syncValues);
 	}
 }
 
 void GenericControllableManagerLinkedContainer::itemAdded(GenericControllableItem* gci)
 {
+	if (gci == nullptr || gci->controllable == nullptr) return;
 	if (gci->controllable->type == Controllable::TRIGGER) return;
 	addValueFromItem(dynamic_cast<Parameter*>(gci->controllable));
 }
 
 void GenericControllableManagerLinkedContainer::itemRemoved(GenericControllableItem* gci)
 {
+	if (gci == nullptr || gci->controllable == nullptr) return;
 	if (gci->controllable->type == Controllable::TRIGGER) return;
 	Parameter* p = dynamic_cast<Parameter*>(getControllableByName(gci->niceName, true));
 	if (p != nullptr)
 	{
-		linkMap[p]->removeControllableListener(this);
-		linkMap[p]->removeParameterListener(this);
-		if (linkMap[p]->type == linkMap[p]->ENUM) ((EnumParameter*)linkMap[p])->removeEnumParameterListener(this);
+		Parameter* source = linkMap.contains(p) ? linkMap[p] : nullptr;
+		if (source != nullptr)
+		{
+			source->removeControllableListener(this);
+			source->removeParameterListener(this);
+			if (source->type == source->ENUM) ((EnumParameter*)source)->removeEnumParameterListener(this);
+		}
 		linkMap.remove(p);
 		removeControllable(p);
 	}
@@ -338,4 +361,3 @@ Parameter* GenericControllableManagerLinkedContainer::getSourceForParameter(Para
 {
 	return linkMap.contains(p) ? linkMap[p] : nullptr;
 }
-

@@ -86,11 +86,12 @@ void ProcessorManagerUI::itemDropped(const SourceDetails& details)
 	if (dataType == "Module")
 	{
 		ModuleUI* mui = dynamic_cast<ModuleUI*>(details.sourceComponent.get());
+		if (mui == nullptr) return;
 
 		PopupMenu pm;
 
-		ControllableChooserPopupMenu* actionInputMenu = new ControllableChooserPopupMenu(&mui->item->valuesCC, 0);
-		ControllableChooserPopupMenu* mappingInputMenu = new ControllableChooserPopupMenu(&mui->item->valuesCC, 10000, -1, StringArray(), StringArray(Trigger::getTypeStringStatic()));
+		auto actionInputMenu = std::make_shared<ControllableChooserPopupMenu>(&mui->item->valuesCC, 0);
+		auto mappingInputMenu = std::make_shared<ControllableChooserPopupMenu>(&mui->item->valuesCC, 10000, -1, StringArray(), StringArray(Trigger::getTypeStringStatic()));
 
 		PopupMenu actionCommandMenu = mui->item->getCommandMenu(20000, CommandContext::ACTION);
 		PopupMenu mappingCommandMenu = mui->item->getCommandMenu(30000, CommandContext::MAPPING);
@@ -100,8 +101,12 @@ void ProcessorManagerUI::itemDropped(const SourceDetails& details)
 		pm.addSubMenu("Action Consequence", actionCommandMenu);
 		pm.addSubMenu("Mapping Output", mappingCommandMenu);
 
-		pm.showMenuAsync(PopupMenu::Options(), [this, mui, actionInputMenu, mappingInputMenu, createDef](int result)
+		Component::SafePointer<ProcessorManagerUI> safeThis(this);
+		Component::SafePointer<ModuleUI> safeMui(mui);
+		pm.showMenuAsync(PopupMenu::Options(), [this, safeThis, safeMui, actionInputMenu, mappingInputMenu, createDef](int result)
 			{
+				if (safeThis == nullptr || safeMui == nullptr || result == 0) return;
+
 				CommandDefinition* def = nullptr;
 				bool isForAction = (result > 0 && result < 10000) || (result > 20000 && result < 30000);
 				bool isInput = result < 20000;
@@ -132,13 +137,10 @@ void ProcessorManagerUI::itemDropped(const SourceDetails& details)
 				}
 				else //command
 				{
-					def = mui->item->getCommandDefinitionForItemID(result - 1 - (isForAction ? 20000 : 30000));
+					def = safeMui->item->getCommandDefinitionForItemID(result - 1 - (isForAction ? 20000 : 30000));
 				}
 
 				createDef(def, isInput, isForAction);
-
-				delete actionInputMenu;
-				delete mappingInputMenu;
 			}
 		);
 	}

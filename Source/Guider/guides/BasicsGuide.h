@@ -52,17 +52,18 @@ public:
 	AudioModule * audioModule;
 	State * state;
 	StandardCondition * condition;
-	Parameter * conditionReference;
-	Parameter * audioFile;
+	WeakReference<Inspectable> conditionRef;
+	WeakReference<Parameter> conditionReference;
+	WeakReference<Parameter> audioFile;
 
-	Inspector * inspector;
-	StateMachineView * smui;
-	ModuleManagerUI * mmui; 
-	StateViewUI * svui;
-	GenericManagerEditor<Condition> * cme;
-	ConsequenceManagerEditor * csme;
-	StandardConditionEditor * ce;
-	BaseCommandHandlerEditor * cse;
+	Component::SafePointer<Inspector> inspector;
+	Component::SafePointer<StateMachineView> smui;
+	Component::SafePointer<ModuleManagerUI> mmui;
+	Component::SafePointer<StateViewUI> svui;
+	Component::SafePointer<GenericManagerEditor<Condition>> cme;
+	Component::SafePointer<ConsequenceManagerEditor> csme;
+	Component::SafePointer<StandardConditionEditor> ce;
+	Component::SafePointer<BaseCommandHandlerEditor> cse;
 
 	void initInternal() override;
 	void clear() override;

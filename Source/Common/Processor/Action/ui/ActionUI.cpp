@@ -148,19 +148,24 @@ void ActionUI::itemDropped(const SourceDetails& details)
 	if (dataType == "Module")
 	{
 		ModuleUI* mui = dynamic_cast<ModuleUI*>(details.sourceComponent.get());
+		if (mui == nullptr) return;
 
 		PopupMenu pm;
-		ControllableChooserPopupMenu actionInputMenu(&mui->item->valuesCC, 0);
+		auto actionInputMenu = std::make_shared<ControllableChooserPopupMenu>(&mui->item->valuesCC, 0);
 
 		PopupMenu actionCommandMenuTrue = mui->item->getCommandMenu(20000, CommandContext::ACTION);
 		PopupMenu actionCommandMenuFalse = mui->item->getCommandMenu(30000, CommandContext::ACTION);
 
-		if (action->cdm != nullptr) pm.addSubMenu("Input", actionInputMenu);
+		if (action->cdm != nullptr) pm.addSubMenu("Input", *actionInputMenu);
 		pm.addSubMenu("Consequence TRUE", actionCommandMenuTrue);
 		pm.addSubMenu("Consequence FALSE", actionCommandMenuFalse);
 
-		pm.showMenuAsync(PopupMenu::Options(), [this, mui, createFunc, &actionInputMenu](int result)
+		Component::SafePointer<ActionUI> safeThis(this);
+		Component::SafePointer<ModuleUI> safeMui(mui);
+		pm.showMenuAsync(PopupMenu::Options(), [this, safeThis, safeMui, createFunc, actionInputMenu](int result)
 			{
+				if (safeThis == nullptr || safeMui == nullptr) return;
+
 				if (result > 0)
 				{
 					bool isInput = result < 20000;
@@ -170,14 +175,14 @@ void ActionUI::itemDropped(const SourceDetails& details)
 						if (action->cdm != nullptr)
 						{
 							StandardCondition* c = dynamic_cast<StandardCondition*>(action->cdm->addItem(action->cdm->factory.create(StandardCondition::getTypeStringStatic(false))));
-							Controllable* target = actionInputMenu.getControllableForResult(result);
+							Controllable* target = actionInputMenu->getControllableForResult(result);
 							if (c != nullptr) c->sourceTarget->setValueFromTarget(target);
 						}
 					}
 					else //command
 					{
 						bool isConsequenceTrue = result > 20000 && result < 30000;
-						CommandDefinition* def = mui->item->getCommandDefinitionForItemID(result - 1 - (isConsequenceTrue ? 20000 : 30000));
+						CommandDefinition* def = safeMui->item->getCommandDefinitionForItemID(result - 1 - (isConsequenceTrue ? 20000 : 30000));
 						createFunc(def, isInput, isConsequenceTrue);
 					}
 				}

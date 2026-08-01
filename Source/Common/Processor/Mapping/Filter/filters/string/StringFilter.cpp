@@ -73,7 +73,15 @@ MappingFilter::ProcessResult StringReplaceFilter::processSingleParameterInternal
 	}
 	else
 	{
-		result = std::regex_replace(str.toStdString(), std::regex(pat.toStdString()), repl.toStdString());
+		try
+		{
+			result = std::regex_replace(str.toStdString(), std::regex(pat.toStdString()), repl.toStdString());
+		}
+		catch (const std::regex_error& e)
+		{
+			NLOGWARNING("String Replace", "Invalid regular expression '" << pat << "': " << e.what());
+			return ProcessResult::UNCHANGED;
+		}
 	}
 
 	if (result == str) return ProcessResult::UNCHANGED;

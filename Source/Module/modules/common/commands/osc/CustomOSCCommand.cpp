@@ -36,7 +36,7 @@ void CustomOSCCommand::triggerInternal(int multiplexIndex)
 	BaseCommand::triggerInternal(multiplexIndex);
 	String addrString = getLinkedValue(address, multiplexIndex);
 
-	if (addressHasWildcards)
+	if (addressHasWildcards && wildcardsContainer != nullptr)
 	{
 		for (auto& w : wildcardsMap)
 		{
@@ -57,29 +57,7 @@ void CustomOSCCommand::triggerInternal(int multiplexIndex)
 			var pVal = a->getLinkedValue(multiplexIndex);
 
 			if (p == nullptr) continue;
-			switch (p->type)
-			{
-			case Controllable::BOOL: OSCHelpers::addBoolArgumentToMessage(m, pVal, oscModule->getBoolMode()); break;
-			case Controllable::INT: m.addInt32((int)pVal); break;
-			case Controllable::FLOAT: m.addFloat32((float)pVal); break;
-			case Controllable::STRING: m.addString(pVal.toString()); break;
-			case Controllable::COLOR: OSCHelpers::addColorArgumentToMessage(m, Colour::fromFloatRGBA(pVal[0], pVal[1], pVal[2], pVal[3]), oscModule->getColorMode()); break;
-
-			case Controllable::POINT2D:
-				m.addFloat32(pVal[0]);
-				m.addFloat32(pVal[1]);
-				break;
-			case Controllable::POINT3D:
-				m.addFloat32(pVal[0]);
-				m.addFloat32(pVal[1]);
-				m.addFloat32(pVal[2]);
-				break;
-
-			default:
-				//not handle
-				break;
-
-			}
+			OSCHelpers::addArgumentsForParameter(m, p, oscModule->getBoolMode(), oscModule->getColorMode(), pVal);
 		}
 		oscModule->sendOSC(m);
 	}

@@ -364,6 +364,7 @@ void OSModule::onContainerParameterChangedInternal(Parameter* p)
 void OSModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
 {
 	Module::onControllableFeedbackUpdateInternal(cc, c);
+	if (c == nullptr) return;
 
 	if (c->parentContainer.get() == &appControlNamesCC)
 	{
@@ -380,7 +381,13 @@ void OSModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc, C
 
 		if (val != isRunning)
 		{
-			File f = ((FileParameter*)appControlNamesCC.controllables[appControlStatusCC.controllables.indexOf(c)])->getFile();
+			const int appIndex = appControlStatusCC.controllables.indexOf(c);
+			if (!isPositiveAndBelow(appIndex, appControlNamesCC.controllables.size())) return;
+
+			FileParameter* appFile = dynamic_cast<FileParameter*>(appControlNamesCC.controllables[appIndex]);
+			if (appFile == nullptr) return;
+
+			File f = appFile->getFile();
 			if (val) launchFile(f);
 			else killProcess(c->niceName, true);
 		}

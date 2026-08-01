@@ -96,29 +96,32 @@ void MappingUI::itemDropped(const SourceDetails& details)
 	if (dataType == "Module")
 	{
 		ModuleUI* mui = dynamic_cast<ModuleUI*>(details.sourceComponent.get());
+		if (mui == nullptr) return;
 
 		PopupMenu pm;
-		ControllableChooserPopupMenu mappingInputMenu(&mui->item->valuesCC, 10000, -1, StringArray(), StringArray(Trigger::getTypeStringStatic()));
+		auto mappingInputMenu = std::make_shared<ControllableChooserPopupMenu>(&mui->item->valuesCC, 10000, -1, StringArray(), StringArray(Trigger::getTypeStringStatic()));
 		PopupMenu mappingCommandMenu = mui->item->getCommandMenu(20000, CommandContext::MAPPING);
 
-		pm.addSubMenu("Input", mappingInputMenu);
+		pm.addSubMenu("Input", *mappingInputMenu);
 		pm.addSubMenu("Output", mappingCommandMenu);
 
-		pm.showMenuAsync(PopupMenu::Options(), [this, &mappingInputMenu, mui](int result)
+		Component::SafePointer<MappingUI> safeThis(this);
+		Component::SafePointer<ModuleUI> safeMui(mui);
+		pm.showMenuAsync(PopupMenu::Options(), [this, safeThis, safeMui, mappingInputMenu](int result)
 			{
-				if (result == 0) return;
+				if (safeThis == nullptr || safeMui == nullptr || result == 0) return;
 				bool isInput = result < 20000;
 
 				if (isInput)
 				{
-					Controllable* target = mappingInputMenu.getControllableForResult(result);
+					Controllable* target = mappingInputMenu->getControllableForResult(result);
 					StandardMappingInput* mi = new StandardMappingInput();
 					mapping->im.addItem(mi);
 					mi->inputTarget->setValueFromTarget(target);
 				}
 				else //command
 				{
-					if (CommandDefinition* def = mui->item->getCommandDefinitionForItemID(result - 1 - 20000))
+					if (CommandDefinition* def = safeMui->item->getCommandDefinitionForItemID(result - 1 - 20000))
 					{
 						MappingOutput* o = mapping->om.addItem();
 						o->setCommand(def);

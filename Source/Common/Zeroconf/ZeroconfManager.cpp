@@ -47,16 +47,16 @@ ZeroconfManager::ZeroconfSearcher* ZeroconfManager::addSearcher(StringRef name, 
 void ZeroconfManager::removeSearcher(StringRef name)
 {
 	ZeroconfSearcher* s = getSearcher(name);
-	if (s == nullptr)
+	if (s != nullptr)
 	{
-		searchers.getLock().enter();
+		GenericScopedLock lock(searchers.getLock());
 		searchers.removeObject(s);
-		searchers.getLock().exit();
 	}
 }
 
 ZeroconfManager::ZeroconfSearcher* ZeroconfManager::getSearcher(StringRef name)
 {
+	GenericScopedLock lock(searchers.getLock());
 	for (auto& s : searchers) if (s->name == name) return s;
 	return nullptr;
 }
@@ -106,12 +106,14 @@ ZeroconfManager::ZeroconfSearcher::ZeroconfSearcher(StringRef name, StringRef se
 
 ZeroconfManager::ZeroconfSearcher::~ZeroconfSearcher()
 {
+	signalThreadShouldExit();
+	notify();
+	stopThread(4000);
+
 	{
-		if (servus != nullptr && servus->isBrowsing()) servus->endBrowsing();
-		
 		ScopedLock lock(browseLock);
+		if (servus != nullptr && servus->isBrowsing()) servus->endBrowsing();
 		servus.reset();
-		stopThread(4000);
 	}
 	
 	services.clear();
@@ -233,10 +235,14 @@ String ZeroconfManager::ZeroconfSearcher::getIPForHost(String host)
 
 void ZeroconfManager::ZeroconfSearcher::run()
 {
-	servus.reset(new servus::Servus(String(serviceName).toStdString()));
-	servus->addListener(this);
+	{
+		ScopedLock lock(browseLock);
+		if (threadShouldExit()) return;
 
-	servus->beginBrowsing(servus::Servus::Interface::IF_ALL);
+		servus.reset(new servus::Servus(String(serviceName).toStdString()));
+		servus->addListener(this);
+		servus->beginBrowsing(servus::Servus::Interface::IF_ALL);
+	}
 
 	while (!threadShouldExit())
 	{

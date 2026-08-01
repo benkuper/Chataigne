@@ -51,9 +51,14 @@ void MergeFilter::setupParametersInternal(int multiplexIndex, bool rangeOnly)
 
 MappingFilter::ProcessResult MergeFilter::processInternal(Array<Parameter*> inputs, int multiplexIndex)
 {
-	if (inputs.size() == 0 || filteredParameters[multiplexIndex]->size() == 0) return ProcessResult::STOP_HERE;
+	inputs.removeAllInstancesOf(nullptr);
+	if (inputs.size() == 0
+		|| !isPositiveAndBelow(multiplexIndex, filteredParameters.size())
+		|| filteredParameters[multiplexIndex] == nullptr
+		|| filteredParameters[multiplexIndex]->size() == 0) return ProcessResult::STOP_HERE;
 
 	Parameter* fp = filteredParameters[multiplexIndex]->getUnchecked(0);
+	if (fp == nullptr) return ProcessResult::STOP_HERE;
 
 	Operator o = op->getValueDataAsEnum<Operator>();
 	if (!fp->isComplex())

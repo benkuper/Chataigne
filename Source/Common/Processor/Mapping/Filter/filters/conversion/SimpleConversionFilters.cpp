@@ -136,6 +136,8 @@ void SimpleConversionFilter::filterParamChanged(Parameter* p)
 
 void SimpleConversionFilter::updateOutRange(Parameter* source, Parameter* out)
 {
+	if (source == nullptr || out == nullptr) return;
+
 	var sourceVal = source->getValue().clone();
 	if (source->hasRange())
 	{

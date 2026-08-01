@@ -176,6 +176,8 @@ void Mapping::updateMappingChain(MappingFilter* afterThisFilter, bool processAft
 						if (sp == nullptr) continue;
 
 						Parameter* p = ControllableFactory::createParameterFrom(sp, false, false);
+						if (p == nullptr) continue;
+
 						mOutParams.add(p);
 						outCC->addParameter(p);
 						p->setControllableFeedbackOnly(true);
@@ -187,13 +189,22 @@ void Mapping::updateMappingChain(MappingFilter* afterThisFilter, bool processAft
 				}
 				else
 				{
-					if (isMultiplexed()) outCC = outValuesCC.controllableContainers[i];
-
-					for (int j = 0; j < processedParams.size(); j++)
+					if (isMultiplexed())
 					{
-						if (Parameter* p = (Parameter*)outCC->controllables[j])
+						if (!isPositiveAndBelow(i, outValuesCC.controllableContainers.size())) return;
+						outCC = outValuesCC.controllableContainers[i];
+					}
+					if (outCC == nullptr) return;
+
+					const int numParams = jmin(processedParams.size(), outCC->controllables.size());
+					for (int j = 0; j < numParams; j++)
+					{
+						Parameter* source = processedParams[j];
+						if (source == nullptr) continue;
+
+						if (Parameter* p = dynamic_cast<Parameter*>(outCC->controllables[j]))
 						{
-							if (p->hasRange()) p->setRange(processedParams[j]->minimumValue, processedParams[j]->maximumValue);
+							if (p->hasRange()) p->setRange(source->minimumValue, source->maximumValue);
 						}
 					}
 				}
@@ -243,6 +254,7 @@ void Mapping::process(bool sendOutput, int multiplexIndex, bool forceSend)
 		for (int i = 0; i < getMultiplexCount(); i++) process(sendOutput, i, forceSend);
 		return;
 	}
+	if (!isPositiveAndBelow(multiplexIndex, getMultiplexCount())) return;
 
 	//DBG("[PROCESS] Enter lock");
 	{
@@ -258,20 +270,32 @@ void Mapping::process(bool sendOutput, int multiplexIndex, bool forceSend)
 		{
 			Array<Parameter*> filteredParameters = fm.getLastFilteredParameters(multiplexIndex);
 
-			ControllableContainer* outCC = isMultiplexed() ? outValuesCC.controllableContainers[multiplexIndex].get() : &outValuesCC;
+			ControllableContainer* outCC = &outValuesCC;
+			if (isMultiplexed())
+			{
+				if (!isPositiveAndBelow(multiplexIndex, outValuesCC.controllableContainers.size()))
+				{
+					isProcessing = false;
+					return;
+				}
+				outCC = outValuesCC.controllableContainers[multiplexIndex].get();
+			}
 			if (outCC == nullptr)
 			{
 				NLOGWARNING(niceName, "Out CC is null in Mapping::process");
 			}
 			else
 			{
-				for (int i = 0; i < filteredParameters.size(); i++)
+				const int numParams = jmin(filteredParameters.size(), outCC->controllables.size());
+				for (int i = 0; i < numParams; i++)
 				{
 					if (Parameter* fp = filteredParameters[i])
 					{
-						if (Parameter* p = (Parameter*)outCC->controllables[i])
+						if (Parameter* p = dynamic_cast<Parameter*>(outCC->controllables[i]))
 						{
-							if (p->type == Parameter::ENUM) ((EnumParameter*)p)->setValueWithKey(((EnumParameter*)fp)->getValueKey());
+							EnumParameter* enumOut = dynamic_cast<EnumParameter*>(p);
+							EnumParameter* enumIn = dynamic_cast<EnumParameter*>(fp);
+							if (enumOut != nullptr && enumIn != nullptr) enumOut->setValueWithKey(enumIn->getValueKey());
 							else p->setValue(fp->value);
 						}
 					}

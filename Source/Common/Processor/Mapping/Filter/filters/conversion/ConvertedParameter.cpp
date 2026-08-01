@@ -39,6 +39,7 @@ bool ConvertedParameter::areAllSlotsConnected() const
 
 void ConvertedParameter::connectSlot(int index)
 {
+	if (!isPositiveAndBelow(index, connectedSlots.size())) return;
 	connectedSlots.set(index, true);
 	defaultParam->setEnabled(!areAllSlotsConnected());
 	cpAsyncNotifier.addMessage(new CPEvent(CPEvent::SLOT_CONNECTION_CHANGED));
@@ -46,6 +47,7 @@ void ConvertedParameter::connectSlot(int index)
 
 void ConvertedParameter::disconnectSlot(int index)
 {
+	if (!isPositiveAndBelow(index, connectedSlots.size())) return;
 	connectedSlots.set(index, false);
 	defaultParam->setEnabled(true);
 	cpAsyncNotifier.addMessage(new CPEvent(CPEvent::SLOT_CONNECTION_CHANGED));
@@ -53,25 +55,29 @@ void ConvertedParameter::disconnectSlot(int index)
 
 void ConvertedParameter::setParamValueAtIndex(var value, int index, int multiplexIndex)
 {
-	outParamReferences.ensureStorageAllocated(multiplexIndex + 1);
+	if (!isPositiveAndBelow(multiplexIndex, outParamReferences.size())
+		|| !isPositiveAndBelow(index, connectedSlots.size())) return;
 
 	WeakReference<Parameter> mParamReference = outParamReferences[multiplexIndex];
-	jassert(!mParamReference.wasObjectDeleted());
+	if (mParamReference == nullptr || mParamReference.wasObjectDeleted()) return;
 
-	if (!mParamReference->isComplex())
+	Parameter* mParam = mParamReference.get();
+	if (mParam == nullptr) return;
+
+	if (!mParam->isComplex())
 	{
-		jassert(index == 0);
-		mParamReference->setValue(value);
+		if (index != 0) return;
+		mParam->setValue(value);
 	}
 	else
 	{
-		var outValue = mParamReference->getValue().clone();
-		jassert(outValue.isArray() && index < mParamReference->value.size());
+		var outValue = mParam->getValue().clone();
+		if (!outValue.isArray() || !isPositiveAndBelow(index, outValue.size())) return;
 
 		if (conversionMode == nullptr)
 		{
 			outValue[index] = value;
-			mParamReference->setValue(outValue);
+			mParam->setValue(outValue);
 		}
 		else
 		{
@@ -80,17 +86,19 @@ void ConvertedParameter::setParamValueAtIndex(var value, int index, int multiple
 			{
 			case RGB:
 				outValue[index] = value;
-				mParamReference->setValue(outValue);
+				mParam->setValue(outValue);
 				break;
 
 			case HSV:
 			{
 				float val = value.isString() ? value.toString().getFloatValue() : (float)value;
 				
-				ColorParameter* cp = (ColorParameter*)mParamReference.get();
+				ColorParameter* cp = dynamic_cast<ColorParameter*>(mParam);
+				ColorParameter* defaultColor = dynamic_cast<ColorParameter*>(defaultParam);
+				if (cp == nullptr || defaultColor == nullptr || connectedSlots.size() < 4) return;
 				Colour refColor =  cp->getColor();
 
-				Colour resultColor = ((ColorParameter*)defaultParam)->getColor();
+				Colour resultColor = defaultColor->getColor();
 				if (index == 0 || connectedSlots[0]) resultColor = resultColor.withHue(index == 0 ? val : refColor.getHue());
 				if (index == 1 || connectedSlots[1]) resultColor = resultColor.withSaturation(index == 1 ? val : refColor.getSaturation());
 				if (index == 2 || connectedSlots[2]) resultColor = resultColor.withBrightness(index == 2 ? val : refColor.getBrightness());

@@ -50,6 +50,7 @@ public:
 
 	OwnedArray<SlotValue> slotValues;
 	HashMap<Point3DParameter*, SlotValue*> p3dSlotMap;
+	CriticalSection slotLock;
 
 	void setupSlots();
 	void setupMulticast();

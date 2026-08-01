@@ -185,7 +185,7 @@ void CustomOSCModule::processMessageInternal(const OSCMessage& msg)
 				break;
 
 			case Controllable::BOOL:
-				((Parameter*)c)->setValue(OSCHelpers::getBoolArg(msg[0])); break;
+				if (msg.size() >= 1) ((Parameter*)c)->setValue(OSCHelpers::getBoolArg(msg[0]));
 				break;
 
 			case Controllable::FLOAT:

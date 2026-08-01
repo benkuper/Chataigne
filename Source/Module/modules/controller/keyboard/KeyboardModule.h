@@ -24,7 +24,7 @@ public:
 	KeyboardModule();
 	~KeyboardModule();
 
-	TopLevelWindow * window;
+	Component::SafePointer<TopLevelWindow> window;
 
 	StringParameter* lastKey;
 	IntParameter* lastKeyCode;

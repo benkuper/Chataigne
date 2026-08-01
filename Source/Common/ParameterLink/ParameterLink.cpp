@@ -43,6 +43,8 @@ ParameterLink::~ParameterLink()
 
 void ParameterLink::multiplexCountChanged()
 {
+	if (parameter == nullptr || parameter.wasObjectDeleted()) return;
+
 	mappingValues.resize(getMultiplexCount());
 	mappingValues.fill(parameter->getValue().clone());
 
@@ -80,6 +82,7 @@ void ParameterLink::setLinkType(LinkType type)
 
 var ParameterLink::getLinkedValue(int multiplexIndex)
 {
+	if (parameter == nullptr || parameter.wasObjectDeleted()) return var();
 	if (!isLinkable) return parameter->getValue();
 
 	switch (linkType)
@@ -95,18 +98,22 @@ var ParameterLink::getLinkedValue(int multiplexIndex)
 
 	case MAPPING_INPUT:
 	{
+		if (!isPositiveAndBelow(multiplexIndex, mappingValues.size())) return parameter->getValue();
+		const var& mappingValue = mappingValues.getReference(multiplexIndex);
+
 		var val;
 		if (parameter->isComplex())
 		{
 			for (int i = 0; i < parameter->value.size(); i++)
 			{
-				if (mappingValueIndex + i < mappingValues[multiplexIndex].size()) val.append(mappingValues[multiplexIndex][mappingValueIndex + i]);
+				const int sourceIndex = mappingValueIndex + i;
+				if (isPositiveAndBelow(sourceIndex, mappingValue.size())) val.append(mappingValue[sourceIndex]);
 				else val.append(0); //default
 			}
 		}
 		else
 		{
-			if (mappingValueIndex < mappingValues[multiplexIndex].size()) val = mappingValues[multiplexIndex][mappingValueIndex];
+			if (isPositiveAndBelow(mappingValueIndex, mappingValue.size())) val = mappingValue[mappingValueIndex];
 		}
 
 		return parameter->getCroppedValue(val);
@@ -142,13 +149,19 @@ var ParameterLink::getLinkedValue(int multiplexIndex)
 
 WeakReference<Controllable> ParameterLink::getLinkedTarget(int multiplexIndex)
 {
+	if (parameter == nullptr || parameter.wasObjectDeleted()) return nullptr;
+
 	if (!isLinkable)
 	{
 		if (parameter->type == Parameter::TARGET) return ((TargetParameter*)parameter.get())->target;
 		return nullptr;
 	};
 
-	if (linkType == MULTIPLEX_LIST && list != nullptr)
+	if (linkType == MULTIPLEX_LIST
+		&& list != nullptr
+		&& listRef != nullptr
+		&& !listRef.wasObjectDeleted()
+		&& isPositiveAndBelow(multiplexIndex, list->list.size()))
 	{
 		if (TargetParameter* p = dynamic_cast<TargetParameter*>(list->list[multiplexIndex])) return p->target;
 	}
@@ -159,17 +172,21 @@ WeakReference<Controllable> ParameterLink::getLinkedTarget(int multiplexIndex)
 
 WeakReference<ControllableContainer> ParameterLink::getLinkedTargetContainer(int multiplexIndex)
 {
+	if (parameter == nullptr || parameter.wasObjectDeleted()) return nullptr;
+
 	if (!isLinkable)
 	{
 		if (parameter->type == Parameter::TARGET) return ((TargetParameter*)parameter.get())->targetContainer;
 		return nullptr;
 	};
 
-	if (list != nullptr && !listRef.wasObjectDeleted())
+	if (list != nullptr && listRef != nullptr && !listRef.wasObjectDeleted())
 	{
 
 		if (linkType == MULTIPLEX_LIST)
 		{
+			if (!isPositiveAndBelow(multiplexIndex, list->list.size())) return nullptr;
+
 			if (CVPresetMultiplexList* pList = dynamic_cast<CVPresetMultiplexList*>(list))
 			{
 				return pList->getPresetAt(multiplexIndex);
@@ -189,7 +206,7 @@ void ParameterLink::setLinkedList(BaseMultiplexList* _list)
 {
 	if (list == _list) return;
 
-	if (list != nullptr)
+	if (list != nullptr && listRef != nullptr && !listRef.wasObjectDeleted())
 	{
 		list->removeMultiplexListListener(this);
 	}
@@ -217,7 +234,7 @@ void ParameterLink::setLinkedPresetParam(CVPresetMultiplexList* _list, const Str
 {
 	if (list == _list && presetParamName == paramName) return;
 
-	if (list != nullptr)
+	if (list != nullptr && listRef != nullptr && !listRef.wasObjectDeleted())
 	{
 		list->removeMultiplexListListener(this);
 	}
