@@ -263,4 +263,4 @@ Choose your angel weapon :
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=benkuper/Chataigne&type=Date)](https://star-history.com/#benkuper/Chataigne&Date)
+[![Star History Chart](https://star-history.dera.page/svg?repos=benkuper/Chataigne&type=Date)](https://star-history.dera.page/#benkuper/Chataigne&Date)
