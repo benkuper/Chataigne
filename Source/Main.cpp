@@ -19,6 +19,17 @@ ChataigneApplication::ChataigneApplication() :
 
 void ChataigneApplication::initialiseInternal(const String &)
 {
+   #if JUCE_LINUX
+	// The launch script sets LD_LIBRARY_PATH so this binary can find its own bundled
+	// libraries, but that same variable leaks into every child process this app spawns
+	// (e.g. zenity/kdialog for native file choosers), making them load outdated bundled
+	// libs instead of the system's own and crash with symbol lookup errors. Our own
+	// executable and its directly-linked libraries are already resolved by the dynamic
+	// loader before main() runs, so clearing it here only affects processes we spawn
+	// from this point on.
+	unsetenv("LD_LIBRARY_PATH");
+   #endif
+
 	engine.reset(new ChataigneEngine());
 	if(useWindow) mainComponent.reset(new MainContentComponent());
 
