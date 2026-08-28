@@ -19,11 +19,17 @@ AjazzModule::AjazzModule(const String& name) :
 	numRows(3),
 	numColumns(5),
 	numSideKeys(3),
-	readyToSend(false),
+	numExtraButtons(0),
+	knobSettingsCC("Knob Settings"),
 	colorsCC("Colors"),
 	imagesCC("Images"),
 	textsCC("Texts"),
-    sideCC("Side Icons")
+    sideCC("Side Icons"),
+    sideIconsSupported(true),
+    knobsCC("Side"),
+    knobsSupported(false),
+    extraButtonsCC("Extra Buttons"),
+	readyToSend(false)
 {
 	setupIOConfiguration(true, true);
 
@@ -39,7 +45,7 @@ AjazzModule::AjazzModule(const String& name) :
 	targetDevice = moduleParams.addEnumParameter("Target Device", "Select the physical device to control");
 	targetDevice->addOption("None", "none");
 
-    deviceWarning = moduleParams.addStringParameter("Note", "", "Knob rotation is not yet supported on this model.");
+    deviceWarning = moduleParams.addStringParameter("Note", "", "Knob rotation and press have not been verified on this model yet.");
     deviceWarning->isControllableFeedbackOnly = true;
     deviceWarning->hideInEditor = true; // Hidden by default (AKP153 has no knobs)
 
@@ -52,13 +58,23 @@ AjazzModule::AjazzModule(const String& name) :
 	moduleParams.addChildControllableContainer(&imagesCC);
 	moduleParams.addChildControllableContainer(&textsCC);
     moduleParams.addChildControllableContainer(&sideCC);
+    moduleParams.addChildControllableContainer(&knobSettingsCC);
 	colorsCC.editorIsCollapsed = true;
 	imagesCC.editorIsCollapsed = true;
 	textsCC.editorIsCollapsed = true;
     sideCC.editorIsCollapsed = true;
+    knobSettingsCC.editorIsCollapsed = true;
+
+    valuesCC.addChildControllableContainer(&knobsCC, true);
+    valuesCC.addChildControllableContainer(&extraButtonsCC, true);
 
 	brightness = moduleParams.addIntParameter("Brightness", "Sets the brightness of the deck's backlight", 75, 0, 100);
 	textSize = moduleParams.addIntParameter("Text size", "Sets the size of the text on the buttons", 10, 1, 50);
+	knobSensitivity = moduleParams.addFloatParameter("Knob Sensitivity", "Sensitivity for the relative computing of the knobs (Absolute value)", .1f, 0, 1);
+	knobFineMultiplier = moduleParams.addFloatParameter("Knob Fine Adjust Multiplier", "Multiplier applied to Knob Sensitivity while the knob is held down and rotated (values below 1 make it finer)", .2f, 0, 5);
+	knobRangeMin = moduleParams.addFloatParameter("Knob Range Min", "Lower bound for each knob's Absolute value", 0, -100000, 100000);
+	knobRangeMax = moduleParams.addFloatParameter("Knob Range Max", "Upper bound for each knob's Absolute value", 1, -100000, 100000);
+	knobWrapAround = moduleParams.addBoolParameter("Knob Wrap Around", "If checked, a knob's Absolute value wraps around the range instead of clamping at the bounds", false);
 
 	reset = moduleParams.addTrigger("Reset", "Resets the Ajazz AKP");
 	colorizeImages = moduleParams.addBoolParameter("Colorize images", "If checked, this will use both colors and images to set buttons", false);
@@ -120,21 +136,32 @@ void AjazzModule::syncGeometry(DeviceType type, bool rebuildUI)
         numRows = 3;
         numColumns = 5;
         numSideKeys = 3;
+        numExtraButtons = 0;
+        knobsSupported = false; // side elements are plain buttons, no rotation
+        sideIconsSupported = true; // side elements have real displays
         deviceWarning->hideInEditor = true;
         break;
     case AKP03:
         numRows = 2;
         numColumns = 3;
         numSideKeys = 3;
-        deviceWarning->hideInEditor = false;
+        numExtraButtons = 3; // plain button row below the grid
+        knobsSupported = true;
+        sideIconsSupported = false; // knobs have no screen at all (confirmed on hardware)
+        deviceWarning->hideInEditor = true; // fully supported (click + rotation)
         break;
     case AKP05:
         numRows = 2;
         numColumns = 5;
         numSideKeys = 4;
+        numExtraButtons = 0;
+        knobsSupported = false; // knob protocol not verified on this model yet
+        sideIconsSupported = true; // unverified assumption, kept as originally described
         deviceWarning->hideInEditor = false;
         break;
     }
+
+    sideCC.hideInEditor = !sideIconsSupported;
 
     if (rebuildUI)
     {
@@ -249,6 +276,85 @@ void AjazzModule::rebuildValues()
         sideImages.add(sideCC.addFileParameter("Image " + String(i), "Image for side button " + String(i)));
         sideTexts.add(sideCC.addStringParameter("Text " + String(i), "Text for side button " + String(i), ""));
     }
+
+    while (sidePressed.size() > numSideKeys)
+    {
+        int idx = sidePressed.size() - 1;
+        knobsCC.removeControllable(sidePressed[idx]);
+        sidePressed.remove(idx);
+    }
+
+    // Absolute/Increment/Decrement only exist while knobsSupported, so their target count
+    // collapses to 0 when switching to a model without verified rotation support.
+    while (knobAbsolutes.size() > (knobsSupported ? numSideKeys : 0))
+    {
+        int idx = knobAbsolutes.size() - 1;
+        knobsCC.removeControllable(knobAbsolutes[idx]);
+        knobsCC.removeControllable(knobIncrementTriggers[idx]);
+        knobsCC.removeControllable(knobDecrementTriggers[idx]);
+        knobAbsolutes.remove(idx);
+        knobIncrementTriggers.remove(idx);
+        knobDecrementTriggers.remove(idx);
+    }
+
+    while (sidePressed.size() < numSideKeys)
+    {
+        int i = sidePressed.size() + 1;
+        BoolParameter* b = knobsCC.addBoolParameter("Side " + String(i) + " Pressed", "Is side button/knob " + String(i) + " pressed", false);
+        b->setControllableFeedbackOnly(true);
+        sidePressed.add(b);
+    }
+
+    if (knobsSupported)
+    {
+        while (knobAbsolutes.size() < numSideKeys)
+        {
+            int i = knobAbsolutes.size() + 1;
+
+            FloatParameter* va = knobsCC.addFloatParameter("Knob " + String(i) + " Absolute", "Absolute scrolling value for knob " + String(i), 0);
+            va->setRange(knobRangeMin->floatValue(), knobRangeMax->floatValue());
+            va->setControllableFeedbackOnly(true);
+            knobAbsolutes.add(va);
+
+            Trigger* ti = knobsCC.addTrigger("Knob " + String(i) + " Increment", "Fires once each time knob " + String(i) + " is rotated one detent CW (or CCW if inverted)");
+            knobIncrementTriggers.add(ti);
+
+            Trigger* td = knobsCC.addTrigger("Knob " + String(i) + " Decrement", "Fires once each time knob " + String(i) + " is rotated one detent CCW (or CW if inverted)");
+            knobDecrementTriggers.add(td);
+        }
+    }
+
+    while (knobInvert.size() > (knobsSupported ? numSideKeys : 0))
+    {
+        int idx = knobInvert.size() - 1;
+        knobSettingsCC.removeControllable(knobInvert[idx]);
+        knobInvert.remove(idx);
+    }
+
+    if (knobsSupported)
+    {
+        while (knobInvert.size() < numSideKeys)
+        {
+            int i = knobInvert.size() + 1;
+            BoolParameter* b = knobSettingsCC.addBoolParameter("Knob " + String(i) + " Invert", "Invert the rotation direction reported for knob " + String(i), false);
+            knobInvert.add(b);
+        }
+    }
+
+    while (extraButtonsPressed.size() > numExtraButtons)
+    {
+        int idx = extraButtonsPressed.size() - 1;
+        extraButtonsCC.removeControllable(extraButtonsPressed[idx]);
+        extraButtonsPressed.remove(idx);
+    }
+
+    while (extraButtonsPressed.size() < numExtraButtons)
+    {
+        int i = extraButtonsPressed.size() + 1;
+        BoolParameter* b = extraButtonsCC.addBoolParameter("Button " + String(i) + " Pressed", "Is extra button " + String(i) + " pressed", false);
+        b->setControllableFeedbackOnly(true);
+        extraButtonsPressed.add(b);
+    }
 }
 
 void AjazzModule::setDevice(AjazzDevice* newDevice)
@@ -330,11 +436,12 @@ void AjazzModule::updateSideButton(int index)
 {
     if (device == nullptr || !readyToSend) return;
     if (index < 0 || index >= numSideKeys) return;
-    
+    if (!sideIconsSupported) return; // no physical screen to send this to
+
     File f = sideImages[index]->getFile();
     String overlayText = sideTexts[index]->stringValue();
     Colour c = sideColors[index]->getColor();
-    bool highlighted = false;
+    bool highlighted = highlightPressedButtons->boolValue() ? (index < sidePressed.size() && sidePressed[index]->boolValue()) : false;
     
     Image image;
     if (f.existsAsFile())
@@ -436,6 +543,73 @@ void AjazzModule::ajazzButtonReleased(int row, int column)
 }
 
 
+void AjazzModule::ajazzSideButtonPressed(int index)
+{
+    if (logIncomingData->boolValue()) NLOG(niceName, "Side button/knob " << String(index + 1) << " pressed");
+    if (index < 0 || index >= sidePressed.size()) return;
+
+    inActivityTrigger->trigger();
+    sidePressed[index]->setValue(true);
+    if (highlightPressedButtons->boolValue()) updateSideButton(index);
+}
+
+void AjazzModule::ajazzSideButtonReleased(int index)
+{
+    if (logIncomingData->boolValue()) NLOG(niceName, "Side button/knob " << String(index + 1) << " released");
+    if (index < 0 || index >= sidePressed.size()) return;
+
+    inActivityTrigger->trigger();
+    sidePressed[index]->setValue(false);
+    if (highlightPressedButtons->boolValue()) updateSideButton(index);
+}
+
+void AjazzModule::ajazzKnobRotated(int index, int direction)
+{
+    if (logIncomingData->boolValue()) NLOG(niceName, "Knob " << String(index + 1) << " rotated " << (direction > 0 ? "CW" : "CCW"));
+    if (index < 0 || index >= knobAbsolutes.size()) return;
+
+    inActivityTrigger->trigger();
+
+    bool inverted = index < knobInvert.size() && knobInvert[index]->boolValue();
+    bool held = index < sidePressed.size() && sidePressed[index]->boolValue();
+
+    float val = (float)direction * (inverted ? -1.0f : 1.0f);
+    if (val > 0) knobIncrementTriggers[index]->trigger();
+    else knobDecrementTriggers[index]->trigger();
+
+    float sensitivity = knobSensitivity->floatValue() * (held ? knobFineMultiplier->floatValue() : 1.0f);
+    float newAbs = knobAbsolutes[index]->floatValue() + val * sensitivity;
+
+    float rangeMin = knobRangeMin->floatValue();
+    float rangeMax = knobRangeMax->floatValue();
+    if (knobWrapAround->boolValue() && rangeMax > rangeMin)
+    {
+        float range = rangeMax - rangeMin;
+        while (newAbs < rangeMin) newAbs += range;
+        while (newAbs >= rangeMax) newAbs -= range;
+    }
+
+    knobAbsolutes[index]->setValue(newAbs);
+}
+
+void AjazzModule::ajazzExtraButtonPressed(int index)
+{
+    if (logIncomingData->boolValue()) NLOG(niceName, "Extra button " << String(index + 1) << " pressed");
+    if (index < 0 || index >= extraButtonsPressed.size()) return;
+
+    inActivityTrigger->trigger();
+    extraButtonsPressed[index]->setValue(true);
+}
+
+void AjazzModule::ajazzExtraButtonReleased(int index)
+{
+    if (logIncomingData->boolValue()) NLOG(niceName, "Extra button " << String(index + 1) << " released");
+    if (index < 0 || index >= extraButtonsPressed.size()) return;
+
+    inActivityTrigger->trigger();
+    extraButtonsPressed[index]->setValue(false);
+}
+
 void AjazzModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
 {
 	Module::onControllableFeedbackUpdateInternal(cc, c);
@@ -456,6 +630,10 @@ void AjazzModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc
     {
         if (device != nullptr) syncGeometryFromDevice(device, true);
         else syncGeometry(deviceType->getValueDataAsEnum<DeviceType>(), true);
+    }
+    else if (c == knobRangeMin || c == knobRangeMax)
+    {
+        for (auto* p : knobAbsolutes) p->setRange(knobRangeMin->floatValue(), knobRangeMax->floatValue());
     }
 
 	if (!enabled->boolValue()) return;

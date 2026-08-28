@@ -18,6 +18,54 @@ namespace
     constexpr int kAjazzReadSize = 512;
     constexpr int kAjazzHidReportId = 0;
     constexpr int kAjazzHidWriteSize = kAjazzDataPayloadSize + 1; // report id + payload
+
+    // AKP03 knobs report input events using their own arbitrary id set rather than the
+    // numKeys+1..numKeys+numSideKeys scheme used for AKP153's plain side buttons. These
+    // ids were captured by sniffing raw HID reports off a physical AKP03 (pid 0x3002):
+    // each knob has a dedicated click id (press=0x01/release=0x00 in the following byte,
+    // same as normal buttons) and two rotation ids (one per direction) which arrive alone,
+    // one report per detent, with no press/release semantics.
+    struct Akp03KnobIds { int click; int ccw; int cw; };
+    constexpr Akp03KnobIds kAkp03KnobIds[3] = {
+        { 0x33, 0x90, 0x91 }, // knob 0 (left)
+        { 0x35, 0x50, 0x51 }, // knob 1 (middle)
+        { 0x34, 0x60, 0x61 }, // knob 2 (right)
+    };
+
+    // AKP03 also has a row of 3 plain (non-rotary, no screen) buttons below the main grid,
+    // separate from both the grid keys and the knobs. Same sniffing method: pressed
+    // left-to-right, in known order, produced these ids in that exact order.
+    constexpr int kAkp03ExtraButtonIds[3] = { 0x25, 0x30, 0x31 };
+
+    // Image format (size + rotation) required for the on-device JPEG to actually display.
+    // Cross-checked against the mirajazz/opendeck-akp03 reference implementations, which
+    // target the same hardware over the same "CRT...BAT" HID protocol:
+    //   - AKP153 and other untested models: kept as originally tuned (96x96, 270 CW).
+    //   - AKP03 "rev2" (pid 0x3002/0x3003, protocol v3): 64x64, plain 90 CW, no mirroring.
+    //   - AKP03 original (pid 0x1001/0x1002/0x1003, protocol v2): 60x60, no rotation.
+    enum RotationMode { kRotationNone, kRotation90CW, kRotation270CW };
+}
+
+void AjazzDevice::getImageFormat(int& imgSize, int& rotationMode) const
+{
+    if (modelName == "AKP03")
+    {
+        if (pid == 0x3002 || pid == 0x3003)
+        {
+            imgSize = 64;
+            rotationMode = kRotation90CW;
+        }
+        else
+        {
+            imgSize = 60;
+            rotationMode = kRotationNone;
+        }
+    }
+    else
+    {
+        imgSize = 96;
+        rotationMode = kRotation270CW;
+    }
 }
 
 AjazzDevice::AjazzDevice(hid_device* device, String serialNumber, String devicePath, int pid) :
@@ -30,18 +78,18 @@ AjazzDevice::AjazzDevice(hid_device* device, String serialNumber, String deviceP
     currentBrightness(100)
 {
     if (pid == 0x6674 || pid == 0x1010 || pid == 0x1020 || pid == 0x3010) {
-        modelName = "AKP153"; numRows = 3; numColumns = 5; numSideKeys = 3;
+        modelName = "AKP153"; numRows = 3; numColumns = 5; numSideKeys = 3; numExtraButtons = 0;
     } else if (pid == 0x1001 || pid == 0x1002 || pid == 0x1003 || pid == 0x3002 || pid == 0x3003) {
-        modelName = "AKP03"; numRows = 2; numColumns = 3; numSideKeys = 3;
+        modelName = "AKP03"; numRows = 2; numColumns = 3; numSideKeys = 3; numExtraButtons = 3;
     } else if (pid == 0x3006 || pid == 0x3004 || pid == 0x3013) {
-        modelName = "AKP05"; numRows = 2; numColumns = 5; numSideKeys = 4;
+        modelName = "AKP05"; numRows = 2; numColumns = 5; numSideKeys = 4; numExtraButtons = 0;
     } else {
-        modelName = "Unknown"; numRows = 3; numColumns = 5; numSideKeys = 3;
+        modelName = "Unknown"; numRows = 3; numColumns = 5; numSideKeys = 3; numExtraButtons = 0;
     }
     numKeys = numRows * numColumns;
 
     if (device != nullptr) hid_set_nonblocking(device, 1);
-    for (int i = 0; i < numKeys + numSideKeys; ++i) buttonStates.add(false);
+    for (int i = 0; i < numKeys + numSideKeys + numExtraButtons; ++i) buttonStates.add(false);
     startThread();
 }
 
@@ -116,9 +164,9 @@ void AjazzDevice::clearAll()
     clearButton(0xff);
 }
 
-static Image renderButtonImage(Image source, bool highlight, const String& overlayText, int textSize, bool colorize = false, Colour bgColor = Colours::black)
+static Image renderButtonImage(Image source, bool highlight, const String& overlayText, int textSize, int imgSize, int rotationMode, bool colorize = false, Colour bgColor = Colours::black)
 {
-    const int IMG_SIZE = 96;
+    const int IMG_SIZE = imgSize;
     Image iconImage(Image::RGB, IMG_SIZE, IMG_SIZE, true);
     Graphics g(iconImage);
     if (!source.isNull())
@@ -171,13 +219,27 @@ static Image renderButtonImage(Image source, bool highlight, const String& overl
         g.drawFittedText(overlayText, bounds, Justification::centred, 3);
     }
 
-    // Apply rotation + mirroring to match device transform.
-    // Reference (mirajazz) uses: Rot90 (CW) + fliph + flipv = 270° CW total.
-    // Combined: dest(sy, IMG_SIZE-1-sx) = src(sx, sy)
+    // Apply rotation to match device transform. Mode and size are picked per-model in
+    // AjazzDevice::getImageFormat (see comment there for the reference this was verified
+    // against); mirroring is not needed for any currently-supported model.
+    if (rotationMode == kRotationNone)
+        return iconImage;
+
     Image transformed(Image::RGB, IMG_SIZE, IMG_SIZE, false);
-    for (int sy = 0; sy < IMG_SIZE; ++sy)
-        for (int sx = 0; sx < IMG_SIZE; ++sx)
-            transformed.setPixelAt(sy, IMG_SIZE - 1 - sx, iconImage.getPixelAt(sx, sy));
+    if (rotationMode == kRotation90CW)
+    {
+        // dest(IMG_SIZE-1-sy, sx) = src(sx, sy)
+        for (int sy = 0; sy < IMG_SIZE; ++sy)
+            for (int sx = 0; sx < IMG_SIZE; ++sx)
+                transformed.setPixelAt(IMG_SIZE - 1 - sy, sx, iconImage.getPixelAt(sx, sy));
+    }
+    else // kRotation270CW
+    {
+        // dest(sy, IMG_SIZE-1-sx) = src(sx, sy)
+        for (int sy = 0; sy < IMG_SIZE; ++sy)
+            for (int sx = 0; sx < IMG_SIZE; ++sx)
+                transformed.setPixelAt(sy, IMG_SIZE - 1 - sx, iconImage.getPixelAt(sx, sy));
+    }
 
     return transformed;
 }
@@ -185,14 +247,18 @@ static Image renderButtonImage(Image source, bool highlight, const String& overl
 void AjazzDevice::setImage(int row, int column, Image image, bool highlight, const String& overlayText, int textSize, bool colorize, Colour bgColor)
 {
     int buttonId = getButtonProtocolId(row, column);
-    Image rendered = renderButtonImage(image, highlight, overlayText, textSize, colorize, bgColor);
+    int imgSize, rotationMode;
+    getImageFormat(imgSize, rotationMode);
+    Image rendered = renderButtonImage(image, highlight, overlayText, textSize, imgSize, rotationMode, colorize, bgColor);
     sendButtonImageData(buttonId, rendered);
 }
 
 void AjazzDevice::setSideImage(int index, Image image, bool highlight, const String& overlayText, int textSize, bool colorize, Colour bgColor)
 {
     int buttonId = numKeys + 1 + index;
-    Image rendered = renderButtonImage(image, highlight, overlayText, textSize, colorize, bgColor);
+    int imgSize, rotationMode;
+    getImageFormat(imgSize, rotationMode);
+    Image rendered = renderButtonImage(image, highlight, overlayText, textSize, imgSize, rotationMode, colorize, bgColor);
     sendButtonImageData(buttonId, rendered);
 }
 
@@ -267,6 +333,14 @@ void AjazzDevice::sendPacket(const uint8_t* data, int length)
 
 int AjazzDevice::getButtonProtocolId(int row, int column)
 {
+    // AKP03 (2x3 grid) reports/expects a simple row-major layout, confirmed by sniffing
+    // raw HID reports while pressing each key in known physical order (top-left through
+    // bottom-right produced ids 1-6 in that exact order). This differs from AKP153's
+    // column-major, right-to-left wiring below, which was tuned for that model and is
+    // left untouched.
+    if (modelName == "AKP03")
+        return row * numColumns + column + 1;
+
     return (numColumns - 1 - column) * numRows + 1 + row;
 }
 
@@ -300,8 +374,17 @@ void AjazzDevice::run()
 
                 if (buttonId >= 1 && buttonId <= numKeys)
                 {
-                    int column = numColumns - 1 - (buttonId - 1) / numRows;
-                    int row    = (buttonId - 1) % numRows;
+                    int row, column;
+                    if (modelName == "AKP03")
+                    {
+                        row    = (buttonId - 1) / numColumns;
+                        column = (buttonId - 1) % numColumns;
+                    }
+                    else
+                    {
+                        column = numColumns - 1 - (buttonId - 1) / numRows;
+                        row    = (buttonId - 1) % numRows;
+                    }
                     WeakReference<AjazzDevice> weakThis(this);
                     MessageManager::callAsync([weakThis, row, column, isPress]() {
                         if (weakThis == nullptr) return;
@@ -310,16 +393,68 @@ void AjazzDevice::run()
                                                       row, column);
                     });
                 }
-                else if (buttonId > numKeys && buttonId <= numKeys + numSideKeys)
+                else
                 {
-                    int index = buttonId - numKeys - 1;
-                    WeakReference<AjazzDevice> weakThis(this);
-                    MessageManager::callAsync([weakThis, index, isPress]() {
-                        if (weakThis == nullptr) return;
-                        weakThis->deviceListeners.call(isPress ? &AjazzListener::ajazzSideButtonPressed
-                                                               : &AjazzListener::ajazzSideButtonReleased,
-                                                      index);
-                    });
+                    bool handled = false;
+
+                    if (modelName == "AKP03")
+                    {
+                        for (int i = 0; i < 3 && !handled; ++i)
+                        {
+                            const Akp03KnobIds& k = kAkp03KnobIds[i];
+                            if (buttonId == k.click)
+                            {
+                                handled = true;
+                                WeakReference<AjazzDevice> weakThis(this);
+                                MessageManager::callAsync([weakThis, i, isPress]() {
+                                    if (weakThis == nullptr) return;
+                                    weakThis->deviceListeners.call(isPress ? &AjazzListener::ajazzSideButtonPressed
+                                                                           : &AjazzListener::ajazzSideButtonReleased,
+                                                                  i);
+                                });
+                            }
+                            else if (buttonId == k.cw || buttonId == k.ccw)
+                            {
+                                handled = true;
+                                int direction = (buttonId == k.cw) ? 1 : -1;
+                                WeakReference<AjazzDevice> weakThis(this);
+                                MessageManager::callAsync([weakThis, i, direction]() {
+                                    if (weakThis == nullptr) return;
+                                    weakThis->deviceListeners.call(&AjazzListener::ajazzKnobRotated, i, direction);
+                                });
+                            }
+                        }
+
+                        for (int i = 0; i < numExtraButtons && !handled; ++i)
+                        {
+                            if (buttonId == kAkp03ExtraButtonIds[i])
+                            {
+                                handled = true;
+                                WeakReference<AjazzDevice> weakThis(this);
+                                MessageManager::callAsync([weakThis, i, isPress]() {
+                                    if (weakThis == nullptr) return;
+                                    weakThis->deviceListeners.call(isPress ? &AjazzListener::ajazzExtraButtonPressed
+                                                                           : &AjazzListener::ajazzExtraButtonReleased,
+                                                                  i);
+                                });
+                            }
+                        }
+                    }
+
+                    // AKP03 only ever uses the explicit id tables above; its knob/extra-button
+                    // ids never fall in the numKeys+1..numKeys+numSideKeys range this generic
+                    // fallback assumes for AKP153/AKP05, so don't let it apply to AKP03.
+                    if (!handled && modelName != "AKP03" && buttonId > numKeys && buttonId <= numKeys + numSideKeys)
+                    {
+                        int index = buttonId - numKeys - 1;
+                        WeakReference<AjazzDevice> weakThis(this);
+                        MessageManager::callAsync([weakThis, index, isPress]() {
+                            if (weakThis == nullptr) return;
+                            weakThis->deviceListeners.call(isPress ? &AjazzListener::ajazzSideButtonPressed
+                                                                   : &AjazzListener::ajazzSideButtonReleased,
+                                                          index);
+                        });
+                    }
                 }
             }
         }

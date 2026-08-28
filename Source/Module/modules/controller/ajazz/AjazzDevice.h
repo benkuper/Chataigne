@@ -30,6 +30,7 @@ public:
 	int numRows;
 	int numColumns;
     int numSideKeys;
+    int numExtraButtons;
 
 	Array<bool> buttonStates;
 	SpinLock writeLock;
@@ -54,6 +55,9 @@ public:
 		virtual void ajazzButtonReleased(int row, int column) = 0;
         virtual void ajazzSideButtonPressed(int index) {}
         virtual void ajazzSideButtonReleased(int index) {}
+        virtual void ajazzKnobRotated(int index, int direction) {} // direction: 1 = CW, -1 = CCW
+        virtual void ajazzExtraButtonPressed(int index) {}
+        virtual void ajazzExtraButtonReleased(int index) {}
 	};
 
 	ListenerList<AjazzListener> deviceListeners;
@@ -66,6 +70,7 @@ private:
     void sendInitPacketIfNeeded();
     void sendPacket(const uint8_t* data, int length);
     int getButtonProtocolId(int row, int column);
+    void getImageFormat(int& imgSize, int& rotationMode) const;
 
     JUCE_DECLARE_WEAK_REFERENCEABLE(AjazzDevice)
 };
