@@ -101,23 +101,15 @@ void ModuleManager::showAllValuesAndGetControllable(const StringArray& typeFilte
 
 bool ModuleManager::checkControllableIsAValue(Controllable* c)
 {
+	if (c == nullptr) return false;
+
 	ControllableContainer* cc = c->parentContainer;
 	while (cc != nullptr)
 	{
-		Module* m = dynamic_cast<Module*>(cc); //If controllable is child of a module
-
-		if (c->parentContainer == m || c->parentContainer == &m->moduleParams) return false; //If controllable is direct child of this module, or child 
-
-		if (m != nullptr)
+		if (Module* m = dynamic_cast<Module*>(cc))
 		{
-			ControllableContainer* vcc = c->parentContainer;
-			while (vcc != nullptr)
-			{
-				if (vcc == &m->valuesCC) return true; //If controllable is child of this module's valuesCC
-				vcc = vcc->parentContainer;
-			}
-
-			return false;
+			if (c->parentContainer == m || c->parentContainer == &m->moduleParams) return false;
+			return m->isControllableInValuesContainer(c);
 		}
 
 		cc = cc->parentContainer;
