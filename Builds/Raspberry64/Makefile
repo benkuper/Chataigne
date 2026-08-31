@@ -39,13 +39,13 @@ ifeq ($(CONFIG),Debug)
     TARGET_ARCH := 
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DDEBUG=1" "-D_DEBUG=1" "-DVST_LOGGING=0" "-DUSE_ABLETONLINK=1" "-DLINK_PLATFORM_LINUX=1" "-DUSE_GPIO=1" "-DJUCER_LINUX_MAKE_30E7ABE=1" "-DJUCE_APP_VERSION=1.10.4b2" "-DJUCE_APP_VERSION_HEX=0x10a04" $(shell $(PKG_CONFIG) --cflags alsa freetype2 gl libcurl webkit2gtk-4.0 gtk+-x11-3.0) -pthread -I../../JuceLibraryCode -I../../JUCE/modules -I../../Modules -I/usr/include/freetype2 -I../../Source -I../../External/wiiuse -I../../External/asio -I../../External/asiodriver -I../../External/kinect/include -I../../External/joycon/include -I../../External/servus/include -I../../External/dnssd/include -I../../External/ois/include -I../../External/sdl/include -I../../External/hidapi/include -I../../External/abletonlink/include -I../../External/libusb/include/libusb-1.0 -I../../External/mosquitto/include -I../../External/posistagenet/include -I../../External/simpleble/include $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DDEBUG=1" "-D_DEBUG=1" "-DVST_LOGGING=0" "-DUSE_ABLETONLINK=1" "-DLINK_PLATFORM_LINUX=1" "-DUSE_GPIO=1" "-DJUCER_LINUX_MAKE_30E7ABE=1" "-DJUCE_APP_VERSION=1.10.4b2" "-DJUCE_APP_VERSION_HEX=0x10a04" $(shell $(PKG_CONFIG) --cflags alsa freetype2 gl libcurl webkit2gtk-4.1 gtk+-x11-3.0) -pthread -I../../JuceLibraryCode -I../../JUCE/modules -I../../Modules -I/usr/include/freetype2 -I../../Source -I../../External/wiiuse -I../../External/asio -I../../External/asiodriver -I../../External/kinect/include -I../../External/joycon/include -I../../External/servus/include -I../../External/dnssd/include -I../../External/ois/include -I../../External/sdl/include -I../../External/hidapi/include -I../../External/abletonlink/include -I../../External/libusb/include/libusb-1.0 -I../../External/mosquitto/include -I../../External/posistagenet/include -I../../External/simpleble/include $(CPPFLAGS)
   JUCE_CPPFLAGS_APP :=  "-DJucePlugin_Build_VST=0" "-DJucePlugin_Build_VST3=0" "-DJucePlugin_Build_AU=0" "-DJucePlugin_Build_AUv3=0" "-DJucePlugin_Build_AAX=0" "-DJucePlugin_Build_Standalone=0" "-DJucePlugin_Build_Unity=0" "-DJucePlugin_Build_LV2=0"
   JUCE_TARGET_APP := Chataigne
 
   JUCE_CFLAGS += $(JUCE_CPPFLAGS) $(TARGET_ARCH) -g -ggdb -O0 -Wno-multichar $(CFLAGS)
   JUCE_CXXFLAGS += $(JUCE_CFLAGS) -std=c++17 $(CXXFLAGS)
-  JUCE_LDFLAGS += $(TARGET_ARCH) -L$(JUCE_BINDIR) -L$(JUCE_LIBDIR) -L../../External/servus/lib/raspberry64 -L../../External/sdl/lib/raspberry64 -L../../External/joycon/lib/raspberry64 -L../../External/mosquitto/lib/rpi/aarch64 -L../../Modules/juce_simpleweb/libs/Linux/${JUCE_ARCH_LABEL} $(shell $(PKG_CONFIG) --libs alsa freetype2 gl libcurl) -fvisibility=hidden -Wl,-rpath,"lib" -Wl,--as-needed -Wl,--export-dynamic -fvisibility=default -lrt -ldl -lpthread -lssl -lcrypto -lbluetooth -lServus -lcurl -lSDL2 -lusb-1.0 -lhidapi-hidraw -lpthread -lJoyShockLibrary -latomic -lmosquitto -lmosquittopp -lssl $(LDFLAGS)
+  JUCE_LDFLAGS += $(TARGET_ARCH) -L$(JUCE_BINDIR) -L$(JUCE_LIBDIR) -L../../External/servus/lib/raspberry64 -L../../External/sdl/lib/raspberry64 -L../../External/joycon/lib/raspberry64 -L../../External/mosquitto/lib/rpi/aarch64 -L../../Modules/juce_simpleweb/libs/Linux/${JUCE_ARCH_LABEL} $(shell $(PKG_CONFIG) --libs alsa freetype2 gl libcurl) -fvisibility=hidden -Wl,-rpath,"lib" -Wl,--as-needed -Wl,--export-dynamic -fvisibility=default -lrt -ldl -lpthread -lssl -lcrypto -lbluetooth -lServus -lcurl -lSDL2 -lusb-1.0 -lhidapi-hidraw -lpthread -lJoyShockLibrary -latomic -lmosquitto -lmosquittopp -lssl -lgpiod $(LDFLAGS)
 
   CLEANCMD = rm -rf $(JUCE_OUTDIR)/$(JUCE_TARGET_APP) $(JUCE_OBJDIR)
 endif
@@ -60,13 +60,13 @@ ifeq ($(CONFIG),Release)
     TARGET_ARCH := 
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DNDEBUG=1" "-DVST_LOGGING=0" "-DUSE_ABLETONLINK=1" "-DLINK_PLATFORM_LINUX=1" "-DUSE_GPIO=1" "-DJUCER_LINUX_MAKE_30E7ABE=1" "-DJUCE_APP_VERSION=1.10.4b2" "-DJUCE_APP_VERSION_HEX=0x10a04" $(shell $(PKG_CONFIG) --cflags alsa freetype2 gl libcurl webkit2gtk-4.0 gtk+-x11-3.0) -pthread -I../../JuceLibraryCode -I../../JUCE/modules -I../../Modules -I/usr/include/freetype2 -I../../Source -I../../External/wiiuse -I../../External/asio -I../../External/asiodriver -I../../External/kinect/include -I../../External/joycon/include -I../../External/servus/include -I../../External/dnssd/include -I../../External/ois/include -I../../External/sdl/include -I../../External/hidapi/include -I../../External/abletonlink/include -I../../External/libusb/include/libusb-1.0 -I../../External/mosquitto/include -I../../External/posistagenet/include -I../../External/simpleble/include $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DNDEBUG=1" "-DVST_LOGGING=0" "-DUSE_ABLETONLINK=1" "-DLINK_PLATFORM_LINUX=1" "-DUSE_GPIO=1" "-DJUCER_LINUX_MAKE_30E7ABE=1" "-DJUCE_APP_VERSION=1.10.4b2" "-DJUCE_APP_VERSION_HEX=0x10a04" $(shell $(PKG_CONFIG) --cflags alsa freetype2 gl libcurl webkit2gtk-4.1 gtk+-x11-3.0) -pthread -I../../JuceLibraryCode -I../../JUCE/modules -I../../Modules -I/usr/include/freetype2 -I../../Source -I../../External/wiiuse -I../../External/asio -I../../External/asiodriver -I../../External/kinect/include -I../../External/joycon/include -I../../External/servus/include -I../../External/dnssd/include -I../../External/ois/include -I../../External/sdl/include -I../../External/hidapi/include -I../../External/abletonlink/include -I../../External/libusb/include/libusb-1.0 -I../../External/mosquitto/include -I../../External/posistagenet/include -I../../External/simpleble/include $(CPPFLAGS)
   JUCE_CPPFLAGS_APP :=  "-DJucePlugin_Build_VST=0" "-DJucePlugin_Build_VST3=0" "-DJucePlugin_Build_AU=0" "-DJucePlugin_Build_AUv3=0" "-DJucePlugin_Build_AAX=0" "-DJucePlugin_Build_Standalone=0" "-DJucePlugin_Build_Unity=0" "-DJucePlugin_Build_LV2=0"
   JUCE_TARGET_APP := Chataigne
 
   JUCE_CFLAGS += $(JUCE_CPPFLAGS) $(TARGET_ARCH) -O3 -Wno-multichar $(CFLAGS)
   JUCE_CXXFLAGS += $(JUCE_CFLAGS) -std=c++17 $(CXXFLAGS)
-  JUCE_LDFLAGS += $(TARGET_ARCH) -L$(JUCE_BINDIR) -L$(JUCE_LIBDIR) -L../../External/servus/lib/raspberry64 -L../../External/sdl/lib/raspberry64 -L../../External/joycon/lib/raspberry64 -L../../External/mosquitto/lib/rpi/aarch64 -L../../Modules/juce_simpleweb/libs/Linux/${JUCE_ARCH_LABEL} $(shell $(PKG_CONFIG) --libs alsa freetype2 gl libcurl) -fvisibility=hidden -Wl,-rpath,"lib" -Wl,--as-needed -Wl,--export-dynamic -fvisibility=default -lrt -ldl -lpthread -lssl -lcrypto -lbluetooth -lServus -lcurl -lSDL2 -lusb-1.0 -lhidapi-hidraw -lpthread -lJoyShockLibrary -latomic -lmosquitto -lmosquittopp -lssl $(LDFLAGS)
+  JUCE_LDFLAGS += $(TARGET_ARCH) -L$(JUCE_BINDIR) -L$(JUCE_LIBDIR) -L../../External/servus/lib/raspberry64 -L../../External/sdl/lib/raspberry64 -L../../External/joycon/lib/raspberry64 -L../../External/mosquitto/lib/rpi/aarch64 -L../../Modules/juce_simpleweb/libs/Linux/${JUCE_ARCH_LABEL} $(shell $(PKG_CONFIG) --libs alsa freetype2 gl libcurl) -fvisibility=hidden -Wl,-rpath,"lib" -Wl,--as-needed -Wl,--export-dynamic -fvisibility=default -lrt -ldl -lpthread -lssl -lcrypto -lbluetooth -lServus -lcurl -lSDL2 -lusb-1.0 -lhidapi-hidraw -lpthread -lJoyShockLibrary -latomic -lmosquitto -lmosquittopp -lssl -lgpiod $(LDFLAGS)
 
   CLEANCMD = rm -rf $(JUCE_OUTDIR)/$(JUCE_TARGET_APP) $(JUCE_OBJDIR)
 endif
@@ -97,8 +97,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/util_7a46226b.o \
   $(JUCE_OBJDIR)/wiiboard_b3f0e298.o \
   $(JUCE_OBJDIR)/wiiuse_8bc34039.o \
-  $(JUCE_OBJDIR)/command_20531fa2.o \
-  $(JUCE_OBJDIR)/pigpio_c63733db.o \
+  $(JUCE_OBJDIR)/ChataigneGPIO_c63733db.o \
   $(JUCE_OBJDIR)/ModuleIncludes_95e047db.o \
   $(JUCE_OBJDIR)/ModuleIncludes2_2648c981.o \
   $(JUCE_OBJDIR)/ModuleIncludes3_2656e102.o \
@@ -274,14 +273,9 @@ $(JUCE_OBJDIR)/wiiuse_8bc34039.o: ../../Source/Module/modules/controller/wiimote
 	@echo "Compiling wiiuse.c"
 	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/command_20531fa2.o: ../../Source/Module/modules/gpio/pigpio/command.c
+$(JUCE_OBJDIR)/ChataigneGPIO_c63733db.o: ../../Source/Module/modules/gpio/gpiod/ChataigneGPIO.c
 	-$(V_AT)mkdir -p $(@D)
-	@echo "Compiling command.c"
-	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/pigpio_c63733db.o: ../../Source/Module/modules/gpio/pigpio/pigpio.c
-	-$(V_AT)mkdir -p $(@D)
-	@echo "Compiling pigpio.c"
+	@echo "Compiling ChataigneGPIO.c"
 	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/ModuleIncludes_95e047db.o: ../../Source/Module/ModuleIncludes.cpp

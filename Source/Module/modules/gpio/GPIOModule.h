@@ -23,8 +23,8 @@
 
 
 #ifdef GPIO_SUPPORT
-#include "pigpio/pigpio.h"
-#define GPIO_MAX_PINS PI_MAX_USER_GPIO
+#include "gpiod/ChataigneGPIO.h"
+#define GPIO_MAX_PINS GPIO_MAX_USER_PIN
 #else
 #define GPIO_MAX_PINS 32
 #endif
