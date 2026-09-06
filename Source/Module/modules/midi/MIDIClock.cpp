@@ -28,6 +28,7 @@ MIDIClockSender::MIDIClockSender() :
 
 MIDIClockSender::~MIDIClockSender()
 {
+	stop();
 }
 
 void MIDIClockSender::setBPM(double newBPM)
