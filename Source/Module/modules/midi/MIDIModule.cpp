@@ -111,6 +111,7 @@ MIDIModule::MIDIModule(const String& name, bool _useGenericControls) :
 
 MIDIModule::~MIDIModule()
 {
+	outClock.stop();
 	if (inputDevice != nullptr) inputDevice->removeMIDIInputListener(this);
 	if (outputDevice != nullptr) outputDevice->close();
 }
