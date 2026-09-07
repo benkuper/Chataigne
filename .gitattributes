@@ -1,0 +1,13 @@
+# Keep Unix build/configuration files stable when Git for Windows has
+# core.autocrlf enabled. This prevents harmless conversion warnings from
+# being reported as staging failures by GUI clients.
+.gitattributes text eol=lf
+.github/** text eol=lf
+**/Makefile text eol=lf
+*.sh text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.pbxproj text eol=lf
+*.c text eol=lf
+*.md text eol=lf
+JuceLibraryCode/JuceHeader.h text eol=lf

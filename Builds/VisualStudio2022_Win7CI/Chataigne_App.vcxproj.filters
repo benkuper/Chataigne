@@ -522,7 +522,7 @@
       <UniqueIdentifier>{8FA46653-8D35-2561-2678-6C2C5C4A06DA}</UniqueIdentifier>
     </Filter>
     <Filter Include="Chataigne\Source\Module\modules\gpio\gpiod">
-      <UniqueIdentifier>{94621B05-5239-FC4B-AA05-303A72C20012}</UniqueIdentifier>
+      <UniqueIdentifier>{918D89E8-B982-D552-9C44-E8A0D24F0F4C}</UniqueIdentifier>
     </Filter>
     <Filter Include="Chataigne\Source\Module\modules\gpio">
       <UniqueIdentifier>{95883558-2B5B-67E4-B81C-3AFA9E47F7AF}</UniqueIdentifier>

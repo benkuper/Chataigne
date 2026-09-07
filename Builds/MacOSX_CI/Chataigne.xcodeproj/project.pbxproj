@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0B13BF87D171A99EA87757C1 /* ChataigneGPIO.c */ = {isa = PBXBuildFile; fileRef = 9820E02666CCFA688707B1F4; };
 		0B711A96469657F81C4C9FA8 /* CoreAudio.framework */ = {isa = PBXBuildFile; fileRef = 48D6B341F756699DA2054362; };
 		14B03BE884B82BE8EC264AE9 /* include_juce_simpleweb.cpp */ = {isa = PBXBuildFile; fileRef = A344ECDA05A5372A32341886; };
 		1E38E7F8E4ECF0F020101DF4 /* include_juce_audio_processors_lv2_libs.cpp */ = {isa = PBXBuildFile; fileRef = DE62E8E7E1EBB5191F56029B; };
@@ -52,6 +51,7 @@
 		9162BCE79A7FD1E0C8EE0B42 /* dynamics.c */ = {isa = PBXBuildFile; fileRef = C95C470933856CCB6E5E6CC4; };
 		929BBF2871F7A7823334D2DE /* MetalKit.framework */ = {isa = PBXBuildFile; fileRef = 3048D13EBD9A691F911639FA; settings = { ATTRIBUTES = (Weak, ); }; };
 		92BE03372C8379806DD57A5E /* ForceFeedback.framework */ = {isa = PBXBuildFile; fileRef = B2AE5AB8212F91ACEEB0E80E; };
+		9342D3CD464A0D70F97F4EBD /* ChataigneGPIO.c */ = {isa = PBXBuildFile; fileRef = FD32DB7DAF3C1E0ED9B1FF46; };
 		93ECA58744F8B5DD181D35F4 /* BaseCommandHandlerEditor.cpp */ = {isa = PBXBuildFile; fileRef = CDE9EF9B0E1277DC6C2D8577; };
 		971F1FB7CB12C74DE5E71C42 /* include_juce_organicui2b.cpp */ = {isa = PBXBuildFile; fileRef = 36244C4F19953080AD5DF2B8; };
 		99364CB2F07F832FAF875831 /* MainIncludes.cpp */ = {isa = PBXBuildFile; fileRef = AB4452A5CA9C7F08A0217A4F; };
@@ -403,7 +403,6 @@
 		5D584109962F7FCF23F2FBC9 /* ConductorUI.h */ /* ConductorUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ConductorUI.h; path = ../../Source/Common/Processor/Conductor/ui/ConductorUI.h; sourceTree = SOURCE_ROOT; };
 		5D6DB6FC455C4BB3C5741B5D /* cpumem_monitor.h */ /* cpumem_monitor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = cpumem_monitor.h; path = ../../Source/Module/modules/system/os/lib/cpumem_monitor.h; sourceTree = SOURCE_ROOT; };
 		5D89B92BBA87AFC030B5C515 /* FFTAnalyzerManagerEditor.h */ /* FFTAnalyzerManagerEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FFTAnalyzerManagerEditor.h; path = ../../Source/Module/modules/audio/analysis/ui/FFTAnalyzerManagerEditor.h; sourceTree = SOURCE_ROOT; };
-		5DA0E15C8037F3E9BD9F306C /* ChataigneGPIO.h */ /* ChataigneGPIO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ChataigneGPIO.h; path = ../../Source/Module/modules/gpio/gpiod/ChataigneGPIO.h; sourceTree = SOURCE_ROOT; };
 		5DACFADA47B796E8671A31A1 /* FFTAnalyzer.cpp */ /* FFTAnalyzer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FFTAnalyzer.cpp; path = ../../Source/Module/modules/audio/analysis/FFTAnalyzer.cpp; sourceTree = SOURCE_ROOT; };
 		5DB923BEF56F893D6C04B857 /* ConditionManagerListener.h */ /* ConditionManagerListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ConditionManagerListener.h; path = ../../Source/Common/Processor/Action/Condition/ConditionManagerListener.h; sourceTree = SOURCE_ROOT; };
 		5E64FD363DAEBC97B49C0E98 /* DLight.png */ /* DLight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DLight.png; path = ../../Resources/Modules/DLight.png; sourceTree = SOURCE_ROOT; };
@@ -592,7 +591,6 @@
 		97D760C2761F8966DA9CB2D8 /* ModuleRouterValue.h */ /* ModuleRouterValue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ModuleRouterValue.h; path = ../../Source/Module/Routing/ModuleRouterValue.h; sourceTree = SOURCE_ROOT; };
 		97DCD8254DBD9DFCC1748B32 /* MappingInputManager.h */ /* MappingInputManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MappingInputManager.h; path = ../../Source/Common/Processor/Mapping/Input/MappingInputManager.h; sourceTree = SOURCE_ROOT; };
 		980F0059A08F3731FE4468C3 /* ProcessorIncludes.cpp */ /* ProcessorIncludes.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ProcessorIncludes.cpp; path = ../../Source/Common/Processor/ProcessorIncludes.cpp; sourceTree = SOURCE_ROOT; };
-		9820E02666CCFA688707B1F4 /* ChataigneGPIO.c */ /* ChataigneGPIO.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = ChataigneGPIO.c; path = ../../Source/Module/modules/gpio/gpiod/ChataigneGPIO.c; sourceTree = SOURCE_ROOT; };
 		984421D8D5601C8121824F56 /* decoder.h */ /* decoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = decoder.h; path = ../../Source/Common/LTC/decoder.h; sourceTree = SOURCE_ROOT; };
 		98CB613184790A7CE68CB744 /* EmptyModule.h */ /* EmptyModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EmptyModule.h; path = ../../Source/Module/modules/custom/empty/EmptyModule.h; sourceTree = SOURCE_ROOT; };
 		98E016F4A116225BB074537A /* MultiplexList.h */ /* MultiplexList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MultiplexList.h; path = ../../Source/Common/Processor/Multiplex/List/MultiplexList.h; sourceTree = SOURCE_ROOT; };
@@ -861,6 +859,7 @@
 		E45FA3B841CA50679596AE4C /* GuideComponents.cpp */ /* GuideComponents.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = GuideComponents.cpp; path = ../../Source/Guider/GuideComponents.cpp; sourceTree = SOURCE_ROOT; };
 		E45FB289FAE0B1C007DC9C96 /* LinkableParameterEditor.h */ /* LinkableParameterEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LinkableParameterEditor.h; path = ../../Source/Common/ParameterLink/ui/LinkableParameterEditor.h; sourceTree = SOURCE_ROOT; };
 		E49476A81DB93D0B8094E56F /* Mapping.cpp */ /* Mapping.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Mapping.cpp; path = ../../Source/Common/Processor/Mapping/Mapping.cpp; sourceTree = SOURCE_ROOT; };
+		E4DBE84451D38826038C0E6E /* ChataigneGPIO.h */ /* ChataigneGPIO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ChataigneGPIO.h; path = ../../Source/Module/modules/gpio/gpiod/ChataigneGPIO.h; sourceTree = SOURCE_ROOT; };
 		E595B2574DFE9E303F2916E2 /* TimeModule.h */ /* TimeModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TimeModule.h; path = ../../Source/Module/modules/system/time/TimeModule.h; sourceTree = SOURCE_ROOT; };
 		E5AA04B82683E9B39FCBFDD3 /* util.c */ /* util.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = util.c; path = ../../Source/Module/modules/controller/wiimote/lib/wiiuse/util.c; sourceTree = SOURCE_ROOT; };
 		E5D31E96C95008AB78305C46 /* CVGroupManager.h */ /* CVGroupManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CVGroupManager.h; path = ../../Source/CustomVariables/CVGroupManager.h; sourceTree = SOURCE_ROOT; };
@@ -930,6 +929,7 @@
 		FC4F8E36F23BD11587DB882F /* motion_plus.c */ /* motion_plus.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = motion_plus.c; path = ../../Source/Module/modules/controller/wiimote/lib/wiiuse/motion_plus.c; sourceTree = SOURCE_ROOT; };
 		FC76F2E50BCEC7920127A00D /* MappingLayerEditor.cpp */ /* MappingLayerEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MappingLayerEditor.cpp; path = ../../Source/TimeMachine/Sequence/layers/mapping/ui/MappingLayerEditor.cpp; sourceTree = SOURCE_ROOT; };
 		FCBA675DBE6482B9FE7F1034 /* PosiStageNetCommand.h */ /* PosiStageNetCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PosiStageNetCommand.h; path = ../../Source/Module/modules/posistagenet/commands/PosiStageNetCommand.h; sourceTree = SOURCE_ROOT; };
+		FD32DB7DAF3C1E0ED9B1FF46 /* ChataigneGPIO.c */ /* ChataigneGPIO.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = ChataigneGPIO.c; path = ../../Source/Module/modules/gpio/gpiod/ChataigneGPIO.c; sourceTree = SOURCE_ROOT; };
 		FD7380F983823A057E46080D /* ResolumeBaseCommand.h */ /* ResolumeBaseCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ResolumeBaseCommand.h; path = ../../Source/Module/modules/osc/resolume/commands/ResolumeBaseCommand.h; sourceTree = SOURCE_ROOT; };
 		FDC68A7B4E5FD9E5DB23819F /* MadMapper.png */ /* MadMapper.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MadMapper.png; path = ../../Resources/Modules/MadMapper.png; sourceTree = SOURCE_ROOT; };
 		FDCDD219404A59B191A59200 /* ConversionFilterEditor.h */ /* ConversionFilterEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ConversionFilterEditor.h; path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/ui/ConversionFilterEditor.h; sourceTree = SOURCE_ROOT; };
@@ -2436,8 +2436,8 @@
 		977C418EACB018EC20201AA6 /* gpiod */ = {
 			isa = PBXGroup;
 			children = (
-				9820E02666CCFA688707B1F4,
-				5DA0E15C8037F3E9BD9F306C,
+				FD32DB7DAF3C1E0ED9B1FF46,
+				E4DBE84451D38826038C0E6E,
 			);
 			name = gpiod;
 			sourceTree = "<group>";
@@ -2719,7 +2719,7 @@
 			isa = PBXGroup;
 			children = (
 				FF673A4A296A364A7EEB2077,
-				977C418EACB018EC20201AA6 /* gpiod */,
+				977C418EACB018EC20201AA6,
 				222768EED0BC479A58D02617,
 				43BF5ADDAC099D6B0F796965,
 			);
@@ -3643,7 +3643,7 @@
 				779C955137FDB88F7CD846DC,
 				FD19F583BBB5C52996F26DB0,
 				F3A70AAF44AF308F3DBAEB92,
-				0B13BF87D171A99EA87757C1,
+				9342D3CD464A0D70F97F4EBD,
 				E1DDA4FC164C8A6BB5F78E3D,
 				9A70BB0E51767661AD48D0AF,
 				655D68933C616C6C3D3C9534,
@@ -3807,7 +3807,7 @@
 					"USE_ABLETONLINK=1",
 					"LINK_PLATFORM_MACOSX=1",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.10.4b2",
+					"JUCE_APP_VERSION=1.10.4b3",
 					"JUCE_APP_VERSION_HEX=0x10a04",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -3890,7 +3890,7 @@
 					"USE_ABLETONLINK=1",
 					"LINK_PLATFORM_MACOSX=1",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.10.4b2",
+					"JUCE_APP_VERSION=1.10.4b3",
 					"JUCE_APP_VERSION_HEX=0x10a04",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
