@@ -206,7 +206,7 @@ Alternatively put `export LD_LIBRARY_PATH=/path/to/Servus/build/lib/:$LD_LIBRARY
 ### Linux running instructions ###
   - Before running Chataigne, you just need to do a chmod a+x on the .AppImage file, or right-click on it and allow execution, then you're ready to play !  
   - If you're running Arch Linux, you can now just do `yay -S chataigne-stable-bin` or `paru -S chataigne-stable-bin` (Thanks Stephan !)
-  - If you're running Raspberry Pi 4, you may need to install some more dependencies : `sudo apt install libbluetooth-dev libx11-dev`
+  - On Raspberry Pi, you may need to install some more dependencies: `sudo apt install libbluetooth-dev libx11-dev libgpiod-dev`
 ## Troubleshooting
 
 If you have any issue regarding the software, you can post an issue on github (preferred for code-related problems and features),

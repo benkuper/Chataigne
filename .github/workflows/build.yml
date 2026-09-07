@@ -571,7 +571,8 @@ jobs:
             libbluetooth-dev:${{ matrix.deb_arch }} \
             libusb-1.0-0-dev:${{ matrix.deb_arch }} \
             libhidapi-dev:${{ matrix.deb_arch }} \
-            libsdl2-dev:${{ matrix.deb_arch }}
+            libsdl2-dev:${{ matrix.deb_arch }} \
+            libgpiod-dev:${{ matrix.deb_arch }}
 
       - name: Set Suffix
         id: set_variables
@@ -667,6 +668,7 @@ jobs:
           copy_glob "$LIB_PATH/libusb-1.0.so*"
           copy_glob "$LIB_PATH/libhidapi-hidraw.so*"
           copy_glob "$LIB_PATH/libSDL2-2.0.so*"
+          copy_glob "$LIB_PATH/libgpiod.so*"
 
           if [ "${{ matrix.arch_name }}" = "aarch64" ]; then
             copy_glob "External/servus/lib/raspberry64/libServus.so*"

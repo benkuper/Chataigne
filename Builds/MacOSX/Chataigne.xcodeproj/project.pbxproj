@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0B13BF87D171A99EA87757C1 /* command.c */ = {isa = PBXBuildFile; fileRef = 9820E02666CCFA688707B1F4; };
+		0B13BF87D171A99EA87757C1 /* ChataigneGPIO.c */ = {isa = PBXBuildFile; fileRef = 9820E02666CCFA688707B1F4; };
 		0B711A96469657F81C4C9FA8 /* CoreAudio.framework */ = {isa = PBXBuildFile; fileRef = 48D6B341F756699DA2054362; };
 		14B03BE884B82BE8EC264AE9 /* include_juce_simpleweb.cpp */ = {isa = PBXBuildFile; fileRef = A344ECDA05A5372A32341886; };
 		1E38E7F8E4ECF0F020101DF4 /* include_juce_audio_processors_lv2_libs.cpp */ = {isa = PBXBuildFile; fileRef = DE62E8E7E1EBB5191F56029B; };
@@ -45,7 +45,6 @@
 		722EA45D07468FE7184E5E5D /* events.c */ = {isa = PBXBuildFile; fileRef = 37B0AB4D21E760006E845005; };
 		723A26BA39C61F2DF6E8EFC7 /* nunchuk.c */ = {isa = PBXBuildFile; fileRef = 20E319398349A41336586E9D; };
 		733770874198A88DEBACE61E /* classic.c */ = {isa = PBXBuildFile; fileRef = 8676DFC506B9817640312891; };
-		73EEDC57D3D78D60970F77CB /* pigpio.c */ = {isa = PBXBuildFile; fileRef = BC14EC6636D09A4F7D7524D3; };
 		779C955137FDB88F7CD846DC /* util.c */ = {isa = PBXBuildFile; fileRef = E5AA04B82683E9B39FCBFDD3; };
 		85E25915D57CB69541CADBC8 /* include_juce_audio_formats.mm */ = {isa = PBXBuildFile; fileRef = A375FF401D9AB143A47EC093; };
 		8670FDE2A6F8AE20A18D48AD /* os_mac_interface.m */ = {isa = PBXBuildFile; fileRef = B7037B1303B113B3EB738DE2; };
@@ -406,7 +405,7 @@
 		5D584109962F7FCF23F2FBC9 /* ConductorUI.h */ /* ConductorUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ConductorUI.h; path = ../../Source/Common/Processor/Conductor/ui/ConductorUI.h; sourceTree = SOURCE_ROOT; };
 		5D6DB6FC455C4BB3C5741B5D /* cpumem_monitor.h */ /* cpumem_monitor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = cpumem_monitor.h; path = ../../Source/Module/modules/system/os/lib/cpumem_monitor.h; sourceTree = SOURCE_ROOT; };
 		5D89B92BBA87AFC030B5C515 /* FFTAnalyzerManagerEditor.h */ /* FFTAnalyzerManagerEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FFTAnalyzerManagerEditor.h; path = ../../Source/Module/modules/audio/analysis/ui/FFTAnalyzerManagerEditor.h; sourceTree = SOURCE_ROOT; };
-		5DA0E15C8037F3E9BD9F306C /* command.h */ /* command.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = command.h; path = ../../Source/Module/modules/gpio/pigpio/command.h; sourceTree = SOURCE_ROOT; };
+		5DA0E15C8037F3E9BD9F306C /* ChataigneGPIO.h */ /* ChataigneGPIO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ChataigneGPIO.h; path = ../../Source/Module/modules/gpio/gpiod/ChataigneGPIO.h; sourceTree = SOURCE_ROOT; };
 		5DACFADA47B796E8671A31A1 /* FFTAnalyzer.cpp */ /* FFTAnalyzer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FFTAnalyzer.cpp; path = ../../Source/Module/modules/audio/analysis/FFTAnalyzer.cpp; sourceTree = SOURCE_ROOT; };
 		5DB923BEF56F893D6C04B857 /* ConditionManagerListener.h */ /* ConditionManagerListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ConditionManagerListener.h; path = ../../Source/Common/Processor/Action/Condition/ConditionManagerListener.h; sourceTree = SOURCE_ROOT; };
 		5E64FD363DAEBC97B49C0E98 /* DLight.png */ /* DLight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DLight.png; path = ../../Resources/Modules/DLight.png; sourceTree = SOURCE_ROOT; };
@@ -523,7 +522,6 @@
 		7FCA3E8E57D8AE1C556395CD /* MQTTCommands.cpp */ /* MQTTCommands.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MQTTCommands.cpp; path = ../../Source/Module/modules/mqtt/commands/MQTTCommands.cpp; sourceTree = SOURCE_ROOT; };
 		7FCAFC7304EC00159AB9C5F2 /* ScriptCallbackCommand.h */ /* ScriptCallbackCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ScriptCallbackCommand.h; path = ../../Source/Module/modules/common/commands/scriptcallback/ScriptCallbackCommand.h; sourceTree = SOURCE_ROOT; };
 		80749B405D075CEECFB28D3B /* MouseModule.cpp */ /* MouseModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MouseModule.cpp; path = ../../Source/Module/modules/controller/mouse/MouseModule.cpp; sourceTree = SOURCE_ROOT; };
-		826AAFA086B63446290F4909 /* pigpio.h */ /* pigpio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pigpio.h; path = ../../Source/Module/modules/gpio/pigpio/pigpio.h; sourceTree = SOURCE_ROOT; };
 		829270114E6479B154663AFB /* StreamDeckModule.cpp */ /* StreamDeckModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = StreamDeckModule.cpp; path = ../../Source/Module/modules/controller/streamdeck/StreamDeckModule.cpp; sourceTree = SOURCE_ROOT; };
 		830C08E624F7EF32DD46FE2B /* AudioModuleHardwareEditor.h */ /* AudioModuleHardwareEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AudioModuleHardwareEditor.h; path = ../../Source/Module/modules/audio/ui/AudioModuleHardwareEditor.h; sourceTree = SOURCE_ROOT; };
 		838C8313674554E96077F76A /* AutomationMappingLayerPanel.cpp */ /* AutomationMappingLayerPanel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = AutomationMappingLayerPanel.cpp; path = ../../Source/TimeMachine/Sequence/layers/mapping/automation/ui/AutomationMappingLayerPanel.cpp; sourceTree = SOURCE_ROOT; };
@@ -595,7 +593,7 @@
 		97D760C2761F8966DA9CB2D8 /* ModuleRouterValue.h */ /* ModuleRouterValue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ModuleRouterValue.h; path = ../../Source/Module/Routing/ModuleRouterValue.h; sourceTree = SOURCE_ROOT; };
 		97DCD8254DBD9DFCC1748B32 /* MappingInputManager.h */ /* MappingInputManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MappingInputManager.h; path = ../../Source/Common/Processor/Mapping/Input/MappingInputManager.h; sourceTree = SOURCE_ROOT; };
 		980F0059A08F3731FE4468C3 /* ProcessorIncludes.cpp */ /* ProcessorIncludes.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ProcessorIncludes.cpp; path = ../../Source/Common/Processor/ProcessorIncludes.cpp; sourceTree = SOURCE_ROOT; };
-		9820E02666CCFA688707B1F4 /* command.c */ /* command.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = command.c; path = ../../Source/Module/modules/gpio/pigpio/command.c; sourceTree = SOURCE_ROOT; };
+		9820E02666CCFA688707B1F4 /* ChataigneGPIO.c */ /* ChataigneGPIO.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = ChataigneGPIO.c; path = ../../Source/Module/modules/gpio/gpiod/ChataigneGPIO.c; sourceTree = SOURCE_ROOT; };
 		984421D8D5601C8121824F56 /* decoder.h */ /* decoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = decoder.h; path = ../../Source/Common/LTC/decoder.h; sourceTree = SOURCE_ROOT; };
 		98CB613184790A7CE68CB744 /* EmptyModule.h */ /* EmptyModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EmptyModule.h; path = ../../Source/Module/modules/custom/empty/EmptyModule.h; sourceTree = SOURCE_ROOT; };
 		98E016F4A116225BB074537A /* MultiplexList.h */ /* MultiplexList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MultiplexList.h; path = ../../Source/Common/Processor/Multiplex/List/MultiplexList.h; sourceTree = SOURCE_ROOT; };
@@ -721,7 +719,6 @@
 		BB9A76CC34F4448EFA6E5EF3 /* StreamingModule.h */ /* StreamingModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StreamingModule.h; path = ../../Source/Module/modules/common/streaming/StreamingModule.h; sourceTree = SOURCE_ROOT; };
 		BBA809182C2FF52BB73D15D6 /* StateViewUI.h */ /* StateViewUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StateViewUI.h; path = ../../Source/StateMachine/State/ui/StateViewUI.h; sourceTree = SOURCE_ROOT; };
 		BBC2FE8F1F37EFC9262168E3 /* ModuleIncludes.cpp */ /* ModuleIncludes.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ModuleIncludes.cpp; path = ../../Source/Module/ModuleIncludes.cpp; sourceTree = SOURCE_ROOT; };
-		BC14EC6636D09A4F7D7524D3 /* pigpio.c */ /* pigpio.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = pigpio.c; path = ../../Source/Module/modules/gpio/pigpio/pigpio.c; sourceTree = SOURCE_ROOT; };
 		BC6F1B625EFCC97D0A8A1558 /* include_juce_audio_devices.mm */ /* include_juce_audio_devices.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_audio_devices.mm; path = ../../JuceLibraryCode/include_juce_audio_devices.mm; sourceTree = SOURCE_ROOT; };
 		BC78C63D601E0DC13788C4B6 /* ChataigneGenericModule.h */ /* ChataigneGenericModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ChataigneGenericModule.h; path = ../../Source/Module/modules/generic/ChataigneGenericModule.h; sourceTree = SOURCE_ROOT; };
 		BCFC0BB3E475D8AD41B05535 /* Mapping1DLayerPanel.cpp */ /* Mapping1DLayerPanel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Mapping1DLayerPanel.cpp; path = ../../Source/TimeMachine/Sequence/layers/mapping/automation/1d/ui/Mapping1DLayerPanel.cpp; sourceTree = SOURCE_ROOT; };
@@ -2436,15 +2433,13 @@
 			name = ui;
 			sourceTree = "<group>";
 		};
-		977C418EACB018EC20201AA6 /* pigpio */ = {
+		977C418EACB018EC20201AA6 /* gpiod */ = {
 			isa = PBXGroup;
 			children = (
 				9820E02666CCFA688707B1F4,
 				5DA0E15C8037F3E9BD9F306C,
-				BC14EC6636D09A4F7D7524D3,
-				826AAFA086B63446290F4909,
 			);
-			name = pigpio;
+			name = gpiod;
 			sourceTree = "<group>";
 		};
 		985F53287404CEE3C052AB32 /* time */ = {
@@ -2724,7 +2719,7 @@
 			isa = PBXGroup;
 			children = (
 				FF673A4A296A364A7EEB2077,
-				977C418EACB018EC20201AA6,
+				977C418EACB018EC20201AA6 /* gpiod */,
 				222768EED0BC479A58D02617,
 				43BF5ADDAC099D6B0F796965,
 			);
@@ -3649,7 +3644,6 @@
 				FD19F583BBB5C52996F26DB0,
 				F3A70AAF44AF308F3DBAEB92,
 				0B13BF87D171A99EA87757C1,
-				73EEDC57D3D78D60970F77CB,
 				E1DDA4FC164C8A6BB5F78E3D,
 				9A70BB0E51767661AD48D0AF,
 				655D68933C616C6C3D3C9534,

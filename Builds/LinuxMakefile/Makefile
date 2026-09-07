@@ -97,8 +97,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/util_7a46226b.o \
   $(JUCE_OBJDIR)/wiiboard_b3f0e298.o \
   $(JUCE_OBJDIR)/wiiuse_8bc34039.o \
-  $(JUCE_OBJDIR)/command_20531fa2.o \
-  $(JUCE_OBJDIR)/pigpio_c63733db.o \
+  $(JUCE_OBJDIR)/ChataigneGPIO_c63733db.o \
   $(JUCE_OBJDIR)/ModuleIncludes_95e047db.o \
   $(JUCE_OBJDIR)/ModuleIncludes2_2648c981.o \
   $(JUCE_OBJDIR)/ModuleIncludes3_2656e102.o \
@@ -274,14 +273,9 @@ $(JUCE_OBJDIR)/wiiuse_8bc34039.o: ../../Source/Module/modules/controller/wiimote
 	@echo "Compiling wiiuse.c"
 	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/command_20531fa2.o: ../../Source/Module/modules/gpio/pigpio/command.c
+$(JUCE_OBJDIR)/ChataigneGPIO_c63733db.o: ../../Source/Module/modules/gpio/gpiod/ChataigneGPIO.c
 	-$(V_AT)mkdir -p $(@D)
-	@echo "Compiling command.c"
-	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/pigpio_c63733db.o: ../../Source/Module/modules/gpio/pigpio/pigpio.c
-	-$(V_AT)mkdir -p $(@D)
-	@echo "Compiling pigpio.c"
+	@echo "Compiling ChataigneGPIO.c"
 	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/ModuleIncludes_95e047db.o: ../../Source/Module/ModuleIncludes.cpp

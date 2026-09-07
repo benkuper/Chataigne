@@ -927,8 +927,7 @@
     <ClCompile Include="..\..\Source\Module\modules\gpio\commands\GPIOCommands.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Module\modules\gpio\pigpio\command.c"/>
-    <ClCompile Include="..\..\Source\Module\modules\gpio\pigpio\pigpio.c"/>
+    <ClCompile Include="..\..\Source\Module\modules\gpio\gpiod\ChataigneGPIO.c"/>
     <ClCompile Include="..\..\Source\Module\modules\gpio\GPIOModule.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -3233,8 +3232,7 @@
     <ClInclude Include="..\..\Source\Module\modules\tcp\tcpclient\TCPClientModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\udp\UDPModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\gpio\commands\GPIOCommands.h"/>
-    <ClInclude Include="..\..\Source\Module\modules\gpio\pigpio\command.h"/>
-    <ClInclude Include="..\..\Source\Module\modules\gpio\pigpio\pigpio.h"/>
+    <ClInclude Include="..\..\Source\Module\modules\gpio\gpiod\ChataigneGPIO.h"/>
     <ClInclude Include="..\..\Source\Module\modules\gpio\GPIOModule.h"/>
     <ClInclude Include="..\..\Source\Module\modules\posistagenet\commands\PosiStageNetCommand.h"/>
     <ClInclude Include="..\..\Source\Module\modules\posistagenet\PosiStageNetModule.h"/>
