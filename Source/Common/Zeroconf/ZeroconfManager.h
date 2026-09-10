@@ -60,7 +60,7 @@ public:
 		String serviceName;
 		std::unique_ptr<servus::Servus> servus;
 		OwnedArray<ServiceInfo> services;
-		CriticalSection browseLock;
+		CriticalSection servusLock;
 
 		ServiceInfo * getService(StringRef name, StringRef host, int port);
 		void addService(StringRef name, StringRef host, StringRef ip, int port, const HashMap<String, String> & keys = HashMap<String, String>());
@@ -72,6 +72,7 @@ public:
 
 		String getIPForHost(String host);
 
+		void shutdown();
 		void run() override;
 
 		class SearcherListener

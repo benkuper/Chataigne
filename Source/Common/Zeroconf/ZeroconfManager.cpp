@@ -25,14 +25,17 @@ ZeroconfManager::ZeroconfManager() :
 
 ZeroconfManager::~ZeroconfManager()
 {
-	// Ask every browser to stop before OwnedArray destroys them one by one. This
-	// prevents the remaining browsers from continuing to dispatch callbacks while
-	// the manager is already being torn down.
+	// Signal all workers first so platforms whose endBrowsing() waits for browse()
+	// do not stop the searchers serially.
 	for (auto* searcher : searchers)
 	{
 		searcher->signalThreadShouldExit();
 		searcher->notify();
 	}
+
+	// Interrupt every blocking browse before OwnedArray destroys the searchers one
+	// by one. On Windows, Servus' browse timeout is not reliably honoured.
+	for (auto* searcher : searchers) searcher->shutdown();
 
 	// Destroy them now, while the manager's other members are still alive.
 	searchers.clear();
@@ -117,27 +120,31 @@ ZeroconfManager::ZeroconfSearcher::ZeroconfSearcher(StringRef name, StringRef se
 
 ZeroconfManager::ZeroconfSearcher::~ZeroconfSearcher()
 {
-	signalThreadShouldExit();
-	notify();
+	shutdown();
 	const bool stoppedCleanly = stopThread(4000);
 
-	if (stoppedCleanly)
-	{
-		ScopedLock lock(browseLock);
-		if (servus != nullptr && servus->isBrowsing()) servus->endBrowsing();
-		servus.reset();
-	}
-	else
+	if (!stoppedCleanly)
 	{
 		// stopThread() has forcibly terminated a browser that failed to honour
-		// Servus' browse timeout. It may have died while holding browseLock, so
-		// acquiring that lock or destroying the in-use Servus object can deadlock
-		// shutdown. Deliberately leak this one object; when this fallback is needed
-		// it is no longer safe for this process to touch the abandoned object.
+		// the shutdown request. It may have died while using the Servus object, so
+		// destroying that object is unsafe. Deliberately leak it in this last-resort
+		// path rather than risking a deadlock or use-after-free during process exit.
 		servus.release();
 	}
 	
 	services.clear();
+}
+
+void ZeroconfManager::ZeroconfSearcher::shutdown()
+{
+	signalThreadShouldExit();
+	notify();
+
+	// Servus::browse() can block indefinitely on Windows even when given a finite
+	// timeout. Ending the browse closes its DNS-SD handle and releases that call.
+	// Keep the Servus object alive until the worker has returned from browse().
+	ScopedLock lock(servusLock);
+	if (servus != nullptr && servus->isBrowsing()) servus->endBrowsing();
 }
 
 ZeroconfManager::ServiceInfo* ZeroconfManager::ZeroconfSearcher::getService(StringRef sName, StringRef host, int port)
@@ -257,7 +264,7 @@ String ZeroconfManager::ZeroconfSearcher::getIPForHost(String host)
 void ZeroconfManager::ZeroconfSearcher::run()
 {
 	{
-		ScopedLock lock(browseLock);
+		ScopedLock lock(servusLock);
 		if (threadShouldExit()) return;
 
 		servus.reset(new servus::Servus(String(serviceName).toStdString()));
@@ -267,14 +274,16 @@ void ZeroconfManager::ZeroconfSearcher::run()
 
 	while (!threadShouldExit())
 	{
-		{
-			ScopedLock lock(browseLock);
-			if (threadShouldExit() || servus == nullptr) return;
-			servus->browse(1000);
-		}
+		servus->browse(1000);
 		wait(500);
 	}
 
+	// The Servus object is created and normally destroyed on this worker thread.
+	// shutdown() may already have ended the browse in order to unblock us.
+	ScopedLock lock(servusLock);
+	servus->removeListener(this);
+	if (servus->isBrowsing()) servus->endBrowsing();
+	servus.reset();
 }
 
 ZeroconfManager::ServiceInfo::ServiceInfo(StringRef name, StringRef host, StringRef ip, int port, const HashMap<String, String>& _keys) :
