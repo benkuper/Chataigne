@@ -70,6 +70,7 @@ public:
 	CriticalSection updateTopicLock;
 	CriticalSection mosquittoLock;
 	BaseManager<MQTTTopic> topicsManager;
+	std::atomic<uint32> lastPublishWarningTime { 0 };
 
 
 
@@ -94,6 +95,7 @@ public:
 	void run() override;
 
 	void stopClient();
+	bool shouldLogPublishWarning();
 
 	//Script
 	static var publishMessageFromScript(const var::NativeFunctionArgs& args);

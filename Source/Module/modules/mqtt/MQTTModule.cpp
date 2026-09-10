@@ -10,6 +10,32 @@
 
 #include "Module/ModuleIncludes.h"
 
+#ifdef MOSQUITTO_SUPPORTED
+namespace
+{
+	// libmosquitto must be initialised before the first mosquitto client is
+	// constructed and cleaned up only after the last client is destroyed.
+	// A translation-unit lifetime object guarantees both ordering constraints.
+	class MosquittoLibraryLifetime
+	{
+	public:
+		MosquittoLibraryLifetime() : initialised(mosqpp::lib_init() == MOSQ_ERR_SUCCESS)
+		{
+			jassert(initialised);
+		}
+
+		~MosquittoLibraryLifetime()
+		{
+			if (initialised) mosqpp::lib_cleanup();
+		}
+
+		bool initialised;
+	};
+
+	MosquittoLibraryLifetime mosquittoLibraryLifetime;
+}
+#endif
+
 MQTTClientModule::MQTTClientModule(const String& name, bool canHaveInput, bool canHaveOutput) :
 	Module(name),
 	Thread("MQTT"),
@@ -21,7 +47,7 @@ MQTTClientModule::MQTTClientModule(const String& name, bool canHaveInput, bool c
 {
 
 #ifdef MOSQUITTO_SUPPORTED
-	mosqpp::lib_init();
+	// reinitialise() resets this flag, so it is also set again in run().
 	threaded_set(true);
 #else
 	NLOGWARNING(niceName, "MQTT is only supported on windows right now.");
@@ -70,11 +96,9 @@ MQTTClientModule::~MQTTClientModule()
 
 void MQTTClientModule::clearItem()
 {
+	// No callback or publish may outlive the model objects cleared below.
+	stopClient();
 	Module::clearItem();
-
-#ifdef MOSQUITTO_SUPPORTED
-	mosqpp::lib_cleanup();
-#endif
 }
 
 
@@ -123,21 +147,42 @@ void MQTTClientModule::publishMessage(const String& topic, const String& message
 #ifdef MOSQUITTO_SUPPORTED
 	if (!isConnected->boolValue())
 	{
-		NLOGWARNING(niceName, "Not connected, not sending");
+		if (shouldLogPublishWarning()) NLOGWARNING(niceName, "Not connected, not sending");
 		return;
 	}
+
+	const std::string topicUTF8 = topic.toStdString();
+	const std::string messageUTF8 = message.toStdString();
 
 	int result = 0;
 	{
 		GenericScopedLock lock(mosquittoLock);
-		result = publish(NULL, topic.toStdString().c_str(), message.length(), message.toStdString().c_str(), 2);
+		result = publish(nullptr, topicUTF8.c_str(), static_cast<int>(messageUTF8.size()), messageUTF8.data(), 2);
 	}
 
-	if (logOutgoingData->boolValue())
+	if (result != MOSQ_ERR_SUCCESS)
+	{
+		if (shouldLogPublishWarning())
+			NLOGWARNING(niceName, "MQTT publish failed: " << String(mosqpp::strerror(result)) << " (" << result << ")");
+	}
+	else if (logOutgoingData->boolValue())
 	{
 		NLOG(niceName, "Sent topic (" << result << ") : " << topic << ", message : " << message);
 	}
 #endif
+}
+
+bool MQTTClientModule::shouldLogPublishWarning()
+{
+	const uint32 now = Time::getMillisecondCounter();
+	uint32 previous = lastPublishWarningTime.load();
+
+	while (now - previous >= 2000)
+	{
+		if (lastPublishWarningTime.compare_exchange_weak(previous, now)) return true;
+	}
+
+	return false;
 }
 
 void MQTTClientModule::itemAdded(MQTTTopic* item)
@@ -269,24 +314,35 @@ void MQTTClientModule::afterLoadJSONDataInternal()
 {
 	Module::afterLoadJSONDataInternal();
 	updateTopicSubs();
-	startThread();
+	if (enabled->boolValue()) startThread();
 }
 
 void MQTTClientModule::run()
 {
-	wait(100);
+	if (wait(100) || threadShouldExit()) return;
 
 #ifdef MOSQUITTO_SUPPORTED
-	int result = 0;
+	int result = MOSQ_ERR_SUCCESS;
 	{
 		GenericScopedLock mosqLock(mosquittoLock);
-		if (isConnected->boolValue())
+
+		const std::string id = clientId->stringValue().toStdString();
+		result = reinitialise(id.c_str(), true);
+		if (result != MOSQ_ERR_SUCCESS)
 		{
-			isConnected->setValue(false);
-			disconnect();
+			NLOGERROR(niceName, "MQTT client initialisation failed: " << String(mosqpp::strerror(result)) << " (" << result << ")");
+			return;
 		}
 
-		reinitialise(clientId->stringValue().toStdString().c_str(), true);
+		// mosquitto_reinitialise() resets the internal threaded state. Publishing
+		// happens on other Chataigne threads while loop_forever() runs here, so
+		// failing to restore it causes races inside libmosquitto.
+		result = threaded_set(true);
+		if (result != MOSQ_ERR_SUCCESS)
+		{
+			NLOGERROR(niceName, "MQTT threaded mode could not be enabled: " << String(mosqpp::strerror(result)) << " (" << result << ")");
+			return;
+		}
 
 		NLOG(niceName, "Connecting to " << host->stringValue() << ":" << port->intValue() << " with id " << clientId->stringValue() << "...");
 
@@ -297,65 +353,57 @@ void MQTTClientModule::run()
 		}
 		else username_pw_set(NULL);
 
-		isConnected->setValue(false);
-		result = connect(host->stringValue().toStdString().c_str(), port->intValue(), keepAlive->intValue());
+		reconnect_delay_set(1, 10, true);
 	}
 
-	if (result == 0)
-	{
-		NLOG(niceName, "Connected");
-		isConnected->setValue(true);
-	}
-	else
-	{
-		NLOGERROR(niceName, "Connection error (" << result << ")");
-		isConnected->setValue(false);
-		return;
-	}
+	isConnected->setValue(false);
 
-
-	reconnect_delay_set(1, 10, true);
-	loop_forever(-1, 1000);
-
-
+	int retryDelayMs = 1000;
 	while (!threadShouldExit())
 	{
-		//int rc = -1;
+		const std::string brokerHost = host->stringValue().toStdString();
+		{
+			GenericScopedLock mosqLock(mosquittoLock);
+			result = connect(brokerHost.c_str(), port->intValue(), keepAlive->intValue());
+		}
 
-		//{
-		//	rc = loop();
-		//}
+		if (result == MOSQ_ERR_SUCCESS) break;
 
-		//if (rc)
-		//{
-		//	LOG("Disconnected, reconnect");
-		//	int rr = reconnect();
-		//	LOG("Reconnection : " << rr);
-		//}
-
-		wait(2);
+		NLOGWARNING(niceName, "MQTT connection failed: " << String(mosqpp::strerror(result)) << " (" << result << "), retrying...");
+		if (wait(retryDelayMs) || threadShouldExit()) return;
+		retryDelayMs = jmin(retryDelayMs * 2, 10000);
 	}
+
+	if (threadShouldExit()) return;
+
+	// loop_forever reconnects automatically after recoverable network failures.
+	// max_packets is documented as reserved and must be 1.
+	result = loop_forever(-1, 1);
 
 	{
 		GenericScopedLock mosqLock(mosquittoLock);
-		loop_stop();
 		isConnected->setValue(false);
 		disconnect();
 	}
+
+	if (!threadShouldExit() && result != MOSQ_ERR_SUCCESS)
+		NLOGERROR(niceName, "MQTT network loop stopped: " << String(mosqpp::strerror(result)) << " (" << result << ")");
 #endif
 }
 
 void MQTTClientModule::stopClient()
 {
+	signalThreadShouldExit();
+	notify();
+
 #ifdef MOSQUITTO_SUPPORTED
 	{
 		GenericScopedLock mosqLock(mosquittoLock);
-		loop_stop();
 		disconnect();
 		isConnected->setValue(false);
 	}
 #endif
-	stopThread(1000);
+	stopThread(5000);
 }
 
 /**
