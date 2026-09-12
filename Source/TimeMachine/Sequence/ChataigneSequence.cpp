@@ -113,7 +113,7 @@ ChataigneSequence::ChataigneSequence() :
 	ltcSyncTolerance = addFloatParameter("LTC Sync Tolerance", "The maximum time difference (in seconds) allowed between the LTC time and the sequence time before a jump is made", 0.25f, 0.05f, 1.0f);
 	ltcOutOfRangeMode = addEnumParameter("LTC Out of Range Mode", "Behavior when LTC time is out of the sequence time range");
 	ltcOutOfRangeMode->addOption("Do Nothing", DO_NOTHING)->addOption("Jump to Closest", JUMP_TO_CLOSEST)->addOption("Jump to 0", JUMP_TO_START)->addOption("Jump to End", JUMP_TO_END);
-	ltcMode = addEnumParameter("LTC Mode", "Either receiving or sending LTC", 0);
+	ltcMode = addEnumParameter("LTC Mode", "Either receiving or sending LTC");
 	ltcMode->addOption("Receive", RECEIVE)->addOption("Send", SEND)->addOption("Both", BOTH);
 	ltcSendFPS = addEnumParameter("Send FPS", "The framerate to use to send LTC");
 	ltcSendFPS->addOption("24", LTC_TV_FILM_24)->addOption("25", LTC_TV_625_50)->addOption("29.97 drop", LTCAudioGenerator::fps2997Drop)->addOption("30 (525_60)", LTC_TV_525_60)->addOption("30 (1125_60)", LTC_TV_1125_60);
