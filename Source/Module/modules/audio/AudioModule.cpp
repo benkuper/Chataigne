@@ -10,10 +10,13 @@
 
 #include "Module/ModuleIncludes.h"
 #include "AudioModule.h"
+#include "Common/MIDI/TimecodeMath.h"
 
 AudioModule::AudioModule(const String& name) :
 	Module(name),
 	hs(&am),
+	currentSampleRate(44100),
+	currentBufferSize(512),
 	uidIncrement(100),
 	curBufferIndex(0),
 	inputVolumesCC("Input Volumes"),
@@ -24,7 +27,7 @@ AudioModule::AudioModule(const String& name) :
 	fftCC("FFT Enveloppes"),
 	ltcParamsCC("LTC"),
 	ltcCC("LTC"),
-	ltcFrameDropCount(0),
+	ltcSamplesSinceLastFrame(0),
 	pitchDetector(nullptr)
 {
 	setupIOConfiguration(true, true);
@@ -99,10 +102,12 @@ AudioModule::AudioModule(const String& name) :
 	ltcDecoder.reset(ltc_decoder_create(1920, 32));
 
 	initSetup();
+	startTimer(20);
 }
 
 AudioModule::~AudioModule()
 {
+	stopTimer();
 	graph.clear();
 
 	am.removeAudioCallback(&player);
@@ -300,7 +305,12 @@ void AudioModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc
 	}
 	else if (c == ltcParamsCC.enabled)
 	{
-		if (!ltcParamsCC.enabled->boolValue()) ltcPlaying->setValue(false);
+		if (!ltcParamsCC.enabled->boolValue())
+		{
+			ltcSamplesSinceLastFrame = 0;
+			pendingLTCPlaying = false;
+			ltcPlaying->setValue(false);
+		}
 	}
 }
 
@@ -368,7 +378,11 @@ void AudioModule::audioDeviceIOCallbackWithContext(const float* const* inputChan
 
 	for (int i = 0; i < numOutputChannels; ++i) FloatVectorOperations::clear(outputChannelData[i], numSamples);
 
-	if (!enabled->boolValue()) return;
+	if (!enabled->boolValue())
+	{
+		pendingLTCPlaying = false;
+		return;
+	}
 
 	for (int i = 0; i < numInputChannels; ++i)
 	{
@@ -433,7 +447,7 @@ void AudioModule::audioDeviceIOCallbackWithContext(const float* const* inputChan
 		if (ltcParamsCC.enabled->boolValue())
 		{
 			int channel = ltcChannel->intValue() - 1;
-			if (channel >= 0 && channel < numInputChannels)
+			if (ltcDecoder != nullptr && channel >= 0 && channel < numInputChannels)
 			{
 				ltc_decoder_write_float(ltcDecoder.get(), (float*)inputChannelData[channel], numSamples, 0);
 
@@ -444,36 +458,63 @@ void AudioModule::audioDeviceIOCallbackWithContext(const float* const* inputChan
 					SMPTETimecode stime;
 					ltc_frame_to_time(&stime, &frame.ltc, (ltcUseDate->boolValue() ? 1 : 0));
 
- 					float time = stime.days * 3600 * 24 + stime.hours * 3600 + stime.mins * 60 + stime.secs + stime.frame * 1.0f / (float)curLTCFPS;
-					ltcTime->setValue(time);
- 					hasLTC = true;
+					double time = stime.days * 86400.0;
+					const double ltcFrameRate = curLTCFPS.load();
+					if (ltcFrameRate > 29.9 && ltcFrameRate < 30.0)
+					{
+						const int64_t nominalFrames = (static_cast<int64_t>(stime.hours) * 3600 + stime.mins * 60 + stime.secs) * 30 + stime.frame;
+						time += frame.ltc.dfbit
+							? TimecodeMath::toSeconds(stime.hours, stime.mins, stime.secs, stime.frame, 2)
+							: static_cast<double>(nominalFrames) * 1001.0 / 30000.0;
+					}
+					else time += stime.hours * 3600 + stime.mins * 60 + stime.secs + stime.frame / ltcFrameRate;
+					pendingLTCTime = time;
+					++pendingLTCSerial;
+					hasLTC = true;
 				}
 
 				if (!hasLTC)
 				{
-					if (ltcPlaying->boolValue())
-					{
-						ltcFrameDropCount++;
-						if (ltcFrameDropCount >= 10) ltcPlaying->setValue(hasLTC);
-					}
+					ltcSamplesSinceLastFrame += numSamples;
+					if (ltcSamplesSinceLastFrame >= currentSampleRate * 0.25)
+						pendingLTCPlaying = false;
 				}
 				else
 				{
-					ltcFrameDropCount = 0;
-					ltcPlaying->setValue(true);
+					ltcSamplesSinceLastFrame = 0;
+					pendingLTCPlaying = true;
 				}
 			}
+			else pendingLTCPlaying = false;
 		}
+		else pendingLTCPlaying = false;
 	}
+	else pendingLTCPlaying = false;
 }
 
-void AudioModule::audioDeviceAboutToStart(AudioIODevice*)
+void AudioModule::audioDeviceAboutToStart(AudioIODevice* device)
 {
-
+	ltcSamplesSinceLastFrame = 0;
+	const double rate = device != nullptr ? device->getCurrentSampleRate() : currentSampleRate;
+	currentSampleRate = rate;
+	ltcDecoder.reset(ltc_decoder_create(jmax(1, static_cast<int>(std::round(rate / curLTCFPS.load()))), 32));
 }
 
 void AudioModule::audioDeviceStopped()
 {
+	ltcSamplesSinceLastFrame = 0;
+	pendingLTCPlaying = false;
+}
+
+void AudioModule::timerCallback()
+{
+	const uint64_t serial = pendingLTCSerial.load();
+	if (serial != lastPublishedLTCSerial)
+	{
+		lastPublishedLTCSerial = serial;
+		ltcTime->setValue(pendingLTCTime.load());
+	}
+	ltcPlaying->setValue(pendingLTCPlaying.load());
 }
 
 void AudioModule::changeListenerCallback(ChangeBroadcaster*)

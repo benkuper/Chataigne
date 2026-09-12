@@ -18,7 +18,6 @@ public:
 
 	MIDIOutputDevice* device;
 
-	// Used only in separate thread!
 private:
 	enum class Piece {
 		FrameLSB = 0,
@@ -34,15 +33,12 @@ private:
 	void run() override;
 	int getValue(Piece piece);
 
-	SpinLock lock;
+	CriticalSection lock;
 
-	float currentPosition;
 	float speedFactor;
 
-	double frameTime;
-	double lastFrameSendTime;
-
-	int fps;
+	double fps;
+	int nominalFPS;
 	MidiMessage::SmpteTimecodeType fpsType;
 
 	Piece m_piece{ Piece::FrameLSB };
@@ -51,7 +47,6 @@ private:
 	int m_second{ 0 };
 	int m_minute{ 0 };
 	int m_hour{ 0 };
-	int m_deviceIndex{ -1 };
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MTCSender)
 };

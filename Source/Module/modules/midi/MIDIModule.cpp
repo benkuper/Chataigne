@@ -319,34 +319,36 @@ void MIDIModule::updateMIDIDevices()
 		newOutput = midiParam->outputDevice;
 	}
 
-	if (inputDevice != nullptr)
+	if (newInput != inputDevice)
 	{
-		inputDevice->removeMIDIInputListener(this);
+		if (inputDevice != nullptr) inputDevice->removeMIDIInputListener(this);
 		mtcReceiver.reset();
+		mtcIsPlaying->setValue(false);
+		inputDevice = newInput;
+
+		if (inputDevice != nullptr)
+		{
+			inputDevice->addMIDIInputListener(this);
+			mtcReceiver.reset(new MTCReceiver(inputDevice));
+			mtcReceiver->addMTCListener(this);
+			noteOns.clear();
+		}
 	}
 
-	inputDevice = newInput;
-
-	if (inputDevice != nullptr)
+	if (newOutput != outputDevice)
 	{
-		inputDevice->addMIDIInputListener(this);
-		mtcReceiver.reset(new MTCReceiver(inputDevice));
-		mtcReceiver->addMTCListener(this);
-		noteOns.clear();
-	}
+		if (outputDevice != nullptr)
+		{
+			if (sendClock->boolValue()) outClock.setOutDevice(nullptr);
+			outputDevice->close();
+		}
 
-	if (outputDevice != nullptr)
-	{
-		if (sendClock->boolValue()) outClock.setOutDevice(nullptr);
-		outputDevice->close();
-	}
-
-	outputDevice = newOutput;
-
-	if (outputDevice != nullptr)
-	{
-		outputDevice->open();
-		if (sendClock->boolValue()) outClock.setOutDevice(outputDevice->device.get());
+		outputDevice = newOutput;
+		if (outputDevice != nullptr)
+		{
+			outputDevice->open();
+			if (sendClock->boolValue()) outClock.setOutDevice(outputDevice->device.get());
+		}
 	}
 
 
@@ -630,7 +632,7 @@ void MIDIModule::mtcStopped()
 void MIDIModule::mtcTimeUpdated(bool isFullFrame)
 {
 	//if(isFullFrame) mtcIsPlaying->setValue(true);
-	mtcTime->setValue(mtcReceiver->getTime());
+	if (mtcReceiver != nullptr) mtcTime->setValue(mtcReceiver->getTime());
 }
 
 

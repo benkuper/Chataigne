@@ -10,6 +10,8 @@
 
 #pragma once
 
+#include <atomic>
+
 #define AUDIO_INPUT_GRAPH_ID AudioProcessorGraph::NodeID(1)
 #define AUDIO_OUTPUT_GRAPH_ID AudioProcessorGraph::NodeID(2)
 #define AUDIO_INPUTMIXER_GRAPH_ID AudioProcessorGraph::NodeID(3)
@@ -62,6 +64,7 @@ class AudioModule :
 	public Module,
 	public AudioIODeviceCallback,
 	public ChangeListener,
+	public Timer,
 	public FFTAnalyzerManager::ManagerListener
 {
 public:
@@ -119,14 +122,18 @@ public:
 
 	EnablingControllableContainer ltcParamsCC;
 	EnumParameter* ltcFPS;
-	double curLTCFPS; //avoid accessing enum in audio thread
+	std::atomic<double> curLTCFPS; //avoid accessing enum in audio thread
 	IntParameter* ltcChannel;
 	BoolParameter* ltcUseDate;
 
 	ControllableContainer ltcCC;
 	BoolParameter* ltcPlaying;
 	FloatParameter* ltcTime;
-	int ltcFrameDropCount;
+	std::atomic<int64_t> ltcSamplesSinceLastFrame;
+	std::atomic<double> pendingLTCTime{ 0.0 };
+	std::atomic<bool> pendingLTCPlaying{ false };
+	std::atomic<uint64_t> pendingLTCSerial{ 0 };
+	uint64_t lastPublishedLTCSerial = 0;
 
 	FFTAnalyzerManager analyzerManager;
 
@@ -157,6 +164,7 @@ public:
 
 	virtual void audioDeviceAboutToStart(AudioIODevice* device) override;
 	virtual void audioDeviceStopped() override;
+	void timerCallback() override;
 
 	// Inherited via ChangeListener
 	virtual void changeListenerCallback(ChangeBroadcaster* source) override;

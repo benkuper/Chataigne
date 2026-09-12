@@ -8,9 +8,12 @@
   ==============================================================================
 */
 
+#include "TimecodeMath.h"
+
 MTCReceiver::MTCReceiver(MIDIInputDevice* device) :
 	isPlaying(false),
 	hours(0), minutes(0), seconds(0), frames(0), type(MidiMessage::SmpteTimecodeType::fps30),
+	divider(30.0),
 	device(nullptr)
 {
 	MIDIManager::getInstance()->addMIDIManagerListener(this);
@@ -27,6 +30,9 @@ MTCReceiver::~MTCReceiver()
 void MTCReceiver::setDevice(MIDIInputDevice* newDevice)
 {
 	if (device == newDevice) return;
+	stopTimer();
+	isPlaying = false;
+	piecesReceived = 0;
 
 	if (device != nullptr)
 	{
@@ -43,69 +49,87 @@ void MTCReceiver::setDevice(MIDIInputDevice* newDevice)
 
 double MTCReceiver::getTime()
 {
-	return (double)(hours * 3600 + minutes * 60 + seconds) + (frames * 1.0 / divider);
+	const ScopedLock scopedLock(timeLock);
+	return decodedTime;
 }
 
 void MTCReceiver::fullFrameTimecodeReceived(const MidiMessage& m)
 {
-	m.getFullFrameParameters(hours, minutes, seconds, frames, type);
-	switch (type)
+	int newHours, newMinutes, newSeconds, newFrames;
+	MidiMessage::SmpteTimecodeType newType;
+	m.getFullFrameParameters(newHours, newMinutes, newSeconds, newFrames, newType);
+	if (newHours >= 24 || newMinutes >= 60 || newSeconds >= 60 || newFrames >= TimecodeMath::nominalFPS(static_cast<int>(newType))) return;
 	{
-	case MidiMessage::fps24: divider = 24;
-	case MidiMessage::fps25: divider = 25;
-	case MidiMessage::fps30: divider = 30;
-	case MidiMessage::fps30drop: divider = 29.997;
+		const ScopedLock scopedLock(timeLock);
+		hours = newHours;
+		minutes = newMinutes;
+		seconds = newSeconds;
+		frames = newFrames;
+		type = newType;
+		divider = TimecodeMath::actualFPS(static_cast<int>(type));
+		decodedTime = TimecodeMath::toSeconds(hours, minutes, seconds, frames, static_cast<int>(type));
 	}
-
+	piecesReceived = 0;
 	mtcListeners.call(&MTCListener::mtcTimeUpdated, true);
-
 }
 
 void MTCReceiver::quarterFrameTimecodeReceived(const MidiMessage& m)
 {
 	int piece = m.getQuarterFrameSequenceNumber();
-	pieces[piece] = m.getQuarterFrameValue();
+	const double now = Time::getMillisecondCounterHiRes();
+	if (now - lastQuarterFrameTime.load() > 500.0) piecesReceived = 0;
+	lastQuarterFrameTime = now;
 
-	if ((Piece)piece == Piece::RateAndHourMSB)
+	if (piece < 0 || piece > 7) return;
+	if (piece != piecesReceived)
 	{
-		frames = (pieces[(int)Piece::FrameLSB] & 0x0F) | ((pieces[(int)Piece::FrameMSB] & 0x01) << 4);
-		seconds = (pieces[(int)Piece::SecondLSB] & 0x0F) | ((pieces[(int)Piece::SecondMSB] & 0x03) << 4);
-		minutes = (pieces[(int)Piece::MinuteLSB] & 0x0F) | ((pieces[(int)Piece::MinuteMSB] & 0x03) << 4);
-		hours = (pieces[(int)Piece::HourLSB] & 0x0F) | ((pieces[(int)Piece::RateAndHourMSB] & 0x01) << 4);
-		MidiMessage::SmpteTimecodeType newType = (MidiMessage::SmpteTimecodeType)(pieces[(int)Piece::RateAndHourMSB] & 0x03);
+		piecesReceived = 0;
+		if (piece != 0) return;
+	}
+	pieces[piece] = m.getQuarterFrameValue();
+	if (++piecesReceived != 8) return;
+	piecesReceived = 0;
 
-		if (type != newType)
-		{
-			type = newType;
-			switch (type)
-			{
-			case MidiMessage::fps24: divider = 24;
-			case MidiMessage::fps25: divider = 25;
-			case MidiMessage::fps30: divider = 30;
-			case MidiMessage::fps30drop: divider = 29.997;
-			}
-		}
+	const int newFrames = (pieces[0] & 0x0f) | ((pieces[1] & 0x01) << 4);
+	const int newSeconds = (pieces[2] & 0x0f) | ((pieces[3] & 0x03) << 4);
+	const int newMinutes = (pieces[4] & 0x0f) | ((pieces[5] & 0x03) << 4);
+	const int newHours = (pieces[6] & 0x0f) | ((pieces[7] & 0x01) << 4);
+	const auto newType = static_cast<MidiMessage::SmpteTimecodeType>((pieces[7] >> 1) & 0x03);
+	if (newHours >= 24 || newMinutes >= 60 || newSeconds >= 60 || newFrames >= TimecodeMath::nominalFPS(static_cast<int>(newType))) return;
 
-		if (!isPlaying)
-		{
-			isPlaying = true;
-			mtcListeners.call(&MTCListener::mtcStarted);
-		}
-
-		startTimerHz(divider /  5);
+	{
+		const ScopedLock scopedLock(timeLock);
+		hours = newHours;
+		minutes = newMinutes;
+		seconds = newSeconds;
+		frames = newFrames;
+		type = newType;
+		divider = TimecodeMath::actualFPS(static_cast<int>(type));
+		// An eight-piece MTC cycle describes the time at its start, two frames ago.
+		decodedTime = std::fmod(TimecodeMath::toSeconds(hours, minutes, seconds, frames, static_cast<int>(type)) + 2.0 / divider, 86400.0);
 	}
 
 	mtcListeners.call(&MTCListener::mtcTimeUpdated, false);
+	if (!isPlaying.exchange(true))
+	{
+		startTimer(100);
+		mtcListeners.call(&MTCListener::mtcStarted);
+	}
 }
 
 void MTCReceiver::midiDeviceInRemoved(MIDIInputDevice* d)
 {
-	if (d == device) setDevice(nullptr);
+	if (d == device)
+	{
+		const bool wasPlaying = isPlaying;
+		setDevice(nullptr);
+		if (wasPlaying) mtcListeners.call(&MTCListener::mtcStopped);
+	}
 }
 
 void MTCReceiver::timerCallback()
 {
-	isPlaying = false;
-	mtcListeners.call(&MTCListener::mtcStopped);
+	if (Time::getMillisecondCounterHiRes() - lastQuarterFrameTime.load() < 500.0) return;
+	if (isPlaying.exchange(false)) mtcListeners.call(&MTCListener::mtcStopped);
 	stopTimer();
 }

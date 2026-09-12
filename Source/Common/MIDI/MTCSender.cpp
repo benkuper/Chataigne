@@ -1,4 +1,5 @@
 #include "Common/CommonIncludes.h"
+#include "TimecodeMath.h"
 
 #include <math.h>
 
@@ -7,6 +8,7 @@ MTCSender::MTCSender(MIDIOutputDevice* device) :
 	device(device),
 	speedFactor(1),
 	fps(30),
+	nominalFPS(30),
 	fpsType(MidiMessage::SmpteTimecodeType::fps30)
 {
 	// In your constructor, you should add any child components, and
@@ -17,18 +19,22 @@ MTCSender::MTCSender(MIDIOutputDevice* device) :
 
 MTCSender::~MTCSender()
 {
-	stopThread(10);
+	stopThread(-1);
+	if (device != nullptr) device->close();
 }
 
 void MTCSender::setDevice(MIDIOutputDevice* newDevice)
 {
 	if (newDevice == device) return;
+	const bool wasRunning = isThreadRunning();
+	stopThread(-1);
 
 	if (device != nullptr) device->close();
 
 	device = newDevice;
 
 	if (device != nullptr) device->open();
+	if (wasRunning && device != nullptr) startThread();
 }
 
 void MTCSender::start(double position)
@@ -41,59 +47,46 @@ void MTCSender::pause(bool resumeIfAlreadyPaused)
 {
 	if (isThreadRunning())
 	{
-		stopThread(10);
+		stopThread(-1);
 	}
 	else if (resumeIfAlreadyPaused)
 	{
-		startThread();
+		if (device != nullptr) startThread();
 	}
 }
 
 void MTCSender::stop()
 {
-	stopThread(10);
+	stopThread(-1);
 }
 
 void MTCSender::setPosition(double position, bool fullFrame)
 {
+	const ScopedLock scopedLock(lock);
 	if (device == nullptr) return;
-
-	double unused;
-
-	bool wasRunning = isThreadRunning();
-	if (wasRunning) stopThread(100);
-
-	GenericScopedLock _lock(lock);
-	m_frame = static_cast<int>(modf(position, &unused) * fps);
-	m_second = static_cast<int>(position) % 60;
-	m_minute = (static_cast<int>(position) / 60) % 60;
-	m_hour = (static_cast<int>(position) / 60 / 60) % 60;
+	TimecodeMath::fromSeconds(position, static_cast<int>(fpsType), m_hour, m_minute, m_second, m_frame);
 	m_piece = Piece::FrameLSB;
-
+	m_quarter = 0;
 
 	if (fullFrame)
 	{
 		device->sendFullframeTimecode(m_hour, m_minute, m_second, m_frame, fpsType);
 	}
 
-	if (wasRunning) startThread();
 }
 
 void MTCSender::setSpeedFactor(float speed)
 {
+	const ScopedLock scopedLock(lock);
 	speedFactor = speed;
 }
 
 void MTCSender::setFPS(MidiMessage::SmpteTimecodeType val)
 {
+	const ScopedLock scopedLock(lock);
 	fpsType = val;
-	switch (fpsType)
-	{
-	case MidiMessage::fps24: fps = 24; break;
-	case MidiMessage::fps25: fps = 25; break;
-	case MidiMessage::fps30: fps = 30; break;
-	case MidiMessage::fps30drop: fps = 29.997; break;
-	}
+	nominalFPS = TimecodeMath::nominalFPS(static_cast<int>(fpsType));
+	fps = TimecodeMath::actualFPS(static_cast<int>(fpsType));
 }
 
 void MTCSender::run()
@@ -107,12 +100,13 @@ void MTCSender::run()
 		sleep(1);
 		GenericScopedLock _lock(lock);
 
-		frameTime = (1000.0 / fps / 4) / speedFactor;
+		if (speedFactor <= 0) continue;
+		const double frameTime = (1000.0 / fps / 4) / speedFactor;
 
 		double t = Time::getMillisecondCounterHiRes();
 		if (t < lastFrameTime + frameTime) continue;
 
-		lastFrameTime += frameTime;
+		lastFrameTime = t - lastFrameTime > frameTime * 2 ? t : lastFrameTime + frameTime;
 
 
 		const int value = getValue(m_piece);
@@ -123,7 +117,7 @@ void MTCSender::run()
 		if (++m_quarter >= 4)
 		{
 			m_quarter = 0;
-			if (++m_frame >= fps)
+			if (++m_frame >= nominalFPS)
 			{
 				m_frame = 0;
 				if (++m_second >= 60)
@@ -139,6 +133,8 @@ void MTCSender::run()
 					}
 				}
 			}
+			if (fpsType == MidiMessage::fps30drop && m_second == 0 && m_minute % 10 != 0 && m_frame == 0)
+				m_frame = 2;
 		}
 	}
 

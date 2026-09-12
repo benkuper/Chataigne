@@ -10,6 +10,8 @@
 
 #pragma once
 
+#include <atomic>
+
 class MTCReceiver :
 	public MIDIInputDevice::MIDIInputListener,
 	public MIDIManager::Listener,
@@ -19,7 +21,7 @@ public:
 	MTCReceiver(MIDIInputDevice* device = nullptr);
 	~MTCReceiver();
 
-	bool isPlaying;
+	std::atomic<bool> isPlaying;
 
 	int hours;
 	int minutes;
@@ -28,18 +30,11 @@ public:
 	MidiMessage::SmpteTimecodeType type;
 	double divider;
 
-	enum class Piece {
-		FrameLSB = 0,
-		FrameMSB,
-		SecondLSB,
-		SecondMSB,
-		MinuteLSB,
-		MinuteMSB,
-		HourLSB,
-		RateAndHourMSB
-	};
-
-	int pieces[8];
+	int pieces[8]{};
+	int piecesReceived = 0;
+	std::atomic<double> lastQuarterFrameTime{ 0.0 };
+	CriticalSection timeLock;
+	double decodedTime = 0.0;
 	
 
 	void setDevice(MIDIInputDevice* newDevice);
@@ -57,7 +52,7 @@ public:
 	{
 	public:
         virtual ~MTCListener() {}
-		virtual void mtcTimeUpdated(bool fromFullFrame) {}
+		virtual void mtcTimeUpdated(bool /*fromFullFrame*/) {}
 		virtual void mtcStarted() {}
 		virtual void mtcStopped() {}
 	};

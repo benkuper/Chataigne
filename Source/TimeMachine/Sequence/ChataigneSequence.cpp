@@ -10,13 +10,91 @@
 
 #include "TimeMachine/TimeMachineIncludes.h"
 #include "ChataigneSequence.h"
+#include "Common/LTC/LTCAudioGenerator.h"
+
+class LTCAudioSender : public AudioIODeviceCallback
+{
+public:
+	~LTCAudioSender() override { setDeviceManager(nullptr, nullptr); }
+
+	void setDeviceManager(AudioDeviceManager* newManager, BoolParameter* newEnabledParameter)
+	{
+		if (manager == newManager) return;
+		if (manager != nullptr) manager->removeAudioCallback(this);
+		manager = newManager;
+		moduleEnabled = newEnabledParameter;
+		wasOutputActive = false;
+		if (manager != nullptr) manager->addAudioCallback(this);
+	}
+
+	void setPositionSnapshot(double position) { startPosition = position; }
+
+	void configure(int newRate, int newChannel, double position, double newSpeed, bool newPlaying)
+	{
+		rate = newRate;
+		channel = newChannel;
+		startPosition = position;
+		speed = newSpeed;
+		playing = newPlaying;
+		++transportSerial;
+	}
+
+	void audioDeviceAboutToStart(AudioIODevice* device) override
+	{
+		const double sampleRate = device != nullptr ? device->getCurrentSampleRate() : 0.0;
+		generator.prepare(sampleRate, rate.load());
+		seenTransportSerial = 0;
+		wasOutputActive = false;
+	}
+
+	void audioDeviceStopped() override { seenTransportSerial = 0; wasOutputActive = false; }
+
+	void audioDeviceIOCallbackWithContext(const float* const*, int, float* const* outputs,
+		int numOutputs, int numSamples, const AudioIODeviceCallbackContext&) override
+	{
+		for (int i = 0; i < numOutputs; ++i)
+			if (outputs[i] != nullptr) FloatVectorOperations::clear(outputs[i], numSamples);
+
+		const uint64_t serial = transportSerial.load();
+		if (serial != seenTransportSerial)
+		{
+			generator.setRate(rate.load());
+			generator.reset(startPosition.load());
+			seenTransportSerial = serial;
+		}
+
+		const int output = channel.load() - 1;
+		const bool active = playing.load() && moduleEnabled != nullptr && moduleEnabled->boolValue()
+			&& output >= 0 && output < numOutputs && outputs[output] != nullptr;
+		if (!active)
+		{
+			wasOutputActive = false;
+			return;
+		}
+		if (!wasOutputActive) generator.reset(startPosition.load());
+		wasOutputActive = true;
+		generator.render(outputs[output], numSamples, speed.load());
+	}
+
+private:
+	AudioDeviceManager* manager = nullptr;
+	BoolParameter* moduleEnabled = nullptr;
+	LTCAudioGenerator generator;
+	std::atomic<int> rate{ LTC_TV_525_60 };
+	std::atomic<int> channel{ 1 };
+	std::atomic<double> startPosition{ 0.0 };
+	std::atomic<double> speed{ 1.0 };
+	std::atomic<bool> playing{ false };
+	std::atomic<uint64_t> transportSerial{ 1 };
+	uint64_t seenTransportSerial = 0;
+	bool wasOutputActive = false;
+};
 
 ChataigneSequence::ChataigneSequence() :
 	Sequence(),
 	masterAudioModule(nullptr),
 	masterAudioLayer(nullptr),
 	ltcAudioModule(nullptr),
-	ltcEncoder(nullptr, &ltc_encoder_free),
 	mtcFPS(nullptr)
 {
 	midiSyncDevice = new MIDIDeviceParameter("Sync Devices", "MIDI Devices to send and/or receive MTC to sync the sequence with external systems.");
@@ -38,13 +116,15 @@ ChataigneSequence::ChataigneSequence() :
 	ltcMode = addEnumParameter("LTC Mode", "Either receiving or sending LTC", 0);
 	ltcMode->addOption("Receive", RECEIVE)->addOption("Send", SEND)->addOption("Both", BOTH);
 	ltcSendFPS = addEnumParameter("Send FPS", "The framerate to use to send LTC");
-	ltcSendFPS->addOption("24", LTC_TV_FILM_24)->addOption("25", LTC_TV_625_50)->addOption("30 (525_60)", LTC_TV_525_60)->addOption("30 (1125_60)", LTC_TV_1125_60);
-	ltcSendFPS->setDefaultValue(30);
+	ltcSendFPS->addOption("24", LTC_TV_FILM_24)->addOption("25", LTC_TV_625_50)->addOption("29.97 drop", LTCAudioGenerator::fps2997Drop)->addOption("30 (525_60)", LTC_TV_525_60)->addOption("30 (1125_60)", LTC_TV_1125_60);
+	ltcSendFPS->setDefaultValue("30 (525_60)", true);
+	ltcOutputChannel = addIntParameter("LTC Output Channel", "Output channel on the selected Sound Card (1 is its first active output). Use a dedicated output for LTC.", 1, 1, 64);
 
 	syncOffset = addFloatParameter("Sync Offset", "The time to offset when sending and receiving", 0, 0);
 	syncOffset->defaultUI = FloatParameter::TIME;
 	reverseOffset = addBoolParameter("Reverse Offset", "This allows negative offset", false);
 	resetTimeOnMTCStopped = addBoolParameter("Reset on MTC Stop", "If checked, sequence will stop and reset time when MTC doesn't send data anymore. If not checked, sequence will just keep its current time", false);
+	ltcSender.reset(new LTCAudioSender());
 
 
 
@@ -77,10 +157,10 @@ ChataigneSequence::~ChataigneSequence()
 
 void ChataigneSequence::clearItem()
 {
+	setLTCAudioModule(nullptr);
 	BaseItem::clearItem();
 
 	setMasterAudioLayer(nullptr);
-	setLTCAudioModule(nullptr);
 	Sequence::clearItem();
 }
 
@@ -275,31 +355,34 @@ void ChataigneSequence::updateLayersSnapKeys()
 
 void ChataigneSequence::setupMidiSyncDevices()
 {
-	//	if ((mtcSender != nullptr && midiSyncDevice->outputDevice != mtcSender->device) || midiSyncDevice->outputDevice != nullptr)
-	//	{
-	if (midiSyncDevice->outputDevice == nullptr || !midiSyncDevice->enabled) mtcSender.reset();
-	else
+	MIDIOutputDevice* output = midiSyncDevice->enabled ? midiSyncDevice->outputDevice : nullptr;
+	if (mtcSender != nullptr && mtcSender->device != output) mtcSender.reset();
+	if (output != nullptr && mtcSender == nullptr)
 	{
-		mtcSender.reset(new MTCSender(midiSyncDevice->outputDevice));
+		mtcSender.reset(new MTCSender(output));
 		mtcSender->setSpeedFactor(playSpeed->floatValue());
 		if (mtcFPS != nullptr) mtcSender->setFPS(mtcFPS->getValueDataAsEnum<MidiMessage::SmpteTimecodeType>());
+		const double time = jmax(0.0, static_cast<double>(currentTime->floatValue() - syncOffset->floatValue() * (reverseOffset->boolValue() ? -1 : 1)));
+		if (isPlaying->boolValue()) mtcSender->start(time);
+		else mtcSender->setPosition(time);
 	}
-	//	}
 
-	//	if ((mtcReceiver != nullptr && midiSyncDevice->inputDevice != mtcReceiver->device) || midiSyncDevice->inputDevice != nullptr)
-	//	{
-	if (midiSyncDevice->inputDevice == nullptr || !midiSyncDevice->enabled) mtcReceiver.reset();
-	else
+	MIDIInputDevice* input = midiSyncDevice->enabled ? midiSyncDevice->inputDevice : nullptr;
+	if (mtcReceiver != nullptr && mtcReceiver->device != input) mtcReceiver.reset();
+	if (input != nullptr && mtcReceiver == nullptr)
 	{
-		mtcReceiver.reset(new MTCReceiver(midiSyncDevice->inputDevice));
+		mtcReceiver.reset(new MTCReceiver(input));
 		mtcReceiver->addMTCListener(this);
 	}
-	//	}
 }
 
 void ChataigneSequence::setLTCAudioModule(AudioModule* am)
 {
-	if (ltcAudioModule == am) return;
+	if (ltcAudioModule == am)
+	{
+		if (am != nullptr) updateLTCSender();
+		return;
+	}
 	if (ltcAudioModule != nullptr)
 	{
 		ltcAudioModule->ltcTime->removeParameterListener(this);
@@ -313,44 +396,19 @@ void ChataigneSequence::setLTCAudioModule(AudioModule* am)
 		ltcAudioModule->ltcTime->addParameterListener(this);
 		ltcAudioModule->ltcPlaying->addParameterListener(this);
 	}
+	updateLTCSender();
 }
 
-void ChataigneSequence::setupLTCEncoder()
+void ChataigneSequence::updateLTCSender()
 {
-	int fps = 24;
-	LTC_TV_STANDARD tv = ltcSendFPS->getValueDataAsEnum<LTC_TV_STANDARD>();
-	switch (tv)
-	{
-	case LTC_TV_FILM_24:
-		fps = 24;
-		break;
-	case LTC_TV_625_50:
-		fps = 25;
-		break;
-	case LTC_TV_525_60:
-		fps = 30;
-		break;
-	case LTC_TV_1125_60:
-		fps = 30;
-		break;
-	}
-
-	ltcEncoder.reset(ltc_encoder_create(sampleRate, fps, tv, 0));
-}
-
-void ChataigneSequence::updateSampleRate()
-{
-	setupLTCEncoder();
-}
-
-void ChataigneSequence::audioDeviceIOCallbackWithContext(const float* const* inputChannelData, int numInputChannels, float* const* outputChannelData, int numOutputChannels, int numSamples, const AudioIODeviceCallbackContext& context)
-{
-	Sequence::audioDeviceIOCallbackWithContext(inputChannelData, numInputChannels, outputChannelData, numOutputChannels, numSamples, context);
-
-	LTCSyncMode ltcM = ltcMode->getValueDataAsEnum<LTCSyncMode>();
-	if (ltcM == SEND || ltcM == BOTH)
-	{
-	}
+	if (ltcSender == nullptr) return;
+	const auto mode = ltcMode->getValueDataAsEnum<LTCSyncMode>();
+	AudioDeviceManager* manager = ltcAudioModule != nullptr && ltcModuleTarget->enabled && mode != RECEIVE ? &ltcAudioModule->am : nullptr;
+	ltcSender->setDeviceManager(manager, manager != nullptr ? ltcAudioModule->enabled : nullptr);
+	const double offset = syncOffset->floatValue() * (reverseOffset->boolValue() ? -1 : 1);
+	ltcSender->configure(ltcSendFPS->getValueDataAsEnum<int>(), ltcOutputChannel->intValue(),
+		jmax(0.0, static_cast<double>(currentTime->floatValue()) - offset), playSpeed->floatValue(),
+		manager != nullptr && isPlaying->boolValue());
 }
 
 void ChataigneSequence::onContainerParameterChangedInternal(Parameter* p)
@@ -367,7 +425,7 @@ void ChataigneSequence::onContainerParameterChangedInternal(Parameter* p)
 
 		if (p == currentTime)
 		{
-			if ((!isPlaying->boolValue() || isSeeking)) mtcSender->setPosition(time, true);
+			if ((!isPlaying->boolValue() || isSeeking) && !applyingIncomingMTC.load()) mtcSender->setPosition(time, true);
 		}
 		else if (p == playSpeed) mtcSender->setSpeedFactor(playSpeed->floatValue());
 		else if (p == isPlaying)
@@ -387,13 +445,28 @@ void ChataigneSequence::onContainerParameterChangedInternal(Parameter* p)
 	}
 	else if (p == mtcFPS)
 	{
-		if (mtcSender != nullptr) mtcSender->setFPS(mtcFPS->getValueDataAsEnum<MidiMessage::SmpteTimecodeType>());
+		if (mtcSender != nullptr)
+		{
+			mtcSender->setFPS(mtcFPS->getValueDataAsEnum<MidiMessage::SmpteTimecodeType>());
+			mtcSender->setPosition(jmax(0.0f, currentTime->floatValue() - syncOffset->floatValue() * (reverseOffset->boolValue() ? -1 : 1)));
+		}
 	}
 
 	if (p == ltcModuleTarget)
 	{
 		if (ltcModuleTarget->enabled) setLTCAudioModule((AudioModule*)ltcModuleTarget->targetContainer.get());
 		else setLTCAudioModule(nullptr);
+	}
+	else if (p == ltcMode || p == ltcSendFPS || p == ltcOutputChannel || p == isPlaying
+		|| p == playSpeed || p == syncOffset || p == reverseOffset
+		|| (p == currentTime && (!isPlaying->boolValue() || isSeeking)))
+	{
+		updateLTCSender();
+	}
+	else if (p == currentTime && ltcSender != nullptr)
+	{
+		const double offset = syncOffset->floatValue() * (reverseOffset->boolValue() ? -1 : 1);
+		ltcSender->setPositionSnapshot(jmax(0.0, static_cast<double>(currentTime->floatValue()) - offset));
 	}
 }
 
@@ -403,11 +476,6 @@ void ChataigneSequence::onControllableStateChanged(Controllable* c)
 	if (c == midiSyncDevice)
 	{
 		setupMidiSyncDevices();
-		if (mtcSender != nullptr && midiSyncDevice->enabled && isPlaying->boolValue())
-		{
-			float time = jmax<float>(0, currentTime->floatValue() - (syncOffset->floatValue() * (reverseOffset->boolValue() ? -1 : 1)));
-			mtcSender->start(time);
-		}
 	}
 	else if (c == ltcModuleTarget)
 	{
@@ -490,6 +558,7 @@ void ChataigneSequence::onExternalParameterValueChanged(Parameter* p)
 
 void ChataigneSequence::mtcStarted()
 {
+	if (mtcReceiver == nullptr || isPlaying->boolValue()) return;
 	double time = mtcReceiver->getTime() + (syncOffset->floatValue() * (reverseOffset->boolValue() ? -1 : 1));
 	if (time >= 0 && time < totalTime->floatValue()) playTrigger->trigger();
 }
@@ -505,9 +574,11 @@ void ChataigneSequence::mtcTimeUpdated(bool isFullFrame)
 	if (mtcReceiver == nullptr) return;
 
 	double time = mtcReceiver->getTime() + (syncOffset->floatValue() * (reverseOffset->boolValue() ? -1 : 1));
-	double diff = fabs(currentTime->floatValue() - time);
-	bool isJump = diff > 1;
-	bool seekMode = isJump || !mtcReceiver->isPlaying;
-	if (mtcReceiver->isPlaying && !isPlaying->boolValue() && time >= 0 && time < totalTime->floatValue()) playTrigger->trigger();
-	setCurrentTime(time, isJump, seekMode);
+	if (time < 0 || time >= totalTime->floatValue()) return;
+	const double diff = fabs(currentTime->floatValue() - time);
+	applyingIncomingMTC = true;
+	if (isFullFrame || !isPlaying->boolValue() || diff > 0.1)
+		setCurrentTime(static_cast<float>(time), true, true);
+	if (mtcReceiver->isPlaying && !isPlaying->boolValue()) playTrigger->trigger();
+	applyingIncomingMTC = false;
 }

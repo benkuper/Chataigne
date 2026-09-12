@@ -10,11 +10,14 @@
 
 #pragma once
 
+#include <atomic>
+
 class ChataigneAudioLayer;
 
 class AudioModule;
 class MTCSender;
 class MIDIDeviceParameter;
+class LTCAudioSender;
 
 class ChataigneSequence :
 	public Sequence,
@@ -32,6 +35,7 @@ public:
 	MIDIDeviceParameter* midiSyncDevice;
 	std::unique_ptr<MTCSender> mtcSender;
 	std::unique_ptr<MTCReceiver> mtcReceiver;
+	std::atomic<bool> applyingIncomingMTC{ false };
 	EnumParameter* mtcFPS;
 	BoolParameter* resetTimeOnMTCStopped;
 
@@ -43,9 +47,8 @@ public:
 	enum LTCSyncMode { RECEIVE, SEND, BOTH};
 	EnumParameter* ltcMode;
 	EnumParameter* ltcSendFPS;
-	EnumParameter* ltcTVStandard;
-	using LTCEncoderPtr = std::unique_ptr<LTCEncoder, void (*)(LTCEncoder*)>;
-	LTCEncoderPtr ltcEncoder;
+	IntParameter* ltcOutputChannel;
+	std::unique_ptr<LTCAudioSender> ltcSender;
 
 	FloatParameter* syncOffset;
 	BoolParameter* reverseOffset;
@@ -75,16 +78,7 @@ public:
 	void setupMidiSyncDevices();
 
 	void setLTCAudioModule(AudioModule* am);
-
-	void setupLTCEncoder();
-
-	virtual void updateSampleRate() override;
-	virtual void audioDeviceIOCallbackWithContext(const float* const* inputChannelData,
-		int numInputChannels,
-		float* const* outputChannelData,
-		int numOutputChannels,
-		int numSamples,
-		const AudioIODeviceCallbackContext& context) override;
+	void updateLTCSender();
 
 	virtual void onContainerParameterChangedInternal(Parameter *) override;
 	virtual void onControllableStateChanged(Controllable* c) override;
@@ -99,5 +93,3 @@ public:
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ChataigneSequence)
 };
-
-
