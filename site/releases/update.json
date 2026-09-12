@@ -1,0 +1,4819 @@
+{
+	"testing": false,
+	"winExtension": "exe",
+	"osxExtension": "pkg",
+	"linuxExtension": "AppImage",
+	"betaversion": {
+		"version": "1.10.4b6",
+		"changelog": [
+			"[Audio] Fixed clips falling silent after a looping sequence wraps, including MP3 files slightly shorter than the sequence",
+			"[Audio] Added short fades at clip edges and smooth transitions when starting, stopping or seeking to prevent clicks"
+		]
+	},
+	"stableversion": {
+		"version": "1.10.3",
+		"changelog": [
+			"Fixes, Fixes, Fixes..."
+		]
+	},
+	"archives": [
+		{
+			"version": "1.0.0",
+			"beta": "true",
+			"changelog": [
+				"Added awesomeness",
+				"Added coolitude"
+			]
+		},
+		{
+			"version": "1.0.1",
+			"beta": "true",
+			"changelog": [
+				"Added Copy/Paste/Duplicate on all items",
+				"Added != comparator in Conditions on Boolean",
+				"Module Router, values not checked by default"
+			]
+		},
+		{
+			"version": "1.0.2",
+			"beta": "true",
+			"changelog": [
+				"Fix crash when click on empty automation in some cases",
+				"Added Millumin Module (Commands only for now)",
+				"Added option to select/deselect all routing values"
+			]
+		},
+		{
+			"version": "1.0.3",
+			"beta": "true",
+			"changelog": [
+				"Fix expressions not correctly loaded",
+				"Added auto-range parameter in OSC Module"
+			]
+		},
+		{
+			"version": "1.0.4",
+			"beta": "true",
+			"changelog": [
+				"Fix expression causes crash at load",
+				"Introduced Progress window at load (WIP)"
+			]
+		},
+		{
+			"version": "1.0.5",
+			"beta": "true",
+			"changelog": [
+				"Fixed Module router source and destination comboBox",
+				"Optimized and secured scripts and expressions loading and updates"
+			]
+		},
+		{
+			"version": "1.0.6",
+			"beta": "true",
+			"changelog": [
+				"Fixed State active / inactive at load",
+				"Split arguments option in OSC Module"
+			]
+		},
+		{
+			"version": "1.0.7",
+			"beta": "true",
+			"changelog": [
+				"Fixed regression in OSC argument save/load"
+			]
+		},
+		{
+			"version": "1.0.10",
+			"beta": "true",
+			"changelog": [
+				"Fixed UI regression in States",
+				"Added scripts and custom params in states",
+				"Actions and Mappings now can choose any parameter as source"
+			]
+		},
+		{
+			"version": "1.0.11",
+			"beta": "true",
+			"changelog": [
+				"Fixed UI regression in all items",
+				"Fixed UI problems in audio clips",
+				"Fixed Crash with triggers in conditions",
+				"Added Audio channel routing in audio layers",
+				"Fixed script custom parameters callbacks"
+			]
+		},
+		{
+			"version": "1.0.12",
+			"beta": "true",
+			"changelog": [
+				"Added Analytics",
+				"Asynchronous update mechanism"
+			]
+		},
+		{
+			"version": "1.1.3",
+			"beta": "true",
+			"changelog": [
+				"Added Metronome condition",
+				"Added Resolume 6 compatibility (WIP)",
+				"Added Automation Key Snap",
+				"Added Automation Key Editor window on double click",
+				"Various minor UI fixes"
+			]
+		},
+		{
+			"version": "1.1.4",
+			"beta": "true",
+			"changelog": [
+				"Help Panel",
+				"Automation Key Editor in Mapping Layer",
+				"Automation Key Position/Value force with Shift Key"
+			]
+		},
+		{
+			"version": "1.1.5",
+			"beta": "true",
+			"changelog": [
+				"Fix OSC Command Model Selection panel",
+				"Fix Wiimote thread infinite loop"
+			]
+		},
+		{
+			"version": "1.2.1",
+			"beta": "false",
+			"changelog": [
+				"Fix Critical loading error",
+				"Massive UI pass and stabilization",
+				"Added TCP, UDP, PJLink, Time and Process Modules",
+				"Preferences Panel"
+			]
+		},
+		{
+			"version": "1.2.2",
+			"beta": "false",
+			"changelog": [
+				"Fix command click on OSX",
+				"Various UI fixes",
+				"Fix Color Layer",
+				"Fix Audio layer module dropdown",
+				"Shift+Click add to selection on automations"
+			]
+		},
+		{
+			"version": "1.2.4",
+			"beta": "false",
+			"changelog": [
+				"MIDI Module support for channels,",
+				"MIDI Module support for Sysex commands",
+				"Various UI Improvements",
+				"Various modules and filter fixes"
+			]
+		},
+		{
+			"version": "1.2.5",
+			"beta": "false",
+			"changelog": [
+				"FUCKING UNDO SUPPORT !",
+				"Auto relink of target parameters",
+				"Many UI Fixes",
+				"Trigger Multi selection",
+				"Automation Recorder",
+				"PJLink shutter command"
+			]
+		},
+		{
+			"version": "1.2.6",
+			"beta": "false",
+			"changelog": [
+				"Many UI fixes",
+				"Fix Module Router and Automation crashes",
+				"Better AutomationRecorder"
+			]
+		},
+		{
+			"version": "1.2.7",
+			"beta": "false",
+			"changelog": [
+				"Many UI fixes",
+				"Fix Module Router and Automation crashes",
+				"Better AutomationRecorder"
+			]
+		},
+		{
+			"version": "1.2.8",
+			"beta": "false",
+			"changelog": [
+				"Automated audo-update",
+				"Better validation time in conditions",
+				"Fixed dynamic values not getting saved",
+				"Cleaner data-UI communication"
+			]
+		},
+		{
+			"version": "1.2.9",
+			"beta": "false",
+			"changelog": [
+				"Fixed critical State Crash",
+				"Better Conditions UI",
+				"Better Script Execution Order",
+				"Improved Logger"
+			]
+		},
+		{
+			"version": "1.2.10",
+			"beta": "false",
+			"changelog": [
+				"Added JoyCon Module (Windows only for now)",
+				"Fixed Retargeting on Generic targets"
+			]
+		},
+		{
+			"version": "1.2.11",
+			"beta": "false",
+			"changelog": [
+				"Fixed script loading",
+				"Fixed OSC Command UI",
+				"Fixed Router disable",
+				"Fixed Target Relink",
+				"Fixed Default layout loading"
+			]
+		},
+		{
+			"version": "1.2.12",
+			"beta": "false",
+			"changelog": [
+				"Fixed bad transition behavior",
+				"UI Improvements",
+				"OSC Auto range behavior change"
+			]
+		},
+		{
+			"version": "1.2.13",
+			"beta": "false",
+			"changelog": [
+				"Fix Module Router regressions",
+				"Unified Serial to Stream Modules",
+				"Stream Modules Custom values command"
+			]
+		},
+		{
+			"version": "1.2.14",
+			"beta": "true",
+			"changelog": [
+				"Fix and optimize expressions",
+				"Serial Device improvements"
+			]
+		},
+		{
+			"version": "1.2.15",
+			"beta": "true",
+			"changelog": [
+				"UI Improvements",
+				"Fix and optimize expressions",
+				"Serial Device improvements"
+			]
+		},
+		{
+			"version": "1.3.2",
+			"beta": "true",
+			"changelog": [
+				"Fix values not saved when only feedback",
+				"Added Custom Variable and Presets",
+				"Added Global settings for beta versions update",
+				"File Paths relative option",
+				"Fixed rare layout crash",
+				"Fixed Text editing UI"
+			]
+		},
+		{
+			"version": "1.3.3",
+			"beta": "false",
+			"changelog": [
+				"Fix Crash when deleting arguments in Custom Message OSC Command",
+				"Fix Automations UI bugs when moving keys",
+				"Fix Serial commands",
+				"Added Keyboard Module",
+				"Added Wake On LAN Command in System Module",
+				"Added Bonjour/Zeroconf support on OSC module",
+				"Added Command+Q shortcut on all platforms"
+			]
+		},
+		{
+			"version": "1.3.4",
+			"beta": "false",
+			"changelog": [
+				"Improve general selection",
+				"Improve Copy/Cut/Paste mechanisms",
+				"Imrove loading time with OSC modules",
+				"Other UI Improvements"
+			]
+		},
+		{
+			"version": "1.3.5",
+			"beta": "false",
+			"changelog": [
+				"Multiple OSC Outputs in OSC Modules",
+				"Fix crash when reordering items",
+				"OSC Command Models dynamic linking",
+				"Custom Variables operator in set value command",
+				"Improved selection management",
+				"Improved value override and feedback"
+			]
+		},
+		{
+			"version": "1.3.6",
+			"beta": "false",
+			"changelog": [
+				"Various fixes and improvements",
+				"Transition Undo support",
+				"Audio multithreaded loading",
+				"Various audio improvements"
+			]
+		},
+		{
+			"version": "1.3.8b",
+			"beta": "false",
+			"changelog": [
+				"Fix action and trigger behaviors",
+				"Fix script calls and filters",
+				"Added On Activate / On Deactivate actions in States",
+				"Added Chataigne Log Message and Value commands"
+			]
+		},
+		{
+			"version": "1.3.9",
+			"beta": "false",
+			"changelog": [
+				"Added copy action to trigger layer support",
+				"Fixed custom variable set value in mappings",
+				"Added Conversion to Int filter",
+				"Fixed Standard Condition UI when using expressions in compared value"
+			]
+		},
+		{
+			"version": "1.3.10",
+			"changelog": [
+				"Fixed crash when changing condition input value",
+				"Improved state, transitions and On activate / On deactivate behaviors",
+				"Fixed some parameters default min/max",
+				"Added Convert to Int Filter",
+				"Sequence now can be more than 1h"
+			]
+		},
+		{
+			"version": "1.4.1",
+			"changelog": [
+				"Fix various bugs and crashes",
+				"Add item lock on triggers and audio clips",
+				"Windows now uses installer",
+				"AIFF support in audio clips",
+				"Fix Command model address change",
+				"OSC commands P2D/P3D/Color support",
+				"Various UI improvements",
+				"Custom Modules improvements",
+				"Float Label and Slider cohabitation",
+				"Sequences commands play from start fix",
+				"Moved Activate / Deactivate to condition types",
+				"Remap filter can be inversed",
+				"Offset filter has dynamic range"
+			]
+		},
+		{
+			"version": "1.4.2",
+			"changelog": [
+				"Fix potential crash when adding filters",
+				"Added async option in smooth filter",
+				"Fix auto set useForMapping in stream commands",
+				"Increase sequence FPS and play speed range",
+				"UI feedbacks in mappings",
+				"Offset filter is now unbound",
+				"Fix Sequence playFromStart command option",
+				"Float Label and Slider cohabitation",
+				"Sequences commands play from start fix",
+				"Moved Activate / Deactivate to condition types",
+				"Remap filter can be inversed",
+				"Offset filter has dynamic range"
+			]
+		},
+		{
+			"version": "1.4.3",
+			"changelog": [
+				"Command templates for all modules and commands",
+				"Items reordering for all managers",
+				"Duplicate and paste items in place instead of last",
+				"Undo on a remove item action replaces it at the same place",
+				"Fix potential crashes in filters and templates",
+				"Default layout includes templates",
+				"Fix streaming commands for templates",
+				"Cleaner files data saving"
+			]
+		},
+		{
+			"version": "1.4.5",
+			"changelog": [
+				"Mapping ouptput range sync",
+				"Fix various crashes",
+				"Parameter UI improvements",
+				"Automation system update"
+			]
+		},
+		{
+			"version": "1.4.7",
+			"changelog": [
+				"Fix Resolume commands",
+				"Fix and update help menu",
+				"Crash log server upload",
+				"Feedback in mapping layer",
+				"Fix layer scrolling with mouse",
+				"Fix Offset filter",
+				"Change default log value message",
+				"Various UI fixes and improvements",
+				"[Win only] Added Joystick and Gamepad modules"
+			]
+		},
+		{
+			"version": "1.4.8",
+			"changelog": [
+				"Fix critical bug OSC custom message address not saving",
+				"Fix crash when renaming an OSC module before creating a command template"
+			]
+		},
+		{
+			"version": "1.4.9",
+			"changelog": [
+				"Support for Resolume 6.0.9+ OSC commands",
+				"Fix Resolume version switch crash",
+				"Various UI Improvements",
+				"TriggerLayer lock/unlock all",
+				"Triggers at end of timeline never goes offscreen",
+				"Cues lock and tooltips",
+				"Improve mapping behavior and update (thanks to Tom Magnier)",
+				"Improved windows crash reporting"
+			]
+		},
+		{
+			"version": "1.4.10",
+			"changelog": [
+				"Lot of crash fixes",
+				"Added Math and ColorShift filters",
+				"Support for OSC Color",
+				"Added OSC and MIDI autoFeedback option",
+				"Added Powerpoint module",
+				"Improved state and layers UI"
+			]
+		},
+		{
+			"version": "1.4.12b",
+			"changelog": [
+				"Added HeavyM Module",
+				"Fixed Math filter operation value not saved",
+				"Fixed Integer parameter range check"
+			]
+		},
+		{
+			"version": "1.4.11",
+			"changelog": [
+				"Fix various crashes",
+				"Updated OSC custom messages",
+				"Horizontal touchpad scrolling in sequences",
+				"Move flag position when locked",
+				"Better sequence zoom",
+				"Powerpoint module"
+			]
+		},
+		{
+			"version": "1.4.12",
+			"changelog": [
+				"HeavyM Module officially implemented",
+				"Fix reordering regression in managers",
+				"Fix varisous potential crashes",
+				"Fix Math filters weirdness",
+				"Touchpad zoom with shift+scroll in timelines",
+				"Hide commands in Output-only OSC modules"
+			]
+		},
+		{
+			"version": "1.4.13",
+			"changelog": [
+				"Fixed automation key ordering on creation"
+			]
+		},
+		{
+			"version": "1.4.15",
+			"changelog": [
+				"Fixed crash when removing a filter",
+				"Fixed crash when recording a mapping layer",
+				"Added support for fixed rate DMX sending (experimental)",
+				"Added Auto-range option in OSC module",
+				"Fixed UI bug in Color layer key handles",
+				"Fixed Range synchronization in Conditions"
+			]
+		},
+		{
+			"version": "1.5.0b",
+			"changelog": [
+				"Massive UI performance improvements",
+				"Faster heavy file loading",
+				"Fixed Sequence seeking bugs",
+				"Fixed DMX crashes and lags",
+				"Better support for complex sequences",
+				"Fixed crash when unplugging UBS DMX Devices",
+				"Fixed log inversion when serial device added/removed"
+			]
+		},
+		{
+			"version": "1.5.1b",
+			"changelog": [
+				"Guides WIP",
+				"Added OSX 10.8 support",
+				"Fixed DLight Command",
+				"Various UI Improvements and Optimizations",
+				"Reset enveloppe in Audio Layer when not playing",
+				"Fixed DMXPro data reception",
+				"Added DMX Fixed send rate feature",
+				"Added Streaming Modules (Serial / UDP) auto-add feature",
+				"Fixed and improved Kinect V2 Module",
+				"Removed autoRange by default in OSC Module"
+			]
+		},
+		{
+			"version": "1.5.1",
+			"changelog": [
+				"Fixed dependencies",
+				"Fixed OSX Power Module commands",
+				"Upadte JUCE framework to v5.4.1"
+			]
+		},
+		{
+			"version": "1.5.2",
+			"changelog": [
+				"Added script templates for OSC, MIDI and Serial modules",
+				"Fixed Audio Clips default time bug",
+				"Fixed timeline seeker zoom jumps",
+				"Fixed DLL dependency regression (Win)",
+				"Fixed UI bug in timeline mapping layers",
+				"Fixed save/load values in Streaming Modules (Serial, UDP)",
+				"Fix linux AppImage generation",
+				"Update JUCE to 5.4.2"
+			]
+		},
+		{
+			"version": "1.5.3b1",
+			"changelog": [
+				"Fixed MIDI Notes switched",
+				"Fixed DMX Values not saved"
+			]
+		},
+		{
+			"version": "1.5.3b2",
+			"changelog": [
+				"Fixed version number (was detected as 1.5.3b1)",
+				"Added support for user-creatable values in OSC, MIDI, DMX, Serial and UDP modules",
+				"Fixed DMX Clear All command crash"
+			]
+		},
+		{
+			"version": "1.5.3b3",
+			"changelog": [
+				"Fixed some parameters can't set range",
+				"Action can both have activate and deactivate conditions",
+				"Added PJLink Power and Shutter status values"
+			]
+		},
+		{
+			"version": "1.5.3",
+			"changelog": [
+				"Fix Mapping variables command",
+				"Fix MIDI channel/pitch/velocity inversion",
+				"Fix MIDI Parameter Editor",
+				"Fix LiveOSC Command crash"
+			]
+		},
+		{
+			"version": "1.5.4b1",
+			"changelog": [
+				"Fix ArtNet Device multi channel commands"
+			]
+		},
+		{
+			"version": "1.5.4",
+			"changelog": [
+				"Fix critical regression on Actions Consequence False"
+			]
+		},
+		{
+			"version": "1.5.5",
+			"changelog": [
+				"Fix Parameter options not handled",
+				"Fix User created values can't be deleted",
+				"Minor UI improvements"
+			]
+		},
+		{
+			"version": "1.5.6",
+			"changelog": [
+				"Fix UI in StateMachine",
+				"Fix Linux fullscreen problem"
+			]
+		},
+		{
+			"version": "1.5.7b2",
+			"changelog": [
+				"Fix various Serial Module issues",
+				"Fix various crashes",
+				"Custom Modules improvements",
+				"Commands Improvements",
+				"Script template update",
+				"Prompt to auto-create a sound card module when first creating an audio layer",
+				"Added always update option to mapping layer",
+				"Added Conversion filters"
+			]
+		},
+		{
+			"version": "1.5.7b3",
+			"changelog": [
+				"Fix PID/VID filter on OSX",
+				"Improved Community Module Manager UI"
+			]
+		},
+		{
+			"version": "1.5.7",
+			"changelog": [
+				"Thread safe script-calls",
+				"Added new getParent() methods to script objects",
+				"Added more options to custom modules definitions",
+				"Fix load last layout not working"
+			]
+		},
+		{
+			"version": "1.5.8b1",
+			"changelog": [
+				"Added interpolation mode in color layer",
+				"Text UI for Parameters",
+				"Sync enum options in commands and templates",
+				"Added HTTP Module"
+			]
+		},
+		{
+			"version": "1.5.8b3",
+			"changelog": [
+				"Fix crash when hitting spacebar with no SequenceEditor panel opened",
+				"Fix potential crash when closing application or creating new document",
+				"Fixed linux AppImage upload",
+				"Moved to OSX packages"
+			]
+		},
+		{
+			"version": "1.5.8",
+			"changelog": [
+				"Fix crashes in network modules when closing",
+				"Improved Community Modules"
+			]
+		},
+		{
+			"version": "1.5.9b1",
+			"changelog": [
+				"Fix crash on OSX when deleting module that has commands linked",
+				"Fix crash when deleting command templates",
+				"Improved command ghosting and undo remove module and command template"
+			]
+		},
+		{
+			"version": "1.5.9b2",
+			"changelog": [
+				"Added OSCQuery Module",
+				"Added Zeroconf/Bonjour discovery for OSC and OSCQuery",
+				"Added Community LaunchKey Mini module",
+				"Fix crash on bad OSC message",
+				"Fix crashes on module / processor deletion"
+			]
+		},
+		{
+			"version": "1.5.9b3",
+			"changelog": [
+				"Improved Artnet in/out support (needs testing on OSX and Linux)",
+				"Added LiveOSC auto detection and plugin installation",
+				"Added Powerpoint plugin installation",
+				"Fix various crashes",
+				"Various UI improvements"
+			]
+		},
+		{
+			"version": "1.5.9b4",
+			"changelog": [
+				"Resolume 6.0.9 and 6.1.0 command updates",
+				"Minor improvements"
+			]
+		},
+		{
+			"version": "1.5.9b5",
+			"changelog": [
+				"Command Tester auto trigger option",
+				"Fixed Resolume Video Parameter commands",
+				"Fixed crash regression introduced in b4",
+				"Added transition in Resolume Video Parameter Commands",
+				"Added Consequences delay and stagger parameter"
+			]
+		},
+		{
+			"version": "1.5.9b6",
+			"changelog": [
+				"Fix zeroconf crash"
+			]
+		},
+		{
+			"version": "1.5.9b7",
+			"changelog": [
+				"Fix Audio layer channels save / load"
+			]
+		},
+		{
+			"version": "1.5.9b8",
+			"changelog": [
+				"Fix items reordering regression",
+				"Fix automation keys creation bug regression",
+				"Fix crash when sending badly formatted OSC",
+				"Fix crash on serial open failure",
+				"Fix comparator value not saved if not overriden",
+				"Linked inspectable highlight system 1st pass",
+				"Fix potential crash on targetParameter target deletion",
+				"Removed Easing submenu in automation keys"
+			]
+		},
+		{
+			"version": "1.5.9b9",
+			"changelog": [
+				"Fix regression crash when adding color layer",
+				"Added more overall access safety",
+				"Better multi-selection handling WIP"
+			]
+		},
+		{
+			"version": "1.5.10b1",
+			"changelog": [
+				"Fix Microphone and Audio Input access on OSX"
+			]
+		},
+		{
+			"version": "1.5.10b2",
+			"changelog": [
+				"Added OSX/Linux basic crash reporting",
+				"Fixed Crash on delete module with referenced commands"
+			]
+		},
+		{
+			"version": "1.5.10",
+			"changelog": [
+				"Fix crash when using autoFeedback in OSC module",
+				"Fix filters save/load parameters"
+			]
+		},
+		{
+			"version": "1.5.11b1",
+			"changelog": [
+				"Added MadMapper (OSCQuery) Module",
+				"Added GenericOSCQuery Command",
+				"Fix reordering regression"
+			]
+		},
+		{
+			"version": "1.5.11b2",
+			"changelog": [
+				"Better multi-item manipulation (copy/cut/paste/delete/duplicate)",
+				"Support for copying keyframes in same layer and different layers",
+				"Added Zeroconf support to WakeOnLan command",
+				"Added Play File command to SoundCard Module",
+				"Better audio file handling in timeline",
+				"Allow all modules to create commands even when no device connected",
+				"Fix automation recorder use absolute 0-1 value if parameter has no range",
+				"Fix UI bugs in Sequence Layers",
+				"Fix UI bugs in Consequence Manager",
+				"Changed Trigger layer color for better visibility",
+				"Renamed Lag Filter to FPS, changed menu name to Time"
+			]
+		},
+		{
+			"version": "1.5.11b3",
+			"changelog": [
+				"Fix audio layer crash on mac",
+				"Better target labelling in mapping and condition input",
+				"Add panning in audio layers",
+				"Better select all behavior",
+				"Allow auto-add in PJLink module"
+			]
+		},
+		{
+			"version": "1.6.0b1",
+			"changelog": [
+				"Update to massive refactor for unified drag & drop system",
+				"Added comments in State Machine",
+				"Added zooming in State Machine",
+				"Added support for cross-drag&drop in modules, command templates, actions, mapping and triggers",
+				"UI and menus improvements",
+				"Fix potential crash in Custom Variables commands"
+			]
+		},
+		{
+			"version": "1.6.0b2",
+			"changelog": [
+				"Fix comments not zooming",
+				"Lock zoom to zoom-out only",
+				"Better option labels",
+				"Desaturate processors when state is  disabled"
+			]
+		},
+		{
+			"version": "1.6.0b3",
+			"changelog": [
+				"Small UI improvements",
+				"Added Generic > Script Commands"
+			]
+		},
+		{
+			"version": "1.6.0b4",
+			"changelog": [
+				"StateMachine / TimeMachine / Module UI improvements",
+				"Improved Select all / Copy-Paste mechanisms",
+				"Added Mapping Layer data sending options"
+			]
+		},
+		{
+			"version": "1.6.0b5",
+			"changelog": [
+				"! WARNING ! Mass refactor, may break some links !!!",
+				"New extensible Dashboard system and shortcuts",
+				"Added labels in Timeline cues",
+				"Fix crash on Panel load",
+				"Fix crash when changing Sequences with heavy Mapping Layers",
+				"Fix potential crash in audio layer files",
+				"Added feedback in Mapping layer recorder",
+				"Added Record Send Mode in Mapping Layer to force sending values during manipulation",
+				"Fix save/load Script Commands",
+				"Fix frame view not centered",
+				"Various controls UI improvements and fixes",
+				"Added Zeroconf advertising for global OSC remote control",
+				"Improved Custom Module definitions (added description, readOnly and dependencies)",
+				"Added Reload Custom Module option from menu",
+				"Condition validation time now works in onActivate Actions",
+				"Fix comments not cleared on file change",
+				"All elements are now targettables (some control address may have changed)"
+			]
+		},
+		{
+			"version": "1.6.0b6",
+			"changelog": [
+				"Millumin special : allow spaces in OSC addresses"
+			]
+		},
+		{
+			"version": "1.6.0b7",
+			"changelog": [
+				"Theoriz special : FFT Analyzers in Sound Card Module",
+				"Option to enable Pitch Detection, disabled by default"
+			]
+		},
+		{
+			"version": "1.6.0b8",
+			"changelog": [
+				"Added Open File, New File and Close App in Generic commands",
+				"Added /openFile, /newFile and /closeApp in global Remote Control",
+				"Improved template editors and moved to module inspector",
+				"Changed default layout",
+				"Fixed smooth filter broken if input param has no range",
+				"Fixed bad circ level address in DLight circ level command",
+				"Added offset parameter in signal module",
+				"Added LogType (Info, Warning, Error) in Generic log command",
+				"Minor fixes and improvements"
+			]
+		},
+		{
+			"version": "1.6.0b9",
+			"changelog": [
+				"Improved launch time (1.5s to < 0.5s)",
+				"Improved ArtNet module : no more lag, added universe/subnet parameters, option to disable receiving"
+			]
+		},
+		{
+			"version": "1.6.0b10",
+			"changelog": [
+				"Fix DMX Target Rate",
+				"Fix DMX Set Range command",
+				"Signal frequency up to 200hz",
+				"Various UI improvements"
+			]
+		},
+		{
+			"version": "1.6.0b11",
+			"changelog": [
+				"Fix DMX Command crash",
+				"Fix potential file chooser crash",
+				"Added Launch at system start option (win)",
+				"Added option to minimize at load",
+				"Added addItem() and removeItem() from script in managers",
+				"Added setName() from scripts, for containers",
+				"Added hideDefaultParameters for containers in custom modules definitions"
+			]
+		},
+		{
+			"version": "1.6.0",
+			"changelog": [
+				"Out of beta !",
+				"WARNING ! Some changes may affect your previous sessions",
+				"A backup file will be automatically generated when opening files from older versions"
+			]
+		},
+		{
+			"version": "1.6.1b1",
+			"changelog": [
+				"Fix Custom HTTP Modules not loading correctly",
+				"Fix potential crash on Template with broken modules"
+			]
+		},
+		{
+			"version": "1.6.1b2",
+			"changelog": [
+				"Fix Script crash when using setValue() without parameters",
+				"Fix potential crash with Guides"
+			]
+		},
+		{
+			"version": "1.6.1b3",
+			"changelog": [
+				"Selection navigation with up and down arrows",
+				"Improved FFT Analyzer UI",
+				"Fix integer parameter not saved if not overriden in comparators",
+				"Added Matomo Analytics"
+			]
+		},
+		{
+			"version": "1.6.1b4",
+			"changelog": [
+				"Added support for Sequence timecode sync (master only, WIP)",
+				"Fix convert to int filter naming in mappings"
+			]
+		},
+		{
+			"version": "1.6.1",
+			"changelog": [
+				"Stable release"
+			]
+		},
+		{
+			"version": "1.6.2b1",
+			"changelog": [
+				"Fix potential crash in Guides",
+				"Fix potential crash in Serial Module",
+				"Better analytics"
+			]
+		},
+		{
+			"version": "1.6.2b2",
+			"changelog": [
+				"Fix logger overflow dropping messages"
+			]
+		},
+		{
+			"version": "1.6.2b3",
+			"changelog": [
+				"Serial module can read at 500hz",
+				"Serial module can read multiple lines at once"
+			]
+		},
+		{
+			"version": "1.6.2b4",
+			"changelog": [
+				"Added Morpher / Voronoi interpolation to Custom Variables",
+				"To use it, choose '2D Voronoi' as Control Mode in a Custom Variable Group and open the 'Morpher' Panel"
+			]
+		},
+		{
+			"version": "1.6.2b5",
+			"changelog": [
+				"Fixed crash on right-click in Inspector Custom Values Manager",
+				"Fixed crash on DMX Set All Command",
+				"Fix TCP Modules not detecting disconnection properly",
+				"Improved TCP Module Connection UI",
+				"Simplified auto-update options"
+			]
+		},
+		{
+			"version": "1.6.2b6",
+			"changelog": [
+				"Improved Morpher UI, save / load and fix crashes",
+				"Add safety to complex parameters"
+			]
+		},
+		{
+			"version": "1.6.2b7",
+			"changelog": [
+				"Better name sanitization, avoid script syntax errors. /!\\ MAY BREAK SOME LINKS !",
+				"Added set() and getTarget() methods to TargetParameter from script",
+				"Fix DMXPro when sending only"
+			]
+		},
+		{
+			"version": "1.6.2",
+			"changelog": [
+				"/!\\ THIS UPDATE MAY BREAK SOME LINKS ! Especially if you have accents in your object names",
+				"Many fixes, crash hunting"
+			]
+		},
+		{
+			"version": "1.6.3b1",
+			"changelog": [
+				"Fixed TargetParameter keep ghost values in saved files",
+				"Recursive Warning system functional with new Panel",
+				"Added TCP Server Module",
+				"Added morpher and warnings to default layout",
+				"Small UI improvements, better readibility of green sliders",
+				"Fixed potential badly formatted OSC in commands"
+			]
+		},
+		{
+			"version": "1.6.3b2",
+			"changelog": [
+				"Fixed regression with Target parameters",
+				"Improved warning system and object naming"
+			]
+		},
+		{
+			"version": "1.6.3b3",
+			"changelog": [
+				"Fixed UDP overflow when receiving at lower rate",
+				"UDP receive framerate is now customizable",
+				"Fixed Integer parameter bugs with Streaming Modules",
+				"Added Hexadecimal view for Integer parameter with a range",
+				"Fix potential crash when pasting triggers",
+				"Added more message structure options in Streaming Modules",
+				"Better handling of enable/disable of input/output in Streaming Modules",
+				"Cleaned up UI or parasites parameters",
+				"Fixed crash when deleting selected items with warnings"
+			]
+		},
+		{
+			"version": "1.6.3b4",
+			"changelog": [
+				"Fixed crash regression in TCP Client"
+			]
+		},
+		{
+			"version": "1.6.3b5",
+			"changelog": [
+				"Integer UI as stepper even if read-only",
+				"Fix stepper increment limitation",
+				"Added Send Hex Data command in Streaming modules"
+			]
+		},
+		{
+			"version": "1.6.3b6",
+			"changelog": [
+				"Added local file read support to HTTP Module",
+				"Added autoAdd and JSON support to HTTP Module and commands",
+				"Added commands to save/load preset values to/from files in CustomVariables"
+			]
+		},
+		{
+			"version": "1.6.3b7",
+			"changelog": [
+				"Ported TimeMachine to juce_timeline",
+				"Added crop, resize and block manipulation in Audio Layer",
+				"TImeline multiselection manipulation WIP",
+				"Added launchFile script command in OSModule",
+				"Simplified Triggers in preparation of Conditionnal triggers",
+				"Improved add / remove items safety",
+				"Added ScriptCallback common command",
+				"Improved HTTP module auto Add mechanism",
+				"Improved Action UI and trigger when disabled"
+			]
+		},
+		{
+			"version": "1.6.3b8",
+			"changelog": [
+				"Moved Color Manager to organicUI",
+				"Normalized file paths for osx / windows compatibility",
+				"Renamed launchFile > launchApp in OS module's scripts"
+			]
+		},
+		{
+			"version": "1.6.3b9",
+			"changelog": [
+				"Timeline UI improvements",
+				"Restored sync scrolling and touchpad scrubbing",
+				"Added Timeline menu with more shortcut controls"
+			]
+		},
+		{
+			"version": "1.6.3b10",
+			"changelog": [
+				"Updated mapping and commands",
+				"Improved mapping filters",
+				"Fixed crash when pasting some modules",
+				"Improved network modules loading"
+			]
+		},
+		{
+			"version": "1.6.4b1",
+			"changelog": [
+				"Fixed Script callbacks in mappings",
+				"Added Script command for DMX"
+			]
+		},
+		{
+			"version": "1.6.4b2",
+			"changelog": [
+				"Fixed On Activate conditions not triggered the first time",
+				"Added more String functions in Javascript"
+			]
+		},
+		{
+			"version": "1.6.4b3",
+			"changelog": [
+				"Improved View UI zoom and scroll behaviour",
+				"Fixed View UI getting invisible in some cases",
+				"Zoom now uses shift or magnify"
+			]
+		},
+		{
+			"version": "1.6.4b4",
+			"changelog": [
+				"Fixed zoom update visible items in Views",
+				"Fixed MIDI notes with # not saved if same notes without are in the list",
+				"Fixed load values before templates and scripts in Module (scripts can access them at load)",
+				"Added more string functions to Javascript (replace, trim, startsWith, endsWith)"
+			]
+		},
+		{
+			"version": "1.6.4b5",
+			"changelog": [
+				"Fixed Audio clip start offset not saved",
+				"Added icons (uncomplete) to modules",
+				"Improved OS Kill command on windows (soft and hard kill)",
+				"Bigger UI for your pretty eyes !"
+			]
+		},
+		{
+			"version": "1.6.4b6",
+			"changelog": [
+				"Fixed On Activate actions not triggered on file load",
+				"Fixed Templates parameters linking",
+				"Fixed Sequence commands Go to time and added play option",
+				"Fixed String Parameter UI size",
+				"Added Warning on Audio module when not correctly set up",
+				"Fixed Module Manager showing up in Inspector"
+			]
+		},
+		{
+			"version": "1.6.4b7",
+			"changelog": [
+				"Added Launch command and Launch command file to OS Module"
+			]
+		},
+		{
+			"version": "1.6.4b9",
+			"changelog": [
+				"Dashboard revamp WIP",
+				"Added fullscreen / kiosk mode",
+				"Added panel temporary exclusive mode (double click on tab)",
+				"Small UI changes and improvements"
+			]
+		},
+		{
+			"version": "1.6.4",
+			"changelog": [
+				"Fixed few bugs, crashes and regressions from beta"
+			]
+		},
+		{
+			"version": "1.6.5b1",
+			"changelog": [
+				"Added option in parameters to force notification even when setting the same value",
+				"Added option in conditions to always re-evaluate and trigger on parameter change"
+			]
+		},
+		{
+			"version": "1.6.5b2",
+			"changelog": [
+				"Many crash fixes from crashlogs and feedbacks",
+				"Improved dashboard, more control over custom UI",
+				"Added fullscreen at startup in Project Settings",
+				"Added focus on specific Dashboard in Project Settings",
+				"Added warning support for commands",
+				"Fixed bug Generic>Log value not showing latest value",
+				"Improved mouse wheel behaviour in Views"
+			]
+		},
+		{
+			"version": "1.6.5b3",
+			"changelog": [
+				"Fixed bad behaviours in comparators and conditions",
+				"Fixed bad behaviours in Streaming modules",
+				"Added more supported audio file formats",
+				"Added \"copy line\" option in Logger",
+				"Fixed StringParameter same-value bad check",
+				"Added crypto and more utilities / string functions to scripts",
+				"Many more crash fixes from crashlogs and feedbacks"
+			]
+		},
+		{
+			"version": "1.6.5b4",
+			"changelog": [
+				"Fixed UI regression in Dashboard",
+				"Improved label and item options in Dashboard",
+				"Added script.logWarning and script.logError in scripts",
+				"Added addOption method for Enum parameters in scripts"
+			]
+		},
+		{
+			"version": "1.6.5b5",
+			"changelog": [
+				"Added more string functions in scripts",
+				"Proper ghosting of lost items in Dashboard"
+			]
+		},
+		{
+			"version": "1.6.5b6",
+			"changelog": [
+				"Added Custom Variables as source in Router",
+				"Fixed module nested values not syncing properly with Router",
+				"Fixed Image BoolParam showing label by default"
+			]
+		},
+		{
+			"version": "1.6.5b7",
+			"changelog": [
+				"Fixed crash when using reference control mode and deleting the parameter",
+				"Improved target UI",
+				"Fixed scrolling bug when scrolling through comments in State view",
+				"Fixed comments and states visibility when framing in State View",
+				"Fixed transitions following states when dragging",
+				"Added active feedback and frame view button in State List UI",
+				"Added Program Change command to MIDI Modules",
+				"Fix commands loading previous command data in wrong situations",
+				"Improved Dashboard : added size, position and contour"
+			]
+		},
+		{
+			"version": "1.6.5b8",
+			"changelog": [
+				"Added snapping in State View and Dashboard",
+				"Fixed crash on Network module load",
+				"Improved enable/disable network modules mechanisms",
+				"Cleaner logging with network modules",
+				"Fixed Remap filter with inverted out range"
+			]
+		},
+		{
+			"version": "1.6.5b10",
+			"changelog": [
+				"Fixed deletion bug with templates losing lins",
+				"Improved TCP Client and Server modules (UI / disconnection detection)",
+				"Added UDP and TCP modules auto disconnection/reconnection on Module disable/enable",
+				"Added \"-r\" command line argument to reset preferences (useful when auto opening crashing file)"
+			]
+		},
+		{
+			"version": "1.6.5b11",
+			"changelog": [
+				"Fixed templates sync on duplicate and rename",
+				"Added multi moving support for triggers",
+				"Added scaled moving using alt+drag on triggers and blocks",
+				"Added locking Y axis on multi-key moving in automations",
+				"Fixed snapping bug"
+			]
+		},
+		{
+			"version": "1.6.5b12",
+			"changelog": [
+				"Fixed crash regression from b11",
+				"Added undo support on multi move/scale in triggers"
+			]
+		},
+		{
+			"version": "1.6.5b13",
+			"changelog": [
+				"Fixed target parameters relinking weird behaviour",
+				"Fixed Custom Variables commands parameters changing unexpectedly",
+				"Added Focus App command on OS Module (win only)"
+			]
+		},
+		{
+			"version": "1.6.5b14",
+			"changelog": [
+				"Fixed target parameter regression not loading some parameters in reference",
+				"Fixed DMX Command not working in mapping when multi-value parameter used as source",
+				"Removed labels in mapping filter and mapping output feedback"
+			]
+		},
+		{
+			"version": "1.6.6b1",
+			"changelog": [
+				"Added support for Joycon Module on Mac"
+			]
+		},
+		{
+			"version": "1.6.6b2",
+			"changelog": [
+				"Added support for passwords in PJLink",
+				"Added support for TCP/UDP/Serial modules in Module Router Outputs",
+				"Fixed Joycon values in wrong containers",
+				"Fixed naming in OS Window Command",
+				"Fixed crash in TCP Server",
+				"Fixed crash in Module Router"
+			]
+		},
+		{
+			"version": "1.6.6b3",
+			"changelog": [
+				"Added network interface detection for OSX and Linux in DMX/ArtNet Module",
+				"Fixed potential crash on interface listing on Windows",
+				"Fixed audio looping not properly in certain circumstances",
+				"Added Sequencetotal time feedback in UI",
+				"Auto adjusting sequence total time when importing audio files longer than current sequence length",
+				"Removed Custom Variables in Module Router output"
+			]
+		},
+		{
+			"version": "1.6.6b4",
+			"changelog": [
+				"Fixed various bugs and crashes",
+				"Added Font Size in Global Settings",
+				"Added Compress file in Global Settings",
+				"Exposed Script update Rate as parameter",
+				"Scripts update function is now threaded",
+				"Optimized Gradient color generation (faster and safer)",
+				"Force reset skipped version when manually checking for updates"
+			]
+		},
+		{
+			"version": "1.6.6b5",
+			"changelog": [
+				"Custom file base path for custom modules",
+				"Improved UI for dynamic font size",
+				"Auto trim IP fields",
+				"Fixed Gradient UI regression",
+				"Fixed Warnings bugs",
+				"Added \"Load Behavior\" in States to setup States activation on load",
+				"Fixed removeItem from script not working",
+				"Fixed script crashing on load/destroy in some conditions",
+				"Reduced script execution timeout to 2 seconds",
+				"Fixed script structure change update"
+			]
+		},
+		{
+			"version": "1.6.6b6",
+			"changelog": [
+				"Raspberry PI online compilation thanks to Tom :)",
+				"MiniView Pane for StateView when dragging",
+				"Proper tabbing through parameters in Inspector",
+				"Fixed small UI and behaviors stuff",
+				"Added the Welcome Screen !"
+			]
+		},
+		{
+			"version": "1.6.6",
+			"changelog": [
+				"Hide edit button in module scripts",
+				"Stable release",
+				"Added support for gamepad/joystick in OSX-Linux"
+			]
+		},
+		{
+			"version": "1.6.7",
+			"changelog": [
+				"BROKEN MAPPING LAYER HOTFIX YOU MUST UPDATE FROM 1.6.6 !!",
+				"Added support for gamepad/joystick on Raspberry",
+				"Added MTC Receiver in Sequences",
+				"Fixed additionnal newLine in Serial sendMessage",
+				"Fixed \"Open specific file at startup\" not keeping absolute path",
+				"Fixed various bugs and crashes",
+				"Added audio enveloppe export to clipboard or to new mapping layer"
+			]
+		},
+		{
+			"version": "1.6.8",
+			"changelog": [
+				"Fix very annoying crash when removing a module in OSX",
+				"Fix various UI bugs in parameters",
+				"Fix spaces in custom short name split Args (OSC module)",
+				"Fix COBS encoding / decoding in Streaming modules",
+				"Added streamdeck module",
+				"Added more module icons",
+				"Various UI improvements",
+				"Fix crash when removing joystick / gamepad",
+				"Fix Serial connection/disconnection"
+			]
+		},
+		{
+			"version": "1.6.9",
+			"changelog": [
+				"Fixed linux dependencies",
+				"Fixed StreamDeck Module",
+				"Hide label in Mappings",
+				"Minor UI updates"
+			]
+		},
+		{
+			"version": "1.6.9b1",
+			"changelog": [
+				"Added mapping layer exporting (WIP)",
+				"Fixed DMX with OpenDMX on Linux",
+				"Added PitchWheel input support in MIDI Module",
+				"Fixed bad script loading with Custom Modules",
+				"Added fancy crash feedback window"
+			]
+		},
+		{
+			"version": "1.6.9b2",
+			"changelog": [
+				"Fixed HeavyM set sequence command",
+				"Fixed linux mp3 format support"
+			]
+		},
+		{
+			"version": "1.6.9b3",
+			"changelog": [
+				"Fixed Color Layer UI update",
+				"Fixed more than 100000 items bug in generic target menu crash"
+			]
+		},
+		{
+			"version": "1.6.9b4",
+			"changelog": [
+				"Blind fix to StreamDeck connection update causing crash",
+				"Filtered Serial port list, hide devices when vid/pid is 0x0"
+			]
+		},
+		{
+			"version": "1.6.10b1",
+			"changelog": [
+				"Update Streamdeck detection accepts all VID"
+			]
+		},
+		{
+			"version": "1.6.10b2",
+			"changelog": [
+				"Added Move time command for Sequences"
+			]
+		},
+		{
+			"version": "1.6.10b3",
+			"changelog": [
+				"Added speed command in Millumin",
+				"Added axis offset and deadzone in gamepad/joystick modules"
+			]
+		},
+		{
+			"version": "1.6.10b4",
+			"changelog": [
+				"Powerpoint module update, added totalPages and fixed bugs",
+				"Added module data pass-through"
+			]
+		},
+		{
+			"version": "1.6.10",
+			"changelog": [
+				"Stable release"
+			]
+		},
+		{
+			"version": "1.6.11",
+			"changelog": [
+				"VDMX OSCQuery support",
+				"Fixed OSX release binaries"
+			]
+		},
+		{
+			"version": "1.6.12b1",
+			"changelog": [
+				"Allow all non-custom modules to be a base for custom modules"
+			]
+		},
+		{
+			"version": "1.6.12b2",
+			"changelog": [
+				"Fix Streaming Module pass-through on Lines mode",
+				"Improved Custom module customization",
+				"Fixed TCP Client and Server disconnection detection",
+				"Fixed custom module Use for Mapping bug"
+			]
+		},
+		{
+			"version": "1.6.12b3",
+			"changelog": [
+				"Added setCollapsed method to containers in scripts",
+				"Added index parameter in custom module container parameter definitions"
+			]
+		},
+		{
+			"version": "1.6.12b4",
+			"changelog": [
+				"Fixed potential crash on using DMX in router (thank you Nick and Chris for the crash log !)",
+				"Fixed various potential crashes",
+				"Minor UI updates",
+				"Preparing for big ass update"
+			]
+		},
+		{
+			"version": "1.6.12b5",
+			"changelog": [
+				"Mass renaming / cleanup : YOU MUST UPDATE THE FILE WHEN LOADING FROM A PREVIOUS VERSION !!",
+				"StreamDeck V2 support",
+				"Improved Scripting API",
+				"Added \"Go to preset\" command for custom variables"
+			]
+		},
+		{
+			"version": "1.6.12b6",
+			"changelog": [
+				"Added script methods to add/remove parameters and containers anywhere",
+				"Added script addFileParameter + script methods to read/write from File Parameters",
+				"Added script methods to read/write/createDirectory from any script (without parameters)",
+				"Fix bug with colors in Custom Values command in Streaming modules (UDP, TCP, Serial)",
+				"Fixed color UI syncing in Color timeline"
+			]
+		},
+		{
+			"version": "1.6.13b1",
+			"changelog": [
+				"Fix serial crash on mode change while receiving data",
+				"Fix potential crash on structure change",
+				"Fix potential crash when using Guide but not following instructions"
+			]
+		},
+		{
+			"version": "1.6.13b2",
+			"changelog": [
+				"Fix potential crashes linked to the morpher (thanks nick and chris !)",
+				"Fix potential crashes in mapping filters",
+				"Optimized the data flow by removing activity triggers from the hierarchy"
+			]
+		},
+		{
+			"version": "1.6.13b3",
+			"changelog": [
+				"Fix recorder broken in Mapping layer",
+				"Fix color layer \"always Update\"  not working",
+				"Fix containers not scrollable in Dashboard",
+				"Added \"auto scroll\" toggle in Logger",
+				"Fix UDP module not able to send broadcast on OSX"
+			]
+		},
+		{
+			"version": "1.6.13b4",
+			"changelog": [
+				"Fix Wiimote button +/- mixed up",
+				"Added \"Stop All\" command to sequences",
+				"Added UI for stop all sequences in panel",
+				"Added \"Only one sequence playing\" option in sequence manager"
+			]
+		},
+		{
+			"version": "1.6.13b5",
+			"changelog": [
+				"Fix broken UDP script send regression",
+				"Imroved zero conf buttons UI"
+			]
+		},
+		{
+			"version": "1.6.13b6",
+			"changelog": [
+				"Added sendTo OSC Script method",
+				"Added sendTo and sendMessageTo UDP script method",
+				"Changed Serial default baudrate to 115200"
+			]
+		},
+		{
+			"version": "1.6.13b7",
+			"changelog": [
+				"Added fileExists() script util method",
+				"Added directoryExists() script util method",
+				"Added getOSInfos() script util method",
+				"Added getAppVersion() script util method",
+				"Added getEnvironmentVariable() script util method"
+			]
+		},
+		{
+			"version": "1.6.13b8",
+			"changelog": [
+				"Fixed various crashes (thank you feedbackers !)",
+				"Added Keyboard send key command (win only)",
+				"Added Mouse module with input",
+				"Added mouse commands (win only)",
+				"Added \"See changelog\" menu",
+				"Added \"sendTo\" script method to send to any ip/port in OSC and UDP modules"
+			]
+		},
+		{
+			"version": "1.6.13b9",
+			"changelog": [
+				"Fixed various crashes (thank you feedbackers !)",
+				"Experimental mac support for mouse and keyboard commands",
+				"Various UI improvements",
+				"Fixed Custom variables presets not interpolating when parameters have not been overriden",
+				"Better template parameter management",
+				"Added format option in the \"Convert to String\" mapping filter",
+				"Added tray icon, now can close to system tray"
+			]
+		},
+		{
+			"version": "1.6.13b10",
+			"changelog": [
+				"Fixed crash using Stop All Sequences command",
+				"Added launchFile script method",
+				"Added level parameter to getParent() script method",
+				"Changed OSC input and UDP port binding to be exclusive and broadcast enabled",
+				"Added copy/paste right click menu to mappings, actions and containers",
+				"Added support for dropping an audio file in the sequence editor",
+				"Added support for 2d and 3d parameters in OSCQuery",
+				"Fixed broken target position command and system in Custom Variables Morpher"
+			]
+		},
+		{
+			"version": "1.6.13b11",
+			"changelog": [
+				"Added support for Channel Pressure and After Touch in MIDI module",
+				"Added more manager script methods (see documentation)",
+				"Added more attribute script methods to Parameters (see documentation)",
+				"Better logging of objects in scripts"
+			]
+		},
+		{
+			"version": "1.6.13",
+			"changelog": [
+				"Last release before 1.7.x cycle !",
+				"Removed auto range in OSC",
+				"Added support for OSCQuery P2D/P3D"
+			]
+		},
+		{
+			"version": "1.7.0b1",
+			"changelog": [
+				"Added support for multiple inputs in Mappings",
+				"Updated all filters and added the Mega converter filter (wip)"
+			]
+		},
+		{
+			"version": "1.7.0b2",
+			"changelog": [
+				"Fix save/load breaks output in mapping and color layers",
+				"Fix potential load freeze",
+				"Fix potential crashes in Automation",
+				"Fix potential crash in conditions",
+				"Improve OSCQuery types support (thanks Manuel !)"
+			]
+		},
+		{
+			"version": "1.7.0b3",
+			"changelog": [
+				"Fix crashes",
+				"Added support for mixed typed in sendSysex script method"
+			]
+		},
+		{
+			"version": "1.7.0b4",
+			"changelog": [
+				"Fix critical OSX keyboard bug",
+				"Fix critical crash when editing float parameter in callout box"
+			]
+		},
+		{
+			"version": "1.7.0b5",
+			"changelog": [
+				"Massive refactor to support 2D Mappings ! (Very WIP, beta testers are welcome..)",
+				"Added Global Setting for default easing when creative automations"
+			]
+		},
+		{
+			"version": "1.7.0b6",
+			"changelog": [
+				"Massive Automation refactor !",
+				"Absolute interpolations",
+				"Automation drawing support with Ctrl+shift",
+				"Curve2D drawing support with Ctrl+shift",
+				"Added multi-selector for all managers",
+				"Simplified and improved automation recorder"
+			]
+		},
+		{
+			"version": "1.7.0b7",
+			"changelog": [
+				"Fix load regression bug on Mapping layer",
+				"Fix some crashes",
+				"Added absolute mode support for Mapping layer",
+				"Improved Mapping layer UI",
+				"Fixed windows installation"
+			]
+		},
+		{
+			"version": "1.7.0b8",
+			"changelog": [
+				"Added support for backward drawing (special Dadou dedicace)",
+				"Added support for recording in Mapping2D",
+				"UI improvements and bug fixes"
+			]
+		},
+		{
+			"version": "1.7.0b9",
+			"changelog": [
+				"Fixed crash on load when using \"Stop All\" Sequence command",
+				"Updated changelog link",
+				"Fixed OSCQuery connection bug"
+			]
+		},
+		{
+			"version": "1.7.0b10",
+			"changelog": [
+				"Fix BIG stupid regression on Int Parameter not changing",
+				"Fix potential crash when removing items"
+			]
+		},
+		{
+			"version": "1.7.0b11",
+			"changelog": [
+				"Fix Position Y not working on Millumin module",
+				"Added experimental audio recording in Time Machine"
+			]
+		},
+		{
+			"version": "1.7.0b12",
+			"changelog": [
+				"Fix various bugs and crashes from Monday's workshop"
+			]
+		},
+		{
+			"version": "1.7.0b13",
+			"changelog": [
+				"Fix various bugs and crashes from Thursday's workshop",
+				"Unified Color sending in OSC",
+				"Improved Mega converted UI"
+			]
+		},
+		{
+			"version": "1.7.0b14",
+			"changelog": [
+				"Optimized Sequence playing for perfect smoothness (Thanks Manuel !)",
+				"Fix potential crashes and layer manipulation in timeline",
+				"Updated script templates",
+				"Better script generation mechanism",
+				"Target Parameters have now script method getKey() to get the label and get() to get the data"
+			]
+		},
+		{
+			"version": "1.7.0b15",
+			"changelog": [
+				"Fixed Resolume MultiClip/MultiColumn crash",
+				"Fixed potential other range change crash",
+				"Fixed debug files on CI Release not linking to sources"
+			]
+		},
+		{
+			"version": "1.7.0b16",
+			"changelog": [
+				"Multiple selection / manipulation WIP",
+				"Ability to select different items in different layers and move them"
+			]
+		},
+		{
+			"version": "1.7.0b17",
+			"changelog": [
+				"OSCQuery fix and improve save/load and sync",
+				"Added PUT, PATCH and DELETE methods in HTTP Module",
+				"Ability to select different items in different layers and move them"
+			]
+		},
+		{
+			"version": "1.7.0b18",
+			"changelog": [
+				"Fixed critical bug when using multiple audio layers"
+			]
+		},
+		{
+			"version": "1.7.0b19",
+			"changelog": [
+				"QLab Module WIP",
+				"Minor bug fixes and improvements"
+			]
+		},
+		{
+			"version": "1.7.0b20",
+			"changelog": [
+				"QLab module improvements",
+				"Added OS launchCommand / launchProcess script methods",
+				"Added support for enum in OSC command arguments",
+				"Fixed parameters not showing up in some custom modules",
+				"Added additional parameter to parseInt for forcing decimal interpretation",
+				"Fixed reorder script method and automation auto update keys on reorder",
+				"Added option to readFile writeFile to search in script's folder"
+			]
+		},
+		{
+			"version": "1.7.0b21",
+			"changelog": [
+				"Fixed export audio layer to mapping curve",
+				"Improved key simplification (drawing and recording)",
+				"Improved Sequence UI (Panel and transport)",
+				"Added timeline advanced control with header right click manipulation"
+			]
+		},
+		{
+			"version": "1.7.0b22",
+			"changelog": [
+				"Added The Detective Panel ! (WIP but functional)",
+				"Added more QLab commands (thank you Jeremy !)",
+				"Fixed sysEx MIDI commands save/load bug",
+				"MIDI SysEx hexMode by default",
+				"Added color parameter to triggers",
+				"Trigger layers normal color by default",
+				"Minor UI improvements and bug fixing"
+			]
+		},
+		{
+			"version": "1.7.0b23",
+			"changelog": [
+				"UI fixes and improvements",
+				"Fixed some DMX/MIDI bugs and crashes",
+				"Added getValueAtPosition, getKeyAtPosition and getKeysBetween automation script methods"
+			]
+		},
+		{
+			"version": "1.7.0b24",
+			"changelog": [
+				"Improved key simplification (thanks Tom !!)",
+				"Fixed recording audio freeze",
+				"Fixed state transition priority using the same condition"
+			]
+		},
+		{
+			"version": "1.7.0b25",
+			"changelog": [
+				"UI fixes and improvements"
+			]
+		},
+		{
+			"version": "1.7.0b26",
+			"changelog": [
+				"Fixed multiple Audio Layer bug",
+				"Fixed DMX disable still receiving",
+				"Minor UI improvements",
+				"Fixed remap filter when using inverted values"
+			]
+		},
+		{
+			"version": "1.7.0b27",
+			"changelog": [
+				"Added script.setExecutionTimeout(timeInSeconds) method",
+				"ArtNet revamp ! Improved simplicity and stability"
+			]
+		},
+		{
+			"version": "1.7.0b28",
+			"changelog": [
+				"Fixed linux crashes on item deletion",
+				"Fixed linux crashlog sending",
+				"Fixed timeline total time frame sync (auto restart bug)"
+			]
+		},
+		{
+			"version": "1.7.0b29",
+			"changelog": [
+				"Fixed copy/paste items in sequences",
+				"Added multi-layer keys selection when clicking on the sequence editor background",
+				"Fixed DMX Router out channel now limited to 512, instead of 16",
+				"Added Module-specific Router controllers (only DMX and MIDI right now)"
+			]
+		},
+		{
+			"version": "1.7.0b30",
+			"changelog": [
+				"DMX per-channel 16-bit input support (right click on values)",
+				"ArtNet separate input and output universe/subnet",
+				"DMX module structure refactor",
+				"DMX add proper input / output separation and enable/disable support",
+				"Dashboard Server WIP (needs to manually put files for now)",
+				"Added dmxEvent() script callback",
+				"Added support for math-expressions in number fields",
+				"Added support for moving automation keys and triggers with left-right arrows",
+				"Improved timeline element cross-layer selection",
+				"Fixed various copy/paste/duplicate bugs",
+				"Fixed various UI bugs in managers",
+				"CustomVariables Added preset per-value interpolation mode",
+				"Timeline infinite mouse motion when dragging the seeker",
+				"Added ToBoolean filter with toggle mode support",
+				"Added \"ToggleMode\" behaviour to Comparators",
+				"Mass ++i optimization"
+			]
+		},
+		{
+			"version": "1.7.0b31",
+			"changelog": [
+				"Fixed various crashes and bugs",
+				"Added Websocket Client and Server modules !",
+				"Added prefix and suffix to stream string commands",
+				"Layer Mini Mode"
+			]
+		},
+		{
+			"version": "1.7.0b32",
+			"changelog": [
+				"Added Dashboard server online file fetching",
+				"Added Dashboard server custom directory support"
+			]
+		},
+		{
+			"version": "1.7.1",
+			"changelog": [
+				"Finally !",
+				"/!\\ IMPORTANT NOTE /!\\",
+				"This release contains many breaking changes from 1.6.x",
+				"A lot of effort has been put in trying to minimize the amount of things actually breaking when updating, but you will have to check your file !!!",
+				"As usual, there is always a _backup file created when updating, and the older versions are available on the website.",
+				"Enjoy !"
+			]
+		},
+		{
+			"version": "1.7.1",
+			"changelog": [
+				"Fixed all bugs from 1.7.0 workshop presentation :",
+				"Fixed Dashboard UI bug when editing",
+				"Fixed Custom Variables naming bug",
+				"Added full support for layers miniMode",
+				"Fixed Cues step-sync",
+				"Attempt to fix linux crash on mapping delete in Release",
+				"Attempt to fix OSCQuery crash when receiving no VALUE and RANGE",
+				"Fixed UI bug in Condition when adding a consequence for the first time",
+				"Fixed Router bad UI",
+				"Fixed Streaming module Log Incoming lines"
+			]
+		},
+		{
+			"version": "1.7.2",
+			"changelog": [
+				"Fixed Custom Variables save/load"
+			]
+		},
+		{
+			"version": "1.7.3b1",
+			"changelog": [
+				"Updated Module Factory, allowing modules to be created from script",
+				"Fixed moduleParameterChanged not being called in HTTP",
+				"Improved HTTP module, added easy Authentication and module-wise protocol",
+				"Fixed few crashes and bugs (thanks for the crash logs, it's very helpful !)",
+				"Updated to JUCE 6, hopefully fixing some stuff I don't know about",
+				"Fixed comparator loading state in toggle mode"
+			]
+		},
+		{
+			"version": "1.7.3",
+			"changelog": [
+				"Fixed Custom Variables crash on set preset / go to preset"
+			]
+		},
+		{
+			"version": "1.7.4b1",
+			"changelog": [
+				"UI bug fixes",
+				"Automation key undo fix",
+				"Many in-depth optimization and fixes, thanks Tom !"
+			]
+		},
+		{
+			"version": "1.7.4",
+			"changelog": [
+				"Fixed Dashboard Ctrl+E shortcut",
+				"Fixed Dashboard feedback to web server",
+				"Fixed HTTP module crash on auto-add",
+				"Fixed Condition not working until changing comparison operator",
+				"Updated JUCE, fixed linux/raspberry launch X11 bug"
+			]
+		},
+		{
+			"version": "1.7.5b1",
+			"changelog": [
+				"Fixed DMX device parameters not saved",
+				"Added sequence colors",
+				"Fixed general UI manipulation",
+				"Added min/max operator in Math filters",
+				"Added min/max operator in Custom Variables",
+				"Added support for custom module icons",
+				"Fixed parameters not clickable in reference/expression mode"
+			]
+		},
+		{
+			"version": "1.7.5b2",
+			"changelog": [
+				"Fixed bad 2D curve handling",
+				"Added support for double click on curves with perfect-fit",
+				"Added support for description in Custom Modules command parameters",
+				"Various UI updates"
+			]
+		},
+		{
+			"version": "1.7.5b3",
+			"changelog": [
+				"Minor UI fixes",
+				"Added MessageBox, OkCancel and YesNoCancel popup script methods (documentation updated)"
+			]
+		},
+		{
+			"version": "1.7.5b6",
+			"changelog": [
+				"Added GPIO Module (Raspberyry only, needs to be launched with sudo !)",
+				"Fixed Resolume Stop layer when using repetetively"
+			]
+		},
+		{
+			"version": "1.7.5b7",
+			"changelog": [
+				"Improved script loading safety",
+				"fixed ArtNet Net/Subnet/Universe parameters",
+				"allow Enum in mappings outputs"
+			]
+		},
+		{
+			"version": "1.7.5b8",
+			"changelog": [
+				"Fixed ArtNet not sending when input is disabled"
+			]
+		},
+		{
+			"version": "1.7.5b9",
+			"changelog": [
+				"Fixed copy/paste of automation keys not working since 1.7.3",
+				"Added Audio Clip fade in/out",
+				"Thanks to Tom : ",
+				"Fixed minimized UI in states on file load",
+				"Fixed potential crash with OSC output",
+				"Various memory improvements"
+			]
+		},
+		{
+			"version": "1.7.5b10",
+			"changelog": [
+				"Fixed potential crashes on Mapping",
+				"Add State UI miniMode toggle on double click",
+				"Removed 1 hour limit for triggers, cues and sequence commands",
+				"Fixed potential crash on file load with Dashboard server enabled",
+				"Fixed range feedback for P2D/P3D parameters",
+				"Added support for enums in Dashboard server",
+				"Fixed Controllable menu bug",
+				"Fixed Dashboard webserver loading bugs (images and timeouts)"
+			]
+		},
+		{
+			"version": "1.7.5b11",
+			"changelog": [
+				"Changed LiveOSC to Ableton Live (using custom Max patch, waaaay better !)",
+				"Various crash and bug fixes",
+				"Added Sequence Command Set Layer volume and multi launch",
+				"Disabled DMXPro Input by default (makes output buggy)"
+			]
+		},
+		{
+			"version": "1.7.5b12",
+			"changelog": [
+				"Fixed remove shortcuts",
+				"Optimized remove multiple items at once",
+				"Fixed Color paramter default init",
+				"Fixed OSCQuery color bug in mapping",
+				"Added Module Router Source Values to hierarchy",
+				"Fix OSCQuery command default value (thanks Manuel !)",
+				"Automation add option to change all easings at once"
+			]
+		},
+		{
+			"version": "1.7.5b13",
+			"changelog": [
+				"Fixed Command Templates missing parameters",
+				"Fixed Mega converter complex parameters sync"
+			]
+		},
+		{
+			"version": "1.7.5b14",
+			"changelog": [
+				"Custom Variables Preset add Interpolation None",
+				"Added search bars to modules, custom variables and sequences",
+				"Custom Variables Preset manual trigger and default load time / interpolation curve",
+				"Fixed potential stack overflow with Target Parameters",
+				"Fix Comment UI bugs in State Machine View (thanks Tom !)"
+			]
+		},
+		{
+			"version": "1.7.5b15",
+			"changelog": [
+				"Custom Variables add Enum Parameter and right-click > set Option",
+				"(Finally !) fixed state transitions when using same conditions in different connected transitions",
+				"Better scrolling behaviour in Views (State Machine View, etc.)"
+			]
+		},
+		{
+			"version": "1.7.5b16",
+			"changelog": [
+				"Updated to JUCE 6.0.4",
+				"Added Mapping \"Out Value\" parameter for hierarchy/dashboard consistent access",
+				"Fixed joystick/gamepad thread lock on file load",
+				"Fixed layout change crash",
+				"Fixed range save/load in command arguments",
+				"Added Enum to Custom Variables",
+				"Fixed Morpher duplicate preset not in view",
+				"Added support for Bluetooth MIDI devices (Windows)",
+				"Updated State Machine commands and added Reset Toggle State"
+			]
+		},
+		{
+			"version": "1.7.5b17",
+			"changelog": [
+				"Improved zeroconf discovery (blazing fast !)",
+				"Improved Dashboard UI (edit mode interaction)",
+				"Fixed Math Filter save/load",
+				"Fixed layout weirdness when setting showDashboardAtLoad",
+				"Do not show crash window in certain cases (museo/autoStartup)",
+				"Added some State Commands in Mappings"
+			]
+		},
+		{
+			"version": "1.7.5b18",
+			"changelog": [
+				"Hide Mapping \"Out Values\" for clarity"
+			]
+		},
+		{
+			"version": "1.7.5b19",
+			"changelog": [
+				"Fix Math filter crash",
+				"OSC bi-directional WIP"
+			]
+		},
+		{
+			"version": "1.7.5b20",
+			"changelog": [
+				"Improved OSCQuery bi-directional",
+				"Fixed crash when right clicking on automation",
+				"Fixed joystick lock typo (hopefully fixes crashes)",
+				"Fixed dmx connection feedback at creation",
+				"Capped joystick/gamepad at 50fps",
+				"MIDI Module values sorting by note",
+				"Added useHierarchy in OSC and MIDI modules",
+				"Fixed drawing in Mapping 2D"
+			]
+		},
+		{
+			"version": "1.7.5b21",
+			"changelog": [
+				"Improved color layer selection and manipulation",
+				"Changed default colors to 1 red key"
+			]
+		},
+		{
+			"version": "1.7.6b1",
+			"changelog": [
+				"Fixed multi-channel playback in Timeline",
+				"Fixed OpenDMX crash unhandled IOerror",
+				"Fixed keyboard commands crash",
+				"Other bug and crash fixes",
+				"Fixed autoFeedback when useHierarchy in OSCModule",
+				"Fixed crash in mapping",
+				"Optimized Outliner and TargetParameter performance",
+				"Fixed Mapping 2D recorder crash",
+				"Fixed Detective crash"
+			]
+		},
+		{
+			"version": "1.7.5",
+			"changelog": [
+				"Stable !"
+			]
+		},
+		{
+			"version": "1.7.7b1",
+			"changelog": [
+				"Fixed multi-channel playback in Timeline",
+				"Fixed OpenDMX crash unhandled IOerror",
+				"Fixed keyboard commands crash",
+				"Other bug and crash fixes",
+				"Fixed autoFeedback when useHierarchy in OSCModule",
+				"Fixed crash in mapping",
+				"Optimized Outliner and TargetParameter performance",
+				"Fixed Mapping 2D recorder crash",
+				"Fixed Detective crash"
+			]
+		},
+		{
+			"version": "1.7.7b2",
+			"changelog": [
+				"Attempt to fix zeroconf osx/win",
+				"Crash fixes"
+			]
+		},
+		{
+			"version": "1.7.7b3",
+			"changelog": [
+				"Added MIDI AfterTouch and Channel pressure manual add",
+				"Added set auto save time interval (Love Gamgie)",
+				"Various bugs and crash fixes from crashlogs"
+			]
+		},
+		{
+			"version": "1.7.7b4",
+			"changelog": [
+				"Many OrganicUI updates and crash/bug fixes",
+				"TargetParameter structure change update",
+				"Fixed various crash on removal",
+				"Fixed TargetParameter support in Custom Variable presets",
+				"Allow Control Modes on Target Parameters",
+				"Improved Mapping flow",
+				"Added \"Damping\" Physics Filter",
+				"Fixed Keyboard Module not working when loading a file on startup",
+				"Replaced toggleImage by toggles (allow for context menu access)"
+			]
+		},
+		{
+			"version": "1.7.7b5",
+			"changelog": [
+				"Reverted Dashboard item default name",
+				"Fixed regression : selection but after creating a Comment",
+				"Fixed crash when converting to color",
+				"Fixed MIDI device naming (disable WinRT support)",
+				"Fixed Automation recorder not taking MIDI and DMX values",
+				"Added \"normalize\" option in recorder"
+			]
+		},
+		{
+			"version": "1.7.7b6",
+			"changelog": [
+				"Fixed various crashes",
+				"Fixed P2D/P3D type initialization",
+				"Added option to set Custom Variable to Read only",
+				"Fixed context menu for P2D/P3D",
+				"Fixed potential crash when creating/removing an OSC module while receiving messages"
+			]
+		},
+		{
+			"version": "1.7.7b7",
+			"changelog": [
+				"Fixed various crashes",
+				"Mapping Layer added linear recording method and interactive simplification",
+				"Updated script filters to handle mapping multi-input multi-output flow",
+				"Fixed mapping filters not updating the flow when changing filter's  parameters"
+			]
+		},
+		{
+			"version": "1.8.0b1",
+			"changelog": [
+				"So many things... where to start ?",
+				"BREAKING CHANGES : beware that some things make break as it is a major version update.",
+				"Please report crashes in the crash log and send broken files on the Discord server, so I can fix those before stable release !",
+				"",
+				"Fixed and optimized a LOT bugs, crashes and weird behaviours (there will always be some, I'm not dreaming)",
+				"MULTIPLEX !! This is a first version but fully functional, RTFM for informations on how to use it",
+				"Added Sequential operator to Conditions",
+				"Modified the linking paradigm for mapping (unified with multiplex), all command parameters can now be linked to inputs",
+				"Groups in Dashboard",
+				"Comments in Dashboard",
+				"Automatic OSCQuery exposition from OSC Remote control, with filtering in Outliner",
+				"Threaded a lot of non-UI Timers",
+				"SequenceBlock Layers : Control Sequence withing Sequences (Vorteeex) !",
+				"BPM preview in Timeline",
+				"Loop in-out from Time Cues",
+				"Multiline support for comments",
+				"Improved Automation manipulation",
+				"Added Generic Commands for minimize/maximize/tray manipulation",
+				"Backup files on version update are now incrementing and not overwriting",
+				"Added \"Integer.toHexString() script method\"",
+				"Updated filter script template",
+				"Added import/export of individual elements via new file type LilNut",
+				"Added Community module update informations",
+				"Custom modules can now be loaded by putting a \"modules\" folder aside the .noisette file",
+				"Fixed Module Router value normalization"
+			]
+		},
+		{
+			"version": "1.8.0b2",
+			"changelog": [
+				"Fixed Mapping and Multiplex crash",
+				"Added Condition Filter in Mappings",
+				"Fixed Remap range in mapping"
+			]
+		},
+		{
+			"version": "1.8.0b3",
+			"changelog": [
+				"Fixed other Mapping and multiplex crashes",
+				"Fixed mapping filter parameter linking",
+				"Fixed Custom Variables/Module values sync",
+				"Fixed Multiplex preview sync in Actions and ParamLinks",
+				"Fixed Multiple conditions checking the same source random behaviour (ParameterListener order bug)"
+			]
+		},
+		{
+			"version": "1.8.0b4",
+			"changelog": [
+				"Fixed Trigger Button in Command Tester",
+				"Fixed Conversion filter loosing range on extract",
+				"CurveMap Filter now derives from Remap filter",
+				"Remap and Curve Map now supports point2D / point3D"
+			]
+		},
+		{
+			"version": "1.8.0b5",
+			"changelog": [
+				"Fixed TCP cross thread infinite lock",
+				"Added more Resolume commands to Mappings"
+			]
+		},
+		{
+			"version": "1.8.0b6",
+			"changelog": [
+				"Fix crash on Mac using Remap filters"
+			]
+		},
+		{
+			"version": "1.8.0b7",
+			"changelog": [
+				"Fix 2D Mapping layer regression",
+				"Fix UI crashes when using linked list in Multiplex",
+				"Fix save/load bug when using linked list in Custom Variable and Generic set value commands",
+				"Fix Color conversion save/load bug",
+				"Added Multiplex Module with Set List value command"
+			]
+		},
+		{
+			"version": "1.8.0b8",
+			"changelog": [
+				"Fix Color Conversion Filter save/load"
+			]
+		},
+		{
+			"version": "1.8.0b9",
+			"changelog": [
+				"Fix Linked list parameter value and UI update"
+			]
+		},
+		{
+			"version": "1.8.0b10",
+			"changelog": [
+				"Switch again to RtMidi (Win) - MIDI Output naming is not resolved"
+			]
+		},
+		{
+			"version": "1.8.0b11",
+			"changelog": [
+				"Added Enum in Multiplex Lists"
+			]
+		},
+		{
+			"version": "1.8.0b12",
+			"changelog": [
+				"Added Custom Variable Preset in Multiplex List"
+			]
+		},
+		{
+			"version": "1.8.0b13",
+			"changelog": [
+				"Fixed HTTP Module arguments not saved",
+				"Fixed Multiplex Custom Variable Presets Unlinking"
+			]
+		},
+		{
+			"version": "1.8.0b14",
+			"changelog": [
+				"Full support for OSCQuery on Remote Control with functional bi-directional communication"
+			]
+		},
+		{
+			"version": "1.8.0b15",
+			"changelog": [
+				"Dashboard Trigger fix",
+				"OSCQuery module bi-comm feedbdack fixes"
+			]
+		},
+		{
+			"version": "1.8.0b16",
+			"changelog": [
+				"Fix Dashboard Server data for Group and Comment",
+				"Added MTC Offset in Sequence",
+				"Fix crash in Enum comparator",
+				"Minor UI fixes"
+			]
+		},
+		{
+			"version": "1.8.0b17",
+			"changelog": [
+				"Dashboard updates",
+				"Fixed Dashboard crash on resize item"
+			]
+		},
+		{
+			"version": "1.8.0b18",
+			"changelog": [
+				"Loupedeck Module (1st draft)",
+				"Optimized Custom Variable fast transition through presets",
+				"Fixed Mouse Module still working when disabled",
+				"Fixed TCP Module blocked on port change",
+				"Fixed Custom Variable command using target's range",
+				"Fixed Conversion Filter save/load bug"
+			]
+		},
+		{
+			"version": "1.8.0b19",
+			"changelog": [
+				"Mapping mechanism update",
+				"Added leading option for filters",
+				"Fixed joycon module memory leak",
+				"Fixed Generic / CV / OSCQuery commands",
+				"Improved Loupedeck module"
+			]
+		},
+		{
+			"version": "1.8.0b20",
+			"changelog": [
+				"Fixed Mapping and Multiplex bugs",
+				"Working, stable Joycon module for ALL platforms (even Raspberry) !",
+				"Added \"Terminate\" and \"Crashed\" input triggers in OS Module",
+				"Improved crash recovery mechanism with on-the-fly reload",
+				"Improved Loupedeck module",
+				"Improved generic/oscquery/customvariable commands",
+				"Added secure websocket support to websocket client and server modules",
+				"Added \"Color send mode\" to custom OSC module"
+			]
+		},
+		{
+			"version": "1.8.0b21",
+			"changelog": [
+				"Fixed Non-Multiplexed OSC Command argument linking",
+				"Fixed Raspberry Secure websocket support",
+				"Fixed Mapping filters fast range change crash",
+				"Optimized Mapping rebuild mechanism",
+				"DMX scoped lock"
+			]
+		},
+		{
+			"version": "1.8.0b22",
+			"changelog": [
+				"Improved Loupedeck Module",
+				"Added Color Remap Filter",
+				"Improved toString and toColor conversion filters",
+				"Improved P2D/P3D support and comparator operators in Action Standard Conditions",
+				"Various bugs and crash fixes",
+				"Fixed frame shortcut when no visible elements in the State Machine"
+			]
+		},
+		{
+			"version": "1.8.0b23",
+			"changelog": [
+				"OSC Feedback from Output",
+				"UDP Feedack from Output",
+				"Fixed potential link crash on load",
+				"Fixed event dispatch order"
+			]
+		},
+		{
+			"version": "1.8.0b24",
+			"changelog": [
+				"Fixed OSCQuery Set Enum value bug using multiplex linked list",
+				"Fixed P3D bug",
+				"More unique IDs for analytics",
+				"OSC Blob Argument as array in scripts"
+			]
+		},
+		{
+			"version": "1.8.0b25",
+			"changelog": [
+				"Fixed Mapping Chain update on update multiplex list",
+				"Comment UI custom size and word wrap",
+				"Fixed text editing bug",
+				"Fix P2D/P3D comparator reference value range",
+				"Fixed Win7 installer and pdb upload for release version"
+			]
+		},
+		{
+			"version": "1.8.0b26",
+			"changelog": [
+				"Multiplex Input Value List Fill from Expression WIP",
+				"DMX sACN/E1.31 support WIP"
+			]
+		},
+		{
+			"version": "1.8.0b27",
+			"changelog": [
+				"OSCQuery better Log Incoming feedback",
+				"Log In/Out for global OSC Remote Control",
+				"DMX Module functional sACN/E1.31 support"
+			]
+		},
+		{
+			"version": "1.8.0b28",
+			"changelog": [
+				"Fixed critical mapping crash"
+			]
+		},
+		{
+			"version": "1.8.0b29",
+			"changelog": [
+				"Fix critical multiplex crash on change count when using Remap or Math filters",
+				"Fix potential crash in comparators",
+				"OSCQuery server-name safety",
+				"OSCQuery fix feedback for triggers"
+			]
+		},
+		{
+			"version": "1.8.0b30",
+			"changelog": [
+				"Outliner Search",
+				"OSCQuery editable ans savable server name",
+				"Improved crash reporting"
+			]
+		},
+		{
+			"version": "1.8.0b31",
+			"changelog": [
+				"Improved crash reporting and file recovery",
+				"Improved File choosing with working directory"
+			]
+		},
+		{
+			"version": "1.8.0b32",
+			"changelog": [
+				"Allowed # in addresses (may break links to midi notes !)",
+				"Improved Crash report",
+				"If you're using multiplex, you MUST update your old files when loading !"
+			]
+		},
+		{
+			"version": "1.8.0b33",
+			"changelog": [
+				"Keyboard module per-key values",
+				"Fixed State act deactivate when copy/pasting",
+				"Fixed expression evaluations"
+			]
+		},
+		{
+			"version": "1.8.0b34",
+			"changelog": [
+				"Fixed crash in mapping layer range editing (thanks Alex !)",
+				"Fixed Mapping chain update not working in multiplexes",
+				"Added process on load option in mappings",
+				"Added log toggle function on the module activity icons",
+				"Joystick and gamepad keeps values in module (to test)",
+				"Updated Organic UI framework"
+			]
+		},
+		{
+			"version": "1.8.0b35",
+			"changelog": [
+				"Serial / DMX connection improvements (Thanks Emerick !)",
+				"Fixed JSON Parsing in network streaming modules (TCP/UDP)",
+				"Fixed Point3D UI broken",
+				"Small UI improvements in Inspector"
+			]
+		},
+		{
+			"version": "1.8.0b36",
+			"changelog": [
+				"Custom Values Int Parameter precision option (Thanks Emerick !)",
+				"Fixed Math filter value save/load",
+				"Fixed Color conversion filter retarget save/load",
+				"Fixed StreamDeck initialization on project load"
+			]
+		},
+		{
+			"version": "1.8.0b37",
+			"changelog": [
+				"WARNING !!! This update will potentially break target links in \"Custom Variable > Set Value\" commands !!!",
+				"Unified Set Value/Trigger commands (CustomVariables/Generic/OSCQuery)",
+				"Fixed 2D/3D comparator \"X<\"",
+				"Added Text support for streamdeck",
+				"Fixed streamdeck types rebuild bug",
+				"Fixed Zeroconf discovery",
+				"Minor UI improvements",
+				"Fixed Resolume commands auto link on OSC arguments"
+			]
+		},
+		{
+			"version": "1.8.0b38",
+			"changelog": [
+				"Streamdeck added text overlay",
+				"Fixed potential crash in Command Custom Values",
+				"Fixed MTC Output syncOffset bug",
+				"Fix growing values menu in HTTP module",
+				"Dashboard : Added background image infos to websocket data",
+				"Dashboard : Added file data access for all file parameters",
+				"Dashboard : Added local per-project dashboard override"
+			]
+		},
+		{
+			"version": "1.8.0b39",
+			"changelog": [
+				"Fixed Sequence - MIDI Sync device enable/ disable manipulation",
+				"Added \"Set Parameter Enabled\" Generic command",
+				"Improved MTC (Sequence MIDI Sync)",
+				"Improved Bonjour/Zeroconf threading",
+				"Fixed Custom modules script commands with linked arguments in Multiplex",
+				"Headless mode with \"-headless\" command line argument",
+				"Fixed input values feedback in UI (Condition and Mapping Input)"
+			]
+		},
+		{
+			"version": "1.8.0b40",
+			"changelog": [
+				"Fixed Serial port bad baudrate init",
+				"Fixed Zeroconf bad cleanup",
+				"Improved DMX / Serial init and logging"
+			]
+		},
+		{
+			"version": "1.8.0b41",
+			"changelog": [
+				"Fix Crash report location and upload",
+				"Various UI Improvements (Filter Scripts, ghost command warnings..)",
+				"Fixed Streamdeck texts not saved",
+				"Update HTTP module, add script and documentation for request with payload",
+				"Reverted linux port listing PR (not compiling)"
+			]
+		},
+		{
+			"version": "1.8.0b42",
+			"changelog": [
+				"Added FileParameter listFiles script method (needs documentation)",
+				"Added Command Handler setCommand method (needs documentation)",
+				"Dashboard fixes and update (feat. Manuel Mitasch)",
+				"Force Check for beta if coming from beta"
+			]
+		},
+		{
+			"version": "1.8.0b43",
+			"changelog": [
+				"Fixed Dashboard Tabs in HTTP data payload",
+				"Fixed contour/border parameter name inconcistency",
+				"Fixed potential crashes on UI",
+				"Added Time Modes for Metronome Module"
+			]
+		},
+		{
+			"version": "1.8.0b44",
+			"changelog": [
+				"Added Sponsor / Donation banner",
+				"Added One Euro filter",
+				"Fixes for Serial/DMX init",
+				"Fixes for int precision in custom values",
+				"Fixed Audio layer loading crash"
+			]
+		},
+		{
+			"version": "1.8.0",
+			"changelog": [
+				"PLEASE READ THIS !",
+				"THIS VERSION IS A MAJOR RELEASE AND SOME THINGS MAY BREAK WHEN CONVERTING FROM 1.7 !",
+				"IF SO, PLEASE GO OVER THE DISCORD SERVER AND KINDLY SUMMON THE COMMUNITY.",
+				"THANK YOU, HAVE A GREAT DAY"
+			]
+		},
+		{
+			"version": "1.8.1b1",
+			"changelog": [
+				"Fixed Websocket not connecting on load",
+				"Fixed Websocket script calls wsMessageReceived / wsDataReceived",
+				"Fixed Loupedeck button color sync on load",
+				"Added util.fromBase64 script method",
+				"Fixed util.toBase64 script method",
+				"Fixed crashes in Enum UI",
+				"Fixed and improved UDP module",
+				"Unified multiplex set list value command",
+				"Fixed Float range detection on semi-range"
+			]
+		},
+		{
+			"version": "1.8.1b2",
+			"changelog": [
+				"Added util.fromBase64 script method",
+				"MIDI device parameter load safety (crash fix)"
+			]
+		},
+		{
+			"version": "1.8.1b3",
+			"changelog": [
+				"Fixed Generic Command value save/load",
+				"Fixed Mega converter UI bug on collapse",
+				"Fixed Color conversion loosing target Type parameter",
+				"Added support for targetting multiplexed actions and mappings",
+				"Fixed On Activate / On Deactivate conditions in multiplexed actions",
+				"Fixed trigger consequence button not showing up in multiplexed consequences",
+				"Simple remap Filter now forces float by default",
+				"Added Audio Layer volume control in Panel",
+				"Added per-channel input volume control in Sound card",
+				"Fixed audio Module Monitor save/load",
+				"(Maybe) Fixed Target Parameter loss on reload"
+			]
+		},
+		{
+			"version": "1.8.1b4",
+			"changelog": [
+				"Added IP resolve fallback support for Zeroconf on linux",
+				"Fixed using mapping output wildcards on string parameter with json content",
+				"Fixed listenToFeedback not saved",
+				"Fixed mapping process on load in multiplex",
+				"Merged Joystick into Gamepad module"
+			]
+		},
+		{
+			"version": "1.8.1b5",
+			"changelog": [
+				"Barbelot update : Randomize Custom variable (CVGroup trigger + commands)"
+			]
+		},
+		{
+			"version": "1.8.1b6",
+			"changelog": [
+				"Fixed Streamdeck XL save/load"
+			]
+		},
+		{
+			"version": "1.8.1b7",
+			"changelog": [
+				"Fixed Enum default value in Custom Modules",
+				"Added GradientColorManager script methods (needs doc)",
+				"Added File and util writeBytes method"
+			]
+		},
+		{
+			"version": "1.8.1b8",
+			"changelog": [
+				"Added setRange / hasRange / getRange methods to Parameter"
+			]
+		},
+		{
+			"version": "1.8.1b9",
+			"changelog": [
+				"Updated to JUCE 6.1.0 (possible unknown breaking changes)",
+				"Fixed action triggers not loading correctly in dashboard",
+				"Possibly improved GUI performance on Mac (to test)"
+			]
+		},
+		{
+			"version": "1.8.1b10",
+			"changelog": [
+				"Fixed Multiplex Set Live Value command with Input Value lists",
+				"Improved thread time precision in parameter automation and custom variables interpolations",
+				"Fixed weight modes updates in custom variables",
+				"Fixed custom variables preset weights read-only states in Weight mode",
+				"Fixed Mapping Input value references not correctly loaded in some cases"
+			]
+		},
+		{
+			"version": "1.8.1",
+			"changelog": [
+				"Fixed Serial port baudrate bad initizalition in some cases",
+				"No cache for retrieve community module list"
+			]
+		},
+		{
+			"version": "1.8.2b1",
+			"changelog": [
+				"Restored using trigger workflow when validation actions",
+				"Fixed MTC jitter when out of timeline bounds",
+				"Fixed ParameterLink process {index} and {index0} on String parameters in Multiplex",
+				"Added util.encodeSHA512() script method",
+				"Fixed infinite rebuild bug in Mapping"
+			]
+		},
+		{
+			"version": "1.8.2",
+			"changelog": [
+				"Fixed potential crash when using parameterLink in wrong situations",
+				"Fixed Automation in Mapping2D not saved",
+				"Increased max dezoom in State Machine View and Dashboard"
+			]
+		},
+		{
+			"version": "1.8.3b1",
+			"changelog": [
+				"Allow 2x zoom in on Dashboard",
+				"Dashboard Select and Select by Index command (love Gamgie, GoldenGang RPZ)"
+			]
+		},
+		{
+			"version": "1.8.3b2",
+			"changelog": [
+				"Fixed Sequence next cue / prev cue not jumping audio",
+				"Added alwaysNotify option in module.json",
+				"default parameter value in module.json now used when resetting parameter value in editor"
+			]
+		},
+		{
+			"version": "1.8.3b3",
+			"changelog": [
+				"Sequence follow View time option",
+				"Custom Variable fix go to preset with time set to 0",
+				"Added Custom Modules command parameter \"mappingIndex\" property",
+				"Manager Views (State Machine, Dashboard..) now keep their zoom and offset",
+				"HTTP Module Log Incoming : show content even if request failed"
+			]
+		},
+		{
+			"version": "1.8.3b4",
+			"changelog": [
+				"JUCE Update (possibly improve OSX drawing)",
+				"Fixed Curve Map Filter not working on parameter without range",
+				"Added Merge filter (Merge all inputs into one with an operator)"
+			]
+		},
+		{
+			"version": "1.8.3b5",
+			"changelog": [
+				"Fixed Warning Panel",
+				"Added better error logging on file load fail",
+				"Prevent empty names in containers"
+			]
+		},
+		{
+			"version": "1.8.3b6",
+			"changelog": [
+				"Linux/Mac support for Serial without vid/pid",
+				"Windows revamped Keyboard module, now fully supports all keys and without focus"
+			]
+		},
+		{
+			"version": "1.8.3b7",
+			"changelog": [
+				"Improved Keyboard commands to reflect support all keycodes"
+			]
+		},
+		{
+			"version": "1.9.0b1",
+			"changelog": [
+				"The Parrot is here ! Fresh new parameter record/playback simulation tool for you :)",
+				"Fix PCIe serial ports detection on linux (thanks Emerick !)",
+				"Fix layout folder not properly created on new systems",
+				"Dashboard added \"Read Only\" option for all items (and pass it to the server)",
+				"Wiimote fixed some connections issues and added IR values",
+				"Fixed morpher crash when deleting a target with the backspace shortcut",
+				"Fixed cancel not working when launching the Guider"
+			]
+		},
+		{
+			"version": "1.9.0b2",
+			"changelog": [
+				"Conductor is here ! Sequential action system inside the State Machine",
+				"Better help menu for linking to Discord and sponsoring",
+				"Float/Int/Enum parameter can now have a customizable \"Color Status\" style in dashboard",
+				"Fully unified attribute system between script and json definitions for parameters",
+				"[To test] PJLink auto connect on send/disconnect 1s after sending the command (to avoid automatic disconnection by the device)"
+			]
+		},
+		{
+			"version": "1.9.0b3",
+			"changelog": [
+				"Consequence Groups",
+				"Mapping Filter channel filter for selective multi-input filtering",
+				"Add \"saveValueOnly\" attribute for parameters (scripts)",
+				"Add Update feature to Custom Variables > sync to current values",
+				"Rotary UI for float/int/enum parameters in Dashboard (love Gamgie)",
+				"Fixed script parameter container save/load",
+				"Fixed script parameter in custom module script save/load",
+				"OSC Module does not create an output when loading from a file"
+			]
+		},
+		{
+			"version": "1.9.0b4",
+			"changelog": [
+				"Canvas UI for Point 2D !",
+				"Try fix mapping smooth filter freeze bug",
+				"Fixed Dashboard front color parameters",
+				"Fixed Mega Converter UI bugs",
+				"Fixed OSCQuery keep values on sync",
+				"Improved crash/recover cleanup with port binding on reload",
+				"Fixed memory leak when using conversion filter and changing source range",
+				"Math filter change default option to Free",
+				"Fixed crash on mapping input deletion when using different threads"
+			]
+		},
+		{
+			"version": "1.9.0b5",
+			"changelog": [
+				"Delay Filter",
+				"Support for script-generated commands in custom modules",
+				"Support for MTC and Beat/Tempo values in MIDI Module",
+				"Fixed save/load behaviours in script generated parameters that have not been changed"
+			]
+		},
+		{
+			"version": "1.9.0b6",
+			"changelog": [
+				"Sequence MTC Sync option to choose pause or stop when not receiving MTC anymore",
+				"Fixed Crash on Guide (Consequence Group mod regression)",
+				"Fixed potential leak in KeyHooker on Windows",
+				"Restyled Windows installer"
+			]
+		},
+		{
+			"version": "1.9.0",
+			"changelog": [
+				"Fixed crash when using some filters in mapping layers",
+				"Added Cue index in UI"
+			]
+		},
+		{
+			"version": "1.9.1b1",
+			"changelog": [
+				"Fixed DMX Router autoSetChannel now starts at 1 (thanks Jeanf !)",
+				"P2D Canvas UI Alt/Shift to lock axes",
+				"P2D Canvas fix text feedback now shows real value"
+			]
+		},
+		{
+			"version": "1.9.1b2",
+			"changelog": [
+				"Fixed Custom Variable not updating when weight reaches 0",
+				"Fixed Toggle Condition State targetting multiplexes and groups",
+				"Mapping Layer added prev/set/next keys in Panel",
+				"Added Last Cue / Next Cue name indicators in Conductor",
+				"Fixed Automation not updating when changing easing",
+				"Fixed joycon module updating when disabled"
+			]
+		},
+		{
+			"version": "1.9.1b3",
+			"changelog": [
+				"Fixed TargetParameter set from script",
+				"Fixed MIDI manual add values allow 0 for note/CC",
+				"Added dynamic snapping in layers with shift/alt shift"
+			]
+		},
+		{
+			"version": "1.9.1b4",
+			"changelog": [
+				"Scripting improvements : search for niceName with getChild",
+				"setCommand can now search for module niceName",
+				"Added linkParamToMappingIndex(param, index) script method in command"
+			]
+		},
+		{
+			"version": "1.9.1b5",
+			"changelog": [
+				"Snap keys to frame option in Preferences",
+				"Backwards playback in sequences (WIP)",
+				"Dynamic \"use hierarchy\" swap in OSC",
+				"Support for wildcards in OSC Module",
+				"New number comparators \"range\" and \"diff\""
+			]
+		},
+		{
+			"version": "1.9.1b6",
+			"changelog": [
+				"Fixed OSC regression with addresses containing space (you SHOULD NOT do that Manon !)",
+				"Added Speed Mapping Filter",
+				"Fixed Mapping using continuous process should not process on input value"
+			]
+		},
+		{
+			"version": "1.9.1b7",
+			"changelog": [
+				"Snap to BPM in sequences",
+				"OSC Custom Message support for custom wildcards using {...}"
+			]
+		},
+		{
+			"version": "1.9.1b8",
+			"changelog": [
+				"LTC Support in Audio Module and Sequence",
+				"Added commands to cancel delayed consequences triggers",
+				"Added option to cancel self delayed consequences on trigger",
+				"Added more conversion extraction methods (min, max, average, length)",
+				"Minor UI improvements in Inspector",
+				"Added P2D Canvas UI stretch/invert options"
+			]
+		},
+		{
+			"version": "1.9.1b9",
+			"changelog": [
+				"Fixed split arguments regression in OSC Module",
+				"Fixed OSC Custom Modules regression"
+			]
+		},
+		{
+			"version": "1.9.1b10",
+			"changelog": [
+				"Fixed bad OSC regression in standard messages"
+			]
+		},
+		{
+			"version": "1.9.1b11",
+			"changelog": [
+				"Added setAttribute canvasInvertX, canvasInvertY and canvasStretchMode in scripts for P2D",
+				"Added Set Editing Sequence Command"
+			]
+		},
+		{
+			"version": "1.9.1b12",
+			"changelog": [
+				"Fixed regression keys randomly stuck at 0 in automations"
+			]
+		},
+		{
+			"version": "1.9.1b13",
+			"changelog": [
+				"Removed Debug Logs",
+				"Sequence delta-based time computing, allowing for speed animation"
+			]
+		},
+		{
+			"version": "1.9.1b14",
+			"changelog": [
+				"Fixed streamdeck thread crash on device change when sending command",
+				"Sequence delta-based time computing, allowing for speed animation",
+				"Added support for multiply operator in Merge Filter",
+				"Added Area operator in Convert to float filter"
+			]
+		},
+		{
+			"version": "1.9.1b15",
+			"changelog": [
+				"Fixed again OSC addresses with spaces bug (you should still NOT do that !)"
+			]
+		},
+		{
+			"version": "1.9.1b16",
+			"changelog": [
+				"Removed millumin 1s limit in time commands",
+				"Added delayThreadMS Script Util method",
+				"Removed streamdeck lock regression",
+				"Added color status ui for boolean"
+			]
+		},
+		{
+			"version": "1.9.1b17",
+			"changelog": [
+				"Fix baaaad OSC auto-add regression"
+			]
+		},
+		{
+			"version": "1.9.1b18",
+			"changelog": [
+				"Fix OSC Module Color format not handled",
+				"Fix Ableton Live commands not multiplexed"
+			]
+		},
+		{
+			"version": "1.9.1b19",
+			"changelog": [
+				"Added Container addAutomation  script method",
+				"Added automation addKey and setLength script methods",
+				"Updated JUCE module and Organic UI",
+				"Added zoom support in value-ranged automations",
+				"Added support for more than 4 channels (thanks EmerickH !)",
+				"MIDI Devices now use Identifier instead of names (you may loose your references !)"
+			]
+		},
+		{
+			"version": "1.9.1b20",
+			"changelog": [
+				"Fixed MIDI Open error"
+			]
+		},
+		{
+			"version": "1.9.1b21",
+			"changelog": [
+				"Resolume removed 100 limit on some parameters",
+				"Improved mapping load/activate behaviour (new options in \"Parameters\")",
+				"JUCE update",
+				"Dashboard fixed edit mode reset on UI parameter change",
+				"CV / Generic / OSCQuery commands allow per-component set value (Luv Gaaaamgyee)",
+				"CV weighted mode, keep values if all weights to 0"
+			]
+		},
+		{
+			"version": "1.9.1b22",
+			"changelog": [
+				"Fixed crash on empty target in set value commands"
+			]
+		},
+		{
+			"version": "1.9.1",
+			"changelog": [
+				"Stable version",
+				"Breaking changes : MIDI devices now use unique IDs, you may have to reconnect them !"
+			]
+		},
+		{
+			"version": "1.9.2",
+			"changelog": [
+				"Hotfix from 1.9.1 causing crash when using set param value in multiplex"
+			]
+		},
+		{
+			"version": "1.9.3b1",
+			"changelog": [
+				"Updated Loupedeck Module to support new firmware.",
+				"Loupedeck Module should now work on Linux and Raspberry pi as well (not tested)"
+			]
+		},
+		{
+			"version": "1.9.3b2",
+			"changelog": [
+				"Fixed crash when changing audio configuration in Sound Card module (to test)",
+				"Fixed various bugs and crashes related to UI and audio"
+			]
+		},
+		{
+			"version": "1.9.3b3",
+			"changelog": [
+				"Added Shared Texture in Dashboard",
+				"Added colorMap infos to webserver in dashboard",
+				"Fixed Loupedeck handshake on OSX/Linux and added VID filter"
+			]
+		},
+		{
+			"version": "1.9.3b4",
+			"changelog": [
+				"Add web-streaming option for the Shared Texture Dashboard item (Will need File > Dashboard update once Manuel Mitasch has done his magic !)"
+			]
+		},
+		{
+			"version": "1.9.3b5",
+			"changelog": [
+				"Fix parameter enable/disable regression"
+			]
+		},
+		{
+			"version": "1.9.3b6",
+			"changelog": [
+				"Multiple receivers support in Shared Texture dashboard (win only)",
+				"Added more infos to dashboard web server feedback"
+			]
+		},
+		{
+			"version": "1.9.3b7",
+			"changelog": [
+				"Fix DMX Value Parameter UI crash",
+				"Dashboard web feedback improvements",
+				"Juce 6.1.3 update",
+				"State Machine > Conductor Commmand",
+				"UnityBuild improvements, reduced compile time"
+			]
+		},
+		{
+			"version": "1.9.3b8",
+			"changelog": [
+				"Fixed and improved Conductor and Custom Arguments script methods"
+			]
+		},
+		{
+			"version": "1.9.3b9",
+			"changelog": [
+				"Fixed MIDI save/load device ID"
+			]
+		},
+		{
+			"version": "1.9.3b10",
+			"changelog": [
+				"Dashboard Improvements, web dashboard now has live layout feedback ! Thanks Manuel :)",
+				"Merged EmerickH script PR"
+			]
+		},
+		{
+			"version": "1.9.3b11",
+			"changelog": [
+				"Added MIDI Program Change input support (Thanks keithw99 !)",
+				"Add Send OSC arguments as objects from script (support for color type)",
+				"Transition with onActivate condition now trigger on source state activation",
+				"Minor thread improvements",
+				"Fixed Enum set options now showing up",
+				"Dashboard Custom Variables list WIP",
+				"Added getJSONData / loadJSONData script methods",
+				"Dashboard web improvements (thanks Manuel !)"
+			]
+		},
+		{
+			"version": "1.9.3b12",
+			"changelog": [
+				"Fixed crash on big project load (linux) (Thanks Emerick !)",
+				"Fixed crash on Mac when editing a value inside a popout editor",
+				"Try fix OpenDMX connection",
+				"Reverted PJLink behaviour, tries to stay connected"
+			]
+		},
+		{
+			"version": "1.9.3b13",
+			"changelog": [
+				"Fixed crash on Mac when editing a value inside a popout editor (again)",
+				"Added Button Bar styling for Enum parameters"
+			]
+		},
+		{
+			"version": "1.9.3b14",
+			"changelog": [
+				"Fixed Sub Component ghost loading on Set Value commands",
+				"Button bar better styling"
+			]
+		},
+		{
+			"version": "1.9.3b15",
+			"changelog": [
+				"Updated Joycon library, maybe fixes crash on reconnect controllers (Love Poul)",
+				"Added Go to value in Custom Variable, Generic and OSCQuery commands",
+				"Allow linking to CV Preset in multiplex Custom Variable commands"
+			]
+		},
+		{
+			"version": "1.9.3b16",
+			"changelog": [
+				"Fix crash on unlinkable preset CV commands",
+				"Fix set value random int with range",
+				"More multiplex input values filling methods",
+				"Added CV variables > send all to dashboard",
+				"Metronome tap tempo (Thanks Norbert !)",
+				"Signal multi offset value (Thanks Norbert !)",
+				"Added Conductor current Cue Index feedback (Thanks Norbert !)"
+			]
+		},
+		{
+			"version": "1.9.3b17",
+			"changelog": [
+				"Conductor updates (condition in cue, global consequences and cue name fix)",
+				"Action trigger default dashboard label",
+				"Go to value command fix multiplexed load and added transition time"
+			]
+		},
+		{
+			"version": "1.9.3b18",
+			"changelog": [
+				"Signal Saw Reverse and Random",
+				"Signal Custom mode (thanks Norbert !)",
+				"Signal phase offset",
+				"Signal changed amplitude/offset for range",
+				"Fixed multiplexed generic set command value-linked load problem",
+				"Fixed sACN receive bug (thanks Emerick !)"
+			]
+		},
+		{
+			"version": "1.9.3b19",
+			"changelog": [
+				"Scripts custom parameter containers",
+				"Multiplex support for generic script commands"
+			]
+		},
+		{
+			"version": "1.9.3b20",
+			"changelog": [
+				"Fix undo color parameter change",
+				"Fix local modules not loaded on direct file open"
+			]
+		},
+		{
+			"version": "1.9.3b21",
+			"changelog": [
+				"Mapping send On input change only option"
+			]
+		},
+		{
+			"version": "1.9.3b22",
+			"changelog": [
+				"Undo support for CV preset update"
+			]
+		},
+		{
+			"version": "1.9.3b23",
+			"changelog": [
+				"Add Set Range presets for floats and integers",
+				"Fix transition consequence trigger even when source is not active",
+				"Fix gradient update on remove item",
+				"Added Bool parameter UI stylings in dashboard",
+				"Fixed save/load of Set Value command in particular cases",
+				"Minor UI updates on MIDI and Gamepad parameter UI",
+				"Potential fix for live gamepad plug update on Mac"
+			]
+		},
+		{
+			"version": "1.9.3b24",
+			"changelog": [
+				"Added Tooltip and Target in Inspector for Dashboard Items",
+				"State option to focus on last triggered action",
+				"LTC sync in Sequence add support for sync offset and reverse",
+				"TargetUI add readOnly UI support",
+				"Add Label to Color Status UI",
+				"Add OSC support for T F and I types",
+				"Add Log to file option (thanks Emerick !)"
+			]
+		},
+		{
+			"version": "1.9.3b25",
+			"changelog": [
+				"Fixed Manager duplicate / copy-paste item order bug",
+				"Added App Control to OS Module",
+				"Improved local IP finding and added IPs logging in OS Module"
+			]
+		},
+		{
+			"version": "1.9.3",
+			"changelog": [
+				"Fixed Gamepad module hotplugging on OSX",
+				"Fixed Midi sysex commands in templates",
+				"Stable release !"
+			]
+		},
+		{
+			"version": "1.9.4b1",
+			"changelog": [
+				"Fixed potential crashes with heavy use of Custom Variables go to preset",
+				"Fixed potential crashes on unload/close",
+				"Better NaN handling for float parameters",
+				"UI heavy drawing optimization for large projects"
+			]
+		},
+		{
+			"version": "1.9.4b2",
+			"changelog": [
+				"UI drawing optimization final tweaks",
+				"Improved Undo / Redo / Move mechanisms"
+			]
+		},
+		{
+			"version": "1.9.4",
+			"changelog": [
+				"Fixed Integer UI update",
+				"Fixed Sound card module monitor bug",
+				"JUCE update",
+				"Fixed weird menu ghost problem"
+			]
+		},
+		{
+			"version": "1.9.5b1",
+			"changelog": [
+				"Massive Async menus and window refactor",
+				"Fixed UI glitches from latest JUCE update",
+				"Restore mods in Juce core code (OSC, Script, UI)"
+			]
+		},
+		{
+			"version": "1.9.5b3",
+			"changelog": [
+				"Fixed Async bugs (may contains some still)",
+				"Cue UI improvements",
+				"Added auto snap mode",
+				"Fixed mmLock in go to value thread"
+			]
+		},
+		{
+			"version": "1.9.5b4",
+			"changelog": [
+				"Fixed out channels save/load in play file command",
+				"Fixed sine easing save/load",
+				"Added Elastic and Bounce easings",
+				"Added editor on double click for easing handles",
+				"Added Pitch set mode for MIDI note commands"
+			]
+		},
+		{
+			"version": "1.9.5b5",
+			"changelog": [
+				"Fixed crash handling"
+			]
+		},
+		{
+			"version": "1.9.5b6",
+			"changelog": [
+				"Fixed file directoryMode",
+				"Added 3 new easings : Steps, Noise, Perlin",
+				"Fixed Welcome screen on open",
+				"Fixed guider bug"
+			]
+		},
+		{
+			"version": "1.9.5b7",
+			"changelog": [
+				"Fixed TargetParameter container type filters and exlude filters",
+				"Added Ableton Link Module (Love Dadou)"
+			]
+		},
+		{
+			"version": "1.9.5b8",
+			"changelog": [
+				"Added Octave Shift parameter in MIDI Module",
+				"Fixed crash when using Pitch note mode in MIDI Commands"
+			]
+		},
+		{
+			"version": "1.9.5b9",
+			"changelog": [
+				"Added Control from Chataigne in Ableton Link",
+				"AbletonLink beat update doesn't depend on sync start / stop"
+			]
+		},
+		{
+			"version": "1.9.5b10",
+			"changelog": [
+				"Fixed Set Range on Point2D parameters"
+			]
+		},
+		{
+			"version": "1.9.5b11",
+			"changelog": [
+				"Fixed manual value creation in OSC, MIDI and Streaming modules",
+				"Updated script methods showOkCancelBox and showYesNoCancelBox (see documentation and script templates)"
+			]
+		},
+		{
+			"version": "1.9.5b12",
+			"changelog": [
+				"Fixed readOnly broken in custom modules",
+				"Added UI manipulation tools (align, distribute, snap to grid) in State Machine and Dashboard"
+			]
+		},
+		{
+			"version": "1.9.5b13",
+			"changelog": [
+				"Fixed Distribute bug",
+				"Fixed Crash on reference input value",
+				"Fixed enum crash on set options",
+				"Fixed multiplex enum manipulation and update",
+				"Fixed grid snap and scale with zoom",
+				"removed grid options by default"
+			]
+		},
+		{
+			"version": "1.9.5b14",
+			"changelog": [
+				"Dashboard custom text size in parameter UI",
+				"Dashboard target parameter improvements",
+				"Custom Variables improved UI",
+				"Custom Variables are now draggable to Dashboard"
+			]
+		},
+		{
+			"version": "1.9.5b15",
+			"changelog": [
+				"Dashboard password (global and per-tab) / needs web implementation",
+				"Dashboard Link : navigate through dashboards",
+				"Dashboard navigation synchronization across web clients"
+			]
+		},
+		{
+			"version": "1.9.5b16",
+			"changelog": [
+				"Fixed Mapping Filter Multiplex param update",
+				"Fixed Trigger button Custom text size in dashboard "
+			]
+		},
+		{
+			"version": "1.9.5b17",
+			"changelog": [
+				"Added Custom Ranges in Project settings",
+				"Added setDashboard from web client",
+				"Fixed Math range change in multiplex",
+				"Increased MTC/LTC jump threshold to 1s",
+				"Added set range/clear range to int and float multiplex list"
+			]
+		},
+		{
+			"version": "1.9.5b18",
+			"changelog": [
+				"Fixed audio layer bug on session reload",
+				"Fixed targetting preset and variables in CV commands"
+			]
+		},
+		{
+			"version": "1.9.5b19",
+			"changelog": [
+				"Fixed potential crash in mapping input linking",
+				"Fixed crash on popup menu discard",
+				"Fixed bad input value targetting when reordering modules",
+				"Added offset parameter to Perlin easing",
+				"Added Label to float and int parameters without range"
+			]
+		},
+		{
+			"version": "1.9.5b20",
+			"changelog": [
+				"Fixed crash on dashboard change",
+				"Fixed OSC Module defaults output values",
+				"Fixed alwaysNotifyChanges with Float and Int UI",
+				"Added default sizes and styles for Dashboard items in project settings"
+			]
+		},
+		{
+			"version": "1.9.5b21",
+			"changelog": [
+				"Fixed Listen when keep values on sync",
+				"Fixed Go to value crash in certain cases",
+				"Added go to list value in Multiplex"
+			]
+		},
+		{
+			"version": "1.9.5b22",
+			"changelog": [
+				"Added Show Tools switch to Dashboard + Edit Mode autoswitch",
+				"Fixed sequence Is Playing savable if customized",
+				"Added Custom text size support in Color Status UI"
+			]
+		},
+		{
+			"version": "1.9.5b23",
+			"changelog": [
+				"Fixed crashes and regressions (expression and enums)",
+				"Fixed JSON interpretation for multivalue parameters in HTTP module"
+			]
+		},
+		{
+			"version": "1.9.5b24",
+			"changelog": [
+				"Fixed OS module AppControl save/load"
+			]
+		},
+		{
+			"version": "1.9.5b25",
+			"changelog": [
+				"Fixed Augmenta module crash (OSC module json regression)",
+				"Fixed DashboardLinkItem server data",
+				"Added Unlock only once option in dashboard"
+			]
+		},
+		{
+			"version": "1.9.5b26",
+			"changelog": [
+				"Try-Fix Loupedeck CT touchpad crash"
+			]
+		},
+		{
+			"version": "1.9.5b27",
+			"changelog": [
+				"Added Allow multiple instances option in Preferences",
+				"Added use address for naming in OSCQuery module"
+			]
+		},
+		{
+			"version": "1.9.5b28",
+			"changelog": [
+				"Fix online update mechanism"
+			]
+		},
+		{
+			"version": "1.9.5b29",
+			"changelog": [
+				"Fixed MIDI Out naming on Windows",
+				"Fixed Command Tester not locked on module"
+			]
+		},
+		{
+			"version": "1.9.5b30",
+			"changelog": [
+				"Added MQTT Client Module",
+				"Fixed Float label editing in dashboard",
+				"Fixed potential crash on deleted container rebuild"
+			]
+		},
+		{
+			"version": "1.9.5b31",
+			"changelog": [
+				"Added username/password Authentication to MQTT module"
+			]
+		},
+		{
+			"version": "1.9.5b32",
+			"changelog": [
+				"Fixed MQTT disconnection and set publish QoS to 2 (fixes duplicate receive)"
+			]
+		},
+		{
+			"version": "1.9.5",
+			"changelog": [
+				"Stable release !"
+			]
+		},
+		{
+			"version": "1.9.7b1",
+			"changelog": [
+				"Fixed send string prefix not using linked value",
+				"Added Multiplex Index condition and modulo / floor comparators"
+			]
+		},
+		{
+			"version": "1.9.7b2",
+			"changelog": [
+				"Unified color system in items",
+				"Added Freeze Mapping Filter"
+			]
+		},
+		{
+			"version": "1.9.7b3",
+			"changelog": [
+				"Fixed crashes in multiplex and organic ui",
+				"Added HTTP Upload file command and script method"
+			]
+		},
+		{
+			"version": "1.9.7b4",
+			"changelog": [
+				"Fixes String / Float UI custom text size in dashboard",
+				"Add Decimal support in Convert to String Time"
+			]
+		},
+		{
+			"version": "1.9.7b5",
+			"changelog": [
+				"Organic updates and fixes",
+				"Added custom message command to OSCQuery module"
+			]
+		},
+		{
+			"version": "1.9.7b6",
+			"changelog": [
+				"Improved JSON parsing in HTTP / Websocket module",
+				"Various fixes from OrganicUI"
+			]
+		},
+		{
+			"version": "1.9.7b7",
+			"changelog": [
+				"Conductor : Added Trigger previous / trigger current cue",
+				"Conductor : Added Stop / Toggle current linked sequence"
+			]
+		},
+		{
+			"version": "1.9.7b8",
+			"changelog": [
+				"Conductor : Added possibility to have scripts"
+			]
+		},
+		{
+			"version": "1.9.7b9",
+			"changelog": [
+				"Conductor : User customizable current:next cue colors (love Rémi)"
+			]
+		},
+		{
+			"version": "1.9.7b10",
+			"changelog": [
+				"UDP Module : Increased UDP buffer to support larger string reception",
+				"DMX Module : Added pass-through",
+				"Sequence : Fix potential crash when switching editing scene from threaded command"
+			]
+		},
+		{
+			"version": "1.9.7b11",
+			"changelog": [
+				"Improved Network modules connection feedback",
+				"Fixed OSX bug with File Chooser"
+			]
+		},
+		{
+			"version": "1.9.7b12",
+			"changelog": [
+				"Module : Added Multicast mode in UDP",
+				"Module : Added PosiStageNet module",
+				"Sequence : FPS independant from Play speed (to test !)"
+			]
+		},
+		{
+			"version": "1.9.7b13",
+			"changelog": [
+				"Module : Fixed Loupedeck not handling knobs and buttons",
+				"Module : Fixed DMX Channel offset in log"
+			]
+		},
+		{
+			"version": "1.9.7b14",
+			"changelog": [
+				"State Machine : Fixed Mapping send output change only resetting on smooth filter change",
+				"OrganicUI updates"
+			]
+		},
+		{
+			"version": "1.9.7b15",
+			"changelog": [
+				"Fixed Crash Reporting",
+				"Added PR for custom module command parameter dependencies : lessThan and greaterThan",
+				"Fixed Dashboard tools showing in play mode",
+				"Added Show/Hide tools in state machine view"
+			]
+		},
+		{
+			"version": "1.9.7b16",
+			"changelog": [
+				"[Windows] Reverted MIDI stack to WinMM (no bluetooth support, but stable device naming)"
+			]
+		},
+		{
+			"version": "1.9.7b17",
+			"changelog": [
+				"Many bug / crash fixes !",
+				"Added shortcuts for layout loading"
+			]
+		},
+		{
+			"version": "1.9.7b18",
+			"changelog": [
+				"Fixed Dashboard settings menu and potential crash on disable",
+				"Added Enable/Disable tooltips option",
+				"Improved Targetting UI with level-wise reselection",
+				"Added / Improved color options for more elements",
+				"Fixed Sequence Time Cue reordering after moving",
+				"Fixed Time parameter UI edition not working when using label",
+				"Added Sequence option to enable/disable data evaluation while seeking and playing",
+				"Added Copy/paste options in parameter context menu",
+				"Improved ValueInterpolator perf (reduced to 50fps by default)"
+			]
+		},
+		{
+			"version": "1.9.7b19",
+			"changelog": [
+				"Fixed Layout crash on select from menu",
+				"Fixed focus lost when changing layout",
+				"Fixed Condition UI bug when collapsed"
+			]
+		},
+		{
+			"version": "1.9.7b20",
+			"changelog": [
+				"Updated to JUCE 7.0.1",
+				"Dashboard added support for parameter live update (BG) and enum option live update (needs web client update as well)",
+				"Added support for multiple vid / pid filters in custom serial modules (to test)",
+				"Moved Conductor Cue Sequence Linking parameters to their own container",
+				"Added support for OSC int64 'h' type"
+			]
+		},
+		{
+			"version": "1.9.7",
+			"changelog": [
+				"Stable channel release"
+			]
+		},
+		{
+			"version": "1.9.8b1",
+			"changelog": [
+				"Added shortcut for automatic creation and linking between parameter and custom variable",
+				"Added drag and drop between CV Group to merge one into the other"
+			]
+		},
+		{
+			"version": "1.9.8b2",
+			"changelog": [
+				"Added util.encodeSHA256 in scripts",
+				"Merged PR to fix ControllableContainer getControlAddress from script (thanks monsieurgustav !)"
+			]
+		},
+		{
+			"version": "1.9.8b3",
+			"changelog": [
+				"Added support for byte array to base64 conversion in scripts"
+			]
+		},
+		{
+			"version": "1.9.8b4",
+			"changelog": [
+				"Added 15s timer shutter request on PJLink to keep connection alive"
+			]
+		},
+		{
+			"version": "1.9.8b5",
+			"changelog": [
+				"Added Empty Module for creating pure Custom Modules (thank you monsieurgustav !)",
+				"Maybe breaking change : Fixed potentially critical Parameter value change notification on load"
+			]
+		},
+		{
+			"version": "1.9.8b6",
+			"changelog": [
+				"Fixed crash on set range / clear range of Int List in Multiplex",
+				"Restored autoReconnect for PJLink module",
+				"Better GPIO connection error message if permission denied on Raspberry",
+				"Fixed warning message system"
+			]
+		},
+		{
+			"version": "1.9.8b7",
+			"changelog": [
+				"Fixed MIDI MTC Full frame reading",
+				"Added TargetParameter current selection highlight",
+				"Fixed Consequence Group still triggering even when not triggered"
+			]
+		},
+		{
+			"version": "1.9.8b8",
+			"changelog": [
+				"Fixed UDP sendTo from script",
+				"Changed sendMessageTo and sendTo respectively to sendTo and sendBytesTo (consistency check)"
+			]
+		},
+		{
+			"version": "1.9.8b9",
+			"changelog": [
+				"Fixed many potential crashes",
+				"Dashboard native and web improvements (thanks Manuel !)",
+				"> You have to update your dashboard files to see the changes !",
+				"Added IFrame in Dashboard to show an external web page",
+				"Improved Cue behaviour in sequences",
+				"Added Sequence Prev/Next cue actions",
+				"Added option to enable/disable OpenGL rendering"
+			]
+		},
+		{
+			"version": "1.9.8b10",
+			"changelog": [
+				"Reverted JUCE commits, restore multi-channel audio playback"
+			]
+		},
+		{
+			"version": "1.9.8b11",
+			"changelog": [
+				"Fixed OSC parameter matching bug",
+				"Fixed MIDI command value alteration bug",
+				"Removed Welcome screen on Linux to fix GTK bug in Ubuntu 22.04+"
+			]
+		},
+		{
+			"version": "1.9.8b12",
+			"changelog": [
+				"Fixed infinite lock freeze in comparators"
+			]
+		},
+		{
+			"version": "1.9.8b13",
+			"changelog": [
+				"Fixed bugs and potential crashes in OS Module",
+				"Improved async process launch from script in OS Module",
+				"Added IP auto ping status system in OS Module"
+			]
+		},
+		{
+			"version": "1.9.8b14",
+			"changelog": [
+				"Improved inspector manipulation, everything is draggable now !",
+				"Added new keyboard manipulation (list : alt+arrow move the item in list, dashboard : arrows move the item in space)",
+				"UI improvements in Custom Variables"
+			]
+		},
+		{
+			"version": "1.9.8",
+			"changelog": [
+				"Stable channel release"
+			]
+		},
+		{
+			"version": "1.9.8b15",
+			"changelog": [
+				"Various crash fixes from crashlog analysis",
+				"Loading improvements for sessions with Parrot and warnings",
+				"Set Joycon values editable"
+			]
+		},
+		{
+			"version": "1.9.9",
+			"changelog": [
+				"Fixed OS Module Ping / App Control values extra infos lost on save",
+				"Added support for focus range in 2D curves",
+				"Stable channel release"
+			]
+		},
+		{
+			"version": "1.9.9b1",
+			"changelog": [
+				"Improved Watchout Module",
+				"Expanded Audio channel support to 64 (not tested)",
+				"PJLink Module refactor to support multiple projectors (WILL BREAK YOUR EXISTING SETUP !)",
+				"Fixed a crash in Resolume FX command"
+			]
+		},
+		{
+			"version": "1.9.9b2",
+			"changelog": [
+				"Improved PJLink module",
+				"Improved Dashboard and Web dashboard",
+				"Organic improvements and fixes",
+				"Fixed Convert mode loading in To String filter"
+			]
+		},
+		{
+			"version": "1.9.9b3",
+			"changelog": [
+				"Fixed float label and time label not selecting text on double click",
+				"Added Conditions to Cues",
+				"Added resetValue script method for parameters"
+			]
+		},
+		{
+			"version": "1.9.9b4",
+			"changelog": [
+				"Crash actions better options",
+				"Invalidation Time support in actions",
+				"OSCQuery connection feedback and sync on connect",
+				"Fixed Cue isValid check in sequences",
+				"OS Module added option to force in shutdown / reboot commands"
+			]
+		},
+		{
+			"version": "1.9.9b5",
+			"changelog": [
+				"Added Save session Generic command",
+				"Added Auto sync for OSCQuery",
+				"Fixed disabled staggered consequence launch bug",
+				"Fixed editor bugs when selecting from Outliner"
+			]
+		},
+		{
+			"version": "1.9.9b6",
+			"changelog": [
+				"Various crash fixes from crash reports",
+				"OSCQuery selective syncing",
+				"Fixed drop module into State menu",
+				"Logger Copy All now contains time"
+			]
+		},
+		{
+			"version": "1.9.9b7",
+			"changelog": [
+				"Fixed Dashboard commands",
+				"Improved sync/listen UI in OSCQuery value containers"
+			]
+		},
+		{
+			"version": "1.9.10b1",
+			"changelog": [
+				"Added enum script methods",
+				"Parameters created in empty modules can now change name",
+				"Fixed parameters not saved if only range has been changed"
+			]
+		},
+		{
+			"version": "1.9.10b2",
+			"changelog": [
+				"Added utils.listFiles, util.listDirectories, util.gotoURL script methods",
+				"Improved OSCQuery module auto sync / connect / listen",
+				"Fixed target parameter level targetting",
+				"Added support for azerty keyboard on layout shortcuts",
+				"Fixed move dashboard items with arrows",
+				"Fixed Input linking in script commands",
+				"Added multiplex index in script command callback signatures"
+			]
+		},
+		{
+			"version": "1.9.10",
+			"changelog": [
+				"Fixed crash when animating parameters frenetically without any scrupules",
+				"Fixed Raspberry pi compatibility and added Raspberry Pi 64 bit support, thank you Tom !!!",
+				"Fixed critical UI bug with Float Label parameter not saving manually entered values",
+				"Added Values section to empty module",
+				"Fixed potential freeze in overused Mappings",
+				"Stable channel release"
+			]
+		},
+		{
+			"version": "1.9.12b1",
+			"changelog": [
+				"Fixed crash with sequence editor",
+				"Fixed crash with dashboard",
+				"Fixed dashboard link item behaviour in native ui",
+				"Fixed Condition load default comparator when changing input parameter type",
+				"Fixed Sequence Block Layer synchronization when changing time from data"
+			]
+		},
+		{
+			"version": "1.9.12b2",
+			"changelog": [
+				"Added back support for generic send string commands in new version of PJLink Module",
+				"Added hexadecimal format to Convert to String filter",
+				"Various fixes",
+				"Raspberry compilation better device support range"
+			]
+		},
+		{
+			"version": "1.9.12b3",
+			"changelog": [
+				"Added crash report contact email, feel free to use it !",
+				"Improved to String filter with case converion and hexadecimal mode",
+				"Added DIRECT mode for streaming modules when source does not send nicely separated data",
+				"JUCE core update"
+			]
+		},
+		{
+			"version": "1.9.12b4",
+			"changelog": [
+				"Fixed PJLink connection system",
+				"Added version to About and Welcome windows",
+				"Use OpenGL Renderer by default on all platforms"
+			]
+		},
+		{
+			"version": "1.9.12",
+			"changelog": [
+				"Revert JUCE code (too many regressions)",
+				"Fixed Always notify Changes option in Custom Variables",
+				"Stable Release"
+			]
+		},
+		{
+			"version": "1.9.13",
+			"changelog": [
+				"Fixed Ableton Link support for Mac/Linux/Raspberry",
+				"Fixed JUCE update + raspberry VNC display bug",
+				"Stable Release"
+			]
+		},
+		{
+			"version": "1.9.14b1",
+			"changelog": [
+				"BREAKING CHANGE ! Refactored DMX Module to support multiple universes, in and out",
+				"Fixed inspector drag and drop crash",
+				"Fixed target steps bug",
+				"Updated to latest JUCE with UI and audio fixes",
+				"State Machine Minimap is improved and interactive",
+				"Added support for drag and drop consequences in sub groups",
+				"Added Stagger Feedback in Action UI",
+				"Added Per-Channel In and Out volume control in Audio Module"
+			]
+		},
+		{
+			"version": "1.9.14b2",
+			"changelog": [
+				"DMX Values collapse fix",
+				"Fixed Custom Variables renaming"
+			]
+		},
+		{
+			"version": "1.9.14b3",
+			"changelog": [
+				"Set parameter command with target with root container fix",
+				"Fix randomize on empty enum parameter",
+				"Fix empty enum random crash in set parameter command",
+				"Added saveMode attribute to FileParameter",
+				"Added multicast support for sACN (not tested, need testers !)",
+				"Fixed Custom Variables renaming"
+			]
+		},
+		{
+			"version": "1.9.14b4",
+			"changelog": [
+				"JUCE Update (may fix some multi channel audio problems)",
+				"Increased UDP max packet size to 65535 bytes",
+				"Tap Tempo improvements in Metronome Module (thanks Norbert !)",
+				"DMX Range sender bug fix (thanks Norbert !)",
+				"Attempt to have universal intel/silicon MacOS app",
+				"Fixed Audio playback stops when connected devices changed"
+			]
+		},
+		{
+			"version": "1.9.14b5",
+			"changelog": [
+				"Try fixing DMX thread rate",
+				"Fixed Custom Variable UI with control modes",
+				"Fixed Comments are not movable",
+				"Added new MIDI module extra info values",
+				"Try fix DMX pass-through",
+				"Added PJLink pjLinkDataReceived script callback"
+			]
+		},
+		{
+			"version": "1.9.14b6",
+			"changelog": [
+				"Fixed potential crash removing a CV group using Morpher",
+				"Fixed Multiplex copy/paste bug",
+				"DMX Send On Change Only disabled by default"
+			]
+		},
+		{
+			"version": "1.9.14b7",
+			"changelog": [
+				"Fixed MIDI Command note linking",
+				"Fixed Collapse bug in Inspector",
+				"Added Volume parameter in Play file Audio Command",
+				"Fixed Audio not playing when replaying timeline"
+			]
+		},
+		{
+			"version": "1.9.14b8",
+			"changelog": [
+				"Added leading zeros to logger milliseconds",
+				"Open script after create/browse with edit button",
+				"Fixed serial port mode",
+				"Fixed loupedeck connection",
+				"Fixed HTTP request from script freeze",
+				"Fixed DMX pass-through loading",
+				"BREAKING CHANGE : Changed \"Controller Change\" MIDI command to \"Control Change\", you HAVE to update your file on load !"
+			]
+		},
+		{
+			"version": "1.9.14b9",
+			"changelog": [
+				"Fix potential crashes",
+				"PR : Added Route All trigger to module router",
+				"PR : Added context menu Add & link to sequence",
+				"PR : Router Custom variables to empty module matching",
+				"PR : OSC script callback now supports blob and sender ip address",
+				"PR : ArtPoll Reply support",
+				"PR : Fixed MIDI Sysex argument in script callback",
+				"JUCE Update"
+			]
+		},
+		{
+			"version": "1.9.14b10",
+			"changelog": [
+				"Metronome in Audio Layer with selectable channels",
+				"PR : Added PJLink extra projector infos [from wholehog2]",
+				"PR : Addded 3 script util function (doc updated)",
+				"PR : Addded Alt Scale factor for sliders in Global Settings [noisetteno]",
+				"Crash fix on Gradient deletion"
+			]
+		},
+		{
+			"version": "1.9.14b11",
+			"changelog": [
+				"Speed filter smoothing param",
+				"MIDI Clock out",
+				"Multiplex list command"
+			]
+		},
+		{
+			"version": "1.9.14b12",
+			"changelog": [
+				"Fixed drag and drop in Inspector",
+				"Fixed OSCQuery sending unwanted data when synchronizing",
+				"Fixed Generic parameter command triggering when loading",
+				"Try fix MTC playing when sender is scrubing",
+				"PR : Fixed Jitter threshold in joycon (Thanks John Bauer !)",
+				"MIDI Module added send Clock Out",
+				"Added Multiplex Trigger List command (love Gamgie)",
+				"Added Speed filter smoothing parameter",
+				"Better script variable logging",
+				"Better OSC Remote control logging",
+				"Added automation in hideInRemote by default",
+				"Fixed UI Mini View Item colors",
+				"Fixed Target Parameter potential crash and relink",
+				"Fixed crash in void var handling",
+				"Fix edit script icon",
+				"Added manual OSC feedback in OSC Remote Control"
+			]
+		},
+		{
+			"version": "1.9.14",
+			"changelog": [
+				"/!\\ MAC USERS, PLEASE READ THIS !!! /!\\",
+				"THE NEW VERSION IS SUPPORTING M1,",
+				"YOU NEED TO DOWNLOAD DIRECTLY FROM THE WEBSITE THE VERSION FOR YOUR SYSTEM",
+				"-- The next versions will automatically download, but this one needs manual download.",
+				"",
+				"Stable release !",
+				"Fixed M1 Zeroconf port detection",
+				"Fixed M1 Serial ports",
+				"Fixed OS Ping system on mac and linux",
+				"Improved Command context setup",
+				"Fixed custom variable enum parameter synchronization",
+				"Added util.toStringFixed() script method"
+			]
+		},
+		{
+			"version": "1.9.15b1",
+			"changelog": [
+				"Performance improvements : 2x RAM reduction on bigger projects",
+				"Performance improvements : Load and Clear speed up and CPU optimization",
+				"Improved OSC types handling across the software",
+				"Fixed keyboard focus when clicking on a manger",
+				"Fixed dashboard enum value feedback for web"
+			]
+		},
+		{
+			"version": "1.9.15b2",
+			"changelog": [
+				"Crash fix party ! Thanks to all crash reporters, your comments are very valuable",
+				"Fixed crash on remove custom variable group when using a morpher",
+				"Fixed crash on gamepad unplug / replug",
+				"Fixed crash on module router route all without an output module",
+				"Fixed crash on PSN module remove/change send mode while sending",
+				"Fixed crash on serial / dmx device connect when already used",
+				"Fixed crash on custom values command link to template",
+				"Reverted buttons on crash handler window, on windows and linux"
+			]
+		},
+		{
+			"version": "1.9.15b3",
+			"changelog": [
+				"Fixed GPIO not working on Raspberry 64-bit",
+				"Merged Nicolas David PR for Module Router DMX Out Support",
+				"Fixed potential crash on Parameter Show Edit Window",
+				"Improved Target Parameter lost target recovery on load",
+				"Added Distance and Difference operators in Merge Mapping filter"
+			]
+		},
+		{
+			"version": "1.9.15b4",
+			"changelog": [
+				"Select new items on copy/paste",
+				"Added copy/paste for BaseItem in Inspector",
+				"Added paste (add) in Managers",
+				"Added more tolerance to cross type copy/paste",
+				"Added Action Manual Condition (Experimental usage)"
+			]
+		},
+		{
+			"version": "1.9.16b1",
+			"changelog": [
+				"Linux support for older systems (thanks Tom !)",
+				"[Live Coding session] PJLink customize projector names",
+				"Fix local / global module detections priority",
+				"Fix cancel delayed consequences",
+				"Fix crash on using delayed consequences",
+				"Fix artpoll reply (thanks Norbert)",
+				"Fix webserver module not sending properly"
+			]
+		},
+		{
+			"version": "1.9.16b2",
+			"changelog": [
+				"Disabled ArtNet Poll, was causing freezes on OSX",
+				"PR : Configurable timeout in HTTP module (Thanks kkoch986 !)",
+				"Added \"Always Unique\" option in Commands Set Value > Random operator",
+				"Add support for non space-separated hex string in send hex streaming command",
+				"Time Trigger potential crash when created from script fix",
+				"PR : Added Dynamic Library (DLL) loading system to scripts (thanks Guillaume !)",
+				"Added OSC Remote Control structure change OSCQuery feedback : PATH_ADDED, PATH_REMOVED, PATH_RENAMED",
+				"Added OSC Remote control command : ADD/REMOVE/RENAME",
+				"Do not select an newly created manager item if it's not on the UI Thread",
+				"Minor fixes and safety checks"
+			]
+		},
+		{
+			"version": "1.9.16b3",
+			"changelog": [
+				"Fixed Mapping Send on Activate",
+				"Removed OSC port binding below 1024 limitation",
+				"Added Clear Logs Generic Command",
+				"Consequence Manager thread safety",
+				"Fix crash on Raspberry audio module without input device",
+				"Fixed crash when using multiple type with the Merge Filter",
+				"Fixed channel offset when using complex types with the Merge Filter",
+				"Organic updates"
+			]
+		},
+		{
+			"version": "1.9.16",
+			"changelog": [
+				"[OSC] Removed OSC port limitation to 1024",
+				"[Mapping] Fixed Send on Activate",
+				"[OrganicUI] Improved reset value behaviour on Target Parameter",
+				"[MIDI] Improved Value sorting",
+				"[Multiplex] Added Fill functions to all list types",
+				"[MIDI] Added option to use pitch instead of note name",
+				"[Multiplex] Added Fill range and offset for partial apply",
+				"[Modules] Fixed pass-through save/load bug",
+				"[StreamDeck] Added global text size option"
+			]
+		},
+		{
+			"version": "1.9.17b1",
+			"changelog": [
+				"Audio Layer Metronome fixes",
+				"Audio Layer custom bip/bop sounds",
+				"Fixed MIDI Note update order (better learn)",
+				"Sequence Editor zoom improvements",
+				"Configurable max zoom per sequence",
+				"Fix potential crash on staggered consequence cleanup",
+				"Fix OS launch command parameter link",
+				"Fix Multiplex listener bug when changing list inputs"
+			]
+		},
+		{
+			"version": "1.9.17b2",
+			"changelog": [
+				"PR : improve linux AppImage integration (thanks vanous)",
+				"PR : create multiple sequences from audio files (thanks Megaphron)",
+				"Organic update and fixes",
+				"Fixed Dashboard crash when drag/dropping dashboard item into itself",
+				"Added support for remote Websocket port in OSCQuery",
+				"Fixed OSCQuery log when LISTEN is not available",
+				"Fixed Generic Save command no log",
+				"Improved ping system to support different languages on windows"
+			]
+		},
+		{
+			"version": "1.9.17b3",
+			"changelog": [
+				"Fixed OSCQuery for good",
+				"Improved OSCQuery first sync do not send IGNORE"
+			]
+		},
+		{
+			"version": "1.9.17b4",
+			"changelog": [
+				"Fixed setups regressions from organic ui optimization in b3",
+				"Improved Multiplex mechanism, fixed same value targetting bug in input values list"
+			]
+		},
+		{
+			"version": "1.9.17b5",
+			"changelog": [
+				"Fixed setups regressions from organic ui optimization in b3"
+			]
+		},
+		{
+			"version": "1.9.17b6",
+			"changelog": [
+				"Fixed more setups regressions from organic ui optimization in b3"
+			]
+		},
+		{
+			"version": "1.9.17b7",
+			"changelog": [
+				"Fixed more regressions from b3",
+				"Critical fix bad load linking on mapping outputs",
+				"Improved DMX system, fixed sACN",
+				"Added Set Editing sequence at index",
+				"Added DTR/RTS options in Serial module",
+				"Fixed send dmx from script",
+				"Force sync when selecting OSCQuery from auto-set",
+				"Remove sync parameter from OSCQuery sends"
+			]
+		},
+		{
+			"version": "1.9.17b8",
+			"changelog": [
+				"Organic and timeline updates and fixes",
+				"Fixed crash on disconnect / reconnect usb when module is disabled",
+				"Fixed delay and damping filters with multiplex",
+				"Added support for target type \"Container\" in Multiplex Target List",
+				"Disable autoload previous command data when switching command",
+				"Staggered consequence and Action UI fixes",
+				"Added MTC Send framerate paramter in Sequence",
+				"Link arguments names when using command templates"
+			]
+		},
+		{
+			"version": "1.9.17b9",
+			"changelog": [
+				"[Script] Fix crash on states.addTransition script method",
+				"[Internal] JUCE and organic updates",
+				"[Custom Module] Recursive load save in values container",
+				"[Mapping] Fix send on output only save/load bug"
+			]
+		},
+		{
+			"version": "1.9.17b10",
+			"changelog": [
+				"[MQTT Client] Fixed crashes and manager based topic system",
+				"[MQTT Client] Improved save/load/update mechanism",
+				"[OS Module] Try fix ping system on mac",
+				"[OrganicUI] minor updates",
+				"[Script] fix crash when adding audio module inside update()",
+				"[Mapping] fix crash when updating multiple input sources from thread"
+			]
+		},
+		{
+			"version": "1.9.17b11",
+			"changelog": [
+				"[MQTT Client] Fixed topic protocol change bug",
+				"[OS] Better ping system on all platforms",
+				"[OS] Slightly better Sys info (disabled on mac for now)"
+			]
+		},
+		{
+			"version": "1.9.17b12",
+			"changelog": [
+				"[OrganicUI] Drastically improved loading time for complex files",
+				"[Mapping Layer] Fixed Disabled Mapping layer still processing",
+				"[OrganicUI] Minor fixes and improvements"
+			]
+		},
+		{
+			"version": "1.9.17",
+			"changelog": [
+				"Stable release"
+			]
+		},
+		{
+			"version": "1.9.18b1",
+			"changelog": [
+				"[Mapping] Added option to enable/disable process on value update for each input",
+				"[OrganicUI] Organic and timeline updates"
+			]
+		},
+		{
+			"version": "1.9.18b2",
+			"changelog": [
+				"[Mapping] Fixed Linking bugs in many places",
+				"[OSCQuery] Update module to 15s timeout",
+				"[MadMapper] Update to support OSCQuery feedback port",
+				"[DMX] 16bit colors support (thanks Emerick !)",
+				"[StreamDeck] Added support for Streamdeck XL (thanks Emerick !)",
+				"[Generic] Add and link to sequence fix (thanks Guillaume !)",
+				"[Script] Fix lag when many calls on missing functions",
+				"[MIDI] Better device detection and disconnect device on module disable (Thanks Emerick !)",
+				"[DMX] sACN priority per universe (thanks Caleb !)",
+				"[Mapping] Fixed send output on change only bug",
+				"[Audio] LTC fix bad timecode when receiving from QLab (thanks Caleb !)",
+				"[Audio] Add script method to receive fft (thanks Guillaume !)",
+				"[Mapping] Added String slice/replace/offset filters",
+				"[Generic] Fix various bugs and crashes"
+			]
+		},
+		{
+			"version": "1.9.18b3",
+			"changelog": [
+				"[Modules] Added custom separator to streaming modules",
+				"[OrganicUI] Fixed app freezing when syncing OSCQuery"
+			]
+		},
+		{
+			"version": "1.9.18b4",
+			"changelog": [
+				"[UI] Fixed minor interactio, bugs",
+				"[Multiplex] Fixed lost link in set value command",
+				"[Module] Fixed OS Module 100% CPU usage",
+				"[MIDI] Fixed script template Sysex command",
+				"[Command] Fixed set value commands auto parameter linking",
+				"[GPIO] Added module icon",
+				"[Script] Fixed crash when setting wrong command"
+			]
+		},
+		{
+			"version": "1.9.18b5",
+			"changelog": [
+				"[HotFix] Fix freeze when using complex parameters"
+			]
+		},
+		{
+			"version": "1.9.18b6",
+			"changelog": [
+				"[General] More crash fixes on listeners",
+				"[Audio] Fix audio layer record bug",
+				"[Linux] AppImage improvements, added external exec wrapper (Thanks Emerick)",
+				"[Custom Variables] FIx preset values with None interpolation still interpolated (Thanks Guillaume)",
+				"[Serial] Removed 9600 baudrate limitation",
+				"[Custom Variables] Fixed save/load preset from file commands",
+				"[DMX] Pass-through now shows activity and logs on out module",
+				"[Script] Added setLink/unlink/linkToMapping methods for ParameterLinkContainer and Custom values arguments",
+				"[Sequence] Evaluate on Seek mode with more options",
+				"[Sequence] Improved Mapping Layer UI Lock",
+				"[Keyboard] Added keyCode value in Keyboard Module",
+				"[Mapping] Reverted to send on output change only true by default",
+				"[UI] Support negative Time values in Time fields (Thanks Thomas)",
+				"[Script] Added util.colorToHex method",
+				"[UI] Added Sequence Editor sequence name in panel tab header",
+				"[UI] Fix remove button focus bug (Thanks Guillaume)",
+				"[UI] Fix warnings not showing in log"
+			]
+		},
+		{
+			"version": "1.9.18b7",
+			"changelog": [
+				"[General] Fix more crashes and regressions",
+				"[General] Updated VS to latest version MSBuild 17.10",
+				"[General] Improved Sequence Remote control seeking"
+			]
+		},
+		{
+			"version": "1.9.18b8",
+			"changelog": [
+				"[General] Fixed more listeners crashes (hopefully that's it)",
+				"[Action] Fixed comparator regression"
+			]
+		},
+		{
+			"version": "1.9.18b9",
+			"changelog": [
+				"[General] Fixed more listeners crashes (please stop !)",
+				"[OSC] Added Clear Values trigger in Custom OSC Module"
+			]
+		},
+		{
+			"version": "1.9.18b10",
+			"changelog": [
+				"[ParameterLink] Fixed crash when closing an editor",
+				"[Mapping] Fixed Lag filter when using in a Multiplex",
+				"[Multiplex] Fixed Linking to Custom Variable Presets in Multiplex"
+			]
+		},
+		{
+			"version": "1.9.18b11",
+			"changelog": [
+				"Sushi Update : Fixed crash on OSX when modifying commands",
+				"[State Machine] Fixed activation / trigger flow"
+			]
+		},
+		{
+			"version": "1.9.18b12",
+			"changelog": [
+				"[Shared Texture] Fixed shared texture broken since 18b1",
+				"[Action] Fix Consequence kill delayed save/load",
+				"[OrganicUI] Fix crash and key mappings init"
+			]
+		},
+		{
+			"version": "1.9.18b13",
+			"changelog": [
+				"[DMX] Fix Freeze on MacOS"
+			]
+		},
+		{
+			"version": "1.9.18",
+			"changelog": [
+				"Stable release"
+			]
+		},
+		{
+			"version": "1.9.20b1",
+			"changelog": [
+				"[Mapping] Fix OneEuroFilter for complex parameters and multiplex",
+				"[Mapping] Added multiple safeties to avoid crashes during structure change",
+				"[Dashboard] Added support for syphon in dashboard Shared Texture",
+				"[Mapping] Fixed multiplex bug when changing a single input in list",
+				"[PSN] Removed exclusive port binding",
+				"[DMX] Removed artnet exclusive port binding",
+				"[UI] UI Improvements in mapping editor, UI and container drag not collapsing anymore"
+			]
+		},
+		{
+			"version": "1.9.20b2",
+			"changelog": [
+				"Improved Timeline block rendering (audio layer)",
+				"Fixed mapping index recovery regression"
+			]
+		},
+		{
+			"version": "1.9.20b3",
+			"changelog": [
+				"Added sequence safety when changing play speed / total time while playing"
+			]
+		},
+		{
+			"version": "1.9.20b4",
+			"changelog": [
+				"Added MIDIParameter safety if set in a wrong way from a script"
+			]
+		},
+		{
+			"version": "1.9.20b5",
+			"changelog": [
+				"[PR] Added Hue/Saturation/Brightness extractors in Mapping Conversion filter (thanks Norbert !)",
+				"Fixed State activation and processors enabled/disabled state on load"
+			]
+		},
+		{
+			"version": "1.9.20b6",
+			"changelog": [
+				"Fixed crash report window not showing up"
+			]
+		},
+		{
+			"version": "1.9.20b7",
+			"changelog": [
+				"Fixed deadlocks in Script",
+				"Improved file load end system and broken links fix/report"
+			]
+		},
+		{
+			"version": "1.9.20b8",
+			"changelog": [
+				"[UI] Fixed Color Gradient item dragging",
+				"[UI] Fixed Condition UI refresh when comparator UI changes",
+				"[UI] Improved header placement in expanded item editor headers",
+				"[UI] Fix redraw condition of groups (thanks Tom !)",
+				"[UI] Fix script param link argument count check (thanks Tom !)"
+			]
+		},
+		{
+			"version": "1.9.20",
+			"changelog": [
+				"[MIDI] Try improve MTC Sender",
+				"[TargetParameter] Wildcards in target parameter now reaches target's value",
+				"[Audio] Fix timeline looping with audio bug",
+				"[Mapping] Fix filters save load loosing data when disabled",
+				"[General] Fix file load event flow",
+				"[Commands] Fix set parameter value commands range syncing",
+				"[Mapping] Fix One Euro filter in multiplex"
+			]
+		},
+		{
+			"version": "1.9.21",
+			"changelog": [
+				"[CRITICAL FIX] FIX 1.9.20 INSTANT CRASH (Warning Reporter bug)"
+			]
+		},
+		{
+			"version": "1.9.22",
+			"changelog": [
+				"[IMPORTANT FIX] Fixed Outliner Panel not accessible in 1.9.20"
+			]
+		},
+		{
+			"version": "1.9.23",
+			"changelog": [
+				"[IMPORTANT FIX] Fixed Multiplex list linking with {list:} wildcard"
+			]
+		},
+		{
+			"version": "1.9.25b1",
+			"changelog": [
+				"[Action] Fixed crash when abusing staggered consequences",
+				"[Mapping] Fixed multiplex crash on list remove",
+				"[Organic] Many organic fixes and improvements",
+				"[Action] More String comparisons (thanks Kopias !)",
+				"[Joycon] Fix right Joycon parameters (thanks oogre !)",
+				"[Script] Added more file/folder script methods",
+				"[Mac] Fix files not selectable on mac in timeline (thanks Norbert !)"
+			]
+		},
+		{
+			"version": "1.9.25b2",
+			"changelog": [
+				"[Action] Added Diff/Dist separation in number comparators",
+				"[Action] Fixed stagger launch crash when self referencing",
+				"[Mapping] Added Math filter LOG and INVERT_LOG",
+				"[Script] Added Script methods to retrieve special file and directory paths"
+			]
+		},
+		{
+			"version": "1.9.25b3",
+			"changelog": [
+				"[Hotfix] Fix crash regression on OSC Output Module"
+			]
+		},
+		{
+			"version": "1.9.25b4",
+			"changelog": [
+				"[Hotfix] Fix OSC Output module regression, not sending"
+			]
+		},
+		{
+			"version": "1.9.25b5",
+			"changelog": [
+				"[Hotfix] Fix Staggered consequences regression"
+			]
+		},
+		{
+			"version": "1.9.25b6",
+			"changelog": [
+				"[Action] Fix corner case when abusing staggered consequences (@SushiDragon)"
+			]
+		},
+		{
+			"version": "1.9.25b7",
+			"changelog": [
+				"[Action] FINALLY fixed stagger consequence abusing crash (@SushiDragon)"
+			]
+		},
+		{
+			"version": "1.9.25b8",
+			"changelog": [
+				"[Custom Variables] Copyable presets",
+				"[Custom Variables] Fix preset interpolation Mode",
+				"[Organic] Improved safety on parameter update mechanism",
+				"[OSCQuery] Fixed crash on intense OSCQuery sending",
+				"[Logger] Fixed crash on abusive logging",
+				"[Sequence] Fixed Set editing sequence at index crash",
+				"[Sequence] Fixed sequence commands save/load bug",
+				"[PR: Emerick Hervé] Fixed Wiiuse compilation",
+				"[Linux/RPI] Better crash reporting (thanks Tom !)"
+			]
+		},
+		{
+			"version": "1.9.25b9",
+			"changelog": [
+				"Fix regression crash on set value ADD with sub component"
+			]
+		},
+		{
+			"version": "1.9.25b10",
+			"changelog": [
+				"Fix CV and Multiplex abuse crash",
+				"Better MIDI device reconnection",
+				"Sequence layer improvements",
+				"Sequence block control improvements"
+			]
+		},
+		{
+			"version": "1.9.25b11",
+			"changelog": [
+				"UI Improvements by Emerick H",
+				"Added Windows Arm64 support",
+				"[OS Module] Fix Ping on mac",
+				"Fix UI regressions",
+				"Fix Key Mappings not saved"
+			]
+		},
+		{
+			"version": "1.9.25b12",
+			"changelog": [
+				"Fixed Automation regressions",
+				"Fixed View Mini pane bounds",
+				"Added ID in MQTT Client",
+				"Configurable refresh rate in Preferences (and improved refresh rate handling)"
+			]
+		},
+		{
+			"version": "1.9.25b13",
+			"changelog": [
+				"Fixed Freeze when big structure change while Outliner is open",
+				"Fixed FFT Analyzer crash",
+				"Improved UI Timers"
+			]
+		},
+		{
+			"version": "1.10.1",
+			"changelog": [
+				"Final 1.x release ! (Until some bugs are found...)",
+				"Many Organic fixes and improvements",
+				"Fixed script getJSONData / loadJSONData",
+				"Added script getAttribute(string) and param.type",
+				"Support for MQTT on Linux and Raspberry",
+				"Support for MQTT Mac (silicon only) by @naychrist",
+				"Improved compatibility with recent Linux / RPI",
+				"LTC improvements by CalebWest",
+				"Linux Ping support by Antoine Pithon"
+			]
+		},
+		{
+			"version": "1.10.1b1",
+			"changelog": [
+				"Major Crash Fix updates !",
+				"Please update and report if you are on 1.10.0 so i can release a new stable",
+				"Thanks, hugs and love."
+			]
+		},
+		{
+			"version": "1.10.1",
+			"changelog": [
+				"Stable version with all the crash fixes of 1.10.1b1"
+			]
+		},
+		{
+			"version": "1.10.2b1",
+			"changelog": [
+				"More crash fixes !",
+				"Custom Variable Interpolation crash fixes"
+			]
+		},
+		{
+			"version": "1.10.2b2",
+			"changelog": [
+				"More crash fixes",
+				"Added interpolation mode in CV preset files"
+			]
+		},
+		{
+			"version": "1.10.2b3",
+			"changelog": [
+				"More crash fixes (Gotta catch'em all !)"
+			]
+		},
+		{
+			"version": "1.10.2",
+			"changelog": [
+				"Stable version with all the crash fixes of 1.10.2 betas"
+			]
+		},
+		{
+			"version": "1.10.4b2",
+			"changelog": [
+				"[Controller] Added Ajazz AKP153, AKP03 and AKP05 support (thanks Andrea Bergamasco !)",
+				"[Conductor] Added OFF actions to cues (thanks Phillip Dykman !)",
+				"[UI] Added Chinese character support on Windows and macOS (thanks liqixin !)",
+				"[UI] Improved font rendering and removed the startup splash screen",
+				"[Sequence] Fixed looping when playing backwards",
+				"[Autosave] Fixed stale autosave cleanup and improved remote restore handling",
+				"[OSCQuery] Improved RESTORE, path/range/rename notifications, warning sync and individual controllable requests",
+				"[Remote Control] Added new-file notifications and improved safety during structure changes",
+				"[Updater] Added custom update-channel support and fixed duplicate startup checks",
+				"[WebSocket] Fixed handshake failures and shutdown deadlocks, and added client timeout and error-code reporting",
+				"[Shared Texture] Improved Syphon and Spout compatibility, receiver stability and sender selection on macOS and Windows",
+				"[Mapping/Multiplex] Fixed crashes and invalid links during structure changes, filter processing and output updates",
+				"[String Filter] Invalid regular expressions now report a warning instead of crashing",
+				"[Custom Variables] Fixed linked-value synchronization and listener cleanup",
+				"[OSC] Improved Custom OSC argument handling and empty-message safety",
+				"[Keyboard] Fixed async key-event and window-lifecycle crashes",
+				"[PosiStageNet] Fixed last-slot updates and improved multicast/thread safety",
+				"[Zeroconf] Fixed service searcher removal and shutdown safety",
+				"[General] Fixed async menu, parameter, enum and notifier crashes",
+				"[Build] Updated macOS/shared-texture builds and platform dependencies",
+				"[Docs] Updated links to HTTPS and added macOS build instructions"
+			]
+		},
+		{
+			"version": "1.10.4b3",
+			"changelog": [
+				"Added full Ajazz AKP03 controller support",
+				"Replaced vendored pigpio with libgpiod for Linux GPIO support",
+				"Fixed native file chooser dialogs crashing on launch",
+				"Fixed Learn assignment for module input values",
+				"Fixed MIDI Clock crashing on removal"
+			]
+		},
+		{
+			"version": "1.10.4b4",
+			"changelog": [
+				"Improved MQTT publishing, reconnection and shutdown thread safety",
+				"Fixed Zeroconf discovery hanging during shutdown",
+				"Fixed warnings when loading sequence commands with missing targets",
+				"Fixed discarding unsaved changes when opening another project",
+				"Improved target relinking during project loading",
+				"Added FLAC files to audio file choosers"
+			]
+		},
+		{
+			"version": "1.10.4b5",
+			"changelog": [
+				"[Sequence] Added LTC audio output with a selectable channel and 24, 25, 29.97 drop-frame and 30 fps modes",
+				"[Timecode] Improved MTC send/receive synchronization, drop-frame timing and MIDI device reconnection",
+				"[Audio] Improved LTC input decoding and playback/dropout detection",
+				"[Sequence] Added duration-based triggers with conditions, separate TRUE/FALSE consequences and configurable exit and rewind actions",
+				"[UI] Improved panel docking, floating-window dragging and drop previews, and added tab reordering",
+				"[Dashboard] Added a connected-client count for the web dashboard"
+			]
+		}
+	]
+}

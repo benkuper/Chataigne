@@ -27,7 +27,7 @@ contents.xcworkspacedata
 profile
 **/MacOSX/build
 **/iOS/build
-**/VisualStudio2022
+**/VisualStudio2022/*
 **/Android/bin
 **/Android/libs
 **/Android/gen
