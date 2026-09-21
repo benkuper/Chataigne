@@ -165,8 +165,10 @@ public:
 
 	enum RetargetMode { HUE = -1, SAT = -2, VAL = -3};
 	ColorParameter* baseColor;
+	var baseColorGhostData;
 
 	var getJSONData(bool includeNonOverriden = false) override;
+	void loadJSONDataItemInternal(var data) override;
 
 	void setupParametersInternal(int multiplexIndex, bool rangeOnly) override;
 	virtual void addExtraRetargetOptions() override;

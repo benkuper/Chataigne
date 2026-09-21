@@ -377,14 +377,11 @@ void HTTPModule::run()
 
 	while (!threadShouldExit())
 	{
-		OwnedArray<Request> tmpRequests;
-		requests.getLock().enter();
-		for (auto& r : requests) tmpRequests.add(new Request(*r));
-		requests.getLock().exit();
-
+		OwnedArray<Request, CriticalSection> tmpRequests;
+		// Drain the queue atomically so requests added during processing remain queued.
+		requests.swapWith(tmpRequests);
 
 		for (auto& r : tmpRequests) processRequest(r);
-		requests.clear();
 		wait(10);
 	}
 }
