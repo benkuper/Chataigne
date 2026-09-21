@@ -111,6 +111,8 @@ public:
 
 	//Values
 	FloatParameter* detectedVolume;
+	ControllableContainer channelsCC;
+	Array<FloatParameter*> channelVolumes;
 
 	ControllableContainer noteCC;
 	FloatParameter* frequency;

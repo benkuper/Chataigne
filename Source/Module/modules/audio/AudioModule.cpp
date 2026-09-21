@@ -23,6 +23,7 @@ AudioModule::AudioModule(const String& name) :
 	outputVolumesCC("Output Volumes"),
 	monitorParams("Monitor"),
 	numActiveMonitorOutputs(0),
+	channelsCC("Channels"),
 	noteCC("Pitch Detection"),
 	fftCC("FFT Enveloppes"),
 	ltcParamsCC("LTC"),
@@ -69,6 +70,7 @@ AudioModule::AudioModule(const String& name) :
 
 	//Values
 	detectedVolume = valuesCC.addFloatParameter("Volume", "Volume of the audio input", 0, 0, 1);
+	valuesCC.addChildControllableContainer(&channelsCC);
 
 	//Pitch Detection
 	frequency = noteCC.addFloatParameter("Freq", "Freq", 0, 0, 2000);
@@ -201,6 +203,8 @@ void AudioModule::updateAudioSetup()
 	var inData = inputVolumesCC.getJSONData();
 	for (auto& c : inputVolumes) inputVolumesCC.removeControllable(c);
 	inputVolumes.clear();
+	for (auto& c : channelVolumes) channelsCC.removeControllable(c);
+	channelVolumes.clear();
 
 	var outData = outputVolumesCC.getJSONData();
 	for (auto& c : outputVolumes) outputVolumesCC.removeControllable(c);
@@ -221,6 +225,10 @@ void AudioModule::updateAudioSetup()
 		String channelName = "Input " + String(i + 1);// AudioChannelSet::getChannelTypeName(inputChannelSet.getTypeOfChannel(i));
 		FloatParameter* v = inputVolumesCC.addFloatParameter(channelName + " Gain", "Gain to apply to this input channel", 1, 0, 3);
 		inputVolumes.add(v);
+
+		FloatParameter* channelVolumeValue = channelsCC.addFloatParameter(channelName + " Volume", "Volume of this input channel", 0, 0, 1);
+		channelVolumeValue->setControllableFeedbackOnly(true);
+		channelVolumes.add(channelVolumeValue);
 
 		graph.addConnection(AudioProcessorGraph::Connection({ AUDIO_INPUT_GRAPH_ID, i }, { AUDIO_INPUTMIXER_GRAPH_ID, i }));
 	}
@@ -384,15 +392,21 @@ void AudioModule::audioDeviceIOCallbackWithContext(const float* const* inputChan
 		return;
 	}
 
+	if (numInputChannels > 0 && (buffer.getNumChannels() != numInputChannels || buffer.getNumSamples() != numSamples))
+		buffer.setSize(numInputChannels, numSamples);
+
 	for (int i = 0; i < numInputChannels; ++i)
 	{
-		float channelVolume = i < inputVolumes.size() && inputVolumes[i] != nullptr ? inputVolumes[i]->floatValue() : 1;
+		const float inputChannelGain = i < inputVolumes.size() && inputVolumes[i] != nullptr ? inputVolumes[i]->floatValue() : 1;
+
+		buffer.copyFromWithRamp(i, 0, inputChannelData[i], numSamples, 1, inputGain->floatValue() * inputChannelGain);
+		const float detectedChannelVolume = buffer.getRMSLevel(i, 0, numSamples);
+		if (i < channelVolumes.size() && channelVolumes[i] != nullptr)
+			channelVolumes[i]->setValue(detectedChannelVolume);
 
 		if (i == 0) //take only the first channel for analysis (later, should be able to select which channel is used for analysis)
 		{
-			if (buffer.getNumSamples() != numSamples) buffer.setSize(1, numSamples);
-			buffer.copyFromWithRamp(0, 0, inputChannelData[0], numSamples, 1, inputGain->floatValue() * channelVolume);
-			detectedVolume->setValue(buffer.getRMSLevel(0, 0, numSamples));
+			detectedVolume->setValue(detectedChannelVolume);
 
 			if (detectedVolume->floatValue() > activityThreshold->floatValue())
 			{
@@ -434,7 +448,7 @@ void AudioModule::audioDeviceIOCallbackWithContext(const float* const* inputChan
 			{
 				int outputIndex = selectedMonitorOutChannels[j];
 				if (outputIndex >= numOutputChannels) continue;
-				FloatVectorOperations::addWithMultiply(outputChannelData[outputIndex], inputChannelData[i], monitorVolume->floatValue() * channelVolume, numSamples);
+				FloatVectorOperations::addWithMultiply(outputChannelData[outputIndex], inputChannelData[i], monitorVolume->floatValue() * inputChannelGain, numSamples);
 			}
 		}
 	}
