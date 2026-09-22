@@ -75,6 +75,7 @@ public:
 	AudioDeviceManager am;
 	AudioProcessorPlayer player;
 	AudioProcessorGraph graph;
+	bool playerCallbackRegistered;
 
 	MixerProcessor* inputMixer;
 	MixerProcessor* outputMixer;
@@ -143,6 +144,7 @@ public:
 	std::unique_ptr<LTCDecoder> ltcDecoder;
 
 	void initSetup();
+	void setPlayerActive(bool shouldBeActive);
 
 	virtual void updateAudioSetup();
 	void updateSelectedMonitorChannels();

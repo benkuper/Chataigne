@@ -94,6 +94,7 @@ bool MappingFilter::setupSources(Array<Parameter*> sources, int multiplexIndex, 
 	{
 		for (auto& filteredParameter : *filteredParameters[multiplexIndex])
 		{
+			if (filteredParameter == nullptr) continue;
 			filteredParameter->isControllableFeedbackOnly = true;
 			filteredParameter->addParameterListener(this);
 		}
@@ -126,8 +127,9 @@ void MappingFilter::setupParametersInternal(int multiplexIndex, bool rangeOnly)
 	int index = 0;
 	for (auto& source : sourceParams[multiplexIndex])
 	{
-		//here if not eligible, force not setting up internal filters but generic mappingFilter setup
-		Parameter* p = isChannelEligible(index) ? setupSingleParameterInternal(source, multiplexIndex, rangeOnly) : MappingFilter::setupSingleParameterInternal(source, multiplexIndex, rangeOnly);
+		const bool isTypeEligible = source != nullptr && (filterTypeFilters.isEmpty() || filterTypeFilters.contains(source->type));
+		// If the channel or type is not eligible, preserve it with the generic pass-through parameter.
+		Parameter* p = isChannelEligible(index) && isTypeEligible ? setupSingleParameterInternal(source, multiplexIndex, rangeOnly) : MappingFilter::setupSingleParameterInternal(source, multiplexIndex, rangeOnly);
 		if (!rangeOnly) filteredParameters[multiplexIndex]->add(p);
 		index++;
 	}
@@ -136,12 +138,17 @@ void MappingFilter::setupParametersInternal(int multiplexIndex, bool rangeOnly)
 
 Parameter* MappingFilter::setupSingleParameterInternal(Parameter* source, int multiplexIndex, bool rangeOnly)
 {
+	if (source == nullptr) return nullptr;
+
 	Parameter* p = nullptr;
 	if (!rangeOnly)
 	{
 		p = ControllableFactory::createParameterFrom(source, true, true);
-		p->isSavable = false;
-		p->setControllableFeedbackOnly(true);
+		if (p != nullptr)
+		{
+			p->isSavable = false;
+			p->setControllableFeedbackOnly(true);
+		}
 	}
 	else
 	{

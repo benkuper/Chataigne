@@ -14,7 +14,7 @@
 CustomValuesCommandArgument::CustomValuesCommandArgument(const String& name, Parameter* _p, bool _mappingEnabled, bool templateMode, Multiplex* multiplex, bool enablePrecison) :
 	BaseItem(name, false),
 	MultiplexTarget(multiplex),
-	param(_p),
+	param(_p != nullptr ? _p : new StringParameter(name, "Custom command argument", "")),
 	editable(nullptr),
 	sendPrecision(nullptr),
 	mappingEnabled(_mappingEnabled),
@@ -26,7 +26,6 @@ CustomValuesCommandArgument::CustomValuesCommandArgument(const String& name, Par
 
 	isSelectable = false;
 
-	jassert(param != nullptr);
 	param->isSavable = false; // save manually
 	addControllable(param);
 

@@ -11,6 +11,16 @@
 #include "Common/Processor/ProcessorIncludes.h"
 #include "Common/Command/CommandIncludes.h"
 
+namespace
+{
+	Controllable::Type getArgumentTypeFromData(const var& data)
+	{
+		String typeName = data.getProperty("type", "").toString();
+		if (typeName.isEmpty()) typeName = data.getProperty("param", var()).getProperty("type", "").toString();
+		return static_cast<Controllable::Type>(Controllable::typeNames.indexOf(typeName));
+	}
+}
+
 CustomValuesCommandArgumentManager::CustomValuesCommandArgumentManager(const String& name, bool _mappingEnabled, bool templateMode, Multiplex* multiplex) :
 	BaseManager(name),
 	MultiplexTarget(multiplex),
@@ -146,6 +156,8 @@ void CustomValuesCommandArgumentManager::removeItemsInternal(Array<CustomValuesC
 
 CustomValuesCommandArgument* CustomValuesCommandArgumentManager::createItemWithParam(Parameter* p)
 {
+	if (p == nullptr) return nullptr;
+
 	CustomValuesCommandArgument* a = new CustomValuesCommandArgument("#" + String(items.size() + 1), p, mappingEnabled, templateMode, multiplex, enablePrecison);
 	return a;
 }
@@ -196,17 +208,21 @@ Parameter* CustomValuesCommandArgumentManager::createParameterFromType(Parameter
 
 	if (p != nullptr) p->isCustomizableByUser = true;
 
-	if (createParamCallbackFunc != nullptr) createParamCallbackFunc(p);
+	if (p != nullptr && createParamCallbackFunc != nullptr) createParamCallbackFunc(p);
 
 	return p;
 }
 
 CustomValuesCommandArgument* CustomValuesCommandArgumentManager::addItemFromData(var data, bool addToUndo)
 {
+	CustomValuesCommandArgument* item = createItemFromType(getArgumentTypeFromData(data));
+	if (item == nullptr)
+	{
+		NLOGWARNING(niceName, "Skipping a custom command argument with an unknown or unsupported type");
+		return nullptr;
+	}
 
-	Controllable::Type t = (Controllable::Type)Controllable::typeNames.indexOf(data.getProperty("type", ""));
-	CustomValuesCommandArgument* item = createItemFromType(t);
-	return addItem(item);
+	return addItem(item, data, addToUndo);
 
 	/*if (s.isEmpty()) return nullptr;
 
@@ -224,14 +240,21 @@ CustomValuesCommandArgument* CustomValuesCommandArgumentManager::addItemFromData
 Array<CustomValuesCommandArgument*> CustomValuesCommandArgumentManager::addItemsFromData(var data, bool addToUndo)
 {
 	Array<CustomValuesCommandArgument*> itemsToAdd;
+	var validItemsData;
 	for (int i = 0; i < data.size(); i++)
 	{
-		Controllable::Type t = (Controllable::Type)Controllable::typeNames.indexOf(data[i].getProperty("type", ""));
-		CustomValuesCommandArgument* item = createItemFromType(t);
-		itemsToAdd.add(item);
+		if (CustomValuesCommandArgument* item = createItemFromType(getArgumentTypeFromData(data[i])))
+		{
+			itemsToAdd.add(item);
+			validItemsData.append(data[i]);
+		}
+		else
+		{
+			NLOGWARNING(niceName, "Skipping a custom command argument with an unknown or unsupported type");
+		}
 	}
 
-	return addItems(itemsToAdd, data, addToUndo);
+	return addItems(itemsToAdd, validItemsData, addToUndo);
 }
 
 var CustomValuesCommandArgumentManager::addItemWithTypeFromScript(const var::NativeFunctionArgs& a)

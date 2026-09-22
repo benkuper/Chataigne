@@ -51,7 +51,7 @@ Parameter* SimpleRemapFilter::setupSingleParameterInternal(Parameter* source, in
 {
 	Parameter* p = nullptr;
 
-	if(rangeOnly) return nullptr; //nothing to do, range is forced from remap
+	if (source == nullptr || rangeOnly) return nullptr; //nothing to do, range is forced from remap
 	
 	if (!source->isComplex() && forceFloatOutput->boolValue())
 	{
@@ -63,6 +63,8 @@ Parameter* SimpleRemapFilter::setupSingleParameterInternal(Parameter* source, in
 	{
 		p = MappingFilter::setupSingleParameterInternal(source, multiplexIndex, rangeOnly);
 	}
+
+	if (p == nullptr || targetOut == nullptr) return p;
 
 	if (!useCustomInputRange->isOverriden || !useCustomInputRange->boolValue()) useCustomInputRange->setValue(!source->hasRange());
 	if (p->isComplex())
@@ -86,7 +88,7 @@ Parameter* SimpleRemapFilter::setupSingleParameterInternal(Parameter* source, in
 
 MappingFilter::ProcessResult  SimpleRemapFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
 {
-	if (targetIn == nullptr || targetOut == nullptr || out == nullptr) return STOP_HERE;
+	if (source == nullptr || targetIn == nullptr || targetOut == nullptr || out == nullptr) return STOP_HERE;
 
 	var remappedValue = getRemappedValueFor(source, multiplexIndex);
 	jassert(remappedValue.size() == out->value.size());
@@ -102,6 +104,8 @@ var SimpleRemapFilter::getRemappedValueFor(Parameter* source, int multiplexIndex
 	var targetVal = sourceVal;
 
 	var linkOut = filterParams.getLinkedValue(targetOut, multiplexIndex);
+	if (!linkOut.isArray() || linkOut.size() < 2) linkOut = targetOut->getValue().clone();
+	if (!linkOut.isArray() || linkOut.size() < 2) return sourceVal;
 
 	if (linkOut[0] == linkOut[1])
 	{
@@ -136,6 +140,8 @@ var SimpleRemapFilter::getRemappedValueFor(Parameter* source, int multiplexIndex
 
 
 	var linkIn = filterParams.getLinkedValue(targetIn, multiplexIndex);
+	if (!linkIn.isArray() || linkIn.size() < 2) linkIn = targetIn->getValue().clone();
+	if (!linkIn.isArray() || linkIn.size() < 2) return sourceVal;
 
 	var tIn;
 	if (!source->hasRange() || useCustomInputRange->boolValue())
@@ -213,17 +219,22 @@ void SimpleRemapFilter::computeOutRanges()
 	for (int i = 0; i < filteredParameters.size(); i++)
 	{
 		auto mFilteredParams = filteredParameters[i];
+		if (mFilteredParams == nullptr) continue;
 
 		for (int j = 0; j < mFilteredParams->size(); j++)
 		{
 			Parameter* f = mFilteredParams->getUnchecked(j);
+			if (f == nullptr) continue;
 			if (!isChannelEligible(j))
 			{
-				if (Parameter* source = sourceParams[i][j]) f->setRange(source->minimumValue, source->maximumValue);
+				if (i < sourceParams.size() && j < sourceParams[i].size())
+					if (Parameter* source = sourceParams[i][j]) f->setRange(source->minimumValue, source->maximumValue);
 				continue;
 			}
 			
 			var mRange = filterParams.getLinkedValue(targetOut, i);
+			if (!mRange.isArray() || mRange.size() < 2) mRange = targetOut->getValue().clone();
+			if (!mRange.isArray() || mRange.size() < 2) continue;
 
 			if (f->type == Controllable::FLOAT || f->type == Controllable::INT)
 			{

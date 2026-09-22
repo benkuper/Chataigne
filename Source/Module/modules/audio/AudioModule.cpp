@@ -15,6 +15,7 @@
 AudioModule::AudioModule(const String& name) :
 	Module(name),
 	hs(&am),
+	playerCallbackRegistered(false),
 	currentSampleRate(44100),
 	currentBufferSize(512),
 	uidIncrement(100),
@@ -110,13 +111,27 @@ AudioModule::AudioModule(const String& name) :
 AudioModule::~AudioModule()
 {
 	stopTimer();
-	graph.clear();
-
-	am.removeAudioCallback(&player);
-	player.setProcessor(nullptr);
-
+	setPlayerActive(false);
 	am.removeAudioCallback(this);
 	am.removeChangeListener(this);
+	graph.clear();
+}
+
+void AudioModule::setPlayerActive(bool shouldBeActive)
+{
+	if (playerCallbackRegistered)
+	{
+		am.removeAudioCallback(&player);
+		playerCallbackRegistered = false;
+	}
+
+	player.setProcessor(shouldBeActive ? &graph : nullptr);
+
+	if (shouldBeActive)
+	{
+		am.addAudioCallback(&player);
+		playerCallbackRegistered = true;
+	}
 }
 
 void AudioModule::initSetup()
@@ -131,8 +146,6 @@ void AudioModule::initSetup()
 	am.addAudioCallback(this);
 	am.addChangeListener(this);
 	am.initialiseWithDefaultDevices(0, 2);
-
-	am.addAudioCallback(&player);
 
 	graph.reset();
 
@@ -160,7 +173,7 @@ void AudioModule::initSetup()
 	graph.addNode(std::move(iProc), AUDIO_INPUTMIXER_GRAPH_ID);
 	graph.addNode(std::move(oProc), AUDIO_OUTPUTMIXER_GRAPH_ID);
 
-	player.setProcessor(&graph);
+	setPlayerActive(enabled->boolValue());
 
 }
 
@@ -171,7 +184,7 @@ void AudioModule::updateAudioSetup()
 	currentSampleRate = setup.sampleRate;
 	currentBufferSize = setup.bufferSize;
 
-	am.removeAudioCallback(&player);
+	setPlayerActive(false);
 	am.removeAudioCallback(this);
 
 	int numSelectedInputChannelsInSetup = setup.inputChannels.countNumberOfSetBits();
@@ -254,11 +267,9 @@ void AudioModule::updateAudioSetup()
 	if (setup.outputDeviceName.isEmpty()) setWarningMessage("Module is not connected to an audio output");
 	else clearWarning();
 
-	am.addAudioCallback(&player);
-	am.addAudioCallback(this);
-
-
 	graph.suspendProcessing(false);
+	am.addAudioCallback(this);
+	setPlayerActive(enabled->boolValue());
 }
 
 void AudioModule::updateSelectedMonitorChannels()
@@ -326,8 +337,7 @@ void AudioModule::onContainerParameterChangedInternal(Parameter* p)
 {
 	if (p == enabled)
 	{
-		if (enabled->boolValue()) player.setProcessor(&graph);
-		else player.setProcessor(nullptr);
+		setPlayerActive(enabled->boolValue());
 	}
 }
 
