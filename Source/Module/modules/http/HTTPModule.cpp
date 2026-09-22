@@ -76,6 +76,7 @@ void HTTPModule::sendRequest(StringRef address, RequestMethod method, ResultData
 	if (logOutgoingData->boolValue())  NLOG(niceName, "Send " + requestMethodNames[(int)method] + " Request : " + url.toString(true));
 
 	requests.add(new Request(url, method, dataType, extraHeaders));
+	notify();
 }
 
 void HTTPModule::processRequest(Request* request)

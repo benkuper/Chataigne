@@ -583,6 +583,21 @@ var ToColorFilter::getJSONData(bool includeNonOverriden)
 {
 	var data = SimpleConversionFilter::getJSONData(includeNonOverriden);
 	if (baseColor != nullptr) data.getProperty("ghostOptions", var()).getDynamicObject()->setProperty("color", baseColor->getValue());
+
+	// Keep deferred Base Color data intact if the filter is saved before its
+	// input type has been restored and the parameter can be recreated.
+	if (baseColor == nullptr && baseColorGhostData.isObject())
+	{
+		var filterParamsData = data.getProperty("filterParams", var());
+		if (DynamicObject* filterParamsObject = filterParamsData.getDynamicObject())
+		{
+			var parametersData = filterParamsData.getProperty("parameters", var());
+			if (!parametersData.isArray()) parametersData = var(Array<var>());
+			parametersData.append(baseColorGhostData.clone());
+			filterParamsObject->setProperty("parameters", parametersData);
+		}
+	}
+
 	return data;
 }
 
@@ -591,7 +606,7 @@ void ToColorFilter::loadJSONDataItemInternal(var data)
 	// Base Color is created only after the mapping input type is known, which is
 	// later than filterParams is initially loaded. Keep its complete parameter
 	// data so its control mode, expression/reference and value can be restored.
-	if (baseColorGhostData.isVoid())
+	if (baseColor == nullptr && baseColorGhostData.isVoid())
 	{
 		var parametersData = data.getProperty("filterParams", var()).getProperty("parameters", var());
 		if (Array<var>* parameters = parametersData.getArray())
@@ -699,6 +714,13 @@ MappingFilter::ProcessResult ToColorFilter::processSingleParameterInternal(Param
 		int comp = retargetComponent->getValueData();
 
 		var baseColorVal = filterParams.getLinkedValue(baseColor, multiplexIndex);
+		if (!baseColorVal.isArray())
+		{
+			baseColorVal = baseColor != nullptr ? baseColor->getValue().clone() : var();
+			if (!baseColorVal.isArray()) return UNCHANGED;
+		}
+		while (baseColorVal.size() < 4) baseColorVal.append(baseColorVal.size() == 3 ? 1.0f : 0.0f);
+
 		Colour mBaseColor = Colour::fromFloatRGBA((float)baseColorVal[0], (float)baseColorVal[1], (float)baseColorVal[2], baseColorVal.size() > 3 ? (float)baseColorVal[3] : 1.0f);
 
 		switch (comp)

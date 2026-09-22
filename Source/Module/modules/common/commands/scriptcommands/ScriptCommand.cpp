@@ -140,6 +140,17 @@ void ScriptCommand::triggerInternal(int multiplexIndex)
 	for (auto& p : params)
 	{
 		var val = getLinkedValue(p, multiplexIndex);
+		if (FileParameter* fileParam = dynamic_cast<FileParameter*>(p.get()))
+		{
+			String path = val.toString();
+			if (path.isNotEmpty() && !File::isAbsolutePath(path) && !path.startsWithChar('/'))
+			{
+				path = fileParam->getBasePath().getChildFile(path).getFullPathName();
+			}
+
+			val = path.replace("\\", "/");
+		}
+
 		args.add(val);
 	}
 
