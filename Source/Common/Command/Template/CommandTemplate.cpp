@@ -45,16 +45,26 @@ CommandTemplate::CommandTemplate(Module * m, var params) :
 
 CommandTemplate::CommandTemplate(var params) :
 	BaseItem(params.getProperty("commandType","New Template"), false),
+	module(nullptr),
 	paramsContainer("Parameters"),
 	sourceDef(nullptr)
 {
 	showInspectorOnSelect = false;
 
-	Module * m = ModuleManager::getInstance()->getModuleWithName(params.getProperty("module",""));
-	Array<CommandDefinition * > defs = m->getCommands(false);
+	module = ModuleManager::getInstance()->getModuleWithName(params.getProperty("module", ""));
 
 	triggerTrigger = addTrigger("Trigger", "Trigger a command from this template");
 	triggerTrigger->hideInEditor = true;
+
+	addChildControllableContainer(&paramsContainer);
+
+	if (module == nullptr)
+	{
+		NLOGERROR(niceName, "Error creating command template: module not found");
+		return;
+	}
+
+	Array<CommandDefinition*> defs = module->getCommands(false);
 
 	String mPath = params.getProperty("menuPath", "").toString();
 	String cType = params.getProperty("commandType", "").toString();
@@ -68,11 +78,9 @@ CommandTemplate::CommandTemplate(var params) :
 		}
 	}
 
-	addChildControllableContainer(&paramsContainer);
-	
 	if (sourceDef == nullptr)
 	{
-		NLOGERROR(niceName, "Error create command template for " << m->niceName << " > " << mPath << ":" << cType);
+		NLOGERROR(niceName, "Error create command template for " << module->niceName << " > " << mPath << ":" << cType);
 		return;
 	}
 
