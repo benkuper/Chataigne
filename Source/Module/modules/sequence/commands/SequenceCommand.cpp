@@ -90,6 +90,10 @@ SequenceCommand::SequenceCommand(SequenceModule* _module, CommandContext context
 		value = addBoolParameter("Value", "The enable state to set this trigger", true);
 		break;
 
+	case ADD_TRIGGER:
+		target->customGetTargetContainerFunc = &ChataigneSequenceManager::showMenuAndGetTriggerLayerStatic;
+		break;
+
 	default:
 		break;
 	}
@@ -240,6 +244,13 @@ void SequenceCommand::triggerInternal(int multiplexIndex)
 		if (TimeTrigger* tt = getLinkedTargetContainerAs<TimeTrigger>(target, multiplexIndex))
 		{
 			tt->enabled->setValue(getLinkedValue(value, multiplexIndex));
+		}
+		break;
+
+	case ADD_TRIGGER:
+		if (TriggerLayer* tl = getLinkedTargetContainerAs<TriggerLayer>(target, multiplexIndex))
+		{
+			if (Sequence* s = tl->sequence) tl->ttm->addTriggerAt(s->currentTime->floatValue(), 0.5f);
 		}
 		break;
 

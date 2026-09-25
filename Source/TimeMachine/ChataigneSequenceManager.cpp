@@ -79,3 +79,8 @@ void ChataigneSequenceManager::showMenuAndGetTriggerStatic(ControllableContainer
 {
 	getInstance()->showMenuAndGetTrigger(startFromCC, returnFunc);
 }
+
+void ChataigneSequenceManager::showMenuAndGetTriggerLayerStatic(ControllableContainer* startFromCC, std::function<void(TriggerLayer*)> returnFunc)
+{
+	getInstance()->showMenuAndGetTriggerLayer(startFromCC, returnFunc);
+}
