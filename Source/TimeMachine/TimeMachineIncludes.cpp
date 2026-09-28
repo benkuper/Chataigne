@@ -19,6 +19,12 @@
 #include "Sequence/layers/audio/ChataigneAudioLayer.cpp"
 #include "Sequence/layers/audio/ui/ChataigneAudioLayerPanel.cpp"
 #include "Sequence/layers/audio/ui/ChataigneAudioLayerTimeline.cpp"
+#if JUCE_WINDOWS
+#include "Sequence/layers/video/ChataigneVideoLayer.cpp"
+#include "Sequence/layers/video/ui/ChataigneVideoLayerPanel.cpp"
+#include "Sequence/layers/video/ui/VideoPreviewPanel.cpp"
+#include "Sequence/layers/video/ui/CompositionVideoPanel.cpp"
+#endif
 #include "Sequence/Cue/ChataigneCue.cpp"
 #include "Sequence/layers/mapping/MappingLayer.cpp"
 #include "Sequence/layers/mapping/automation/1d/Mapping1DLayer.cpp"

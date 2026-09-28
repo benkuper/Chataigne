@@ -33,6 +33,9 @@ public:
 
 	void createSequenceFromAudioFile(File f) override;
 	void showMenuAndGetTriggerLayer(ControllableContainer* startFromCC, std::function<void(TriggerLayer*)> returnFunc);
+#if JUCE_WINDOWS
+	void createSequenceFromVideoFile(File f) override;
+#endif
 
 	static void showMenuAndGetSequenceStatic(ControllableContainer* startFromCC, std::function<void(Sequence*)> returnFunc);
 	static void showMenuAndGetLayerStatic(ControllableContainer* startFromCC, std::function<void(SequenceLayer*)> returnFunc);

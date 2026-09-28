@@ -111,6 +111,7 @@
 #include "modules/generators/metronome/MetronomeModule.h"
 
 #include "modules/generators/signal/SignalModule.h"
+#include "modules/video/VideoMonitorOutModule.h"
 
 #include "modules/abletonlink/AbletonLinkModule.h"
 

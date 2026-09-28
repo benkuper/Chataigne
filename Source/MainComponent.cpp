@@ -39,6 +39,11 @@ void MainContentComponent::init()
 
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Command Templates", &CommandTemplateManagerPanel::create));
 
+#if JUCE_WINDOWS
+	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Preview Video", &VideoPreviewPanel::create));
+	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Composition Video", &CompositionVideoPanel::create));
+#endif
+
 	OrganicMainContentComponent::init();
 
 	String lastVersion = getAppProperties().getUserSettings()->getValue("lastVersion", "");
