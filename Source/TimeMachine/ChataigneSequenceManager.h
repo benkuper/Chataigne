@@ -32,6 +32,7 @@ public:
 	std::unique_ptr<SequenceModule> module;
 
 	void createSequenceFromAudioFile(File f) override;
+	void showMenuAndGetTriggerLayer(ControllableContainer* startFromCC, std::function<void(TriggerLayer*)> returnFunc);
 
 	static void showMenuAndGetSequenceStatic(ControllableContainer* startFromCC, std::function<void(Sequence*)> returnFunc);
 	static void showMenuAndGetLayerStatic(ControllableContainer* startFromCC, std::function<void(SequenceLayer*)> returnFunc);

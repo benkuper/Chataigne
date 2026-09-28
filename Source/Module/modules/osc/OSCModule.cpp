@@ -238,11 +238,6 @@ void OSCModule::setupSenders()
 	for (auto& o : outputManager->items)
 	{
 		o->setupSender();
-		if (o->receiver != nullptr && o->listenToOutputFeedback->boolValue())
-		{
-			NLOG(niceName, "Feedback enabled, listening also on port " << o->socket->getBoundPort());
-			o->receiver->addListener(this);
-		}
 	}
 }
 
@@ -584,20 +579,6 @@ void OSCModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc, 
 		if (!isCurrentlyLoadingData) setupReceiver();
 		setupSenders();
 	}
-	else if (OSCOutput* o = c->getParentAs<OSCOutput>())
-	{
-		if (c == o->listenToOutputFeedback)
-		{
-			if (o->listenToOutputFeedback->boolValue())
-			{
-				if (o->receiver != nullptr)
-				{
-					NLOG(niceName, "Feedback enabled, listening also on port " << o->socket->getBoundPort());
-					o->receiver->addListener(this);
-				}
-			}
-		}
-	}
 }
 
 void OSCModule::oscMessageReceived(const OSCMessage& message)
@@ -751,7 +732,15 @@ void OSCOutput::setupSender()
 		if (listenToOutputFeedback->boolValue())
 		{
 			receiver.reset(new OSCReceiver());
-			receiver->connectToSocket(*socket);
+			if (receiver->connectToSocket(*socket))
+			{
+				receiver->addListener(oscModule);
+				NLOG(oscModule->niceName, "Feedback enabled, listening also on port " << socket->getBoundPort());
+			}
+			else
+			{
+				receiver.reset();
+			}
 		}
 		startThread();
 

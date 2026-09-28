@@ -26,6 +26,9 @@ public:
 
 	SerialDeviceParameter* portParam;
 	IntParameter* baudRate;
+	EnumParameter* dataBits;
+	EnumParameter* stopBits;
+	EnumParameter* parity;
 	BoolParameter* dtr;
 	BoolParameter* rts;
 	SerialDevice* port;

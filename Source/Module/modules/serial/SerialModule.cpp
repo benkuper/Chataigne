@@ -19,11 +19,17 @@ SerialModule::SerialModule(const String& name) :
 
 	moduleParams.addParameter(portParam);
 	baudRate = moduleParams.addIntParameter("Baud Rate", "The connection speed. Common values are 9600, 57600, 115200", 115200, 1);
+	dataBits = moduleParams.addEnumParameter("Data Bits", "The number of data bits in each serial frame");
+	dataBits->addOption("8", 8)->addOption("7", 7)->addOption("6", 6)->addOption("5", 5);
+	stopBits = moduleParams.addEnumParameter("Stop Bits", "The number of stop bits in each serial frame");
+	stopBits->addOption("1", 1)->addOption("2", 2);
+	parity = moduleParams.addEnumParameter("Parity", "The parity check used for each serial frame");
+	parity->addOption("None", 0)->addOption("Odd", 1)->addOption("Even", 2);
 	dtr = moduleParams.addBoolParameter("DTR", "Data Terminal Ready", false);
 	rts = moduleParams.addBoolParameter("RTS", "Request To Send", false);
 	portParam->setBaudrate(baudRate->intValue());
 	portParam->setDTR(dtr->boolValue());
-	portParam->setDTR(rts->boolValue());
+	portParam->setRTS(rts->boolValue());
 
 	isConnected = moduleParams.addBoolParameter("Is Connected", "This is checked if a serial port is connected.", false);
 	isConnected->setControllableFeedbackOnly(true);
@@ -58,6 +64,9 @@ bool SerialModule::setPortStatus(bool status)
 	{
 		port->setMode(streamingType->getValueDataAsEnum<SerialDevice::PortMode>()); //always set mode, port might be already open with default mode
 		port->setBaudRate(baudRate->intValue());
+		port->setDataBits((int)dataBits->getValueData());
+		port->setStopBits((int)stopBits->getValueData());
+		port->setParity((int)parity->getValueData());
 		setupPortInternal();
 		if (port->isOpen()) port->close();
 		port->open(baudRate->intValue());
@@ -133,7 +142,18 @@ void SerialModule::onControllableFeedbackUpdateInternal(ControllableContainer* c
 	if (c == baudRate)
 	{
 		portParam->setBaudrate(baudRate->intValue());
-
+	}
+	else if (c == dataBits && port != nullptr)
+	{
+		port->setDataBits((int)dataBits->getValueData());
+	}
+	else if (c == stopBits && port != nullptr)
+	{
+		port->setStopBits((int)stopBits->getValueData());
+	}
+	else if (c == parity && port != nullptr)
+	{
+		port->setParity((int)parity->getValueData());
 	}
 	else if (c == dtr)
 	{

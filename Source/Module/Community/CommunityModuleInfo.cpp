@@ -58,7 +58,7 @@ File CommunityModuleInfo::getDownloadFilePath()
 {
 	File tmpFolder = File::getSpecialLocation(File::tempDirectory).getChildFile("Chataigne");
 	if (!tmpFolder.exists()) tmpFolder.createDirectory();
-	return tmpFolder.getChildFile(niceName + ".zip");
+	return tmpFolder.getChildFile(File::createLegalFileName(niceName) + ".zip");
 }
 
 void CommunityModuleInfo::updateLocalData()
@@ -153,5 +153,4 @@ InspectableEditor* CommunityModuleInfo::getEditorInternal(bool isRoot, Array<Ins
 {
 	return new CommunityModuleInfoEditor(this, isRoot);
 }
-
 

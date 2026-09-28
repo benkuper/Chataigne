@@ -55,6 +55,42 @@ void ChataigneSequenceManager::createSequenceFromAudioFile(File f)
 	clip->filePath->setValue(f.getFullPathName());
 }
 
+void ChataigneSequenceManager::showMenuAndGetTriggerLayer(ControllableContainer* startFromCC, std::function<void(TriggerLayer*)> returnFunc)
+{
+	Array<TriggerLayer*> triggerLayers;
+
+	auto getMenuForSequence = [&triggerLayers](Sequence* sequence)
+		{
+			PopupMenu sequenceMenu;
+			for (auto* layer : sequence->layerManager->items)
+			{
+				if (auto* triggerLayer = dynamic_cast<TriggerLayer*>(layer))
+				{
+					triggerLayers.add(triggerLayer);
+					sequenceMenu.addItem(triggerLayers.size(), triggerLayer->niceName);
+				}
+			}
+			return sequenceMenu;
+		};
+
+	PopupMenu menu;
+	if (auto* sequence = dynamic_cast<Sequence*>(startFromCC))
+	{
+		menu = getMenuForSequence(sequence);
+	}
+	else
+	{
+		for (auto* sequence : items)
+			menu.addSubMenu(sequence->niceName, getMenuForSequence(sequence));
+	}
+
+	menu.showMenuAsync(PopupMenu::Options(), [triggerLayers, returnFunc](int result)
+		{
+			if (isPositiveAndBelow(result - 1, triggerLayers.size()))
+				returnFunc(triggerLayers[result - 1]);
+		});
+}
+
 void ChataigneSequenceManager::showMenuAndGetSequenceStatic(ControllableContainer* startFromCC, std::function<void(Sequence*)> returnFunc)
 {
 	getInstance()->showMenuAndGetSequence(startFromCC, returnFunc);

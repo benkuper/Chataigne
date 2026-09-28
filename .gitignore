@@ -58,5 +58,8 @@ Builds/VisualStudio2017_Win7/
 
 .vscode
 
+# JUCE is checked out separately by CI and must not become a submodule.
+/JUCE/
+
 
 Builds/VisualStudio2022_CI/x64/
