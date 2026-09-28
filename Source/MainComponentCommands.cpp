@@ -106,7 +106,7 @@ void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationComman
 
 	case ChataigneCommandIDs::closeVideoMonitorOuts:
 		result.setInfo("Close Video Monitor Out", "Closes the output window of every Video monitor out module", "General", result.readOnlyInKeyEditor);
-		result.addDefaultKeypress(KeyPress::createFromDescription("E").getKeyCode(), ModifierKeys::ctrlModifier | ModifierKeys::shiftModifier);
+		result.addDefaultKeypress(KeyPress::createFromDescription("M").getKeyCode(), ModifierKeys::ctrlModifier | ModifierKeys::shiftModifier);
 		break;
 
 	default:
