@@ -443,6 +443,18 @@ void GenericOSCQueryModule::messageReceived(const String& message)
 	}
 
 	inActivityTrigger->trigger();
+
+	var data = JSON::parse(message);
+	if (!data.isObject()) return;
+
+	const String command = data.getProperty("COMMAND", "").toString();
+	if (command == "PATH_ADDED" || command == "PATH_REMOVED"
+		|| command == "PATH_RENAMED" || command == "PATH_CHANGED")
+	{
+		// Refreshing the complete structure keeps values, listen states and UI
+		// expansion state consistent for every OSCQuery structure notification.
+		syncData();
+	}
 }
 
 var GenericOSCQueryModule::getJSONData(bool includeNonOverriden)
