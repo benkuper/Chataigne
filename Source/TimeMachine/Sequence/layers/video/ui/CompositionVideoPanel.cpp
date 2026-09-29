@@ -12,7 +12,7 @@
   ==============================================================================
 */
 
-#include "TimeMachineIncludes.h"
+#include "TimeMachine/TimeMachineIncludes.h"
 #include "CompositionVideoPanel.h"
 #include "CompositionRenderer.h"
 

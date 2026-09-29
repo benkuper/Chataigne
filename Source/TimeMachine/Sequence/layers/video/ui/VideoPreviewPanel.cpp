@@ -11,7 +11,7 @@
   ==============================================================================
 */
 
-#include "TimeMachineIncludes.h"
+#include "TimeMachine/TimeMachineIncludes.h"
 #include "VideoPreviewPanel.h"
 
 VideoPreviewPanel::VideoPreviewPanel(const String& contentName) :
