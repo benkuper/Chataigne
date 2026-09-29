@@ -250,6 +250,7 @@ jobs:
           # Clean blobs to force system linking
           rm -rf External/mosquitto/lib/linux/
           rm -rf External/sdl/lib/linux/
+          rm -rf Modules/juce_simpleweb/libs/Linux/x86_64/
 
           cd Builds/LinuxMakefile
           make -j$(nproc) CONFIG=Release
