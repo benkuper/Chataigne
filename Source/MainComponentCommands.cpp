@@ -29,6 +29,8 @@ namespace ChataigneCommandIDs
 	static const int exportSelection = 0x800;
 	static const int importSelection = 0x801;
 
+	static const int closeVideoMonitorOuts = 0x60008;
+
 }
 
 void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationCommandInfo& result)
@@ -102,6 +104,11 @@ void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationComman
 		result.addDefaultKeypress(KeyPress::createFromDescription("o").getKeyCode(), ModifierKeys::altModifier);
 		break;
 
+	case ChataigneCommandIDs::closeVideoMonitorOuts:
+		result.setInfo("Close Video Monitor Out", "Closes the output window of every Video monitor out module", "General", result.readOnlyInKeyEditor);
+		result.addDefaultKeypress(KeyPress::createFromDescription("M").getKeyCode(), ModifierKeys::ctrlModifier | ModifierKeys::shiftModifier);
+		break;
+
 	default:
 		OrganicMainContentComponent::getCommandInfo(commandID, result);
 		break;
@@ -130,6 +137,7 @@ void MainContentComponent::getAllCommands(Array<CommandID>& commands) {
 		ChataigneCommandIDs::goToCommunityModules,
 		ChataigneCommandIDs::reloadCustomModules,
 		ChataigneCommandIDs::exitGuide,
+		ChataigneCommandIDs::closeVideoMonitorOuts,
 	};
 
 	commands.addArray(ids, numElementsInArray(ids));
@@ -258,6 +266,18 @@ bool MainContentComponent::perform(const InvocationInfo& info)
 	case ChataigneCommandIDs::importSelection:
 	{
 		((ChataigneEngine*)Engine::mainEngine)->importSelection();
+	}
+	break;
+
+	case ChataigneCommandIDs::closeVideoMonitorOuts:
+	{
+		for (auto& m : ModuleManager::getInstance()->items)
+		{
+			if (VideoMonitorOutModule* vmo = dynamic_cast<VideoMonitorOutModule*>(m))
+			{
+				vmo->closeVideoOutputWindow();
+			}
+		}
 	}
 	break;
 

@@ -23,6 +23,12 @@
 #include "Sequence/layers/audio/ui/ChataigneAudioLayerPanel.h"
 #include "Sequence/layers/audio/ui/ChataigneAudioLayerTimeline.h"
 
+#include "Sequence/layers/video/ChataigneVideoLayer.h"
+#include "Sequence/layers/video/ui/ChataigneVideoLayerPanel.h"
+#include "Sequence/layers/video/ui/VideoPreviewPanel.h"
+#include "Sequence/layers/video/ui/CompositionVideoPanel.h"
+#include "Sequence/layers/video/ui/CompositionRenderer.h"
+
 #include "Sequence/layers/mapping/MappingLayer.h"
 
 #include "Sequence/Cue/ChataigneCue.h"

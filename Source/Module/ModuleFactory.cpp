@@ -33,6 +33,7 @@ ModuleFactory::ModuleFactory() {
 #endif
 
 	defs.add(new ModuleDefinition("Hardware", "Sound Card", &AudioModule::create));
+	defs.add(new ModuleDefinition("Hardware", "Video monitor out", &VideoMonitorOutModule::create));
 
 	defs.add(new ModuleDefinition("Hardware", "Wiimote", &WiimoteModule::create));
 	defs.add(new ModuleDefinition("Hardware", "JoyCon", &JoyConModule::create));

@@ -91,6 +91,21 @@ void ChataigneSequenceManager::showMenuAndGetTriggerLayer(ControllableContainer*
 		});
 }
 
+void ChataigneSequenceManager::createSequenceFromVideoFile(File f)
+{
+	ChataigneSequence* seq = new ChataigneSequence();
+	addItem(seq);
+	seq->setNiceName(f.getFileNameWithoutExtension());
+
+	ChataigneVideoLayer* l = new ChataigneVideoLayer(seq, var());
+	seq->layerManager->addItem(l);
+	l->uiHeight->setValue(160);
+
+	VideoLayerClip* clip = l->createVideoClip();
+	l->clipManager.addItem(clip);
+	clip->filePath->setValue(f.getFullPathName());
+}
+
 void ChataigneSequenceManager::showMenuAndGetSequenceStatic(ControllableContainer* startFromCC, std::function<void(Sequence*)> returnFunc)
 {
 	getInstance()->showMenuAndGetSequence(startFromCC, returnFunc);
