@@ -32,7 +32,7 @@ juce::Array<CompositionVideoPanel::VideoCue> CompositionVideoPanel::gatherActive
 {
 	auto cues = CompositionRenderer::gatherActiveLayers();
 	juce::Array<VideoCue> result;
-	for (auto& c : cues) result.add({ c.layer, c.frame });
+	for (auto& c : cues) result.add({ c.layer, c.clip, c.frame, c.fadeFactor });
 	return result;
 }
 
@@ -66,7 +66,7 @@ void CompositionVideoPanel::renderComposite()
 
 	auto cues = gatherActiveLayers();
 	juce::Array<CompositionRenderer::Cue> rendererCues;
-	for (auto& c : cues) rendererCues.add({ c.layer, c.frame });
+	for (auto& c : cues) rendererCues.add({ c.layer, c.clip, c.frame, c.fadeFactor });
 	CompositionRenderer::renderScene(backBuffers[target], layerScratch, rendererCues, false);
 
 	// Swap the fully-rendered image into view. The previous frame is replaced

@@ -12,6 +12,7 @@
 #include "Module/ModuleIncludes.h"
 
 class ChataigneSequence;
+namespace CompositionRenderer { class SharedTextureOutput; }
 
 class ChataigneVideoLayer :
 	public VideoLayer
@@ -21,6 +22,14 @@ public:
 	~ChataigneVideoLayer();
 
 	ChataigneSequence* chataigneSequence;
+	BoolParameter* spoutOutput;
+	StringParameter* spoutName;
+	IntParameter* spoutWidth;
+	IntParameter* spoutHeight;
+	std::unique_ptr<CompositionRenderer::SharedTextureOutput> sharedTextureOutput;
+
+	void updateSharedTextureOutput();
+	void onContainerParameterChangedInternal(Parameter* p) override;
 
 	virtual SequenceLayerPanel* getPanel() override;
 	virtual SequenceLayerTimeline* getTimelineUI() override;

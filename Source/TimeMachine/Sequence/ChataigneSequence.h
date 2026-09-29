@@ -18,6 +18,7 @@ class AudioModule;
 class MTCSender;
 class MIDIDeviceParameter;
 class LTCAudioSender;
+namespace CompositionRenderer { class SharedTextureOutput; }
 
 class ChataigneSequence :
 	public Sequence,
@@ -52,6 +53,13 @@ public:
 
 	FloatParameter* syncOffset;
 	BoolParameter* reverseOffset;
+
+	BoolParameter* spoutOutput;
+	StringParameter* spoutName;
+	IntParameter* spoutWidth;
+	IntParameter* spoutHeight;
+	std::unique_ptr<CompositionRenderer::SharedTextureOutput> sharedTextureOutput;
+	void updateSharedTextureOutput();
 
 	virtual void clearItem() override;
 

@@ -15,7 +15,7 @@
 #include "TimeMachine/TimeMachineIncludes.h"
 #include "CompositionRenderer.h"
 
-juce::Array<CompositionRenderer::Cue> CompositionRenderer::gatherActiveLayers()
+juce::Array<CompositionRenderer::Cue> CompositionRenderer::gatherActiveLayers(Sequence* sequenceFilter, VideoLayer* layerFilter)
 {
 	juce::Array<Cue> result;
 
@@ -25,6 +25,7 @@ juce::Array<CompositionRenderer::Cue> CompositionRenderer::gatherActiveLayers()
 	for (auto& seq : sm->items) // top-most sequence first
 	{
 		if (seq == nullptr || seq->layerManager == nullptr) continue;
+		if (sequenceFilter != nullptr && seq != sequenceFilter) continue;
 
 		for (auto& layer : seq->layerManager->items) // top-most track first
 		{
@@ -33,13 +34,21 @@ juce::Array<CompositionRenderer::Cue> CompositionRenderer::gatherActiveLayers()
 
 			if (VideoLayer* vl = dynamic_cast<VideoLayer*>(layer))
 			{
-				if (vl->moviePlayer == nullptr) continue;
-				if (vl->currentClip == nullptr || vl->currentClip.wasObjectDeleted()) continue;
+				if (layerFilter != nullptr && vl != layerFilter) continue;
 
-				juce::Image frame = vl->moviePlayer->getCurrentFrame();
-				if (!frame.isValid()) continue;
+				// The incoming clip is top-most within its layer. Add it first because
+				// renderScene consumes this top-most-first collection in reverse.
+				if (vl->overlapPlayer != nullptr && vl->overlapClip != nullptr && !vl->overlapClip.wasObjectDeleted())
+				{
+					juce::Image frame = vl->overlapPlayer->getCurrentFrame();
+					if (frame.isValid()) result.add({ vl, vl->overlapClip.get(), frame, vl->getClipFadeFactor(vl->overlapClip) });
+				}
 
-				result.add({ vl, frame });
+				if (vl->moviePlayer != nullptr && vl->currentClip != nullptr && !vl->currentClip.wasObjectDeleted())
+				{
+					juce::Image frame = vl->moviePlayer->getCurrentFrame();
+					if (frame.isValid()) result.add({ vl, vl->currentClip.get(), frame, vl->getClipFadeFactor(vl->currentClip) });
+				}
 			}
 		}
 	}
@@ -157,9 +166,8 @@ void CompositionRenderer::renderScene(juce::Image& buffer, juce::Image& layerScr
 	for (int i = cues.size() - 1; i >= 0; --i)
 	{
 		VideoLayer* layer = cues[i].layer;
-		if (layer == nullptr || layer->currentClip == nullptr || layer->currentClip.wasObjectDeleted()) continue;
-
-		VideoLayerClip* clip = layer->currentClip;
+		VideoLayerClip* clip = cues[i].clip;
+		if (layer == nullptr || clip == nullptr) continue;
 
 		if (clip->getBlendMode() == VideoLayerClip::BlendMode::Normal)
 		{
@@ -168,7 +176,7 @@ void CompositionRenderer::renderScene(juce::Image& buffer, juce::Image& layerScr
 			VlcVideoPlayer::drawFrameWithTransform(g,
 				cues[i].frame,
 				area,
-				clip->getRenderOpacity(),
+				clip->getRenderOpacity() * cues[i].fadeFactor,
 				clip->getRenderScaleX(),
 				clip->getRenderScaleY(),
 				clip->getRenderXPercent(),
@@ -184,7 +192,7 @@ void CompositionRenderer::renderScene(juce::Image& buffer, juce::Image& layerScr
 				VlcVideoPlayer::drawFrameWithTransform(sg,
 					cues[i].frame,
 					area,
-					clip->getRenderOpacity(),
+					clip->getRenderOpacity() * cues[i].fadeFactor,
 					clip->getRenderScaleX(),
 					clip->getRenderScaleY(),
 					clip->getRenderXPercent(),
@@ -194,4 +202,71 @@ void CompositionRenderer::renderScene(juce::Image& buffer, juce::Image& layerScr
 			blendPixels(buffer, layerScratch, (int) clip->getBlendMode());
 		}
 	}
+}
+
+CompositionRenderer::SharedTextureOutput::SharedTextureOutput(std::function<juce::Array<Cue>()> gatherFunction) :
+	gather(std::move(gatherFunction))
+{
+}
+
+CompositionRenderer::SharedTextureOutput::~SharedTextureOutput()
+{
+	stopTimer();
+	if (sender != nullptr)
+	{
+		sender->removeSharedTextureListener(this);
+		if (auto* manager = getSharedTextureManager()) manager->removeSender(sender);
+		sender = nullptr;
+	}
+}
+
+void CompositionRenderer::SharedTextureOutput::configure(bool enabled, const juce::String& name, int width, int height)
+{
+	outputWidth = juce::jlimit(16, 8192, width);
+	outputHeight = juce::jlimit(16, 8192, height);
+
+#if JUCE_WINDOWS || JUCE_MAC
+	if (enabled && sender == nullptr)
+	{
+		if (auto* manager = getSharedTextureManager())
+		{
+			sender = manager->addSender(name, outputWidth, outputHeight, true);
+			sender->addSharedTextureListener(this);
+		}
+	}
+
+	if (sender != nullptr)
+	{
+		sender->setSharingName(name);
+		sender->setSize(outputWidth, outputHeight);
+		sender->setEnabled(enabled);
+	}
+	if (enabled) startTimerHz(30);
+	else stopTimer();
+#else
+	juce::ignoreUnused(name);
+	stopTimer();
+#endif
+}
+
+void CompositionRenderer::SharedTextureOutput::timerCallback()
+{
+	if (gather == nullptr || outputWidth <= 0 || outputHeight <= 0) return;
+
+	if (!renderBuffer.isValid() || renderBuffer.getWidth() != outputWidth || renderBuffer.getHeight() != outputHeight)
+		renderBuffer = juce::Image(juce::Image::ARGB, outputWidth, outputHeight, true);
+	if (!layerScratch.isValid() || layerScratch.getWidth() != outputWidth || layerScratch.getHeight() != outputHeight)
+		layerScratch = juce::Image(juce::Image::ARGB, outputWidth, outputHeight, true);
+
+	renderScene(renderBuffer, layerScratch, gather(), true);
+	const juce::ScopedLock lock(imageLock);
+	renderedImage = renderBuffer.createCopy();
+}
+
+void CompositionRenderer::SharedTextureOutput::drawSharedTexture(juce::Graphics& g, juce::Rectangle<int> bounds)
+{
+	const juce::ScopedLock lock(imageLock);
+	g.fillAll(juce::Colours::black);
+	if (renderedImage.isValid())
+		g.drawImage(renderedImage, bounds.toFloat(), juce::RectanglePlacement(juce::RectanglePlacement::stretchToFit));
 }

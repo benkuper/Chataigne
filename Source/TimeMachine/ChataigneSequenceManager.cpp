@@ -24,10 +24,34 @@ ChataigneSequenceManager::ChataigneSequenceManager() :
 	helpID = "TimeMachine";
 
 	snapKeysToFrames = getAppSettings()->addBoolParameter("Snap Keys to Frames", "If checked, all mapping keys in sequences, will be automatically snapped to frames", false);
+
+	spoutOutput = addBoolParameter("Spout Output", "Publish the full composition as a Spout texture on Windows (Syphon on macOS)", false);
+	spoutName = addStringParameter("Spout Name", "Shared texture sender name", "Chataigne - Composition");
+	spoutWidth = addIntParameter("Spout Width", "Shared texture width", 1280, 16, 8192);
+	spoutHeight = addIntParameter("Spout Height", "Shared texture height", 720, 16, 8192);
+	sharedTextureOutput.reset(new CompositionRenderer::SharedTextureOutput([]()
+		{
+			return CompositionRenderer::gatherActiveLayers();
+		}));
+	updateSharedTextureOutput();
 }
 
 ChataigneSequenceManager::~ChataigneSequenceManager()
 {
+	sharedTextureOutput.reset();
+}
+
+void ChataigneSequenceManager::updateSharedTextureOutput()
+{
+	if (sharedTextureOutput != nullptr)
+		sharedTextureOutput->configure(spoutOutput->boolValue(), spoutName->stringValue(), spoutWidth->intValue(), spoutHeight->intValue());
+}
+
+void ChataigneSequenceManager::onContainerParameterChanged(Parameter* p)
+{
+	SequenceManager::onContainerParameterChanged(p);
+	if (p == spoutOutput || p == spoutName || p == spoutWidth || p == spoutHeight)
+		updateSharedTextureOutput();
 }
 
 Sequence* ChataigneSequenceManager::createItem()
@@ -99,7 +123,7 @@ void ChataigneSequenceManager::createSequenceFromVideoFile(File f)
 
 	ChataigneVideoLayer* l = new ChataigneVideoLayer(seq, var());
 	seq->layerManager->addItem(l);
-	l->uiHeight->setValue(160);
+	l->uiHeight->setValue(110);
 
 	VideoLayerClip* clip = l->createVideoClip();
 	l->clipManager.addItem(clip);

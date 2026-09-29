@@ -19,6 +19,7 @@
 #include "JuceHeader.h"
 
 class VideoLayer;
+class VideoLayerClip;
 
 class CompositionVideoPanel :
 	public ShapeShifterContentComponent,
@@ -33,7 +34,9 @@ public:
 	struct VideoCue
 	{
 		VideoLayer* layer = nullptr;
+		VideoLayerClip* clip = nullptr;
 		juce::Image frame;
+		float fadeFactor = 1.0f;
 	};
 
 	// Collects the enabled video layers with an active clip AND a decoded frame,

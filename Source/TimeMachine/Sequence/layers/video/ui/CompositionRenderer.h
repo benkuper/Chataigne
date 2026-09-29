@@ -23,12 +23,14 @@ namespace CompositionRenderer
 	struct Cue
 	{
 		VideoLayer* layer = nullptr;
+		VideoLayerClip* clip = nullptr;
 		juce::Image frame;
+		float fadeFactor = 1.0f;
 	};
 
 	// Collects the enabled video layers with an active clip AND a decoded frame,
 	// ordered from the top-most sequence/track to the bottom-most one.
-	juce::Array<Cue> gatherActiveLayers();
+	juce::Array<Cue> gatherActiveLayers(Sequence* sequenceFilter = nullptr, VideoLayer* layerFilter = nullptr);
 
 	// Blends the premultiplied `src` layer over the premultiplied `dst` composite
 	// using one of VideoLayerClip::BlendMode. Graphic contexts can't do arbitrary
@@ -39,4 +41,28 @@ namespace CompositionRenderer
 	// top-most first, so it is composited in reverse. `layerScratch` is a scratch
 	// buffer used for the non-Normal blend paths.
 	void renderScene(juce::Image& buffer, juce::Image& layerScratch, const juce::Array<Cue>& cues, bool blackBackground);
+
+	class SharedTextureOutput :
+		private SharedTextureSender::SharedTextureListener,
+		private juce::Timer
+	{
+	public:
+		SharedTextureOutput(std::function<juce::Array<Cue>()> gatherFunction);
+		~SharedTextureOutput() override;
+
+		void configure(bool enabled, const juce::String& name, int width, int height);
+
+	private:
+		void timerCallback() override;
+		void drawSharedTexture(juce::Graphics& g, juce::Rectangle<int> bounds) override;
+
+		std::function<juce::Array<Cue>()> gather;
+		SharedTextureSender* sender = nullptr;
+		juce::Image renderedImage;
+		juce::Image renderBuffer;
+		juce::Image layerScratch;
+		juce::CriticalSection imageLock;
+		int outputWidth = 1280;
+		int outputHeight = 720;
+	};
 }
