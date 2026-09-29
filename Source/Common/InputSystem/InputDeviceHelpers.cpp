@@ -99,6 +99,10 @@ void GamepadParameterUI::comboBoxChanged(ComboBox * c)
 			gamepadParam->ghostID = SDL_JoystickGUID();
 			gamepadParam->ghostName = "";
 		}
-		gamepadParam->setGamepad(getGamepad());
+		for (Parameter* related : gamepadParam->getRelatedSelectedParameters())
+		{
+			if (GamepadParameter* relatedGamepad = dynamic_cast<GamepadParameter*>(related))
+				relatedGamepad->setGamepad(getGamepad());
+		}
 	}
 }

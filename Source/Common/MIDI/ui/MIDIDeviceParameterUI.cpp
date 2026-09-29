@@ -41,10 +41,18 @@ void MIDIDeviceParameterUI::valueChanged(const var & /*value*/)
 
 void MIDIDeviceParameterUI::midiDeviceInSelected(MIDIInputDevice * d)
 {
-	midiParam->setInputDevice(d);
+	for (Parameter* related : midiParam->getRelatedSelectedParameters())
+	{
+		if (MIDIDeviceParameter* relatedMIDI = dynamic_cast<MIDIDeviceParameter*>(related))
+			relatedMIDI->setInputDevice(d);
+	}
 }
 
 void MIDIDeviceParameterUI::midiDeviceOutSelected(MIDIOutputDevice * d)
 {
-	midiParam->setOutputDevice(d);
+	for (Parameter* related : midiParam->getRelatedSelectedParameters())
+	{
+		if (MIDIDeviceParameter* relatedMIDI = dynamic_cast<MIDIDeviceParameter*>(related))
+			relatedMIDI->setOutputDevice(d);
+	}
 }
