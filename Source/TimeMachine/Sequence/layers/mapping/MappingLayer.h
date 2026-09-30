@@ -35,7 +35,7 @@ public:
 	void updateMappingInputValue(bool forceOutput = false);
 	virtual void updateMappingInputValueInternal();
 
-	virtual var getValueAtPosition(float position) = 0;
+	virtual var getValueAtPosition(double position) = 0;
 	void exportBakedValues(bool dataOnly = false);
 
 	virtual void onContainerParameterChangedInternal(Parameter* p) override;
