@@ -242,6 +242,7 @@ void ChataigneAudioLayer::sequencePlayStateChanged(Sequence* s)
 			{
 				cProc->stopRecording();
 				AudioLayerClip* clip = (AudioLayerClip*)clipManager.addBlockAt(timeAtStartRecord);
+				clip->resizeSequenceOnLoad = false;
 				clip->filePath->setValue(cProc->recordingFile.getFullPathName());
 			}
 		}
@@ -252,7 +253,7 @@ void ChataigneAudioLayer::sequencePlayStateChanged(Sequence* s)
 
 void ChataigneAudioLayer::audioSetupChanged()
 {
-	updateSelectedOutChannels();
+	refreshOutputChannels();
 }
 
 var ChataigneAudioLayer::getJSONData(bool includeNonOverriden)
