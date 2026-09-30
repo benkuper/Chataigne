@@ -19,10 +19,6 @@
 
 #include "modules/video/VideoMonitorOutModule.cpp"
 
-// Renders the composition signal. Pulled in here (not through TimeMachineIncludes)
-// so it is defined exactly once for both the Composition Video panel and the
-// Video monitor out module.
-#include "../TimeMachine/Sequence/layers/video/ui/CompositionRenderer.cpp"
 #include "modules/generic/ChataigneGenericModule.cpp"
 #include "modules/generic/commands/ChataigneLogCommand.cpp"
 #include "modules/generic/commands/GenericAppCommand.cpp"

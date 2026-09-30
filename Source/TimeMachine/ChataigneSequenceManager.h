@@ -15,7 +15,6 @@ class TimeCue;
 class ChataigneSequence;
 class SequenceModule;
 class TriggerLayer;
-namespace CompositionRenderer { class SharedTextureOutput; }
 
 class ChataigneSequenceManager :
 	public SequenceManager
@@ -27,13 +26,7 @@ public:
 	~ChataigneSequenceManager();
 
 	BoolParameter* snapKeysToFrames;
-	BoolParameter* spoutOutput;
-	StringParameter* spoutName;
-	IntParameter* spoutWidth;
-	IntParameter* spoutHeight;
-	std::unique_ptr<CompositionRenderer::SharedTextureOutput> sharedTextureOutput;
 
-	void updateSharedTextureOutput();
 	void onContainerParameterChanged(Parameter* p) override;
 
 	Sequence * createItem() override;

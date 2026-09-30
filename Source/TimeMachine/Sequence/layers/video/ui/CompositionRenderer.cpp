@@ -1,13 +1,13 @@
 /*
   ==============================================================================
 
-    CompositionRenderer.cpp
-    Created: 28 Sep 2026
+	CompositionRenderer.cpp
+	GL compositor for the video signal. See CompositionRenderer.h.
 
-    Renders the composition signal : for every enabled VideoLayer with an active
-    clip and a decoded frame, the frame is rastered (with the clip's
-    Opacity/Transform parameters) into the buffer, blended using the clip's
-    blend mode, top-most layer last so it ends up on top of the pile.
+	All compositing runs on the holder GL thread (renderLayers for layers,
+	renderSurfaces for the display surfaces) ; the only CPU involvement is the
+	generative test card image, the layer transform math, and the final image
+	read-back that surfaces paint.
 
   ==============================================================================
 */
@@ -15,7 +15,267 @@
 #include "TimeMachine/TimeMachineIncludes.h"
 #include "CompositionRenderer.h"
 
-juce::Array<CompositionRenderer::Cue> CompositionRenderer::gatherActiveLayers(Sequence* sequenceFilter, VideoLayer* layerFilter)
+#include <map>
+#include <algorithm>
+#include <memory>
+#include <utility>
+
+using namespace juce;
+using namespace juce::gl;
+
+// ==============================================================================
+// GL program (one shared program, all contexts share GL objects)
+// ==============================================================================
+
+namespace
+{
+	const char* blitVertexShader =
+		"#version 120\n"
+		"varying vec2 vUv;\n"
+		"\n"
+		"void main()\n"
+		"{\n"
+		"	gl_Position = vec4(gl_Vertex.xy, 0.0, 1.0);\n"
+		"	vUv = gl_MultiTexCoord0.xy;\n"
+		"}\n";
+
+	const char* blitFragmentShader =
+		"#version 120\n"
+		"varying vec2 vUv;\n"
+		"\n"
+		"uniform sampler2D uSrc;\n"
+		"uniform sampler2D uDst;\n"
+		"uniform vec4 uRect;\n"
+		"uniform float uOpacity;\n"
+		"uniform int uMode;\n"
+		"uniform int uFlipY;\n"
+		"uniform int uFeatherOn;\n"
+		"uniform vec4 uFeather;\n"
+		"uniform float uFeatherAmount;\n"
+		"\n"
+		"vec3 blendF(vec3 s, vec3 d, int m)\n"
+		"{\n"
+		"	if (m == 1) return min(s + d, vec3(1.0));\n"
+		"	if (m == 2) return s * d;\n"
+		"	if (m == 3) return s + d - s * d;\n"
+		"	if (m == 4) return max(s, d);\n"
+		"	if (m == 5) return min(s, d);\n"
+		"	if (m == 7) return abs(s - d);\n"
+		"	if (m == 8) return s + d - 2.0 * s * d;\n"
+		"	if (m == 6) return mix(2.0 * d * s, 1.0 - 2.0 * (1.0 - d) * (1.0 - s), step(vec3(0.5), s));\n"
+		"	return s;\n"
+		"}\n"
+		"\n"
+		"void main()\n"
+		"{\n"
+		"	vec4 dst = texture2D(uDst, vec2(vUv.x, 1.0 - vUv.y));\n"
+		"\n"
+		"	vec2 inside = (vUv - uRect.xy) / max(uRect.zw - uRect.xy, vec2(0.0001));\n"
+		"	if (inside.x < 0.0 || inside.x > 1.0 || inside.y < 0.0 || inside.y > 1.0)\n"
+		"	{\n"
+		"		gl_FragColor = dst;\n"
+		"		return;\n"
+		"	}\n"
+		"\n"
+		"	vec2 srcUV = (uFlipY == 1) ? vec2(inside.x, 1.0 - inside.y) : inside;\n"
+		"	vec4 src = texture2D(uSrc, srcUV);\n"
+		"	float sa = src.a * uOpacity;\n"
+		"	if (sa <= 0.001)\n"
+		"	{\n"
+		"		gl_FragColor = dst;\n"
+		"		return;\n"
+		"	}\n"
+		"\n"
+		"	float da = max(dst.a, 0.0001);\n"
+		"	vec3 sCol = src.rgb / max(src.a, 0.0001);\n"
+		"	vec3 dCol = dst.rgb / da;\n"
+		"	vec3 bCol = blendF(sCol, dCol, uMode);\n"
+		"\n"
+		"	float ao = sa + dst.a * (1.0 - sa);\n"
+		"	vec3 outCol = sa * bCol + (1.0 - sa) * dst.rgb;\n"
+		"\n"
+		"	if (uFeatherOn == 1)\n"
+		"	{\n"
+		"		float fade = 1.0;\n"
+		"		if (uFeather.x > 0.0 && vUv.x < uFeather.x) fade = min(fade, vUv.x / uFeather.x);\n"
+		"		if (uFeather.y > 0.0 && vUv.x >= 1.0 - uFeather.y) fade = min(fade, (1.0 - vUv.x) / uFeather.y);\n"
+		"		if (uFeather.z > 0.0 && vUv.y < uFeather.z) fade = min(fade, vUv.y / uFeather.z);\n"
+		"		if (uFeather.w > 0.0 && vUv.y >= 1.0 - uFeather.w) fade = min(fade, (1.0 - vUv.y) / uFeather.w);\n"
+		"		fade = 1.0 - uFeatherAmount * (1.0 - fade);\n"
+		"		outCol *= fade;\n"
+		"	}\n"
+		"\n"
+		"	gl_FragColor = vec4(outCol, ao);\n"
+		"}\n";
+
+	struct CompositorGL
+	{
+		GLuint program = 0;
+		bool failed = false;
+
+		GLint uSrc = -1;
+		GLint uDst = -1;
+		GLint uRect = -1;
+		GLint uOpacity = -1;
+		GLint uMode = -1;
+		GLint uFlipY = -1;
+		GLint uFeatherOn = -1;
+		GLint uFeather = -1;
+		GLint uFeatherAmount = -1;
+
+		void ensure()
+		{
+			if (program != 0 || failed) return;
+
+			const char* vs = blitVertexShader;
+			const char* fs = blitFragmentShader;
+
+			GLuint v = glCreateShader(GL_VERTEX_SHADER);
+			glShaderSource(v, 1, &vs, nullptr);
+			glCompileShader(v);
+
+			GLuint f = glCreateShader(GL_FRAGMENT_SHADER);
+			glShaderSource(f, 1, &fs, nullptr);
+			glCompileShader(f);
+
+		GLint ok = 0;
+		char log[1024] = { 0 };
+
+		glGetShaderiv(v, GL_COMPILE_STATUS, &ok);
+		if (ok == 0)
+			{
+				glGetShaderInfoLog(v, sizeof(log), nullptr, log);
+				NLOGERROR("Video", "Compositor vertex shader error : " << String(log));
+				glDeleteShader(v); glDeleteShader(f);
+				failed = true;
+				return;
+			}
+
+		glGetShaderiv(f, GL_COMPILE_STATUS, &ok);
+		if (ok == 0)
+			{
+				glGetShaderInfoLog(f, sizeof(log), nullptr, log);
+				NLOGERROR("Video", "Compositor fragment shader error : " << String(log));
+				glDeleteShader(v); glDeleteShader(f);
+				failed = true;
+				return;
+			}
+
+			program = glCreateProgram();
+			glAttachShader(program, v);
+			glAttachShader(program, f);
+			glLinkProgram(program);
+
+		glGetProgramiv(program, GL_LINK_STATUS, &ok);
+		if (ok == 0)
+			{
+				glGetProgramInfoLog(program, sizeof(log), nullptr, log);
+				NLOGERROR("Video", "Compositor program link error : " << String(log));
+				glDeleteProgram(program); program = 0;
+				glDeleteShader(v); glDeleteShader(f);
+				failed = true;
+				return;
+			}
+
+			glDeleteShader(v);
+			glDeleteShader(f);
+
+			uSrc = glGetUniformLocation(program, "uSrc");
+			uDst = glGetUniformLocation(program, "uDst");
+			uRect = glGetUniformLocation(program, "uRect");
+			uOpacity = glGetUniformLocation(program, "uOpacity");
+			uMode = glGetUniformLocation(program, "uMode");
+			uFlipY = glGetUniformLocation(program, "uFlipY");
+			uFeatherOn = glGetUniformLocation(program, "uFeatherOn");
+			uFeather = glGetUniformLocation(program, "uFeather");
+			uFeatherAmount = glGetUniformLocation(program, "uFeatherAmount");
+		}
+	};
+
+	CompositorGL compositorGL;
+}
+
+// ==============================================================================
+// Per-layer framebuffers (live on the holder GL thread)
+// ==============================================================================
+
+namespace
+{
+	struct FeatherVec { float x, y, z, w; };
+
+	struct LayerFBO
+	{
+		OpenGLFrameBuffer fbo;
+	};
+
+	std::map<VideoLayer*, std::unique_ptr<LayerFBO>> layerFBOs;
+	CriticalSection layerFBOLock;
+
+	void drawFullscreenQuad()
+	{
+		glDisable(GL_DEPTH_TEST);
+		glDisable(GL_SCISSOR_TEST);
+		glDisable(GL_BLEND);
+		glDisable(GL_CULL_FACE);
+
+		glBegin(GL_QUADS);
+		glMultiTexCoord2f(GL_TEXTURE0, 0.0f, 0.0f); glVertex2f(-1.0f, 1.0f);
+		glMultiTexCoord2f(GL_TEXTURE0, 1.0f, 0.0f); glVertex2f( 1.0f, 1.0f);
+		glMultiTexCoord2f(GL_TEXTURE0, 1.0f, 1.0f); glVertex2f( 1.0f,-1.0f);
+		glMultiTexCoord2f(GL_TEXTURE0, 0.0f, 1.0f); glVertex2f(-1.0f,-1.0f);
+		glEnd();
+	}
+
+	void renderPass(GLuint srcTex, GLuint dstTex,
+		float u0, float v0, float u1, float v1,
+		float opacity, int mode, int flipY,
+		int featherOn, float featherAmount, const FeatherVec& feather)
+	{
+		compositorGL.ensure();
+		if (compositorGL.program == 0) return;
+
+		glUseProgram(compositorGL.program);
+
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, srcTex);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, dstTex);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+		glUniform1i(compositorGL.uSrc, 0);
+		glUniform1i(compositorGL.uDst, 1);
+		glUniform4f(compositorGL.uRect, u0, v0, u1, v1);
+		glUniform1f(compositorGL.uOpacity, opacity);
+		glUniform1i(compositorGL.uMode, mode);
+		glUniform1i(compositorGL.uFlipY, flipY);
+		glUniform1i(compositorGL.uFeatherOn, featherOn);
+		glUniform1f(compositorGL.uFeatherAmount, featherAmount);
+		glUniform4f(compositorGL.uFeather, feather.x, feather.y, feather.z, feather.w);
+
+		drawFullscreenQuad();
+		glUseProgram(0);
+	}
+
+	void bindTarget(OpenGLFrameBuffer& fbo, int w, int h)
+	{
+		glBindFramebuffer(GL_FRAMEBUFFER, fbo.getFrameBufferID());
+		glViewport(0, 0, w, h);
+	}
+}
+
+// ==============================================================================
+// CompositionRenderer
+// ==============================================================================
+
+juce::Array<CompositionRenderer::Cue> CompositionRenderer::gatherActiveCues(Sequence* sequenceFilter, VideoLayer* layerFilter)
 {
 	juce::Array<Cue> result;
 
@@ -35,20 +295,13 @@ juce::Array<CompositionRenderer::Cue> CompositionRenderer::gatherActiveLayers(Se
 			if (VideoLayer* vl = dynamic_cast<VideoLayer*>(layer))
 			{
 				if (layerFilter != nullptr && vl != layerFilter) continue;
+				if (vl->moviePlayer == nullptr) continue;
 
-				// The incoming clip is top-most within its layer. Add it first because
-				// renderScene consumes this top-most-first collection in reverse.
-				if (vl->overlapPlayer != nullptr && vl->overlapClip != nullptr && !vl->overlapClip.wasObjectDeleted())
-				{
-					juce::Image frame = vl->overlapPlayer->getCurrentFrame();
-					if (frame.isValid()) result.add({ vl, vl->overlapClip.get(), frame, vl->getClipFadeFactor(vl->overlapClip) });
-				}
+				VideoPlayerEngine* engine = vl->moviePlayer.get();
+				if (engine->getFilePath().isEmpty()) continue;
+				if (vl->currentClip == nullptr || vl->currentClip.wasObjectDeleted()) continue;
 
-				if (vl->moviePlayer != nullptr && vl->currentClip != nullptr && !vl->currentClip.wasObjectDeleted())
-				{
-					juce::Image frame = vl->moviePlayer->getCurrentFrame();
-					if (frame.isValid()) result.add({ vl, vl->currentClip.get(), frame, vl->getClipFadeFactor(vl->currentClip) });
-				}
+				result.add({ vl, vl->currentClip.get(), 1.0f });
 			}
 		}
 	}
@@ -56,217 +309,500 @@ juce::Array<CompositionRenderer::Cue> CompositionRenderer::gatherActiveLayers(Se
 	return result;
 }
 
-void CompositionRenderer::blendPixels(juce::Image& dst, const juce::Image& src, int blendMode)
+void CompositionRenderer::renderLayers()
 {
-	const int w = juce::jmin(dst.getWidth(), src.getWidth());
-	const int h = juce::jmin(dst.getHeight(), src.getHeight());
-	if (w <= 0 || h <= 0) return;
+	if (VideoGLContext::getInstanceWithoutCreating() == nullptr) return;
 
-	juce::Image::BitmapData d(dst, juce::Image::BitmapData::readWrite);
-	juce::Image::BitmapData s(src, juce::Image::BitmapData::readOnly);
+	juce::Array<Cue> cues = gatherActiveCues();
 
-	auto clamp01 = [](float v) { return v < 0.0f ? 0.0f : (v > 1.0f ? 1.0f : v); };
-
-	for (int y = 0; y < h; ++y)
+	// Report transitions only : the holder repaints continuously.
 	{
-		const uint8* sp = s.getLinePointer(y);
-		uint8* dp = d.getLinePointer(y);
-
-		for (int x = 0; x < w; ++x)
+		static int lastCueCount = -1;
+		if (cues.size() != lastCueCount)
 		{
-			const uint8* sPix = sp + x * 4;
-			uint8* dPix = dp + x * 4;
-
-			const float sa = sPix[3] / 255.0f;
-			if (sa <= 0.001f) continue;
-
-			const float da = dPix[3] / 255.0f;
-			if (da <= 0.001f) // nothing below : the layer just lands on top
-			{
-				dPix[0] = sPix[0];
-				dPix[1] = sPix[1];
-				dPix[2] = sPix[2];
-				dPix[3] = sPix[3];
-				continue;
-			}
-
-			// straight (non-premultiplied) colors, 0..1
-			const float sr = sPix[0] / (255.0f * sa);
-			const float sg = sPix[1] / (255.0f * sa);
-			const float sb = sPix[2] / (255.0f * sa);
-
-			const float dr = dPix[0] / (255.0f * da);
-			const float dg = dPix[1] / (255.0f * da);
-			const float db = dPix[2] / (255.0f * da);
-
-			float br, bg, bb;
-			switch (blendMode)
-			{
-			case 1: // Add
-				br = clamp01(sr + dr); bg = clamp01(sg + dg); bb = clamp01(sb + db);
-				break;
-			case 2: // Multiply
-				br = sr * dr; bg = sg * dg; bb = sb * db;
-				break;
-			case 3: // Screen
-				br = sr + dr - sr * dr; bg = sg + dg - sg * dg; bb = sb + db - sb * db;
-				break;
-			case 4: // Lighten
-				br = juce::jmax(sr, dr); bg = juce::jmax(sg, dg); bb = juce::jmax(sb, db);
-				break;
-			case 5: // Darken
-				br = juce::jmin(sr, dr); bg = juce::jmin(sg, dg); bb = juce::jmin(sb, db);
-				break;
-			case 6: // Overlay
-				br = sr <= 0.5f ? 2.0f * dr * sr : 1.0f - 2.0f * (1.0f - dr) * (1.0f - sr);
-				bg = sg <= 0.5f ? 2.0f * dg * sg : 1.0f - 2.0f * (1.0f - dg) * (1.0f - sg);
-				bb = sb <= 0.5f ? 2.0f * db * sb : 1.0f - 2.0f * (1.0f - db) * (1.0f - sb);
-				break;
-			case 7: // Difference
-				br = fabsf(sr - dr); bg = fabsf(sg - dg); bb = fabsf(sb - db);
-				break;
-			case 8: // Exclusion
-				br = sr + dr - 2.0f * sr * dr; bg = sg + dg - 2.0f * sg * dg; bb = sb + db - 2.0f * sb * db;
-				break;
-			case 0: // Normal
-			default:
-				br = sr; bg = sg; bb = sb;
-				break;
-			}
-
-			// Premultiplied source-over with the blended color, per the W3C
-			// compositing spec : C = As * B(Cb,Cs) + (1-As) * Cb(premultiplied).
-			const float ao = sa + da * (1.0f - sa);
-
-			dPix[0] = (uint8) juce::jlimit(0.0f, 255.0f, (sa * br + (1.0f - sa) * dPix[0] / 255.0f) * 255.0f);
-			dPix[1] = (uint8) juce::jlimit(0.0f, 255.0f, (sa * bg + (1.0f - sa) * dPix[1] / 255.0f) * 255.0f);
-			dPix[2] = (uint8) juce::jlimit(0.0f, 255.0f, (sa * bb + (1.0f - sa) * dPix[2] / 255.0f) * 255.0f);
-			dPix[3] = (uint8) juce::jlimit(0.0f, 255.0f, ao * 255.0f);
+			lastCueCount = cues.size();
+			NLOG("Video", "Compositor : " << cues.size() << " active cue(s)");
 		}
+	}
+
+	// Drop framebuffers of layers that are no longer active.
+	{
+		const ScopedLock l(layerFBOLock);
+
+		for (auto it = layerFBOs.begin(); it != layerFBOs.end();)
+		{
+			bool found = false;
+			for (auto& c : cues)
+				if (c.layer == it->first) { found = true; break; }
+
+			if (!found)
+			{
+				it->second->fbo.release();
+				it = layerFBOs.erase(it);
+			}
+			else ++it;
+		}
+	}
+
+	for (auto& c : cues)
+	{
+		if (c.layer == nullptr) continue;
+		VideoPlayerEngine* engine = c.layer->moviePlayer.get();
+		if (engine == nullptr) continue;
+
+		// First time the holder context exists : create the engine's GL renderer.
+		// MPVPlayer::setupGL internally triggers the pending file load.
+		if (!engine->isGLInit() && engine->getFilePath().isNotEmpty())
+			engine->setupGL();
+
+		if (!engine->isGLInit() || !engine->isFileLoaded()) continue;
+
+		const int w = engine->getVideoWidth();
+		const int h = engine->getVideoHeight();
+		if (w <= 0 || h <= 0) continue;
+
+		const ScopedLock l(layerFBOLock);
+
+		std::unique_ptr<LayerFBO>& entry = layerFBOs[c.layer];
+		if (entry == nullptr) entry.reset(new LayerFBO());
+
+		if (entry->fbo.getTextureID() == 0 || entry->fbo.getWidth() != w || entry->fbo.getHeight() != h)
+		{
+			entry->fbo.release();
+			entry->fbo.initialise(VideoGLContext::getInstance()->context, w, h);
+		}
+
+		engine->renderGL(entry->fbo);
 	}
 }
 
-void CompositionRenderer::renderScene(juce::Image& buffer, juce::Image& layerScratch, const juce::Array<Cue>& cues, bool blackBackground)
+juce::Image CompositionRenderer::createTestCard(int width, int height)
 {
-	const int w = buffer.getWidth();
-	const int h = buffer.getHeight();
-	if (w <= 0 || h <= 0) return;
+	const int w = jmax(1, width);
+	const int h = jmax(1, height);
 
-	// Render the whole scene from scratch : every tick starts from a clean opaque
-	// background, so nothing can bleed through from a previous frame.
+	juce::Image img(juce::Image::ARGB, w, h, true);
+	juce::Graphics g(img);
+
+	const float colorBarsHeight = h * 0.60f;
+	const float greyRowHeight = h * 0.12f; // 60% .. 72%
+	const float textZoneTop = colorBarsHeight + greyRowHeight;
+	const float textZoneHeight = h - textZoneTop;
+
+	// 7 colour bars : white, yellow, cyan, green, magenta, red, blue
+	const Colour bars[7] = {
+		Colours::white,
+		Colour(0xFFFFFF00),
+		Colour(0xFF00FFFF),
+		Colour(0xFF00FF00),
+		Colour(0xFFFF00FF),
+		Colour(0xFFFF0000),
+		Colour(0xFF0000FF)
+	};
+
 	{
-		juce::Graphics g(buffer);
-		g.fillAll(blackBackground ? juce::Colours::black : juce::Colour::greyLevel(0.08f));
+		float x = 0;
+		for (int i = 0; i < 7; ++i)
+		{
+			g.setColour(bars[i]);
+			g.fillRect(Rectangle<float>(x, 0, (float) w / 7.0f + 1.0f, colorBarsHeight));
+			x += (float) w / 7.0f;
+		}
 	}
 
-	const juce::Rectangle<int> area(0, 0, w, h);
+	// Grey ramp : 0,45,90,135,180,225,255
+	{
+		float x = 0;
+		for (int i = 0; i < 7; ++i)
+		{
+			g.setColour(Colour::greyLevel(i / 6.0f));
+			g.fillRect(Rectangle<float>(x, colorBarsHeight, (float) w / 7.0f + 1.0f, greyRowHeight));
+			x += (float) w / 7.0f;
+		}
+	}
 
-	// The collection is top-most first : composite it in reverse so the bottom-most
-	// layer ends up at the back and the top-most one on top of the pile.
+	// Black text zone below the bars.
+	g.setColour(Colours::black);
+	g.fillRect(Rectangle<float>(0, textZoneTop, w, textZoneHeight));
+
+	const float textSize = textZoneHeight * 0.22f;
+	g.setFont(Font(textSize, Font::bold));
+
+	// Resolution label on the left.
+	g.setColour(Colours::white);
+	const String resText = String(w) + "x" + String(h);
+	g.drawText(resText, Rectangle<float>(w * 0.03f, textZoneTop + textZoneHeight * 0.2f, w * 0.5f, textSize), Justification::left, false);
+
+	// Time label next to it.
+	g.setColour(Colour(0xFFFFFF00));
+	const String timeText = Time::getCurrentTime().formatted("%H:%M:%S");
+	g.drawText(timeText, Rectangle<float>(w * 0.03f, textZoneTop + textZoneHeight * 0.55f, w * 0.5f, textSize), Justification::left, false);
+
+	// Program logo, scaled to the text zone height, centered.
+	{
+		Image logo = ImageCache::getFromMemory(BinaryData::about_png, BinaryData::about_pngSize);
+		if (logo.isValid())
+		{
+			const float logoHeight = textZoneHeight * 0.4f;
+			const float logoWidth = logoHeight * (float) logo.getWidth() / (float) logo.getHeight();
+			Rectangle<float> target((w - logoWidth) * 0.5f, textZoneTop + (textZoneHeight - logoHeight) * 0.5f, logoWidth, logoHeight);
+			g.drawImage(logo, target);
+		}
+	}
+
+	// Red frame around the screen edges.
+	const float borderThickness = jmax(2.0f, h * 0.004f);
+	g.setColour(Colours::red);
+	g.drawRect(Rectangle<float>(borderThickness * 0.5f, borderThickness * 0.5f, w - borderThickness, h - borderThickness), borderThickness);
+
+	// Slow white diagonal sweep.
+	{
+		const double cycleMs = 10000.0;
+		const double activeMs = cycleMs * 0.25; // the sweep only runs the first 25% of each cycle
+
+		const double elapsed = std::fmod((double) Time::getMillisecondCounter(), cycleMs);
+		const double p = elapsed / activeMs; // 0..1 while sweeping, >1 while idle
+		if (p < 1.0)
+		{
+			const double fade = std::sin(MathConstants<double>::pi * jmin(1.0, p));
+
+			Image::BitmapData b(img, Image::BitmapData::readWrite);
+
+			const double travel = p * 2.0;
+			const double halfWidth = 0.35;
+
+			for (int y = 0; y < h; ++y)
+			{
+				const double yPart = (double) y / h;
+				uint8* line = b.getLinePointer(y);
+
+				for (int x = 0; x < w; ++x)
+				{
+					const double d = (double) x / w + yPart;
+					const double dist = std::fabs(d - travel);
+					if (dist >= halfWidth) continue;
+
+					const double band = 1.0 - dist / halfWidth;
+					const double weight = fade * band;
+					if (weight <= 0.001) continue;
+
+					uint8* px = line + x * 4;
+					px[0] = (uint8) jlimit(0, 255, (int) (px[0] + (255 - px[0]) * weight));
+					px[1] = (uint8) jlimit(0, 255, (int) (px[1] + (255 - px[1]) * weight));
+					px[2] = (uint8) jlimit(0, 255, (int) (px[2] + (255 - px[2]) * weight));
+				}
+			}
+		}
+	}
+
+	return img;
+}
+
+// ==============================================================================
+// CompositionSurface
+// ==============================================================================
+
+namespace
+{
+	// Surfaces currently shown by a panel/window (message thread may add/remove,
+	// holder GL thread composites them under the same lock).
+	juce::Array<CompositionRenderer::CompositionSurface*> shownSurfaces;
+	juce::CriticalSection surfacesLock;
+}
+
+void CompositionRenderer::renderSurfaces()
+{
+	const juce::ScopedLock l(surfacesLock);
+	for (int i = 0; i < shownSurfaces.size(); ++i)
+		if (CompositionSurface* s = shownSurfaces[i])
+			s->renderSurfaceGL();
+}
+
+CompositionRenderer::CompositionSurface::CompositionSurface(VideoGLContext* holder) :
+	vidHolder(holder)
+{
+	setOpaque(true);
+	settings.blackBackground = true;
+	settings.featherEnabled = false;
+}
+
+CompositionRenderer::CompositionSurface::~CompositionSurface()
+{
+	hideGL();
+}
+
+void CompositionRenderer::CompositionSurface::setTestCardImage(const juce::Image& img)
+{
+	const ScopedLock l(lockForTestCard);
+	pendingTestCard = img;
+}
+
+void CompositionRenderer::CompositionSurface::showGL()
+{
+	if (isShown) return;
+	isShown = true;
+
+	{
+		const ScopedLock l(surfacesLock);
+		shownSurfaces.addIfNotAlreadyThere(this);
+	}
+
+	startTimerHz(60);
+}
+
+void CompositionRenderer::CompositionSurface::hideGL()
+{
+	if (!isShown) return;
+	isShown = false;
+
+	stopTimer();
+
+	{
+		const ScopedLock l(surfacesLock);
+		shownSurfaces.removeAllInstancesOf(this);
+	}
+}
+
+void CompositionRenderer::CompositionSurface::paint(juce::Graphics& g)
+{
+	g.fillAll(settings.blackBackground ? Colours::black : Colour::greyLevel(0.08f));
+
+	Image img;
+	{
+		const ScopedLock l(imageLock);
+		img = latestImage;
+	}
+
+	if (img.isValid())
+		g.drawImage(img, getLocalBounds().toFloat());
+}
+
+void CompositionRenderer::CompositionSurface::resized()
+{
+	// Nothing to do here : the next GL frame picks up the new size.
+}
+
+void CompositionRenderer::CompositionSurface::timerCallback()
+{
+	// Repaint at a capped rate ; paint() picks up whatever image the holder
+	// thread read back most recently.
+	repaint();
+}
+
+void CompositionRenderer::CompositionSurface::renderSurfaceGL()
+{
+	const int w = getWidth();
+	const int h = getHeight();
+	if (w <= 0 || h <= 0) return;
+
+	// Cap the CPU read-backs while the holder repaints continuously.
+	// Per-surface throttle : a shared static would starve every other surface.
+	{
+		const uint32 now = (uint32) Time::getMillisecondCounter();
+		if (lastReadbackTime != 0 && now - lastReadbackTime < 16) return;
+		lastReadbackTime = now;
+	}
+
+	if (vidHolder == nullptr) return;
+
+	{
+		if (!reportedFirstFrame)
+		{
+			reportedFirstFrame = true;
+			NLOG("Video", "Composition surface first frame : " << w << "x" << h
+				<< (layerFilter != nullptr ? " [preview]" : " [composition]"));
+		}
+	}
+
+	// (Re)size the ping-pong targets to this surface.
+	if (pingFB.getTextureID() == 0 || pingFB.getWidth() != w || pingFB.getHeight() != h)
+	{
+		pingFB.release();
+		pongFB.release();
+		pingFB.initialise(vidHolder->context, w, h);
+		pongFB.initialise(vidHolder->context, w, h);
+	}
+
+	fbWidth = w;
+	fbHeight = h;
+
+	// Pick up a new test card image (generated off the GL thread).
+	{
+		ScopedLock l(lockForTestCard);
+		if (pendingTestCard.isValid())
+		{
+			testCardImage = pendingTestCard;
+			pendingTestCard = Image();
+			testCardDirty = true;
+		}
+	}
+
+	compositorGL.ensure();
+
+	// 1) Clear the first target to the opaque background.
+	bindTarget(pingFB, w, h);
+	Colour bg = settings.blackBackground ? Colours::black : Colour::greyLevel(0.08f);
+	glClearColor(bg.getFloatRed(), bg.getFloatGreen(), bg.getFloatBlue(), 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	// 2) Composite the layers, bottom-most first.
+	auto cues = gatherActiveCues(sequenceFilter, layerFilter);
+
+	OpenGLFrameBuffer* src = &pingFB;
+	OpenGLFrameBuffer* dst = &pongFB;
+
 	for (int i = cues.size() - 1; i >= 0; --i)
 	{
-		VideoLayer* layer = cues[i].layer;
-		VideoLayerClip* clip = cues[i].clip;
-		if (layer == nullptr || clip == nullptr) continue;
+		const Cue& cue = cues[i];
+		if (cue.layer == nullptr || cue.clip == nullptr) continue;
 
-		if (clip->getBlendMode() == VideoLayerClip::BlendMode::Normal)
+		VideoPlayerEngine* engine = cue.layer->moviePlayer.get();
+		if (engine == nullptr || !engine->isGLInit() || !engine->isFileLoaded()) continue;
+
+		const int vw = engine->getVideoWidth();
+		const int vh = engine->getVideoHeight();
+		if (vw <= 0 || vh <= 0) continue;
+
+		GLuint layerTex = 0;
 		{
-			// Direct source-over : the premultiplied draw keeps the layer's alpha.
-			juce::Graphics g(buffer);
-			VlcVideoPlayer::drawFrameWithTransform(g,
-				cues[i].frame,
-				area,
-				clip->getRenderOpacity() * cues[i].fadeFactor,
-				clip->getRenderScaleX(),
-				clip->getRenderScaleY(),
-				clip->getRenderXPercent(),
-				clip->getRenderYPercent());
+			const ScopedLock l(layerFBOLock);
+			auto it = layerFBOs.find(cue.layer);
+			if (it == layerFBOs.end()) continue;
+			layerTex = it->second->fbo.getTextureID();
 		}
-		else
+		if (layerTex == 0) continue;
+		VideoLayerClip* clip = cue.clip;
+
+		// Transform, exactly like the CPU version : fit-to-screen, then clip scale
+		// and X/Y offset in percent of the surface.
+		const float scale = jmin((float) w / (float) vw, (float) h / (float) vh);
+		float dw = vw * scale * clip->getRenderScaleX();
+		float dh = vh * scale * clip->getRenderScaleY();
+		float dx = (w - dw) * 0.5f + w * (clip->getRenderXPercent() / 100.0f);
+		float dy = (h - dh) * 0.5f + h * (clip->getRenderYPercent() / 100.0f);
+
+		const float u0 = dx / w, v0 = dy / h;
+		const float u1 = (dx + dw) / w, v1 = (dy + dh) / h;
+
+		bindTarget(*dst, w, h);
+		renderPass(layerTex, src->getTextureID(),
+			u0, v0, u1, v1,
+			clip->getRenderOpacity() * cue.fadeFactor,
+			(int) clip->getBlendMode(),
+			1, // layer FBOs : image top at v=1
+			0, 0, FeatherVec{ 0, 0, 0, 0 });
+
+		std::swap(src, dst);
+	}
+
+	// 3) Optional test card on top.
+	if (settings.testCard)
+	{
+		if (testCardTexture == 0 && !testCardImage.isValid()) { /* nothing to show yet */ }
+		else if (testCardDirty || testCardTexture == 0)
 		{
-			// Graphics::fillAll ignores fully transparent colours, so clear the
-			// backing pixels explicitly before drawing the next blended layer.
-			layerScratch.clear(layerScratch.getBounds());
+			if (testCardImage.isValid())
 			{
-				juce::Graphics sg(layerScratch);
-				VlcVideoPlayer::drawFrameWithTransform(sg,
-					cues[i].frame,
-					area,
-					clip->getRenderOpacity() * cues[i].fadeFactor,
-					clip->getRenderScaleX(),
-					clip->getRenderScaleY(),
-					clip->getRenderXPercent(),
-					clip->getRenderYPercent());
+				juce::Image rgba = testCardImage.convertedToFormat(Image::ARGB);
+				Image::BitmapData bd(rgba, Image::BitmapData::readOnly);
+
+				if (testCardTexture == 0) glGenTextures(1, &testCardTexture);
+				glBindTexture(GL_TEXTURE_2D, testCardTexture);
+				glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, bd.width, bd.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, bd.data);
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+				testCardWidth = bd.width;
+				testCardHeight = bd.height;
+				testCardDirty = false;
+			}
+			else
+			{
+				if (testCardTexture != 0) { glDeleteTextures(1, &testCardTexture); testCardTexture = 0; }
+			}
+		}
+
+		if (testCardTexture != 0)
+		{
+			if (testCardWidth != (GLuint) w || testCardHeight != (GLuint) h)
+			{
+				juce::Image scaled = testCardImage.rescaled(w, h, juce::Graphics::ResamplingQuality::highResamplingQuality);
+				juce::Image rgba = scaled.convertedToFormat(Image::ARGB);
+				Image::BitmapData bd(rgba, Image::BitmapData::readOnly);
+
+				glBindTexture(GL_TEXTURE_2D, testCardTexture);
+				glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, bd.width, bd.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, bd.data);
+				testCardWidth = bd.width;
+				testCardHeight = bd.height;
 			}
 
-			blendPixels(buffer, layerScratch, (int) clip->getBlendMode());
+			bindTarget(*dst, w, h);
+			renderPass(testCardTexture, src->getTextureID(),
+				0, 0, 1, 1,
+				1.0f,
+				0, // normal mode
+				0, // uploaded image : image top at v=0
+				0, 0, FeatherVec{ 0, 0, 0, 0 });
+
+			std::swap(src, dst);
 		}
 	}
-}
 
-CompositionRenderer::SharedTextureOutput::SharedTextureOutput(std::function<juce::Array<Cue>()> gatherFunction) :
-	gather(std::move(gatherFunction))
-{
-}
-
-CompositionRenderer::SharedTextureOutput::~SharedTextureOutput()
-{
-	stopTimer();
-	if (sender != nullptr)
+	// 4) Optional feather on top of the final composite.
+	if (settings.featherEnabled)
 	{
-		sender->removeSharedTextureListener(this);
-		if (auto* manager = getSharedTextureManager()) manager->removeSender(sender);
-		sender = nullptr;
+		FeatherVec feather{ 0, 0, 0, 0 };
+		feather.x = settings.featherLeft / 100.0f;
+		feather.y = settings.featherRight / 100.0f;
+		feather.z = settings.featherTop / 100.0f;
+		feather.w = settings.featherBottom / 100.0f;
+
+		OpenGLFrameBuffer* featherDst = (src == &pingFB) ? &pongFB : &pingFB;
+		bindTarget(*featherDst, w, h);
+		renderPass(src->getTextureID(), src->getTextureID(),
+			0, 0, 1, 1,
+			1.0f,
+			0,
+			1, // composite FBO : image top at v=1
+			1, settings.featherAmount, feather);
+
+		src = featherDst;
 	}
-}
 
-void CompositionRenderer::SharedTextureOutput::configure(bool enabled, const juce::String& name, int width, int height)
-{
-	outputWidth = juce::jlimit(16, 8192, width);
-	outputHeight = juce::jlimit(16, 8192, height);
-
-#if JUCE_WINDOWS || JUCE_MAC
-	if (enabled && sender == nullptr)
+	// 5) Read the final composite back to a CPU image the component paints.
 	{
-		if (auto* manager = getSharedTextureManager())
+		glBindFramebuffer(GL_FRAMEBUFFER, src->getFrameBufferID());
+		glPixelStorei(GL_PACK_ALIGNMENT, 4);
+
+		// One whole-FBO read-back, then flip rows while copying.
+		// (Per-row glReadPixels calls are far slower.)
+		const GLsizei rowBytes = w * 4;
+		HeapBlock<uint8> raw;
+		raw.malloc((size_t) rowBytes * h);
+		// GL_BGRA byte order == JUCE Image::ARGB native memory layout on
+		// little-endian (B,G,R,A), so no per-pixel channel swap is needed.
+		glReadPixels(0, 0, w, h, GL_BGRA, GL_UNSIGNED_BYTE, raw);
+
+		Image img(Image::ARGB, w, h, false);
 		{
-			sender = manager->addSender(name, outputWidth, outputHeight, true);
-			sender->addSharedTextureListener(this);
+			Image::BitmapData bd(img, Image::BitmapData::readWrite);
+
+			for (int y = 0; y < h; ++y)
+			{
+				// glReadPixels returns rows bottom-up, so copy into the image flipped.
+				const uint8* srcRow = raw + rowBytes * (h - 1 - y);
+				memcpy(bd.getLinePointer(y), srcRow, (size_t) rowBytes);
+			}
+		}
+
+		{
+			const ScopedLock l(imageLock);
+			latestImage = img;
 		}
 	}
 
-	if (sender != nullptr)
-	{
-		sender->setSharingName(name);
-		sender->setSize(outputWidth, outputHeight);
-		sender->setEnabled(enabled);
-	}
-	if (enabled) startTimerHz(30);
-	else stopTimer();
-#else
-	juce::ignoreUnused(name);
-	stopTimer();
-#endif
-}
-
-void CompositionRenderer::SharedTextureOutput::timerCallback()
-{
-	if (gather == nullptr || outputWidth <= 0 || outputHeight <= 0) return;
-
-	if (!renderBuffer.isValid() || renderBuffer.getWidth() != outputWidth || renderBuffer.getHeight() != outputHeight)
-		renderBuffer = juce::Image(juce::Image::ARGB, outputWidth, outputHeight, true);
-	if (!layerScratch.isValid() || layerScratch.getWidth() != outputWidth || layerScratch.getHeight() != outputHeight)
-		layerScratch = juce::Image(juce::Image::ARGB, outputWidth, outputHeight, true);
-
-	renderScene(renderBuffer, layerScratch, gather(), true);
-	const juce::ScopedLock lock(imageLock);
-	renderedImage = renderBuffer.createCopy();
-}
-
-void CompositionRenderer::SharedTextureOutput::drawSharedTexture(juce::Graphics& g, juce::Rectangle<int> bounds)
-{
-	const juce::ScopedLock lock(imageLock);
-	g.fillAll(juce::Colours::black);
-	if (renderedImage.isValid())
-		g.drawImage(renderedImage, bounds.toFloat(), juce::RectanglePlacement(juce::RectanglePlacement::stretchToFit));
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }

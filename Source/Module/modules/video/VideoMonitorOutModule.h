@@ -8,6 +8,9 @@
     monitor, duplicating the composition signal (the same picture the Composition
     Video panel shows). Black background by default.
 
+    The whole signal (composition, test card overlay, edge feather) is produced
+    by a CompositionSurface on the shared OpenGL context.
+
     Options :
     - Monitor : which monitor the window appears on ("None" closes it)
     - Test Card : generative SMPTE-style test card overlaid on the signal
@@ -22,12 +25,12 @@
 #pragma once
 
 #include "JuceHeader.h"
+#include "TimeMachine/Sequence/layers/video/ui/CompositionRenderer.h"
 
 class VideoMonitorOutModule;
 
 class VideoMonitorOutWindow :
-	public juce::Component,
-	public juce::Timer
+	public juce::Component
 {
 public:
 	VideoMonitorOutWindow(VideoMonitorOutModule* _module);
@@ -35,50 +38,37 @@ public:
 
 	void resized() override;
 
-	void timerCallback() override;
+	// Pushes the module's Test Card / Edge Feather parameters into the surface.
+	void updateSettings();
 
 private:
 	VideoMonitorOutModule* module;
-
-	juce::Image backBuffers[2];
-	int frontIndex = 0;
-	juce::Image layerScratch;
-	juce::ImageComponent renderedView;
-
-	// Rasterizes the composition into a fresh back buffer, applies the test card
-	// and the edge feather, then swaps the finished image into view.
-	void renderComposite();
-
-	// Draws the generative test card on top of the composition.
-	void drawTestCard(juce::Image& img);
-
-	// The slow white diagonal sweep, scheduled every 10 seconds.
-	void drawSweep(juce::Image& img);
+	CompositionRenderer::CompositionSurface* surface = nullptr;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(VideoMonitorOutWindow)
 };
 
 class VideoMonitorOutModule :
 	public Module
+#if JUCE_WINDOWS
+	, public KeyboardHooker::Listener
+#endif
 {
 public:
 	VideoMonitorOutModule();
 	~VideoMonitorOutModule();
 
-	EnumParameter* monitor;
-	BoolParameter* testCard;
+	EnumParameter* monitor = nullptr;
+	BoolParameter* testCard = nullptr;
 
-	BoolParameter* featherEnabled;
-	FloatParameter* featherAmount;
-	FloatParameter* featherLeft;
-	FloatParameter* featherRight;
-	FloatParameter* featherTop;
-	FloatParameter* featherBottom;
+	BoolParameter* featherEnabled = nullptr;
+	FloatParameter* featherAmount = nullptr;
+	FloatParameter* featherLeft = nullptr;
+	FloatParameter* featherRight = nullptr;
+	FloatParameter* featherTop = nullptr;
+	FloatParameter* featherBottom = nullptr;
 
 	std::unique_ptr<VideoMonitorOutWindow> window;
-
-	// Applies the optional per-pixel edge fade to the rendered image.
-	void applyEdgeFeather(juce::Image& img);
 
 	// Immediately closes the output window, if any (Monitor reset to None).
 	void closeVideoOutputWindow();
@@ -98,4 +88,9 @@ private:
 	// Opens/closes the output window depending on the enabled state and the
 	// selected monitor.
 	void updateWindow();
+
+#if JUCE_WINDOWS
+	// Global keyboard hook : fires even when the app has no OS focus.
+	void keyChanged(int keyCode, bool pressed) override;
+#endif
 };

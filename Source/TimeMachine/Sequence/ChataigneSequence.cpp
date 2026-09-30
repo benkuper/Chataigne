@@ -124,15 +124,6 @@ ChataigneSequence::ChataigneSequence() :
 	syncOffset->defaultUI = FloatParameter::TIME;
 	reverseOffset = addBoolParameter("Reverse Offset", "This allows negative offset", false);
 
-	spoutOutput = addBoolParameter("Spout Output", "Publish this sequence as a Spout texture on Windows (Syphon on macOS)", false);
-	spoutName = addStringParameter("Spout Name", "Shared texture sender name", "Chataigne - Sequence");
-	spoutWidth = addIntParameter("Spout Width", "Shared texture width", 1280, 16, 8192);
-	spoutHeight = addIntParameter("Spout Height", "Shared texture height", 720, 16, 8192);
-	sharedTextureOutput.reset(new CompositionRenderer::SharedTextureOutput([this]()
-		{
-			return CompositionRenderer::gatherActiveLayers(this, nullptr);
-		}));
-	updateSharedTextureOutput();
 	resetTimeOnMTCStopped = addBoolParameter("Reset on MTC Stop", "If checked, sequence will stop and reset time when MTC doesn't send data anymore. If not checked, sequence will just keep its current time", false);
 	ltcSender.reset(new LTCAudioSender());
 
@@ -159,18 +150,11 @@ ChataigneSequence::ChataigneSequence() :
 
 ChataigneSequence::~ChataigneSequence()
 {
-	sharedTextureOutput.reset();
 	if (ChataigneSequenceManager::getInstanceWithoutCreating())
 	{
 		ChataigneSequenceManager::getInstance()->snapKeysToFrames->removeParameterListener(this);
 	}
 	clearItem();
-}
-
-void ChataigneSequence::updateSharedTextureOutput()
-{
-	if (sharedTextureOutput != nullptr)
-		sharedTextureOutput->configure(spoutOutput->boolValue(), spoutName->stringValue(), spoutWidth->intValue(), spoutHeight->intValue());
 }
 
 void ChataigneSequence::clearItem()
@@ -432,9 +416,6 @@ void ChataigneSequence::updateLTCSender()
 void ChataigneSequence::onContainerParameterChangedInternal(Parameter* p)
 {
 	Sequence::onContainerParameterChangedInternal(p);
-
-	if (p == spoutOutput || p == spoutName || p == spoutWidth || p == spoutHeight)
-		updateSharedTextureOutput();
 
 	if (p == fps)
 	{

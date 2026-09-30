@@ -1,13 +1,23 @@
 /*
   ==============================================================================
 
-    CompositionRenderer.h
-    Created: 28 Sep 2026
+	CompositionRenderer.h
+	GL compositor for the video signal.
 
-    Shared helpers that render the composition signal : the currently active
-    frames of every VideoLayer, stacked top-most-first. Used by the editable
-    "Composition Video" panel and by the "Video monitor out" module output
-    window so they always show the exact same picture.
+	Everything compositing-related runs on the holder's single GL thread (see
+	VideoGLContext) :
+
+	- renderLayers() runs on the holder GL thread (once per holder frame). For
+	  every active VideoLayer it makes sure the engine is GL-ready and renders
+	  it into a per-layer framebuffer (layers are GPU-resident : no CPU images).
+	- renderSurfaces() runs right after, also on the holder GL thread. For every
+	  registered CompositionSurface it composites the per-layer textures into a
+	  ping-pong pair of framebuffers using the clip's transform / opacity /
+	  blend mode, plus optional test card and edge feather, then reads the result
+	  back into a CPU image the surface paints.
+
+	Surfaces are plain JUCE components (no native OpenGL child windows) : that
+	keeps them glitch-free inside organicui panels.
 
   ==============================================================================
 */
@@ -15,8 +25,11 @@
 #pragma once
 
 #include "JuceHeader.h"
+#include "../VideoGLContext.h"
 
 class VideoLayer;
+class VideoLayerClip;
+class Sequence;
 
 namespace CompositionRenderer
 {
@@ -24,45 +37,103 @@ namespace CompositionRenderer
 	{
 		VideoLayer* layer = nullptr;
 		VideoLayerClip* clip = nullptr;
-		juce::Image frame;
 		float fadeFactor = 1.0f;
 	};
 
-	// Collects the enabled video layers with an active clip AND a decoded frame,
-	// ordered from the top-most sequence/track to the bottom-most one.
-	juce::Array<Cue> gatherActiveLayers(Sequence* sequenceFilter = nullptr, VideoLayer* layerFilter = nullptr);
+	struct SceneSettings
+	{
+		bool blackBackground = false;
+		bool testCard = false;
 
-	// Blends the premultiplied `src` layer over the premultiplied `dst` composite
-	// using one of VideoLayerClip::BlendMode. Graphic contexts can't do arbitrary
-	// blend modes in this JUCE, so the modes are implemented per-pixel here.
-	void blendPixels(juce::Image& dst, const juce::Image& src, int blendMode);
+		bool featherEnabled = false;
+		float featherAmount = 1.0f; // 0..1 strength at the very edge
+		float featherLeft = 0;      // fade widths, in % of width/height
+		float featherRight = 0;
+		float featherTop = 0;
+		float featherBottom = 0;
+	};
 
-	// Renders all cues into a freshly-cleared `buffer` : the collection is
-	// top-most first, so it is composited in reverse. `layerScratch` is a scratch
-	// buffer used for the non-Normal blend paths.
-	void renderScene(juce::Image& buffer, juce::Image& layerScratch, const juce::Array<Cue>& cues, bool blackBackground);
+	// Collects the enabled video layers that are playing/showing a clip, ordered
+	// from the top-most sequence/track to the bottom-most one. Optionally filtered
+	// to one sequence / one layer (used by the preview panel).
+	juce::Array<Cue> gatherActiveCues(Sequence* sequenceFilter = nullptr, VideoLayer* layerFilter = nullptr);
 
-	class SharedTextureOutput :
-		private SharedTextureSender::SharedTextureListener,
+	// Holder GL thread : ensures every active engine is GL-ready and renders it
+	// into its per-layer framebuffer. Called every holder frame.
+	void renderLayers();
+
+	// Holder GL thread : composites and publishes every registered surface.
+	// Called every holder frame, right after renderLayers().
+	void renderSurfaces();
+
+	// Generative test card (bars, grey ramp, resolution, clock, logo, red frame,
+	// diagonal sweep), ported from the old CPU monitor. Returns an ARGB image the
+	// caller can feed to CompositionSurface::setTestCardImage().
+	juce::Image createTestCard(int width, int height);
+
+	// A display surface that hosts the composition : a plain JUCE component.
+	// It has no OpenGL context of its own — it is composited on the holder GL
+	// thread (renderSurfaces) and publishes a CPU image that paint() blits, so
+	// it can live safely inside organicui panels without a native GL child
+	// window glitching the UI.
+	class CompositionSurface :
+		public juce::Component,
 		private juce::Timer
 	{
 	public:
-		SharedTextureOutput(std::function<juce::Array<Cue>()> gatherFunction);
-		~SharedTextureOutput() override;
+		CompositionSurface(VideoGLContext* holder);
+		~CompositionSurface() override;
 
-		void configure(bool enabled, const juce::String& name, int width, int height);
+		SceneSettings settings;
+
+		// Optional filtering (preview panel).
+		Sequence* sequenceFilter = nullptr;
+		VideoLayer* layerFilter = nullptr;
+
+		// Message thread : hands a freshly generated test card image to the
+		// surface. It is uploaded to the GPU on the next GL frame.
+		void setTestCardImage(const juce::Image& img);
+
+		// Message thread : starts/stops being composited by renderSurfaces().
+		void showGL();
+		void hideGL();
+
+		// Holder GL thread only : composites this surface and reads the result
+		// back into latestImage (painted on the message thread).
+		void renderSurfaceGL();
+
+		void paint(juce::Graphics& g) override;
+		void resized() override;
 
 	private:
 		void timerCallback() override;
-		void drawSharedTexture(juce::Graphics& g, juce::Rectangle<int> bounds) override;
 
-		std::function<juce::Array<Cue>()> gather;
-		SharedTextureSender* sender = nullptr;
-		juce::Image renderedImage;
-		juce::Image renderBuffer;
-		juce::Image layerScratch;
+		VideoGLContext* vidHolder = nullptr;
+
+		bool isShown = false;
+
+		bool reportedFirstFrame = false;
+		juce::OpenGLFrameBuffer pingFB;
+		juce::OpenGLFrameBuffer pongFB;
+		int fbWidth = 0;
+		int fbHeight = 0;
+
+		juce::Image testCardImage;
+		juce::Image pendingTestCard;
+		juce::CriticalSection lockForTestCard;
+		GLuint testCardTexture = 0;
+		bool testCardDirty = false;
+		GLuint testCardWidth = 0;
+		GLuint testCardHeight = 0;
+
+		// Image last produced on the holder GL thread, painted on the UI thread.
+		juce::Image latestImage;
 		juce::CriticalSection imageLock;
-		int outputWidth = 1280;
-		int outputHeight = 720;
+
+		// Per-surface read-back throttle (holder thread) : caps CPU read-backs
+		// while the holder composites continuously.
+		uint32 lastReadbackTime = 0;
+
+		JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CompositionSurface)
 	};
 }

@@ -5,8 +5,9 @@
     Created: 27 Sep 2026
 
     Shows the video of the current VideoLayer in its own dockable/floating
-    organicui window. The movie player is owned by the layer, it is only
-    parented here while this panel is visible.
+    organicui window. The engine is owned by the layer and rendered on the
+    shared holder context ; this panel composites it through a
+    CompositionSurface filtered to the current layer.
 
   ==============================================================================
 */
@@ -17,6 +18,11 @@
 VideoPreviewPanel::VideoPreviewPanel(const String& contentName) :
 	ShapeShifterContentComponent(contentName)
 {
+	surface = new CompositionRenderer::CompositionSurface(VideoGLContext::getInstance());
+	addAndMakeVisible(surface);
+	surface->setWantsKeyboardFocus(false);
+	surface->setInterceptsMouseClicks(false, false);
+
 	startTimerHz(4);
 	updateCurrentVideoLayer();
 }
@@ -25,9 +31,13 @@ VideoPreviewPanel::~VideoPreviewPanel()
 {
 	stopTimer();
 
-	if (!currentLayer.wasObjectDeleted() && currentPlayer != nullptr && currentPlayer->getParentComponent() == this)
+	if (surface != nullptr)
 	{
-		removeChildComponent(currentPlayer);
+		surface->layerFilter = nullptr;
+		surface->sequenceFilter = nullptr;
+		surface->hideGL();
+		delete surface;
+		surface = nullptr;
 	}
 }
 
@@ -68,33 +78,22 @@ VideoLayer* VideoPreviewPanel::getCurrentVideoLayer()
 
 void VideoPreviewPanel::updateCurrentVideoLayer()
 {
-	// The player is owned by the layer : if it died, its player is gone as well.
-	if (currentLayer.wasObjectDeleted()) currentPlayer = nullptr;
+	if (currentLayer.wasObjectDeleted()) currentLayer = nullptr;
 
 	VideoLayer* layer = getCurrentVideoLayer();
-	VlcVideoPlayer* player = (layer != nullptr) ? layer->moviePlayer.get() : nullptr;
 
-	if (layer == currentLayer.get() && player == currentPlayer)
+	if (layer == currentLayer.get())
 	{
-		if (player != nullptr && player->getParentComponent() == this)
-		{
-			player->setBounds(getLocalBounds());
-		}
+		if (surface != nullptr) surface->setBounds(getLocalBounds());
 		return;
 	}
 
-	if (currentPlayer != nullptr && currentPlayer->getParentComponent() == this)
-	{
-		removeChildComponent(currentPlayer);
-	}
-
 	currentLayer = layer;
-	currentPlayer = player;
 
-	if (currentPlayer != nullptr)
+	if (surface != nullptr)
 	{
-		addAndMakeVisible(currentPlayer);
-		currentPlayer->setBounds(getLocalBounds());
+		surface->layerFilter = layer;
+		surface->sequenceFilter = layer != nullptr ? layer->sequence : nullptr;
 	}
 
 	repaint();
@@ -107,16 +106,34 @@ void VideoPreviewPanel::paint(juce::Graphics& g)
 
 void VideoPreviewPanel::resized()
 {
-	if (currentPlayer != nullptr && currentPlayer->getParentComponent() == this)
-	{
-		currentPlayer->setBounds(getLocalBounds());
-	}
+	if (surface != nullptr)
+		surface->setBounds(getLocalBounds());
+}
+
+void VideoPreviewPanel::visibilityChanged()
+{
+	updateGLVisibility();
+}
+
+void VideoPreviewPanel::updateGLVisibility()
+{
+	if (surface == nullptr) return;
+
+	if (isVisible())
+		surface->showGL();
+	else
+		surface->hideGL();
 }
 
 void VideoPreviewPanel::timerCallback()
 {
+	// Safety net : visibilityChanged() is not called when the panel is already
+	// visible at construction time, and the surface can only attach once the
+	// holder's GL context exists.
+	updateGLVisibility();
+
 	// Detect the active video layer (selection based, falling back to the first
-	// video layer) and re-parent the player if it changed.
+	// video layer) and retarget the surface filter if it changed.
 	if (!isVisible()) return;
 
 	updateCurrentVideoLayer();
