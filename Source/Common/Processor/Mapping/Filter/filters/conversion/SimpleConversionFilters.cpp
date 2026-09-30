@@ -9,6 +9,15 @@
 */
 
 #include "Common/Processor/ProcessorIncludes.h"
+#include "Common/MIDI/TimecodeMath.h"
+
+namespace
+{
+	String mappingHexByte(uint8 value)
+	{
+		return String::toHexString((int)value).paddedLeft('0', 2).toUpperCase();
+	}
+}
 
 SimpleConversionFilter::SimpleConversionFilter(const String& name, var params, StringRef outTypeString, Multiplex* multiplex) :
 	MappingFilter(name, params, multiplex),
@@ -403,6 +412,7 @@ var ToIntFilter::convertValue(Parameter* source, var sourceValue, int multiplexI
 ToStringFilter::ToStringFilter(var params, Multiplex* multiplex) :
 	SimpleConversionFilter(getTypeString(), params, StringParameter::getTypeStringStatic(), multiplex),
 	format(nullptr),
+	smpteFrameRate(nullptr),
 	numDecimals(nullptr),
 	fixedLeading(nullptr),
 	forceCase(nullptr),
@@ -411,7 +421,12 @@ ToStringFilter::ToStringFilter(var params, Multiplex* multiplex) :
 	enumConvertMode(nullptr)
 {
 	format = filterParams.addEnumParameter("Format", "The format of the string");
-	format->addOption("Number", NUMBER)->addOption("Time", TIME)->addOption("Hexadecimal", HEXA);
+	format->addOption("Number", NUMBER)->addOption("Time", TIME)->addOption("Hexadecimal", HEXA)
+		->addOption("SMPTE", SMPTE)->addOption("RRGGBB", RRGGBB)
+		->addOption("RRGGBBAA", RRGGBBAA)->addOption("AARRGGBB", AARRGGBB);
+	smpteFrameRate = filterParams.addEnumParameter("Frame Rate", "Frame rate used for SMPTE timecode");
+	smpteFrameRate->addOption("24 fps", 0)->addOption("25 fps", 1)
+		->addOption("29.97 fps drop frame", 2)->addOption("30 fps", 3);
 	numDecimals = filterParams.addIntParameter("Number of Decimals", "Maximum number of decimals", 3, 0, 26);
 	fixedLeading = filterParams.addIntParameter("Fixed Leading", "If enabled, this will force the output to be with a certain mount of digits before the decimals", 3, 0, 100, false);
 	fixedLeading->canBeDisabledByUser = true;
@@ -421,6 +436,7 @@ ToStringFilter::ToStringFilter(var params, Multiplex* multiplex) :
 
 	prefix = filterParams.addStringParameter("Prefix", "Something prepended to the result", "");
 	suffix = filterParams.addStringParameter("Suffix", "Something appended  to the result", "");
+	smpteFrameRate->setValueWithData(3);
 }
 
 
@@ -449,12 +465,31 @@ void ToStringFilter::setupParametersInternal(int multiplexIndex, bool rangeOnly)
 			if (ghostOptions.hasProperty("convertMode")) enumConvertMode->setValueWithData(ghostOptions.getDynamicObject()->getProperty("convertMode"));
 		}
 	}
+
+	filterParamChanged(format);
+}
+
+MappingFilter::ProcessResult ToStringFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
+{
+	const Format f = format->getValueDataAsEnum<Format>();
+	if (source->type == Parameter::COLOR && (f == RRGGBB || f == RRGGBBAA || f == AARRGGBB))
+	{
+		const Colour color = ((ColorParameter*)source)->getColor();
+		const String rgb = mappingHexByte(color.getRed()) + mappingHexByte(color.getGreen()) + mappingHexByte(color.getBlue());
+		String result = f == AARRGGBB ? mappingHexByte(color.getAlpha()) + rgb : rgb;
+		if (f == RRGGBBAA) result += mappingHexByte(color.getAlpha());
+		out->setValue(filterParams.getLinkedValue(prefix, multiplexIndex).toString()
+			+ getCasedString(result) + filterParams.getLinkedValue(suffix, multiplexIndex).toString());
+		return CHANGED;
+	}
+
+	return SimpleConversionFilter::processSingleParameterInternal(source, out, multiplexIndex);
 }
 
 
 var ToStringFilter::convertValue(Parameter* source, var sourceValue, int multiplexIndex)
 {
-	String result = "";;
+	String result;
 
 	var sv = sourceValue;
 
@@ -501,6 +536,22 @@ var ToStringFilter::convertValue(Parameter* source, var sourceValue, int multipl
 				case TIME:
 					result += StringUtil::valueToTimeString((float)sv, numDecimals->intValue());
 					break;
+
+				case SMPTE:
+				{
+					const int rateCode = (int)smpteFrameRate->getValueData();
+					int hours, minutes, seconds, frames;
+					TimecodeMath::fromSeconds((double)sv, rateCode, hours, minutes, seconds, frames);
+					result += String::formatted("%02d:%02d:%02d%c%02d", hours, minutes, seconds,
+						rateCode == 2 ? ';' : ':', frames);
+					break;
+				}
+
+				case RRGGBB:
+				case RRGGBBAA:
+				case AARRGGBB:
+					result += sv.toString();
+					break;
 				}
 			}
 		}
@@ -534,7 +585,17 @@ String ToStringFilter::getCasedString(const String& value)
 
 void ToStringFilter::filterParamChanged(Parameter* p)
 {
-	fixedLeading->hideInEditor = format->getValueDataAsEnum<Format>() != NUMBER;
+	const Format f = format->getValueDataAsEnum<Format>();
+	fixedLeading->hideInEditor = f != NUMBER;
+	numDecimals->hideInEditor = f != NUMBER && f != TIME;
+	smpteFrameRate->hideInEditor = f != SMPTE;
+	if (sourceParams.size() > 0 && sourceParams[0].size() > 0 && sourceParams[0][0] != nullptr)
+	{
+		const bool colorHex = sourceParams[0][0]->type == Parameter::COLOR
+			&& (f == RRGGBB || f == RRGGBBAA || f == AARRGGBB);
+		retargetComponent->hideInEditor = transferType == DIRECT || colorHex;
+		if (enumConvertMode != nullptr) enumConvertMode->hideInEditor = colorHex;
+	}
 	SimpleConversionFilter::filterParamChanged(p);
 }
 
@@ -764,6 +825,44 @@ MappingFilter::ProcessResult ToColorFilter::processSingleParameterInternal(Param
 		break;
 	}
 
+	return CHANGED;
+}
+
+HexToColorFilter::HexToColorFilter(var params, Multiplex* multiplex) :
+	MappingFilter(getTypeString(), params, multiplex)
+{
+	autoSetRange = false;
+	eightDigitOrder = filterParams.addEnumParameter("8-Digit Order", "Byte order for eight-digit hexadecimal colors");
+	eightDigitOrder->addOption("RRGGBBAA", 0)->addOption("AARRGGBB", 1);
+	filterTypeFilters.add(Controllable::STRING);
+}
+
+Parameter* HexToColorFilter::setupSingleParameterInternal(Parameter* source, int multiplexIndex, bool rangeOnly)
+{
+	if (rangeOnly)
+	{
+		const int index = sourceParams[multiplexIndex].indexOf(source);
+		return index >= 0 ? (*filteredParameters[multiplexIndex])[index] : nullptr;
+	}
+
+	return new ColorParameter(source->niceName, "Color parsed from hexadecimal string", Colours::black);
+}
+
+MappingFilter::ProcessResult HexToColorFilter::processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex)
+{
+	String hex = source->stringValue().trim();
+	if (hex.startsWithChar('#')) hex = hex.substring(1);
+	else if (hex.startsWithIgnoreCase("0x")) hex = hex.substring(2);
+
+	if ((hex.length() != 6 && hex.length() != 8)
+		|| !hex.containsOnly("0123456789abcdefABCDEF")) return UNCHANGED;
+
+	const bool alphaFirst = hex.length() == 8 && (int)eightDigitOrder->getValueData() == 1;
+	const auto byteAt = [&hex](int offset) { return (uint8)hex.substring(offset, offset + 2).getHexValue32(); };
+	const int rgbStart = alphaFirst ? 2 : 0;
+	const uint8 alpha = hex.length() == 6 ? 0xff : byteAt(alphaFirst ? 0 : 6);
+	((ColorParameter*)out)->setColor(Colour::fromRGBA(byteAt(rgbStart), byteAt(rgbStart + 2),
+		byteAt(rgbStart + 4), alpha));
 	return CHANGED;
 }
 

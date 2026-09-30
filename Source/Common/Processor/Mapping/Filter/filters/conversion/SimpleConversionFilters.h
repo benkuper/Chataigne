@@ -99,8 +99,9 @@ public:
 	ToStringFilter(var params, Multiplex* multiplex);
 	~ToStringFilter() {}
 
-	enum Format { NUMBER, TIME, HEXA };
+	enum Format { NUMBER, TIME, HEXA, SMPTE, RRGGBB, RRGGBBAA, AARRGGBB };
 	EnumParameter* format;
+	EnumParameter* smpteFrameRate;
 	IntParameter* numDecimals;
 	IntParameter* fixedLeading;
 
@@ -113,6 +114,7 @@ public:
 	EnumParameter * enumConvertMode;
 
 	void setupParametersInternal(int multiplexIndex, bool rangeOnly) override;
+	ProcessResult processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;
 	var convertValue(Parameter * source, var sourceValue, int multiplexIndex) override;
 	String getCasedString(const String& value);
 
@@ -177,4 +179,20 @@ public:
 
 	String getTypeString() const override { return "Convert To Color"; }
 
+};
+
+class HexToColorFilter :
+	public MappingFilter
+{
+public:
+	HexToColorFilter(var params, Multiplex* multiplex);
+	~HexToColorFilter() {}
+
+	EnumParameter* eightDigitOrder;
+
+	Parameter* setupSingleParameterInternal(Parameter* source, int multiplexIndex, bool rangeOnly) override;
+	ProcessResult processSingleParameterInternal(Parameter* source, Parameter* out, int multiplexIndex) override;
+
+	String getTypeString() const override { return getTypeStringStatic(); }
+	static String getTypeStringStatic() { return "Hex To Color"; }
 };
