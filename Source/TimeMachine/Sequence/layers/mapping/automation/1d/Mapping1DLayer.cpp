@@ -35,7 +35,7 @@ Mapping1DLayer::~Mapping1DLayer()
 {
 }
 
-var Mapping1DLayer::getValueAtPosition(float position)
+var Mapping1DLayer::getValueAtPosition(double position)
 {
     return automation1D.getValueAtPosition(position);
 }

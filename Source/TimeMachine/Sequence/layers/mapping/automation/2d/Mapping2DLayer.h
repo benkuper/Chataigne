@@ -21,7 +21,7 @@ public:
 
 	void addDefaultContent() override;
 
-	virtual var getValueAtPosition(float position) override;
+	virtual var getValueAtPosition(double position) override;
 
 	virtual void stopRecorderAndAddKeys() override;
 

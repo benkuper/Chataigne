@@ -36,9 +36,9 @@ void ColorMappingLayer::addDefaultContent()
     colorManager.addColorAt(0, Colours::red);
 }
 
-var ColorMappingLayer::getValueAtPosition(float position)
+var ColorMappingLayer::getValueAtPosition(double position)
 {
-    Colour c = colorManager.getColorForPosition(position);
+	Colour c = colorManager.getColorForPosition(static_cast<float>(position));
     var result;
     result.append(c.getFloatRed());
     result.append(c.getFloatGreen());

@@ -19,7 +19,7 @@ public:
 
     Automation automation1D;
 
-    virtual var getValueAtPosition(float position) override;
+    virtual var getValueAtPosition(double position) override;
 
     virtual void stopRecorderAndAddKeys() override;
 

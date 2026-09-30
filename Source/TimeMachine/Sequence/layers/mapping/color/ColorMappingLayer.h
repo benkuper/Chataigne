@@ -21,7 +21,7 @@ public:
 
     void addDefaultContent() override;
 
-    var getValueAtPosition(float position) override;
+    var getValueAtPosition(double position) override;
     void selectAll(bool addToSelection = false) override;
 
     Array<Inspectable*> selectAllItemsBetweenInternal(float start, float end) override;

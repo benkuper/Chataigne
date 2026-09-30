@@ -117,15 +117,15 @@ void AutomationMappingLayer::sequenceCurrentTimeChangedInternal(Sequence* s, flo
 {
 	if (automation == nullptr) return;
 
-	float curTime = sequence->currentTime->floatValue();
+	const double curTime = sequence->currentTime->doubleValue();
 	automation->position->setValue(curTime);
 
 	if (sequence->isPlaying->boolValue())
 	{
 		if (recorder.isRecording->boolValue())
 		{
-			if (sequence->currentTime->floatValue() < prevTime)  recorder.removeKeysAfter(curTime);
-			recorder.addKeyAt(curTime);
+			if (curTime < prevTime) recorder.removeKeysAfter(static_cast<float>(curTime));
+			recorder.addKeyAt(static_cast<float>(curTime));
 		}
 	}
 }
@@ -175,4 +175,3 @@ SequenceLayerTimeline* AutomationMappingLayer::getTimelineUI()
 {
 	return new AutomationMappingLayerTimeline(this);
 }
-
