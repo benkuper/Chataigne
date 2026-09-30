@@ -511,6 +511,17 @@ bool MPVPlayer::load(const String& path)
 	if (path.isEmpty()) return false;
 	if (mpv == nullptr) return false;
 
+	// Several clips of a layer can point at the same file (splitting a clip leaves
+	// its source on both halves). Re-issuing loadfile for a path the player already
+	// holds restarts the decoder and flashes black frames while mpv re-opens the
+	// file : keep the running decoder and just tell the layer its clip is ready.
+	if (filePath == path && fileInfo.fileLoaded)
+	{
+		NLOG("MPV Player", "load '" << path << "' already loaded, keeping decoder");
+		pendingSameFileNotify = true;
+		return true;
+	}
+
 	filePath = path;
 
 	NLOG("MPV Player", "load '" << path << "' (gl ready : " << (mpv_gl != nullptr ? "yes" : "no") << ")");
@@ -777,6 +788,16 @@ void MPVPlayer::pullEvents()
 	if (frameUpdatePending.exchange(false, std::memory_order_acq_rel))
 	{
 		notifyFrameUpdate();
+	}
+
+	// load() short-circuited because the file was already loaded : the layer waits
+	// for this callback to finalize its clip bookkeeping (duration, loadedClip), and
+	// no mpv event will ever arrive for it. Fired from here so the layer has already
+	// armed its pending clip when the notification reaches it.
+	if (pendingSameFileNotify)
+	{
+		pendingSameFileNotify = false;
+		if (mpv != nullptr && fileInfo.fileLoaded) notifyFileLoaded();
 	}
 
 	if (mpv == nullptr) return;

@@ -153,6 +153,10 @@ public:
 	};
 	FileInfo fileInfo;
 	int pendingFileInfoMask = 0;
+	// Set by load() when it was asked for the file the player already holds (two
+	// clips of a layer can share a source, e.g. after a clip was split) : the layer
+	// is notified of the load from pullEvents() instead of by an mpv event.
+	bool pendingSameFileNotify = false;
 	bool eofReached = false;
 	std::atomic<bool> playbackActive{ false };
 	// Cached mpv state, fed by observed properties : lets isPlaying()/getPosition()

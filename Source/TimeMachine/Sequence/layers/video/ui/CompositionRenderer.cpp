@@ -206,6 +206,7 @@ namespace
 	struct LayerFBO
 	{
 		OpenGLFrameBuffer fbo;
+		String lastLoadedPath;
 	};
 
 	std::map<VideoLayer*, std::unique_ptr<LayerFBO>> layerFBOs;
@@ -366,8 +367,10 @@ void CompositionRenderer::renderLayers()
 		std::unique_ptr<LayerFBO>& entry = layerFBOs[c.layer];
 		if (entry == nullptr) entry.reset(new LayerFBO());
 
-		if (entry->fbo.getTextureID() == 0 || entry->fbo.getWidth() != w || entry->fbo.getHeight() != h)
+		if (entry->fbo.getTextureID() == 0 || entry->fbo.getWidth() != w || entry->fbo.getHeight() != h
+			|| entry->lastLoadedPath != engine->getFilePath())
 		{
+			entry->lastLoadedPath = engine->getFilePath();
 			entry->fbo.release();
 			entry->fbo.initialise(VideoGLContext::getInstance()->context, w, h);
 		}
