@@ -25,12 +25,19 @@ public:
 	ModuleChooserUI moduleChooser;
 	ChataigneAudioLayer * chataigneAudioLayer;
 
-	//std::unique_ptr<BoolToggleUI> armUI;
-
+	Label outputRoutingLabel;
+	TextButton outputRoutingButton;
 
 	void resizedInternalContent(Rectangle<int> &r) override;
+	void updateOutputRouting();
+	bool canEditOutputRouting() const;
+	void addOutputRoutingMenuItems(PopupMenu& menu);
+	void showOutputRoutingMenu();
+	void controllableFeedbackUpdateInternal(Controllable* c) override;
+	void newMessage(const ContainerAsyncEvent& e) override;
 
 	void targetAudioModuleChanged(ChataigneAudioLayer *) override;
+	void outputChannelsChanged(ChataigneAudioLayer*) override;
 	
 	void selectedModuleChanged(ModuleChooserUI *, Module *) override;
 	void moduleListChanged(ModuleChooserUI *) override;

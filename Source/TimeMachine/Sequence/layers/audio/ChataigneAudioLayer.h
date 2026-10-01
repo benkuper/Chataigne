@@ -26,6 +26,9 @@ public:
 	AudioModule * audioModule;
 	ChataigneSequence* chataigneSequence;
 
+	BoolParameter* showOutputRouting;
+	BoolParameter* lockOutputRouting;
+
 	//Recording
 	BoolParameter* arm;
 	BoolParameter * autoDisarm;

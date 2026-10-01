@@ -24,6 +24,11 @@ ChataigneAudioLayer::ChataigneAudioLayer(ChataigneSequence* _sequence, var param
 	arm = addBoolParameter("Arm", "If checked, this will record audio and save it", false);
 	autoDisarm = addBoolParameter("Auto Disarm", "If checked, this will automatically set Arm to false when the sequence stops", false);
 
+	showOutputRouting = addBoolParameter("Show Output Routing", "Show the selected output channels in the sequence editor", true);
+	lockOutputRouting = addBoolParameter("Lock Output Routing", "Prevent output channel changes from the sequence editor", true);
+	showOutputRouting->hideInEditor = true;
+	lockOutputRouting->hideInEditor = true;
+
 
 	uiHeight->setValue(80);
 }
@@ -254,6 +259,8 @@ void ChataigneAudioLayer::updateRecordingState()
 void ChataigneAudioLayer::audioSetupChanged()
 {
 	refreshOutputChannels();
+	// Also notify the panel when a device change leaves no output channels.
+	audioLayerListeners.call(&ChataigneAudioLayerListener::outputChannelsChanged, this);
 }
 
 var ChataigneAudioLayer::getJSONData(bool includeNonOverriden)
