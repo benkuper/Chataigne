@@ -1,0 +1,12 @@
+diff --git a/meson.build b/meson.build
+--- a/meson.build
++++ b/meson.build
+@@ -1382,7 +1382,7 @@ if features['vulkan'] or (features['gl'] and features['egl'])
+     sources += files('video/filter/vf_gpu.c')
+ endif
+ 
+-if features['d3d11'] or features['egl-angle-win32'] or (features['vulkan'] and win32)
++if features['d3d11'] or features['egl-angle-win32'] or (features['vulkan'] and win32) or get_option('d3d-hwaccel').enabled()
+     sources += files('video/out/gpu/d3d11_helpers.c')
+     features += {'dxgi-debug-d3d11': cc.has_header_symbol('d3d11sdklayers.h', 'DXGI_DEBUG_D3D11')}
+ endif

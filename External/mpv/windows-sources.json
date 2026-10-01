@@ -1,0 +1,15 @@
+{
+  "mpv": {"repo": "mpv-player/mpv", "commit": "a1f50f2c38206dc943f331cf5a5b02f97a0ce219"},
+  "ffmpeg": {"repo": "FFmpeg/FFmpeg", "commit": "1041abdc962f4cc4f394aa8de9dc5236c0c3b9e7"},
+  "libplacebo": {"repo": "haasn/libplacebo", "commit": "1937beef3a2f508266c68efea1491e3fc4600e04"},
+  "libass": {"repo": "libass/libass", "commit": "bbb3c7f1570a4a021e52683f3fbdf74fe492ae84"},
+  "zlib": {"repo": "madler/zlib", "commit": "51b7f2abdade71cd9bb0e7a373ef2610ec6f9daf"},
+  "freetype": {"repo": "freetype/freetype", "commit": "0a0221a1347e2f1e07c395263540026e9a0aa7c7"},
+  "fribidi": {"repo": "fribidi/fribidi", "commit": "68162babff4f39c4e2dc164a5e825af93bda9983"},
+  "harfbuzz": {"repo": "harfbuzz/harfbuzz", "commit": "b0ffab42d473eb380ad0fcf42730e0f1868cbc97"},
+  "dav1d": {"repo": "videolan/dav1d", "commit": "42b2b24fb8819f1ed3643aa9cf2a62f03868e3aa"},
+  "libvpx": {"repo": "webmproject/libvpx", "commit": "d168454ecd099805c675d4a98c66f4891373302a"},
+  "opus": {"repo": "xiph/opus", "commit": "ddbe48383984d56acd9e1ab6a090c54ca6b735a6"},
+  "lcms2": {"repo": "mm2/Little-CMS", "commit": "5176347635785e53ee5cee92328f76fda766ecc6"},
+  "nv-codec-headers": {"repo": "FFmpeg/nv-codec-headers", "commit": "e844e5b26f46bb77479f063029595293aa8f812d"}
+}

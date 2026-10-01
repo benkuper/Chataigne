@@ -4,7 +4,13 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING .ISS SCRIPT FILES!
 
 #define ApplicationName 'Chataigne'
-#define ApplicationVersion GetStringFileInfo('Binaries/CI/App/Chataigne.exe',"ProductVersion")
+#ifndef AppSourceDir
+  #define AppSourceDir 'Binaries/CI/App'
+#endif
+#ifndef InstallerCompression
+  #define InstallerCompression 'lzma2/ultra64'
+#endif
+#define ApplicationVersion GetStringFileInfo(AppSourceDir + '/Chataigne.exe',"ProductVersion")
 
 [Setup]
 AppName={#ApplicationName}
@@ -16,7 +22,7 @@ DefaultDirName={pf}\{#ApplicationName}
 DefaultGroupName={#ApplicationName}
 UninstallDisplayIcon={app}\{#ApplicationName}.exe
 UninstallDisplayName={#ApplicationName}
-Compression=lzma2
+Compression={#InstallerCompression}
 SolidCompression=yes
 ArchitecturesAllowed=win64
 ArchitecturesInstallIn64BitMode=win64
@@ -32,10 +38,11 @@ WizardStyle=modern
 SetupWindowTitle={#ApplicationName} {#ApplicationVersion} Setup
 
 [Files]
-Source: "Binaries/CI/App/{#ApplicationName}.exe"; DestDir: "{app}" ; Flags: ignoreversion
-Source: "Binaries/CI/App/*.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Binaries/CI/App/server.crt"; DestDir: "{app}"; Flags: ignoreversion
-Source: "Binaries/CI/App/server.key"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#AppSourceDir}/{#ApplicationName}.exe"; DestDir: "{app}" ; Flags: ignoreversion
+Source: "{#AppSourceDir}/*.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#AppSourceDir}/server.crt"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#AppSourceDir}/server.key"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#AppSourceDir}/mpv-licenses/*"; DestDir: "{app}/mpv-licenses"; Flags: ignoreversion skipifsourcedoesntexist recursesubdirs createallsubdirs
 [Icons]
 Name: "{group}\{#ApplicationName}"; Filename: "{app}\{#ApplicationName}.exe"
 
