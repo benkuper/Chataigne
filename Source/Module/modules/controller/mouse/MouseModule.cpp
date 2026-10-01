@@ -21,14 +21,12 @@
 #elif JUCE_MAC
 #include "MouseMacFunctions.h"
 #include "MouseModule.h"
-#if JUCE_SUPPORT_CARBON
 #define LEFT_DOWN kCGEventLeftMouseDown
 #define LEFT_UP kCGEventLeftMouseUp
 #define MIDDLE_DOWN kCGEventOtherMouseDown
 #define MIDDLE_UP kCGEventOtherMouseUp
 #define RIGHT_DOWN kCGEventRightMouseDown
 #define RIGHT_UP kCGEventRightMouseUp
-#endif
 #endif
 
 #ifndef LEFT_DOWN
@@ -119,17 +117,19 @@ void MouseModule::setWheelData(float wheelDelta, int orientation)
 	if (!enabled->boolValue()) return;
 	outActivityTrigger->trigger();
 	NLOG(niceName, "Sent delta of " << wheelDelta << " to " << (orientation == 1 ? "Vertical Wheel" : "Horizontal Wheel"));
+#if JUCE_WINDOWS
 	int wheelType = (orientation == 1 ? WHEEL : HWHEEL);
 	int winWheelTravel = wheelDelta * 515;
-#if JUCE_WINDOWS
 	INPUT    Input = { 0 };
 	Input.type = INPUT_MOUSE;
 	Input.mi.dwFlags = wheelType;
 	Input.mi.mouseData = winWheelTravel;
 	::SendInput(1, &Input, sizeof(INPUT));
 #elif JUCE_MAC
-	int32 scrollX = (orientation == 1 ? 0 : wheelDelta * 5);
-	int32 scrollY = (orientation == 1 ? wheelDelta * 5 : 0);
+	int32 amount = roundToInt(wheelDelta * 5.0f);
+	if (amount == 0 && wheelDelta != 0.0f) amount = wheelDelta > 0.0f ? 1 : -1;
+	int32 scrollX = (orientation == 1 ? 0 : amount);
+	int32 scrollY = (orientation == 1 ? amount : 0);
 	mousemac::sendScrollWheelEvent(scrollX, scrollY);
 #endif
 }
@@ -185,6 +185,27 @@ void MouseModule::mouseButtonChanged(int button, bool pressed)
 	else if (button == 2) middleButtonDown->setValue(pressed);
 	else if (button == 3) extraButton1->setValue(pressed);
 	else if (button == 4) extraButton2->setValue(pressed);
+}
+
+void MouseModule::mouseWheelChanged(int wheelDelta, bool horizontal)
+{
+	if (!enabled->boolValue() || wheelDelta == 0) return;
+
+	// Windows reports wheel movement in multiples of WHEEL_DELTA. Horizontal
+	// wheel messages are positive to the right, while the module uses negative.
+	const float delta = (float)wheelDelta / (float)WHEEL_DELTA * (horizontal ? -1.0f : 1.0f);
+	inActivityTrigger->trigger();
+	if (horizontal)
+	{
+		wheelXDelta->setValue(delta);
+		wheelXData->trigger();
+	}
+	else
+	{
+		wheelYDelta->setValue(delta);
+		wheelYData->trigger();
+	}
+	if (logIncomingData->boolValue()) NLOG(niceName, (horizontal ? "Horizontal" : "Vertical") << " wheel delta " << delta);
 }
 #else
 void MouseModule::mouseDown(const MouseEvent& e)

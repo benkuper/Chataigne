@@ -104,7 +104,10 @@ LRESULT __stdcall MouseHooker::mouseCallback(int nCode, WPARAM wParam, LPARAM lP
 				MouseHooker::getInstance()->listeners.call(&Listener::mouseChanged, pMouseStruct->pt.x, pMouseStruct->pt.y, 0);
 				break;
 			case WM_MOUSEWHEEL:
-				MouseHooker::getInstance()->listeners.call(&Listener::mouseChanged, pMouseStruct->pt.x, pMouseStruct->pt.y, GET_WHEEL_DELTA_WPARAM(pMouseStruct->mouseData));
+				MouseHooker::getInstance()->listeners.call(&Listener::mouseWheelChanged, GET_WHEEL_DELTA_WPARAM(pMouseStruct->mouseData), false);
+				break;
+			case WM_MOUSEHWHEEL:
+				MouseHooker::getInstance()->listeners.call(&Listener::mouseWheelChanged, GET_WHEEL_DELTA_WPARAM(pMouseStruct->mouseData), true);
 				break;
 
 			case WM_LBUTTONDOWN:

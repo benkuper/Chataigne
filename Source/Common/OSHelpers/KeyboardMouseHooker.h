@@ -104,6 +104,7 @@ class MouseHooker
 		public:
 			virtual ~Listener() {}
 			virtual void mouseChanged(int x, int y, int wheelDelta) {}
+			virtual void mouseWheelChanged(int wheelDelta, bool horizontal) {}
 			virtual void mouseButtonChanged(int button, bool pressed) {}
 		};
 

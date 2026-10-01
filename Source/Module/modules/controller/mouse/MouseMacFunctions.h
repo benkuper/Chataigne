@@ -12,7 +12,7 @@
 
 #include "JuceHeader.h"
 
-#if JUCE_SUPPORT_CARBON
+#if JUCE_MAC
     #include <CoreGraphics/CGEventSource.h>
     #include <CoreGraphics/CoreGraphics.h>
 #endif
@@ -20,20 +20,28 @@
 namespace mousemac {
     
     void sendMouseEvent(int buttonEvent, float posX, float posY){
- #if JUCE_SUPPORT_CARBON
+ #if JUCE_MAC
         CGPoint pt;
         pt.x = posX;
         pt.y = posY;
         
-        CGEventRef mouseDownEv = CGEventCreateMouseEvent (NULL,(CGEventType)buttonEvent,pt,kCGMouseButtonLeft);
-        CGEventPost (kCGHIDEventTap, mouseDownEv);
+        const auto button = (buttonEvent == kCGEventRightMouseDown || buttonEvent == kCGEventRightMouseUp)
+                            ? kCGMouseButtonRight
+                            : (buttonEvent == kCGEventOtherMouseDown || buttonEvent == kCGEventOtherMouseUp)
+                              ? kCGMouseButtonCenter : kCGMouseButtonLeft;
+        CGEventRef mouseDownEv = CGEventCreateMouseEvent (NULL,(CGEventType)buttonEvent,pt,button);
+        if (mouseDownEv != nullptr)
+        {
+            CGEventPost (kCGHIDEventTap, mouseDownEv);
+            CFRelease(mouseDownEv);
+        }
 #endif
         
     }
     
     void setMousePos(float posX, float posY)
     {
- #if JUCE_SUPPORT_CARBON
+ #if JUCE_MAC
         CGPoint pt;
         pt.x = posX;
         pt.y = posY;
@@ -53,8 +61,14 @@ namespace mousemac {
     }
 
     void sendScrollWheelEvent(int32 scrollX, int32 scrollY) {
-#if JUCE_SUPPORT_CARBON
-        CGEventRef scrollEvent = CGEventCreateScrollWheelEvent(NULL, CGScrollEventUnit.line, 2, scrollY, scrollX)
+#if JUCE_MAC
+        if (scrollX == 0 && scrollY == 0) return;
+        CGEventRef scrollEvent = CGEventCreateScrollWheelEvent(nullptr, kCGScrollEventUnitLine, 2, scrollY, scrollX);
+        if (scrollEvent != nullptr)
+        {
+            CGEventPost(kCGHIDEventTap, scrollEvent);
+            CFRelease(scrollEvent);
+        }
 #endif
 
     }

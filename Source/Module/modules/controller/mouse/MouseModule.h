@@ -54,6 +54,7 @@ public:
 
 #if JUCE_WINDOWS
 	void mouseButtonChanged(int button, bool pressed);
+	void mouseWheelChanged(int wheelDelta, bool horizontal) override;
 #else
 
 	void mouseDown(const MouseEvent& e) override;
