@@ -5,6 +5,7 @@
 .github/** text eol=lf
 **/Makefile text eol=lf
 *.sh text eol=lf
+External/mpv/patches/*.patch text eol=lf
 *.yml text eol=lf
 *.yaml text eol=lf
 *.pbxproj text eol=lf

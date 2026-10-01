@@ -5,36 +5,8 @@ env:
   PackagesVersion: 1.2.11
 
 jobs:
-  mpv-windows:
-    name: Bundled Windows video runtime
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v4
-      - name: Cache video runtime
-        id: mpv-cache
-        uses: actions/cache@v4
-        with:
-          path: mpv-dist
-          key: mpv-win-x64-${{ runner.os }}-${{ hashFiles('External/mpv/build-windows.sh', 'External/mpv/windows-sources.json', 'External/mpv/patches/**') }}
-      - name: Install cross compiler
-        if: steps.mpv-cache.outputs.cache-hit != 'true'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y --no-install-recommends gcc-mingw-w64-x86-64-posix g++-mingw-w64-x86-64-posix nasm pkg-config cmake ninja-build meson autoconf automake libtool
-      - name: Build playback runtime
-        if: steps.mpv-cache.outputs.cache-hit != 'true'
-        run: |
-          bash External/mpv/build-windows.sh "${{ runner.temp }}/chataigne-mpv" 4
-          cp -a "${{ runner.temp }}/chataigne-mpv/dist" mpv-dist
-      - name: Upload runtime and corresponding sources
-        uses: actions/upload-artifact@v4
-        with:
-          name: mpv-win-x64
-          path: mpv-dist
-
   windows:
     name: Windows
-    needs: mpv-windows
     # if: false # always skip job
     runs-on: windows-2022
     strategy:
@@ -81,20 +53,22 @@ jobs:
       - name: Build
         run:  msbuild "Builds/${{ matrix.buildFolder }}/${{ env.ProjectName }}.sln" /p:PreferredToolArchitecture=x64 /m /verbosity:normal /p:Configuration=${{ steps.set_variables.outputs.config }}
 
-      - name: Download playback runtime
-        if: matrix.arch == 'win-x64'
-        uses: actions/download-artifact@v4
-        with:
-          name: mpv-win-x64
-          path: ${{ runner.temp }}/mpv-dist
+      - name: Stage Dependencies
+        shell: powershell
+        run: |
+          Invoke-WebRequest "${{ secrets.DEPDIRURL }}${{ env.ProjectName }}-${{ matrix.arch }}-${{ steps.set_variables.outputs.dep }}-dependencies.zip" -OutFile ./deps.zip
+          7z x deps.zip -aoa
+          if ($LASTEXITCODE -ne 0) { throw 'Dependency extraction failed' }
+          if (-not (Test-Path ./libmpv-2.dll)) { throw 'libmpv-2.dll is missing from the dependency archive' }
+        working-directory: ./Binaries/CI/App
 
       - name: Validate playback runtime
         if: matrix.arch == 'win-x64'
         shell: powershell
         run: |
           @'
-          import ctypes as C, os, pathlib, re
-          mpv = C.CDLL(str(pathlib.Path(os.environ['RUNNER_TEMP']) / 'mpv-dist/libmpv-2.dll'))
+          import ctypes as C, pathlib, re
+          mpv = C.CDLL(str(pathlib.Path('Binaries/CI/App/libmpv-2.dll').resolve()))
           source = pathlib.Path('Source/TimeMachine/Sequence/layers/video/MPVPlayer.cpp').read_text()
           functions = set(re.findall(r'\b(mpv_\w+)\(', source)) - {'mpv_update', 'mpv_wakeup'}
           for name in functions:
@@ -120,15 +94,6 @@ jobs:
         shell: powershell
         run: |
           Set-Variable -Name "PKGNAME" -Value "${{ env.ProjectName }}-${{ steps.set_variables.outputs.suffix }}"
-          Invoke-WebRequest "${{ secrets.DEPDIRURL }}${{ env.ProjectName }}-${{ matrix.arch }}-${{ steps.set_variables.outputs.dep }}-dependencies.zip" -OutFile ./deps.zip
-          7z e deps.zip -aoa
-          if ('${{ matrix.arch }}' -eq 'win-x64') {
-            Copy-Item "${{ runner.temp }}/mpv-dist/libmpv-2.dll" . -Force
-            Copy-Item "${{ runner.temp }}/mpv-dist/mpv-licenses" . -Recurse -Force
-            Copy-Item "${{ runner.temp }}/mpv-dist/mpv-sources.tar.xz" "./$PKGNAME-mpv-sources.tar.xz"
-            echo "mpv-sources-name=$PKGNAME-mpv-sources.tar.xz" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
-          }
-          if (-not (Test-Path ./libmpv-2.dll)) { throw 'libmpv-2.dll is missing from the dependency archive' }
           &"C:/Program Files (x86)/Inno Setup 6/ISCC.exe" "${{ github.workspace }}/${{ matrix.installerName }}.iss" /O. /F$PKGNAME
           if ($LASTEXITCODE -ne 0) { throw 'Installer compilation failed' }
           echo "pkg-name=$PKGNAME.exe" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
@@ -139,14 +104,6 @@ jobs:
         uses: ./.github/actions/upload
         with:
           pkg-name: ./Binaries/CI/App/${{ steps.create_package.outputs.pkg-name }}
-          url: ${{ secrets.UPLOADURL }}
-          pass: ${{ secrets.UPLOADPASS }}
-
-      - name: Upload corresponding video sources
-        if: matrix.arch == 'win-x64'
-        uses: ./.github/actions/upload
-        with:
-          pkg-name: ./Binaries/CI/App/${{ steps.create_package.outputs.mpv-sources-name }}
           url: ${{ secrets.UPLOADURL }}
           pass: ${{ secrets.UPLOADPASS }}
 
