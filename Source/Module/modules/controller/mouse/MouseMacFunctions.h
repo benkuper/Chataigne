@@ -13,8 +13,13 @@
 #include "JuceHeader.h"
 
 #if JUCE_MAC
+    // Apple's legacy MacTypes.h declares a global Point. This file is included
+    // by ModuleIncludes.cpp after JUCE has imported juce::Point, so rename the
+    // legacy declaration while parsing the native headers.
+    #define Point MacQuickDrawPoint
     #include <CoreGraphics/CGEventSource.h>
     #include <CoreGraphics/CoreGraphics.h>
+    #undef Point
 #endif
 
 namespace mousemac {
