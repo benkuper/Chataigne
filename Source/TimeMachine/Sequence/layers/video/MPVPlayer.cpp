@@ -232,6 +232,12 @@ void MPVPlayer::clear()
 	if (MPVTimers::getInstanceWithoutCreating())
 		MPVTimers::getInstance()->unregisterMPV(this);
 
+	// Stop the reader before the audio graph destroys the processor it feeds.
+	if (pipeThread) {
+		pipeThread->shutdown();
+		pipeThread.reset();
+	}
+
 	if (audioModuleResolved != nullptr)
 	{
 		if (audioListenerRegistered)
@@ -246,12 +252,6 @@ void MPVPlayer::clear()
 		audioModuleResolved = nullptr;
 	}
 	audioProcessor = nullptr;
-
-	// Cleanup Pipe Thread
-	if (pipeThread) {
-		pipeThread->shutdown();
-		pipeThread.reset();
-	}
 
 	if (mpv_gl)
 	{
