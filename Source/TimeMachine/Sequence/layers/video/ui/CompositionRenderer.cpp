@@ -209,6 +209,7 @@ namespace
 		OpenGLFrameBuffer fbo;
 		VideoLayerClip* thumbnailClip = nullptr;
 		double lastThumbnailRequestTime = -1.0;
+		String lastLoadedPath;
 	};
 
 	std::map<VideoPlayerEngine*, std::unique_ptr<LayerFBO>> layerFBOs;
@@ -371,8 +372,12 @@ void CompositionRenderer::renderLayers()
 		std::unique_ptr<LayerFBO>& entry = layerFBOs[engine];
 		if (entry == nullptr) entry.reset(new LayerFBO());
 
-		if (entry->fbo.getTextureID() == 0 || entry->fbo.getWidth() != w || entry->fbo.getHeight() != h)
+		if (entry->fbo.getTextureID() == 0 || entry->fbo.getWidth() != w || entry->fbo.getHeight() != h
+			|| entry->lastLoadedPath != engine->getFilePath())
 		{
+			entry->lastLoadedPath = engine->getFilePath();
+			entry->thumbnailClip = nullptr;
+			entry->lastThumbnailRequestTime = -1.0;
 			entry->fbo.release();
 			entry->fbo.initialise(VideoGLContext::getInstance()->context, w, h);
 		}

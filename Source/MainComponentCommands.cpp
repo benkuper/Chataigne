@@ -30,7 +30,67 @@ namespace ChataigneCommandIDs
 	static const int importSelection = 0x801;
 
 	static const int closeVideoMonitorOuts = 0x60008;
+	static const int spliceMediaAtPlayhead = 0x60009;
 
+}
+
+static void spliceBlockAt(LayerBlockManager& manager, LayerBlock* block, float splitTime)
+{
+	auto* audioLeft = dynamic_cast<AudioLayerClip*>(block);
+	auto* videoLeft = dynamic_cast<VideoLayerClip*>(block);
+	if (audioLeft == nullptr && videoLeft == nullptr) return;
+
+	const float start = block->time->floatValue();
+	const float end = block->getEndTime();
+	const float leftDuration = splitTime - start;
+	const float rightDuration = end - splitTime;
+	const float minCore = (float) block->coreLength->minimumValue;
+	if (leftDuration < minCore || rightDuration < minCore) return;
+
+	const float originalCore = block->coreLength->floatValue();
+	const float leftCore = jmin(originalCore, leftDuration);
+	const float leftLoop = leftDuration - leftCore;
+	const float remainingCore = jmax(0.0f, originalCore - leftDuration);
+	const float rightCore = jmin(rightDuration, jmax(minCore,
+		remainingCore > 0.0f ? remainingCore : originalCore));
+	const float rightLoop = rightDuration - rightCore;
+
+	// Construct the new clip before changing the original, so a failed factory
+	// leaves the selected clip untouched.
+	std::unique_ptr<LayerBlock> right(manager.createItem());
+	if (right == nullptr) return;
+	auto* audioRight = dynamic_cast<AudioLayerClip*>(right.get());
+	auto* videoRight = dynamic_cast<VideoLayerClip*>(right.get());
+	if ((audioLeft != nullptr && audioRight == nullptr)
+		|| (videoLeft != nullptr && videoRight == nullptr)) return;
+	right->loadJSONData(block->getJSONData());
+	right->setStartTime(splitTime, false, false);
+	right->setCoreLength(rightCore, false, false);
+	right->setLoopLength(rightLoop);
+
+	if (audioRight != nullptr)
+	{
+		const float stretch = jmax(0.001f, audioLeft->stretchFactor->floatValue());
+		audioRight->stretchFactor->setValue(stretch);
+		audioRight->clipStartOffset->setValue(audioLeft->clipStartOffset->floatValue() + leftDuration / stretch);
+		audioRight->fadeIn->setValue(0.0f);
+		audioLeft->fadeOut->setValue(0.0f);
+	}
+	else if (videoRight != nullptr)
+	{
+		videoRight->clipStartOffset->setValue(videoLeft->clipStartOffset->floatValue() + leftDuration);
+		videoRight->fadeIn->setValue(0.0f);
+		videoLeft->fadeOut->setValue(0.0f);
+	}
+
+	block->setCoreLength(leftCore, false, false);
+	block->setLoopLength(leftLoop);
+	LayerBlock* added = right.release();
+	manager.addBlockAt(added, splitTime);
+	// addBlockAt trims against the next clip even on video layers that allow
+	// overlap. Restore the original endpoint after insertion.
+	added->setCoreLength(rightCore, false, false);
+	added->setLoopLength(rightLoop);
 }
 
 void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationCommandInfo& result)
@@ -109,6 +169,11 @@ void MainContentComponent::getCommandInfo(CommandID commandID, ApplicationComman
 		result.addDefaultKeypress(KeyPress::createFromDescription("M").getKeyCode(), ModifierKeys::ctrlModifier | ModifierKeys::shiftModifier);
 		break;
 
+	case ChataigneCommandIDs::spliceMediaAtPlayhead:
+		result.setInfo("Splice Media at Playhead", "Splits the selected audio or video clip at the playhead", "Timeline", result.readOnlyInKeyEditor);
+		result.addDefaultKeypress(KeyPress::createFromDescription("K").getKeyCode(), ModifierKeys::ctrlModifier | ModifierKeys::shiftModifier);
+		break;
+
 	default:
 		OrganicMainContentComponent::getCommandInfo(commandID, result);
 		break;
@@ -138,6 +203,7 @@ void MainContentComponent::getAllCommands(Array<CommandID>& commands) {
 		ChataigneCommandIDs::reloadCustomModules,
 		ChataigneCommandIDs::exitGuide,
 		ChataigneCommandIDs::closeVideoMonitorOuts,
+		ChataigneCommandIDs::spliceMediaAtPlayhead,
 	};
 
 	commands.addArray(ids, numElementsInArray(ids));
@@ -276,6 +342,27 @@ bool MainContentComponent::perform(const InvocationInfo& info)
 			if (VideoMonitorOutModule* vmo = dynamic_cast<VideoMonitorOutModule*>(m))
 			{
 				vmo->closeVideoOutputWindow();
+			}
+		}
+	}
+	break;
+
+	case ChataigneCommandIDs::spliceMediaAtPlayhead:
+	{
+		if (LayerBlock* block = InspectableSelectionManager::mainSelectionManager->getInspectableAs<LayerBlock>())
+		{
+			if (LayerBlockManager* mgr = dynamic_cast<LayerBlockManager*>(block->parentContainer.get()))
+			{
+				if (mgr->layer != nullptr && mgr->layer->sequence != nullptr)
+				{
+					const float playhead = mgr->layer->sequence->currentTime->floatValue();
+					const float start = block->time->floatValue();
+					const float end = block->getEndTime();
+					if (playhead > start + 1e-6f && playhead < end - 1e-6f)
+					{
+						spliceBlockAt(*mgr, block, playhead);
+					}
+				}
 			}
 		}
 	}
