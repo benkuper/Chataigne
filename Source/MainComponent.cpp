@@ -20,22 +20,29 @@ class ChataigneSequenceTransportUI final : public SequenceTransportUI
 {
 public:
 	explicit ChataigneSequenceTransportUI(ChataigneSequence* sequence)
-		: SequenceTransportUI(sequence), recordUI(sequence->recordMode->createButtonToggle())
+		: SequenceTransportUI(sequence)
 	{
-		recordUI->customLabel = "REC";
-		recordUI->useCustomFGColor = true;
-		recordUI->customFGColor = Colours::red;
+		Image recordImage(Image::ARGB, 32, 32, true);
+		Graphics g(recordImage);
+		g.setColour(Colours::red);
+		g.fillEllipse(2.0f, 2.0f, 28.0f, 28.0f);
+		recordUI.reset(sequence->recordMode->createToggle(recordImage));
+		recordUI->setRepaintsOnMouseActivity(true);
 		addAndMakeVisible(recordUI.get());
 	}
 
 	void resized() override
 	{
 		SequenceTransportUI::resized();
-		recordUI->setBounds(2, 2, 38, 26);
+		Rectangle<int> tools = getLocalBounds().reduced(2).removeFromBottom(24);
+		tools.removeFromLeft(loopUI->getRight() + 2 - tools.getX());
+		recordUI->setBounds(tools.removeFromLeft(30).withSizeKeepingCentre(16, 16));
+		snapUI->setBounds(tools.removeFromLeft(30).reduced(4));
+		totalTimeLabel.setBounds(tools.removeFromRight(100));
 	}
 
 private:
-	std::unique_ptr<BoolButtonToggleUI> recordUI;
+	std::unique_ptr<BoolToggleUI> recordUI;
 };
 
 class ChataigneTimeMachineView final : public TimeMachineView
