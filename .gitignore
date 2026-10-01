@@ -63,3 +63,7 @@ Builds/VisualStudio2017_Win7/
 
 
 Builds/VisualStudio2022_CI/x64/
+Builds/VisualStudio2022_Win7CI/x64/
+
+dependencies_zips
+
