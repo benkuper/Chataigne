@@ -18,8 +18,12 @@ ChataigneApplication::ChataigneApplication() :
 }
 
 
-void ChataigneApplication::initialiseInternal(const String&)
+void ChataigneApplication::initialiseInternal(const String& commandLine)
 {
+	bool headless = Desktop::getInstance().isHeadless();
+	for (const auto& argument : StringUtil::parseCommandLine(commandLine))
+		if (argument.command == "headless") headless = true;
+
    #if JUCE_LINUX
 	// The launch script sets LD_LIBRARY_PATH so this binary can find its own bundled
 	// libraries, but that same variable leaks into every child process this app spawns
@@ -38,7 +42,7 @@ void ChataigneApplication::initialiseInternal(const String&)
 	// Saved preferences and -forceGL still override this startup default.
 	GlobalSettings::getInstance()->useGLRenderer->setValue(false);
 	#endif
-	if(useWindow) mainComponent.reset(new MainContentComponent());
+	if (useWindow) mainComponent.reset(new MainContentComponent());
 
 	//Call after engine init
 	AppUpdater::getInstance()->setURLs("http://benjamin.kuperberg.fr/chataigne/releases/update.json", "http://benjamin.kuperberg.fr/chataigne/user/data/", "Chataigne");
@@ -61,7 +65,7 @@ void ChataigneApplication::initialiseInternal(const String&)
 	// 1x1 offscreen host child of the main component, so the main UI keeps using
 	// its regular software painting.
 	#if JUCE_WINDOWS || JUCE_MAC || JUCE_LINUX
-	if (mainComponent != nullptr)
+	if (mainComponent != nullptr && !headless)
 		VideoGLContext::getInstance()->setup(mainComponent.get());
 	#endif
 
