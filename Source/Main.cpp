@@ -18,7 +18,7 @@ ChataigneApplication::ChataigneApplication() :
 }
 
 
-void ChataigneApplication::initialiseInternal(const String &)
+void ChataigneApplication::initialiseInternal(const String&)
 {
    #if JUCE_LINUX
 	// The launch script sets LD_LIBRARY_PATH so this binary can find its own bundled
@@ -32,6 +32,12 @@ void ChataigneApplication::initialiseInternal(const String &)
    #endif
 
 	engine.reset(new ChataigneEngine());
+	#if JUCE_WINDOWS
+	// Prefer software painting on a fresh install. A missing or incompatible
+	// OpenGL driver can otherwise leave only menus and tooltips visible (#169).
+	// Saved preferences and -forceGL still override this startup default.
+	GlobalSettings::getInstance()->useGLRenderer->setValue(false);
+	#endif
 	if(useWindow) mainComponent.reset(new MainContentComponent());
 
 	//Call after engine init
