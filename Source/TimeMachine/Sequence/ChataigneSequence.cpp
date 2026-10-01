@@ -12,6 +12,49 @@
 #include "ChataigneSequence.h"
 #include "Common/LTC/LTCAudioGenerator.h"
 
+namespace
+{
+class ChataigneSequenceBlockLayer : public SequenceBlockLayer
+{
+public:
+	using SequenceBlockLayer::SequenceBlockLayer;
+
+	void sequenceCurrentTimeChanged(Sequence*, float, bool) override
+	{
+		updateCurrentBlock();
+		if (isClearing || !enabled->boolValue() || !sequence->enabled->boolValue()) return;
+
+		const ScopedLock lock(blockLock);
+		if (currentBlock == nullptr || currentBlockRef.wasObjectDeleted()) return;
+		Sequence* child = currentBlock->getTargetSequence();
+		if (child == nullptr || child == sequence) return;
+
+		const double time = currentBlock->getRelativeTime(sequence->currentTime->floatValue(), true)
+			+ currentBlock->sequenceStartOffset->floatValue();
+		if (!sequence->isPlaying->boolValue())
+		{
+			child->setCurrentTime(time, true, true);
+			return;
+		}
+
+		// Parent and child clocks can differ by a frame between updates. Seeking
+		// backward for every tiny difference repeatedly restarts child audio (#292).
+		const double tolerance = jmax(0.005, 2.0 / jmax(1, sequence->fps->intValue()));
+		if (sequence->isSeeking || !child->isPlaying->boolValue()
+			|| time + tolerance < child->currentTime->doubleValue())
+		{
+			child->setCurrentTime(time, true, true);
+			child->playTrigger->trigger();
+		}
+	}
+
+	static SequenceBlockLayer* create(Sequence* sequence, var params)
+	{
+		return new ChataigneSequenceBlockLayer(sequence, params);
+	}
+};
+}
+
 class LTCAudioSender : public AudioIODeviceCallback
 {
 public:
@@ -144,7 +187,7 @@ ChataigneSequence::ChataigneSequence() :
 	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Audio", &ChataigneAudioLayer::create, this, true));
 	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Video", &ChataigneVideoLayer::create, this, false, true));
 	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", ColorMappingLayer::getTypeStringStatic(), &ColorMappingLayer::create, this));
-	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Sequences", &SequenceBlockLayer::create, this)->addParam("manager", ChataigneSequenceManager::getInstance()->getControlAddress()));
+	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Sequences", &ChataigneSequenceBlockLayer::create, this)->addParam("manager", ChataigneSequenceManager::getInstance()->getControlAddress()));
 
 	layerManager->addBaseManagerListener(this);
 
