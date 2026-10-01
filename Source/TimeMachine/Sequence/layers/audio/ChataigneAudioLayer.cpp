@@ -213,8 +213,7 @@ void ChataigneAudioLayer::exportRMS(bool toNewMappingLayer, bool toClipboard, bo
 void ChataigneAudioLayer::onContainerParameterChanged(Parameter* p)
 {
 	AudioLayer::onContainerParameterChanged(p);
-
-	//if (p == arm) updateSelectedOutChannels();
+	if (p == arm && sequence->isPlaying->boolValue()) updateRecordingState();
 }
 
 void ChataigneAudioLayer::sequenceCurrentTimeChanged(Sequence* s, float prevTime, bool evaluateSkippedData)
@@ -225,29 +224,30 @@ void ChataigneAudioLayer::sequenceCurrentTimeChanged(Sequence* s, float prevTime
 void ChataigneAudioLayer::sequencePlayStateChanged(Sequence* s)
 {
 	AudioLayer::sequencePlayStateChanged(s);
-	if (sequence->isPlaying->boolValue())
+	updateRecordingState();
+	if (!sequence->isPlaying->boolValue() && autoDisarm->boolValue()) arm->setValue(false);
+}
+
+void ChataigneAudioLayer::updateRecordingState()
+{
+	ChataigneAudioLayerProcessor* processor = static_cast<ChataigneAudioLayerProcessor*>(currentProcessor);
+	if (processor == nullptr) return;
+
+	if (sequence->isPlaying->boolValue() && chataigneSequence->recordMode->boolValue() && arm->boolValue())
 	{
-		if (arm->boolValue() && currentProcessor != nullptr)
+		if (!processor->isRecording())
 		{
 			updateSelectedOutChannels();
 			timeAtStartRecord = sequence->currentTime->floatValue();
-			((ChataigneAudioLayerProcessor*)currentProcessor)->startRecording();
+			processor->startRecording();
 		}
 	}
-	else
+	else if (processor->isRecording())
 	{
-		if (ChataigneAudioLayerProcessor* cProc = (ChataigneAudioLayerProcessor*)currentProcessor)
-		{
-			if (cProc->isRecording())
-			{
-				cProc->stopRecording();
-				AudioLayerClip* clip = (AudioLayerClip*)clipManager.addBlockAt(timeAtStartRecord);
-				clip->resizeSequenceOnLoad = false;
-				clip->filePath->setValue(cProc->recordingFile.getFullPathName());
-			}
-		}
-
-		if (autoDisarm->boolValue()) arm->setValue(false);
+		processor->stopRecording();
+		AudioLayerClip* clip = (AudioLayerClip*)clipManager.addBlockAt(timeAtStartRecord);
+		clip->resizeSequenceOnLoad = false;
+		clip->filePath->setValue(processor->recordingFile.getFullPathName());
 	}
 }
 

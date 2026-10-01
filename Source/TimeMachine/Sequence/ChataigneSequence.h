@@ -32,6 +32,7 @@ public:
 
 	AudioModule * masterAudioModule;
 	ChataigneAudioLayer* masterAudioLayer;
+	BoolParameter* recordMode;
 
 	MIDIDeviceParameter* midiSyncDevice;
 	std::unique_ptr<MTCSender> mtcSender;

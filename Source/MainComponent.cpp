@@ -8,10 +8,61 @@
 
 #include "MainIncludes.h"
 #include "Module/ModuleIncludes.h"
+#include "TimeMachine/TimeMachineIncludes.h"
 
 using namespace std::placeholders;
 
 String getAppVersion();
+
+namespace
+{
+class ChataigneSequenceTransportUI final : public SequenceTransportUI
+{
+public:
+	explicit ChataigneSequenceTransportUI(ChataigneSequence* sequence)
+		: SequenceTransportUI(sequence), recordUI(sequence->recordMode->createButtonToggle())
+	{
+		recordUI->customLabel = "REC";
+		recordUI->useCustomFGColor = true;
+		recordUI->customFGColor = Colours::red;
+		addAndMakeVisible(recordUI.get());
+	}
+
+	void resized() override
+	{
+		SequenceTransportUI::resized();
+		recordUI->setBounds(2, 2, 38, 26);
+	}
+
+private:
+	std::unique_ptr<BoolButtonToggleUI> recordUI;
+};
+
+class ChataigneTimeMachineView final : public TimeMachineView
+{
+public:
+	explicit ChataigneTimeMachineView(const String& name) : TimeMachineView(name)
+	{
+		// The base constructor may have created an editor before virtual dispatch
+		// can select the Chataigne transport. Recreate it once construction ends.
+		if (editor != nullptr)
+		{
+			Sequence* selected = editor->sequence;
+			setSequence(nullptr);
+			setSequence(selected);
+		}
+	}
+
+	SequenceEditorView* createEditorForSequence(Sequence* sequence) override
+	{
+		if (auto* chataigne = dynamic_cast<ChataigneSequence*>(sequence))
+			return new SequenceEditorView(sequence, nullptr, new ChataigneSequenceTransportUI(chataigne));
+		return TimeMachineView::createEditorForSequence(sequence);
+	}
+
+	static TimeMachineView* create(const String& name) { return new ChataigneTimeMachineView(name); }
+};
+}
 
 //==============================================================================
 MainContentComponent::MainContentComponent()
@@ -32,7 +83,7 @@ void MainContentComponent::init()
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Morpher", &MorpherPanel::create));
 
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Sequences", &createSequenceManagerUI));
-	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Sequence Editor", &TimeMachineView::create));
+	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Sequence Editor", &ChataigneTimeMachineView::create));
 
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("States", &StateManagerUI::create));
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("State Machine", &StateMachineView::create));

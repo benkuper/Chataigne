@@ -52,6 +52,7 @@ public:
 
 	void sequenceCurrentTimeChanged(Sequence* s, float prevTime, bool evaluateSkippedData) override;
 	void sequencePlayStateChanged(Sequence* s) override;
+	void updateRecordingState();
 	void audioSetupChanged() override;
 
 

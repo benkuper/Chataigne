@@ -46,6 +46,28 @@ void Mapping1DLayer::stopRecorderAndAddKeys()
     Array<Point<float>> points;
     for (auto& rv : recordedValues) points.add({ rv.time, (float)rv.value });
     AutomationRecorder::SimplificationMethod sm = recorder.simplificationMethod->getValueDataAsEnum<AutomationRecorder::SimplificationMethod>();
+    if (sm == AutomationRecorder::SIMPL_BEZIER && !points.isEmpty())
+    {
+        // Preserve the curve before a drop-in take, then hold its last value
+        // until the new recording starts. Otherwise the previous key eases
+        // toward the first recorded value over the entire gap.
+        const float frame = 1.0f / jmax(1, sequence->fps->intValue());
+        const float holdTime = points.getFirst().x - frame;
+        if (holdTime > 0.0f)
+        {
+            if (auto* previous = automation1D.getKeyForPosition(holdTime))
+            {
+                if (previous->position->floatValue() < holdTime - 0.001f)
+                {
+                    if (previous->nextKey != nullptr) automation1D.insertKeyAt(holdTime, true);
+                    else automation1D.addKey(holdTime, previous->value->floatValue(), true);
+                }
+                if (auto* hold = automation1D.getKeyForPosition(holdTime))
+                    if (std::abs(hold->position->floatValue() - holdTime) < 0.001f)
+                        hold->setEasing(Easing::HOLD);
+            }
+        }
+    }
     if (sm == AutomationRecorder::SIMPL_BEZIER) automation1D.addFromPointsAndSimplifyBezier(points, true, true);
     if (sm == AutomationRecorder::SIMPL_LINEAR) automation1D.addFromPointsAndSimplifyLinear(points, recorder.simplificationTolerance->floatValue(), true, true);
     if (sm == AutomationRecorder::SIMPL_LINEAR_INTERACTIVE) automation1D.launchInteractiveSimplification(points);

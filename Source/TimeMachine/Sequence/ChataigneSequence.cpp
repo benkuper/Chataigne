@@ -140,6 +140,9 @@ ChataigneSequence::ChataigneSequence() :
 	ltcAudioModule(nullptr),
 	mtcFPS(nullptr)
 {
+	recordMode = addBoolParameter("Record", "Record armed sequence layers during playback", false);
+	recordMode->isSavable = false;
+
 	midiSyncDevice = new MIDIDeviceParameter("Sync Devices", "MIDI Devices to send and/or receive MTC to sync the sequence with external systems.");
 	midiSyncDevice->canBeDisabledByUser = true;
 	midiSyncDevice->enabled = false;
@@ -472,6 +475,17 @@ void ChataigneSequence::updateLTCSender()
 void ChataigneSequence::onContainerParameterChangedInternal(Parameter* p)
 {
 	Sequence::onContainerParameterChangedInternal(p);
+	if (p == isPlaying && !isPlaying->boolValue()) recordMode->setValue(false);
+	if (p == recordMode && isPlaying->boolValue())
+	{
+		for (auto* layer : layerManager->items)
+		{
+			if (auto* mapping = dynamic_cast<AutomationMappingLayer*>(layer))
+				mapping->sequencePlayStateChangedInternal(this);
+			else if (auto* audio = dynamic_cast<ChataigneAudioLayer*>(layer))
+				audio->updateRecordingState();
+		}
+	}
 
 	if (p == spoutOutput || p == spoutName || p == spoutWidth || p == spoutHeight)
 		updateSharedTextureOutput();

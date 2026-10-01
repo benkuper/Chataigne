@@ -137,8 +137,25 @@ void AutomationMappingLayer::sequenceTotalTimeChanged(Sequence* s)
 
 void AutomationMappingLayer::sequencePlayStateChangedInternal(Sequence* s)
 {
-	if (sequence->isPlaying->boolValue())
+	const auto* chataigneSequence = dynamic_cast<ChataigneSequence*>(sequence);
+	if (sequence->isPlaying->boolValue()
+		&& (chataigneSequence == nullptr || chataigneSequence->recordMode->boolValue()))
 	{
+		// A single Set Value output is the natural recording source for an
+		// unassigned recorder. Keep any explicitly chosen source untouched.
+		if (recorder.arm->boolValue() && recorder.input->target == nullptr
+			&& mapping->om.items.size() == 1 && !mapping->om.isMultiplexed())
+		{
+			if (auto* command = dynamic_cast<GenericControllableCommand*>(mapping->om.items[0]->command.get()))
+			{
+				if (command->action == GenericControllableCommand::SET_VALUE)
+				{
+					if (auto* target = command->target->getTargetParameter())
+						if (recorder.input->typesFilter.contains(target->getTypeString()))
+							recorder.input->setTarget(target);
+				}
+			}
+		}
 		if (recorder.shouldRecord()) recorder.startRecording();
 	}
 	else if (recorder.isRecording->boolValue())
