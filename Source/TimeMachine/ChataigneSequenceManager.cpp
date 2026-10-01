@@ -29,10 +29,7 @@ ChataigneSequenceManager::ChataigneSequenceManager() :
 	spoutName = addStringParameter("Spout Name", "Shared texture sender name", "Chataigne - Composition");
 	spoutWidth = addIntParameter("Spout Width", "Shared texture width", 1280, 16, 8192);
 	spoutHeight = addIntParameter("Spout Height", "Shared texture height", 720, 16, 8192);
-	sharedTextureOutput.reset(new CompositionRenderer::SharedTextureOutput([]()
-		{
-			return CompositionRenderer::gatherActiveLayers();
-		}));
+	sharedTextureOutput.reset(new CompositionRenderer::SharedTextureOutput(nullptr, nullptr));
 	updateSharedTextureOutput();
 }
 

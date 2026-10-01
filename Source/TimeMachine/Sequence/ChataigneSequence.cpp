@@ -128,10 +128,7 @@ ChataigneSequence::ChataigneSequence() :
 	spoutName = addStringParameter("Spout Name", "Shared texture sender name", "Chataigne - Sequence");
 	spoutWidth = addIntParameter("Spout Width", "Shared texture width", 1280, 16, 8192);
 	spoutHeight = addIntParameter("Spout Height", "Shared texture height", 720, 16, 8192);
-	sharedTextureOutput.reset(new CompositionRenderer::SharedTextureOutput([this]()
-		{
-			return CompositionRenderer::gatherActiveLayers(this, nullptr);
-		}));
+	sharedTextureOutput.reset(new CompositionRenderer::SharedTextureOutput(this, nullptr));
 	updateSharedTextureOutput();
 	resetTimeOnMTCStopped = addBoolParameter("Reset on MTC Stop", "If checked, sequence will stop and reset time when MTC doesn't send data anymore. If not checked, sequence will just keep its current time", false);
 	ltcSender.reset(new LTCAudioSender());

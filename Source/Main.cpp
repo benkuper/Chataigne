@@ -6,6 +6,7 @@
 #endif
 
 #include "Module/ModuleIncludes.h"
+#include "TimeMachine/Sequence/layers/video/VideoGLContext.h"
 
 //==============================================================================
 
@@ -48,6 +49,14 @@ void ChataigneApplication::initialiseInternal(const String &)
 	// for accented and other characters loaded from existing projects.
 	#if JUCE_WINDOWS
 		LookAndFeel::getDefaultLookAndFeel().setDefaultSansSerifTypefaceName("Microsoft YaHei");
+	#endif
+
+	// Shared video OpenGL context (drives the mpv timeline). It renders into a
+	// 1x1 offscreen host child of the main component, so the main UI keeps using
+	// its regular software painting.
+	#if JUCE_WINDOWS || JUCE_MAC || JUCE_LINUX
+	if (mainComponent != nullptr)
+		VideoGLContext::getInstance()->setup(mainComponent.get());
 	#endif
 
 }

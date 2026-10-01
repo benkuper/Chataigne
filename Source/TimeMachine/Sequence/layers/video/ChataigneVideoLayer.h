@@ -31,6 +31,9 @@ public:
 	void updateSharedTextureOutput();
 	void onContainerParameterChangedInternal(Parameter* p) override;
 
+	// Factory : provides the mpv-backed engine for the base VideoLayer.
+	virtual VideoPlayerEngine* createVideoPlayer() override;
+
 	virtual SequenceLayerPanel* getPanel() override;
 	virtual SequenceLayerTimeline* getTimelineUI() override;
 
