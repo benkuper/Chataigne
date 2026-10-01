@@ -38,6 +38,9 @@ public:
 		return (localWritePos - localReadPos + bufferSize) % bufferSize;
 	}
 
+	int getFreeFrames() const { return bufferSize - getFramesAvailable() - 1; }
+	void clear() { readPos.store(writePos.load(std::memory_order_acquire), std::memory_order_release); }
+
 private:
 	int channels;
 	int bufferSize;
@@ -65,6 +68,7 @@ public:
 
 	void onAudioPlay(const void* data, unsigned int count, int64_t pts);
 	void onAudioFlush(int64_t pts);
+	int getFreeFrames();
 
 	void processBlock(AudioBuffer<float>& buffer, MidiBuffer& midiMessages) override;
 

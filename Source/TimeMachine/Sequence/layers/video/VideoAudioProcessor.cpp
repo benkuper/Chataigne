@@ -38,6 +38,15 @@ void VideoAudioProcessor::onAudioPlay(const void* data, unsigned int count, int6
 
 void VideoAudioProcessor::onAudioFlush(int64_t pts)
 {
+	const ScopedLock lock(fifoLock);
+	if (fifo != nullptr) fifo->clear();
+	isBuffering = true;
+}
+
+int VideoAudioProcessor::getFreeFrames()
+{
+	const ScopedLock lock(fifoLock);
+	return fifo != nullptr ? fifo->getFreeFrames() : 0;
 }
 
 void VideoAudioProcessor::processBlock(AudioBuffer<float>& buffer, MidiBuffer& midiMessages)
@@ -75,7 +84,7 @@ void VideoAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
 	int numChannels = getTotalNumOutputChannels();
 	if (numChannels > 0)
 	{
-		fifo.reset(new AudioFIFO(numChannels, (int)(sampleRate * 10)));
+		fifo.reset(new AudioFIFO(numChannels, juce::jmax(samplesPerBlock * 8, (int)(sampleRate * 0.25))));
 		bufferThreshold = samplesPerBlock * 4;
 		isBuffering = true;
 	}
@@ -135,7 +144,7 @@ void AudioFIFO::pullData(AudioBuffer<float>& buffer, int numSamples)
 	{
 		if (ch >= buffer.getNumChannels()) break;
 
-		const int destinationChannel = buffer.getNumChannels() >= channels ? channels - ch - 1 : ch;
+		const int destinationChannel = ch;
 
 		if (localReadPos + framesToPull > bufferSize)
 		{

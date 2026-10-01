@@ -354,7 +354,7 @@ jobs:
           LIB_PATH=/usr/lib/x86_64-linux-gnu
           copy_glob() {
             if compgen -G "$1" > /dev/null; then
-              cp -d $1 "$APPDIR/usr/lib/"
+              cp -L $1 "$APPDIR/usr/lib/"
             fi
           }
 
@@ -682,7 +682,7 @@ jobs:
 
           copy_glob() {
             if compgen -G "$1" > /dev/null; then
-              cp -d $1 "$APPDIR/usr/lib/"
+              cp -L $1 "$APPDIR/usr/lib/"
             fi
           }
 

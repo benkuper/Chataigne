@@ -24,6 +24,7 @@
 #include <map>
 #include <vector>
 #include <memory>
+#include <cstring>
 
 using namespace juce;
 using namespace juce::gl;
@@ -362,7 +363,8 @@ void MPVPlayer::setupMPV()
 	// Leave the alpha channel untouched so layers clipped in the compositor keep
 	// their transparency. The default blends the frame over a checkerboard
 	// pattern ("tiles"), which paints squares over every transparent area.
-	setOption("background", "none");
+	if (mpv_set_option_string(mpv, "background", "none") < 0)
+		setOption("background", "0/0/0/0"); // mpv before 0.38 uses a color value.
 
 	// "auto" is good, but sometimes picks copy-back methods.
 	// "nvdec" (Nvidia) or "vaapi" (Intel/Linux) are strictly keep-in-VRAM.
@@ -393,7 +395,10 @@ void MPVPlayer::setupMPV()
 	setOption("audio-format", "float");
 	setOption("audio-channels", "stereo");
 
-	setOption("ao", "pcm");
+	// mpv's PCM writer is untimed. Without a Sound Card module there is no
+	// consumer to pace it, so use the timed null output to keep video at speed.
+	usingAudioPipe = am != nullptr && am->currentSampleRate > 0;
+	setOption("ao", usingAudioPipe ? "pcm" : "null");
 	setOption("ao-pcm-waveheader", "no"); // The pipe carries raw interleaved floats.
 	setOption("ao-pcm-file", uniquePipePath.toRawUTF8());
 
@@ -544,6 +549,7 @@ bool MPVPlayer::load(const String& path)
 
 void MPVPlayer::unload()
 {
+	if (audioProcessor != nullptr) audioProcessor->onAudioFlush(0);
 	if (mpv)
 	{
 		shutdownRequested = true;
@@ -603,6 +609,7 @@ void MPVPlayer::setPosition(double pos)
 	// (asynchronous) seek we are about to enqueue.
 	lastSeekTarget.store(jmax(0.0, pos), std::memory_order_relaxed);
 	if (pos >= 0.0) lastTimePos.store(pos, std::memory_order_relaxed);
+	if (audioProcessor != nullptr) audioProcessor->onAudioFlush(0);
 	mpv_node args[3];
 	args[0].format = MPV_FORMAT_STRING; args[0].u.string = const_cast<char*> ("seek");
 	args[1].format = MPV_FORMAT_DOUBLE; args[1].u.double_ = pos;
@@ -693,9 +700,15 @@ AudioProcessor* MPVPlayer::getAudioProcessor()
 void MPVPlayer::setupAudio()
 {
 	AudioModule* am = findAudioModule();
-	if (fileInfo.numChannels <= 0 || am == nullptr)
+	if (fileInfo.numChannels <= 0 || am == nullptr || am->currentSampleRate <= 0)
 	{
 		return;
+	}
+	if (!usingAudioPipe && mpv != nullptr)
+	{
+		if (mpv_set_property_string(mpv, "ao", "pcm") < 0)
+			return;
+		usingAudioPipe = true;
 	}
 
 	const bool isFirstSetup = audioProcessor == nullptr;
@@ -961,12 +974,14 @@ MPVPlayer::AudioPipeThread::AudioPipeThread(MPVPlayer* owner, String path)
 	pipeHandle = CreateNamedPipeA(
 		pipePath.toRawUTF8(),
 		PIPE_ACCESS_INBOUND,        // Read only
-		PIPE_TYPE_BYTE | PIPE_WAIT,
+		PIPE_TYPE_BYTE | PIPE_READMODE_BYTE | PIPE_NOWAIT,
 		1,                          // Max instances (1)
 		65536, 65536,               // Buffer sizes (64k)
 		0,
 		NULL
 	);
+	if (pipeHandle != INVALID_HANDLE_VALUE)
+		ConnectNamedPipe(pipeHandle, NULL); // PIPE_NOWAIT starts listening immediately.
 #else
 	if (::mkfifo(pipePath.toRawUTF8(), 0600) != 0)
 		NLOGERROR("MPV Player", "Could not create audio FIFO : " << pipePath);
@@ -1001,51 +1016,56 @@ void MPVPlayer::AudioPipeThread::shutdown()
 
 void MPVPlayer::AudioPipeThread::run()
 {
+	auto waitForAudioSpace = [this](size_t bytes) -> bool
+	{
+		const int frames = (int) ((bytes + sizeof(float) * 2 - 1) / (sizeof(float) * 2));
+		while (!threadShouldExit() && owner != nullptr && owner->audioProcessor != nullptr
+			&& owner->audioProcessor->getFreeFrames() < frames)
+			wait(5);
+		return !threadShouldExit();
+	};
 #if JUCE_WINDOWS
 	if (pipeHandle == INVALID_HANDLE_VALUE) return;
+	size_t pendingBytes = 0;
 
-	// Wait for MPV to connect
-	connected = ConnectNamedPipe(pipeHandle, NULL) ? TRUE : (GetLastError() == ERROR_PIPE_CONNECTED);
-
-	if (connected)
+	while (!threadShouldExit())
 	{
-		DWORD bytesAvail = 0;
-		while (!threadShouldExit())
+		if (!connected)
 		{
-			if (PeekNamedPipe(pipeHandle, NULL, 0, NULL, &bytesAvail, NULL))
+			connected = ConnectNamedPipe(pipeHandle, NULL) ? true : GetLastError() == ERROR_PIPE_CONNECTED;
+			if (!connected) { wait(5); continue; }
+		}
+
+		DWORD bytesAvail = 0;
+		if (PeekNamedPipe(pipeHandle, NULL, 0, NULL, &bytesAvail, NULL))
+		{
+			if (bytesAvail > 0)
 			{
-				if (bytesAvail > 0)
+				DWORD bytesRead = 0;
+				auto* bytes = reinterpret_cast<char*>(readBuffer.data());
+				const size_t capacity = readBuffer.size() * sizeof(float);
+				const DWORD bytesToRead = jmin((DWORD)(capacity - pendingBytes), bytesAvail);
+				if (!waitForAudioSpace(pendingBytes + bytesToRead)) break;
+				if (ReadFile(pipeHandle, bytes + pendingBytes, bytesToRead, &bytesRead, NULL) && bytesRead > 0)
 				{
-					DWORD bytesRead = 0;
-					// Limit read size to our buffer size
-					DWORD bytesToRead = jmin((DWORD)(readBuffer.size() * sizeof(float)), bytesAvail);
-
-					// Now we know ReadFile won't block because data is guaranteed to be there
-					if (ReadFile(pipeHandle, readBuffer.data(), bytesToRead, &bytesRead, NULL) && bytesRead > 0)
-					{
-						if (owner && owner->audioProcessor)
-						{
-							int numFloats = bytesRead / sizeof(float);
-							int numChannels = 2;
-							int numFrames = numFloats / numChannels;
-
-							owner->audioProcessor->onAudioPlay(readBuffer.data(), numFrames, 0);
-						}
-					}
-				}
-				else
-				{
-					// Pipe is connected but no audio is flowing (Paused/Stopped).
-					// Sleep briefly to let the thread loop check 'threadShouldExit()'
-					wait(5);
+					const size_t totalBytes = pendingBytes + (size_t)bytesRead;
+					const int numFrames = (int)(totalBytes / (sizeof(float) * 2));
+					if (owner && owner->audioProcessor)
+						owner->audioProcessor->onAudioPlay(readBuffer.data(), numFrames, 0);
+					pendingBytes = totalBytes - (size_t)numFrames * sizeof(float) * 2;
+					if (pendingBytes > 0)
+						std::memmove(bytes, bytes + totalBytes - pendingBytes, pendingBytes);
 				}
 			}
-			else
-			{
-				// Peek failed (Pipe disconnected or broken).
-				// Sleep briefly to avoid 100% CPU usage loop.
-				wait(5);
-			}
+			else wait(5);
+		}
+		else
+		{
+			// mpv closes and reopens the PCM output on file changes and seeks.
+			DisconnectNamedPipe(pipeHandle);
+			connected = false;
+			pendingBytes = 0;
+			ConnectNamedPipe(pipeHandle, NULL);
 		}
 	}
 #else
@@ -1056,6 +1076,7 @@ void MPVPlayer::AudioPipeThread::run()
 	{
 		auto* bytes = reinterpret_cast<char*>(readBuffer.data());
 		const size_t capacity = readBuffer.size() * sizeof(float);
+		if (!waitForAudioSpace(capacity)) break;
 		const ssize_t count = ::read(fifoFd, bytes + pendingBytes, capacity - pendingBytes);
 		if (count <= 0)
 		{

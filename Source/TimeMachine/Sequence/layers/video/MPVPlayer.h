@@ -135,6 +135,7 @@ public:
 	VideoAudioProcessor* audioProcessor = nullptr;
 	AudioModule* audioModuleResolved = nullptr;
 	bool audioListenerRegistered = false;
+	bool usingAudioPipe = false;
 
 	void setupAudio();
 	void audioSetupChanged() override;
