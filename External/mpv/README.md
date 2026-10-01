@@ -7,7 +7,7 @@ The video engine uses the libmpv C API headers in `include/mpv`.
 - macOS Intel and Apple Silicon: the 18 universal dylibs from [media-kit libmpv-darwin-build v0.7.3](https://github.com/media-kit/libmpv-darwin-build/releases/tag/v0.7.3), asset `libmpv-libs_v0.7.3_macos-universal-video-default.tar.gz`. SHA-256 of the source archive: `324d32690882640ce7fde71c43a8bff25066e7f69be740a8ac2c284ef6900d28`.
 - Linux x64, Raspberry Pi arm64 and armhf: `libmpv-dev` is installed in CI and the resulting `libmpv.so` and its non-system dependencies are copied to the AppDir.
 
-Windows dependency ZIPs are distributed from `https://benjamin.kuperberg.fr/chataigne/user/data/`. For Windows 10/11, CI updates the release and debug archives with the custom runtime and notices, publishes changed archives using the existing upload endpoint, and verifies the downloaded copies byte-for-byte before building the installers. The `mpv-win-x64` Actions artifact contains the DLL, license notices, build recipe and corresponding source archive. Video support is still bundled in the installer.
+Windows dependency ZIPs are distributed from `https://benjamin.kuperberg.fr/chataigne/user/data/`. The modern Windows release and debug archives contain the playback runtime and notices. CI also builds the runtime from the pinned sources and uses that build when making the Windows 10/11 installer. The `mpv-win-x64` Actions artifact contains the DLL, license notices, build recipe and corresponding source archive. Video support is still bundled in the installer.
 
 The local `stage_mpv.bat` script searches an explicit `CHATAIGNE_MPV_SRC` file/directory first, then `Binaries/mpv-win-x64`, then `dependencies_zips/Chataigne-win-x64-release-dependencies.zip`. Point `CHATAIGNE_MPV_SRC` at the generated `dist` directory, or copy its contents to `Binaries/mpv-win-x64`. It stages the DLL and its accompanying `mpv-licenses` directory beside the executable.
 
@@ -35,7 +35,7 @@ To update local dependency archives from a tested runtime:
 python External/mpv/update-windows-dependencies.py --runtime Binaries/mpv-win-x64 dependencies_zips/Chataigne-win-x64-release-dependencies.zip dependencies_zips/Chataigne-win-x64-debug-dependencies.zip
 ```
 
-The updater verifies the runtime's manifest, preserves every other dependency byte-for-byte, and checks the new ZIP's integrity before replacing the archive. Locally, the release archive decreased from 59.24 MB to 19.75 MB, and the debug archive from 60.33 MB to 20.80 MB.
+The updater verifies the runtime's manifest, preserves every other dependency byte-for-byte, and checks the new ZIP's integrity before replacing the archive. Upload both updated ZIPs to the site's `user/data` directory using the site SFTP configuration; keep credentials outside Git. Locally, the release archive decreased from 59.24 MB to 19.75 MB, and the debug archive from 60.33 MB to 20.80 MB.
 
 ## Measuring installer size
 

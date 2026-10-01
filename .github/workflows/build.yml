@@ -32,44 +32,6 @@ jobs:
           name: mpv-win-x64
           path: mpv-dist
 
-      - name: Update Windows dependency archives
-        id: update-dependencies
-        env:
-          DEPENDENCY_URL: ${{ secrets.DEPDIRURL }}
-        run: |
-          mkdir -p dependencies
-          for configuration in release debug; do
-            filename="Chataigne-win-x64-${configuration}-dependencies.zip"
-            curl --fail --silent --show-error --location "${DEPENDENCY_URL}${filename}" --output "dependencies/${filename}"
-          done
-          python3 External/mpv/update-windows-dependencies.py --runtime mpv-dist --github-output "$GITHUB_OUTPUT" dependencies/*.zip
-
-      - name: Upload release dependencies
-        if: steps.update-dependencies.outputs.release-updated == 'true'
-        uses: ./.github/actions/upload
-        with:
-          pkg-name: dependencies/Chataigne-win-x64-release-dependencies.zip
-          url: ${{ secrets.UPLOADURL }}
-          pass: ${{ secrets.UPLOADPASS }}
-
-      - name: Upload debug dependencies
-        if: steps.update-dependencies.outputs.debug-updated == 'true'
-        uses: ./.github/actions/upload
-        with:
-          pkg-name: dependencies/Chataigne-win-x64-debug-dependencies.zip
-          url: ${{ secrets.UPLOADURL }}
-          pass: ${{ secrets.UPLOADPASS }}
-
-      - name: Verify published dependencies
-        env:
-          DEPENDENCY_URL: ${{ secrets.DEPDIRURL }}
-        run: |
-          for archive in dependencies/*.zip; do
-            filename="$(basename "$archive")"
-            curl --fail --silent --show-error --location "${DEPENDENCY_URL}${filename}" --output "${archive}.published"
-            cmp "$archive" "${archive}.published"
-          done
-
   windows:
     name: Windows
     needs: mpv-windows

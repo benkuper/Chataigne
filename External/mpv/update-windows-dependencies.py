@@ -62,12 +62,7 @@ def update(runtime, archive):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--runtime", required=True, type=Path)
-    parser.add_argument("--github-output", type=Path)
     parser.add_argument("archives", nargs="+", type=Path)
     args = parser.parse_args()
     for path in args.archives:
-        result = update(args.runtime.resolve(strict=True), path)
-        if args.github_output:
-            configuration = "debug" if "-debug-" in path.name else "release"
-            with args.github_output.open("a", encoding="utf-8") as output:
-                output.write(f"{configuration}-updated={str(result['changed']).lower()}\n")
+        update(args.runtime.resolve(strict=True), path)
