@@ -61,6 +61,7 @@
         <FILE id="JHC4oG" name="TCP Server.png" compile="0" resource="1" file="Resources/Modules/TCP Server.png"/>
         <FILE id="WCdCQ8" name="Time.png" compile="0" resource="1" file="Resources/Modules/Time.png"/>
         <FILE id="Yc4byM" name="UDP.png" compile="0" resource="1" file="Resources/Modules/UDP.png"/>
+        <FILE id="VdMo07" name="Video monitor out.png" compile="0" resource="1" file="Resources/Modules/Video monitor out.png"/>
         <FILE id="cODnxv" name="Watchout.png" compile="0" resource="1" file="Resources/Modules/Watchout.png"/>
         <FILE id="Fu3uo5" name="WebSocket Client.png" compile="0" resource="1"
               file="Resources/Modules/WebSocket Client.png"/>

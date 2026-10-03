@@ -39,10 +39,6 @@ VideoMonitorOutWindow::VideoMonitorOutWindow(VideoMonitorOutModule* _module) :
 	// The context renders continuously (: showGL arms the shared context and
 	// requests a repaint rate) as soon as this window is on screen.
 	surface->showGL();
-
-	// Generate the initial test card at the window size when it is enabled.
-	if (surface->settings.testCard && getWidth() > 0 && getHeight() > 0)
-		surface->setTestCardImage(CompositionRenderer::createTestCard(getWidth(), getHeight()));
 }
 
 VideoMonitorOutWindow::~VideoMonitorOutWindow()
@@ -73,21 +69,36 @@ void VideoMonitorOutWindow::updateSettings()
 	s.featherTop = module->featherTop->floatValue();
 	s.featherBottom = module->featherBottom->floatValue();
 
-	if (s.testCard)
-		surface->setTestCardImage(CompositionRenderer::createTestCard(getWidth(), getHeight()));
-	else
-		surface->setTestCardImage(Image());
+	updateMonitorResolution();
+}
+
+void VideoMonitorOutWindow::updateMonitorResolution()
+{
+	// The window covers the monitor in JUCE logical units, but the card has to
+	// print the real pixel resolution the monitor is driven at, so ask the
+	// display for its physical bounds.
+	if (surface == nullptr) return;
+
+	surface->settings.testCardMonitorWidth = 0;
+	surface->settings.testCardMonitorHeight = 0;
+
+	const int index = module->monitor != nullptr ? (int) module->monitor->getValueData() : -1;
+	if (index < 0) return;
+
+	const Array<Displays::Display>& displays = Desktop::getInstance().getDisplays().displays;
+	if (index >= displays.size()) return;
+
+	Displays::Display d = displays[index];
+	d.totalArea = Desktop::getInstance().getDisplays().logicalToPhysical (d.totalArea, &d);
+
+	surface->settings.testCardMonitorWidth = d.totalArea.getWidth();
+	surface->settings.testCardMonitorHeight = d.totalArea.getHeight();
 }
 
 void VideoMonitorOutWindow::resized()
 {
 	if (surface != nullptr)
-	{
 		surface->setBounds(getLocalBounds());
-
-		if (surface->settings.testCard && getWidth() > 0 && getHeight() > 0)
-			surface->setTestCardImage(CompositionRenderer::createTestCard(getWidth(), getHeight()));
-	}
 }
 
 // =============================================================================
@@ -187,6 +198,7 @@ void VideoMonitorOutModule::updateWindow()
 
 		window->setBounds(displays[displayIndex].totalArea);
 		window->setVisible(true);
+		window->updateSettings();
 	}
 	else
 	{
@@ -207,7 +219,13 @@ void VideoMonitorOutModule::closeVideoOutputWindow()
 #if JUCE_WINDOWS
 void VideoMonitorOutModule::keyChanged(int keyCode, bool pressed)
 {
-	if (!pressed || keyCode != VK_ESCAPE) return;
+	if (!pressed || keyCode != VK_M) return;
+
+	// Ctrl+Shift+M. The hook only reports the key itself, so read the modifiers
+	// directly : GetAsyncKeyState is global, unlike GetKeyState which reflects
+	// the calling thread's queue and is unreliable from the hook thread.
+	if ((GetAsyncKeyState(VK_CONTROL) & 0x8000) == 0) return;
+	if ((GetAsyncKeyState(VK_SHIFT) & 0x8000) == 0) return;
 
 	if (window == nullptr) return;
 

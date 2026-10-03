@@ -42,6 +42,8 @@ public:
 	void updateSettings();
 
 private:
+	void updateMonitorResolution();
+
 	VideoMonitorOutModule* module;
 	CompositionRenderer::CompositionSurface* surface = nullptr;
 
