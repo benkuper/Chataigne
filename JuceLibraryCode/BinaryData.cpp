@@ -1664,6 +1664,24 @@ static const unsigned char temp_binary_data_41[] =
 
 const char* UDP_png = (const char*) temp_binary_data_41;
 
+//================== Video monitor out.png ==================
+static const unsigned char temp_binary_data_77[] =
+{ 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,32,0,0,0,32,
+ 8,2,0,0,0,252,24,237,163,0,0,0,1,115,82,71,66,0,174,206,28,233,0,0,
+ 0,4,103,65,77,65,0,0,177,143,11,252,97,5,0,0,0,9,112,72,89,115,0,0,
+ 18,116,0,0,18,116,1,222,102,31,120,0,0,0,187,73,68,65,84,72,75,237,206,91,
+ 14,194,48,12,68,209,236,127,211,144,58,87,157,180,228,97,87,41,170,16,231,139,198,227,
+ 49,233,239,17,94,183,209,1,126,45,245,188,3,209,255,113,229,128,51,89,40,236,92,179,
+ 254,13,223,51,74,58,119,172,28,60,13,41,230,95,168,241,218,167,140,39,157,89,237,1,
+ 131,14,5,166,209,194,58,207,152,181,104,58,206,237,172,176,129,241,7,141,6,161,154,181,
+ 157,49,107,209,116,156,219,89,225,1,131,14,5,166,209,194,58,133,215,62,101,60,233,204,
+ 106,193,211,144,98,254,133,130,239,25,37,157,59,86,238,109,207,20,118,174,133,218,179,240,
+ 129,168,239,30,184,9,7,60,216,168,48,88,133,214,10,131,85,104,173,48,184,134,142,32,
+ 150,61,216,8,98,249,183,164,244,6,175,131,133,151,66,24,175,231,0,0,0,0,73,69,
+ 78,68,174,66,96,130,0,0 };
+
+const char* Video_monitor_out_png = (const char*) temp_binary_data_77;
+
 //================== Watchout.png ==================
 static const unsigned char temp_binary_data_42[] =
 "\x89PNG\r\n"
@@ -5093,6 +5111,7 @@ const char* getNamedResource (const char* resourceNameUTF8, int& numBytes)
         case 0x3b74728b:  numBytes = 2909; return TCP_Server_png;
         case 0x880d69d7:  numBytes = 661; return Time_png;
         case 0x090f708b:  numBytes = 2698; return UDP_png;
+        case 0x59f507ef:  numBytes = 294; return Video_monitor_out_png;
         case 0x01499229:  numBytes = 2380; return Watchout_png;
         case 0xc88c2f4d:  numBytes = 3542; return WebSocket_Client_png;
         case 0x1a00eec5:  numBytes = 3517; return WebSocket_Server_png;
@@ -5179,6 +5198,7 @@ const char* namedResourceList[] =
     "TCP_Server_png",
     "Time_png",
     "UDP_png",
+    "Video_monitor_out_png",
     "Watchout_png",
     "WebSocket_Client_png",
     "WebSocket_Server_png",
@@ -5260,6 +5280,7 @@ const char* originalFilenames[] =
     "TCP Server.png",
     "Time.png",
     "UDP.png",
+    "Video monitor out.png",
     "Watchout.png",
     "WebSocket Client.png",
     "WebSocket Server.png",
