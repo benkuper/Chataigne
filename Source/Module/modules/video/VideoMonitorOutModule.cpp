@@ -219,7 +219,7 @@ void VideoMonitorOutModule::closeVideoOutputWindow()
 #if JUCE_WINDOWS
 void VideoMonitorOutModule::keyChanged(int keyCode, bool pressed)
 {
-	if (!pressed || keyCode != VK_M) return;
+	if (!pressed || keyCode != VK_KEY_M) return;
 
 	// Ctrl+Shift+M. The hook only reports the key itself, so read the modifiers
 	// directly : GetAsyncKeyState is global, unlike GetKeyState which reflects
