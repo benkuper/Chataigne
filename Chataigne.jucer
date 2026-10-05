@@ -4,7 +4,7 @@
               bundleIdentifier="benkuper.Chataigne" companyName="Ben Kuper"
               companyWebsite="http://benjamin.kuperberg.fr/chataigne" companyEmail="benjamin@kuperberg.fr"
               defines="VST_LOGGING=0" splashScreenColour="Dark" cppLanguageStandard="17"
-              companyCopyright="Ben Kuper" headerPath="../../Source&#10;../../External/wiiuse&#10;../../External/asio&#10;../../External/asiodriver&#10;../../External/kinect/include&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/ois/include&#10;../../External/sdl/include&#10;../../External/hidapi/include&#10;../../External/abletonlink/include&#10;../../External/libusb/include/libusb-1.0&#10;../../External/mosquitto/include&#10;../../External/posistagenet/include&#10;../../External/simpleble/include&#10;../../External/mpv/include"
+              companyCopyright="Ben Kuper" headerPath="../../Source&#10;../../External/wiiuse&#10;../../External/asio&#10;../../External/asiodriver&#10;../../External/kinect/include&#10;../../External/joycon/include&#10;../../External/servus/include&#10;../../External/dnssd/include&#10;../../External/ois/include&#10;../../External/sdl/include&#10;../../External/hidapi/include&#10;../../External/abletonlink/include&#10;../../External/libusb/include/libusb-1.0&#10;../../External/mosquitto/include&#10;../../External/posistagenet/include&#10;../../External/simpleble/include&#10;../../External/mpv/include&#10;../../External/omt/include&#10;../../External/ndi/include"
               projectLineFeed="&#10;" jucerFormatVersion="1">
   <MAINGROUP id="EDDVhd" name="Chataigne">
     <GROUP id="{E61F6705-4C4B-3F04-F742-20CC91F590E4}" name="Resources">
@@ -43,6 +43,8 @@
         <FILE id="XUwKVr" name="Millumin.png" compile="0" resource="1" file="Resources/Modules/Millumin.png"/>
         <FILE id="UjV2cF" name="Mouse.png" compile="0" resource="1" file="Resources/Modules/Mouse.png"/>
         <FILE id="E9Dt6s" name="MQTT Client.png" compile="0" resource="1" file="Resources/Modules/MQTT Client.png"/>
+        <FILE id="NDIoo01" name="NDI out.png" compile="0" resource="1" file="Resources/Modules/NDI out.png"/>
+        <FILE id="OMToo01" name="OMT out.png" compile="0" resource="1" file="Resources/Modules/OMT out.png"/>
         <FILE id="i5QUZ4" name="OS.png" compile="0" resource="1" file="Resources/Modules/OS.png"/>
         <FILE id="CBoeF1" name="OSC.png" compile="0" resource="1" file="Resources/Modules/OSC.png"/>
         <FILE id="mQRViU" name="OSCQuery.png" compile="0" resource="1" file="Resources/Modules/OSCQuery.png"/>
@@ -1715,12 +1717,12 @@
   </MAINGROUP>
   <EXPORTFORMATS>
     <VS2022 targetFolder="Builds/VisualStudio2022" extraDefs="USE_KINECT=1&#10;USE_ABLETONLINK=1&#10;LINK_PLATFORM_WINDOWS=1&#10;BLE_SUPPORT=0"
-            extraLinkerFlags="/HEAP:0x200000,0x10000" externalLibraries="hid.lib&#10;Kinect20.lib&#10;JoyShockLibrary.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib&#10;iphlpapi.lib&#10;hid.lib&#10;hidapi_static.lib&#10;mosquitto.lib&#10;mosquittopp.lib&#10;simpleble.lib&#10;libmpv.lib"
+            extraLinkerFlags="/HEAP:0x200000,0x10000" externalLibraries="hid.lib&#10;Kinect20.lib&#10;JoyShockLibrary.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib&#10;iphlpapi.lib&#10;hid.lib&#10;hidapi_static.lib&#10;mosquitto.lib&#10;mosquittopp.lib&#10;simpleble.lib&#10;libomt.lib&#10;Processing.NDI.Lib.x64.lib&#10;libmpv.lib"
             smallIcon="nVz6Li" bigIcon="nVz6Li" extraCompilerFlags="/bigobj">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib/win&#10;../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/hidapi/lib/win/x64&#10;../../External/mosquitto/lib/win&#10;../../External/simpleble/lib/win/debug&#10;../../External/mpv/lib/win"
+        <CONFIGURATION isDebug="1" name="Debug" libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib/win&#10;../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/hidapi/lib/win/x64&#10;../../External/mosquitto/lib/win&#10;../../External/simpleble/lib/win/debug&#10;../../External/mpv/lib/win&#10;../../External/omt/lib/win/x64&#10;../../External/ndi/lib/win/x64"
                        binaryPath="Binaries/Debug" usePrecompiledHeaderFile="1" precompiledHeaderFile="Source\PrecompiledHeaders.h"/>
-        <CONFIGURATION isDebug="0" name="Release" binaryPath="Binaries" libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib/win&#10;../../External/servus/lib/win/x64/release&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/hidapi/lib/win/x64&#10;../../External/mosquitto/lib/win&#10;../../External/simpleble/lib/win/release&#10;../../External/mpv/lib/win"
+        <CONFIGURATION isDebug="0" name="Release" binaryPath="Binaries" libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib/win&#10;../../External/servus/lib/win/x64/release&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/hidapi/lib/win/x64&#10;../../External/mosquitto/lib/win&#10;../../External/simpleble/lib/win/release&#10;../../External/mpv/lib/win&#10;../../External/omt/lib/win/x64&#10;../../External/ndi/lib/win/x64"
                        alwaysGenerateDebugSymbols="1" debugInformationFormat="ProgramDatabase"
                        usePrecompiledHeaderFile="1" precompiledHeaderFile="Source\PrecompiledHeaders.h"/>
       </CONFIGURATIONS>
@@ -1829,12 +1831,12 @@
     </LINUX_MAKE>
     <VS2022 targetFolder="Builds/VisualStudio2022_CI" extraDefs="USE_KINECT=1&#10;USE_ABLETONLINK=1&#10;LINK_PLATFORM_WINDOWS=1&#10;BLE_SUPPORT=0"
             extraCompilerFlags="/Zm1000 /bigobj" extraLinkerFlags="/HEAP:0x400000,0x10000"
-            externalLibraries="hid.lib&#10;Kinect20.lib&#10;JoyShockLibrary.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib&#10;iphlpapi.lib&#10;hid.lib&#10;hidapi_static.lib&#10;mosquitto.lib&#10;mosquittopp.lib&#10;libmpv.lib"
+            externalLibraries="hid.lib&#10;Kinect20.lib&#10;JoyShockLibrary.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib&#10;iphlpapi.lib&#10;hid.lib&#10;hidapi_static.lib&#10;mosquitto.lib&#10;mosquittopp.lib&#10;libomt.lib&#10;Processing.NDI.Lib.x64.lib&#10;libmpv.lib"
             smallIcon="nVz6Li" bigIcon="nVz6Li">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" binaryPath="Binaries/CI" libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib/win&#10;../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/hidapi/lib/win/x64&#10;../../External/mosquitto/lib/win&#10;../../External/mpv/lib/win"
+        <CONFIGURATION isDebug="1" name="Debug" binaryPath="Binaries/CI" libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib/win&#10;../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/hidapi/lib/win/x64&#10;../../External/mosquitto/lib/win&#10;../../External/mpv/lib/win&#10;../../External/omt/lib/win/x64&#10;../../External/ndi/lib/win/x64"
                        winArchitecture="x64"/>
-        <CONFIGURATION isDebug="0" name="Release" binaryPath="Binaries/CI" libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib/win&#10;../../External/servus/lib/win/x64/release&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/hidapi/lib/win/x64&#10;../../External/mosquitto/lib/win&#10;../../External/mpv/lib/win"
+        <CONFIGURATION isDebug="0" name="Release" binaryPath="Binaries/CI" libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib/win&#10;../../External/servus/lib/win/x64/release&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/hidapi/lib/win/x64&#10;../../External/mosquitto/lib/win&#10;../../External/mpv/lib/win&#10;../../External/omt/lib/win/x64&#10;../../External/ndi/lib/win/x64"
                        winArchitecture="x64" alwaysGenerateDebugSymbols="1" debugInformationFormat="ProgramDatabase"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
@@ -1863,12 +1865,12 @@
     </VS2022>
     <VS2022 targetFolder="Builds/VisualStudio2022_Win7CI" extraDefs="USE_KINECT=0&#10;USE_ABLETONLINK=0&#10;BLE_SUPPORT=0&#10;PING_SUPPORT=0&#10;OS_SYSINFO_SUPPORT=0"
             extraCompilerFlags="/Zm1000 /bigobj" extraLinkerFlags="/HEAP:0x400000,0x10000"
-            externalLibraries="hid.lib&#10;JoyShockLibrary.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib&#10;iphlpapi.lib&#10;hid.lib&#10;hidapi_static.lib&#10;mosquitto.lib&#10;mosquittopp.lib&#10;libmpv.lib"
+            externalLibraries="hid.lib&#10;JoyShockLibrary.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib&#10;iphlpapi.lib&#10;hid.lib&#10;hidapi_static.lib&#10;mosquitto.lib&#10;mosquittopp.lib&#10;libomt.lib&#10;Processing.NDI.Lib.x64.lib&#10;libmpv.lib"
             smallIcon="nVz6Li" bigIcon="nVz6Li">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" binaryPath="Binaries/CI" libraryPath="../../External/joycon/lib/win&#10;../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/hidapi/lib/win/x64&#10;../../External/mosquitto/lib/win&#10;../../External/mpv/lib/win"
+        <CONFIGURATION isDebug="1" name="Debug" binaryPath="Binaries/CI" libraryPath="../../External/joycon/lib/win&#10;../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/hidapi/lib/win/x64&#10;../../External/mosquitto/lib/win&#10;../../External/mpv/lib/win&#10;../../External/omt/lib/win/x64&#10;../../External/ndi/lib/win/x64"
                        winArchitecture="x64"/>
-        <CONFIGURATION isDebug="0" name="Release" binaryPath="Binaries/CI" libraryPath="../../External/joycon/lib/win&#10;../../External/servus/lib/win/x64/release&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/hidapi/lib/win/x64&#10;../../External/mosquitto/lib/win&#10;../../External/mpv/lib/win"
+        <CONFIGURATION isDebug="0" name="Release" binaryPath="Binaries/CI" libraryPath="../../External/joycon/lib/win&#10;../../External/servus/lib/win/x64/release&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/hidapi/lib/win/x64&#10;../../External/mosquitto/lib/win&#10;../../External/mpv/lib/win&#10;../../External/omt/lib/win/x64&#10;../../External/ndi/lib/win/x64"
                        winArchitecture="x64"/>
       </CONFIGURATIONS>
       <MODULEPATHS>

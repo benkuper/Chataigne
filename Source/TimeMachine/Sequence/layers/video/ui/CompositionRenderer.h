@@ -161,6 +161,7 @@ namespace CompositionRenderer
 		SharedTextureOutput(Sequence* sequenceFilter, VideoLayer* layerFilter);
 		~SharedTextureOutput() override;
 		void configure(bool enabled, const juce::String& name, int width, int height);
+		CompositionSurface* getSurface() const noexcept { return surface.get(); }
 
 	private:
 		void drawSharedTexture(juce::Graphics& g, juce::Rectangle<int> bounds) override;

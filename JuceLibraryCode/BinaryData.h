@@ -83,6 +83,12 @@ namespace BinaryData
     extern const char*   MQTT_Client_png;
     const int            MQTT_Client_pngSize = 3362;
 
+    extern const char*   NDI_out_png;
+    const int            NDI_out_pngSize = 438;
+
+    extern const char*   OMT_out_png;
+    const int            OMT_out_pngSize = 483;
+
     extern const char*   OS_png;
     const int            OS_pngSize = 1669;
 

@@ -10307,6 +10307,12 @@
     <None Include="..\..\Resources\Modules\MQTT Client.png">
       <Filter>Chataigne\Resources\Modules</Filter>
     </None>
+    <None Include="..\..\Resources\Modules\NDI out.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\OMT out.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
     <None Include="..\..\Resources\Modules\OS.png">
       <Filter>Chataigne\Resources\Modules</Filter>
     </None>
