@@ -62,9 +62,7 @@ GenericControllableCommand::GenericControllableCommand(Module* _module, CommandC
 
 GenericControllableCommand::~GenericControllableCommand()
 {
-	if (Parameter::ValueInterpolator::Manager::getInstanceWithoutCreating() == nullptr) return;
-
-	if (action == GO_TO_VALUE)
+	if (action == GO_TO_VALUE && Parameter::ValueInterpolator::Manager::getInstanceWithoutCreating() != nullptr)
 	{
 		if (!isMultiplexed()) Parameter::ValueInterpolator::Manager::getInstance()->removeInterpolationWith((Parameter*)target->target.get());
 		else
@@ -79,6 +77,8 @@ GenericControllableCommand::~GenericControllableCommand()
 		}
 	}
 
+	// Set Value commands also listen to their target, even if no interpolation
+	// has ever run. Always detach before the command is destroyed (#355).
 	if (!isMultiplexed() && targetParam != nullptr && !targetParam.wasObjectDeleted()) targetParam->removeParameterListener(this);
 }
 
