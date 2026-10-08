@@ -128,6 +128,8 @@ void Conductor::itemsReordered()
 
 void Conductor::actionTriggered(Action* a, bool triggerTrue, int multiplexIndex)
 {
+	if (!triggerTrue || a == cueBeingTriggered) return;
+
 	if (ConductorCue* c = dynamic_cast<ConductorCue*>(a))
 	{
 		if (cueTriggerSetCurrent->boolValue()) triggerCue(c, false);
@@ -138,30 +140,31 @@ void Conductor::triggerCue(ConductorCue* cue, bool triggeredFromConductor)
 {
 	if (cue == nullptr) return;
 
-	if (currentCue != nullptr)
+	const bool retriggerCurrent = currentCue == cue;
+	if (currentCue != nullptr && !retriggerCurrent)
 	{
-	    if (currentCue != cue && currentCue->csmOff != nullptr) {
+		if (currentCue->csmOff != nullptr) {
 			currentCue->csmOff->triggerAll();
 		}
 		currentCue->setIsCurrent(false);
 	}
 
 	currentCue = cue;
-	currentCue->setIsCurrent(true);
+	if (retriggerCurrent) cue->startLinkedSequence();
+	else cue->setIsCurrent(true);
 	currentCueName->setValue(cue->niceName);
 	currentCueIndex->setValue(processorManager.items.indexOf(currentCue) + 1);
 	nextCueIndex->setValue(getValidIndexAfter(processorManager.items.indexOf(currentCue) + 1));
 	updateNextCue();
 
 
-	if (!triggeredFromConductor)
+	if (triggeredFromConductor)
 	{
-		if (triggerConductorConsequencesOnDirect->boolValue()) csmOn->triggerAll();
+		// The cue notification acknowledges this launch; it must not launch it again.
+		const ScopedValueSetter<ConductorCue*> guard(cueBeingTriggered, cue);
+		cue->triggerOn->trigger();
 	}
-	else
-	{
-		currentCue->triggerOn->trigger();
-	}
+	if (triggerConductorConsequencesOnDirect->boolValue()) csmOn->triggerAll();
 }
 
 void Conductor::updateIndices()

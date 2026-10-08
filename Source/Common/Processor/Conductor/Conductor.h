@@ -75,4 +75,7 @@ public:
 
     ProcessorUI* getUI() override;
     String getTypeString() const override { return "Conductor"; };
+
+private:
+    ConductorCue* cueBeingTriggered = nullptr;
 };

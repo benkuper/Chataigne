@@ -33,6 +33,7 @@ public:
     void clearItem() override;
 
     void setLinkedSequence(Sequence* s);
+    void startLinkedSequence();
 
     void setIsCurrent(bool value);
     void setIsNext(bool value);

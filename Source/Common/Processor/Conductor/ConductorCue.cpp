@@ -63,6 +63,13 @@ void ConductorCue::setLinkedSequence(Sequence* s)
 	}
 }
 
+void ConductorCue::startLinkedSequence()
+{
+	if (linkedSequence == nullptr || !autoStart->boolValue()) return;
+	if (forceStartFrom0->boolValue()) linkedSequence->setCurrentTime(0, true, true);
+	linkedSequence->playTrigger->trigger();
+}
+
 void ConductorCue::setIsCurrent(bool value)
 {
 	if (isCurrent == value) return;
@@ -72,11 +79,7 @@ void ConductorCue::setIsCurrent(bool value)
 	{
 		if (isCurrent)
 		{
-			if (autoStart->boolValue())
-			{
-				if (forceStartFrom0->boolValue()) linkedSequence->setCurrentTime(0);
-				linkedSequence->playTrigger->trigger();
-			}
+			startLinkedSequence();
 		}
 		else
 		{
