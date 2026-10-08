@@ -24,6 +24,15 @@ public:
 	enum InterpolationMode { INTERPOLATE, CHANGE_AT_END, CHANGE_AT_START, NONE };
 	EnumParameter* interpolationMode;
 
+	// Auto-filled entries retain the existing preset behavior, but are not
+	// authored timeline endpoints until their value is edited or updated.
+	bool hasTimelineValue = true;
+	bool syncingMetadata = false;
+	void setTimelineValueAuthored(bool authored);
+	var getJSONData(bool includeNonOverriden = false) override;
+	void loadJSONDataInternal(var data) override;
+	void onContainerParameterChanged(Parameter* p) override;
+
 	InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables = Array<Inspectable*>()) override;
 };
 

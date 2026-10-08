@@ -35,6 +35,7 @@
 #include <juce_sharedtexture/juce_sharedtexture.h>
 #include <juce_simpleweb/juce_simpleweb.h>
 #include <juce_timeline/juce_timeline.h>
+#include <juce_video/juce_video.h>
 
 #include "BinaryData.h"
 

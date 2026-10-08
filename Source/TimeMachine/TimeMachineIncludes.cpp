@@ -40,6 +40,8 @@
 #include "Sequence/layers/mapping/automation/ui/AutomationMappingLayerTimeline.cpp"
 #include "Sequence/layers/mapping/color/ColorMappingLayer.cpp"
 #include "Sequence/layers/mapping/color/ui/ColorMappingLayerTimeline.cpp"
+#include "Sequence/layers/cvvalues/CVValuesLayer.cpp"
+#include "Sequence/layers/cvvalues/CVValuesLayerUI.cpp"
 #include "Sequence/layers/mapping/ui/MappingLayerEditor.cpp"
 #include "Sequence/layers/mapping/ui/MappingLayerPanel.cpp"
 #include "Sequence/layers/mapping/ui/MappingLayerTimeline.cpp"

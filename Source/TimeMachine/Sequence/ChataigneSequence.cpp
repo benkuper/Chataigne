@@ -190,6 +190,7 @@ ChataigneSequence::ChataigneSequence() :
 	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Audio", &ChataigneAudioLayer::create, this, true));
 	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Video", &ChataigneVideoLayer::create, this, false, true));
 	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", ColorMappingLayer::getTypeStringStatic(), &ColorMappingLayer::create, this));
+	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", CVValuesLayer::getTypeStringStatic(), &CVValuesLayer::create, this));
 	layerManager->factory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Sequences", &ChataigneSequenceBlockLayer::create, this)->addParam("manager", ChataigneSequenceManager::getInstance()->getControlAddress()));
 
 	layerManager->addBaseManagerListener(this);
@@ -321,6 +322,7 @@ void ChataigneSequence::itemRemoved(SequenceLayer* layer)
 			updateTargetAudioLayer(a);
 		}
 	}
+	if (dynamic_cast<CVValuesLayer*>(layer)) evaluateCVValues();
 }
 
 void ChataigneSequence::itemsRemoved(Array<SequenceLayer*> layers)
@@ -338,6 +340,7 @@ void ChataigneSequence::itemsRemoved(Array<SequenceLayer*> layers)
 			}
 		}
 	}
+	evaluateCVValues();
 }
 
 
@@ -395,6 +398,62 @@ void ChataigneSequence::checkForNewAudioLayer(SequenceLayer* layer, bool showMen
 bool ChataigneSequence::timeIsDrivenByAudio()
 {
 	return Sequence::timeIsDrivenByAudio() && masterAudioModule != nullptr && masterAudioModule->enabled->boolValue();
+}
+
+void ChataigneSequence::evaluateCVValues()
+{
+	const ScopedLock evaluationLock(cvValuesEvaluationLock);
+	if (evaluatingCVValues || isClearing || isCurrentlyLoadingData || Engine::mainEngine->isLoadingFile || Engine::mainEngine->isClearing) return;
+	const ScopedValueSetter<bool> guard(evaluatingCVValues, true);
+	const ScopedLock layersLock(layerManager->items.getLock());
+	const ScopedLock groupsLock(CVGroupManager::getInstance()->items.getLock());
+	const double time = currentTime->doubleValue();
+	Array<CVValuesLayer::Output> outputs;
+	for (auto* item : layerManager->items)
+	{
+		auto* layer = dynamic_cast<CVValuesLayer*>(item);
+		if (!layer) continue;
+		if (auto* messageManager = MessageManager::getInstanceWithoutCreating())
+			if (messageManager->isThisTheMessageThread() && layer->snapshotDirty.load()) layer->rebuildSnapshot();
+		layer->updateActiveBlocks(time);
+		for (const auto& output : layer->evaluate(time))
+		{
+			int index = -1;
+			for (int i = 0; i < outputs.size(); ++i)
+				if (outputs[i].target == output.target) { index = i; break; }
+			if (index >= 0) outputs.set(index, output);
+			else outputs.add(output);
+		}
+	}
+	Array<CVGroup*> stopped;
+	for (const auto& output : outputs)
+	{
+		auto* parameter = output.target.get();
+		CVGroup* group = nullptr;
+		for (auto* candidate : CVGroupManager::getInstance()->items)
+			if (static_cast<ControllableContainer*>(candidate) == output.group.get()) { group = candidate; break; }
+		if (!parameter || !group) continue;
+		const ScopedLock valuesLock(group->values.items.getLock());
+		bool present = false;
+		for (auto* variable : group->values.items) if (variable->controllable == output.target.get()) { present = true; break; }
+		if (!present) continue;
+		if (!stopped.contains(group))
+		{
+			if (group->isThreadRunning()) group->stopInterpolation();
+			stopped.add(group);
+		}
+		parameter->setValue(output.value);
+	}
+}
+
+void ChataigneSequence::itemsReordered() { evaluateCVValues(); }
+
+void ChataigneSequence::fileLoaded()
+{
+	for (auto* item : layerManager->items)
+		if (auto* layer = dynamic_cast<CVValuesLayer*>(item)) layer->rebuildSnapshot();
+	evaluateCVValues();
+	Sequence::fileLoaded();
 }
 
 void ChataigneSequence::addNewMappingLayerFromValues(Array<Point<float>> keys)
@@ -475,6 +534,7 @@ void ChataigneSequence::updateLTCSender()
 void ChataigneSequence::onContainerParameterChangedInternal(Parameter* p)
 {
 	Sequence::onContainerParameterChangedInternal(p);
+	if (p == currentTime || p == enabled || p == isPlaying) evaluateCVValues();
 	if (p == isPlaying && !isPlaying->boolValue()) recordMode->setValue(false);
 	if (p == recordMode && isPlaying->boolValue())
 	{

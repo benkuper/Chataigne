@@ -55,3 +55,5 @@
 
 #include "Sequence/layers/mapping/color/ui/ColorMappingLayerTimeline.h"
 
+#include "Sequence/layers/cvvalues/CVValuesLayer.h"
+

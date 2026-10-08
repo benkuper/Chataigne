@@ -96,6 +96,7 @@ void CVPreset::loadValuesFromJSON(var data)
 			{
 				pp->parameter->setValue(nv.value);
 			}
+			pp->setTimelineValueAuthored(true);
 		}
 	}
 }
@@ -173,6 +174,7 @@ void PresetParameterContainer::addValueFromItem(Parameter* source)
 
 void PresetParameterContainer::syncItem(ParameterPreset* preset, bool syncValueAfter)
 {
+	const ScopedValueSetter<bool> metadataGuard(preset->syncingMetadata, true);
 	Parameter* p = preset->parameter;
 	Parameter* source = linkMap[preset];
 
@@ -225,9 +227,39 @@ UndoableAction* PresetParameterContainer::syncValue(ParameterPreset* preset, boo
 	Parameter* p = preset->parameter;
 	Parameter* source = linkMap[preset];
 
-	if (onlyReturnUndoAction) return p->setUndoableValue(p->value, source->value, true);
+	if (onlyReturnUndoAction)
+	{
+		class TimelinePresetValueAction : public UndoableAction
+		{
+		public:
+			TimelinePresetValueAction(ParameterPreset* pp, UndoableAction* action) : preset(pp), valueAction(action), wasAuthored(pp->hasTimelineValue) {}
+			bool perform() override
+			{
+				if (!preset) return true;
+				if (!valueAction || !valueAction->perform()) return false;
+				static_cast<ParameterPreset*>(preset.get())->setTimelineValueAuthored(true);
+				return true;
+			}
+			bool undo() override
+			{
+				if (!preset) return true;
+				if (!valueAction || !valueAction->undo()) return false;
+				static_cast<ParameterPreset*>(preset.get())->setTimelineValueAuthored(wasAuthored);
+				return true;
+			}
+		private:
+			WeakReference<ControllableContainer> preset;
+			std::unique_ptr<UndoableAction> valueAction;
+			bool wasAuthored;
+		};
+		auto* action = p->setUndoableValue(p->value, source->value, true);
+		if (!action) { preset->setTimelineValueAuthored(true); return nullptr; }
+		if (preset->hasTimelineValue) return action;
+		return new TimelinePresetValueAction(preset, action);
+	}
 
 	p->setValue(source->value);
+	if (!preset->syncingMetadata) preset->setTimelineValueAuthored(true);
 	return nullptr;
 }
 
@@ -235,6 +267,7 @@ void PresetParameterContainer::itemAdded(GenericControllableItem* gci)
 {
 	if (gci->controllable->type == Controllable::TRIGGER) return;
 	addValueFromItem(dynamic_cast<Parameter*>(gci->controllable));
+	if (auto* pp = getParameterPresetForSource(dynamic_cast<Parameter*>(gci->controllable))) pp->hasTimelineValue = false;
 }
 
 void PresetParameterContainer::itemsAdded(Array<GenericControllableItem*> items)
@@ -243,6 +276,7 @@ void PresetParameterContainer::itemsAdded(Array<GenericControllableItem*> items)
 	{
 		if (gci->controllable->type == Controllable::TRIGGER) continue;
 		addValueFromItem(dynamic_cast<Parameter*>(gci->controllable));
+		if (auto* pp = getParameterPresetForSource(dynamic_cast<Parameter*>(gci->controllable))) pp->hasTimelineValue = false;
 	}
 }
 
@@ -322,6 +356,8 @@ ParameterPreset* PresetParameterContainer::getParameterPresetForSource(Parameter
 void PresetParameterContainer::loadJSONData(var data, bool createIfNotThere)
 {
 	resetAndBuildValues();
+	for (auto& cc : controllableContainers)
+		if (auto* pp = dynamic_cast<ParameterPreset*>(cc.get())) pp->hasTimelineValue = false;
 	ControllableContainer::loadJSONData(data, createIfNotThere);
 }
 
@@ -359,6 +395,31 @@ ParameterPreset::ParameterPreset(Parameter* p) :
 
 ParameterPreset::~ParameterPreset()
 {
+}
+
+var ParameterPreset::getJSONData(bool includeNonOverriden)
+{
+	var data = ControllableContainer::getJSONData(includeNonOverriden);
+	data.getDynamicObject()->setProperty("timelineValueAuthored", hasTimelineValue);
+	return data;
+}
+
+void ParameterPreset::loadJSONDataInternal(var data)
+{
+	ControllableContainer::loadJSONDataInternal(data);
+	hasTimelineValue = data.getProperty("timelineValueAuthored", true);
+}
+
+void ParameterPreset::onContainerParameterChanged(Parameter* p)
+{
+	if (p == parameter && !syncingMetadata && !isCurrentlyLoadingData) setTimelineValueAuthored(true);
+}
+
+void ParameterPreset::setTimelineValueAuthored(bool authored)
+{
+	if (hasTimelineValue == authored) return;
+	hasTimelineValue = authored;
+	notifyStructureChanged();
 }
 
 InspectableEditor* ParameterPreset::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)

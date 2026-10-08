@@ -620,6 +620,9 @@
     <Filter Include="Chataigne\Source\TimeMachine\Sequence">
       <UniqueIdentifier>{6428C8E3-D025-E905-DC8D-00699D1B1C05}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\TimeMachine\CV Values">
+      <UniqueIdentifier>{B813A978-215B-9202-C308-4BEAFF963178}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\TimeMachine">
       <UniqueIdentifier>{E81F0790-93FE-B6FB-2400-3E2BBDEBF60E}</UniqueIdentifier>
     </Filter>
@@ -1205,6 +1208,12 @@
     <Filter Include="JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger">
       <UniqueIdentifier>{38321AC7-8947-F0A1-5A3D-3731F17C3F35}</UniqueIdentifier>
     </Filter>
+    <Filter Include="JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\video\ui">
+      <UniqueIdentifier>{91B0804E-C75A-2757-427A-F3FF33011C33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\video">
+      <UniqueIdentifier>{192DB0A6-52A3-A361-BA7A-2CBDA7439769}</UniqueIdentifier>
+    </Filter>
     <Filter Include="JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers">
       <UniqueIdentifier>{AB1A1199-96AB-2A7E-9E0C-870A25DEB6A5}</UniqueIdentifier>
     </Filter>
@@ -1228,6 +1237,18 @@
     </Filter>
     <Filter Include="JUCE Modules\juce_timeline">
       <UniqueIdentifier>{31374781-50DF-1D59-72CC-734A4B423CBB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_video\capture">
+      <UniqueIdentifier>{CB8DF3B2-0409-6D59-C5D4-A034EBB7F973}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_video\native">
+      <UniqueIdentifier>{7774F72F-C951-B8AB-E927-E34AD23C52C8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_video\playback">
+      <UniqueIdentifier>{658BADF8-7095-C722-F9EC-9F36E8818187}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_video">
+      <UniqueIdentifier>{2C58F450-CD01-0231-2F16-0D4D68565164}</UniqueIdentifier>
     </Filter>
     <Filter Include="JUCE Modules">
       <UniqueIdentifier>{FE955B6B-68AC-AA07-70D8-2413F6DB65C8}</UniqueIdentifier>
@@ -2241,6 +2262,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\TimeMachine\ChataigneSequenceManager.cpp">
       <Filter>Chataigne\Source\TimeMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\cvvalues\CVValuesLayer.cpp">
+      <Filter>Chataigne\Source\TimeMachine\CV Values</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\TimeMachine\Sequence\layers\cvvalues\CVValuesLayerUI.cpp">
+      <Filter>Chataigne\Source\TimeMachine\CV Values</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\TimeMachine\TimeMachineIncludes.cpp">
       <Filter>Chataigne\Source\TimeMachine</Filter>
@@ -4153,6 +4180,30 @@
     <ClCompile Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\TriggerLayer.cpp">
       <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\video\ui\VideoLayerClipManagerUI.cpp">
+      <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\video\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\video\ui\VideoLayerClipUI.cpp">
+      <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\video\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\video\ui\VideoLayerPanel.cpp">
+      <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\video\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\video\ui\VideoLayerTimeline.cpp">
+      <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\video\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\video\VideoLayer.cpp">
+      <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\video\VideoLayerClip.cpp">
+      <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\video\VideoLayerClipManager.cpp">
+      <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\video\VlcVideoPlayer.cpp">
+      <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\video</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\ui\SequenceLayerPanel.cpp">
       <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\ui</Filter>
     </ClCompile>
@@ -4209,6 +4260,18 @@
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_timeline\TimelineAppCommands.cpp">
       <Filter>JUCE Modules\juce_timeline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_video\capture\juce_CameraDevice.cpp">
+      <Filter>JUCE Modules\juce_video\capture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_video\playback\juce_VideoComponent.cpp">
+      <Filter>JUCE Modules\juce_video\playback</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_video\juce_video.cpp">
+      <Filter>JUCE Modules\juce_video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_video\juce_video.mm">
+      <Filter>JUCE Modules\juce_video</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\BinaryData.cpp">
       <Filter>JUCE Library Code</Filter>
@@ -4295,6 +4358,9 @@
       <Filter>JUCE Library Code</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_timeline.cpp">
+      <Filter>JUCE Library Code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\include_juce_video.cpp">
       <Filter>JUCE Library Code</Filter>
     </ClCompile>
   </ItemGroup>
@@ -5285,6 +5351,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\TimeMachine\ChataigneSequenceManager.h">
       <Filter>Chataigne\Source\TimeMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\cvvalues\CVValuesEvaluator.h">
+      <Filter>Chataigne\Source\TimeMachine\CV Values</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\TimeMachine\Sequence\layers\cvvalues\CVValuesLayer.h">
+      <Filter>Chataigne\Source\TimeMachine\CV Values</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\TimeMachine\TimeMachineIncludes.h">
       <Filter>Chataigne\Source\TimeMachine</Filter>
@@ -6588,6 +6660,9 @@
     <ClInclude Include="..\..\Modules\juce_organicui\automation\easing\Easing.h">
       <Filter>JUCE Modules\juce_organicui\automation\easing</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\easing\EasingMath.h">
+      <Filter>JUCE Modules\juce_organicui\automation\easing</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\automation\parameter\ui\ParameterAutomationEditor.h">
       <Filter>JUCE Modules\juce_organicui\automation\parameter\ui</Filter>
     </ClInclude>
@@ -6616,6 +6691,9 @@
       <Filter>JUCE Modules\juce_organicui\automation</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\automation\AutomationKey.h">
+      <Filter>JUCE Modules\juce_organicui\automation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\AutomationKeySearch.h">
       <Filter>JUCE Modules\juce_organicui\automation</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\comment\ui\CommentManagerViewUI.h">
@@ -10107,6 +10185,9 @@
     <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\audio\AudioLayerClipManager.h">
       <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\audio</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\audio\TimelineAudioTransportSource.h">
+      <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\audio</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\Block\ui\LayerBlockManagerUI.h">
       <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Block\ui</Filter>
     </ClInclude>
@@ -10164,6 +10245,36 @@
     <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\TriggerLayer.h">
       <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\video\ui\VideoLayerClipManagerUI.h">
+      <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\video\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\video\ui\VideoLayerClipUI.h">
+      <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\video\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\video\ui\VideoLayerPanel.h">
+      <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\video\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\video\ui\VideoLayerTimeline.h">
+      <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\video\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\video\VideoFileHelpers.h">
+      <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\video\VideoLayer.h">
+      <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\video\VideoLayerClip.h">
+      <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\video\VideoLayerClipManager.h">
+      <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\video\VideoPlayerEngine.h">
+      <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\video\VlcVideoPlayer.h">
+      <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\video</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\ui\SequenceLayerPanel.h">
       <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\ui</Filter>
     </ClInclude>
@@ -10206,6 +10317,9 @@
     <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Sequence.h">
       <Filter>JUCE Modules\juce_timeline\timeline\Sequence</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\SequencePlaybackClock.h">
+      <Filter>JUCE Modules\juce_timeline\timeline\Sequence</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Modules\juce_timeline\timeline\ui\SequenceManagerUI.h">
       <Filter>JUCE Modules\juce_timeline\timeline\ui</Filter>
     </ClInclude>
@@ -10220,6 +10334,39 @@
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_timeline\juce_timeline.h">
       <Filter>JUCE Modules\juce_timeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_video\capture\juce_CameraDevice.h">
+      <Filter>JUCE Modules\juce_video\capture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_video\native\juce_CameraDevice_android.h">
+      <Filter>JUCE Modules\juce_video\native</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_video\native\juce_CameraDevice_ios.h">
+      <Filter>JUCE Modules\juce_video\native</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_video\native\juce_CameraDevice_mac.h">
+      <Filter>JUCE Modules\juce_video\native</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_video\native\juce_CameraDevice_windows.h">
+      <Filter>JUCE Modules\juce_video\native</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_video\native\juce_ComTypes_windows.h">
+      <Filter>JUCE Modules\juce_video\native</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_video\native\juce_Video_android.h">
+      <Filter>JUCE Modules\juce_video\native</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_video\native\juce_Video_mac.h">
+      <Filter>JUCE Modules\juce_video\native</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_video\native\juce_Video_windows.h">
+      <Filter>JUCE Modules\juce_video\native</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_video\playback\juce_VideoComponent.h">
+      <Filter>JUCE Modules\juce_video\playback</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE\modules\juce_video\juce_video.h">
+      <Filter>JUCE Modules\juce_video</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JuceLibraryCode\AppConfig.h">
       <Filter>JUCE Library Code</Filter>
@@ -10356,6 +10503,9 @@
       <Filter>Chataigne\Resources\Modules</Filter>
     </None>
     <None Include="..\..\Resources\Modules\UDP.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\Video monitor out.png">
       <Filter>Chataigne\Resources\Modules</Filter>
     </None>
     <None Include="..\..\Resources\Modules\Watchout.png">

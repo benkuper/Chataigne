@@ -75,6 +75,11 @@ public:
 	void itemsAdded(Array<SequenceLayer*> layers) override;
 	void itemRemoved(SequenceLayer* layer) override;
 	void itemsRemoved(Array<SequenceLayer*> layers) override;
+	void itemsReordered() override;
+	void evaluateCVValues();
+	void fileLoaded() override;
+	bool evaluatingCVValues = false;
+	CriticalSection cvValuesEvaluationLock;
 
 	void checkForNewAudioLayer(SequenceLayer* layer, bool showMenuIfNoAudioModule = true);
 	

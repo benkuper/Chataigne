@@ -134,6 +134,9 @@ namespace BinaryData
     extern const char*   UDP_png;
     const int            UDP_pngSize = 2698;
 
+    extern const char*   Video_monitor_out_png;
+    const int            Video_monitor_out_pngSize = 294;
+
     extern const char*   Watchout_png;
     const int            Watchout_pngSize = 2380;
 
@@ -240,7 +243,7 @@ namespace BinaryData
     const int            tray_icon_pngSize = 3363;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 77;
+    const int namedResourceListSize = 78;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];
