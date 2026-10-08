@@ -5156,6 +5156,7 @@
     <None Include="..\..\Resources\Modules\TCP Server.png"/>
     <None Include="..\..\Resources\Modules\Time.png"/>
     <None Include="..\..\Resources\Modules\UDP.png"/>
+    <None Include="..\..\Resources\Modules\Video monitor out.png"/>
     <None Include="..\..\Resources\Modules\Watchout.png"/>
     <None Include="..\..\Resources\Modules\WebSocket Client.png"/>
     <None Include="..\..\Resources\Modules\WebSocket Server.png"/>

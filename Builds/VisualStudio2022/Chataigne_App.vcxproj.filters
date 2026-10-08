@@ -10358,6 +10358,9 @@
     <None Include="..\..\Resources\Modules\UDP.png">
       <Filter>Chataigne\Resources\Modules</Filter>
     </None>
+    <None Include="..\..\Resources\Modules\Video monitor out.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
     <None Include="..\..\Resources\Modules\Watchout.png">
       <Filter>Chataigne\Resources\Modules</Filter>
     </None>

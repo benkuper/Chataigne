@@ -46,6 +46,10 @@ namespace CompositionRenderer
 	{
 		bool blackBackground = false;
 		bool testCard = false;
+		// Real pixel resolution of the monitor the test card is shown on. The
+		// card prints it instead of a hardcoded value.
+		int testCardMonitorWidth = 0;
+		int testCardMonitorHeight = 0;
 
 		bool featherEnabled = false;
 		float featherAmount = 1.0f; // 0..1 strength at the very edge
@@ -68,11 +72,6 @@ namespace CompositionRenderer
 	// Called every holder frame, right after renderLayers().
 	void renderSurfaces();
 
-	// Generative test card (bars, grey ramp, resolution, clock, logo, red frame,
-	// diagonal sweep), ported from the old CPU monitor. Returns an ARGB image the
-	// caller can feed to CompositionSurface::setTestCardImage().
-	juce::Image createTestCard(int width, int height);
-
 	// A display surface that hosts the composition : a plain JUCE component.
 	// It has no OpenGL context of its own — it is composited on the holder GL
 	// thread (renderSurfaces) and publishes a CPU image that paint() blits, so
@@ -92,10 +91,6 @@ namespace CompositionRenderer
 		Sequence* sequenceFilter = nullptr;
 		VideoLayer* layerFilter = nullptr;
 
-		// Message thread : hands a freshly generated test card image to the
-		// surface. It is uploaded to the GPU on the next GL frame.
-		void setTestCardImage(const juce::Image& img);
-
 		// Message thread : starts/stops being composited by renderSurfaces().
 		void showGL();
 		void hideGL();
@@ -111,6 +106,16 @@ namespace CompositionRenderer
 	private:
 		void timerCallback() override;
 
+		// Test card. The static part (checkerboard, grid, diagonals, circles,
+		// greyscale ramp, colour ramp, logo, wordmark, resolution) is baked once
+		// per size; only the diagonal white sweep and the clock are refreshed per
+		// frame, each as its own small texture, so nothing has to be re-rasterised
+		// at full resolution while the card is on screen.
+		void releaseTestCardTextures();
+		void renderTestCardGL(juce::OpenGLFrameBuffer*& src,
+			juce::OpenGLFrameBuffer& ping, juce::OpenGLFrameBuffer& pong,
+			int w, int h);
+
 		VideoGLContext* vidHolder = nullptr;
 
 		bool isShown = false;
@@ -121,13 +126,21 @@ namespace CompositionRenderer
 		int fbWidth = 0;
 		int fbHeight = 0;
 
-		juce::Image testCardImage;
-		juce::Image pendingTestCard;
-		juce::CriticalSection lockForTestCard;
-		GLuint testCardTexture = 0;
-		bool testCardDirty = false;
-		GLuint testCardWidth = 0;
-		GLuint testCardHeight = 0;
+		// Static part of the test card, re-baked when the surface size or the
+		// reported monitor resolution changes.
+		GLuint testCardStaticTexture = 0;
+		int testCardStaticWidth = 0;
+		int testCardStaticHeight = 0;
+		juce::String testCardStaticLabel;
+
+		// Diagonal white sweep : re-uploaded every frame (small).
+		GLuint testCardSweepTexture = 0;
+
+		// Clock : re-uploaded only when the printed string changes.
+		GLuint testCardClockTexture = 0;
+		int testCardClockWidth = 0;
+		int testCardClockHeight = 0;
+		juce::String testCardClockLabel;
 
 		// Image last produced on the holder GL thread, painted on the UI thread.
 		juce::Image latestImage;

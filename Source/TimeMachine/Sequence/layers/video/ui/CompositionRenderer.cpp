@@ -6,8 +6,7 @@
 
 	All compositing runs on the holder GL thread (renderLayers for layers,
 	renderSurfaces for the display surfaces) ; the only CPU involvement is the
-	generative test card image, the layer transform math, and the final image
-	read-back that surfaces paint.
+	layer transform math and the final image read-back that surfaces paint.
 
   ==============================================================================
 */
@@ -18,6 +17,7 @@
 #include <map>
 #include <algorithm>
 #include <cstring>
+#include <cmath>
 #include <memory>
 #include <utility>
 
@@ -419,126 +419,305 @@ void CompositionRenderer::renderLayers()
 	}
 }
 
-juce::Image CompositionRenderer::createTestCard(int width, int height)
+// ==============================================================================
+// Test card
+// ==============================================================================
+//
+// The layout is the 1920x1080 reference design : a 16x9 checkerboard with a fine
+// black grid on top of it, both diagonals, five white circles, a greyscale ramp
+// on the right, a colour ramp on the left, the resolution of the monitor the card
+// runs on, the logo and the wordmark. Everything is expressed in reference pixels
+// and mapped onto whatever the output surface actually is.
+//
+// Only the colour ramp scrolls and only the clock ticks, so the layer is split in
+// three : a full-size static bake (rebuilt when the geometry changes), a narrow
+// ramp strip stretched over the bar, and a clock strip. Nothing is rasterised at
+// full resolution per frame.
+
+namespace TestCard
 {
-	const int w = jmax(1, width);
-	const int h = jmax(1, height);
+	constexpr float designW = 1920.0f;
+	constexpr float designH = 1080.0f;
+	constexpr float cell = 120.0f; // checkerboard cell, also the grid pitch
 
-	juce::Image img(juce::Image::ARGB, w, h, true);
-	juce::Graphics g(img);
+	constexpr float barX = 192.0f, barY = 162.0f, barW = 128.0f, barH = 756.0f;
+	constexpr float greyBarX = 1600.0f;
 
-	const float colorBarsHeight = h * 0.60f;
-	const float greyRowHeight = h * 0.12f; // 60% .. 72%
-	const float textZoneTop = colorBarsHeight + greyRowHeight;
-	const float textZoneHeight = h - textZoneTop;
+	constexpr float sweepBand = 0.35f;
 
-	// 7 colour bars : white, yellow, cyan, green, magenta, red, blue
-	const Colour bars[7] = {
-		Colours::white,
-		Colour(0xFFFFFF00),
-		Colour(0xFF00FFFF),
-		Colour(0xFF00FF00),
-		Colour(0xFFFF00FF),
-		Colour(0xFFFF0000),
-		Colour(0xFF0000FF)
+	// Maps reference coordinates onto the surface. X and Y scale independently so
+	// the card always fills the frame whatever the output aspect is.
+	struct Layout
+	{
+		float sx = 1.0f, sy = 1.0f;
+
+		explicit Layout (int w, int h)
+		{
+			sx = (float) w / designW;
+			sy = (float) h / designH;
+		}
+
+		juce::Rectangle<float> box (float x, float y, float w, float h) const
+		{
+			return { x * sx, y * sy, w * sx, h * sy };
+		}
+
+		// Strokes must stay at least one pixel wide.
+		float scale (float v) const { return jmax (1.0f, v * (sx + sy) * 0.5f); }
+
+		// Fonts follow the frame height, which is what the design is built on.
+		float fontSize (float v) const { return jmax (1.0f, v * sy); }
 	};
 
+	struct Stop { float offset; juce::Colour colour; };
+
+	// Piecewise-linear ramp lookup, t in 0..1.
+	juce::Colour sampleRamp (const Stop* stops, int numStops, float t)
 	{
-		float x = 0;
-		for (int i = 0; i < 7; ++i)
+		if (t <= stops[0].offset)
+			return stops[0].colour;
+
+		for (int i = 1; i < numStops; ++i)
 		{
-			g.setColour(bars[i]);
-			g.fillRect(Rectangle<float>(x, 0, (float) w / 7.0f + 1.0f, colorBarsHeight));
-			x += (float) w / 7.0f;
-		}
-	}
-
-	// Grey ramp : 0,45,90,135,180,225,255
-	{
-		float x = 0;
-		for (int i = 0; i < 7; ++i)
-		{
-			g.setColour(Colour::greyLevel(i / 6.0f));
-			g.fillRect(Rectangle<float>(x, colorBarsHeight, (float) w / 7.0f + 1.0f, greyRowHeight));
-			x += (float) w / 7.0f;
-		}
-	}
-
-	// Black text zone below the bars.
-	g.setColour(Colours::black);
-	g.fillRect(Rectangle<float>(0, textZoneTop, w, textZoneHeight));
-
-	const float textSize = textZoneHeight * 0.22f;
-	g.setFont(Font(textSize, Font::bold));
-
-	// Resolution label on the left.
-	g.setColour(Colours::white);
-	const String resText = String(w) + "x" + String(h);
-	g.drawText(resText, Rectangle<float>(w * 0.03f, textZoneTop + textZoneHeight * 0.2f, w * 0.5f, textSize), Justification::left, false);
-
-	// Time label next to it.
-	g.setColour(Colour(0xFFFFFF00));
-	const String timeText = Time::getCurrentTime().formatted("%H:%M:%S");
-	g.drawText(timeText, Rectangle<float>(w * 0.03f, textZoneTop + textZoneHeight * 0.55f, w * 0.5f, textSize), Justification::left, false);
-
-	// Program logo, scaled to the text zone height, centered.
-	{
-		Image logo = ImageCache::getFromMemory(BinaryData::about_png, BinaryData::about_pngSize);
-		if (logo.isValid())
-		{
-			const float logoHeight = textZoneHeight * 0.4f;
-			const float logoWidth = logoHeight * (float) logo.getWidth() / (float) logo.getHeight();
-			Rectangle<float> target((w - logoWidth) * 0.5f, textZoneTop + (textZoneHeight - logoHeight) * 0.5f, logoWidth, logoHeight);
-			g.drawImage(logo, target);
-		}
-	}
-
-	// Red frame around the screen edges.
-	const float borderThickness = jmax(2.0f, h * 0.004f);
-	g.setColour(Colours::red);
-	g.drawRect(Rectangle<float>(borderThickness * 0.5f, borderThickness * 0.5f, w - borderThickness, h - borderThickness), borderThickness);
-
-	// Slow white diagonal sweep.
-	{
-		const double cycleMs = 10000.0;
-		const double activeMs = cycleMs * 0.25; // the sweep only runs the first 25% of each cycle
-
-		const double elapsed = std::fmod((double) Time::getMillisecondCounter(), cycleMs);
-		const double p = elapsed / activeMs; // 0..1 while sweeping, >1 while idle
-		if (p < 1.0)
-		{
-			const double fade = std::sin(MathConstants<double>::pi * jmin(1.0, p));
-
-			Image::BitmapData b(img, Image::BitmapData::readWrite);
-
-			const double travel = p * 2.0;
-			const double halfWidth = 0.35;
-
-			for (int y = 0; y < h; ++y)
+			if (t <= stops[i].offset)
 			{
-				const double yPart = (double) y / h;
-				uint8* line = b.getLinePointer(y);
-
-				for (int x = 0; x < w; ++x)
-				{
-					const double d = (double) x / w + yPart;
-					const double dist = std::fabs(d - travel);
-					if (dist >= halfWidth) continue;
-
-					const double band = 1.0 - dist / halfWidth;
-					const double weight = fade * band;
-					if (weight <= 0.001) continue;
-
-					uint8* px = line + x * 4;
-					px[0] = (uint8) jlimit(0, 255, (int) (px[0] + (255 - px[0]) * weight));
-					px[1] = (uint8) jlimit(0, 255, (int) (px[1] + (255 - px[1]) * weight));
-					px[2] = (uint8) jlimit(0, 255, (int) (px[2] + (255 - px[2]) * weight));
-				}
+				const float span = stops[i].offset - stops[i - 1].offset;
+				const float f = span > 0.0f ? (t - stops[i - 1].offset) / span : 0.0f;
+				return stops[i - 1].colour.interpolatedWith (stops[i].colour, f);
 			}
 		}
+
+		return stops[numStops - 1].colour;
 	}
 
-	return img;
+	const Stop colourStops[] = {
+		{ 0.000f, juce::Colour(0xffff0000) },
+		{ 0.167f, juce::Colour(0xffff7f00) },
+		{ 0.333f, juce::Colour(0xffffff00) },
+		{ 0.500f, juce::Colour(0xff00ff00) },
+		{ 0.667f, juce::Colour(0xff00ffff) },
+		{ 0.833f, juce::Colour(0xff0000ff) },
+		{ 1.000f, juce::Colour(0xff8b00ff) },
+	};
+	constexpr int numColourStops = (int) (sizeof (colourStops) / sizeof (colourStops[0]));
+
+	const Stop greyStops[] = {
+		{ 0.0f, juce::Colours::white },
+		{ 1.0f, juce::Colours::black },
+	};
+	constexpr int numGreyStops = 2;
+
+	struct Circle { float x, y, w, h; };
+
+	const Circle circles[] = {
+		{ 1.0f, 1.0f, 140.0f, 140.0f }, // corners
+		{ 1779.0f, 1.0f, 140.0f, 140.0f },
+		{ 1.0f, 939.0f, 140.0f, 140.0f },
+		{ 1779.0f, 939.0f, 140.0f, 140.0f },
+		{ 420.0f, 0.0f, 1080.0f, 1080.0f }, // centre
+	};
+	constexpr int numCircles = (int) (sizeof (circles) / sizeof (circles[0]));
+
+	void drawCheckerboard (juce::Graphics& g, const Layout& l, int w, int h)
+	{
+		// The dark squares are the base, the light ones are painted on top.
+		g.setColour (juce::Colour(0xff6e6e6e));
+		g.fillRect (juce::Rectangle<float> (0.0f, 0.0f, (float) w, (float) h));
+
+		g.setColour (juce::Colour(0xffb4b4b4));
+		const int cols = (int) std::ceil (designW / cell);
+		const int rows = (int) std::ceil (designH / cell);
+
+		for (int y = 0; y < rows; ++y)
+			for (int x = 0; x < cols; ++x)
+				if (((x + y) & 1) == 0)
+					g.fillRect (l.box ((float) x * cell, (float) y * cell, cell, cell));
+	}
+
+	void drawGrid (juce::Graphics& g, const Layout& l)
+	{
+		g.setColour (juce::Colours::black);
+
+		for (int i = 0; ; ++i)
+		{
+			const float x = -1.5f + (float) i * cell;
+			if (x > designW) break;
+			g.fillRect (l.box (x, 0.0f, 3.0f, designH));
+		}
+
+		for (int i = 0; ; ++i)
+		{
+			const float y = -1.5f + (float) i * cell;
+			if (y > designH) break;
+			g.fillRect (l.box (0.0f, y, designW, 3.0f));
+		}
+	}
+
+	void drawDiagonals (juce::Graphics& g, const Layout& l, int w, int h)
+	{
+		g.setColour (juce::Colours::white);
+		const auto stroke = juce::PathStrokeType (l.scale (3.0f));
+
+		juce::Path down, up;
+		down.startNewSubPath (0.0f, 0.0f);
+		down.lineTo ((float) w, (float) h);
+		up.startNewSubPath (0.0f, (float) h);
+		up.lineTo ((float) w, 0.0f);
+		g.strokePath (down, stroke);
+		g.strokePath (up, stroke);
+	}
+
+	void drawCircles (juce::Graphics& g, const Layout& l)
+	{
+		g.setColour (juce::Colours::white);
+
+		for (int i = 0; i < numCircles; ++i)
+			g.drawEllipse (l.box (circles[i].x, circles[i].y, circles[i].w, circles[i].h), l.scale (3.0f));
+	}
+
+	void drawRamp (juce::Graphics& g, const juce::Rectangle<float>& r,
+		const Stop* stops, int numStops, float phase)
+	{
+		const int rows = jmax (2, (int) std::ceil (r.getHeight()));
+
+		for (int i = 0; i < rows; ++i)
+		{
+			const float t = (float) i / (float) (rows - 1);
+			g.setColour (sampleRamp (stops, numStops, phase + t));
+
+			const float y0 = r.getY() + r.getHeight() * (float) i / (float) rows;
+			const float y1 = r.getY() + r.getHeight() * (float) (i + 1) / (float) rows;
+			g.fillRect (juce::Rectangle<float> (r.getX(), y0, r.getWidth(), y1 - y0 + 1.0f));
+		}
+	}
+
+	void drawGreyRamp (juce::Graphics& g, const Layout& l)
+	{
+		const auto r = l.box (greyBarX, barY, barW, barH);
+		drawRamp (g, r, greyStops, numGreyStops, 0.0f);
+
+		g.setColour (juce::Colours::black);
+		g.drawRect (r, l.scale (1.0f));
+	}
+
+	// Static colour ramp, exactly the reference design.
+	void drawColourRamp (juce::Graphics& g, const Layout& l)
+	{
+		const auto r = l.box (barX, barY, barW, barH);
+		drawRamp (g, r, colourStops, numColourStops, 0.0f);
+
+		g.setColour (juce::Colours::black);
+		g.drawRect (r, l.scale (1.0f));
+	}
+
+	void drawWordmark (juce::Graphics& g, const Layout& l)
+	{
+		const auto r = l.box (715.0f, 470.0f, 490.0f, 90.0f);
+		g.setFont (juce::Font (l.fontSize (96.0f), juce::Font::bold));
+
+		// Eight black copies ring the white label so it reads on any cell.
+		const float o = l.scale (3.0f);
+		constexpr int dx[] = { -1, 1, 0, 0, -1, 1, -1, 1 };
+		constexpr int dy[] = { 0, 0, -1, 1, -1, -1, 1, 1 };
+
+		g.setColour (juce::Colours::black);
+		for (int i = 0; i < 8; ++i)
+			g.drawText ("Chataigne", r.translated ((float) dx[i] * o, (float) dy[i] * o),
+				juce::Justification::centred, false);
+
+		g.setColour (juce::Colours::white);
+		g.drawText ("Chataigne", r, juce::Justification::centred, false);
+	}
+
+	void drawLogo (juce::Graphics& g, const Layout& l)
+	{
+		const juce::Image logo = juce::ImageCache::getFromMemory (BinaryData::icon_png, BinaryData::icon_pngSize);
+		if (logo.isValid())
+			g.drawImage (logo, l.box (715.0f, 40.0f, 490.3722534f, 494.9051514f));
+	}
+
+	void drawResolution (juce::Graphics& g, const Layout& l, const juce::String& label)
+	{
+		if (label.isEmpty()) return;
+
+		g.setFont (juce::Font (l.fontSize (44.0f)));
+		g.setColour (juce::Colours::white);
+		g.drawText (label, l.box (715.0f, 630.0f, 490.0f, 60.0f), juce::Justification::centred, false);
+	}
+
+	// Everything that stays put while the card is on screen.
+	juce::Image buildStaticLayer (int w, int h, const juce::String& resolutionLabel)
+	{
+		juce::Image img (juce::Image::ARGB, jmax (1, w), jmax (1, h), true);
+		juce::Graphics g (img);
+		const Layout l (img.getWidth(), img.getHeight());
+
+		drawCheckerboard (g, l, img.getWidth(), img.getHeight());
+		drawGrid (g, l);
+		drawDiagonals (g, l, img.getWidth(), img.getHeight());
+		drawCircles (g, l);
+		drawGreyRamp (g, l);
+		drawColourRamp (g, l);
+		drawResolution (g, l, resolutionLabel);
+		drawLogo (g, l);
+		drawWordmark (g, l);
+
+		return img;
+	}
+
+	// Diagonal white gradient used as a light sweep : white toward the leading
+	// edge, fading to fully transparent across the band. `travel` is the band
+	// centre along the normalised top-left -> bottom-right diagonal, `fade` its
+	// overall opacity, so the caller drives both from the animation clock.
+	juce::Image buildSweepLayer (int w, int h, float travel, float fade)
+	{
+		const int tw = juce::jlimit (128, 640, w / 4);
+		const int th = juce::jlimit (128, 360, h / 4);
+
+		juce::Image img (juce::Image::ARGB, tw, th, true);
+		juce::Image::BitmapData bd (img, juce::Image::BitmapData::readWrite);
+
+		for (int y = 0; y < th; ++y)
+		{
+			const double v = ((double) y + 0.5) / (double) th;
+			juce::PixelARGB* line = reinterpret_cast<juce::PixelARGB*> (bd.getLinePointer (y));
+
+			for (int x = 0; x < tw; ++x)
+			{
+				const double u = ((double) x + 0.5) / (double) tw;
+				const double d = (u + v) * 0.5;
+				const double dist = std::fabs (d - (double) travel);
+
+				if (dist >= (double) sweepBand)
+				{
+					line[x] = juce::PixelARGB (0, 0, 0, 0);
+					continue;
+				}
+
+				const double weight = (1.0 - dist / (double) sweepBand) * (double) fade;
+				const auto a = (uint8) juce::jlimit (0, 255, (int) (weight * 255.0));
+
+				// Premultiplied white : the compositor expects premultiplied RGB.
+				line[x] = juce::PixelARGB (a, a, a, a);
+			}
+		}
+
+		return img;
+	}
+
+	juce::Image buildClockLayer (int w, int h, const juce::String& text)
+	{
+		juce::Image img (juce::Image::ARGB, jmax (1, w), jmax (1, h), true);
+		juce::Graphics g (img);
+
+		// 52 reference px over a 70 px tall box.
+		g.setFont (juce::Font (jmax (1.0f, 52.0f * (float) img.getHeight() / 70.0f), juce::Font::bold));
+		g.setColour (juce::Colours::white);
+		g.drawText (text, juce::Rectangle<float> (0.0f, 0.0f, (float) img.getWidth(), (float) img.getHeight()),
+			juce::Justification::centred, false);
+
+		return img;
+	}
 }
 
 // ==============================================================================
@@ -572,12 +751,7 @@ CompositionRenderer::CompositionSurface::CompositionSurface(VideoGLContext* hold
 CompositionRenderer::CompositionSurface::~CompositionSurface()
 {
 	hideGL();
-}
-
-void CompositionRenderer::CompositionSurface::setTestCardImage(const juce::Image& img)
-{
-	const ScopedLock l(lockForTestCard);
-	pendingTestCard = img;
+	releaseTestCardTextures();
 }
 
 void CompositionRenderer::CompositionSurface::showGL()
@@ -603,6 +777,127 @@ void CompositionRenderer::CompositionSurface::hideGL()
 	{
 		const ScopedLock l(surfacesLock);
 		shownSurfaces.removeAllInstancesOf(this);
+	}
+}
+
+void CompositionRenderer::CompositionSurface::releaseTestCardTextures()
+{
+	if (juce::OpenGLContext::getCurrentContext() == nullptr) return;
+
+	const auto drop = [] (GLuint& t)
+	{
+		if (t != 0) { glDeleteTextures (1, &t); t = 0; }
+	};
+
+	drop (testCardStaticTexture);
+	drop (testCardSweepTexture);
+	drop (testCardClockTexture);
+
+	testCardStaticWidth = 0;
+	testCardStaticHeight = 0;
+	testCardStaticLabel.clear();
+
+	testCardClockWidth = 0;
+	testCardClockHeight = 0;
+	testCardClockLabel.clear();
+}
+
+// Holder GL thread : bakes the static part of the card once, then composites the
+// diagonal white sweep and the clock over it on every frame.
+void CompositionRenderer::CompositionSurface::renderTestCardGL(OpenGLFrameBuffer*& src,
+	OpenGLFrameBuffer& ping, OpenGLFrameBuffer& pong, int w, int h)
+{
+	if (w <= 0 || h <= 0) return;
+
+	const String resolution = settings.testCardMonitorWidth > 0 && settings.testCardMonitorHeight > 0
+		? String (settings.testCardMonitorWidth) + " x " + String (settings.testCardMonitorHeight)
+		: String (w) + " x " + String (h);
+
+	// JUCE ARGB images are stored premultiplied as BGRA on little-endian, so a
+	// GL_RGBA upload would swap red and blue : the logo would come out blue.
+	const auto upload = [] (GLuint& texture, const juce::Image& src)
+	{
+		if (! src.isValid()) return;
+
+		const juce::Image rgba = src.convertedToFormat (juce::Image::ARGB);
+		const juce::Image::BitmapData bd (rgba, juce::Image::BitmapData::readOnly);
+
+		if (texture == 0) glGenTextures (1, &texture);
+		glBindTexture (GL_TEXTURE_2D, texture);
+		glPixelStorei (GL_UNPACK_ALIGNMENT, 4);
+		glTexImage2D (GL_TEXTURE_2D, 0, GL_RGBA8, bd.width, bd.height, 0, GL_BGRA, GL_UNSIGNED_BYTE, bd.data);
+		glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	};
+
+	const auto pass = [&] (GLuint texture, const juce::Rectangle<float>& r)
+	{
+		if (texture == 0 || r.getWidth() <= 0.5f || r.getHeight() <= 0.5f) return;
+
+		OpenGLFrameBuffer* dst = (src == &ping) ? &pong : &ping;
+		bindTarget (*dst, w, h);
+		renderPass (texture, src->getTextureID(),
+			r.getX() / (float) w, r.getY() / (float) h,
+			r.getRight() / (float) w, r.getBottom() / (float) h,
+			1.0f, 0, 0, 0, 0.0f, FeatherVec{ 0, 0, 0, 0 });
+		src = dst;
+	};
+
+	// 1) Static bake : checkerboard, grid, diagonals, circles, greyscale ramp,
+	//    colour ramp, resolution, logo, wordmark.
+	if (testCardStaticTexture == 0 || testCardStaticWidth != w || testCardStaticHeight != h
+		|| testCardStaticLabel != resolution)
+	{
+		const auto base = TestCard::buildStaticLayer (w, h, resolution);
+		upload (testCardStaticTexture, base);
+
+		if (base.isValid())
+		{
+			testCardStaticWidth = base.getWidth();
+			testCardStaticHeight = base.getHeight();
+			testCardStaticLabel = resolution;
+		}
+	}
+
+	if (testCardStaticTexture == 0) return;
+
+	pass (testCardStaticTexture, juce::Rectangle<float> (0.0f, 0.0f, (float) w, (float) h));
+
+	const TestCard::Layout l (w, h);
+
+	// 2) Diagonal white gradient sweeping once every 10 s : it enters at the top
+	//    left, crosses to the bottom right, fading in and out on the way.
+	{
+		constexpr double sweepCycleMs = 10000.0;
+		const double p = std::fmod ((double) juce::Time::getMillisecondCounter(), sweepCycleMs) / sweepCycleMs;
+
+		const auto travel = (float) (-TestCard::sweepBand + p * (1.0 + 2.0 * TestCard::sweepBand));
+		const auto fade = (float) std::sin (juce::MathConstants<double>::pi * p);
+
+		upload (testCardSweepTexture, TestCard::buildSweepLayer (w, h, travel, fade));
+		pass (testCardSweepTexture, juce::Rectangle<float> (0.0f, 0.0f, (float) w, (float) h));
+	}
+
+	// 3) Clock : only re-uploaded when the printed second changes.
+	{
+		const auto r = l.box (715.0f, 740.0f, 490.0f, 70.0f);
+		const auto rw = (int) r.getWidth();
+		const auto rh = (int) r.getHeight();
+		const String clock = juce::Time::getCurrentTime().formatted ("%H:%M:%S");
+
+		if (testCardClockTexture == 0 || testCardClockLabel != clock
+			|| testCardClockWidth != rw || testCardClockHeight != rh)
+		{
+			upload (testCardClockTexture, TestCard::buildClockLayer (rw, rh, clock));
+
+			testCardClockWidth = rw;
+			testCardClockHeight = rh;
+			testCardClockLabel = clock;
+		}
+
+		pass (testCardClockTexture, r);
 	}
 }
 
@@ -664,17 +959,6 @@ void CompositionRenderer::CompositionSurface::renderSurfaceGL()
 	fbWidth = w;
 	fbHeight = h;
 
-	// Pick up a new test card image (generated off the GL thread).
-	{
-		ScopedLock l(lockForTestCard);
-		if (pendingTestCard.isValid())
-		{
-			testCardImage = pendingTestCard;
-			pendingTestCard = Image();
-			testCardDirty = true;
-		}
-	}
-
 	compositorGL.ensure();
 
 	// 1) Clear the first target to the opaque background.
@@ -733,60 +1017,11 @@ void CompositionRenderer::CompositionSurface::renderSurfaceGL()
 		std::swap(src, dst);
 	}
 
-	// 3) Optional test card on top.
+	// 3) Optional test card on top : the static bake, then the scrolling colour
+	//    ramp and the clock, refreshed every frame.
 	if (settings.testCard)
 	{
-		if (testCardTexture == 0 && !testCardImage.isValid()) { /* nothing to show yet */ }
-		else if (testCardDirty || testCardTexture == 0)
-		{
-			if (testCardImage.isValid())
-			{
-				juce::Image rgba = testCardImage.convertedToFormat(Image::ARGB);
-				Image::BitmapData bd(rgba, Image::BitmapData::readOnly);
-
-				if (testCardTexture == 0) glGenTextures(1, &testCardTexture);
-				glBindTexture(GL_TEXTURE_2D, testCardTexture);
-				glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, bd.width, bd.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, bd.data);
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-				testCardWidth = bd.width;
-				testCardHeight = bd.height;
-				testCardDirty = false;
-			}
-			else
-			{
-				if (testCardTexture != 0) { glDeleteTextures(1, &testCardTexture); testCardTexture = 0; }
-			}
-		}
-
-		if (testCardTexture != 0)
-		{
-			if (testCardWidth != (GLuint) w || testCardHeight != (GLuint) h)
-			{
-				juce::Image scaled = testCardImage.rescaled(w, h, juce::Graphics::ResamplingQuality::highResamplingQuality);
-				juce::Image rgba = scaled.convertedToFormat(Image::ARGB);
-				Image::BitmapData bd(rgba, Image::BitmapData::readOnly);
-
-				glBindTexture(GL_TEXTURE_2D, testCardTexture);
-				glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, bd.width, bd.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, bd.data);
-				testCardWidth = bd.width;
-				testCardHeight = bd.height;
-			}
-
-			bindTarget(*dst, w, h);
-			renderPass(testCardTexture, src->getTextureID(),
-				0, 0, 1, 1,
-				1.0f,
-				0, // normal mode
-				0, // uploaded image : image top at v=0
-				0, 0, FeatherVec{ 0, 0, 0, 0 });
-
-			std::swap(src, dst);
-		}
+		renderTestCardGL(src, pingFB, pongFB, w, h);
 	}
 
 	// 4) Optional feather on top of the final composite.
