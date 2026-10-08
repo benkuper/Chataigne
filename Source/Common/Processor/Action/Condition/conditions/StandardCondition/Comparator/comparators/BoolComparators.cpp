@@ -25,8 +25,16 @@ BoolComparator::~BoolComparator()
 
 bool BoolComparator::compareInternal(Parameter * sourceParam, int multiplexIndex)
 {
+	return compareValue(sourceParam->getValue(), multiplexIndex);
+}
+
+bool BoolComparator::compareValue(const var& sourceValue, int multiplexIndex)
+{
+	const ScopedLock lock(compareLock);
+	if (reference == nullptr || currentFunctionId.isNull()) return false;
+	if (currentFunctionId == changeId) return true;
 	bool value = isMultiplexed() ? (bool)refLink->getLinkedValue(multiplexIndex) : reference->boolValue();
-	if (currentFunctionId == equalsId) return sourceParam->boolValue() == value;
-	if (currentFunctionId == differentId) return sourceParam->boolValue() != reference->boolValue();
+	if (currentFunctionId == equalsId) return (bool)sourceValue == value;
+	if (currentFunctionId == differentId) return (bool)sourceValue != value;
 	return false;
 }

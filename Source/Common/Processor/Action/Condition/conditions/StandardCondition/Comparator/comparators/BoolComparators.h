@@ -22,4 +22,5 @@ public:
 	const Identifier changeId = "ch";
 
 	virtual bool compareInternal(Parameter* sourceParam, int multiplexIndex = 0) override;
+	bool compareValue(const var& sourceValue, int multiplexIndex = 0);
 };

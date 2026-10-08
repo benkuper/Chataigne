@@ -243,10 +243,26 @@ void StandardCondition::onControllableFeedbackUpdateInternal(ControllableContain
 
 void StandardCondition::onExternalParameterValueChanged(Parameter* p)
 {
-	if (!multiplexListMode)
+	if (!multiplexListMode && p == sourceControllable.get())
 	{
 		for (int i = 0; i < getMultiplexCount(); i++) checkComparator(i);
 	}
+}
+
+void StandardCondition::parameterValueChangedWithValue(Parameter* p, const var& value)
+{
+	if (!multiplexListMode && p == sourceControllable.get() && !isCurrentlyLoadingData)
+	{
+		if (auto* boolComparator = dynamic_cast<BoolComparator*>(comparator.get()))
+		{
+			// Evaluate each captured edge, rather than the latest tick after a
+			// message-thread stall has queued several ON/OFF notifications.
+			for (int i = 0; i < getMultiplexCount(); i++)
+				setValid(i, boolComparator->compareValue(value, i));
+			return;
+		}
+	}
+	Condition::parameterValueChanged(p);
 }
 
 void StandardCondition::onExternalParameterRangeChanged(Parameter* p)

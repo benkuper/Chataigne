@@ -59,6 +59,7 @@ public:
 	void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
 
 	void onExternalParameterValueChanged(Parameter* p) override;
+	void parameterValueChangedWithValue(Parameter* p, const var& value) override;
 	void onExternalParameterRangeChanged(Parameter* p) override;
 	void onExternalTriggerTriggered(Trigger* t) override;
 

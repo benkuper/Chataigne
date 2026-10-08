@@ -16,6 +16,8 @@ class UDPModule :
 	public NetworkStreamingModule
 {
 public:
+	static constexpr int maxPacketsPerRead = 16;
+
 	UDPModule(const String &name = "UDP", bool canHaveInput = true, bool canHaveOutput = true, int defaultLocalPort= 10000, int defaultRemotePort = 10001);
 	virtual ~UDPModule();
 

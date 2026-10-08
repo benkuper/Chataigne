@@ -11,7 +11,8 @@
 #include "Module/ModuleIncludes.h"
 
 UDPModule::UDPModule(const String& name, bool canHaveInput, bool canHaveOutput, int defaultLocalPort, int defaultRemotePort) :
-	NetworkStreamingModule(name, canHaveInput, canHaveOutput, defaultLocalPort, defaultRemotePort)
+	NetworkStreamingModule(name, canHaveInput, canHaveOutput, defaultLocalPort, defaultRemotePort),
+	proxySender(nullptr)
 {
 
 	multicastMode = moduleParams.addBoolParameter("Multicast Mode", "If check, instead of binding and connecting, it will try to join a multicast network.", false);
@@ -27,6 +28,10 @@ UDPModule::UDPModule(const String& name, bool canHaveInput, bool canHaveOutput, 
 
 UDPModule::~UDPModule()
 {
+	// The base destructor runs after our socket members have been destroyed.
+	// Stop the reader while its receiver and packet buffer are still alive.
+	clearThread();
+	clearInternal();
 }
 
 void UDPModule::setupReceiver()
@@ -167,8 +172,11 @@ void UDPModule::sendBytesInternal(Array<uint8> data, var params)
 Array<uint8> UDPModule::readBytes()
 {
 	Array<uint8> result;
+	if (receiver == nullptr) return result;
 
-	while (true)
+	// A continuously busy socket must not keep us here indefinitely, growing
+	// the batch and preventing both parsing and thread shutdown.
+	for (int packet = 0; packet < maxPacketsPerRead && !threadShouldExit(); ++packet)
 	{
 		String senderAddress = "";
 		int senderPort = 0;
