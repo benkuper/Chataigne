@@ -59,10 +59,16 @@ void ConsequenceManager::triggerAll(int multiplexIndex)
 	{
 		if (delay->floatValue() == 0 && stagger->floatValue() == 0)
 		{
-			for (auto& bi : items)
+			Array<WeakReference<ControllableContainer>> snapshot;
+			for (auto* bi : items) snapshot.add(bi);
+			WeakReference<ControllableContainer> safeThis(this);
+			for (auto weak : snapshot)
 			{
+				auto* bi = weak.get();
 				if (Consequence* c = dynamic_cast<Consequence*>(bi)) c->triggerCommand(multiplexIndex);
 				else if (ConsequenceGroup* g = dynamic_cast<ConsequenceGroup*>(bi))  if (g->enabled->boolValue()) g->csm.triggerAll(multiplexIndex);
+				if (safeThis == nullptr) return;
+				if (isClearing || (Engine::mainEngine && Engine::mainEngine->isClearing)) return;
 			}
 		}
 		else

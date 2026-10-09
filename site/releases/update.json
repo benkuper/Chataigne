@@ -6,6 +6,10 @@
 	"betaversion": {
 		"version": "1.10.5b1",
 		"changelog": [
+			"[Sequence] Point triggers now run TRUE or FALSE according to their condition at the crossing",
+			"[Sequence] Duration triggers track activity and validity separately, with exit actions for conditions that were never valid or valid at least once; the default runs TRUE on first validity and FALSE only if the visit was never valid",
+			"[Sequence] Added per-trigger seek overrides, destination synchronization for duration blocks, latest-point-cue seeking and Trigger All TRUE/FALSE layer controls; fixed rewinds resetting unrelated triggers",
+			"[Sequence] Point triggers no longer allocate duration controls, and duration choices survive conversion to points and back",
 			"[Sequence] Added CV Values layers with live preset references and independent custom-value overrides for multiple Custom Variable Groups",
 			"[Sequence] Added block-local number automation and color gradients, crossfades, editable transition curves, and Base Preset, Interpolate and Hold gap modes",
 			"[Sequence] CV Values layers evaluate deterministically when playing, seeking, jumping and looping, with sparse inheritance, Do not change masks and per-parameter layer priority",

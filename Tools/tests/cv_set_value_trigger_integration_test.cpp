@@ -42,6 +42,8 @@ static void exerciseDuplicateAndMove()
     auto* trigger = static_cast<ChataigneTimeTrigger*>(layer->ttm->addItem(nullptr, var(), false));
     trigger->time->setValue(1);
     trigger->length->setValue(2);
+    // This regression exercises explicit TRUE-on-entry / FALSE-on-exit commands.
+    trigger->duration->everValidExit->setValueWithData(ChataigneTimeTrigger::action_triggerFalse);
     auto* on = static_cast<Consequence*>(trigger->csm->addItem(new Consequence(), var(), false));
     on->setCommand(groups->module->getCommandDefinitionFor("", "Set Value"));
     auto* onCommand = getCommand(on);
@@ -68,6 +70,11 @@ static void exerciseDuplicateAndMove()
     auto* offCommand = getCommand(trigger->untcsm->items[0]);
     check(offCommand->value != nullptr && offCommand->value->boolValue(), "duplicate preserves TRUE value");
     offCommand->value->setValue(false);
+
+    // The first mutation must also be safe when made manually, before any timeline entry.
+    boolean->setValue(true);
+    trigger->untcsm->triggerAll();
+    check(!boolean->boolValue() && !sourceBoolean->boolValue(), "first manual Boolean change and FALSE preview are safe");
 
     for (int i = 0; i < 3; ++i)
     {
