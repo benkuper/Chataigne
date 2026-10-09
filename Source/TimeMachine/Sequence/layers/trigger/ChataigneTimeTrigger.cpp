@@ -65,7 +65,7 @@ void ChataigneTimeTrigger::updateTriggerParams()
         };
         d.activeFeedback = feedback("Active", "The playhead is inside this duration");
         d.validFeedback = feedback("Valid", "The current condition result");
-        d.everValidFeedback = feedback("Was ever valid", "The condition was valid at least once during this visit");
+        d.everValidFeedback = feedback("Was ever valid", "Reset and evaluated whenever the playhead enters this duration, in either direction or by seeking. Becomes true if the condition is valid at entry or at any point during the visit, and stays true until the next entry.");
         applyDurationSettings(savedDurationSettings);
         savedDurationSettings = var();
         // Editing a length must not execute consequences.
