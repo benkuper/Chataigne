@@ -46,6 +46,7 @@ void MappingInput::setInput(Parameter* _input)
 	}
 
 	inputReference = _input;
+	inputValueSnapshot.reset(_input != nullptr ? ControllableFactory::createParameterFrom(_input, true, true) : nullptr);
 
 	if (!inputReference.wasObjectDeleted() && inputReference != nullptr)
 	{
@@ -67,15 +68,35 @@ Parameter* MappingInput::getInputAt(int multiplexIndex)
 
 void MappingInput::parameterRangeChanged(Parameter* p)
 {
+	if (p == inputReference && inputValueSnapshot != nullptr)
+		inputValueSnapshot->setRange(p->minimumValue, p->maximumValue);
 	ControllableContainer::parameterRangeChanged(p);
 	mappinginputListeners.call(&MappingInput::Listener::inputParameterRangeChanged, this);
+}
+
+void MappingInput::parameterValueChangedWithValue(Parameter* p, const var& value)
+{
+	if (p == inputReference && inputValueSnapshot != nullptr
+		&& p->type != Controllable::ENUM && p->type != Controllable::TARGET)
+	{
+		// Worker-thread notifications may wait behind several newer values. Keep
+		// the source untouched and process the value captured for this event.
+		// Enum notifications contain option data rather than the selected key.
+		inputValueSnapshot->setValue(value, true, true);
+		ScopedValueSetter<bool> delivering(deliveringCapturedValue, true);
+		BaseItem::parameterValueChanged(p);
+		return;
+	}
+	BaseItem::parameterValueChanged(p);
 }
 
 void MappingInput::onExternalParameterValueChanged(Parameter* p)
 {
 	if (p == inputReference)
 	{
-		mappinginputListeners.call(&MappingInput::Listener::inputParameterValueChanged, this, -1);
+		if (deliveringCapturedValue)
+			mappinginputListeners.call(&MappingInput::Listener::inputParameterValueChangedWithValue, this, -1, inputValueSnapshot.get());
+		else mappinginputListeners.call(&MappingInput::Listener::inputParameterValueChanged, this, -1);
 		mappingInputAsyncNotifier.addMessage(new MappingInputEvent(MappingInputEvent::PARAMETER_VALUE_CHANGED, this, -1));
 	}
 }

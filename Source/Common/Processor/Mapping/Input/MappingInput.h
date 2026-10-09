@@ -20,6 +20,8 @@ public:
 
 	BoolParameter* triggersProcess;
 	WeakReference<Parameter> inputReference;
+	std::unique_ptr<Parameter> inputValueSnapshot;
+	bool deliveringCapturedValue = false;
 
 	virtual void clear() override;
 	virtual void setInput(Parameter* input);
@@ -27,6 +29,7 @@ public:
 	virtual Parameter* getInputAt(int multiplexIndex);
 
 	virtual void onExternalParameterValueChanged(Parameter* p) override;
+	void parameterValueChangedWithValue(Parameter* p, const var& value) override;
 	virtual void parameterRangeChanged(Parameter* p) override;
 
 	class  Listener
@@ -36,6 +39,7 @@ public:
 		virtual ~Listener() {}
 		virtual void inputReferenceChanged(MappingInput*, int multiplexIndex) {};
 		virtual void inputParameterValueChanged(MappingInput*, int multiplexIndex) {};
+		virtual void inputParameterValueChangedWithValue(MappingInput* input, int multiplexIndex, Parameter*) { inputParameterValueChanged(input, multiplexIndex); }
 		virtual void inputParameterRangeChanged(MappingInput*) {};
 	};
 

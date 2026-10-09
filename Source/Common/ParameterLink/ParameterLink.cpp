@@ -11,6 +11,8 @@
 #include "ParameterLink.h"
 #include "ui/LinkableParameterEditor.h"
 #include "Common/Processor/ProcessorIncludes.h"
+#include <cmath>
+#include <limits>
 
 ParameterLink::ParameterLink(WeakReference<Parameter> p, Multiplex* multiplex) :
 	MultiplexTarget(multiplex),
@@ -82,8 +84,29 @@ void ParameterLink::setLinkType(LinkType type)
 
 var ParameterLink::getLinkedValue(int multiplexIndex)
 {
+	return getLinkedValue(multiplexIndex, false);
+}
+
+var ParameterLink::getLinkedValue(int multiplexIndex, bool roundIntegers)
+{
 	if (parameter == nullptr || parameter.wasObjectDeleted()) return var();
 	if (!isLinkable) return parameter->getValue();
+
+	auto cropValue = [this, roundIntegers](const var& value) -> var
+	{
+		if (!roundIntegers || parameter->type != Controllable::INT)
+			return parameter->getCroppedValue(value);
+
+		// Round the original linked value before IntParameter's truncating crop.
+		// Clamp in double precision so INT_MAX does not become 2147483648.f.
+		double rounded = std::round(static_cast<double>(value));
+		if (std::isnan(rounded)) rounded = 0;
+		const double minimum = jmax(static_cast<double>(std::numeric_limits<int>::min()),
+			static_cast<double>(parameter->minimumValue));
+		const double maximum = jmin(static_cast<double>(std::numeric_limits<int>::max()),
+			static_cast<double>(parameter->maximumValue));
+		return static_cast<int>(jlimit(minimum, maximum, rounded));
+	};
 
 	switch (linkType)
 	{
@@ -116,7 +139,7 @@ var ParameterLink::getLinkedValue(int multiplexIndex)
 			if (isPositiveAndBelow(mappingValueIndex, mappingValue.size())) val = mappingValue[mappingValueIndex];
 		}
 
-		return parameter->getCroppedValue(val);
+		return cropValue(val);
 	}
 	break;
 
@@ -125,7 +148,7 @@ var ParameterLink::getLinkedValue(int multiplexIndex)
 		{
 			if (Parameter* p = dynamic_cast<Parameter*>(list->getTargetControllableAt(multiplexIndex)))
 			{
-				return parameter->getCroppedValue(p->getValue());
+				return cropValue(p->getValue());
 			}
 		}
 		break;
@@ -137,7 +160,7 @@ var ParameterLink::getLinkedValue(int multiplexIndex)
 			{
 				if (Parameter* p = pList->getPresetParameterAt(multiplexIndex, presetParamName))
 				{
-					return parameter->getCroppedValue(p->getValue());
+					return cropValue(p->getValue());
 				}
 			}
 		}

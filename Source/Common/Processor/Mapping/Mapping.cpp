@@ -245,13 +245,18 @@ void Mapping::multiplexPreviewIndexChanged()
 
 void Mapping::process(bool sendOutput, int multiplexIndex, bool forceSend)
 {
+	processWithCapturedInput(sendOutput, multiplexIndex, forceSend, nullptr, nullptr);
+}
+
+void Mapping::processWithCapturedInput(bool sendOutput, int multiplexIndex, bool forceSend, Parameter* changedInput, Parameter* capturedInput)
+{
 	if ((canBeDisabled && !enabled->boolValue()) || forceDisabled) return;
 	if (im.items.size() == 0) return;
 	if (isCurrentlyLoadingData || isRebuilding || isProcessing || isClearing) return;
 
 	if (multiplexIndex == -1) // -1 makes process all
 	{
-		for (int i = 0; i < getMultiplexCount(); i++) process(sendOutput, i, forceSend);
+		for (int i = 0; i < getMultiplexCount(); i++) processWithCapturedInput(sendOutput, i, forceSend, changedInput, capturedInput);
 		return;
 	}
 	if (!isPositiveAndBelow(multiplexIndex, getMultiplexCount())) return;
@@ -264,6 +269,8 @@ void Mapping::process(bool sendOutput, int multiplexIndex, bool forceSend)
 		isProcessing = true;
 
 		Array<Parameter*> inputs = im.getInputReferences(multiplexIndex);
+		if (changedInput != nullptr && capturedInput != nullptr)
+			for (auto& input : inputs) if (input == changedInput) input = capturedInput;
 		MappingFilter::ProcessResult filterResult = fm.processFilters(inputs, multiplexIndex);
 
 		if (filterResult == MappingFilter::CHANGED || (filterResult == MappingFilter::UNCHANGED && !sendOnOutputChangeOnly->boolValue()))
@@ -440,6 +447,13 @@ void Mapping::inputParameterValueChanged(MappingInput* mi, int multiplexIndex)
 	{
 		process(true, multiplexIndex);
 	}
+}
+
+void Mapping::inputParameterValueChangedWithValue(MappingInput* mi, int multiplexIndex, Parameter* capturedInput)
+{
+	if (!mi->triggersProcess->boolValue()) return;
+	if (processMode == VALUE_CHANGE && !isThreadRunning())
+		processWithCapturedInput(true, multiplexIndex, false, mi->inputReference.get(), capturedInput);
 }
 
 void Mapping::inputParameterRangeChanged(MappingInput*)

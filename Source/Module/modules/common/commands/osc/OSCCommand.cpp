@@ -165,7 +165,8 @@ void OSCCommand::triggerInternal(int multiplexIndex)
 			Parameter* p = static_cast<Parameter*>(a);
 			if (p == nullptr) continue;
 
-			var val = argumentsContainer.getLinkedValue(p, multiplexIndex);
+			ParameterLink* link = argumentsContainer.getLinkedParam(p);
+			var val = link != nullptr ? link->getLinkedValue(multiplexIndex, true) : p->getValue();
 			OSCHelpers::addArgumentsForParameter(m, p, oscModule->getBoolMode(), oscModule->getColorMode(), val);
 		}
 

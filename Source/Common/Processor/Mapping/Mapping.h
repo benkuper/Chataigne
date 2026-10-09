@@ -55,6 +55,7 @@ public:
 	virtual void multiplexPreviewIndexChanged() override;
 
 	void process(bool sendOutput = true, int multiplexIndex = -1, bool forceSend = false);
+	void processWithCapturedInput(bool sendOutput, int multiplexIndex, bool forceSend, Parameter* changedInput, Parameter* capturedInput);
 
 	void updateContinuousProcess();
 
@@ -72,6 +73,7 @@ public:
 
 	void inputReferenceChanged(MappingInput*, int multiplexIndex) override;
 	void inputParameterValueChanged(MappingInput*, int multiplexIndex) override;
+	void inputParameterValueChangedWithValue(MappingInput*, int multiplexIndex, Parameter* capturedInput) override;
 	void inputParameterRangeChanged(MappingInput*) override;
 
 	void onContainerParameterChangedInternal(Parameter* p) override;

@@ -59,6 +59,7 @@ public:
     void setLinkedPresetParam(CVPresetMultiplexList* list, const String& paramName);
 
     var getLinkedValue(int multiplexIndex = 0);
+    var getLinkedValue(int multiplexIndex, bool roundIntegers);
 
     //For target parameters
     WeakReference<Controllable> getLinkedTarget(int multiplexIndex);

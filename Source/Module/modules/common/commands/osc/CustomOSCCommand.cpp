@@ -54,9 +54,10 @@ void CustomOSCCommand::triggerInternal(int multiplexIndex)
 		for (auto& a : customValuesManager->items)
 		{
 			Parameter* p = a->param;
-			var pVal = a->getLinkedValue(multiplexIndex);
-
 			if (p == nullptr) continue;
+			var pVal = a->paramLink != nullptr
+				? a->paramLink->getLinkedValue(multiplexIndex, true)
+				: a->getLinkedValue(multiplexIndex);
 			OSCHelpers::addArgumentsForParameter(m, p, oscModule->getBoolMode(), oscModule->getColorMode(), pVal);
 		}
 		oscModule->sendOSC(m);
