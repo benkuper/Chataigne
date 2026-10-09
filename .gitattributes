@@ -6,6 +6,9 @@
 **/Makefile text eol=lf
 *.sh text eol=lf
 External/mpv/patches/*.patch text eol=lf
+External/servus/patches/*.patch text eol=lf whitespace=-blank-at-eol
+External/servus/source/** text eol=lf
+External/servus/source/servus/md5/README whitespace=-blank-at-eol,-blank-at-eof
 *.yml text eol=lf
 *.yaml text eol=lf
 *.pbxproj text eol=lf

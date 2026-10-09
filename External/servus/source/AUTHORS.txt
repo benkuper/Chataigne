@@ -1,0 +1,11 @@
+The following people have contributed to Servus:
+
+-------- git master -------
+
+Stefan Eilemann
+Cedric Stalder
+Ahmet Bilgili
+Daniel Nachbaur
+Juan Hernando
+John Biddiscombe
+Carsten Rohn

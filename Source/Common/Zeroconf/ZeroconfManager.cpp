@@ -143,8 +143,10 @@ void ZeroconfManager::ZeroconfSearcher::shutdown()
 	// Servus::browse() can block indefinitely on Windows even when given a finite
 	// timeout. Ending the browse closes its DNS-SD handle and releases that call.
 	// Keep the Servus object alive until the worker has returned from browse().
+#if JUCE_WINDOWS
 	ScopedLock lock(servusLock);
 	if (servus != nullptr && servus->isBrowsing()) servus->endBrowsing();
+#endif
 }
 
 ZeroconfManager::ServiceInfo* ZeroconfManager::ZeroconfSearcher::getService(StringRef sName, StringRef host, int port)
@@ -263,18 +265,28 @@ String ZeroconfManager::ZeroconfSearcher::getIPForHost(String host)
 
 void ZeroconfManager::ZeroconfSearcher::run()
 {
+	servus::Servus::Result started(servus::Servus::Result::PENDING);
 	{
 		ScopedLock lock(servusLock);
 		if (threadShouldExit()) return;
 
 		servus.reset(new servus::Servus(String(serviceName).toStdString()));
 		servus->addListener(this);
-		servus->beginBrowsing(servus::Servus::Interface::IF_ALL);
+		started = servus->beginBrowsing(servus::Servus::Interface::IF_ALL);
 	}
 
-	while (!threadShouldExit())
+	if (!started && started != servus::Servus::Result::PENDING)
+		NLOGWARNING("Zeroconf", "Could not start " << name << " discovery: " << started.getString());
+
+	while (!threadShouldExit() && (started || started == servus::Servus::Result::PENDING))
 	{
-		servus->browse(1000);
+		const auto result = servus->browse(1000);
+		if (!result && result != servus::Servus::Result::PENDING)
+		{
+			if (!threadShouldExit())
+				NLOGWARNING("Zeroconf", name << " discovery stopped: " << result.getString());
+			break;
+		}
 		wait(500);
 	}
 

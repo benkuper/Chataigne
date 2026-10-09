@@ -314,7 +314,13 @@ jobs:
             libxrandr-dev libxrender-dev libwebkit2gtk-4.0-dev \
             libglu1-mesa-dev mesa-common-dev libcurl4-openssl-dev \
             libssl-dev libmosquitto-dev libmosquittopp-dev libbluetooth-dev \
-            libusb-1.0-0-dev libhidapi-dev libsdl2-dev libmpv-dev
+            libusb-1.0-0-dev libhidapi-dev libsdl2-dev libmpv-dev \
+            libavahi-client-dev cmake
+
+      - name: Build patched Servus and validate Avahi failure handling
+        run: |
+          bash Tools/build_servus_linux.sh
+          bash Tools/tests/run_servus_avahi_failure_test.sh
 
       - name: Build
         run: |
@@ -652,7 +658,20 @@ jobs:
             libhidapi-dev:${{ matrix.deb_arch }} \
             libsdl2-dev:${{ matrix.deb_arch }} \
             libmpv-dev:${{ matrix.deb_arch }} \
-            libgpiod-dev:${{ matrix.deb_arch }}
+            libgpiod-dev:${{ matrix.deb_arch }} \
+            libavahi-client-dev:${{ matrix.deb_arch }} cmake
+
+      - name: Build patched Servus
+        env:
+          CXX: ${{ matrix.gnu_type }}-g++
+          CXXFLAGS: ${{ matrix.arch_flags }}
+          PKG_CONFIG_LIBDIR: /usr/lib/${{ matrix.gnu_type }}/pkgconfig:/usr/share/pkgconfig
+        run: |
+          if [ "${{ matrix.deb_arch }}" = arm64 ]; then
+            bash Tools/build_servus_linux.sh External/servus/lib/raspberry64
+          else
+            bash Tools/build_servus_linux.sh External/servus/lib/raspberry
+          fi
 
       - name: Set Suffix
         id: set_variables

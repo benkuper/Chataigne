@@ -1,0 +1,164 @@
+--- a/servus/avahi/servus.h
++++ b/servus/avahi/servus.h
+@@ -75,6 +75,7 @@
+         , _port(0)
+         , _announcable(false)
+         , _scope(servus::Servus::IF_ALL)
++        , _pollFailed(false)
+     {
+         if (!_poll)
+             throw std::runtime_error("Can't setup avahi poll device");
+@@ -107,6 +108,9 @@
+     {
+         ScopedLock lock(_mutex);
+ 
++        if (_pollFailed)
++            return servus::Servus::Result(servus::Servus::Result::POLL_ERROR);
++
+         _result = servus::Servus::Result::PENDING;
+         _port = port;
+         if (instance.empty())
+@@ -124,7 +128,8 @@
+                    _result == servus::Servus::Result::PENDING &&
+                    _elapsedMilliseconds(startTime) < ANNOUNCE_TIMEOUT)
+             {
+-                avahi_simple_poll_iterate(_poll, ANNOUNCE_TIMEOUT);
++                if (!_iterate(ANNOUNCE_TIMEOUT))
++                    return servus::Servus::Result(servus::Servus::Result::POLL_ERROR);
+             }
+         }
+ 
+@@ -149,10 +154,11 @@
+     servus::Servus::Result beginBrowsing(
+         const ::servus::Servus::Interface addr) final
+     {
++        ScopedLock lock(_mutex);
++        if (_pollFailed)
++            return servus::Servus::Result(servus::Servus::Result::POLL_ERROR);
+         if (_browser)
+             return servus::Servus::Result(servus::Servus::Result::PENDING);
+-
+-        ScopedLock lock(_mutex);
+         _scope = addr;
+         _instanceMap.clear();
+         _result = servus::Servus::Result::SUCCESS;
+@@ -176,22 +182,13 @@
+         const chrono::high_resolution_clock::time_point& startTime =
+             chrono::high_resolution_clock::now();
+ 
+-        size_t nErrors = 0;
+         do
+         {
+-            if (avahi_simple_poll_iterate(_poll, timeout) != 0)
+-            {
+-                if (++nErrors < 10)
+-                    continue;
+-
+-                _result = servus::Servus::Result::POLL_ERROR;
+-                break;
+-            }
++            if (!_iterate(timeout))
++                return servus::Servus::Result(servus::Servus::Result::POLL_ERROR);
+         } while (_elapsedMilliseconds(startTime) < timeout);
+ 
+-        if (_result != servus::Servus::Result::POLL_ERROR)
+-            _result = servus::Servus::Result::SUCCESS;
+-
++        _result = servus::Servus::Result::SUCCESS;
+         return servus::Servus::Result(_result);
+     }
+ 
+@@ -215,6 +212,24 @@
+     bool _announcable;
+     servus::Servus::Interface _scope;
+ 
++    // A quit is terminal for AvahiSimplePoll: iterating it again asserts.
++    bool _pollFailed;
++
++    void _quitPoll()
++    {
++        _pollFailed = true;
++        avahi_simple_poll_quit(_poll);
++    }
++
++    bool _iterate(const int32_t timeout)
++    {
++        if (_pollFailed)
++            return false;
++        if (avahi_simple_poll_iterate(_poll, timeout) != 0)
++            _pollFailed = true;
++        return !_pollFailed;
++    }
++
+     // Client state change
+     static void _clientCBS(AvahiClient*, AvahiClientState state, void* servus)
+     {
+@@ -234,21 +249,21 @@
+         case AVAHI_CLIENT_FAILURE:
+             _result = avahi_client_errno(_client);
+             WARN << "Client failure: " << avahi_strerror(_result) << std::endl;
+-            avahi_simple_poll_quit(_poll);
++            _quitPoll();
+             break;
+ 
+         case AVAHI_CLIENT_S_COLLISION:
+             // Can't setup client
+             _result = EEXIST;
+-            avahi_simple_poll_quit(_poll);
++            _quitPoll();
+             break;
+ 
+         case AVAHI_CLIENT_S_REGISTERING:
+             // The server records are now being established. This might be
+             // caused by a host name change. We need to wait for our own records
+             // to register until the host name is properly established.
+-            throw std::runtime_error(
+-                "Unimplemented AVAHI_CLIENT_S_REGISTERING event");
++            _result = EAGAIN;
++            _quitPoll();
+             // withdraw & _createServices ?
+             break;
+ 
+@@ -277,7 +292,7 @@
+         case AVAHI_BROWSER_FAILURE:
+             _result = avahi_client_errno(_client);
+             WARN << "Browser failure: " << avahi_strerror(_result) << std::endl;
+-            avahi_simple_poll_quit(_poll);
++            _quitPoll();
+             break;
+ 
+         case AVAHI_BROWSER_NEW:
+@@ -292,7 +307,7 @@
+                 _result = avahi_client_errno(_client);
+                 WARN << "Error creating resolver: " << avahi_strerror(_result)
+                      << std::endl;
+-                avahi_simple_poll_quit(_poll);
++                _quitPoll();
+             }
+             break;
+ 
+@@ -395,13 +410,13 @@
+ 
+         if (_result != servus::Result::SUCCESS)
+         {
+-            avahi_simple_poll_quit(_poll);
++            _quitPoll();
+             return;
+         }
+ 
+         _result = avahi_entry_group_commit(_group);
+         if (_result != servus::Result::SUCCESS)
+-            avahi_simple_poll_quit(_poll);
++            _quitPoll();
+     }
+ 
+     static void _groupCBS(AvahiEntryGroup*, AvahiEntryGroupState state,
+@@ -420,7 +435,7 @@
+         case AVAHI_ENTRY_GROUP_COLLISION:
+         case AVAHI_ENTRY_GROUP_FAILURE:
+             _result = EEXIST;
+-            avahi_simple_poll_quit(_poll);
++            _quitPoll();
+             break;
+ 
+         case AVAHI_ENTRY_GROUP_UNCOMMITED:
