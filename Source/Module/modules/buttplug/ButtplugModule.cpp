@@ -2,7 +2,7 @@
 
 ButtplugModule::ButtplugModule() : Module("Buttplug")
 {
-    serverPath = moduleParams.addStringParameter("Server Path", "Intiface WebSocket server, with optional ws:// or wss:// prefix", "127.0.0.1:12345");
+    serverPath = moduleParams.addStringParameter("Server Path", "Copy the WebSocket server address shown in Intiface Central. Its port may differ from the default 12345. ws:// and wss:// prefixes are accepted.", "127.0.0.1:12345");
     useSecureConnection = moduleParams.addBoolParameter("Use Secure Connection", "Connect using wss://", false);
     autoScan = moduleParams.addBoolParameter("Scan On Connect", "Start device discovery after connecting to Intiface", true);
     reconnect = moduleParams.addTrigger("Reconnect", "Reconnect to the Intiface server");
@@ -14,8 +14,7 @@ ButtplugModule::ButtplugModule() : Module("Buttplug")
     isScanning = moduleParams.addBoolParameter("Scanning", "Intiface is discovering devices", false);
     serverName = moduleParams.addStringParameter("Server Name", "Name reported by Intiface", "");
     deviceCount = moduleParams.addIntParameter("Device Count", "Number of connected devices", 0, 0);
-    lastError = moduleParams.addStringParameter("Last Error", "Most recent connection or protocol error", "");
-    for (auto* p : Array<Parameter*> { isConnected, isScanning, serverName, deviceCount, lastError })
+    for (auto* p : Array<Parameter*> { isConnected, isScanning, serverName, deviceCount })
     {
         p->setControllableFeedbackOnly(true);
         p->isSavable = false;
@@ -49,15 +48,15 @@ void ButtplugModule::clearItem()
     Module::clearItem();
 }
 
-void ButtplugModule::enqueue(EventType type, const String& text)
+void ButtplugModule::enqueue(EventType type, const String& text, int status)
 {
     const ScopedLock lock(eventLock);
-    if (!shuttingDown) events.add({ type, text });
+    if (!shuttingDown) events.add({ type, text, status });
 }
 
 void ButtplugModule::connectionOpened() { enqueue(OPENED); }
-void ButtplugModule::connectionClosed(int, const String& reason) { enqueue(CLOSED, reason); }
-void ButtplugModule::connectionError(int, const String& message) { enqueue(ERROR, message); }
+void ButtplugModule::connectionClosed(int status, const String& reason) { enqueue(CLOSED, reason, status); }
+void ButtplugModule::connectionError(int status, const String& message) { enqueue(ERROR, message, status); }
 void ButtplugModule::messageReceived(const String& message) { enqueue(MESSAGE, message); }
 
 void ButtplugModule::resetSession()
@@ -98,7 +97,8 @@ void ButtplugModule::setupClient()
     else if (path.startsWithIgnoreCase("ws://")) { path = path.substring(5); secure = false; }
 
     retryTime = Time::getMillisecondCounterHiRes() + 5000;
-    if (path.isEmpty()) { reportError("Set an Intiface server path."); return; }
+    connectionAddress = (secure ? "wss://" : "ws://") + path;
+    if (path.isEmpty()) { reportConnectionWarning("Set Server Path to the WebSocket address shown in Intiface Central, then click Reconnect."); return; }
     if (secure)
     {
 #if SIMPLEWEB_SECURE_SUPPORTED
@@ -142,7 +142,7 @@ void ButtplugModule::timerCallback()
         else if (event.type == MESSAGE) processMessage(event.text);
         else
         {
-            if (event.type == ERROR) reportError(event.text);
+            reportTransportWarning(event);
             stopClient();
             retryTime = Time::getMillisecondCounterHiRes() + 5000;
             break;
@@ -156,7 +156,10 @@ void ButtplugModule::timerCallback()
     }
     else if (!isConnected->boolValue() && now - connectTime >= 10000)
     {
-        reportError("Intiface connection or Buttplug handshake timed out.");
+        if (socketConnected)
+            reportConnectionWarning("A WebSocket server answered at " + connectionAddress + ", but did not complete the Buttplug handshake. Check the WebSocket address in Intiface Central; this port may belong to another application. Retrying automatically.");
+        else
+            reportConnectionWarning("Intiface did not respond at " + connectionAddress + ". Intiface may not be launched, or its server may not be started. Start its server and copy the displayed WebSocket address into Server Path. Retrying automatically.");
         stopClient();
         retryTime = now + 5000;
     }
@@ -164,7 +167,7 @@ void ButtplugModule::timerCallback()
     {
         if (pingId != 0 && now - lastPingTime >= maxPingTime)
         {
-            reportError("Intiface did not acknowledge the Buttplug ping.");
+            reportConnectionWarning("Intiface stopped responding to keepalive pings. Check that its server is still running and the network connection is available. Retrying automatically.");
             stopClient();
             retryTime = now + 5000;
         }
@@ -271,7 +274,11 @@ void ButtplugModule::processMessage(const String& message)
     if (logIncomingData->boolValue()) NLOG(niceName, message);
     var data;
     const juce::Result result = JSON::parse(message, data);
-    if (result.failed() || !data.isArray()) { reportError("Invalid Buttplug JSON message."); return; }
+    if (result.failed() || !data.isArray())
+    {
+        reportError("Invalid Buttplug JSON reply. Check that Server Path matches the WebSocket address shown in Intiface Central; this port may belong to another application.");
+        return;
+    }
     for (const auto& envelope : *data.getArray())
     {
         const auto* object = envelope.getDynamicObject();
@@ -286,8 +293,17 @@ void ButtplugModule::processMessage(const String& type, const var& body)
     const int id = body.getProperty("Id", 0);
     if (type == "Error")
     {
-        reportError(body.getProperty("ErrorMessage", "Unknown Buttplug error").toString());
-        if (id == scanRequestId) { scanRequestId = 0; isScanning->setValue(false); }
+        const String detail = body.getProperty("ErrorMessage", "Unknown Buttplug error").toString();
+        if (scanRequestId != 0 && id == scanRequestId)
+        {
+            reportError("Intiface could not change device scanning. Check its Devices and Logs pages, then try Start Scanning or Stop Scanning again. Server message: " + detail, "Scanning");
+            scanRequestId = 0;
+            isScanning->setValue(false);
+        }
+        else if (handshakeId != 0 && id == handshakeId)
+            reportError("Intiface rejected the connection. Check its Logs page, close any other connected client, and update Intiface Central if needed. Server message: " + detail, "Connection");
+        else
+            reportError("Intiface could not complete the request. Check the device connection and Intiface's Logs page. Server message: " + detail);
         if ((handshakeId != 0 && id == handshakeId) || (pingId != 0 && id == pingId))
         {
             stopClient();
@@ -300,7 +316,7 @@ void ButtplugModule::processMessage(const String& type, const var& body)
         if (handshakeId == 0 || id != handshakeId || isConnected->boolValue()) return;
         if ((int)body.getProperty("MessageVersion", -1) != 3 || !body.hasProperty("MaxPingTime"))
         {
-            reportError("The server did not negotiate Buttplug protocol v3.");
+            reportError("The server did not negotiate Buttplug protocol v3. Check that Server Path points to Intiface's WebSocket server and update Intiface Central if needed.", "Connection");
             stopClient();
             retryTime = Time::getMillisecondCounterHiRes() + 5000;
             return;
@@ -310,7 +326,8 @@ void ButtplugModule::processMessage(const String& type, const var& body)
         lastPingTime = Time::getMillisecondCounterHiRes();
         serverName->setValue(body.getProperty("ServerName", ""));
         isConnected->setValue(true);
-        lastError->setValue("");
+        clearWarning("Connection");
+        clearWarning("Scanning");
         clearWarning("Buttplug");
         sendServerCommand("RequestDeviceList");
         if (autoScan->boolValue()) sendServerCommand("StartScanning");
@@ -320,7 +337,7 @@ void ButtplugModule::processMessage(const String& type, const var& body)
     if (type == "Ok")
     {
         if (id == pingId) pingId = 0;
-        if (id == scanRequestId) scanRequestId = 0;
+        if (scanRequestId != 0 && id == scanRequestId) { scanRequestId = 0; clearWarning("Scanning"); }
     }
     else if (type == "DeviceList")
     {
@@ -374,17 +391,45 @@ void ButtplugModule::removeDevice(int index)
     deviceCount->setValue(devices.size());
 }
 
-void ButtplugModule::reportError(const String& message)
+void ButtplugModule::reportError(const String& message, const String& warningId)
 {
-    if (lastError->stringValue() != message) NLOGWARNING(niceName, message);
-    lastError->setValue(message);
-    setWarningMessage(message, "Buttplug");
+    if (getWarningMessage(warningId) != message) NLOGERROR(niceName, message);
+    setWarningMessage(message, warningId, false);
+}
+
+void ButtplugModule::reportConnectionWarning(const String& message)
+{
+    setWarningMessage(message, "Connection");
+}
+
+void ButtplugModule::reportTransportWarning(const Event& event)
+{
+    String message;
+    if (isConnected->boolValue())
+        message = "Disconnected from Intiface at " + connectionAddress + ". Check that its server is still running. If another client is connected, disconnect it and click Reconnect. Retrying automatically.";
+    else if (socketConnected)
+        message = "The server at " + connectionAddress + " closed the connection before the Buttplug handshake completed. Check Intiface's Logs page and verify the WebSocket address; this port may belong to another application. Retrying automatically.";
+    else
+        message = "Could not connect to Intiface at " + connectionAddress + ". Intiface may not be launched, or its server may not be started. Start its server and copy the displayed WebSocket address into Server Path. Another application may be using this port. Retrying automatically.";
+    reportConnectionWarning(message);
+    // Low-level transport details remain available with incoming logging enabled.
+    if (logIncomingData->boolValue() && event.text.isNotEmpty())
+        NLOG(niceName, "WebSocket status " << event.status << ": " << event.text);
 }
 
 void ButtplugModule::onContainerParameterChangedInternal(Parameter* p)
 {
     Module::onContainerParameterChangedInternal(p);
-    if (p == enabled) reconnectRequested = true;
+    if (p == enabled)
+    {
+        if (!enabled->boolValue())
+        {
+            clearWarning("Connection");
+            clearWarning("Buttplug");
+            clearWarning("Scanning");
+        }
+        reconnectRequested = true;
+    }
 }
 
 void ButtplugModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)

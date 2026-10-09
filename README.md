@@ -32,12 +32,12 @@ You can check the tutorials to better understand what and how you can use Chatai
     - HTTP
     - MQTT
     - WebSockets
-    - Buttplug (through Intiface Central)
     - PJLink
     - Ableton Link
     - PosiStageNet
     
   - Supports communication and synchronization of the following hardware :
+    - Buttplug devices (through Intiface Central)
     - KinectV2 (Windows only)
     - StreamDeck
     - Joystick
@@ -105,10 +105,13 @@ Also you can watch tutorials from the website and follow the interactive guide f
 
 ### Controlling devices through Intiface
 
-Start the WebSocket server in Intiface Central, then add **Protocol > Buttplug**
+Start the WebSocket server in Intiface Central, then add **Hardware > Buttplug**
 in Chataigne. The default server is `127.0.0.1:12345`; you can also enter a
 `ws://` or `wss://` URL. The module uses Buttplug protocol v3, discovers devices
 on connection, and reconnects automatically when the server becomes available.
+Copy the address displayed in Intiface: its port may differ from `12345`,
+especially if another application already uses that port (for example, Leap Motion).
+Connection problems appear through Chataigne's standard warnings and log messages.
 
 Connected devices appear under **Values**, with their **Device Index** and
 supported **Features**. Use that device index in the **Vibrate**, **Set Scalar**,
@@ -252,6 +255,7 @@ Windows 7 x64 / Windows 10 x64 / MacOS / Linux x64 / Raspberry Pi :
 This list contains all the references to projects and libraries that Chataigne uses, either as an external libraries, or merged with and modified for Chataigne's source code.
 
 - JUCE : https://www.juce.com
+- Buttplug protocol and module logo : https://buttplug.io
 - Serial Library : https://github.com/wjwwood/serial
 - MIDI Timecode, from MStarPlayer : https://github.com/ServiusHack/MStarPlayer
 - Wiimote library Wiiuse : https://github.com/wiiuse/wiiuse

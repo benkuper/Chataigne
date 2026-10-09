@@ -29,6 +29,9 @@ namespace BinaryData
     extern const char*   Ableton_Live_png;
     const int            Ableton_Live_pngSize = 3172;
 
+    extern const char*   Buttplug_png;
+    const int            Buttplug_pngSize = 60773;
+
     extern const char*   DLight_png;
     const int            DLight_pngSize = 3180;
 
@@ -249,7 +252,7 @@ namespace BinaryData
     const int            tray_icon_pngSize = 3363;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 80;
+    const int namedResourceListSize = 81;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

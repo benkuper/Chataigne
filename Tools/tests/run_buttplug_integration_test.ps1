@@ -1,3 +1,4 @@
+param([string]$LiveServer = '')
 $ErrorActionPreference = 'Stop'
 $repoPath = (Resolve-Path (Join-Path $PSScriptRoot '../..')).Path
 $projectDir = Join-Path $repoPath 'Builds/VisualStudio2022'
@@ -42,7 +43,8 @@ try {
     $previousErrorPreference = $ErrorActionPreference
     try {
         $ErrorActionPreference = 'Continue'
-        & $testExe 2>&1 | ForEach-Object { "$PSItem" }
+        if ($LiveServer) { & $testExe $LiveServer 2>&1 | ForEach-Object { "$PSItem" } }
+        else { & $testExe 2>&1 | ForEach-Object { "$PSItem" } }
         $testExitCode = $LASTEXITCODE
     } finally { $ErrorActionPreference = $previousErrorPreference }
     if ($testExitCode -ne 0) { throw "Buttplug integration tests failed (exit $testExitCode)." }

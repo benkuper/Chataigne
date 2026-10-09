@@ -27,13 +27,13 @@ ModuleFactory::ModuleFactory() {
 	defs.add(new ModuleDefinition("Protocol", "PJLink", &PJLinkModule::create));
 	defs.add(new ModuleDefinition("Protocol", "PosiStageNet", &PosiStageNetModule::create));
 	defs.add(new ModuleDefinition("Protocol", "Ableton Link", &AbletonLinkModule::create));
-	defs.add(new ModuleDefinition("Protocol", "Buttplug", &ButtplugModule::create));
 
 #if BLE_SUPPORT
 	defs.add(new ModuleDefinition("Protocol", "Bluetooth LE", &BLEModule::create));
 #endif
 
 	defs.add(new ModuleDefinition("Hardware", "Sound Card", &AudioModule::create));
+	defs.add(new ModuleDefinition("Hardware", "Buttplug", &ButtplugModule::create));
 	defs.add(new ModuleDefinition("Video", "Video monitor out", &VideoMonitorOutModule::create));
 	defs.add(new ModuleDefinition("Video", "NDI out", &NDIOutModule::create));
 	defs.add(new ModuleDefinition("Video", "OMT out", &OMTOutModule::create));

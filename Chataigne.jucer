@@ -25,6 +25,7 @@
               file="Resources/Modules/Ableton Link.png"/>
         <FILE id="jnGyRW" name="Ableton Live.png" compile="0" resource="1"
               file="Resources/Modules/Ableton Live.png"/>
+        <FILE id="bpLogo" name="Buttplug.png" compile="0" resource="1" file="Resources/Modules/Buttplug.png"/>
         <FILE id="MPJkAm" name="DLight.png" compile="0" resource="1" file="Resources/Modules/DLight.png"/>
         <FILE id="kdkONp" name="DMX.png" compile="0" resource="1" file="Resources/Modules/DMX.png"/>
         <FILE id="eqnFj9" name="Empty.png" compile="0" resource="1" file="Resources/Modules/Empty.png"/>

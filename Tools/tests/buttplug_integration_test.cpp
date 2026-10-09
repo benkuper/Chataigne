@@ -160,6 +160,10 @@ static void testButtplug()
     check(module->serverName->stringValue() == "Mock Intiface", "server name feedback");
     waitFor([&] { return server.count("StartScanning") == 1; }, "automatic scanning");
     check(module->valuesCC.getControllableContainerByName("device7") != nullptr, "device feedback container");
+    check(module->moduleParams.getControllableByName("Last Error", true) == nullptr, "diagnostics use standard warnings rather than a Last Error parameter");
+    ModuleFactory factory;
+    auto* definition = factory.getDefinitionForType("Buttplug");
+    check(definition != nullptr && definition->menuPath == "Hardware" && definition->icon.isValid(), "Hardware chooser contains Buttplug with its embedded logo");
     const String saved = JSON::toString(module->getJSONData());
     check(saved.contains(path) && !saved.contains("device7") && !saved.contains("Mock Intiface"), "save configuration without runtime device or server state");
 
@@ -205,17 +209,20 @@ static void testButtplug()
     waitFor([&] { return !module->isScanning->boolValue(); }, "scanning finished feedback");
     server.rejectScan = true;
     module->startScanning->trigger();
-    waitFor([&] { return module->lastError->stringValue() == "Scan test failure"; }, "scan error reported");
+    waitFor([&] { return module->getWarningMessage("Scanning").contains("Scan test failure"); }, "scan error reported");
     check(!module->isScanning->boolValue() && module->isConnected->boolValue(), "scan failure clears scanning without disconnecting");
     server.rejectScan = false;
+    module->startScanning->trigger();
+    waitFor([&] { return module->getWarningMessage("Scanning").isEmpty(); }, "successful scanning retry clears its warning");
+    server.send("ScanningFinished", var(new DynamicObject()));
     { const ScopedLock guard(server.lock); server.connection->send("not JSON"); }
-    waitFor([&] { return module->lastError->stringValue().contains("Invalid Buttplug JSON"); }, "malformed reply reported");
+    waitFor([&] { return module->getWarningMessage("Buttplug").contains("Invalid Buttplug JSON"); }, "malformed reply reported");
     check(module->isConnected->boolValue(), "malformed message does not destroy session");
     var error(new DynamicObject());
     error.getDynamicObject()->setProperty("ErrorCode", 3);
     error.getDynamicObject()->setProperty("ErrorMessage", "System test error");
     server.send("Error", error);
-    waitFor([&] { return module->lastError->stringValue() == "System test error"; }, "unsolicited error reported");
+    waitFor([&] { return module->getWarningMessage("Buttplug").contains("System test error"); }, "unsolicited error reported");
     check(module->isConnected->boolValue(), "system error does not match an inactive handshake or ping");
     server.send("DeviceAdded", MockIntiface::device(9));
     waitFor([&] { return module->deviceCount->intValue() == 2; }, "device hotplug");
@@ -236,11 +243,11 @@ static void testButtplug()
 
     server.answerPings = false;
     waitFor([&] { return !module->isConnected->boolValue(); }, "missing ping acknowledgment disconnects");
-    check(module->lastError->stringValue().contains("ping"), "ping failure reported");
+    check(module->getWarningMessage("Connection").contains("ping"), "ping failure reported");
     server.answerPings = true;
     server.version = 2;
     module->reconnect->trigger();
-    waitFor([&] { return module->lastError->stringValue().contains("protocol v3"); }, "incompatible protocol rejected");
+    waitFor([&] { return module->getWarningMessage("Connection").contains("protocol v3"); }, "incompatible protocol rejected");
     check(!module->isConnected->boolValue(), "incompatible handshake is not connected");
 
     server.version = 3;
@@ -249,6 +256,7 @@ static void testButtplug()
     const int scans = server.count("StartScanning");
     module->reconnect->trigger();
     waitFor([&] { return module->isConnected->boolValue() && module->deviceCount->intValue() == 1; }, "reconnect without scanning");
+    check(module->getWarningMessage().isEmpty(), "successful reconnection clears previous session warnings");
     check(server.count("StartScanning") == scans, "scan-on-connect can be disabled");
     const int stops = server.count("StopAllDevices");
     module->enabled->setValue(false);
@@ -258,13 +266,50 @@ static void testButtplug()
     module->clearItem();
 }
 
-int main()
+static void testConnectionWarning()
+{
+    StreamingSocket freePort;
+    check(freePort.createListener(0, "127.0.0.1"), "reserve a free port for an unavailable server");
+    const int port = freePort.getBoundPort();
+    freePort.close();
+    ButtplugModule module;
+    module.serverPath->setValue("127.0.0.1:" + String(port));
+    waitFor([&] { return module.getWarningMessage("Connection").isNotEmpty(); }, "connection warning reported");
+    const String warning = module.getWarningMessage("Connection");
+    check(warning.contains("Intiface may not be launched") && warning.contains("Server Path")
+        && warning.contains(String(port)), "connection warning explains what to check and identifies the endpoint");
+    module.enabled->setValue(false);
+    check(module.getWarningMessage().isEmpty(), "disabling the module clears connection warnings");
+}
+
+static void testLiveIntiface(const String& address)
+{
+    ButtplugModule module;
+    module.autoScan->setValue(false);
+    module.serverPath->setValue(address);
+    waitFor([&] { return module.isConnected->boolValue(); }, "live Intiface handshake", 8000);
+    check(module.serverName->stringValue().containsIgnoreCase("Intiface"), "live server identifies itself as Intiface");
+    const double until = Time::getMillisecondCounterHiRes() + 500;
+    waitFor([&] { return Time::getMillisecondCounterHiRes() >= until; }, "live session stable");
+    check(module.isConnected->boolValue() && module.getWarningMessage().isEmpty(), "live session remains connected without warnings");
+    std::cout << "Connected to " << module.serverName->stringValue() << " at " << address
+              << "; devices: " << module.deviceCount->intValue() << '\n';
+    module.clearItem();
+}
+
+int main(int argc, char** argv)
 {
     ScopedJuceInitialiser_GUI gui;
     ButtplugTestApplication app;
     app.engine.reset(new ChataigneEngine());
+    WarningReporter::getInstance();
     int result = 0;
-    try { testButtplug(); std::cout << "Buttplug integration tests passed\n"; }
+    try
+    {
+        if (argc > 1) testLiveIntiface(String(argv[1]));
+        else { testButtplug(); testConnectionWarning(); }
+        std::cout << "Buttplug integration tests passed\n";
+    }
     catch (const std::exception& e) { std::cerr << "Buttplug integration failed: " << e.what() << '\n'; result = 1; }
     app.engine.reset();
     return result;

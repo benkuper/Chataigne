@@ -15,7 +15,6 @@ public:
     BoolParameter* isConnected;
     BoolParameter* isScanning;
     StringParameter* serverName;
-    StringParameter* lastError;
     IntParameter* deviceCount;
     Trigger* reconnect;
     Trigger* startScanning;
@@ -39,7 +38,7 @@ public:
 
 private:
     enum EventType { OPENED, CLOSED, ERROR, MESSAGE };
-    struct Event { EventType type; String text; };
+    struct Event { EventType type; String text; int status = 0; };
     CriticalSection eventLock;
     Array<Event> events;
     CriticalSection stateLock;
@@ -56,12 +55,13 @@ private:
     double connectTime = 0;
     double retryTime = 0;
     double lastPingTime = 0;
+    String connectionAddress;
 
     void timerCallback() override;
     void setupClient();
     void stopClient();
     void resetSession();
-    void enqueue(EventType type, const String& text = {});
+    void enqueue(EventType type, const String& text = {}, int status = 0);
     void connectionOpened() override;
     void connectionClosed(int status, const String& reason) override;
     void connectionError(int status, const String& message) override;
@@ -70,7 +70,9 @@ private:
     void processMessage(const String& type, const var& body);
     void updateDevice(const var& data);
     void removeDevice(int index);
-    void reportError(const String& message);
+    void reportError(const String& message, const String& warningId = "Buttplug");
+    void reportConnectionWarning(const String& message);
+    void reportTransportWarning(const Event& event);
     int sendRequest(const String& type, var body = var(new DynamicObject()));
     bool sendActuatorCommand(const String& type, int deviceIndex, int featureIndex,
                              double value, bool clockwise, int durationMs, const String& actuatorType);
