@@ -27,6 +27,7 @@ ModuleFactory::ModuleFactory() {
 	defs.add(new ModuleDefinition("Protocol", "PJLink", &PJLinkModule::create));
 	defs.add(new ModuleDefinition("Protocol", "PosiStageNet", &PosiStageNetModule::create));
 	defs.add(new ModuleDefinition("Protocol", "Ableton Link", &AbletonLinkModule::create));
+	defs.add(new ModuleDefinition("Protocol", "Buttplug", &ButtplugModule::create));
 
 #if BLE_SUPPORT
 	defs.add(new ModuleDefinition("Protocol", "Bluetooth LE", &BLEModule::create));

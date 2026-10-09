@@ -1424,6 +1424,18 @@
             <FILE id="O19KOs" name="PosiStageNetModule.h" compile="0" resource="0"
                   file="Source/Module/modules/posistagenet/PosiStageNetModule.h"/>
           </GROUP>
+          <GROUP id="buttplugModule" name="buttplug">
+            <FILE id="buttplugCpp" name="ButtplugModule.cpp" compile="0" resource="0"
+                  file="Source/Module/modules/buttplug/ButtplugModule.cpp"/>
+            <FILE id="buttplugH" name="ButtplugModule.h" compile="0" resource="0"
+                  file="Source/Module/modules/buttplug/ButtplugModule.h"/>
+            <GROUP id="buttplugCommands" name="commands">
+              <FILE id="buttplugCmdCpp" name="ButtplugCommand.cpp" compile="0" resource="0"
+                    file="Source/Module/modules/buttplug/commands/ButtplugCommand.cpp"/>
+              <FILE id="buttplugCmdH" name="ButtplugCommand.h" compile="0" resource="0"
+                    file="Source/Module/modules/buttplug/commands/ButtplugCommand.h"/>
+            </GROUP>
+          </GROUP>
           <GROUP id="{82D5E4C7-8C1C-9378-EEE7-C988DD90549E}" name="websocket">
             <GROUP id="{4FA7479C-2A94-C90F-41FE-7D5B84A26E65}" name="ui">
               <FILE id="XUeIev" name="WebSocketServerModuleUI.cpp" compile="0" resource="0"

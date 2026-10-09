@@ -32,6 +32,7 @@ You can check the tutorials to better understand what and how you can use Chatai
     - HTTP
     - MQTT
     - WebSockets
+    - Buttplug (through Intiface Central)
     - PJLink
     - Ableton Link
     - PosiStageNet
@@ -101,6 +102,27 @@ If you wish to test the latest features and commits, the bleeding-edge section i
 You can start by checking the Amazing Chataigne Documentation, made with love ! https://benjamin.kuperberg.fr/chataigne/docs
 
 Also you can watch tutorials from the website and follow the interactive guide from withing the application.
+
+### Controlling devices through Intiface
+
+Start the WebSocket server in Intiface Central, then add **Protocol > Buttplug**
+in Chataigne. The default server is `127.0.0.1:12345`; you can also enter a
+`ws://` or `wss://` URL. The module uses Buttplug protocol v3, discovers devices
+on connection, and reconnects automatically when the server becomes available.
+
+Connected devices appear under **Values**, with their **Device Index** and
+supported **Features**. Use that device index in the **Vibrate**, **Set Scalar**,
+**Rotate**, **Linear**, or **Stop Device** commands. A **Feature Index** of `-1`
+controls all matching features; otherwise use the zero-based index within that
+command's feature array. Vibrate filters scalar features to vibration motors.
+Actuator values range from 0 to 1, and linear movement duration is in milliseconds.
+These actuator commands support mappings and sequence automation.
+
+**Start Scanning**, **Stop Scanning**, **Refresh Devices**, and **Stop All Devices**
+are available as module controls and commands. The module sends Stop All Devices
+before disconnecting or being disabled; it does not restore actuator values when
+reconnecting. Intiface provides hardware and Bluetooth support, so no additional
+device drivers or Buttplug library are required by Chataigne.
 
 ## Building the software
 

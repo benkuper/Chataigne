@@ -40,6 +40,9 @@
 #include "modules/websocket/WebSocketServerModule.cpp"
 #include "modules/websocket/ui/WebSocketServerModuleUI.cpp"
 
+#include "modules/buttplug/ButtplugModule.cpp"
+#include "modules/buttplug/commands/ButtplugCommand.cpp"
+
 #include "modules/abletonlink/AbletonLinkModule.cpp"
 
 #include "modules/mqtt/MQTTModule.cpp"
