@@ -1,0 +1,37 @@
+--- a/src/linux/OMTDiscoveryAvahi.cs
++++ b/src/linux/OMTDiscoveryAvahi.cs
+@@ -87,6 +87,7 @@
+             if (client == IntPtr.Zero)
+             {
+                 OMTLogging.Write("Failure creating client: " + hr, "OMTDiscoveryAvahi");
++                return;
+             }
+             browser = AvahiClient.avahi_service_browser_new(client, AvahiClient.AVAHI_IF_UNSPEC, AvahiClient.AVAHI_PROTO_UNSPEC
+                 , serviceType, IntPtr.Zero, 0, Marshal.GetFunctionPointerForDelegate(serviceBrowserCallback), IntPtr.Zero);
+@@ -180,6 +181,7 @@
+         {
+             lock (lockSync)
+             {
++                if (client == IntPtr.Zero) return false;
+                 OMTDiscoveryEntry entry = GetEntry(address);
+                 if (entry == null)
+                 {
+--- a/src/OMTDiscovery.cs
++++ b/src/OMTDiscovery.cs
+@@ -91,7 +91,15 @@
+                             instance = new mac.OMTDiscoveryMac();
+                             break;
+                         case OMTPlatformType.Linux:
+-                            instance = new linux.OMTDiscoveryAvahi();
++                            try
++                            {
++                                instance = new linux.OMTDiscoveryAvahi();
++                            }
++                            catch (Exception ex) when (ex is DllNotFoundException || ex is EntryPointNotFoundException)
++                            {
++                                OMTLogging.Write(ex.ToString(), "OMTDiscovery");
++                                instance = new OMTDiscovery();
++                            }
+                             break;
+                         default:
+                             instance = new OMTDiscovery();

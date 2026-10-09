@@ -176,7 +176,7 @@ int main(int argc, char** argv)
                 auto* pixel = pixels.data() + (y * 64 + x) * 4;
                 pixel[0] = y < 16 ? 0 : 255; pixel[1] = 0; pixel[2] = y < 16 ? 255 : 0;
             }
-        testNDI(pixels);
+        if (!(argc > 1 && String(argv[1]) == "--omt-only")) testNDI(pixels);
 #if ! defined(__arm__) || defined(__aarch64__)
         testOMT(pixels);
 #endif

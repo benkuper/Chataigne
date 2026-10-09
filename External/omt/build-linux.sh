@@ -7,7 +7,8 @@ case "$ARCH" in
   arm64) RID=linux-arm64; CXX=clang++; FLAGS=(--target=aarch64-linux-gnu -march=armv8-a+simd); AVX=() ;;
   *) echo "OMT NativeAOT supports x64 and arm64; ARM32 is unavailable." >&2; exit 1 ;;
 esac
-DEST=$(cd "$(dirname "$0")" && pwd)/lib/linux/$ARCH
+SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
+DEST=$SCRIPT_DIR/lib/linux/$ARCH
 WORK=$(mktemp -d)
 trap 'rm -rf "$WORK"' EXIT
 fetch() {
@@ -19,6 +20,8 @@ fetch() {
 fetch libomt bb4b67be8e5964f1017592b9fc5406495e704e5d
 fetch libomtnet 029ef4e925c68973f3289eb0c7ecfd40a161166f
 fetch libvmx a1828cb438823ebb777dcad20f9f56b633ae8db4
+# Discovery is optional: upstream otherwise aborts without an Avahi daemon.
+git -C "$WORK/libomtnet" apply "$SCRIPT_DIR/optional-avahi.patch"
 mkdir -p "$DEST"
 pushd "$WORK/libvmx/src" >/dev/null
 if [ "$ARCH" = x64 ]; then

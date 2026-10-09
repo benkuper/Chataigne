@@ -24,7 +24,9 @@ if ($RuntimeOnly) { $compileArguments += "/DCHATAIGNE_VIDEO_RUNTIME_ONLY=1" }
 $compileArguments += "`"$(Join-Path $PSScriptRoot 'video_network_output_test.cpp')`""
 $compileResponse = Join-Path $testDir 'compile.rsp'
 Set-Content -LiteralPath $compileResponse -Value ($compileArguments -join "`r`n")
-$linkLines = Get-Content -LiteralPath (Join-Path $objectDir 'Chataigne_App.tlog/link.command.1.tlog')
+$linkLog = Get-ChildItem -LiteralPath $objectDir -Filter link.command.1.tlog -Recurse | Select-Object -First 1
+if (!$linkLog) { throw "Build Chataigne $Configuration first; the linker log is missing." }
+$linkLines = Get-Content -LiteralPath $linkLog.FullName
 $linkArguments = $linkLines | Where-Object { $_.StartsWith('/OUT:') } | Select-Object -First 1
 $objectLine = $linkLines | Where-Object { $_.StartsWith('^') } | Select-Object -First 1
 if (!$linkArguments -or !$objectLine) { throw 'Build Chataigne Debug first.' }

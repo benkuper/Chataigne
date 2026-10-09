@@ -18,6 +18,9 @@ installing a missing runtime.
 The application's macOS deployment target is unchanged. Older macOS systems can
 use an appropriately compatible installed NDI runtime. x64 OMT/VMX needs SSE4.2,
 SSSE3 and LZCNT; AVX2 is used by the optimized codec path.
+Linux OMT discovery uses Avahi. Without its libraries or running daemon, direct
+connections by OMT URL still work. The Linux runtime includes a small patch to
+make discovery failure optional instead of aborting the application.
 
 ## Runtime locations
 

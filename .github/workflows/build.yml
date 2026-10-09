@@ -262,6 +262,7 @@ jobs:
         env:
           JUCE_DIR: ${{ github.workspace }}/JUCE
           CXX: clang++
+          VIDEO_ARCH: ${{ matrix.arch }}
         run: bash Tools/tests/run_video_network_output_test.sh
 
       - name: Create Package
