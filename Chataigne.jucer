@@ -43,6 +43,8 @@
         <FILE id="XUwKVr" name="Millumin.png" compile="0" resource="1" file="Resources/Modules/Millumin.png"/>
         <FILE id="UjV2cF" name="Mouse.png" compile="0" resource="1" file="Resources/Modules/Mouse.png"/>
         <FILE id="E9Dt6s" name="MQTT Client.png" compile="0" resource="1" file="Resources/Modules/MQTT Client.png"/>
+        <FILE id="NDIoo01" name="NDI out.png" compile="0" resource="1" file="Resources/Modules/NDI out.png"/>
+        <FILE id="OMToo01" name="OMT out.png" compile="0" resource="1" file="Resources/Modules/OMT out.png"/>
         <FILE id="i5QUZ4" name="OS.png" compile="0" resource="1" file="Resources/Modules/OS.png"/>
         <FILE id="CBoeF1" name="OSC.png" compile="0" resource="1" file="Resources/Modules/OSC.png"/>
         <FILE id="mQRViU" name="OSCQuery.png" compile="0" resource="1" file="Resources/Modules/OSCQuery.png"/>
@@ -1502,6 +1504,18 @@
                 file="Source/Module/ui/ModuleManagerUI.h"/>
           <FILE id="WePLRY" name="ModuleUI.cpp" compile="0" resource="0" file="Source/Module/ui/ModuleUI.cpp"/>
           <FILE id="TYCtuK" name="ModuleUI.h" compile="0" resource="0" file="Source/Module/ui/ModuleUI.h"/>
+        </GROUP>
+        <GROUP id="VideoNetworkSenders" name="Network video output">
+          <FILE id="NetVideo0" name="NDIOutModule.cpp" compile="0" resource="0"
+                file="Source/Module/modules/video/NDIOutModule.cpp"/>
+          <FILE id="NetVideo1" name="NDIOutModule.h" compile="0" resource="0"
+                file="Source/Module/modules/video/NDIOutModule.h"/>
+          <FILE id="NetVideo2" name="OMTOutModule.cpp" compile="0" resource="0"
+                file="Source/Module/modules/video/OMTOutModule.cpp"/>
+          <FILE id="NetVideo3" name="OMTOutModule.h" compile="0" resource="0"
+                file="Source/Module/modules/video/OMTOutModule.h"/>
+          <FILE id="NetVideo4" name="VideoNetworkRuntime.h" compile="0" resource="0"
+                file="Source/Module/modules/video/VideoNetworkRuntime.h"/>
         </GROUP>
         <FILE id="I7xDJJ" name="Module.cpp" compile="0" resource="0" file="Source/Module/Module.cpp"/>
         <FILE id="Lh5WP9" name="Module.h" compile="0" resource="0" file="Source/Module/Module.h"/>

@@ -18,6 +18,8 @@
 #include "modules/generators/signal/SignalModule.cpp"
 
 #include "modules/video/VideoMonitorOutModule.cpp"
+#include "modules/video/NDIOutModule.cpp"
+#include "modules/video/OMTOutModule.cpp"
 
 #include "modules/generic/ChataigneGenericModule.cpp"
 #include "modules/generic/commands/ChataigneLogCommand.cpp"

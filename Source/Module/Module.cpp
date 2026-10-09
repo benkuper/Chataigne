@@ -75,6 +75,11 @@ void Module::clearItem()
 	if (templateManager != nullptr) templateManager->clear();
 }
 
+void Module::hideScripts()
+{
+	if (scriptManager != nullptr) scriptManager->hideInEditor = true;
+}
+
 void Module::setupIOConfiguration(bool _hasInput, bool _hasOutput)
 {
 	if (_hasInput != hasInput) hasInput = _hasInput;

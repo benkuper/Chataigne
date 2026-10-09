@@ -112,6 +112,8 @@
 
 #include "modules/generators/signal/SignalModule.h"
 #include "modules/video/VideoMonitorOutModule.h"
+#include "modules/video/NDIOutModule.h"
+#include "modules/video/OMTOutModule.h"
 
 #include "modules/abletonlink/AbletonLinkModule.h"
 

@@ -533,6 +533,12 @@
     <Filter Include="Chataigne\Source\Module\modules\posistagenet">
       <UniqueIdentifier>{8315CC6E-A442-E46E-6881-E59DA25239A7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\buttplug\commands">
+      <UniqueIdentifier>{E7F34692-148B-5A64-4F32-1B552EEA13B9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\buttplug">
+      <UniqueIdentifier>{8C6F3218-8990-DDCF-91B2-5791A86F7DDA}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Module\modules\websocket\ui">
       <UniqueIdentifier>{B293CBA1-C418-03EF-CF1A-854113923B86}</UniqueIdentifier>
     </Filter>
@@ -550,6 +556,9 @@
     </Filter>
     <Filter Include="Chataigne\Source\Module\ui">
       <UniqueIdentifier>{7D0AC6E2-A763-976E-40B4-A16CDBF6FCC7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\Network video output">
+      <UniqueIdentifier>{0CB33214-92B7-60FC-F800-BD85B299DB87}</UniqueIdentifier>
     </Filter>
     <Filter Include="Chataigne\Source\Module">
       <UniqueIdentifier>{2A255203-2162-2DD6-4B3C-1214AAED9B97}</UniqueIdentifier>
@@ -2142,6 +2151,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\ui\ModuleUI.cpp">
       <Filter>Chataigne\Source\Module\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\video\NDIOutModule.cpp">
+      <Filter>Chataigne\Source\Module\Network video output</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\video\OMTOutModule.cpp">
+      <Filter>Chataigne\Source\Module\Network video output</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\Module.cpp">
       <Filter>Chataigne\Source\Module</Filter>
@@ -5234,6 +5249,15 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\ui\ModuleUI.h">
       <Filter>Chataigne\Source\Module\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\video\NDIOutModule.h">
+      <Filter>Chataigne\Source\Module\Network video output</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\video\OMTOutModule.h">
+      <Filter>Chataigne\Source\Module\Network video output</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\video\VideoNetworkRuntime.h">
+      <Filter>Chataigne\Source\Module\Network video output</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\Module.h">
       <Filter>Chataigne\Source\Module</Filter>
@@ -10455,6 +10479,12 @@
       <Filter>Chataigne\Resources\Modules</Filter>
     </None>
     <None Include="..\..\Resources\Modules\MQTT Client.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\NDI out.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\OMT out.png">
       <Filter>Chataigne\Resources\Modules</Filter>
     </None>
     <None Include="..\..\Resources\Modules\OS.png">

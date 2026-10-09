@@ -63,6 +63,11 @@ public:
 
 	virtual void setupIOConfiguration(bool _hasInput, bool _hasOutput);
 
+	// Hides the Scripts section for modules that do not expose anything
+	// scriptable. ScriptManager is only forward declared here, so this has to
+	// live in Module.cpp.
+	void hideScripts();
+
 	virtual void setupFromManualCreation() {} //for some module to setup a base configuration when creating from UI
 
 	//ROUTING

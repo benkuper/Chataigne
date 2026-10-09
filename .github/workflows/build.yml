@@ -59,6 +59,8 @@ jobs:
           Invoke-WebRequest "${{ secrets.DEPDIRURL }}${{ env.ProjectName }}-${{ matrix.arch }}-${{ steps.set_variables.outputs.dep }}-dependencies.zip" -OutFile ./deps.zip
           7z x deps.zip -aoa
           if ($LASTEXITCODE -ne 0) { throw 'Dependency extraction failed' }
+          python ../../../External/stage-video-runtimes.py ${{ matrix.arch }} .
+          if ($LASTEXITCODE -ne 0) { throw 'Video runtime staging failed' }
           if (-not (Test-Path ./libmpv-2.dll)) { throw 'libmpv-2.dll is missing from the dependency archive' }
         working-directory: ./Binaries/CI/App
 
@@ -88,6 +90,12 @@ jobs:
           print('Runtime initialized; verified', len(functions), 'Chataigne API functions')
           '@ | python -
           if ($LASTEXITCODE -ne 0) { throw 'The playback runtime failed validation' }
+
+      - name: Validate network video output
+        if: matrix.arch == 'win-x64'
+        shell: powershell
+        run: |
+          ./Tools/tests/run_video_network_output_test.ps1 -RuntimeOnly -BuildFolder ${{ matrix.buildFolder }} -Configuration ${{ steps.set_variables.outputs.config }} -RuntimeDirectory Binaries/CI/App
 
       - name: Create Package
         id: create_package
@@ -238,6 +246,7 @@ jobs:
           test -f "$EXECUTABLE"
           mkdir -p "$FRAMEWORKS_DIR"
           cp External/mpv/lib/osx/*.dylib "$FRAMEWORKS_DIR/"
+          python3 External/stage-video-runtimes.py osx "$APP_PATH/Contents"
           for LIBRARY in "$FRAMEWORKS_DIR"/lib*.dylib; do
             otool -L "$LIBRARY" | tail -n +2 | awk '{print $1}' | while read -r DEPENDENCY; do
               case "$DEPENDENCY" in
@@ -248,6 +257,12 @@ jobs:
             done
           done
           codesign --force --deep --sign - "$APP_PATH"
+
+      - name: Validate network video runtimes
+        env:
+          JUCE_DIR: ${{ github.workspace }}/JUCE
+          CXX: clang++
+        run: bash Tools/tests/run_video_network_output_test.sh
 
       - name: Create Package
         id: create_package
@@ -309,6 +324,11 @@ jobs:
 
           cd Builds/LinuxMakefile
           make -j$(nproc) CONFIG=Release
+
+      - name: Validate network video runtimes
+        env:
+          JUCE_DIR: ${{ github.workspace }}/JUCE
+        run: bash Tools/tests/run_video_network_output_test.sh
 
       - name: ABI Baseline Audit (glibc/OpenSSL)
         run: |
@@ -400,6 +420,7 @@ jobs:
           copy_glob "$LIB_PATH/libSDL2-2.0.so*"
           copy_glob "$LIB_PATH/libmpv.so*"
           copy_glob "External/servus/lib/linux/libServus.so*"
+          python3 External/stage-video-runtimes.py linux-x64 "$APPDIR/usr"
 
           # Some bundles only ship libServus.so while the binary expects libServus.so.6.
           if compgen -G "$APPDIR/usr/lib/libServus.so" > /dev/null && ! compgen -G "$APPDIR/usr/lib/libServus.so.6" > /dev/null; then
@@ -730,8 +751,10 @@ jobs:
           copy_glob "$LIB_PATH/libgpiod.so*"
 
           if [ "${{ matrix.arch_name }}" = "aarch64" ]; then
+            python3 External/stage-video-runtimes.py linux-arm64 "$APPDIR/usr"
             copy_glob "External/servus/lib/raspberry64/libServus.so*"
           else
+            python3 External/stage-video-runtimes.py linux-armhf "$APPDIR/usr"
             copy_glob "External/servus/lib/raspberry/libServus.so*"
           fi
 

@@ -40,6 +40,7 @@ Source: "{#AppSourceDir}/server.crt"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#AppSourceDir}/server.key"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#AppSourceDir}/mpv-licenses/*"; DestDir: "{app}/mpv-licenses"; Flags: ignoreversion skipifsourcedoesntexist recursesubdirs createallsubdirs
 
+Source: "{#AppSourceDir}/video-licenses/*"; DestDir: "{app}/video-licenses"; Flags: ignoreversion recursesubdirs createallsubdirs
 [Icons]
 Name: "{group}\{#ApplicationName}"; Filename: "{app}\{#ApplicationName}.exe"
 
