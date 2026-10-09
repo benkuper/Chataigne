@@ -16,6 +16,7 @@ public:
     BoolParameter* isScanning;
     StringParameter* serverName;
     IntParameter* deviceCount;
+    Trigger* autoDetect;
     Trigger* reconnect;
     Trigger* startScanning;
     Trigger* stopScanning;
@@ -27,6 +28,7 @@ public:
     bool setScalar(int deviceIndex, int featureIndex, double value, const String& actuatorType = {});
     bool setRotation(int deviceIndex, int featureIndex, double speed, bool clockwise);
     bool setLinear(int deviceIndex, int featureIndex, double position, int durationMs);
+    void connectToService(const ZeroconfManager::ServiceInfo& service);
 
     void clearItem() override;
     void onContainerParameterChangedInternal(Parameter* p) override;
@@ -59,6 +61,7 @@ private:
 
     void timerCallback() override;
     void setupClient();
+    void showAutoDetectMenu();
     void stopClient();
     void resetSession();
     void enqueue(EventType type, const String& text = {}, int status = 0);

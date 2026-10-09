@@ -113,6 +113,13 @@ Copy the address displayed in Intiface: its port may differ from `12345`,
 especially if another application already uses that port (for example, Leap Motion).
 Connection problems appear through Chataigne's standard warnings and log messages.
 
+You can also enable **Broadcast Server Info via mDNS** in Intiface's advanced
+settings before starting its server. Click **Auto Detect** in the Buttplug module
+and select the advertised server. Chataigne browses `_intiface_engine._tcp.` and
+sets the server address, port, and WebSocket path automatically. Servers running
+on this computer use the loopback address; servers on other computers must allow
+connections from the local network in Intiface's settings.
+
 Connected devices appear under **Values**, with their **Device Index** and
 supported **Features**. Use that device index in the **Vibrate**, **Set Scalar**,
 **Rotate**, **Linear**, or **Stop Device** commands. A **Feature Index** of `-1`

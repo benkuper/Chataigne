@@ -3,6 +3,7 @@
 ButtplugModule::ButtplugModule() : Module("Buttplug")
 {
     serverPath = moduleParams.addStringParameter("Server Path", "Copy the WebSocket server address shown in Intiface Central. Its port may differ from the default 12345. ws:// and wss:// prefixes are accepted.", "127.0.0.1:12345");
+    autoDetect = moduleParams.addTrigger("Auto Detect", "Find Intiface servers on this computer or local network. Enable Broadcast Server Info via mDNS in Intiface's advanced settings, then start its server.");
     useSecureConnection = moduleParams.addBoolParameter("Use Secure Connection", "Connect using wss://", false);
     autoScan = moduleParams.addBoolParameter("Scan On Connect", "Start device discovery after connecting to Intiface", true);
     reconnect = moduleParams.addTrigger("Reconnect", "Reconnect to the Intiface server");
@@ -113,6 +114,45 @@ void ButtplugModule::setupClient()
     connectTime = Time::getMillisecondCounterHiRes();
     client->addWebSocketListener(this);
     client->start(path, 5);
+}
+
+void ButtplugModule::showAutoDetectMenu()
+{
+    // A trigger can also arrive from a script or network thread.
+    WeakReference<ControllableContainer> weakThis(this);
+    MessageManager::callAsync([weakThis]
+    {
+        auto* module = dynamic_cast<ButtplugModule*>(weakThis.get());
+        if (module == nullptr || module->shuttingDown) return;
+        ZeroconfManager::getInstance()->showMenuAndGetService("Intiface", [weakThis](ZeroconfManager::ServiceInfo* service)
+        {
+            auto* target = dynamic_cast<ButtplugModule*>(weakThis.get());
+            if (target != nullptr && !target->shuttingDown && service != nullptr)
+                target->connectToService(*service);
+        }, true, true, true, true, "",
+            "No Intiface server found. Enable Broadcast Server Info via mDNS in Intiface, start its server, then try Auto Detect again.");
+    });
+}
+
+void ButtplugModule::connectToService(const ZeroconfManager::ServiceInfo& service)
+{
+    if (shuttingDown) return;
+    String host = service.getIP().trim();
+    if (host.isEmpty()) host = service.host.trim();
+    if (host.isEmpty() || service.port < 1 || service.port > 65535)
+    {
+        reportError("The discovered Intiface server has no usable address or port. Check Intiface's server settings, or copy its WebSocket address into Server Path.", "Discovery");
+        return;
+    }
+    if (host.containsChar(':') && !host.startsWithChar('[')) host = "[" + host + "]";
+    String path = service.keys["path"].trim();
+    if (!path.startsWithChar('/')) path = "/" + path;
+    // Intiface advertises its plain WebSocket endpoint, including the TXT path.
+    useSecureConnection->setValue(false);
+    serverPath->setValue("ws://" + host + ":" + String(service.port) + path);
+    clearWarning("Discovery");
+    // Selecting the current endpoint should also retry a failed connection.
+    reconnectRequested = true;
 }
 
 void ButtplugModule::timerCallback()
@@ -427,6 +467,7 @@ void ButtplugModule::onContainerParameterChangedInternal(Parameter* p)
             clearWarning("Connection");
             clearWarning("Buttplug");
             clearWarning("Scanning");
+            clearWarning("Discovery");
         }
         reconnectRequested = true;
     }
@@ -437,6 +478,7 @@ void ButtplugModule::onControllableFeedbackUpdateInternal(ControllableContainer*
     Module::onControllableFeedbackUpdateInternal(cc, c);
     if (isCurrentlyLoadingData || shuttingDown) return;
     if (c == serverPath || c == useSecureConnection || c == reconnect) reconnectRequested = true;
+    else if (c == autoDetect) showAutoDetectMenu();
     else if (c == startScanning) sendServerCommand("StartScanning");
     else if (c == stopScanning) sendServerCommand("StopScanning");
     else if (c == refreshDevices) sendServerCommand("RequestDeviceList");

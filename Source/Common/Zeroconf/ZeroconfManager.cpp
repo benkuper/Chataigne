@@ -75,7 +75,7 @@ ZeroconfManager::ZeroconfSearcher* ZeroconfManager::getSearcher(StringRef name)
 	return nullptr;
 }
 
-void ZeroconfManager::showMenuAndGetService(StringRef searcherName, std::function<void(ZeroconfManager::ServiceInfo *)> returnFunc, bool showLocal, bool showRemote, bool separateLocalAndRemote, bool excludeInternal, const String& nameFilter)
+void ZeroconfManager::showMenuAndGetService(StringRef searcherName, std::function<void(ZeroconfManager::ServiceInfo *)> returnFunc, bool showLocal, bool showRemote, bool separateLocalAndRemote, bool excludeInternal, const String& nameFilter, const String& noServicesMessage)
 {
 	ZeroconfSearcher* s = getSearcher(searcherName);
 
@@ -85,27 +85,40 @@ void ZeroconfManager::showMenuAndGetService(StringRef searcherName, std::functio
 		return;
 	}
 
-	PopupMenu p;
-	if (s->services.isEmpty())
+	// Keep a snapshot alive for the popup: services may disappear or change while
+	// it is open, and the browser updates them on a worker thread.
+	auto services = std::make_shared<OwnedArray<ServiceInfo>>();
 	{
-		p.addItem(-1, "No service found", false);
+		const ScopedLock lock(s->servicesLock);
+		for (auto* info : s->services)
+		{
+			if (nameFilter.isNotEmpty() && !info->name.contains(nameFilter)) continue;
+			auto* copy = new ServiceInfo(info->name, info->host, info->ip, info->port, info->keys);
+			copy->isLocal = info->isLocal;
+			services->add(copy);
+		}
+	}
+
+	PopupMenu p;
+	if (services->isEmpty())
+	{
+		p.addItem(-1, noServicesMessage, false);
 	}
 	else
 	{
-		for (int i = 0; i < s->services.size(); i++)
+		for (int i = 0; i < services->size(); i++)
 		{
-			ServiceInfo* info = s->services[i];
-			if (nameFilter.isNotEmpty() && !info->name.contains(nameFilter)) continue;
+			ServiceInfo* info = (*services)[i];
 			p.addItem(1 + i, info->name + " on " + info->host + " (" + info->getIP() + ":" + String(info->port) + ")");
 		}
 	}
 
 	
-	p.showMenuAsync(PopupMenu::Options(), [s, returnFunc](int result)
+	p.showMenuAsync(PopupMenu::Options(), [services, returnFunc](int result)
 		{
-			if (result <= 0) return;
+			if (result <= 0 || result > services->size()) return;
 
-			returnFunc(s->services[result - 1]);
+			returnFunc((*services)[result - 1]);
 		}
 	);
 }
@@ -151,6 +164,7 @@ void ZeroconfManager::ZeroconfSearcher::shutdown()
 
 ZeroconfManager::ServiceInfo* ZeroconfManager::ZeroconfSearcher::getService(StringRef sName, StringRef host, int port)
 {
+	const ScopedLock lock(servicesLock);
 	for (auto& i : services)
 	{
 		if (Thread::getCurrentThread()->threadShouldExit()) return nullptr;
@@ -161,6 +175,7 @@ ZeroconfManager::ServiceInfo* ZeroconfManager::ZeroconfSearcher::getService(Stri
 
 void ZeroconfManager::ZeroconfSearcher::addService(StringRef sName, StringRef host, StringRef ip, int port, const HashMap<String, String>& keys)
 {
+	const ScopedLock lock(servicesLock);
 	if (Thread::getCurrentThread()->threadShouldExit()) return;
 
 	String keysStr = ", keys : ";
@@ -178,6 +193,7 @@ void ZeroconfManager::ZeroconfSearcher::addService(StringRef sName, StringRef ho
 
 void ZeroconfManager::ZeroconfSearcher::removeService(ServiceInfo* s)
 {
+	const ScopedLock lock(servicesLock);
 	jassert(s != nullptr);
 	NLOG("Zeroconf", name << " service removed : " << s->name);
 	listeners.call(&SearcherListener::serviceRemoved, s);
@@ -186,6 +202,7 @@ void ZeroconfManager::ZeroconfSearcher::removeService(ServiceInfo* s)
 
 void ZeroconfManager::ZeroconfSearcher::updateService(ServiceInfo* service, StringRef host, StringRef ip, int port, const HashMap<String, String>& keys)
 {
+	const ScopedLock lock(servicesLock);
 	jassert(service != nullptr);
 	service->host = host;
 	service->ip = ip;
@@ -232,6 +249,7 @@ void ZeroconfManager::ZeroconfSearcher::instanceAdded(const std::string& instanc
 
 void ZeroconfManager::ZeroconfSearcher::instanceRemoved(const std::string& instance)
 {
+	const ScopedLock lock(servicesLock);
 	String s = instance;
 	//String host = servus->get(instance, "servus_host");
 	//if (host.endsWithChar('.')) host = host.substring(0, host.length() - 1);

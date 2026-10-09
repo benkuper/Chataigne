@@ -282,17 +282,75 @@ static void testConnectionWarning()
     check(module.getWarningMessage().isEmpty(), "disabling the module clears connection warnings");
 }
 
+static void testDiscoveredService()
+{
+    auto* searcher = ZeroconfManager::getInstance()->getSearcher("Intiface");
+    check(searcher != nullptr && searcher->serviceName == "_intiface_engine._tcp.", "Intiface mDNS service browser is registered");
+    MockIntiface server;
+    ButtplugModule module;
+    check(module.autoDetect != nullptr, "Auto Detect control is available");
+    module.autoScan->setValue(false);
+    module.useSecureConnection->setValue(true);
+    HashMap<String, String> keys;
+    keys.set("path", "/intiface");
+    ZeroconfManager::ServiceInfo service("Test Intiface", "test.local", "127.0.0.1", server.port.load(), keys);
+    service.isLocal = true;
+    module.connectToService(service);
+    const String endpoint = "ws://127.0.0.1:" + String(server.port.load()) + "/intiface";
+    check(module.serverPath->stringValue() == endpoint && !module.useSecureConnection->boolValue(), "service selection applies advertised port and TXT path using plain WebSocket");
+    waitFor([&] { return module.isConnected->boolValue(); }, "selected service connects and completes handshake");
+    const int handshakes = server.count("RequestServerInfo");
+    module.connectToService(service);
+    waitFor([&] { return module.isConnected->boolValue() && server.count("RequestServerInfo") > handshakes; }, "reselecting the same service reconnects");
+
+    ZeroconfManager::ServiceInfo invalid("Invalid Intiface", "", "", 0, keys);
+    module.connectToService(invalid);
+    check(module.serverPath->stringValue() == endpoint && module.getWarningMessage("Discovery").contains("Server Path"), "invalid discovery preserves configuration and gives actionable guidance");
+    module.enabled->setValue(false);
+    check(module.getWarningMessage("Discovery").isEmpty(), "disable clears discovery warnings");
+
+    HashMap<String, String> noKeys;
+    ZeroconfManager::ServiceInfo remote("Remote Intiface", "remote.local", "2001:db8::1", 23456, noKeys);
+    remote.isLocal = false;
+    module.connectToService(remote);
+    check(module.serverPath->stringValue() == "ws://[2001:db8::1]:23456/", "IPv6 addresses are bracketed and absent TXT path defaults to root");
+    remote.ip = "";
+    module.connectToService(remote);
+    check(module.serverPath->stringValue() == "ws://remote.local:23456/", "hostname is used when an IP is unavailable");
+    module.clearItem();
+}
+
 static void testLiveIntiface(const String& address)
 {
     ButtplugModule module;
     module.autoScan->setValue(false);
-    module.serverPath->setValue(address);
+    if (address == "--mdns")
+    {
+        auto* searcher = ZeroconfManager::getInstance()->getSearcher("Intiface");
+        check(searcher != nullptr, "live Intiface browser exists");
+        std::unique_ptr<ZeroconfManager::ServiceInfo> discovered;
+        waitFor([&]
+        {
+            const ScopedLock lock(searcher->servicesLock);
+            for (auto* service : searcher->services)
+            {
+                if (!service->isLocal) continue;
+                discovered.reset(new ZeroconfManager::ServiceInfo(service->name, service->host, service->ip, service->port, service->keys));
+                discovered->isLocal = true;
+                return true;
+            }
+            return false;
+        }, "live local Intiface advertisement discovered", 10000);
+        std::cout << "Discovered " << discovered->name << " via " << searcher->serviceName << '\n';
+        module.connectToService(*discovered);
+    }
+    else module.serverPath->setValue(address);
     waitFor([&] { return module.isConnected->boolValue(); }, "live Intiface handshake", 8000);
     check(module.serverName->stringValue().containsIgnoreCase("Intiface"), "live server identifies itself as Intiface");
     const double until = Time::getMillisecondCounterHiRes() + 500;
     waitFor([&] { return Time::getMillisecondCounterHiRes() >= until; }, "live session stable");
     check(module.isConnected->boolValue() && module.getWarningMessage().isEmpty(), "live session remains connected without warnings");
-    std::cout << "Connected to " << module.serverName->stringValue() << " at " << address
+    std::cout << "Connected to " << module.serverName->stringValue() << " at " << module.serverPath->stringValue()
               << "; devices: " << module.deviceCount->intValue() << '\n';
     module.clearItem();
 }
@@ -307,7 +365,7 @@ int main(int argc, char** argv)
     try
     {
         if (argc > 1) testLiveIntiface(String(argv[1]));
-        else { testButtplug(); testConnectionWarning(); }
+        else { testButtplug(); testConnectionWarning(); testDiscoveredService(); }
         std::cout << "Buttplug integration tests passed\n";
     }
     catch (const std::exception& e) { std::cerr << "Buttplug integration failed: " << e.what() << '\n'; result = 1; }

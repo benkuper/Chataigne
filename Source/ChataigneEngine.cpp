@@ -54,6 +54,7 @@ ChataigneEngine::ChataigneEngine() :
 	ZeroconfManager::getInstance()->addSearcher("OSC", "_osc._udp.");
 	ZeroconfManager::getInstance()->addSearcher("OSCQuery", "_oscjson._tcp.");
 	ZeroconfManager::getInstance()->addSearcher("Workstation", "_workstation._tcp.");
+	ZeroconfManager::getInstance()->addSearcher("Intiface", "_intiface_engine._tcp.");
 
 	//DashboardItemFactory::getInstance()->defs.add(DashboardItemFactory::Definition::createDef("", &CVVariablesDashboardItem::getTypeStringStatic(), &CVVariablesDashboardItem::create));
 

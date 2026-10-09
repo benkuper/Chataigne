@@ -1,5 +1,6 @@
-param([string]$LiveServer = '')
+param([string]$LiveServer = '', [switch]$DiscoverIntiface)
 $ErrorActionPreference = 'Stop'
+if ($LiveServer -and $DiscoverIntiface) { throw 'Choose either LiveServer or DiscoverIntiface.' }
 $repoPath = (Resolve-Path (Join-Path $PSScriptRoot '../..')).Path
 $projectDir = Join-Path $repoPath 'Builds/VisualStudio2022'
 $objectDir = Join-Path $projectDir 'x64/Debug/App'
@@ -43,7 +44,8 @@ try {
     $previousErrorPreference = $ErrorActionPreference
     try {
         $ErrorActionPreference = 'Continue'
-        if ($LiveServer) { & $testExe $LiveServer 2>&1 | ForEach-Object { "$PSItem" } }
+        if ($DiscoverIntiface) { & $testExe '--mdns' 2>&1 | ForEach-Object { "$PSItem" } }
+        elseif ($LiveServer) { & $testExe $LiveServer 2>&1 | ForEach-Object { "$PSItem" } }
         else { & $testExe 2>&1 | ForEach-Object { "$PSItem" } }
         $testExitCode = $LASTEXITCODE
     } finally { $ErrorActionPreference = $previousErrorPreference }
