@@ -1,7 +1,7 @@
 stableavailable: true
 stableversion: 1.10.4
 betaavailable: true
-betaversion: 1.10.5b2
+betaversion: 1.10.5b3
 showversionwarning: false
 minversionwarning: 1.9.0
 showolderversions: true
@@ -180,6 +180,7 @@ olderversionsstable:
     - 1.5.2
 
 olderversionsbeta:
+    - 1.10.5b2
     - 1.10.5b1
     - 1.10.4b6
     - 1.10.4b5

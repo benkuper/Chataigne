@@ -566,6 +566,7 @@
 		8C3C85E4F7C6FB804CBD9F59 /* CommunityModuleInfoEditor.cpp */ /* CommunityModuleInfoEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CommunityModuleInfoEditor.cpp; path = ../../Source/Module/Community/ui/CommunityModuleInfoEditor.cpp; sourceTree = SOURCE_ROOT; };
 		8C49B305FD4D86D068A653A7 /* WiimotePairUtil.h */ /* WiimotePairUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WiimotePairUtil.h; path = ../../Source/Module/modules/controller/wiimote/WiimotePairUtil.h; sourceTree = SOURCE_ROOT; };
 		8C62E42B39C66796F42E60AA /* ConditionManagerEditor.h */ /* ConditionManagerEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ConditionManagerEditor.h; path = ../../Source/Common/Processor/Action/Condition/ui/ConditionManagerEditor.h; sourceTree = SOURCE_ROOT; };
+		8C8099BE9B4E2B85CB08A13E /* Buttplug.png */ /* Buttplug.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Buttplug.png; path = ../../Resources/Modules/Buttplug.png; sourceTree = SOURCE_ROOT; };
 		8CDCEB4DC37C0C926A7AA482 /* Security.framework */ /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		8CE35DBB1F5287A5AFF59CFE /* juce_dmx */ /* juce_dmx */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_dmx; path = ../../Modules/juce_dmx; sourceTree = SOURCE_ROOT; };
 		8D12442FA5A06DC1B43331FF /* SequenceModule.h */ /* SequenceModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SequenceModule.h; path = ../../Source/Module/modules/sequence/SequenceModule.h; sourceTree = SOURCE_ROOT; };
@@ -1904,6 +1905,7 @@
 			children = (
 				ABA1EF387AE0BA1B4D6B0FCD,
 				6C76365E6A0B310E2734B571,
+				8C8099BE9B4E2B85CB08A13E,
 				5E64FD363DAEBC97B49C0E98,
 				068D5BDCBB49D14D8C13012E,
 				74637658C178668184A2A835,
@@ -3939,7 +3941,7 @@
 					"USE_ABLETONLINK=1",
 					"LINK_PLATFORM_MACOSX=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.10.5b2",
+					"JUCE_APP_VERSION=1.10.5b3",
 					"JUCE_APP_VERSION_HEX=0x10a05",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -4022,7 +4024,7 @@
 					"USE_ABLETONLINK=1",
 					"LINK_PLATFORM_MACOSX=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.10.5b2",
+					"JUCE_APP_VERSION=1.10.5b3",
 					"JUCE_APP_VERSION_HEX=0x10a05",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -4157,7 +4159,7 @@
 					"USE_ABLETONLINK=1",
 					"LINK_PLATFORM_MACOSX=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.10.5b2",
+					"JUCE_APP_VERSION=1.10.5b3",
 					"JUCE_APP_VERSION_HEX=0x10a05",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -4240,7 +4242,7 @@
 					"USE_ABLETONLINK=1",
 					"LINK_PLATFORM_MACOSX=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.10.5b2",
+					"JUCE_APP_VERSION=1.10.5b3",
 					"JUCE_APP_VERSION_HEX=0x10a05",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",

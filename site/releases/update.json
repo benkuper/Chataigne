@@ -4,24 +4,13 @@
 	"osxExtension": "pkg",
 	"linuxExtension": "AppImage",
 	"betaversion": {
-		"version": "1.10.5b2",
+		"version": "1.10.5b3",
 		"changelog": [
-			"[Sequence] Point triggers now run TRUE or FALSE according to their condition at the crossing",
-			"[Sequence] Duration triggers track activity and validity separately, with exit actions for conditions that were never valid or valid at least once; the default runs TRUE on first validity and FALSE only if the visit was never valid",
-			"[Sequence] Added per-trigger seek overrides, destination synchronization for duration blocks, latest-point-cue seeking and Trigger All TRUE/FALSE layer controls; fixed rewinds resetting unrelated triggers",
-			"[Sequence] Point triggers no longer allocate duration controls, and duration choices survive conversion to points and back",
-			"[CV Values] Added optional block fades, embedded automation and gradient editors, and compact custom-value rows",
-			"[Sequence] Added active-block highlighting and custom block colors; improved CV Values transitions and backward compatibility for saved overrides",
-			"[Audio] Added overlapping clip playback with automatic crossfades, optional manual fades and inline volume automation editing",
-			"[Mapping] Preserved every queued input frame and captured parameter-reference value instead of reading a newer value during delayed callbacks",
-			"[OSC] Linked integer arguments now round before clamping, with saturation at the 32-bit integer limits",
-			"[Custom Variables] Fixed a crash caused by Set Value commands leaving listeners attached after the commands were deleted",
-			"[UI] Fixed saved custom keyboard shortcuts not being restored correctly",
-			"[Modules] Added a Buttplug module for Intiface device discovery, scalar, rotation and linear control, and stopping devices",
-			"[Video] Added NDI and OMT composition outputs with configurable resolution, fractional frame rates and OMT encoding quality",
-			"[Video] Bundled NDI and OMT runtimes for Windows, Intel and Apple Silicon macOS, and Linux x64 and ARM64, plus NDI on ARM32; missing or incompatible runtimes show module warnings",
-			"[Video] Fixed Linux OMT startup when Avahi discovery is unavailable",
-			"[Video] OMT requires Windows 10 or newer and is unavailable on ARM32; the bundled macOS NDI runtime requires macOS 13 or newer"
+			"[DMX] Added network interface selection for Art-Net and sACN input and output, including multicast interface selection for sACN",
+			"[Buttplug] Added Auto Detect for local and network Intiface servers via mDNS; enable Broadcast Server Info via mDNS in Intiface to use discovery",
+			"[Buttplug] Added a dedicated module icon and clearer setup guidance, connection warnings and protocol diagnostics",
+			"[Network] Fixed Linux Zeroconf crashes after Avahi polling failures and made service selection safe when discovered services change while the menu is open",
+			"[Sequence] Clarified when duration triggers reset and update their Was ever valid feedback"
 		]
 	},
 	"stableversion": {
@@ -4885,6 +4874,17 @@
 				"[Video] Bundled NDI and OMT runtimes for Windows, Intel and Apple Silicon macOS, and Linux x64 and ARM64, plus NDI on ARM32; missing or incompatible runtimes show module warnings",
 				"[Video] Fixed Linux OMT startup when Avahi discovery is unavailable",
 				"[Video] OMT requires Windows 10 or newer and is unavailable on ARM32; the bundled macOS NDI runtime requires macOS 13 or newer"
+			]
+		},
+		{
+			"version": "1.10.5b3",
+			"beta": "true",
+			"changelog": [
+				"[DMX] Added network interface selection for Art-Net and sACN input and output, including multicast interface selection for sACN",
+				"[Buttplug] Added Auto Detect for local and network Intiface servers via mDNS; enable Broadcast Server Info via mDNS in Intiface to use discovery",
+				"[Buttplug] Added a dedicated module icon and clearer setup guidance, connection warnings and protocol diagnostics",
+				"[Network] Fixed Linux Zeroconf crashes after Avahi polling failures and made service selection safe when discovered services change while the menu is open",
+				"[Sequence] Clarified when duration triggers reset and update their Was ever valid feedback"
 			]
 		}
 	]

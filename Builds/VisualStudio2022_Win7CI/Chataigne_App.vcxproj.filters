@@ -2107,6 +2107,12 @@
     <ClCompile Include="..\..\Source\Module\modules\posistagenet\PosiStageNetModule.cpp">
       <Filter>Chataigne\Source\Module\modules\posistagenet</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\buttplug\ButtplugModule.cpp">
+      <Filter>Chataigne\Source\Module\modules\buttplug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\buttplug\commands\ButtplugCommand.cpp">
+      <Filter>Chataigne\Source\Module\modules\buttplug\commands</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\websocket\ui\WebSocketServerModuleUI.cpp">
       <Filter>Chataigne\Source\Module\modules\websocket\ui</Filter>
     </ClCompile>
@@ -5204,6 +5210,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\posistagenet\PosiStageNetModule.h">
       <Filter>Chataigne\Source\Module\modules\posistagenet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\buttplug\ButtplugModule.h">
+      <Filter>Chataigne\Source\Module\modules\buttplug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\buttplug\commands\ButtplugCommand.h">
+      <Filter>Chataigne\Source\Module\modules\buttplug\commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\websocket\ui\WebSocketServerModuleUI.h">
       <Filter>Chataigne\Source\Module\modules\websocket\ui</Filter>
@@ -10425,6 +10437,9 @@
       <Filter>Chataigne\Resources\Modules</Filter>
     </None>
     <None Include="..\..\Resources\Modules\Ableton Live.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\Buttplug.png">
       <Filter>Chataigne\Resources\Modules</Filter>
     </None>
     <None Include="..\..\Resources\Modules\DLight.png">
