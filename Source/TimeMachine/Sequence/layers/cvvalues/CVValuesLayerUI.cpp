@@ -31,21 +31,52 @@ public:
     void newMessage(const WarningTarget::WarningTargetEvent&) override { updateWarning(); }
 };
 
-class CVValuesEditorWindow : public Component
+// A value uses its enabling container's toggle and the same typed editor as
+// preset rows. Automation is edited in the timeline, leaving this row compact.
+class CVValuesValueEditor : public InspectableEditor, public Parameter::AsyncListener
 {
 public:
-    CVValuesEditorWindow(CVValuesBlock* block)
+    CVValuesValueEditor(CVValuesValue* v, bool root) : InspectableEditor(v, root), value(v)
     {
-        viewport.setViewedComponent(block->getEditor(true), true);
-        addAndMakeVisible(viewport); setSize(700, 650);
+        enabledUI.reset(v->enabled->createToggle()); enabledUI->showLabel = false;
+        valueUI.reset(v->value->getEditor(false));
+        if (auto* editor = dynamic_cast<ControllableEditor*>(valueUI.get()))
+        { editor->label.setText(v->niceName, dontSendNotification); editor->minLabelWidth = 100; }
+        modeUI.reset(v->interpolation->createDefaultUI()); modeUI->showLabel = false;
+        unsetUI.reset(v->unsetBehavior->createDefaultUI()); unsetUI->showLabel = false;
+        animationUI.reset(v->animated->createButtonToggle());
+        animationUI->customLabel = "Animate";
+        animationUI->setTooltip("Edit this animation with the block's right-click menu");
+        Component* controls[] = { enabledUI.get(), valueUI.get(), modeUI.get(), unsetUI.get(), animationUI.get() };
+        for (auto* c : controls) addAndMakeVisible(c);
+        v->enabled->addAsyncParameterListener(this); v->animated->addAsyncParameterListener(this);
+        setSize(500, jmax(26, valueUI->getHeight())); update();
     }
-    Viewport viewport;
-    void paint(Graphics& g) override { g.fillAll(BG_COLOR); }
+    ~CVValuesValueEditor() override
+    {
+        if (inspectable.wasObjectDeleted()) return;
+        value->enabled->removeAsyncParameterListener(this); value->animated->removeAsyncParameterListener(this);
+    }
+    CVValuesValue* value;
+    std::unique_ptr<ControllableUI> enabledUI, modeUI, unsetUI, animationUI;
+    std::unique_ptr<InspectableEditor> valueUI;
+    void update()
+    {
+        const bool enabled = value->enabled->boolValue();
+        valueUI->setEnabled(enabled && !value->animated->boolValue());
+        modeUI->setVisible(enabled); unsetUI->setVisible(!enabled);
+        animationUI->setVisible(enabled && (value->automation || value->gradient)); resized();
+    }
     void resized() override
     {
-        viewport.setBounds(getLocalBounds());
-        if (auto* editor = viewport.getViewedComponent()) editor->setSize(getWidth() - viewport.getScrollBarThickness(), editor->getHeight());
+        auto r = getLocalBounds().reduced(0, 2);
+        enabledUI->setBounds(r.removeFromLeft(22)); r.removeFromLeft(4);
+        auto right = r.removeFromRight(jmin(140, r.getWidth() / 3));
+        modeUI->setBounds(right); unsetUI->setBounds(right); r.removeFromRight(6);
+        if (animationUI->isVisible()) { animationUI->setBounds(r.removeFromRight(65)); r.removeFromRight(6); }
+        valueUI->setBounds(r);
     }
+    void newMessage(const Parameter::ParameterEvent&) override { if (!inspectable.wasObjectDeleted()) update(); }
 };
 
 class CVValuesBlockUI : public LayerBlockUI
@@ -63,59 +94,49 @@ public:
     void paint(Graphics& g) override
     {
         LayerBlockUI::paint(g);
-        auto bounds = getLocalBounds().toFloat();
-        const auto length = block->coreLength->floatValue();
-        const auto visible = viewEnd - viewStart;
-        if (visible > 0)
-        {
-            auto shade = [&](float start, float end, Colour color)
-            {
-                const float x1 = jlimit(0.0f, bounds.getWidth(), (start - viewStart) / visible * bounds.getWidth());
-                const float x2 = jlimit(0.0f, bounds.getWidth(), (end - viewStart) / visible * bounds.getWidth());
-                g.setColour(color); g.fillRect(x1, 0.0f, jmax(0.0f, x2 - x1), bounds.getHeight());
-            };
-            auto data = std::atomic_load(&block->layer->snapshot);
-            if (data)
-            {
-                const auto& timeline = data->timeline;
-                for (size_t i = 0; i < timeline.blocks.size(); ++i)
-                {
-                    const auto& b = timeline.blocks[i];
-                    if (b.start != block->time->doubleValue()) continue;
-                    const auto* previous = i > 0 ? &timeline.blocks[i - 1] : nullptr;
-                    const auto* next = i + 1 < timeline.blocks.size() ? &timeline.blocks[i + 1] : nullptr;
-                    const bool incomingOverlap = previous && previous->end() > b.start;
-                    const bool outgoingOverlap = next && next->start < b.end();
-                    if (incomingOverlap) shade(0, static_cast<float>(previous->end() - b.start), Colours::cyan.withAlpha(.15f));
-                    else shade(0, static_cast<float>(timeline.edgeFades(i).first), Colours::white.withAlpha(.08f));
-                    if (outgoingOverlap) shade(static_cast<float>(next->start - b.start), length, Colours::cyan.withAlpha(.15f));
-                    else shade(length - static_cast<float>(timeline.edgeFades(i).second), length, Colours::white.withAlpha(.08f));
-                    break;
-                }
-            }
-        }
-        String label = block->blockType->getValueKey();
+        String label = block->niceName + " | " + block->blockType->getValueKey();
         if (block->blockType->getValueDataAsEnum<int>() == 0)
             for (auto* group : block->groups.items)
                 if (auto* preset = group->preset->getTargetContainer()) label += " | " + preset->niceName;
         if (!block->valid) label = "Invalid overlap | " + label;
         g.setColour(block->valid ? TEXT_COLOR : Colours::orange);
-        g.drawFittedText(label, getLocalBounds().reduced(8, 3), Justification::centredLeft, 2);
+        g.drawFittedText(label, getLocalBounds().reduced(14, 3).withHeight(18), Justification::centredLeft, 1);
     }
 
-    void addContextMenuItems(PopupMenu& menu) override { menu.addItem(1001, "Edit Values / Animations..."); }
+    Array<WeakReference<ControllableContainer>> menuValues;
+    void addContextMenuItems(PopupMenu& menu) override
+    {
+        menu.addItem(1001, "Edit Values");
+        menu.addItem(1002, "Hide animation editor", automationUI || gradientUI);
+        menuValues.clear();
+        if (block->blockType->getValueDataAsEnum<int>() != 1) return;
+        for (auto* group : block->groups.items)
+        {
+            if (group->hideInEditor) continue;
+            PopupMenu variables;
+            for (auto* v : group->values.items)
+            {
+                if (v->hideInEditor || (!v->automation && !v->gradient)) continue;
+                menuValues.add(v);
+                variables.addItem(2000 + menuValues.size() - 1, "Animate " + v->niceName, true, editedValue == v);
+            }
+            if (variables.getNumItems() > 0) menu.addSubMenu(group->niceName, variables);
+        }
+    }
+    WeakReference<ControllableContainer> editedValue;
     void handleContextMenuResult(int result) override
     {
-        if (result != 1001) return;
-        block->syncTargets();
-        DialogWindow::LaunchOptions options;
-        options.dialogTitle = block->niceName + " - Values / Animations";
-        options.dialogBackgroundColour = BG_COLOR;
-        options.content.setOwned(block->createValuesEditor());
-        options.escapeKeyTriggersCloseButton = true;
-        options.useNativeTitleBar = true;
-        options.resizable = true;
-        options.launchAsync();
+        if (result == 1001) { block->syncTargets(); block->selectThis(); return; }
+        if (result == 1002) { editedValue = nullptr; setInlineEditor(nullptr); return; }
+        const int index = result - 2000;
+        if (!isPositiveAndBelow(index, menuValues.size())) return;
+        auto* value = dynamic_cast<CVValuesValue*>(menuValues[index].get());
+        if (!value) return;
+        Array<UndoableAction*> actions;
+        if (!value->enabled->boolValue()) actions.add(value->enabled->setUndoableValue(false, true, true));
+        if (!value->animated->boolValue()) actions.add(value->animated->setUndoableValue(false, true, true));
+        if (!actions.isEmpty()) UndoMaster::getInstance()->performActions("Animate CV value", actions);
+        editedValue = value; setInlineEditor(value->automation.get(), value->gradient.get());
     }
     void mouseEnter(const MouseEvent& e) override { LayerBlockUI::mouseEnter(e); loopGrabber.setVisible(false); }
     void mouseUp(const MouseEvent& e) override
@@ -132,6 +153,14 @@ public:
         BaseItemMinimalUI<LayerBlock>::mouseUp(e);
     }
     void resizedBlockInternal() override { loopGrabber.setVisible(false); }
+    void handlePaintTimerInternal() override
+    {
+        auto* value = dynamic_cast<CVValuesValue*>(editedValue.get());
+        if ((automationUI || gradientUI) && (!value || value->hideInEditor || !value->enabled->boolValue()
+            || !value->animated->boolValue() || block->blockType->getValueDataAsEnum<int>() != 1))
+        { editedValue = nullptr; setInlineEditor(nullptr); }
+        LayerBlockUI::handlePaintTimerInternal();
+    }
 };
 
 class CVValuesBlockManagerUI : public LayerBlockManagerUI
@@ -202,6 +231,7 @@ public:
         }
         m->cvLayer->clearWarning("add");
         b->time->setValue(time); b->blockType->setValueWithData(type);
+        b->setNiceName(b->blockType->getValueKey());
         b->acceptedStart = time;
         b->syncTargets();
         m->addItem(b.release());
@@ -210,7 +240,7 @@ public:
     {
         if (!miniMode && !e.mods.isCommandDown() && !e.mods.isShiftDown()) addAt(timeline->getTimeForX(getMouseXYRelative().x), 0);
     }
-    void addItemFromMenu(bool fromButton, Point<int> position) override
+    void showMenuAndAddItem(bool fromButton, Point<int> position) override
     {
         if (miniMode || fromButton) return;
         PopupMenu menu;
@@ -231,6 +261,11 @@ public:
         updateMiniModeUI();
     }
     CVValuesBlockManagerUI blocks;
+    void newMessage(const ContainerAsyncEvent& e) override
+    {
+        SequenceLayerTimeline::newMessage(e);
+        if (e.targetControllable != item->sequence->currentTime) blocks.updateContent();
+    }
     void resized() override { blocks.setBounds(getLocalBounds()); updateNeedlePosition(); }
     void updateContent() override { blocks.updateContent(); }
     void updateMiniModeUI() override { blocks.setMiniMode(item->miniMode->boolValue()); }
@@ -240,5 +275,6 @@ public:
 }
 
 SequenceLayerTimeline* CVValuesLayer::getTimelineUI() { return new CVValuesLayerTimeline(this); }
-Component* CVValuesBlock::createValuesEditor() { syncTargets(); return new CVValuesEditorWindow(this); }
+Component* CVValuesBlock::createValuesEditor() { syncTargets(); return getEditor(true); }
+InspectableEditor* CVValuesValue::getEditorInternal(bool isRoot, Array<Inspectable*>) { return new CVValuesValueEditor(this, isRoot); }
 InspectableEditor* CVValuesTarget::getEditorInternal(bool isRoot, Array<Inspectable*>) { return new CVValuesTargetEditor(this, isRoot); }

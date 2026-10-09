@@ -109,8 +109,9 @@ CVValuesTarget::CVValuesTarget() : BaseItem("Group", true, false)
     CVValuesHelpers::presetSelector(basePreset);
 }
 
-CVValuesValue::CVValuesValue(Parameter* parameter, const String& type) : BaseItem(parameter ? parameter->niceName : "Value", false, false)
+CVValuesValue::CVValuesValue(Parameter* parameter, const String& type) : BaseItem(parameter ? parameter->niceName : "Value", true, false)
 {
+    enabled->setValue(false);
     itemDataType = "CVValuesOverride";
     saveAndLoadRecursiveData = true;
     userCanRemove = false;
@@ -121,13 +122,13 @@ CVValuesValue::CVValuesValue(Parameter* parameter, const String& type) : BaseIte
     value = dynamic_cast<Parameter*>(ControllableFactory::createControllable(parameter ? parameter->getTypeString() : type));
     if (!value) value = new FloatParameter("Value", "", 0);
     value->setNiceName("Value");
+    value->setCustomShortName("value");
     value->forceSaveValue = true;
     value->saveValueOnly = false;
     value->userCanSetReadOnly = false;
     value->lockManualControlMode = true;
     addParameter(value);
-    overrideValue = addBoolParameter("Override", "Enable this block's custom value", false);
-    unsetBehavior = addEnumParameter("When Unset", "What to do when Override is disabled");
+    unsetBehavior = addEnumParameter("When Unset", "What to do when this value is disabled");
     unsetBehavior->addOption("Take last set value", 0)->addOption("Do not change", 1);
     interpolation = addEnumParameter("Transition", "How this value transitions from another block");
     if (value->type == Controllable::FLOAT || value->type == Controllable::INT || value->isComplex())
@@ -170,6 +171,7 @@ void CVValuesValue::syncMetadata(Parameter* p)
 {
     if (!p || value->type != p->type) return;
     if (niceName != p->niceName) setNiceName(p->niceName);
+    if (value->niceName != p->niceName) value->setNiceName(p->niceName);
     if (p->hasRange()) value->setRange(p->minimumValue, p->maximumValue);
     else value->clearRange();
     if (automation)
@@ -208,14 +210,24 @@ var CVValuesValue::getJSONData(bool includeNonOverriden)
 
 void CVValuesValue::onContainerParameterChangedInternal(Parameter*)
 {
-    if (!animated || !overrideValue) return;
+    if (!animated) return;
     bool changed = false;
     auto visibility = [&changed](bool& hidden, bool next) { changed |= hidden != next; hidden = next; };
-    if (automation) visibility(automation->hideInEditor, !animated->boolValue() || !overrideValue->boolValue());
-    if (gradient) visibility(gradient->hideInEditor, !animated->boolValue() || !overrideValue->boolValue());
-    visibility(value->hideInEditor, animated->boolValue() || !overrideValue->boolValue());
-    visibility(unsetBehavior->hideInEditor, overrideValue->boolValue());
+    if (automation) visibility(automation->hideInEditor, true);
+    if (gradient) visibility(gradient->hideInEditor, true);
+    visibility(value->hideInEditor, false);
+    visibility(unsetBehavior->hideInEditor, enabled->boolValue());
     if (changed) notifyStructureChanged();
+}
+
+void CVValuesValue::loadJSONData(var data, bool createIfNotThere)
+{
+    auto migrated = data.clone();
+    if (auto* parameters = migrated.getProperty("parameters", var()).getArray())
+        for (auto p : *parameters)
+            if (p.getProperty("controlAddress", "").toString() == "/override")
+                p.getDynamicObject()->setProperty("controlAddress", "/enabled");
+    BaseItem::loadJSONData(migrated, createIfNotThere);
 }
 
 CVValuesValueManager::CVValuesValueManager() : BaseManager("Custom Values")
@@ -293,6 +305,7 @@ CVValuesBlock::CVValuesBlock(CVValuesLayer* owner) : LayerBlock("Preset Block"),
     saveAndLoadRecursiveData = true;
     blockType = addEnumParameter("Block Type", "Preset references or custom values");
     blockType->addOption("Preset Block", 0)->addOption("Custom Values", 1);
+    addFadeParameters(1);
     loopLength->hideInEditor = true;
     isActive->isSavable = false;
     loopLength->setControllableFeedbackOnly(true);
@@ -357,6 +370,8 @@ void CVValuesBlock::onContainerParameterChangedInternal(Parameter* p)
 {
     if (validating || isCurrentlyLoadingData || !layer || !blockType) return;
     if (p == isActive) return;
+    if (p == blockType && (niceName == "Preset Block" || niceName == "Custom Values"))
+        setNiceName(blockType->getValueKey());
     if (p == loopLength && loopLength->doubleValue() != 0)
     { validating = true; loopLength->setValue(0); validating = false; }
     if ((p == time || p == coreLength || p == enabled) && layer->blocks.items.contains(this))
@@ -643,6 +658,8 @@ void CVValuesLayer::rebuildSnapshot()
         block->acceptedEnabled = block->enabled->boolValue();
         CVValuesEvaluation::Block<var> b;
         b.start = block->acceptedStart; b.length = block->acceptedLength;
+        b.manualFadeIn = block->blockFadeIn->enabled; b.manualFadeOut = block->blockFadeOut->enabled;
+        b.fadeIn = block->blockFadeIn->doubleValue(); b.fadeOut = block->blockFadeOut->doubleValue();
         for (size_t ch = 0; ch < rows.size(); ++ch)
         {
             CVValuesEvaluation::Channel<var> c;
@@ -675,7 +692,7 @@ void CVValuesLayer::rebuildSnapshot()
                 for (auto* v : entry->values.items)
                 {
                     if (v->source->getTargetParameter() != parameter || v->value->type != parameter->type) continue;
-                    if (!v->overrideValue->boolValue())
+                    if (!v->enabled->boolValue())
                         c.source = v->unsetBehavior->getValueDataAsEnum<int>() == 0 ? CVValuesEvaluation::Source::Inherit : CVValuesEvaluation::Source::NoWrite;
                     else
                     {
@@ -819,4 +836,20 @@ Array<UndoableAction*> CVValuesLayer::getRemoveTimespanInternal(float start, flo
     }
     after.getDynamicObject()->setProperty("items", list);
     return { blocks.stateAction(before, after) };
+}
+
+BlockTransitions::Fades CVValuesBlock::getEffectiveFades() const
+{
+    const auto data = std::atomic_load(&layer->snapshot);
+    if (data)
+        for (size_t i = 0; i < data->timeline.blocks.size(); ++i)
+            if (data->timeline.blocks[i].start == time->doubleValue()) return data->timeline.displayFades(i);
+    return BlockTransitions::fit({ blockFadeIn->enabled ? blockFadeIn->doubleValue() : layer->fadeIn->doubleValue(),
+        blockFadeOut->enabled ? blockFadeOut->doubleValue() : layer->fadeOut->doubleValue() }, coreLength->doubleValue());
+}
+
+double CVValuesBlock::getFadeCurveValue(double w) const
+{
+    const auto data = std::atomic_load(&layer->snapshot);
+    return data ? data->timeline.weight(w) : w;
 }

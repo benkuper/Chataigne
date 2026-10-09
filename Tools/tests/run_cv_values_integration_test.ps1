@@ -44,6 +44,13 @@ Push-Location $projectDir
 try {
     & cmd /c "`"$vsPath\VC\Auxiliary\Build\vcvars64.bat`" >nul && cl @`"$compileResponse`" && link @`"$linkResponse`""
     if ($LASTEXITCODE -ne 0) { throw 'Integration test build failed.' }
-    if ($FixturePath) { & $testExe $FixturePath } else { & $testExe }
-    if ($LASTEXITCODE -ne 0) { throw 'Integration tests failed.' }
+    # Native dependency diagnostics on stderr must not become PowerShell exceptions.
+    $previousErrorPreference = $ErrorActionPreference
+    try {
+        $ErrorActionPreference = 'Continue'
+        if ($FixturePath) { & $testExe $FixturePath 2>&1 | ForEach-Object { "$PSItem" } }
+        else { & $testExe 2>&1 | ForEach-Object { "$PSItem" } }
+        $testExitCode = $LASTEXITCODE
+    } finally { $ErrorActionPreference = $previousErrorPreference }
+    if ($testExitCode -ne 0) { throw 'Integration tests failed.' }
 } finally { Pop-Location }

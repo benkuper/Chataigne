@@ -10194,6 +10194,9 @@
     <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\Block\ui\LayerBlockUI.h">
       <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Block\ui</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\Block\BlockTransitions.h">
+      <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Block</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\Block\LayerBlock.h">
       <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Block</Filter>
     </ClInclude>

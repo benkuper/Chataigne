@@ -5,6 +5,7 @@
 #include <functional>
 #include <utility>
 #include <vector>
+#include "../../../../../Modules/juce_timeline/timeline/Sequence/Layer/layers/Block/BlockTransitions.h"
 
 // Independent of JUCE and target containers: evaluation never reads live values.
 namespace CVValuesEvaluation
@@ -31,6 +32,8 @@ template<class T> struct Block
 {
     double start = 0, length = 1;
     std::vector<Channel<T>> channels;
+    bool manualFadeIn = false, manualFadeOut = false;
+    double fadeIn = 0, fadeOut = 0;
     double end() const { return start + length; }
 };
 
@@ -71,13 +74,26 @@ template<class T> struct Timeline
         const auto& b = blocks[index];
         const auto* p = index > 0 ? &blocks[index - 1] : nullptr;
         const auto* n = index + 1 < blocks.size() ? &blocks[index + 1] : nullptr;
-        double in = p && (p->end() > b.start || gapMode == GapMode::Interpolate) ? 0 : std::max(0.0, fadeIn);
-        double out = n && (n->start < b.end() || gapMode != GapMode::Base) ? 0 : std::max(0.0, fadeOut);
-        const double available = std::max(0.0, b.length - (p ? std::max(0.0, p->end() - b.start) : 0)
-            - (n ? std::max(0.0, b.end() - n->start) : 0));
-        if (in + out > available && in + out > 0)
-        { const double scale = available / (in + out); in *= scale; out *= scale; }
-        return { in, out };
+        double in = b.manualFadeIn ? b.fadeIn : p && (p->end() > b.start || gapMode == GapMode::Interpolate) ? 0 : std::max(0.0, fadeIn);
+        double out = b.manualFadeOut ? b.fadeOut : n && (n->start < b.end() || gapMode != GapMode::Base) ? 0 : std::max(0.0, fadeOut);
+        // Automatic overlaps keep their entire span. Only the remaining
+        // space is available to outer/manual edge fades.
+        const double reservedIn = !b.manualFadeIn && p ? std::max(0.0, p->end() - b.start) : 0;
+        const double reservedOut = !b.manualFadeOut && n ? std::max(0.0, b.end() - n->start) : 0;
+        const double available = std::max(0.0, b.length - reservedIn - reservedOut);
+        const auto fitted = BlockTransitions::fit({ in, out }, available);
+        return { fitted.in, fitted.out };
+    }
+
+    BlockTransitions::Fades displayFades(size_t index) const
+    {
+        auto result = edgeFades(index);
+        const auto& b = blocks[index];
+        if (!b.manualFadeIn && index > 0)
+            result.first = std::max(result.first, BlockTransitions::overlap(b.start, b.end(), blocks[index - 1].start, blocks[index - 1].end()));
+        if (!b.manualFadeOut && index + 1 < blocks.size())
+            result.second = std::max(result.second, BlockTransitions::overlap(b.start, b.end(), blocks[index + 1].start, blocks[index + 1].end()));
+        return BlockTransitions::fit({ result.first, result.second }, b.length);
     }
 
     Sample<T> blend(size_t channel, Sample<T> a, Sample<T> b, double w) const
@@ -136,8 +152,34 @@ template<class T> struct Timeline
             {
                 const auto& a = blocks[first];
                 const auto& b = blocks[second];
-                result.push_back(blend(ch, resolve(first, ch, time), resolve(second, ch, time),
-                    (time - b.start) / (a.end() - b.start)));
+                auto from = resolve(first, ch, time), to = resolve(second, ch, time);
+                if (!a.manualFadeOut && !b.manualFadeIn)
+                    result.push_back(blend(ch, from, to, (time - b.start) / (a.end() - b.start)));
+                else if (!from.write || !to.write)
+                    result.push_back(blend(ch, from, to, 0));
+                else
+                {
+                    const auto af = displayFades(first), bf = displayFades(second);
+                    auto envelope = [&](const Block<T>& block, BlockTransitions::Fades fades)
+                    {
+                        const double in = fades.in > 0 ? weight((time - block.start) / fades.in) : 1;
+                        const double out = fades.out > 0 ? 1 - weight((time - (block.end() - fades.out)) / fades.out) : 1;
+                        return std::min(in, out);
+                    };
+                    const double out = envelope(a, af), in = envelope(b, bf);
+                    const double sum = in + out;
+                    // Manual edges have independent envelopes; normalize excess
+                    // contribution and fill any uncovered weight from the base.
+                    auto mixed = from;
+                    if (sum > 0)
+                    {
+                        const double w = in / sum;
+                        mixed = to.mode == Mode::Start ? to : to.mode == Mode::End && w < 1 ? from
+                            : Sample<T>{ interpolate(ch, from.value, to.value, w), true, to.mode };
+                    }
+                    if (sum < 1) mixed.value = interpolate(ch, base[ch], mixed.value, sum);
+                    result.push_back(mixed);
+                }
             }
             else if (first >= 0)
             {

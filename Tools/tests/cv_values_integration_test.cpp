@@ -32,6 +32,102 @@ static void check(bool condition, const char* label)
     if (!condition) throw std::runtime_error(label);
 }
 
+class ConstantAudioSource : public PositionableAudioSource
+{
+public:
+    explicit ConstantAudioSource(float level) : level(level) {}
+    float level; int64 position = 0;
+    void prepareToPlay(int, double) override {}
+    void releaseResources() override {}
+    void getNextAudioBlock(const AudioSourceChannelInfo& info) override
+    {
+        for (int ch = 0; ch < info.buffer->getNumChannels(); ++ch)
+            FloatVectorOperations::fill(info.buffer->getWritePointer(ch, info.startSample), level, info.numSamples);
+        position += info.numSamples;
+    }
+    void setNextReadPosition(int64 p) override { position = p; }
+    int64 getNextReadPosition() const override { return position; }
+    int64 getTotalLength() const override { return 48000 * 30; }
+    bool isLooping() const override { return false; }
+};
+
+static void testAudioBlocks(ChataigneSequence* sequence)
+{
+    ConstantAudioSource first(.2f), second(.6f);
+    AudioProcessorGraph graph;
+    graph.setPlayConfigDetails(0, 2, 48000, 256); graph.prepareToPlay(48000, 256);
+    AudioLayer audio(sequence, var()); audio.setAudioProcessorGraph(&graph);
+    auto add = [&](double start, ConstantAudioSource& source)
+    {
+        auto* clip = new AudioLayerClip(); clip->time->setValue(start); clip->coreLength->setValue(10);
+        clip->filePath->setValue("memory", true); clip->clipDuration = 30; clip->numChannels = 1;
+        audio.clipManager.addItem(clip, var(), false);
+        clip->transportSource.setSource(&source, 0, nullptr, 48000, 2);
+        return clip;
+    };
+    auto* a = add(0, first); auto* b = add(8, second);
+    check(audio.clipManager.blocksCanOverlap, "audio supports overlapping blocks");
+    check(a->getEffectiveFades().out == 2 && b->getEffectiveFades().in == 2, "automatic overlap durations");
+    sequence->isPlaying->setValue(true, true);
+    auto seekAudio = [&](double time)
+    {
+        sequence->currentTime->setValue(time, true); sequence->hiResAudioTime = time;
+        const ScopedValueSetter<bool> seeking(sequence->isSeeking, true);
+        audio.sequenceCurrentTimeChanged(sequence, 0, false);
+    };
+    AudioBuffer<float> buffer(2, 256); MidiBuffer midi;
+    auto sample = [&]()
+    {
+        audio.currentProcessor->processBlock(buffer, midi); // finish the short discontinuity ramp
+        audio.currentProcessor->processBlock(buffer, midi);
+        check(std::abs(buffer.getSample(0, 128) - buffer.getSample(1, 128)) < .0001f, "mixed mono routing");
+        return buffer.getSample(0, 128);
+    };
+    seekAudio(9);
+    check(a->isActive->boolValue() && b->isActive->boolValue(), "both audio clips active in overlap");
+    check(std::abs(sample() - .4f) < .005f, "audio renders both crossfade contributors");
+    b->fadeIn->setEnabled(true); b->fadeIn->setValue(0); seekAudio(9);
+    check(std::abs(sample() - .7f) < .005f, "manual zero fade disables incoming auto fade");
+    a->fadeOut->setEnabled(true); a->fadeOut->setValue(0); seekAudio(9);
+    check(std::abs(sample() - .8f) < .005f, "both manual zero edges mix at full gain");
+    b->fadeIn->setEnabled(false); a->fadeOut->setEnabled(false); seekAudio(4);
+    check(a->isActive->boolValue() && !b->isActive->boolValue(), "audio active flags update on seek");
+    check(std::abs(sample() - .2f) < .005f, "single audio clip unchanged");
+    AudioLayerClipUI ui(b); ui.setSize(500, 120); ui.handleContextMenuResult(1002);
+    check(ui.automationUI != nullptr, "audio automation embedded");
+    ui.setViewRange(1, 6);
+    check(ui.automationUI->keysUI.viewPosRange == Point<float>(1, 6), "audio automation follows cropped zoom");
+    check(std::abs(ui.xForLocalTime(2) - 100) < .001, "fade positions use cropped coordinates");
+    ui.setViewRange(3, 6);
+    check(!ui.fadeInHandle.isVisible(), "offscreen fade handle is hidden");
+    ui.handleContextMenuResult(1001);
+    check(!ui.automationUI, "hide inline editor");
+    ui.setViewRange(1, 6);
+    auto fadeEvent = [&](float x, int modifiers, bool dragged)
+    {
+        return MouseEvent(Desktop::getInstance().getMainMouseSource(), { x, 5 }, ModifierKeys(modifiers),
+            1, 0, 0, 0, 0, &ui.fadeInHandle, &ui.fadeInHandle, Time::getCurrentTime(),
+            { 5, 5 }, Time::getCurrentTime(), 1, dragged);
+    };
+    ui.mouseDown(fadeEvent(5, ModifierKeys::leftButtonModifier, false));
+    ui.mouseDrag(fadeEvent(105, ModifierKeys::leftButtonModifier, true));
+    ui.mouseUp(fadeEvent(5, 0, true));
+    check(b->fadeIn->enabled && std::abs(b->fadeIn->doubleValue() - 3) < .01, "fade handle edits local duration and enables override");
+    check(UndoMaster::getInstance()->undo() && !b->fadeIn->enabled, "fade gesture undo restores automatic mode");
+    AudioLayerClip oldFade;
+    oldFade.fadeIn->setValue(.5);
+    auto legacyAudio = oldFade.getJSONData().clone();
+    for (auto p : *legacyAudio.getProperty("parameters", var()).getArray())
+        if (p.getProperty("controlAddress", "").toString() == "/fadeIn") p.getDynamicObject()->removeProperty("enabled");
+    AudioLayerClip migratedAudio; migratedAudio.loadJSONData(legacyAudio);
+    check(migratedAudio.fadeIn->enabled && migratedAudio.fadeIn->doubleValue() == .5, "legacy audio fade remains explicit");
+    audio.enabled->setValue(false);
+    check(!a->transportSource.isPlaying() && !b->transportSource.isPlaying(), "disable stops all audio transports");
+    check(sample() == 0, "disabled audio is silent");
+    sequence->isPlaying->setValue(false, true);
+    audio.setAudioProcessorGraph(nullptr);
+}
+
 int main(int argc, char** argv)
 {
     ScopedJuceInitialiser_GUI gui;
@@ -89,16 +185,27 @@ int main(int argc, char** argv)
         layer->rebuildSnapshot();
         check(entry->values.items.size() == 8, "typed custom overrides");
         auto* custom = entry->values.items[0];
-        custom->overrideValue->setValue(true); custom->value->setValue(200);
+        custom->enabled->setValue(true); custom->value->setValue(200);
         layer->rebuildSnapshot(); seek(3, 200);
+        block->blockFadeIn->setEnabled(true); block->blockFadeIn->setValue(2);
+        layer->rebuildSnapshot(); seek(3, 100);
+        block->blockFadeIn->setValue(0); layer->rebuildSnapshot(); seek(2, 200);
+        block->blockFadeIn->setEnabled(false); layer->rebuildSnapshot(); seek(2, 200);
+        auto legacyValueData = custom->getJSONData().clone();
+        for (auto p : *legacyValueData.getProperty("parameters", var()).getArray())
+            if (p.getProperty("controlAddress", "").toString() == "/enabled") p.getDynamicObject()->setProperty("controlAddress", "/override");
+        CVValuesValue migratedValue;
+        migratedValue.loadJSONData(legacyValueData, true);
+        check(migratedValue.enabled->boolValue() && migratedValue.getControllableForAddress("/override", false) == nullptr,
+            "legacy override migrates into enabling container without a second toggle");
         custom->animated->setValue(true);
         custom->automation->clear();
         custom->automation->addKey(0, 0, false)->easingType->setValueWithData(Easing::LINEAR);
         custom->automation->addKey(4, 400, false)->easingType->setValueWithData(Easing::LINEAR);
         layer->rebuildSnapshot(); seek(3, 100); seek(5, 300); seek(3, 100);
-        custom->overrideValue->setValue(false); custom->unsetBehavior->setValueWithData(1);
+        custom->enabled->setValue(false); custom->unsetBehavior->setValueWithData(1);
         layer->rebuildSnapshot(); number->setValue(777); seek(3, 777);
-        custom->overrideValue->setValue(true);
+        custom->enabled->setValue(true);
         layer->rebuildSnapshot();
 
         const var saved = layer->getJSONData();
@@ -150,7 +257,7 @@ int main(int argc, char** argv)
         auto overrideFor = [](CVValuesBlock* b, int index, var value)
         {
             auto* v = b->groups.items[0]->values.items[index];
-            v->overrideValue->setValue(true); v->value->setValue(value); return v;
+            v->enabled->setValue(true); v->value->setValue(value); return v;
         };
         auto* av = overrideFor(a, 0, 100);
         auto* bv = overrideFor(b, 0, 800);
@@ -158,7 +265,7 @@ int main(int argc, char** argv)
         av->automation->addKey(0, 0)->easingType->setValueWithData(Easing::LINEAR);
         av->automation->addKey(4, 400)->easingType->setValueWithData(Easing::LINEAR);
         edit->handleAsyncUpdate(); seek(5.5, 575);
-        bv->overrideValue->setValue(false); edit->handleAsyncUpdate(); seek(5.5, 350); seek(7, 400);
+        bv->enabled->setValue(false); edit->handleAsyncUpdate(); seek(5.5, 350); seek(7, 400);
         bv->unsetBehavior->setValueWithData(1); edit->handleAsyncUpdate(); seek(5.5, 350);
         number->setValue(777); seek(7, 777);
         bv->unsetBehavior->setValueWithData(0); check(b->setTiming(8, 4), "valid move out of overlap");
@@ -166,7 +273,7 @@ int main(int argc, char** argv)
         edit->interpolationMode->setValueWithData(2); edit->handleAsyncUpdate(); seek(9, 400);
         edit->interpolationMode->setValueWithData(1); edit->handleAsyncUpdate(); seek(7, 400); seek(9, 400);
         edit->interpolationMode->setValueWithData(0); check(b->setTiming(5, 4), "valid overlap restored");
-        av->animated->setValue(false); av->value->setValue(100); bv->overrideValue->setValue(true); bv->value->setValue(500);
+        av->animated->setValue(false); av->value->setValue(100); bv->enabled->setValue(true); bv->value->setValue(500);
         overrideFor(b, 1, 101); overrideFor(b, 2, var(Array<var>{ 1., 1., 1., 1. }));
         overrideFor(b, 3, var(Array<var>{ 10., 20. })); overrideFor(b, 4, true); overrideFor(b, 5, "other");
         overrideFor(b, 6, "Other"); overrideFor(b, 7, var(Array<var>{ 10., 20., 30. }));
@@ -293,11 +400,11 @@ int main(int argc, char** argv)
         edit->targets.removeItem(row2, false); edit->handleAsyncUpdate();
         CVGroupManager::getInstance()->removeItem(group2, false);
         layer->enabled->setValue(true); layer->handleAsyncUpdate();
-        bv = b->groups.items[0]->values.items[0]; bv->overrideValue->setValue(false); bv->unsetBehavior->setValueWithData(1); edit->handleAsyncUpdate();
+        bv = b->groups.items[0]->values.items[0]; bv->enabled->setValue(false); bv->unsetBehavior->setValueWithData(1); edit->handleAsyncUpdate();
         seek(7, 200); // Lower layer abstains; upper layer's second block inherits its endpoint.
         sequence->layerManager->setItemIndex(edit, 0, false); seek(7, 200);
         sequence->layerManager->setItemIndex(edit, sequence->layerManager->items.size() - 1, false);
-        bv->overrideValue->setValue(true); edit->handleAsyncUpdate(); seek(7, 500);
+        bv->enabled->setValue(true); edit->handleAsyncUpdate(); seek(7, 500);
         layer->enabled->setValue(false);
 
         // Taking timeline control cancels the group's existing timed preset fade.
@@ -384,18 +491,25 @@ int main(int argc, char** argv)
         a = static_cast<CVValuesBlock*>(edit->blocks.items[0]); b = static_cast<CVValuesBlock*>(edit->blocks.items[1]);
         av = a->groups.items[0]->values.items[0]; av->animated->setValue(true);
         edit->handleAsyncUpdate();
-        std::unique_ptr<Component> valuesEditor(b->createValuesEditor()); valuesEditor->setSize(700, 650);
-        check(valuesEditor->getNumChildComponents() == 1 && dynamic_cast<Viewport*>(valuesEditor->getChildComponent(0)), "scrollable block editor");
-        auto* viewport = static_cast<Viewport*>(valuesEditor->getChildComponent(0));
-        int automationEditors = 0, gradientEditors = 0;
-        std::function<void(Component&)> inspectEditor = [&](Component& c)
-        {
-            if (dynamic_cast<AutomationEditor*>(&c)) ++automationEditors;
-            if (dynamic_cast<GradientColorManagerEditor*>(&c)) ++gradientEditors;
-            for (auto* child : c.getChildren()) inspectEditor(*child);
-        };
-        inspectEditor(*valuesEditor);
-        check(automationEditors > 0 && gradientEditors > 0, "typed animation editing UI");
+        Viewport valuesViewport;
+        valuesViewport.setViewedComponent(b->createValuesEditor(), true);
+        Component* valuesEditor = &valuesViewport;
+        valuesEditor->setSize(700, 650);
+        valuesViewport.getViewedComponent()->setSize(680, valuesViewport.getViewedComponent()->getHeight());
+        auto* viewport = &valuesViewport;
+        auto* rowValue = b->groups.items[0]->values.items[0];
+        rowValue->enabled->setValue(true); rowValue->animated->setValue(false);
+        std::unique_ptr<InspectableEditor> rowEditor(rowValue->getEditor(false)); rowEditor->setSize(600, 28);
+        ParameterEditor* typedEditor = nullptr;
+        for (auto* child : rowEditor->getChildren()) if (auto* p = dynamic_cast<ParameterEditor*>(child)) typedEditor = p;
+        check(typedEditor && typedEditor->ui->isInteractable() && typedEditor->isEnabled(), "compact typed value is editable");
+        check(rowEditor->getHeight() <= 30, "one-line custom value row");
+        auto* slider = dynamic_cast<FloatSliderUI*>(typedEditor->ui.get());
+        check(slider != nullptr, "custom number uses typed slider");
+        const auto beforeValue = rowValue->value->value;
+        slider->setParamNormalizedValue(.65f);
+        check(rowValue->value->value != beforeValue, "inspector slider changes authored custom value");
+        rowValue->value->setValue(beforeValue);
         std::unique_ptr<SequenceLayerTimeline> timelineUI(edit->getTimelineUI());
         sequence->viewStartTime->setValue(0); sequence->viewEndTime->setValue(15);
         timelineUI->setSize(1100, 100); timelineUI->updateContent();
@@ -403,8 +517,23 @@ int main(int argc, char** argv)
         for (auto* child : timelineUI->getChildren()) if (auto* ui = dynamic_cast<LayerBlockManagerUI*>(child)) managerUI = ui;
         check(managerUI && managerUI->itemsUI.size() == 2, "block timeline UI");
         PopupMenu menu; managerUI->itemsUI[0]->addContextMenuItems(menu); check(menu.getNumItems() > 0, "animation context menu");
+        auto* firstUI = managerUI->itemsUI[0];
+        firstUI->handleContextMenuResult(2000);
+        check(firstUI->automationUI != nullptr, "CV number automation embedded in block");
+        sequence->viewStartTime->setValue(3); sequence->viewEndTime->setValue(5);
+        timelineUI->setSize(1100, 120); timelineUI->updateContent();
+        check(firstUI->automationUI->keysUI.viewPosRange == Point<float>(1, 3), "cropped automation view uses local time");
+        check(firstUI->automationUI->keysUI.getBounds() == firstUI->automationUI->getLocalBounds(), "automation child bounds update in the same frame as zoom");
+        firstUI->handleContextMenuResult(2002);
+        check(firstUI->gradientUI != nullptr && !firstUI->automationUI, "CV color gradient embedded in block");
+        check(firstUI->gradientUI->viewStartPos == 1 && firstUI->gradientUI->viewEndPos == 3, "cropped gradient uses local time");
+        firstUI->handleContextMenuResult(1002);
+        sequence->viewStartTime->setValue(0); sequence->viewEndTime->setValue(15);
+        timelineUI->updateContent();
         if (argc > 1)
         {
+            sequence->setCurrentTime(5.5, true, true); sequence->evaluateCVValues();
+            firstUI->handleContextMenuResult(2000);
             valuesEditor->addToDesktop(ComponentPeer::windowIsTemporary); valuesEditor->setVisible(true);
             timelineUI->addToDesktop(ComponentPeer::windowIsTemporary); timelineUI->setVisible(true);
             pumpMessages(200);
@@ -419,9 +548,17 @@ int main(int argc, char** argv)
             render(*valuesEditor, "cv-values-editor-top.png");
             viewport->setViewPosition(0, 500); render(*valuesEditor, "cv-values-editor-animations.png");
             render(*timelineUI, "cv-values-timeline.png");
+            sequence->viewStartTime->setValue(3); sequence->viewEndTime->setValue(5); timelineUI->updateContent();
+            render(*timelineUI, "cv-values-cropped-automation.png");
+            firstUI->handleContextMenuResult(2002);
+            pumpMessages(100);
+            render(*timelineUI, "cv-values-cropped-gradient.png");
+            firstUI->handleContextMenuResult(1002);
+            sequence->viewStartTime->setValue(0); sequence->viewEndTime->setValue(15); timelineUI->updateContent();
             valuesEditor->removeFromDesktop(); timelineUI->removeFromDesktop();
         }
-        valuesEditor.reset();
+        valuesViewport.setViewedComponent(nullptr, true);
+        rowEditor.reset();
         // Exercise the timeline's actual resize gesture and shared snapping
         // callbacks; undo must restore both timing and authored animation keys.
         auto* blockUI = managerUI->itemsUI[0];
@@ -467,6 +604,7 @@ int main(int argc, char** argv)
             layer->fadeIn->setValue(1); layer->fadeOut->setValue(1);
             File(argv[1]).replaceWithText(JSON::toString(app.engine->getJSONData(), true));
         }
+        testAudioBlocks(sequence);
         std::cout << "CV Values integration passed\n";
     }
     catch (const std::exception& e)

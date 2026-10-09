@@ -23,7 +23,6 @@ public:
     CVValuesValue(Parameter* source = nullptr, const String& type = "Float");
     TargetParameter* source = nullptr;
     Parameter* value = nullptr;
-    BoolParameter* overrideValue = nullptr;
     EnumParameter* unsetBehavior = nullptr;
     EnumParameter* interpolation = nullptr;
     BoolParameter* animated = nullptr;
@@ -32,6 +31,8 @@ public:
     void syncMetadata(Parameter* p);
     void setLength(float length, bool stretch = false, bool stickToEnd = false);
     var getJSONData(bool includeNonOverriden = false) override;
+    void loadJSONData(var data, bool createIfNotThere = false) override;
+    InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables = {}) override;
     void onContainerParameterChangedInternal(Parameter* p) override;
     DECLARE_TYPE("CV Values Override");
 };
@@ -68,6 +69,8 @@ public:
     bool setTiming(double start, double length, bool stretch = false);
     void syncTargets();
     Component* createValuesEditor();
+    BlockTransitions::Fades getEffectiveFades() const override;
+    double getFadeCurveValue(double weight) const override;
     void setCoreLength(float length, bool stretch, bool stickToEnd = false) override;
     void setStartTime(float start, bool keepCoreEnd = false, bool stickToEnd = false) override;
     void onContainerParameterChangedInternal(Parameter* p) override;
@@ -129,6 +132,7 @@ public:
     void onContainerParameterChangedInternal(Parameter* p) override;
     void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
     void onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* c) override;
+    void onControllableStateChanged(Controllable* c) override { SequenceLayer::onControllableStateChanged(c); refresh(); }
     void childStructureChanged(ControllableContainer* cc) override;
     void childAddressChanged(ControllableContainer* cc) override;
     void onExternalParameterRangeChanged(Parameter*) override { refresh(); }

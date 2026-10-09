@@ -119,6 +119,33 @@ int main()
     assert(edges.edgeFades(2) == std::make_pair(0.0, 3.0));
     expect(edges, 1.5, 50); expect(edges, 3.5, 150); expect(edges, 8.5, 150);
 
+    // Per-block controls replace automatic fades, including an explicit zero.
+    auto manual = timeline(); manual.blocks = { block(2, 4, 100) };
+    manual.blocks[0].manualFadeIn = true; manual.blocks[0].fadeIn = 0;
+    expect(manual, 2, 100);
+    manual.blocks[0].fadeIn = 2; expect(manual, 3, 50);
+    manual.blocks[0].manualFadeOut = true; manual.blocks[0].fadeOut = 6;
+    assert(manual.edgeFades(0) == std::make_pair(1.0, 3.0));
+    expect(manual, 2.5, 50); expect(manual, 4.5, 50);
+    manual.blocks[0].manualFadeIn = manual.blocks[0].manualFadeOut = false;
+    expect(manual, 2, 0); expect(manual, 3, 100);
+    manual.fadeIn = manual.fadeOut = 0;
+    manual.blocks = { block(0, 10, 100), block(8, 10, 200) };
+    manual.blocks[1].manualFadeIn = true; manual.blocks[1].fadeIn = 1;
+    expect(manual, 8, 100); expect(manual, 8.5, 140); expect(manual, 9, 500.0 / 3);
+    manual.blocks[1].channels[0].source = Source::NoWrite; expect(manual, 9, 100);
+    manual.blocks[0].channels[0].source = Source::NoWrite; assert(!manual.evaluate(9)[0].write);
+    manual.blocks = { block(0, 4, 100), block(1, 5, 200) };
+    manual.blocks[0].manualFadeIn = manual.blocks[0].manualFadeOut = true;
+    manual.blocks[0].fadeIn = manual.blocks[0].fadeOut = 3;
+    expect(manual, 1, 50); expect(manual, 2, 125);
+    manual.blocks[0].manualFadeOut = false;
+    assert(manual.edgeFades(0).first == 1 && manual.displayFades(0).out == 3);
+    expect(manual, 1, 100);
+    assert(BlockTransitions::overlap(0, 10, 8, 18) == 2);
+    assert(BlockTransitions::gain(.5, 4, { 1, 1 }) == .5);
+    assert(BlockTransitions::withReservedOverlaps({ 0, 20 }, 10, { 2, 0 }).out == 8);
+
     // Evaluation order, playback direction, and visit history cannot affect output.
     t.blocks[1].channels[0].constant.mode = Mode::Interpolate;
     t.blocks[0].channels[0].animation = [](double local) { return 20 + local * local; };
