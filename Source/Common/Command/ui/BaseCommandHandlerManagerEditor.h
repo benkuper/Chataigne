@@ -41,7 +41,7 @@ public:
 					T* item = this->manager->createItem();
 					BaseCommandHandler* c = dynamic_cast<BaseCommandHandler*>(item);
 					c->setCommand(def);
-					this->manager->addItem(item);
+					this->manager->addItemForSelected(item);
 					this->setCollapsed(false, true);
 				}
 			},

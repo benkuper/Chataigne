@@ -48,14 +48,14 @@ void ConsequenceManagerEditor::showMenuAndAddItem(bool)
 			if (result == -100000)
 			{
 				ConsequenceGroup* g = new ConsequenceGroup(var(), csm->multiplex);
-				csm->addItem(g);
+				csm->addItemForSelected(g);
 
 			}
 			else if (CommandDefinition* def = CommandFactory::getCommandFromResult(result, nullptr))
 			{
 				Consequence* c = new Consequence(var(), csm->multiplex);
 				c->setCommand(def);
-				csm->addItem(c);
+				csm->addItemForSelected(c);
 				setCollapsed(false, true);
 			}
 		}
