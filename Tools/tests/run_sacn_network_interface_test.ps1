@@ -2,7 +2,7 @@
 param(
     [ValidateSet('Debug', 'Release')][string]$Configuration = 'Debug',
     [string[]]$InterfaceIPs = @(),
-    [ValidateSet('sacn_network_interface_test', 'artnet_network_interface_test')]
+    [ValidateSet('sacn_network_interface_test', 'artnet_network_interface_test', 'dmx_input_receiver_test')]
     [string]$TestName = 'sacn_network_interface_test',
     [switch]$SkipBuild
 )
