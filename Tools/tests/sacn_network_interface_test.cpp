@@ -1,4 +1,5 @@
 #include "MainIncludes.h"
+#include "Module/ModuleIncludes.h"
 #include <iostream>
 #include <stdexcept>
 #if JUCE_WINDOWS
@@ -18,6 +19,118 @@ public:
 static void check(bool condition, const char* message)
 {
     if (!condition) throw std::runtime_error(message);
+}
+
+static void pumpUI()
+{
+#if JUCE_WINDOWS
+    const auto deadline = GetTickCount64() + 30;
+    do
+    {
+        MSG message;
+        while (PeekMessage(&message, nullptr, 0, 0, PM_REMOVE))
+        {
+            TranslateMessage(&message);
+            DispatchMessage(&message);
+        }
+        MsgWaitForMultipleObjects(0, nullptr, FALSE, 1, QS_ALLINPUT);
+    } while (GetTickCount64() < deadline);
+#endif
+}
+
+static void testProtocolControls()
+{
+    struct TestModule : DMXModule
+    {
+        ~TestModule() { clearItem(); }
+    } module;
+    module.enabled->setValue(false);
+    auto* output = module.outputUniverseManager.items[0];
+    output->netParam->setValue(3);
+    output->subnetParam->setValue(4);
+    DMXUniverseItemEditor outputEditor({ output }, true);
+    outputEditor.setSize(600, 300);
+    check(!outputEditor.netUI->isVisible() && !outputEditor.subnetUI->isVisible(),
+        "Serial device hides Net/Subnet in universe header");
+    check(output->netParam->hideInEditor && output->subnetParam->hideInEditor,
+        "Serial device hides Net/Subnet in universe contents");
+    check(module.useMulticast->hideInEditor, "Legacy multicast control is hidden");
+
+    module.dmxType->setValueWithData(DMXDevice::ARTNET);
+    pumpUI();
+    check(outputEditor.netUI->isVisible() && outputEditor.subnetUI->isVisible(),
+        "Switching to Art-Net updates an existing universe header");
+    check(!output->netParam->hideInEditor && !output->subnetParam->hideInEditor,
+        "Art-Net exposes Net/Subnet in universe contents");
+    auto* input = module.inputUniverseManager.addItem(nullptr, var(), false);
+    DMXUniverseItemEditor inputEditor({ input }, true);
+    inputEditor.setSize(600, 300);
+    check(inputEditor.netUI->isVisible() && inputEditor.subnetUI->isVisible(),
+        "New Art-Net input universe exposes addressing in its header");
+
+    module.dmxType->setValueWithData(DMXDevice::SACN);
+    pumpUI();
+    check(!outputEditor.netUI->isVisible() && !inputEditor.netUI->isVisible()
+        && !outputEditor.subnetUI->isVisible() && !inputEditor.subnetUI->isVisible(),
+        "Switching to sACN hides addressing in both existing headers");
+    check(outputEditor.universeUI->isVisible() && inputEditor.universeUI->isVisible(),
+        "Universe selector remains visible");
+    auto* sacn = dynamic_cast<DMXSACNDevice*>(module.dmxDevice.get());
+    check(sacn != nullptr && sacn->useMulticast->parentContainer == sacn,
+        "Visible multicast control belongs to sACN settings");
+    sacn->remoteHost->setValue("192.0.2.10");
+    sacn->useMulticast->setValue(true);
+    check(module.useMulticast->boolValue() && !sacn->remoteHost->enabled,
+        "Multicast disables Remote Host and synchronizes legacy control");
+    check(sacn->outMulticastMap.contains(output->universe), "Multicast toggle configures output destinations");
+    sacn->useMulticast->setValue(false);
+    check(sacn->remoteHost->enabled && sacn->remoteHost->stringValue() == "192.0.2.10"
+        && sacn->outMulticastMap.size() == 0, "Unicast restores retained Remote Host and clears multicast map");
+    module.useMulticast->setValue(true);
+    check(sacn->useMulticast->boolValue() && !sacn->remoteHost->enabled,
+        "Original multicast address still controls sACN");
+
+    auto* added = module.outputUniverseManager.addItem(nullptr, var(), false);
+    check(!added->showArtNetAddressing && added->netParam->hideInEditor,
+        "New sACN universes inherit hidden addressing");
+    auto* copied = new DMXUniverseItem();
+    module.outputUniverseManager.addItems({ copied }, var(), false);
+    check(!copied->showArtNetAddressing, "Bulk-added sACN universes inherit hidden addressing");
+
+    var saved = JSON::parse(JSON::toString(module.getJSONData()));
+    TestModule restored;
+    restored.loadJSONData(saved);
+    auto* restoredSACN = dynamic_cast<DMXSACNDevice*>(restored.dmxDevice.get());
+    check(restoredSACN != nullptr && restoredSACN->useMulticast->boolValue()
+        && !restoredSACN->remoteHost->enabled, "Saved project restores multicast and Remote Host state");
+    for (auto* u : restored.outputUniverseManager.items)
+        check(!u->showArtNetAddressing && u->netParam->hideInEditor, "Loaded sACN universes hide addressing");
+
+    // Simulate an older project with only the module-level multicast parameter.
+    for (var deviceData : { saved["device"], saved["params"]["containers"]["sacn"] })
+    {
+        auto* deviceParameters = deviceData["parameters"].getArray();
+        check(deviceParameters != nullptr, "Saved sACN device contains parameters");
+        for (int i = deviceParameters->size(); --i >= 0;)
+            if ((*deviceParameters)[i]["controlAddress"].toString() == "/useMulticast") deviceParameters->remove(i);
+    }
+    restoredSACN->useMulticast->setValue(false);
+    restored.loadJSONData(saved);
+    restoredSACN = dynamic_cast<DMXSACNDevice*>(restored.dmxDevice.get());
+    check(restoredSACN != nullptr && restoredSACN->useMulticast->boolValue()
+        && !restoredSACN->remoteHost->enabled, "Legacy project restores multicast and Remote Host state");
+
+    module.dmxType->setValueWithData(DMXDevice::ARTNET);
+    pumpUI();
+    check(outputEditor.netUI->isVisible() && inputEditor.netUI->isVisible()
+        && output->netParam->intValue() == 3 && output->subnetParam->intValue() == 4,
+        "Returning to Art-Net restores visibility and retained Net/Subnet values");
+    module.dmxType->setValueWithData(DMXDevice::SACN);
+    sacn = dynamic_cast<DMXSACNDevice*>(module.dmxDevice.get());
+    check(sacn->useMulticast->boolValue() && !sacn->remoteHost->enabled,
+        "Returning to sACN retains multicast mode");
+    pumpUI();
+    std::cout << "DMX protocol control regression tests passed\n";
 }
 
 static void checkSenderInterface(DMXSACNDevice& device, const String& ip)
@@ -127,6 +240,7 @@ int main(int argc, char** argv)
     int result = 0;
     try
     {
+        testProtocolControls();
         DMXSACNDevice device;
         device.sendRate->setEnabled(false);
         check(device.networkInterface->getValueKey() == "Auto", "Existing projects default to Auto");

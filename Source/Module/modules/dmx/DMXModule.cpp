@@ -43,6 +43,9 @@ DMXModule::DMXModule() :
 	sendRate = moduleParams.addIntParameter("Send Rate", "The rate at which to send data.", 40, 1, 200);
 	sendOnChangeOnly = moduleParams.addBoolParameter("Send On Change Only", "Only send a universe if one of its channels has changed", false);
 	useMulticast = moduleParams.addBoolParameter("Use Multicast", "Use Multicast on receive and send if applicable with the device type", false);
+	// Keep the original address and saved value for existing projects and scripts.
+	// The visible control lives in the sACN device settings.
+	useMulticast->hideInEditor = true;
 
 	autoAdd = moduleParams.addBoolParameter("Auto Add", "If checked, received universed will automatically be added to the values. Not effective when using 1-universe devices like OpenDMX or Enttec DMXPro", true);
 
@@ -126,13 +129,12 @@ void DMXModule::setCurrentDMXDevice(DMXDevice* d)
 
 	if (dmxDevice != nullptr)
 	{
+		if (auto* sacn = dynamic_cast<DMXSACNDevice*>(dmxDevice.get())) sacn->useMulticast->setValue(useMulticast->boolValue());
 		dmxDevice->setEnabled(enabled->boolValue());
 		dmxDevice->addDMXDeviceListener(this);
 		moduleParams.addChildControllableContainer(dmxDevice.get(), false, 0);
 		connectionFeedbackRef = dmxDevice->isConnected;
 		setupIOConfiguration(dmxDevice->canReceive && dmxDevice->inputCC->enabled->boolValue(), dmxDevice->outputCC->enabled->boolValue());
-
-		useMulticast->setEnabled(dmxDevice->type == DMXDevice::SACN);
 
 		updateDeviceMulticast();
 		inputUniverseManager.setFirstUniverse(dmxDevice->getFirstUniverse());
@@ -141,10 +143,8 @@ void DMXModule::setCurrentDMXDevice(DMXDevice* d)
 
 		if (!isCurrentlyLoadingData) startThread();
 	}
-	else
-	{
-		useMulticast->setEnabled(false);
-	}
+	inputUniverseManager.setShowArtNetAddressing(dmxDevice != nullptr && dmxDevice->type == DMXDevice::ARTNET);
+	outputUniverseManager.setShowArtNetAddressing(dmxDevice != nullptr && dmxDevice->type == DMXDevice::ARTNET);
 
 
 	dmxModuleListeners.call(&DMXModuleListener::dmxDeviceChanged);
@@ -154,6 +154,9 @@ void DMXModule::updateDeviceMulticast()
 {
 	if (isCurrentlyLoadingData) return;
 	if (dmxDevice == nullptr) return;
+	auto* sacn = dynamic_cast<DMXSACNDevice*>(dmxDevice.get());
+	if (sacn == nullptr) return;
+	sacn->useMulticast->setValue(useMulticast->boolValue());
 
 	Array<DMXUniverse*> inUniv;
 	Array<DMXUniverse*> outUniv;
@@ -374,6 +377,7 @@ void DMXModule::loadJSONDataInternal(var data)
 void DMXModule::afterLoadJSONDataInternal()
 {
 	Module::afterLoadJSONDataInternal();
+	useMulticast->hideInEditor = true;
 	updateDeviceMulticast();
 	if (dmxDevice != nullptr) startThread();
 }
@@ -410,6 +414,10 @@ void DMXModule::controllableFeedbackUpdate(ControllableContainer* cc, Controllab
 		else if (c == useMulticast)
 		{
 			updateDeviceMulticast();
+		}
+		else if (auto* sacn = dynamic_cast<DMXSACNDevice*>(dmxDevice.get()))
+		{
+			if (c == sacn->useMulticast) useMulticast->setValue(sacn->useMulticast->boolValue());
 		}
 	}
 }
