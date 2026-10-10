@@ -16,3 +16,4 @@
 - Wait for the tag's CI run and all required platform package uploads to succeed before uploading either metadata file. Never publish metadata from a failed, incomplete, or unrelated branch run.
 - Upload both files through the SFTP profile in `site/.vscode/sftp.json`, preserving their paths relative to `site` under its configured remote root. Keep credentials private, upload only these two files, and verify the remote contents.
 - Preserve unrelated work and existing tags; do not force-push, change CI dependency strategy, or force-add the ignored website/credential tree. If the personal skill is unavailable, follow this workflow directly.
+- Keep the entire `site/` tree local-only and ignored, including both release metadata files. Never stage or commit files beneath `site/`; freeze validated metadata snapshots outside the repository for SFTP upload.
