@@ -4,13 +4,13 @@
 	"osxExtension": "pkg",
 	"linuxExtension": "AppImage",
 	"betaversion": {
-		"version": "1.10.5b3",
+		"version": "1.10.5b4",
 		"changelog": [
-			"[DMX] Added network interface selection for Art-Net and sACN input and output, including multicast interface selection for sACN",
-			"[Buttplug] Added Auto Detect for local and network Intiface servers via mDNS; enable Broadcast Server Info via mDNS in Intiface to use discovery",
-			"[Buttplug] Added a dedicated module icon and clearer setup guidance, connection warnings and protocol diagnostics",
-			"[Network] Fixed Linux Zeroconf crashes after Avahi polling failures and made service selection safe when discovered services change while the menu is open",
-			"[Sequence] Clarified when duration triggers reset and update their Was ever valid feedback"
+			"[DMX] Added HTP and LTP input merging for Art-Net and sACN, with sACN universe and per-slot priorities",
+			"[DMX] Expired and terminated input sources now release control to remaining sources; the last received look is retained when all sources disappear",
+			"[DMX] Simplified protocol-specific settings: Art-Net addressing is shown only for Art-Net, and multicast controls are grouped with the sACN device settings",
+			"[UI] Extended multi-editing to matching manager add, paste and delete actions, parameter and container names, ranges and editable metadata, with grouped undo and redo",
+			"[Automation] Fixed the initial display and resizing of automation editors"
 		]
 	},
 	"stableversion": {
@@ -4885,6 +4885,17 @@
 				"[Buttplug] Added a dedicated module icon and clearer setup guidance, connection warnings and protocol diagnostics",
 				"[Network] Fixed Linux Zeroconf crashes after Avahi polling failures and made service selection safe when discovered services change while the menu is open",
 				"[Sequence] Clarified when duration triggers reset and update their Was ever valid feedback"
+			]
+		},
+		{
+			"version": "1.10.5b4",
+			"beta": "true",
+			"changelog": [
+				"[DMX] Added HTP and LTP input merging for Art-Net and sACN, with sACN universe and per-slot priorities",
+				"[DMX] Expired and terminated input sources now release control to remaining sources; the last received look is retained when all sources disappear",
+				"[DMX] Simplified protocol-specific settings: Art-Net addressing is shown only for Art-Net, and multicast controls are grouped with the sACN device settings",
+				"[UI] Extended multi-editing to matching manager add, paste and delete actions, parameter and container names, ranges and editable metadata, with grouped undo and redo",
+				"[Automation] Fixed the initial display and resizing of automation editors"
 			]
 		}
 	]

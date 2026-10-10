@@ -5925,6 +5925,9 @@
     <ClInclude Include="..\..\Modules\juce_dmx\device\DMXEnttecProDevice.h">
       <Filter>JUCE Modules\juce_dmx\device</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_dmx\device\DMXInputMerger.h">
+      <Filter>JUCE Modules\juce_dmx\device</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Modules\juce_dmx\device\DMXOpenUSBDevice.h">
       <Filter>JUCE Modules\juce_dmx\device</Filter>
     </ClInclude>
