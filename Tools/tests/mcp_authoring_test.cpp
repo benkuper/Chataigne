@@ -353,6 +353,14 @@ int run()
         auto imported = call("chataigne_import", object({{"path", selection.getFullPathName()}}));
         check(CVGroupManager::getInstance()->items.size() == 2, "native selection export/import round trip");
         call("organic_undo", object({{"transaction", imported["transaction"]}})); check(CVGroupManager::getInstance()->items.size() == 1, "selection import undo");
+        auto* configuredGroup = CVGroupManager::getInstance()->items[0]; auto configuration = revisionArgs(configuredGroup);
+        auto configuredData = configuredGroup->getJSONData().clone(); configuredData.getDynamicObject()->setProperty("niceName", "MCP Configured Group");
+        configuration.getDynamicObject()->setProperty("data", configuredData);
+        context.grant.access = Access::edit; context.grant.advancedExecution = true;
+        rejects([&] { call("chataigne_configure", configuration); }, -32003); context.grant.access = Access::full;
+        auto configured = call("chataigne_configure", configuration);
+        check(configuredGroup->niceName == "MCP Configured Group" && (bool) configured["irreversibleEffects"] && !(bool) configured["reversible"]
+            && (bool) mcp.registry.find("chataigne_configure").descriptor()["annotations"]["openWorldHint"], "arbitrary configuration retains Full gate and reports irreversible external effects");
         for (int iteration = 0; iteration < 8; ++iteration)
         {
             auto stale = mcp.organic.handle(CVGroupManager::getInstance()->items[0]);
