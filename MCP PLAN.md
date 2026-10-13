@@ -63,7 +63,7 @@ Provide a connection panel with client creation, access selection, endpoint info
 
 Support Codex and Claude Code through HTTP configuration. Bundle a reusable native stdio bridge and Claude Desktop extension packaging for desktop clients needing stdio. The bridge connects to an explicitly selected running instance.
 
-For hosted ChatGPT, provide guided [Secure MCP Tunnel setup](https://developers.openai.com/api/docs/guides/secure-mcp-tunnels), including its separate Platform credentials and workspace requirements. Public hosting and public plugin-directory publication are outside this release.
+ChatGPT integration uses regular browser sign-in inside Chataigne. Hosted ChatGPT connections, Secure MCP Tunnel setup, public hosting, and public plugin-directory publication are outside this release, as clarified by the user on 2026-10-13. No Platform API key or tunnel is required for the embedded assistant.
 
 ## Optional assistant inside Chataigne
 
@@ -75,6 +75,7 @@ Add a reusable dockable OrganicUI assistant panel with a provider interface. Shi
 - Follow the route’s [preview requirements](https://developers.openai.com/siwc/token-sharing-open-source/preview-limitations), including client-managed conversation context and local tool execution.
 - Display account eligibility and usage-limit failures clearly. Do not silently switch to API billing.
 - Keep the assistant optional and identify the account integration as a preview. MCP remains independently usable.
+- Put account, credential, model, and access management in Global Settings. Expose prompting and conversation actions through OrganicUI controllables, with the application's own styling and responsive docked layouts for side and main panels.
 - Claude support in this release means external Claude clients; an embedded Claude account integration is outside scope.
 
 ## Delivery and acceptance
@@ -93,7 +94,7 @@ Acceptance includes:
 - Authoring scenarios covering every capability family, save/reload, undo/redo, broken references, concurrent UI edits, and live playback.
 - Diagnostic scenarios for connection failures, missing assets, script errors, and mappings that produce unexpected output.
 - Stress tests with large control trees, concurrent clients, slow subscribers, repeated project loads, and shutdown during pending work.
-- Actual Codex, Claude Code, Claude Desktop, and ChatGPT connection checks; mocked account failure tests and a real subscription-backed assistant smoke test.
+- Actual Codex, Claude Code, and Claude Desktop connection checks; mocked account failure tests and a real ChatGPT sign-in/subscription-backed assistant smoke test inside Chataigne. Hosted ChatGPT/tunnel checks are excluded.
 - Builds and regression checks across supported Windows, macOS, Linux, and Raspberry targets, including MCP-disabled framework builds.
 
 Use the shared JUCE checkout at `D:\Projects\Dev\JUCE` for local builds. Keep framework changes in their respective submodules, preserve existing project formats, and leave the local-only `site/` tree untouched.

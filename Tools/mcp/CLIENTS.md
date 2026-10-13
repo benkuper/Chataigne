@@ -74,29 +74,25 @@ only JSON-RPC messages to stdout. It forwards both modern and legacy lifecycle
 and subscription traffic, with a limit of eight active requests and 1 MiB
 messages. Closing stdin cancels pending connections and stops it.
 
+Native integrations may use `--credential-store DIRECTORY` instead of an
+environment variable. It reads the `bridge-credential` record from OrganicUI's
+protected store (current-user DPAPI on Windows, private owner-only files on Unix).
+Desktop JSON then contains the directory path, not the bearer. The native bridge
+tests cover a real authenticated connection using this route. The developer
+validation instance supports `mcp_authoring_test --desktop-connection`; its
+credential has Inspect access and is listed in Global Settings > MCP > Clients.
+
 Build a bundle with `package_bridge.py BINARY OUTPUT --platform PLATFORM --arch ARCH`.
 Packaging verifies the manifest, executable contents, and executable permission.
 The format follows the [MCPB manifest](https://github.com/modelcontextprotocol/mcpb/blob/main/MANIFEST.md).
 
-## Hosted ChatGPT through Secure MCP Tunnel
+## ChatGPT inside Chataigne
 
-Follow the current [Secure MCP Tunnel guide](https://developers.openai.com/api/docs/guides/secure-mcp-tunnels).
-This setup needs a Platform tunnel ID, a separate runtime API key, tunnel
-permissions, and an associated ChatGPT workspace that permits custom MCP
-connections. A ChatGPT subscription alone does not supply these credentials.
+Use **Continue with ChatGPT** in the assistant or **Global Settings > ChatGPT
+Assistant**. This uses regular browser sign-in and your ChatGPT plan. It requires
+no Platform API key, hosted MCP connector, or tunnel. See [assistant setup](ASSISTANT.md).
 
-1. Create and associate the tunnel in Platform tunnel settings.
-2. Obtain the current native `tunnel-client` and run its `help quickstart`.
-3. Configure its local stdio profile to launch `chataigne-mcp-bridge` with the
-   selected endpoint and Chataigne credential environment variable. This keeps
-   local Host/Origin checks and credentials under the native bridge's control.
-4. Run the tunnel's `doctor --explain` check, then keep its client running.
-5. Add a custom MCP server in ChatGPT, choose the Tunnel connection, and select
-   the associated tunnel. Use Chataigne's Inspect profile for an initial check.
-
-The tunnel's Platform credential and the Chataigne client credential are
-separate. Use the tunnel's private outbound connection; direct unauthenticated
-LAN listeners and public plugin-directory publication are outside this setup.
+Hosted ChatGPT and tunnel setup are outside this release's agreed scope.
 
 ## Troubleshooting
 

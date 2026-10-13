@@ -17,6 +17,7 @@ def main():
     with tempfile.TemporaryDirectory(prefix="mcp-bridge-") as directory:
         created = subprocess.run([example, "--store", directory, "--create-client"], capture_output=True, text=True, check=True, **hidden)
         token = created.stdout.strip().split()[-1]
+        subprocess.run([example, "--store", directory, "--protected-client"], capture_output=True, check=True, **hidden)
         with socket.socket() as reservation:
             reservation.bind(("127.0.0.1", 0)); port = reservation.getsockname()[1]
         server = subprocess.Popen([example, "--store", directory, "--port", str(port)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, **hidden)
@@ -29,9 +30,13 @@ def main():
                 except OSError:
                     if time.monotonic() > deadline: raise AssertionError("example did not start")
                     time.sleep(0.05)
-            for version in ("2026-07-28", "2025-11-25", "2025-06-18"):
+            for version, protected_store in (("2026-07-28", False), ("2025-11-25", False), ("2025-06-18", False), ("2025-11-25", True)):
                 environment = dict(os.environ, CHATAIGNE_MCP_TOKEN=token)
-                process = subprocess.Popen([bridge, "--endpoint", f"http://127.0.0.1:{port}/mcp"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, env=environment, **hidden)
+                arguments = [bridge, "--endpoint", f"http://127.0.0.1:{port}/mcp"]
+                if protected_store:
+                    environment.pop("CHATAIGNE_MCP_TOKEN", None)
+                    arguments += ["--credential-store", directory]
+                process = subprocess.Popen(arguments, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, env=environment, **hidden)
                 clients.append(process)
                 messages = queue.Queue()
 
@@ -89,7 +94,7 @@ def main():
                 assert process.returncode == 0, "bridge did not shut down cleanly"
                 reader.join(timeout=2)
                 assert token not in process.stderr.read(), "credential leaked to bridge diagnostics"
-            print("Passed native stdio bridge checks for modern and both legacy MCP versions, subscriptions, cancellation, and EOF teardown")
+            print("Passed native stdio bridge checks for modern and both legacy MCP versions, protected Desktop credentials, subscriptions, cancellation, and EOF teardown")
         finally:
             for process in clients:
                 if process.poll() is None: process.kill(); process.wait(timeout=5)

@@ -1,4 +1,5 @@
 #include "McpServer.h"
+#include "../../Modules/juce_organicui/assistant/AssistantCore.h"
 #include <iostream>
 
 // Independent of Chataigne: embeds the optional OrganicUI MCP foundation.
@@ -7,19 +8,25 @@ int main(int argc, char** argv)
     juce::ScopedJuceInitialiser_GUI runtime;
     using namespace organic::mcp;
     auto directory = juce::File::getSpecialLocation(juce::File::userApplicationDataDirectory).getChildFile("OrganicMcpExample");
-    int port = 42003; bool createClient = false;
+    int port = 42003; bool createClient = false, protectedClient = false;
     for (int i = 1; i < argc; ++i)
     {
         String argument(argv[i]);
         if (argument == "--create-client") createClient = true;
+        else if (argument == "--protected-client") { createClient = true; protectedClient = true; }
         else if (argument == "--store" && i + 1 < argc) directory = juce::File(String(argv[++i]));
         else if (argument == "--port" && i + 1 < argc) port = String(argv[++i]).getIntValue();
-        else { std::cerr << "Usage: organic_mcp_example [--create-client] [--store directory] [--port port]\n"; return 2; }
+        else { std::cerr << "Usage: organic_mcp_example [--create-client | --protected-client] [--store directory] [--port port]\n"; return 2; }
     }
     Permissions permissions(directory.getChildFile("clients.json"));
     if (createClient)
     {
         auto credential = permissions.create("Example client", Access::inspect);
+        if (protectedClient)
+        {
+            organic::assistant::ProtectedStore(directory).write("bridge-credential", object({{"token", credential.second}}));
+            std::cout << "Protected Inspect credential created.\n"; return 0;
+        }
         std::cout << "Bearer credential (shown once): " << credential.second << std::endl;
         return 0;
     }

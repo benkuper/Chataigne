@@ -68,6 +68,9 @@ separation follows the [MCP transport specification](https://modelcontextprotoco
   per-client observations, playback, cues, and keys implemented. Generic manager
   operations cover states, processing, routing, custom variables, dashboards,
   presets, Parrot, timeline layers, and clips through their existing model APIs.
+  User-added native controls (including Parrot targets) use the same factory,
+  revision checks and undo history. Project summaries expose built-in app command
+  modules. Native selection export produces importable `.lilnut` files.
   Arbitrary serialized configuration and selection import require Full Access;
   restricted profiles use typed operations with their capability and path checks.
 - Dockable connection UI, native stdio bridge, MCPB packaging, and client setup
@@ -89,19 +92,24 @@ regression covers module/state/variable/sequence creation,
 typed edits and conflicts, duplicate/move, grouped undo, folder restrictions on
 undo, cue/key authoring, frame-aware seeking, save/reload, generation changes,
 and teardown, plus offline assistant accounts and native UI bindings. Coverage
-now includes transitions, processing chains, multiplexes, routing, dashboards,
-presets, Parrot records, timeline clips and live playback. Run
+now includes transitions, processing chains, multiplexes, routing, dashboard
+bindings, presets, Parrot recording/playback, media loading, interpolation,
+synchronization, command templates, native selection round trips, broken assets
+and targets, refused connections, 5,000 controls and repeated loads. Run
 `Tools/tests/run_mcp_authoring_test.ps1` after building the application. The
 registry, assistant security/streaming, HTTP and bridge suites pass on Windows
 and Linux; they are also run by platform CI.
 
-The stage-3 CI application builds passed Windows (including Win7), both Macs,
-and both Raspberry architectures. Native test tooling failed on Mac and Linux:
-the core/events-only Mac example needed direct run-loop pumping, and the Linux
-bridge needed the existing libcurl dependency instead of JUCE's raw HTTP
-fallback. Fixes are included for the next CI run. CI builds and bundles the native
-bridge and Desktop extension without changing its dependency checkout strategy.
+The stage-4 CI passed all seven platforms: Windows (including Win7), both Macs,
+Linux and both Raspberry architectures, including native bridge/Desktop bundle
+packaging. Local Windows/Linux lifecycle tests additionally exercise queue
+overflow, stale queued work, an unread large SSE stream and pending shutdown.
+Streaming teardown cancels outstanding socket writes and releases queued response
+owners before destroying their listener. CI preserves its existing dependency
+checkout strategy.
 
-Actual Claude Desktop and hosted ChatGPT connection checks, expanded stress and
-diagnostics coverage, and final platform/package checks remain acceptance work.
+Actual Claude Desktop connection checks and the follow-up platform/package checks
+remain acceptance work.
 See [acceptance evidence](ACCEPTANCE.md) for the current scope and outstanding checks.
+Hosted ChatGPT and tunnel setup are excluded by the user's scope clarification;
+the embedded assistant uses regular ChatGPT sign-in and needs no Platform key.

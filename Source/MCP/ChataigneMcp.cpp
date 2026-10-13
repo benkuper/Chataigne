@@ -28,11 +28,32 @@ String safeDiagnosticText(const String& text)
     result = std::regex_replace(result, std::regex("(password|token|secret|api[_ -]?key)([=: ]+)[^,; \\r\\n]+", std::regex::icase), "$1$2[redacted]");
     return String(result).substring(0, 8192);
 }
-bool executableCommand(BaseCommand* command)
+bool executableCommand(BaseCommand* command, int depth = 0, int multiplexIndex = 0)
 {
+    if (depth > 16) return true;
+    if (auto* generic = dynamic_cast<GenericControllableCommand*>(command))
+        if (auto* target = generic->getTargetControllableAtIndex(multiplexIndex))
+            for (auto* parent = target->parentContainer.get(); parent; parent = parent->parentContainer.get())
+            {
+                if (dynamic_cast<Script*>(parent) || dynamic_cast<OSModule*>(parent)) return true;
+                if (auto* nested = dynamic_cast<BaseCommand*>(parent)) if (executableCommand(nested, depth + 1, multiplexIndex)) return true;
+            }
     return dynamic_cast<OSExecCommand*>(command) || dynamic_cast<OSPowerCommand*>(command)
         || dynamic_cast<GenericScriptCommand*>(command) || dynamic_cast<ScriptCommand*>(command)
         || dynamic_cast<ScriptCallbackCommand*>(command);
+}
+bool executableDefinition(CommandDefinition* definition, Module* module, int depth = 0)
+{
+    if (!definition || !module || depth > 16) return true;
+    if (dynamic_cast<OSModule*>(module) || module->customType.isNotEmpty() || definition->params.hasProperty("commandData")
+        || definition->commandType.containsIgnoreCase("script") || definition->menuPath.containsIgnoreCase("script")) return true;
+    if (definition->params.hasProperty("template"))
+    {
+        for (auto* item : module->templateManager->items)
+            if (item->shortName == definition->params["template"].toString()) return executableDefinition(item->sourceDef, module, depth + 1);
+        return true;
+    }
+    return false;
 }
 class SetCommandAction : public juce::UndoableAction
 {
@@ -63,6 +84,7 @@ ChataigneMcp::ChataigneMcp(ChataigneEngine& e)
 #endif
             if (dynamic_cast<Script*>(parent)) capabilities |= advanced;
             if (auto* command = dynamic_cast<BaseCommand*>(parent)) if (executableCommand(command)) capabilities |= advanced;
+            if (auto* commandTemplate = dynamic_cast<CommandTemplate*>(parent)) if (executableDefinition(commandTemplate->sourceDef, commandTemplate->module)) capabilities |= advanced;
             if (auto* values = dynamic_cast<GenericControllableManager*>(parent))
                 if (dynamic_cast<CVGroup*>(values->parentContainer.get())) capabilities = control;
         }
@@ -74,6 +96,10 @@ ChataigneMcp::ChataigneMcp(ChataigneEngine& e)
         if (dynamic_cast<ScriptManager*>(parent) || type.containsIgnoreCase("script")) capabilities |= advanced;
         if (auto* manager = dynamic_cast<ModuleManager*>(parent))
             if (auto* definition = manager->factory->getDefinitionForType(type)) if (definition->isCustomModule) capabilities |= advanced;
+        if (auto* manager = dynamic_cast<CommandTemplateManager*>(parent))
+            for (auto* base : manager->factory.defs) if (base->type == type)
+                if (auto* definition = dynamic_cast<Factory<CommandTemplate>::Definition*>(base))
+                    if (executableDefinition(manager->module->getCommandDefinitionFor(definition->params["menuPath"].toString(), definition->params["commandType"].toString()), manager->module)) capabilities |= advanced;
         return capabilities;
     };
     organic.executionCapabilities = [](Controllable* target)
@@ -82,8 +108,8 @@ ChataigneMcp::ChataigneMcp(ChataigneEngine& e)
 #if ORGANICUI_USE_ASSISTANT
         if (dynamic_cast<organic::assistant::Controller*>(target->parentContainer.get())) capabilities |= advanced;
 #endif
-        if (auto* handler = dynamic_cast<BaseCommandHandler*>(target->parentContainer.get())) if (executableCommand(handler->command.get())) capabilities |= advanced;
-        if (auto* command = dynamic_cast<BaseCommand*>(target->parentContainer.get())) if (executableCommand(command)) capabilities |= advanced;
+        if (auto* handler = dynamic_cast<BaseCommandHandler*>(target->parentContainer.get())) if (executableCommand(handler->command.get(), 0, handler->getPreviewIndex())) capabilities |= advanced;
+        if (auto* command = dynamic_cast<BaseCommand*>(target->parentContainer.get())) if (executableCommand(command, 0, command->getPreviewIndex())) capabilities |= advanced;
         if (dynamic_cast<OSModule*>(target->parentContainer.get())) capabilities |= advanced;
         return capabilities;
     };
@@ -92,6 +118,7 @@ ChataigneMcp::ChataigneMcp(ChataigneEngine& e)
         if (dynamic_cast<Script*>(cc)) return true;
         if (auto* command = dynamic_cast<BaseCommand*>(cc)) return executableCommand(command);
         if (auto* handler = dynamic_cast<BaseCommandHandler*>(cc)) return executableCommand(handler->command.get());
+        if (auto* commandTemplate = dynamic_cast<CommandTemplate*>(cc)) return executableDefinition(commandTemplate->sourceDef, commandTemplate->module);
         return false;
     };
     organic.validateCreation = [](ControllableContainer* parent, const String& type, const Context& c)
@@ -169,6 +196,11 @@ void ChataigneMcp::newMessage(const CustomLogger::LogEvent& event)
 }
 var ChataigneMcp::projectSummary()
 {
+    juce::Array<var> specialModules;
+    for (auto* module : {static_cast<Module*>(engine.module.get()), static_cast<Module*>(engine.multiplexModule.get()),
+        static_cast<Module*>(StateManager::getInstance()->module.get()), static_cast<Module*>(ChataigneSequenceManager::getInstance()->module.get()),
+        static_cast<Module*>(CVGroupManager::getInstance()->module.get())})
+        specialModules.add(object({{"name", module->niceName}, {"handle", organic.handle(module)}}));
     organic.ensureReady();
     return object({{"name", engine.getDocumentTitle()}, {"file", engine.getFile().getFullPathName()},
         {"modified", engine.hasChangedSinceSaved()}, {"generation", organic.generation()},
@@ -176,14 +208,14 @@ var ChataigneMcp::projectSummary()
         {"states", organic.handle(StateManager::getInstance())}, {"sequences", organic.handle(ChataigneSequenceManager::getInstance())},
         {"routing", organic.handle(ModuleRouterManager::getInstance())}, {"variables", organic.handle(CVGroupManager::getInstance())},
         {"dashboards", organic.handle(DashboardManager::getInstance())}, {"parrot", organic.handle(ParrotManager::getInstance())},
-        {"detective", organic.handle(Detective::getInstance())}});
+        {"detective", organic.handle(Detective::getInstance())}, {"specialModules", specialModules}});
 }
 var ChataigneMcp::diagnostics(const var& args, Context& context)
 {
     organic.ensureReady();
     auto* scope = args["scope"].toString().isEmpty() ? static_cast<ControllableContainer*>(&engine) : organic.container(args["scope"].toString());
     int offset = (int) args.getProperty("offset", 0), limit = (int) args.getProperty("limit", 100);
-    juce::Array<var> findings; juce::Array<juce::WeakReference<ControllableContainer>> pending; pending.add(scope);
+    juce::Array<var> findings, processing; juce::Array<juce::WeakReference<ControllableContainer>> pending; pending.add(scope);
     int visited = 0, inspected = 0;
     for (int i = 0; i < pending.size() && visited < 10000; ++i)
     {
@@ -197,6 +229,31 @@ var ChataigneMcp::diagnostics(const var& args, Context& context)
             findings.add(object({{"kind", "script_error"}, {"handle", organic.handle(cc)}, {"evidence", safeDiagnosticText(script->getWarningMessage())}}));
         if (auto* module = dynamic_cast<Module*>(cc)) if (module->connectionFeedbackRef && !module->connectionFeedbackRef->boolValue())
             findings.add(object({{"kind", "disconnected"}, {"handle", organic.handle(cc)}, {"evidence", "Connection feedback is false"}}));
+        if (auto* audio = dynamic_cast<ChataigneAudioLayer*>(cc)) if (!audio->audioModule)
+            findings.add(object({{"kind", "audio_output_unassigned"}, {"handle", organic.handle(cc)}, {"evidence", "Audio layer has no Sound Card module; create or assign one before sound output"}}));
+        if (auto* mapping = dynamic_cast<Mapping*>(cc))
+        {
+            const juce::ScopedTryLock lock(mapping->mappingLock);
+            auto snapshot = object({{"kind", "mapping"}, {"handle", organic.handle(mapping)}, {"snapshotAvailable", lock.isLocked()}});
+            if (lock.isLocked())
+            {
+                juce::Array<var> inputs, filters, outputs, values;
+                for (auto* input : mapping->im.items) if (inputs.size() < 32)
+                {
+                    auto entry = object({{"handle", organic.handle(input)}, {"connected", input->inputReference != nullptr}});
+                    if (auto* source = input->inputReference.get()) entry.getDynamicObject()->setProperty("source", organic.describe(organic.handle(source)));
+                    inputs.add(entry);
+                }
+                for (auto* filter : mapping->fm.items) if (filters.size() < 32) filters.add(organic.describe(organic.handle(filter)));
+                for (auto* output : mapping->om.items) if (outputs.size() < 32)
+                    outputs.add(object({{"handle", organic.handle(output)}, {"commandConfigured", output->command != nullptr}, {"forceDisabled", output->forceDisabled}}));
+                for (auto* value : mapping->outValuesCC.controllables) if (values.size() < 32) values.add(organic.describe(organic.handle(value)));
+                snapshot.getDynamicObject()->setProperty("inputs", inputs); snapshot.getDynamicObject()->setProperty("filters", filters);
+                snapshot.getDynamicObject()->setProperty("outputs", outputs); snapshot.getDynamicObject()->setProperty("observedOutputs", values);
+                snapshot.getDynamicObject()->setProperty("truncated", mapping->im.items.size() > 32 || mapping->fm.items.size() > 32 || mapping->om.items.size() > 32 || mapping->outValuesCC.controllables.size() > 32);
+            }
+            processing.add(snapshot);
+        }
         for (auto* parameter : cc->controllables)
         {
             if (auto* target = dynamic_cast<TargetParameter*>(parameter))
@@ -210,7 +267,7 @@ var ChataigneMcp::diagnostics(const var& args, Context& context)
             }
         }
     }
-    auto result = object({{"findings", findings}, {"logs", recentLogs}, {"readOnly", true}, {"evidenceTime", juce::Time::getCurrentTime().toISO8601(true)}});
+    auto result = object({{"findings", findings}, {"processing", processing}, {"logs", recentLogs}, {"readOnly", true}, {"evidenceTime", juce::Time::getCurrentTime().toISO8601(true)}});
     if (inspected > limit || visited >= 10000) result.getDynamicObject()->setProperty("nextOffset", offset + limit);
     return result;
 }
@@ -263,6 +320,35 @@ void ChataigneMcp::registerOperations()
         schema(object({{"handle", stringSchema()}, {"path", stringSchema()}}), organic::mcp::array({"handle", "path"})), edit | files,
         [this](const var& args, Context&) { auto data = organic.container(args["handle"].toString())->getJSONData(); auto target = juce::File(args["path"].toString()); juce::TemporaryFile temp(target); if (!temp.getFile().replaceWithText(juce::JSON::toString(data)) || !temp.overwriteTargetFileWithTemporary()) throw Error(-32000, "Could not export object"); return object({{"exported", true}}); },
         [this, requireFile](const var& args, const Context& c) { requireFile(args, c); organic.container(args["handle"].toString()); }, false, true);
+    auto selectionInput = schema(object({{"handles", object({{"type", "array"}, {"items", stringSchema()}, {"minItems", 1}, {"maxItems", 64}})}, {"path", stringSchema()}}), organic::mcp::array({"handles", "path"}));
+    add("chataigne_export_selection", "Export top-level modules, variable groups, states, sequences or routers as a native .lilnut selection that chataigne_import can reload.", selectionInput, edit | files,
+        [this](const var& args, Context&)
+        {
+            auto data = object();
+            for (auto& handle : *args["handles"].getArray())
+            {
+                auto* item = organic.container(handle.toString()); auto key = item->parentContainer->shortName;
+                auto items = data.getProperty(key, {}); if (!items.isArray()) items = organic::mcp::array({});
+                items.append(item->getJSONData()); data.getDynamicObject()->setProperty(key, items);
+            }
+            auto text = juce::JSON::toString(data);
+            if (text.getNumBytesAsUTF8() > 1024 * 1024) throw Error(-32602, "Selection exceeds the import size limit; export smaller selections");
+            juce::TemporaryFile temp(juce::File(args["path"].toString()));
+            if (!temp.getFile().replaceWithText(text) || !temp.overwriteTargetFileWithTemporary()) throw Error(-32000, "Could not export selection");
+            return object({{"exported", true}, {"itemCount", args["handles"].size()}});
+        },
+        [this, requireFile](const var& args, const Context& c)
+        {
+            requireFile(args, c); juce::StringArray seen;
+            for (auto& handle : *args["handles"].getArray())
+            {
+                auto* item = dynamic_cast<BaseItem*>(organic.container(handle.toString())); auto* parent = item ? item->parentContainer.get() : nullptr;
+                if (!item || !item->isSavable || seen.contains(handle.toString()) || !(dynamic_cast<ModuleManager*>(parent) || dynamic_cast<CVGroupManager*>(parent)
+                    || dynamic_cast<StateManager*>(parent) || dynamic_cast<ChataigneSequenceManager*>(parent) || dynamic_cast<ModuleRouterManager*>(parent)))
+                    throw Error(-32602, "Selection requires distinct supported top-level items");
+                seen.add(handle.toString());
+            }
+        }, false, true);
     // Loading arbitrary serialized object data can contain subtype-specific file
     // paths and executable behavior. Restricted grants use typed operations.
     add("chataigne_configure", "Load existing-format JSON into an object. Requires Full Access; restricted profiles use typed parameter and creation operations.",
@@ -284,12 +370,25 @@ void ChataigneMcp::registerOperations()
             if (!definition || (definition->context != CommandContext::BOTH && definition->context != handler->context)) throw Error(-32602, "Command is not compatible with this context");
             // Selecting executable commands is itself executable authoring. Avoid
             // constructing a command merely to classify it during prevalidation.
-            if (dynamic_cast<OSModule*>(module) || module->customType.isNotEmpty() || args["type"].toString().containsIgnoreCase("script") || args["menuPath"].toString().containsIgnoreCase("script")) c.require(advanced);
+            if (executableDefinition(definition, module)) c.require(advanced);
         }, true);
     add("chataigne_execute_command", "Execute an already authored command handler. Direct script or system-command invocation requires Advanced.",
         schema(object({{"handle", stringSchema()}, {"multiplexIndex", integerSchema(0, 100000)}}), organic::mcp::array({"handle"})), control,
         [this](const var& args, Context&) { auto* handler = dynamic_cast<BaseCommandHandler*>(organic.container(args["handle"].toString())); handler->triggerCommand((int) args.getProperty("multiplexIndex", 0)); return object({{"executed", true}, {"reversible", false}}); },
-        [this](const var& args, const Context& c) { auto* handler = dynamic_cast<BaseCommandHandler*>(organic.container(args["handle"].toString())); if (!handler || !handler->command) throw Error(-32602, "Handle has no configured command"); if (executableCommand(handler->command.get())) c.require(advanced); }, false, true);
+        [this](const var& args, const Context& c)
+        {
+            auto* handler = dynamic_cast<BaseCommandHandler*>(organic.container(args["handle"].toString()));
+            if (!handler || !handler->command) throw Error(-32602, "Handle has no configured command");
+            auto index = (int) args.getProperty("multiplexIndex", 0);
+            if (executableCommand(handler->command.get(), 0, index)) c.require(advanced);
+            if (auto* generic = dynamic_cast<GenericControllableCommand*>(handler->command.get()))
+                if (auto* file = dynamic_cast<FileParameter*>(generic->value.get()))
+                {
+                    auto path = generic->getLinkedValue(file, index).toString();
+                    if (!juce::File::isAbsolutePath(path)) throw Error(-32602, "File commands require an absolute linked path");
+                    c.requireFile(juce::File(path));
+                }
+        }, false, true);
     auto scriptInput = schema(object({{"handle", stringSchema()}}), organic::mcp::array({"handle"}));
     auto script = [this](const var& args) { auto* result = dynamic_cast<Script*>(organic.container(args["handle"].toString())); if (!result) throw Error(-32602, "Handle is not a script"); return result; };
     add("chataigne_script_inspect", "Read a script's source, available functions, and error state from its approved file.", scriptInput, inspect | files,

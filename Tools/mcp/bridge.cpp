@@ -1,4 +1,5 @@
 #include "McpCore.h"
+#include "../../Modules/juce_organicui/assistant/AssistantCore.h"
 #include <juce_events/juce_events.h>
 #include <iostream>
 #include <mutex>
@@ -176,19 +177,30 @@ private:
 int main(int argc, char** argv)
 {
     juce::ScopedJuceInitialiser_GUI runtime;
-    juce::String endpoint, tokenEnvironment = "CHATAIGNE_MCP_TOKEN";
+    juce::String endpoint, tokenEnvironment = "CHATAIGNE_MCP_TOKEN", credentialDirectory;
     for (int i = 1; i < argc; ++i)
     {
         juce::String argument(argv[i]);
         if (argument == "--endpoint" && i + 1 < argc) endpoint = argv[++i];
         else if (argument == "--token-env" && i + 1 < argc) tokenEnvironment = argv[++i];
-        else { std::cerr << "Usage: chataigne-mcp-bridge --endpoint http://127.0.0.1:PORT/mcp [--token-env NAME]\n"; return 2; }
+        else if (argument == "--credential-store" && i + 1 < argc) credentialDirectory = argv[++i];
+        else { std::cerr << "Usage: chataigne-mcp-bridge --endpoint http://127.0.0.1:PORT/mcp [--token-env NAME | --credential-store DIRECTORY]\n"; return 2; }
     }
     juce::URL url(endpoint);
     if (url.getScheme() != "http" || (url.getDomain() != "127.0.0.1" && url.getDomain() != "localhost")
-        || url.getPort() < 1 || url.getSubPath() != "mcp" || endpoint.containsAnyOf("@?#\r\n"))
+        || url.getPort() < 1 || url.getPort() > 65535 || url.getSubPath() != "mcp" || endpoint.containsAnyOf("@?#\r\n"))
     { std::cerr << "Select an explicit authenticated loopback /mcp endpoint.\n"; return 2; }
     auto token = juce::SystemStats::getEnvironmentVariable(tokenEnvironment, {});
+    if (!credentialDirectory.isEmpty())
+    {
+        try
+        {
+            auto directory = juce::File(credentialDirectory);
+            if (!directory.isDirectory()) throw organic::mcp::Error(-32030, "Missing credential store");
+            token = organic::assistant::ProtectedStore(directory).read("bridge-credential")["token"].toString();
+        }
+        catch (...) { std::cerr << "The selected protected credential store is missing or inaccessible.\n"; return 2; }
+    }
     if (token.length() != 64 || token.containsAnyOf("\r\n")) { std::cerr << "The selected credential environment variable is missing or invalid.\n"; return 2; }
     Bridge bridge(endpoint, token); bridge.run(); return 0;
 }

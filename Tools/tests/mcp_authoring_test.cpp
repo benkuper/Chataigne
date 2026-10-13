@@ -86,6 +86,10 @@ int run()
             auto snapshot = panel.createComponentSnapshot(panel.getLocalBounds());
             auto preview = juce::File::getCurrentWorkingDirectory().getChildFile("../../Binaries/mcp-connection-panel.png");
             if (auto output = preview.createOutputStream()) { output->setPosition(0); output->truncate(); juce::PNGImageFormat().writeImageToStream(snapshot, *output); }
+            panel.setSize(320, 760); snapshot = panel.createComponentSnapshot(panel.getLocalBounds());
+            if (auto output = preview.getSiblingFile("mcp-connection-panel-narrow.png").createOutputStream()) { output->setPosition(0); output->truncate(); juce::PNGImageFormat().writeImageToStream(snapshot, *output); }
+            panel.setSize(1100, 760); snapshot = panel.createComponentSnapshot(panel.getLocalBounds());
+            if (auto output = preview.getSiblingFile("mcp-connection-panel-wide.png").createOutputStream()) { output->setPosition(0); output->truncate(); juce::PNGImageFormat().writeImageToStream(snapshot, *output); }
             connectionSettings.rotate->trigger();
             check(uiPermissions.list().size() == 1, "panel rotates existing client");
             connectionSettings.revoke->trigger(); check(uiPermissions.list().isEmpty(), "panel revokes client");
@@ -96,6 +100,14 @@ int run()
         auto setParameter = [&](Parameter* parameter, const var& value)
         { auto info = mcp.organic.describe(mcp.organic.handle(parameter)); return call("organic_set_value", object({{"handle", info["handle"]}, {"revision", info["revision"]}, {"value", value}})); };
         auto* oscModule = dynamic_cast<Module*>(mcp.organic.container(module["handle"].toString()));
+        auto failedConnection = create(ModuleManager::getInstance(), "WebSocket Client", "MCP Disconnected Socket");
+        auto* ws = dynamic_cast<WebSocketClientModule*>(mcp.organic.container(failedConnection["handle"].toString()));
+        juce::StreamingSocket closedPort; check(closedPort.createListener(0, "127.0.0.1"), "connection failure fixture port");
+        auto unavailablePort = closedPort.getBoundPort(); closedPort.close();
+        setParameter(ws->serverPath, "127.0.0.1:" + String(unavailablePort)); pumpMessages(100);
+        auto connectionDiagnostics = call("chataigne_diagnostics", object({{"scope", failedConnection["handle"]}}));
+        check(!ws->isConnected->boolValue() && juce::JSON::toString(connectionDiagnostics).contains("disconnected"), "real connection failure diagnostic evidence");
+        call("organic_remove", revisionArgs(ws));
         auto scriptData = create(oscModule->scriptManager.get(), "", "MCP Script");
         auto* script = dynamic_cast<Script*>(mcp.organic.container(scriptData["handle"].toString()));
         auto scriptPath = directory.getChildFile("probe.js"); setParameter(script->filePath, scriptPath.getFullPathName());
@@ -144,6 +156,83 @@ int run()
         auto* variableItem = mcp.organic.container(variable["handle"].toString());
         Parameter* value = nullptr; for (auto* c : variableItem->controllables) if (auto* p = dynamic_cast<FloatParameter*>(c)) if (p != dynamic_cast<BaseItem*>(variableItem)->listUISize) { value = p; break; }
         check(value != nullptr, "custom variable parameter discovery");
+        // Author real bindings and record/play back a value through native triggers.
+        auto targetArgs = revisionArgs(&parrot->targetsCC); targetArgs.getDynamicObject()->setProperty("type", "Target");
+        targetArgs.getDynamicObject()->setProperty("name", "Recorded level");
+        auto targetData = call("organic_add_controllable", targetArgs);
+        auto* parrotTarget = dynamic_cast<TargetParameter*>(mcp.organic.controllable(targetData["handle"].toString()));
+        check(parrotTarget != nullptr, "Parrot target creation"); setParameter(parrotTarget, value->getControlAddress());
+        check(parrot->getAllTargets().contains(value), "Parrot target binding");
+        auto trigger = [&](Trigger* t) { return call("organic_trigger", object({{"handle", mcp.organic.handle(t)}})); };
+        trigger(parrot->startRecordTrigger); setParameter(value, 0.2); pumpMessages(40); setParameter(value, 0.8); pumpMessages(40);
+        trigger(parrot->stopRecordTrigger);
+        check(parrot->currentRecord && parrot->currentRecord->dataMap[value].size() >= 2, "Parrot records changes through registry controls");
+        trigger(parrot->playTrigger); pumpMessages(60);
+        check(parrot->playProgression->doubleValue() > 0 && parrot->dataMapPlayIndex[value] >= 2,
+            "Parrot playback consumes recorded values");
+        if (parrot->status->getValueDataAsEnum<Parrot::Status>() == Parrot::PLAYING) trigger(parrot->stopTrigger);
+        auto targetInfo = mcp.organic.describe(targetData["handle"].toString());
+        auto removedTarget = call("organic_remove_controllable", object({{"handle", targetInfo["handle"]}, {"revision", targetInfo["revision"]}}));
+        check(parrot->targetsCC.controllables.isEmpty(), "user control removal");
+        call("organic_undo", object({{"transaction", removedTarget["transaction"]}}));
+        check(parrot->getAllTargets().contains(value), "user control removal undo restores target");
+        auto dashboardBinding = create(&dashboard->itemManager, "DashboardParameterItem", "MCP Level Control");
+        auto* boundItem = dynamic_cast<DashboardParameterItem*>(mcp.organic.container(dashboardBinding["handle"].toString()));
+        setParameter(boundItem->target, value->getControlAddress());
+        check(boundItem->parameter == value, "dashboard target binding");
+
+        // Diagnose a configured remap without running the chain or emitting output.
+        auto* mappingInput = dynamic_cast<StandardMappingInput*>(mapping->im.items[0]);
+        check(mappingInput != nullptr, "mapping target input discovery"); setParameter(mappingInput->inputTarget, value->getControlAddress());
+        auto* remap = dynamic_cast<SimpleRemapFilter*>(mapping->fm.items[0]);
+        setParameter(remap->targetOut, array({10.0, 20.0})); setParameter(value, 0.25); pumpMessages(20);
+        mapping->process(false); // Fixture establishes observed state; diagnostics itself must not process.
+        auto beforeDiagnostic = value->getValue();
+        auto mappingDiagnostic = call("chataigne_diagnostics", object({{"scope", mappingData["handle"]}, {"limit", 200}}));
+        check(mappingDiagnostic["processing"].size() == 1 && (bool) mappingDiagnostic["processing"][0]["inputs"][0]["connected"], "diagnostics expose processing dependencies");
+        check(mappingDiagnostic["processing"][0]["observedOutputs"].size() == 1
+            && std::abs((double) mappingDiagnostic["processing"][0]["observedOutputs"][0]["value"] - 12.5) < 0.01,
+            "diagnostics expose unexpected remapped output evidence");
+        check(value->getValue() == beforeDiagnostic && !(bool) mappingDiagnostic["processing"][0]["outputs"][0]["commandConfigured"], "diagnostics do not emit or mutate");
+
+        // Discover, create and assign a real built-in command template.
+        auto commands = call("chataigne_commands", object({{"module", module["handle"]}}));
+        check(commands["commands"].size() >= 2, "module command discovery");
+        auto templateData = create(oscModule->templateManager.get(), "Custom Message", "MCP Message Template");
+        auto* commandTemplate = dynamic_cast<CommandTemplate*>(mcp.organic.container(templateData["handle"].toString()));
+        check(commandTemplate && commandTemplate->sourceDef, "command template authoring");
+        auto* outputHandler = mapping->om.items[0]; auto commandArgs = revisionArgs(outputHandler);
+        commandArgs.getDynamicObject()->setProperty("module", module["handle"]); commandArgs.getDynamicObject()->setProperty("menuPath", "Templates");
+        commandArgs.getDynamicObject()->setProperty("type", commandTemplate->niceName);
+        auto assignedCommand = call("chataigne_set_command", commandArgs); check(outputHandler->command != nullptr, "assign discovered template command");
+        call("organic_undo", object({{"transaction", assignedCommand["transaction"]}})); check(outputHandler->command == nullptr, "command assignment undo");
+        // A script-defined command with an innocuous label cannot bypass Advanced.
+        auto* scriptDefinition = CommandDefinition::createDef(oscModule, "Utilities", "Friendly Label", &ScriptCommand::create)->addParam("commandData", object());
+        oscModule->defManager->add(scriptDefinition);
+        commandArgs = revisionArgs(outputHandler); commandArgs.getDynamicObject()->setProperty("module", module["handle"]);
+        commandArgs.getDynamicObject()->setProperty("menuPath", "Utilities"); commandArgs.getDynamicObject()->setProperty("type", "Friendly Label");
+        context.grant.access = Access::edit; context.grant.advancedExecution = false;
+        rejects([&] { call("chataigne_set_command", commandArgs); }, -32003); context.grant.access = Access::full;
+        oscModule->defManager->remove(scriptDefinition);
+        auto* consequence = dynamic_cast<BaseCommandHandler*>(action->csmOn->items[0]); check(consequence != nullptr, "action command handler discovery");
+        commandArgs = revisionArgs(consequence); commandArgs.getDynamicObject()->setProperty("module", roots["specialModules"][0]["handle"]);
+        commandArgs.getDynamicObject()->setProperty("menuPath", ""); commandArgs.getDynamicObject()->setProperty("type", "Set Parameter Value");
+        call("chataigne_set_command", commandArgs);
+        auto* localCommand = dynamic_cast<GenericControllableCommand*>(consequence->command.get()); check(localCommand != nullptr, "discover and author built-in app command");
+        setParameter(localCommand->target, value->getControlAddress()); setParameter(localCommand->value.get(), 0.375);
+        context.grant.access = Access::control;
+        auto executed = call("chataigne_execute_command", object({{"handle", mcp.organic.handle(consequence)}}));
+        check(value->doubleValue() == 0.375 && (bool) executed["executed"] && !(bool) executed["reversible"], "execute authored app command with accurate effect annotation");
+        context.grant.access = Access::full;
+        // Generic parameter commands must retain the underlying executable gate.
+        auto* executableFixture = new ControllableContainer("Executable target fixture"); engine->addChildControllableContainer(executableFixture, true);
+        auto* fixtureScript = new Script(); executableFixture->addChildControllableContainer(fixtureScript, true);
+        auto* scriptSetting = fixtureScript->addStringParameter("Executable setting", "", "initial");
+        setParameter(localCommand->target, scriptSetting->getControlAddress());
+        context.grant.access = Access::control;
+        rejects([&] { call("chataigne_execute_command", object({{"handle", mcp.organic.handle(consequence)}})); }, -32003);
+        context.grant.access = Access::full; setParameter(localCommand->target, value->getControlAddress());
+        engine->removeChildControllableContainer(executableFixture);
         createFirst(cvGroup->pm.get(), "MCP Preset"); check(cvGroup->pm->items.size() == 1, "preset authoring");
         auto watch = call("chataigne_detective_watch", object({{"handle", mcp.organic.handle(value)}}));
         auto observed = call("chataigne_detective_inspect", object({{"handle", watch["handle"]}})); check((bool) observed["readOnly"], "Detective observation");
@@ -186,8 +275,19 @@ int run()
         check((bool) batch["success"] && value->doubleValue() == 0.75 && secondValue->doubleValue() == 0.25, "batch authoring");
         call("organic_undo", object({{"transaction", batch["transaction"]}}));
         check(value->doubleValue() == 0.5 && secondValue->doubleValue() == 0, "batch groups undo");
+        firstInfo = mcp.organic.describe(mcp.organic.handle(value));
+        auto repeatedEdit = object({{"handle", firstInfo["handle"]}, {"revision", firstInfo["revision"]}, {"value", 0.6}});
+        auto partial = call("organic_batch", object({{"operations", array({
+            object({{"name", "organic_set_value"}, {"arguments", repeatedEdit}}),
+            object({{"name", "organic_set_value"}, {"arguments", repeatedEdit.clone()}})})}}));
+        check(!(bool) partial["success"] && partial["completed"].size() == 1 && partial["recovery"].toString().isNotEmpty(), "batch reports intervening revision conflict and completed work");
+        call("organic_undo", object({{"transaction", partial["transaction"]}})); check(value->doubleValue() == 0.5, "partial batch recovery undo");
         rejects([&] { call("organic_undo", object({{"transaction", edited["transaction"]}})); }, -32006);
         auto* file = helper->addFileParameter("Asset", "", directory.getSiblingFile("outside.wav").getFullPathName());
+        auto* unresolved = helper->addTargetParameter("Broken reference", ""); unresolved->setValue("/missing/value");
+        auto brokenDiagnostics = call("chataigne_diagnostics", object({{"scope", mcp.organic.handle(helper)}}));
+        auto diagnosticText = juce::JSON::toString(brokenDiagnostics);
+        check(diagnosticText.contains("missing_asset") && diagnosticText.contains("unresolved_target"), "missing asset and broken reference evidence");
         auto fileInfo = mcp.organic.describe(mcp.organic.handle(file));
         context.grant.access = Access::edit; context.grant.folders = {directory.getFullPathName()};
         auto fileEdit = call("organic_set_value", object({{"handle", fileInfo["handle"]}, {"revision", fileInfo["revision"]}, {"value", directory.getChildFile("inside.wav").getFullPathName()}}));
@@ -197,9 +297,21 @@ int run()
         engine->removeChildControllableContainer(helper);
         auto seq = create(ChataigneSequenceManager::getInstance(), "", "MCP Sequence");
         auto* sequence = dynamic_cast<Sequence*>(mcp.organic.container(seq["handle"].toString())); check(sequence != nullptr, "sequence authoring");
+        auto* nativeSequence = dynamic_cast<ChataigneSequence*>(sequence);
+        setParameter(nativeSequence->syncOffset, 1.25); setParameter(nativeSequence->mtcFPS, "25");
+        check(nativeSequence->syncOffset->doubleValue() == 1.25, "timeline synchronization configuration");
         auto layerData = create(sequence->layerManager.get(), "Audio", "MCP Audio Layer");
+        check(juce::Component::getNumCurrentlyModalComponents() == 0, "remote audio layer authoring opens no prerequisite dialog");
+        check(juce::JSON::toString(call("chataigne_diagnostics", object({{"scope", layerData["handle"]}}))).contains("audio_output_unassigned"), "unassigned audio output is diagnosed");
         auto* audioLayer = dynamic_cast<AudioLayer*>(mcp.organic.container(layerData["handle"].toString()));
         createFirst(&audioLayer->clipManager, "MCP Audio Clip"); check(audioLayer->clipManager.items.size() == 1, "timeline clip authoring");
+        auto media = directory.getChildFile("fixture.wav");
+        juce::WavAudioFormat wav; auto mediaStream = media.createOutputStream();
+        auto writer = std::unique_ptr<juce::AudioFormatWriter>(wav.createWriterFor(mediaStream.get(), 48000, 1, 16, {}, 0));
+        check(writer != nullptr, "media fixture writer"); mediaStream.release(); juce::AudioBuffer<float> silence(1, 4800); silence.clear(); writer->writeFromAudioSampleBuffer(silence, 0, 4800); writer.reset();
+        auto* clip = dynamic_cast<AudioLayerClip*>(audioLayer->clipManager.items[0]); check(clip != nullptr, "native audio clip type"); setParameter(clip->filePath, media.getFullPathName());
+        for (int attempt = 0; attempt < 100 && (!clip->readerSource || clip->isLoading); ++attempt) pumpMessages(20);
+        check(clip->readerSource && std::abs(clip->clipDuration - 0.1) < 0.001, "timeline media assignment loads approved audio");
         create(sequence->layerManager.get(), "Trigger", "MCP Trigger Layer"); check(sequence->layerManager->items.size() == 2, "timeline layer authoring");
         call("timeline_transport", object({{"handle", seq["handle"]}, {"action", "play"}})); pumpMessages(30);
         check(sequence->isPlaying->boolValue(), "live playback");
@@ -215,6 +327,9 @@ int run()
         auto* automation = new Automation("MCP Automation"); engine->addChildControllableContainer(automation, true);
         auto key = revisionArgs(automation); key.getDynamicObject()->setProperty("position", 0.5); key.getDynamicObject()->setProperty("value", 0.5);
         call("timeline_add_key", key); check(automation->items.size() == 1, "automation key authoring");
+        key = revisionArgs(automation); key.getDynamicObject()->setProperty("position", 1.0); key.getDynamicObject()->setProperty("value", 1.0);
+        call("timeline_add_key", key); setParameter(automation->items[0]->easingType, "Linear");
+        check(std::abs(automation->getValueAtPosition(0.75) - 0.75) < 0.01, "automation interpolation through typed controls");
         engine->removeChildControllableContainer(automation);
         auto removedHandle = module["handle"].toString();
         auto removed = call("organic_remove", revisionArgs(mcp.organic.container(removedHandle)));
@@ -232,6 +347,29 @@ int run()
         check(CVGroupManager::getInstance()->items.size() == 1, "custom variables save/reload");
         check(StateManager::getInstance()->items.size() == 1, "state save/reload");
         check(ChataigneSequenceManager::getInstance()->items.size() == 1, "sequence save/reload");
+        auto selection = directory.getChildFile("roundtrip.lilnut");
+        auto selectedGroup = mcp.organic.handle(CVGroupManager::getInstance()->items[0]);
+        call("chataigne_export_selection", object({{"handles", array({selectedGroup})}, {"path", selection.getFullPathName()}}));
+        auto imported = call("chataigne_import", object({{"path", selection.getFullPathName()}}));
+        check(CVGroupManager::getInstance()->items.size() == 2, "native selection export/import round trip");
+        call("organic_undo", object({{"transaction", imported["transaction"]}})); check(CVGroupManager::getInstance()->items.size() == 1, "selection import undo");
+        for (int iteration = 0; iteration < 8; ++iteration)
+        {
+            auto stale = mcp.organic.handle(CVGroupManager::getInstance()->items[0]);
+            call("chataigne_new", object({{"discardChanges", true}}));
+            call("chataigne_open", object({{"path", project.getFullPathName()}, {"discardChanges", true}}));
+            rejects([&] { mcp.organic.container(stale); }, -32005);
+        }
+        check(CVGroupManager::getInstance()->items.size() == 1, "repeated project loads preserve authoring data");
+        auto* largeTree = new ControllableContainer("Large tree fixture"); engine->addChildControllableContainer(largeTree, true);
+        for (int index = 0; index < 5000; ++index) largeTree->addFloatParameter("Value " + String(index), "", 0);
+        auto scope = mcp.organic.handle(largeTree); int seen = 0; auto browseStart = juce::Time::getMillisecondCounterHiRes();
+        do { auto page = call("organic_browse", object({{"scope", scope}, {"offset", seen}, {"limit", 200}})); seen += page["items"].size(); if (!page.hasProperty("nextOffset")) break; } while (seen < 6000);
+        check(seen == 5000 && juce::Time::getMillisecondCounterHiRes() - browseStart < 30000, "large control tree pagination is bounded and complete");
+        auto raced = mcp.organic.describe(mcp.organic.handle(largeTree->controllables[0]));
+        dynamic_cast<Parameter*>(largeTree->controllables[0])->setValue(1); // A concurrent native UI edit.
+        rejects([&] { call("organic_set_value", object({{"handle", raced["handle"]}, {"revision", raced["revision"]}, {"value", 0.5}})); }, -32006);
+        engine->removeChildControllableContainer(largeTree);
         std::cout << "Passed " << checks << " MCP authoring checks\n";
     }
     catch (const std::exception& error) { std::cerr << "MCP authoring failed: " << error.what() << '\n'; result = 1; }
@@ -240,6 +378,34 @@ int run()
 }
 int main(int argc, char** argv)
 {
+#if ORGANICUI_USE_MCP && ORGANICUI_USE_ASSISTANT
+    if (argc == 2 && juce::String(argv[1]) == "--desktop-connection")
+    {
+        juce::ScopedJuceInitialiser_GUI runtime;
+        mcp_test::McpTestApplication app; app.engine.reset(new ChataigneEngine());
+        auto* engine = static_cast<ChataigneEngine*>(app.engine.get()); auto& mcp = *engine->mcp;
+        auto directory = juce::File::getSpecialLocation(juce::File::userApplicationDataDirectory).getChildFile("Chataigne/MCP/Desktop");
+        try
+        {
+            organic::assistant::ProtectedStore storage(directory); auto record = storage.read("bridge-credential");
+            try { mcp.permissions->authenticate(record["token"].toString()); }
+            catch (...) { record = organic::mcp::object({{"token", mcp.permissions->create("Claude Desktop", organic::mcp::Access::inspect).second}}); storage.write("bridge-credential", record); }
+            auto stop = directory.getChildFile("stop"); stop.deleteFile();
+            mcp.port->setValue(42002); mcp.enabled->setValue(true);
+            if (!mcp.server->isRunning()) { std::cerr << "Cannot start Chataigne MCP validation instance\n"; return 1; }
+            std::cout << "Chataigne engine ready for Claude Desktop at http://127.0.0.1:42002/mcp\n" << std::flush;
+            auto deadline = juce::Time::getMillisecondCounterHiRes() + 900000;
+            int reported = 0;
+            while (!stop.existsAsFile() && juce::Time::getMillisecondCounterHiRes() < deadline)
+            {
+                mcp_test::pumpMessages(50); auto activity = mcp.server->activity();
+                while (reported < activity.size()) { auto event = activity[reported++]; std::cout << "MCP " << event.method << " status " << event.status << '\n' << std::flush; }
+            }
+            return 0;
+        }
+        catch (const std::exception& error) { std::cerr << error.what() << '\n'; return 1; }
+    }
+#endif
 #if ORGANICUI_USE_ASSISTANT
     if (argc == 2 && (juce::String(argv[1]) == "--subscription-smoke" || juce::String(argv[1]) == "--saved-subscription-smoke"))
     {

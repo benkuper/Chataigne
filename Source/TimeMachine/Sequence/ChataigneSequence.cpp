@@ -346,6 +346,11 @@ void ChataigneSequence::itemsRemoved(Array<SequenceLayer*> layers)
 
 void ChataigneSequence::checkForNewAudioLayer(SequenceLayer* layer, bool showMenuIfNoAudioModule)
 {
+#if ORGANICUI_USE_MCP
+	// Remote authoring may intentionally prepare media before choosing hardware.
+	// Report an unassigned output through diagnostics instead of asking a dialog.
+	if (organic::mcp::Registry::executingContext() != nullptr) showMenuIfNoAudioModule = false;
+#endif
 	ChataigneAudioLayer* audioLayer = dynamic_cast<ChataigneAudioLayer*>(layer);
 	if (audioLayer != nullptr)
 	{
