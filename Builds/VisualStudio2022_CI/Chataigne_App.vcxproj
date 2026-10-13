@@ -158,6 +158,9 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\MCP\ChataigneMcp.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Source\PrecompiledHeaders.cpp"/>
     <ClCompile Include="..\..\Source\Guider\guides\BasicsGuide.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
@@ -2522,6 +2525,15 @@
     <ClCompile Include="..\..\Modules\juce_organicui\manager\GenericControllableManager.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\mcp\McpCore.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\mcp\McpServer.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\mcp\OrganicMcpProvider.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\outliner\Outliner.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2792,6 +2804,9 @@
     <ClCompile Include="..\..\Modules\juce_simpleweb\SimpleWebSocketServer.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_timeline\mcp\TimelineMcpProvider.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_timeline\resources\BinaryData.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -3013,6 +3028,7 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_video.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\MCP\ChataigneMcp.h"/>
     <ClInclude Include="..\..\Source\PrecompiledHeaders.h"/>
     <ClInclude Include="..\..\Source\Guider\guides\BasicsGuide.h"/>
     <ClInclude Include="..\..\Source\Guider\BaseGuide.h"/>
@@ -3927,6 +3943,10 @@
     <ClInclude Include="..\..\Modules\juce_organicui\manager\Factory.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\GenericControllableItem.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\GenericControllableManager.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\mcp\McpCore.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\mcp\McpManagerAdapter.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\mcp\McpServer.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\mcp\OrganicMcpProvider.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\outliner\Outliner.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\parrot\ui\ParrotPanel.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\parrot\ui\ParrotUI.h"/>
@@ -4947,6 +4967,7 @@
     <ClInclude Include="..\..\Modules\juce_simpleweb\SimpleWebSocketClient.h"/>
     <ClInclude Include="..\..\Modules\juce_simpleweb\SimpleWebSocketServer.h"/>
     <ClInclude Include="..\..\Modules\juce_simpleweb\juce_simpleweb.h"/>
+    <ClInclude Include="..\..\Modules\juce_timeline\mcp\TimelineMcpProvider.h"/>
     <ClInclude Include="..\..\Modules\juce_timeline\resources\BinaryData.h"/>
     <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Cue\ui\TimeCueManagerUI.h"/>
     <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Cue\ui\TimeCueUI.h"/>

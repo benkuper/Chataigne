@@ -124,6 +124,12 @@
       <FILE id="xbqvN3" name="tray_icon.png" compile="0" resource="1" file="Resources/tray_icon.png"/>
     </GROUP>
     <GROUP id="{31908E9E-F626-E2D6-1A6D-E188C9D72C25}" name="Source">
+      <GROUP id="mcpSourceGroup" name="MCP">
+        <FILE id="mcpHeader" name="ChataigneMcp.h" compile="0" resource="0"
+              file="Source/MCP/ChataigneMcp.h"/>
+        <FILE id="mcpImplementation" name="ChataigneMcp.cpp" compile="0" resource="0"
+              file="Source/MCP/ChataigneMcp.cpp"/>
+      </GROUP>
       <FILE id="ah4ZzR" name="PrecompiledHeaders.cpp" compile="1" resource="0"
             file="Source/PrecompiledHeaders.cpp"/>
       <FILE id="ELGbdJ" name="PrecompiledHeaders.h" compile="0" resource="0"
@@ -2078,7 +2084,8 @@
                JUCE_USE_MP3AUDIOFORMAT="1" JUCE_USE_LAME_AUDIO_FORMAT="1" JUCE_USE_WINDOWS_MEDIA_FORMAT="1"
                JUCE_ENABLE_BROADCAST_BY_DEFAULT="1" JUCE_EXCLUSIVE_BINDING_BY_DEFAULT="1"
                ORGANICUI_USE_WEBSERVER="1" JUCE_USE_WINRT_MIDI="0" JUCE_IP_AND_PORT_DETECTION="1"
-               ORGANICUI_USE_SHAREDTEXTURE="1" JUCE_USE_WIN_WEBVIEW2="1" JUCE_FLOAT_COLOURS="1"/>
+               ORGANICUI_USE_SHAREDTEXTURE="1" JUCE_USE_WIN_WEBVIEW2="1" JUCE_FLOAT_COLOURS="1"
+               ORGANICUI_USE_MCP="1"/>
   <LIVE_SETTINGS>
     <WINDOWS/>
     <OSX/>

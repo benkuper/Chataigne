@@ -340,6 +340,10 @@
  #define   ORGANICUI_USE_WEBSERVER 1
 #endif
 
+#ifndef    ORGANICUI_USE_MCP
+ #define   ORGANICUI_USE_MCP 1
+#endif
+
 #ifndef    ORGANICUI_USE_WEBBROWSER
  //#define ORGANICUI_USE_WEBBROWSER 1
 #endif

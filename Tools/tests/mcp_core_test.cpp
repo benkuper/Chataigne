@@ -32,6 +32,12 @@ int main()
         Grant full; full.access = Access::full;
         expect(full.allows(inspect | control | edit | files | advanced), "full access incomplete");
         Registry registry; int executions = 0;
+        auto nested = schema(object({{"rows", object({{"type", "array"}, {"items", schema(object({{"value", anySchema()}}), array({"value"}))}, {"maxItems", 3}})}}), array({"rows"}));
+        checkSchema(nested);
+        validate(nested, object({{"rows", array({object({{"value", array({1, 2, 3})}})})}}));
+        expect(true, "nested object and array schema validation");
+        rejects([&] { validate(schema(), array({})); }, -32602);
+        rejects([&] { validate(nested, object({{"rows", object()}})); }, -32602);
         Operation operation;
         operation.name = "organic_test"; operation.description = "Test";
         operation.input = schema(object({{"amount", integerSchema(0, 10)}}), array({"amount"}));

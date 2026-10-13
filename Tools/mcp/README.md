@@ -62,11 +62,24 @@ separation follows the [MCP transport specification](https://modelcontextprotoco
 
 - Foundation: registry, grants, dedicated transport, resource observation,
   manager interface, independent example, and native/HTTP checks implemented.
-- Chataigne and timeline model providers, authoring, undo, diagnostics: next stage.
+- Chataigne and timeline providers: scoped object and factory discovery, revision
+  checks, typed edits, ranges/enums, create/duplicate/move/reorder/remove, batched
+  edits, named undo/redo, project files, commands, scripts, diagnostics, Detective,
+  per-client observations, playback, cues, and keys implemented. Generic manager
+  operations cover states, processing, routing, custom variables, dashboards,
+  presets, Parrot, timeline layers, and clips through their existing model APIs.
+  Arbitrary serialized configuration and selection import require Full Access;
+  restricted profiles use typed operations with their capability and path checks.
 - Production connection UI, bridge, client packaging and interoperability: pending.
 - Optional assistant, ChatGPT account integration and final validation: pending.
 
-The foundation tests do not establish application authoring coverage, actual
+The Windows Debug application builds with MCP enabled. The native authoring
+regression covers 38 checks, including module/state/variable/sequence creation,
+typed edits and conflicts, duplicate/move, grouped undo, folder restrictions on
+undo, cue/key authoring, frame-aware seeking, save/reload, generation changes,
+and teardown. Run `Tools/tests/run_mcp_authoring_test.ps1` after building the
+application. The core and HTTP suites also pass.
+
+These checks do not establish every subtype's authoring coverage, actual
 third-party client interoperability, account-backed inference, or builds on
-platforms other than the host used to run them. Those are separate acceptance
-checks before the final merge.
+platforms other than the test host. Those remain final acceptance checks.

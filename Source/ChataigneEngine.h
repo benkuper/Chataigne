@@ -12,6 +12,7 @@
 #pragma once
 class ChataigneGenericModule;
 class MultiplexModule;
+class ChataigneMcp;
 
 class ChataigneEngine :
 	public Engine
@@ -22,6 +23,9 @@ public:
 
 	std::unique_ptr<ChataigneGenericModule> module;
 	std::unique_ptr<MultiplexModule> multiplexModule;
+#if ORGANICUI_USE_MCP
+    std::unique_ptr<ChataigneMcp> mcp;
+#endif
 
 	//Global Settings
 	ControllableContainer defaultBehaviors;

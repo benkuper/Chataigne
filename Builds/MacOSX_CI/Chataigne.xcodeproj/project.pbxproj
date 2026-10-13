@@ -591,6 +591,7 @@
 		917521599B52D2E67AA82FF6 /* StreamDeckV1.cpp */ /* StreamDeckV1.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = StreamDeckV1.cpp; path = ../../Source/Module/modules/controller/streamdeck/models/StreamDeckV1.cpp; sourceTree = SOURCE_ROOT; };
 		917F8F23507E7AE42797E326 /* CustomOSCModule.cpp */ /* CustomOSCModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CustomOSCModule.cpp; path = ../../Source/Module/modules/osc/custom/CustomOSCModule.cpp; sourceTree = SOURCE_ROOT; };
 		91F013D5F5CD4BC069CEF902 /* ChataigneAudioLayerPanel.cpp */ /* ChataigneAudioLayerPanel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ChataigneAudioLayerPanel.cpp; path = ../../Source/TimeMachine/Sequence/layers/audio/ui/ChataigneAudioLayerPanel.cpp; sourceTree = SOURCE_ROOT; };
+		920BA6D9FBCA505340DC3DF7 /* ChataigneMcp.cpp */ /* ChataigneMcp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ChataigneMcp.cpp; path = ../../Source/MCP/ChataigneMcp.cpp; sourceTree = SOURCE_ROOT; };
 		9221984DA5E82A7851E57A6D /* BLEModule.h */ /* BLEModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BLEModule.h; path = ../../Source/Module/modules/ble/BLEModule.h; sourceTree = SOURCE_ROOT; };
 		922ED66F10FDA55AD0197D00 /* BLEDeviceParameter.cpp */ /* BLEDeviceParameter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BLEDeviceParameter.cpp; path = ../../Source/Common/BLE/BLEDeviceParameter.cpp; sourceTree = SOURCE_ROOT; };
 		923AE5135E5069CB080C5867 /* AudioModule.cpp */ /* AudioModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = AudioModule.cpp; path = ../../Source/Module/modules/audio/AudioModule.cpp; sourceTree = SOURCE_ROOT; };
@@ -786,6 +787,7 @@
 		CBB3A02D0C384DE3EE983267 /* ChataigneAudioLayerListener.h */ /* ChataigneAudioLayerListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ChataigneAudioLayerListener.h; path = ../../Source/TimeMachine/Sequence/layers/audio/ChataigneAudioLayerListener.h; sourceTree = SOURCE_ROOT; };
 		CC32A694BE65152C463DA1F0 /* MorphTargetUI.h */ /* MorphTargetUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MorphTargetUI.h; path = ../../Source/CustomVariables/Preset/Morpher/ui/MorphTargetUI.h; sourceTree = SOURCE_ROOT; };
 		CC389765208788865C6C6995 /* StandardConditionEditor.h */ /* StandardConditionEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StandardConditionEditor.h; path = ../../Source/Common/Processor/Action/Condition/conditions/StandardCondition/ui/StandardConditionEditor.h; sourceTree = SOURCE_ROOT; };
+		CCB645AB75DF5E5CAC7C5AEB /* ChataigneMcp.h */ /* ChataigneMcp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ChataigneMcp.h; path = ../../Source/MCP/ChataigneMcp.h; sourceTree = SOURCE_ROOT; };
 		CCCBE67E2FFA2D8143093EF5 /* StateTransitionUI.cpp */ /* StateTransitionUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = StateTransitionUI.cpp; path = ../../Source/StateMachine/Transition/ui/StateTransitionUI.cpp; sourceTree = SOURCE_ROOT; };
 		CD13532F8389EA3388606668 /* StateTransitionUI.h */ /* StateTransitionUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StateTransitionUI.h; path = ../../Source/StateMachine/Transition/ui/StateTransitionUI.h; sourceTree = SOURCE_ROOT; };
 		CD28AA5204CAAB7963FC2387 /* include_juce_organicui3.cpp */ /* include_juce_organicui3.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_juce_organicui3.cpp; path = ../../JuceLibraryCode/include_juce_organicui3.cpp; sourceTree = SOURCE_ROOT; };
@@ -2627,6 +2629,7 @@
 		A6036FD6B54D8D748F9FA2C3 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				EE0AE8E21A3D5881E1C445B0,
 				A269643C4A221397D972937C,
 				712CDB41F91E0C9A6EC1F69F,
 				35FD7B8838F4A0B49CE24427,
@@ -3448,6 +3451,15 @@
 				75264E6590D2A292044545A1,
 			);
 			name = ui;
+			sourceTree = "<group>";
+		};
+		EE0AE8E21A3D5881E1C445B0 /* MCP */ = {
+			isa = PBXGroup;
+			children = (
+				CCB645AB75DF5E5CAC7C5AEB,
+				920BA6D9FBCA505340DC3DF7,
+			);
+			name = MCP;
 			sourceTree = "<group>";
 		};
 		F1BCE98A352AB3437DD8D5F9 /* oneeuro */ = {

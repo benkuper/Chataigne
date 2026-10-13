@@ -10,6 +10,9 @@
 
 #include "MainIncludes.h"
 #include "Common/CommonIncludes.h"
+#if ORGANICUI_USE_MCP
+#include "MCP/ChataigneMcp.cpp"
+#endif
 
 ControllableContainer* getAppSettings();
 
@@ -71,10 +74,16 @@ ChataigneEngine::ChataigneEngine() :
 
 
 	getAppSettings()->addChildControllableContainer(&defaultBehaviors);
+#if ORGANICUI_USE_MCP
+    mcp = std::make_unique<ChataigneMcp>(*this);
+#endif
 }
 
 ChataigneEngine::~ChataigneEngine()
 {
+#if ORGANICUI_USE_MCP
+    mcp.reset();
+#endif
 	//Application-end cleanup, nothing should be recreated after this
 	//delete singletons here
 
