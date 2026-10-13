@@ -58,6 +58,9 @@ ChataigneMcp::ChataigneMcp(ChataigneEngine& e)
         unsigned capabilities = edit;
         for (auto* parent = p->parentContainer.get(); parent; parent = parent->parentContainer.get())
         {
+#if ORGANICUI_USE_ASSISTANT
+            if (dynamic_cast<organic::assistant::Controller*>(parent)) capabilities |= advanced;
+#endif
             if (dynamic_cast<Script*>(parent)) capabilities |= advanced;
             if (auto* command = dynamic_cast<BaseCommand*>(parent)) if (executableCommand(command)) capabilities |= advanced;
             if (auto* values = dynamic_cast<GenericControllableManager*>(parent))
@@ -76,6 +79,9 @@ ChataigneMcp::ChataigneMcp(ChataigneEngine& e)
     organic.executionCapabilities = [](Controllable* target)
     {
         unsigned capabilities = control;
+#if ORGANICUI_USE_ASSISTANT
+        if (dynamic_cast<organic::assistant::Controller*>(target->parentContainer.get())) capabilities |= advanced;
+#endif
         if (auto* handler = dynamic_cast<BaseCommandHandler*>(target->parentContainer.get())) if (executableCommand(handler->command.get())) capabilities |= advanced;
         if (auto* command = dynamic_cast<BaseCommand*>(target->parentContainer.get())) if (executableCommand(command)) capabilities |= advanced;
         if (dynamic_cast<OSModule*>(target->parentContainer.get())) capabilities |= advanced;
@@ -98,17 +104,44 @@ ChataigneMcp::ChataigneMcp(ChataigneEngine& e)
     {
         permissions = std::make_unique<Permissions>(directory.getChildFile("clients.json"));
         server = std::make_unique<Server>(registry, *permissions, "Chataigne", ProjectInfo::versionString);
+        connectionSettings = std::make_unique<organic::mcp::ConnectionSettings>(*permissions, *server, [this] { return port->intValue(); });
+        addChildControllableContainer(connectionSettings.get());
         organic.documentInvalidated = [this] { if (server) server->invalidateDocument(); };
     }
     catch (const Error& error) { status->setValue(String(error.what())); }
     registerOperations();
+#if ORGANICUI_USE_ASSISTANT
+    if (permissions)
+    {
+        try
+        {
+            assistant = std::make_unique<organic::assistant::ChatGptProvider>(registry, *permissions,
+                directory.getSiblingFile("Assistant"), "Chataigne", [this] { return organic.generation(); },
+                [this] { return assistantController && !assistantController->includeProjectContext->boolValue() ? object() : projectSummary(); });
+            assistantController = std::make_unique<organic::assistant::Controller>(*assistant);
+            engine.addChildControllableContainer(assistantController.get());
+            GlobalSettings::getInstance()->addChildControllableContainer(&assistantController->settings);
+        }
+        catch (const Error& error) { status->setValue(String(error.what())); }
+    }
+#endif
     engine.addEngineListener(this);
     CustomLogger::getInstance()->addLogListener(this);
     GlobalSettings::getInstance()->addChildControllableContainer(this);
 }
 ChataigneMcp::~ChataigneMcp()
 {
+#if ORGANICUI_USE_ASSISTANT
+    if (assistantController)
+    {
+        engine.removeChildControllableContainer(assistantController.get());
+        if (auto* settings = GlobalSettings::getInstanceWithoutCreating()) settings->removeChildControllableContainer(&assistantController->settings);
+        assistantController.reset();
+    }
+    assistant.reset();
+#endif
     if (server) server->stop();
+    if (connectionSettings) { removeChildControllableContainer(connectionSettings.get()); connectionSettings.reset(); }
     cancelPendingUpdate();
     engine.removeEngineListener(this);
     if (auto* logger = CustomLogger::getInstanceWithoutCreating()) logger->removeLogListener(this);
@@ -193,6 +226,27 @@ void ChataigneMcp::registerOperations()
     add("chataigne_diagnostics", "Read observed warnings, connections, missing approved assets, unresolved targets, script failures, and recent logs. Does not emit test output.",
         schema(object({{"scope", stringSchema()}, {"offset", integerSchema(0, 10000)}, {"limit", integerSchema(1, 200)}})), inspect,
         [this](const var& args, Context& c) { return diagnostics(args, c); });
+    add("chataigne_add_transition", "Create a state transition between two existing states in one undo transaction. Configure its conditions and consequences through the returned handle.",
+        schema(object({{"source", stringSchema()}, {"destination", stringSchema()}, {"sourceRevision", integerSchema(1, INT32_MAX)}, {"destinationRevision", integerSchema(1, INT32_MAX)}}),
+            organic::mcp::array({"source", "destination", "sourceRevision", "destinationRevision"})), edit,
+        [this](const var& args, Context&) { return organic.transaction("Add state transition", [&]
+        {
+            auto* source = dynamic_cast<State*>(organic.container(args["source"].toString()));
+            auto* destination = dynamic_cast<State*>(organic.container(args["destination"].toString()));
+            auto* transition = StateManager::getInstance()->stm.addItemFromData(object({{"sourceState", source->shortName}, {"destState", destination->shortName}}), true);
+            if (!transition) throw Error(-32000, "Could not create state transition");
+            return organic.describe(organic.handle(transition));
+        }); },
+        [this](const var& args, const Context&)
+        {
+            auto* source = dynamic_cast<State*>(organic.container(args["source"].toString()));
+            auto* destination = dynamic_cast<State*>(organic.container(args["destination"].toString()));
+            if (!source || !destination || source == destination) throw Error(-32602, "Transition requires two distinct states");
+            if ((juce::int64) organic.describe(args["source"].toString())["revision"] != (juce::int64) args["sourceRevision"]
+                || (juce::int64) organic.describe(args["destination"].toString())["revision"] != (juce::int64) args["destinationRevision"])
+                throw Error(-32006, "State changed since inspection");
+            if (StateManager::getInstance()->stm.getItemForSourceAndDest(source, destination)) throw Error(-32602, "Transition already exists");
+        }, true);
     auto fileInput = schema(object({{"path", stringSchema()}}), organic::mcp::array({"path"}));
     auto requireFile = [this](const var& args, const Context& c)
     { organic.ensureReady(); if (!juce::File::isAbsolutePath(args["path"].toString())) throw Error(-32602, "Use an absolute file path"); c.requireFile(juce::File(args["path"].toString())); };

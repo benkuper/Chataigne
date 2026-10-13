@@ -37,6 +37,10 @@ static void pumpMessages(int milliseconds)
     auto until = juce::Time::getMillisecondCounterHiRes() + milliseconds;
     do { MSG message; while (PeekMessage(&message, nullptr, 0, 0, PM_REMOVE)) { TranslateMessage(&message); DispatchMessage(&message); } Sleep(1); } while (juce::Time::getMillisecondCounterHiRes() < until);
 }
+}
+#include "assistant_integration_test.h"
+namespace mcp_test
+{
 int run()
 {
     juce::ScopedJuceInitialiser_GUI runtime;
@@ -57,44 +61,92 @@ int run()
         };
         check(!mcp.enabled->boolValue() && !mcp.server->isRunning(), "server must be opt-in");
         auto roots = call("chataigne_project", object()); check(roots["modules"].isString(), "project discovery");
+        assistantChecks(directory);
         {
             Permissions uiPermissions(directory.getChildFile("panel-clients.json"));
             Server uiServer(mcp.registry, uiPermissions, "Connection panel test", "1");
-            int uiPort = 42009; bool uiEnabled = false;
-            ConnectionPanel panel("MCP Connections", uiPermissions, uiServer,
-                [&] { return uiEnabled; }, [&](bool enabled) { uiEnabled = enabled; if (enabled) { auto started = uiServer.start(uiPort); check(started.wasOk(), "panel listener start"); } else uiServer.stop(); },
-                [&] { return uiPort; }, [&](int value) { uiPort = value; });
+            struct Host : ControllableContainer
+            {
+                Server& server; BoolParameter* enabled; IntParameter* port;
+                Host(Server& s) : ControllableContainer("Test MCP settings"), server(s)
+                { enabled = addBoolParameter("Enabled", "", false); port = addIntParameter("Port", "", 42009, 1, 65535); }
+                void onContainerParameterChanged(Parameter* value) override
+                { if (value == enabled) { if (enabled->boolValue()) check(server.start(port->intValue()).wasOk(), "panel listener start"); else server.stop(); } }
+            } host(uiServer);
+            ConnectionSettings connectionSettings(uiPermissions, uiServer, [&] { return host.port->intValue(); });
+            ConnectionPanel panel("MCP Connections", connectionSettings, *host.enabled, *host.port);
             panel.setSize(720, 760);
-            auto* name = findComponent<juce::TextEditor>(panel, [](const auto& c) { return c.getName() == "Client name"; });
-            auto* profile = findComponent<juce::ComboBox>(panel, [](const auto& c) { return c.getName() == "Access profile"; });
-            auto button = [&](const String& text) { auto* found = findComponent<juce::TextButton>(panel, [&](const auto& c) { return c.getButtonText() == text; }); check(found != nullptr, "connection panel button exists"); return found; };
-            check(name && profile, "connection panel fields exist"); name->setText("Regression client"); profile->setSelectedId(4, juce::sendNotificationSync);
-            button("Create client")->onClick();
+            check(findComponent<ControllableUI>(panel, [&](const auto& ui) { return ui.controllable == connectionSettings.create; }) != nullptr, "connection actions use OrganicUI trigger controls");
+            connectionSettings.clientName->setValue("Regression client"); connectionSettings.profile->setValueWithData(3);
+            connectionSettings.create->trigger();
             check(uiPermissions.list().size() == 1 && uiPermissions.list()[0].access == Access::full, "panel creates remembered Full Access client");
-            auto* enable = findComponent<juce::ToggleButton>(panel, [](const auto& c) { return c.getButtonText() == "Enable authenticated MCP"; });
-            enable->setToggleState(true, juce::dontSendNotification); enable->onClick();
-            button("Test connection")->onClick();
-            auto* resultLabel = findComponent<juce::Label>(panel, [](const auto& c) { return c.getName() == "Connection result"; });
-            for (int attempt = 0; attempt < 100 && !resultLabel->getText().contains("succeeded"); ++attempt) pumpMessages(50);
-            check(resultLabel->getText().contains("succeeded"), "panel tests authenticated HTTP connection");
+            host.enabled->setValue(true); connectionSettings.test->trigger();
+            for (int attempt = 0; attempt < 100 && !connectionSettings.result->stringValue().contains("succeeded"); ++attempt) pumpMessages(50);
+            check(connectionSettings.result->stringValue().contains("succeeded"), "panel tests authenticated HTTP connection");
             auto snapshot = panel.createComponentSnapshot(panel.getLocalBounds());
             auto preview = juce::File::getCurrentWorkingDirectory().getChildFile("../../Binaries/mcp-connection-panel.png");
-            if (auto output = preview.createOutputStream()) juce::PNGImageFormat().writeImageToStream(snapshot, *output);
-            button("Rotate credential")->onClick();
+            if (auto output = preview.createOutputStream()) { output->setPosition(0); output->truncate(); juce::PNGImageFormat().writeImageToStream(snapshot, *output); }
+            connectionSettings.rotate->trigger();
             check(uiPermissions.list().size() == 1, "panel rotates existing client");
-            button("Revoke client")->onClick(); check(uiPermissions.list().isEmpty(), "panel revokes client");
+            connectionSettings.revoke->trigger(); check(uiPermissions.list().isEmpty(), "panel revokes client");
             uiServer.stop();
         }
         auto module = create(ModuleManager::getInstance(), "OSC", "MCP OSC");
         check(module["type"].toString() == "OSC", "built-in module authoring");
+        auto setParameter = [&](Parameter* parameter, const var& value)
+        { auto info = mcp.organic.describe(mcp.organic.handle(parameter)); return call("organic_set_value", object({{"handle", info["handle"]}, {"revision", info["revision"]}, {"value", value}})); };
+        auto* oscModule = dynamic_cast<Module*>(mcp.organic.container(module["handle"].toString()));
+        auto scriptData = create(oscModule->scriptManager.get(), "", "MCP Script");
+        auto* script = dynamic_cast<Script*>(mcp.organic.container(scriptData["handle"].toString()));
+        auto scriptPath = directory.getChildFile("probe.js"); setParameter(script->filePath, scriptPath.getFullPathName());
+        call("chataigne_script_write", object({{"handle", scriptData["handle"]}, {"source", "function mcpProbe() { return 42; }"}}));
+        check(call("chataigne_script_inspect", object({{"handle", scriptData["handle"]}}))["source"].toString().contains("mcpProbe"), "script source authoring and inspection");
+        call("chataigne_script_reload", object({{"handle", scriptData["handle"]}}));
+        check((int) call("chataigne_script_invoke", object({{"handle", scriptData["handle"]}, {"function", "mcpProbe"}, {"arguments", array({})}}))["result"] == 42, "script invocation");
+        call("chataigne_script_write", object({{"handle", scriptData["handle"]}, {"source", "function broken( {"}}));
+        check(script->state == Script::SCRIPT_ERROR, "broken script diagnostic evidence");
+        auto scriptDiagnostics = call("chataigne_diagnostics", object()); check(juce::JSON::toString(scriptDiagnostics).contains("script_error"), "diagnostics report script failure");
+        call("organic_remove", revisionArgs(script));
         auto state = create(StateManager::getInstance(), "", "MCP State");
         check(state["handle"].isString(), "state authoring");
+        auto* authoredState = dynamic_cast<State*>(mcp.organic.container(state["handle"].toString()));
+        auto createFirst = [&](ControllableContainer* manager, const String& name)
+        {
+            auto types = call("organic_types", object({{"handle", mcp.organic.handle(manager)}}))["types"];
+            check(types.size() > 0, "family factory discovery"); return create(manager, types[0]["type"].toString(), name);
+        };
+        auto actionData = create(authoredState->pm.get(), "Action", "MCP Action");
+        auto* action = dynamic_cast<Action*>(mcp.organic.container(actionData["handle"].toString()));
+        createFirst(action->cdm.get(), "MCP Condition"); createFirst(action->csmOn.get(), "MCP Consequence");
+        auto mappingData = create(authoredState->pm.get(), "Mapping", "MCP Mapping");
+        auto* mapping = dynamic_cast<Mapping*>(mcp.organic.container(mappingData["handle"].toString()));
+        createFirst(&mapping->im, "MCP Input"); create(&mapping->fm, "Remap", "MCP Remap"); createFirst(&mapping->om, "MCP Output");
+        check(mapping->im.items.size() == 1 && mapping->fm.items.size() == 1 && mapping->om.items.size() == 1, "mapping processing chain authoring");
+        auto multiplexData = create(authoredState->pm.get(), "Multiplex", "MCP Multiplex");
+        auto* multiplex = dynamic_cast<Multiplex*>(mcp.organic.container(multiplexData["handle"].toString()));
+        create(&multiplex->processorManager, "Mapping", "MCP Nested Mapping"); check(multiplex->processorManager.items.size() == 1, "multiplex authoring");
+        auto destinationStateData = create(StateManager::getInstance(), "", "MCP Destination State");
+        auto sourceInfo = mcp.organic.describe(state["handle"].toString()), destinationStateInfo = mcp.organic.describe(destinationStateData["handle"].toString());
+        auto transition = call("chataigne_add_transition", object({{"source", sourceInfo["handle"]}, {"destination", destinationStateInfo["handle"]}, {"sourceRevision", sourceInfo["revision"]}, {"destinationRevision", destinationStateInfo["revision"]}}));
+        check(StateManager::getInstance()->stm.items.size() == 1, "transition authoring");
+        call("organic_undo", object({{"transaction", transition["transaction"]}})); check(StateManager::getInstance()->stm.items.isEmpty(), "transition undo");
+        call("organic_remove", revisionArgs(mcp.organic.container(destinationStateData["handle"].toString())));
+        createFirst(ModuleRouterManager::getInstance(), "MCP Router");
+        auto dashboardData = createFirst(DashboardManager::getInstance(), "MCP Dashboard");
+        auto* dashboard = dynamic_cast<Dashboard*>(mcp.organic.container(dashboardData["handle"].toString()));
+        create(&dashboard->itemManager, "DashboardCommentItem", "MCP Dashboard Comment"); check(dashboard->itemManager.items.size() == 1, "dashboard authoring");
+        auto parrotData = createFirst(ParrotManager::getInstance(), "MCP Parrot");
+        auto* parrot = dynamic_cast<Parrot*>(mcp.organic.container(parrotData["handle"].toString()));
+        createFirst(&parrot->recordManager, "MCP Record"); check(parrot->recordManager.items.size() == 1, "Parrot record authoring");
         auto group = create(CVGroupManager::getInstance(), "", "MCP Variables");
         auto* cvGroup = dynamic_cast<CVGroup*>(mcp.organic.container(group["handle"].toString())); check(cvGroup != nullptr, "custom variable group authoring");
         auto variable = create(&cvGroup->values, cvGroup->values.getTypeForControllableType("Float"), "Level");
         auto* variableItem = mcp.organic.container(variable["handle"].toString());
         Parameter* value = nullptr; for (auto* c : variableItem->controllables) if (auto* p = dynamic_cast<FloatParameter*>(c)) if (p != dynamic_cast<BaseItem*>(variableItem)->listUISize) { value = p; break; }
         check(value != nullptr, "custom variable parameter discovery");
+        createFirst(cvGroup->pm.get(), "MCP Preset"); check(cvGroup->pm->items.size() == 1, "preset authoring");
+        auto watch = call("chataigne_detective_watch", object({{"handle", mcp.organic.handle(value)}}));
+        auto observed = call("chataigne_detective_inspect", object({{"handle", watch["handle"]}})); check((bool) observed["readOnly"], "Detective observation");
         auto valueInfo = mcp.organic.describe(mcp.organic.handle(value));
         auto set = object({{"handle", valueInfo["handle"]}, {"revision", valueInfo["revision"]}, {"value", 0.5}});
         context.grant.access = Access::inspect;
@@ -145,6 +197,13 @@ int run()
         engine->removeChildControllableContainer(helper);
         auto seq = create(ChataigneSequenceManager::getInstance(), "", "MCP Sequence");
         auto* sequence = dynamic_cast<Sequence*>(mcp.organic.container(seq["handle"].toString())); check(sequence != nullptr, "sequence authoring");
+        auto layerData = create(sequence->layerManager.get(), "Audio", "MCP Audio Layer");
+        auto* audioLayer = dynamic_cast<AudioLayer*>(mcp.organic.container(layerData["handle"].toString()));
+        createFirst(&audioLayer->clipManager, "MCP Audio Clip"); check(audioLayer->clipManager.items.size() == 1, "timeline clip authoring");
+        create(sequence->layerManager.get(), "Trigger", "MCP Trigger Layer"); check(sequence->layerManager->items.size() == 2, "timeline layer authoring");
+        call("timeline_transport", object({{"handle", seq["handle"]}, {"action", "play"}})); pumpMessages(30);
+        check(sequence->isPlaying->boolValue(), "live playback");
+        call("timeline_transport", object({{"handle", seq["handle"]}, {"action", "pause"}})); check(!sequence->isPlaying->boolValue(), "pause playback");
         auto cue = revisionArgs(sequence); cue.getDynamicObject()->setProperty("seconds", 0.5);
         auto addedCue = call("timeline_add_cue", cue); check(sequence->cueManager->items.size() == 1, "cue authoring");
         call("organic_undo", object({{"transaction", addedCue["transaction"]}})); check(sequence->cueManager->items.isEmpty(), "cue undo");
@@ -179,4 +238,39 @@ int run()
     app.engine.reset(); directory.deleteRecursively(); return result;
 }
 }
-int main() { return mcp_test::run(); }
+int main(int argc, char** argv)
+{
+#if ORGANICUI_USE_ASSISTANT
+    if (argc == 2 && (juce::String(argv[1]) == "--subscription-smoke" || juce::String(argv[1]) == "--saved-subscription-smoke"))
+    {
+        juce::ScopedJuceInitialiser_GUI runtime;
+        mcp_test::McpTestApplication app; app.engine.reset(new ChataigneEngine());
+        auto* engine = static_cast<ChataigneEngine*>(app.engine.get());
+        auto* provider = engine->mcp->assistant.get();
+        if (!provider) { std::cerr << "Assistant provider unavailable\n"; return 1; }
+        try
+        {
+            if (juce::String(argv[1]) == "--saved-subscription-smoke") provider->refreshModels(); else provider->signIn(false);
+            auto deadline = juce::Time::getMillisecondCounterHiRes() + 240000;
+            while (provider->view().busy && juce::Time::getMillisecondCounterHiRes() < deadline) mcp_test::pumpMessages(50);
+            if (provider->view().busy) provider->cancel();
+            auto state = provider->view();
+            if (state.models.size() == 0) { std::cerr << state.status << '\n'; return 1; }
+            // The smoke conversation uses the user's remembered grant. Its explicit
+            // request is read-only and the test does not upgrade access.
+            auto previousLength = state.transcript.length();
+            provider->send("Call the chataigne_project tool to inspect this empty test project. Do not edit or run output. Then say: Chataigne assistant connected.", state.models[0]["slug"].toString());
+            deadline = juce::Time::getMillisecondCounterHiRes() + 240000;
+            while (provider->view().busy && juce::Time::getMillisecondCounterHiRes() < deadline) mcp_test::pumpMessages(50);
+            if (provider->view().busy) provider->cancel();
+            state = provider->view();
+            std::cout << state.status << '\n';
+            auto passed = state.status == "Response complete." && state.transcript.substring(previousLength).contains("[Tool: chataigne_project]");
+            std::cout << (passed ? "Passed real subscription-backed assistant smoke test\n" : "Subscription smoke did not complete a local tool call\n");
+            return passed ? 0 : 1;
+        }
+        catch (const std::exception& error) { std::cerr << error.what() << '\n'; return 1; }
+    }
+#endif
+    return mcp_test::run();
+}

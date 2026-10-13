@@ -36,5 +36,7 @@ int main(int argc, char** argv)
     auto result = server.start(port);
     if (result.failed()) { std::cerr << result.getErrorMessage() << std::endl; return 1; }
     std::cerr << "Listening at http://127.0.0.1:" << port << "/mcp; Ctrl+C to stop.\n";
-    juce::MessageManager::getInstance()->runDispatchLoop();
+    // The core/events-only macOS example has no NSApplication. Pump the CF/OS
+    // message loop directly, which also works for console hosts on other systems.
+    while (juce::MessageManager::getInstance()->runDispatchLoopUntil(1000)) {}
 }

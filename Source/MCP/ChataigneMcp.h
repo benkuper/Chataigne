@@ -11,6 +11,11 @@ public:
     organic::mcp::OrganicProvider organic;
     organic::mcp::TimelineProvider timeline;
     std::unique_ptr<organic::mcp::Server> server;
+    std::unique_ptr<organic::mcp::ConnectionSettings> connectionSettings;
+#if ORGANICUI_USE_ASSISTANT
+    std::unique_ptr<organic::assistant::ChatGptProvider> assistant;
+    std::unique_ptr<organic::assistant::Controller> assistantController;
+#endif
     BoolParameter* enabled;
     IntParameter* port;
     StringParameter* status;

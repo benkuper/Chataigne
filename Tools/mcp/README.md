@@ -76,21 +76,32 @@ separation follows the [MCP transport specification](https://modelcontextprotoco
   subscriptions, cancellation, and EOF teardown. Installed Claude Code passes an
   authenticated health check; installed Codex passes discovery and a direct
   read-only MCP call through app-server, with no model turn. See [client setup](CLIENTS.md).
-- Optional assistant, ChatGPT account integration and final validation: pending.
+- Optional ChatGPT-plan assistant implemented with browser OAuth/PKCE, verified
+  identity, protected per-account storage, serialized token renewal, live model
+  discovery, streamed responses and local registry function calls. The
+  conversation uses OrganicUI parameters/triggers and native controls; account
+  and access management live in Global Settings. See [assistant setup](ASSISTANT.md).
+  A real subscription-backed native provider smoke test has completed a local
+  project-inspection tool call. Offline account failures and streaming are tested.
 
 The Windows Debug application builds with MCP enabled. The native authoring
-regression covers 48 checks, including module/state/variable/sequence creation,
+regression covers module/state/variable/sequence creation,
 typed edits and conflicts, duplicate/move, grouped undo, folder restrictions on
 undo, cue/key authoring, frame-aware seeking, save/reload, generation changes,
-and teardown. Run `Tools/tests/run_mcp_authoring_test.ps1` after building the
-application. The core and HTTP suites also pass.
+and teardown, plus offline assistant accounts and native UI bindings. Coverage
+now includes transitions, processing chains, multiplexes, routing, dashboards,
+presets, Parrot records, timeline clips and live playback. Run
+`Tools/tests/run_mcp_authoring_test.ps1` after building the application. The
+registry, assistant security/streaming, HTTP and bridge suites pass on Windows
+and Linux; they are also run by platform CI.
 
-The stage-2 CI build passed Windows (including Win7), Linux, and both Raspberry
-architectures. Mac compilation failed; filesystem compatibility was revised for
-the existing macOS deployment target and raw Xcode diagnostics are enabled for
-the next run. CI now also builds and bundles the native bridge and Desktop
-extension without changing its dependency checkout strategy.
+The stage-3 CI application builds passed Windows (including Win7), both Macs,
+and both Raspberry architectures. Native test tooling failed on Mac and Linux:
+the core/events-only Mac example needed direct run-loop pumping, and the Linux
+bridge needed the existing libcurl dependency instead of JUCE's raw HTTP
+fallback. Fixes are included for the next CI run. CI builds and bundles the native
+bridge and Desktop extension without changing its dependency checkout strategy.
 
-Every subtype's authoring coverage, actual Claude Desktop and hosted ChatGPT
-connections, account-backed inference, and final platform/package checks remain
-final acceptance work. The optional assistant is not yet implemented.
+Actual Claude Desktop and hosted ChatGPT connection checks, expanded stress and
+diagnostics coverage, and final platform/package checks remain acceptance work.
+See [acceptance evidence](ACCEPTANCE.md) for the current scope and outstanding checks.

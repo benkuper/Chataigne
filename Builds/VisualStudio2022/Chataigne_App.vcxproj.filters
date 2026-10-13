@@ -827,6 +827,9 @@
     <Filter Include="JUCE Modules\juce_organicui\app">
       <UniqueIdentifier>{713F9F29-C2A1-3D8F-4394-6A948FA0175D}</UniqueIdentifier>
     </Filter>
+    <Filter Include="JUCE Modules\juce_organicui\assistant">
+      <UniqueIdentifier>{8DD35572-B7B3-6647-631B-9B2CD7EA1F95}</UniqueIdentifier>
+    </Filter>
     <Filter Include="JUCE Modules\juce_organicui\automation\common\fitting\intern">
       <UniqueIdentifier>{129F2071-932D-39D0-7756-2F0D13FA6835}</UniqueIdentifier>
     </Filter>
@@ -3403,6 +3406,18 @@
     <ClCompile Include="..\..\Modules\juce_organicui\app\OrganicMainComponentCommands.cpp">
       <Filter>JUCE Modules\juce_organicui\app</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\assistant\AssistantController.cpp">
+      <Filter>JUCE Modules\juce_organicui\assistant</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\assistant\AssistantCore.cpp">
+      <Filter>JUCE Modules\juce_organicui\assistant</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\assistant\AssistantPanel.cpp">
+      <Filter>JUCE Modules\juce_organicui\assistant</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\assistant\AssistantProvider.cpp">
+      <Filter>JUCE Modules\juce_organicui\assistant</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\automation\common\fitting\intern\curve_fit_corners_detect.c">
       <Filter>JUCE Modules\juce_organicui\automation\common\fitting\intern</Filter>
     </ClCompile>
@@ -3809,6 +3824,9 @@
       <Filter>JUCE Modules\juce_organicui\manager</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\mcp\McpConnectionPanel.cpp">
+      <Filter>JUCE Modules\juce_organicui\mcp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\mcp\McpConnectionSettings.cpp">
       <Filter>JUCE Modules\juce_organicui\mcp</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\mcp\McpCore.cpp">
@@ -6687,6 +6705,18 @@
     <ClInclude Include="..\..\Modules\juce_organicui\app\OrganicMainComponent.h">
       <Filter>JUCE Modules\juce_organicui\app</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\assistant\AssistantController.h">
+      <Filter>JUCE Modules\juce_organicui\assistant</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\assistant\AssistantCore.h">
+      <Filter>JUCE Modules\juce_organicui\assistant</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\assistant\AssistantPanel.h">
+      <Filter>JUCE Modules\juce_organicui\assistant</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\assistant\AssistantProvider.h">
+      <Filter>JUCE Modules\juce_organicui\assistant</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\automation\common\fitting\intern\curve_fit_inline.h">
       <Filter>JUCE Modules\juce_organicui\automation\common\fitting\intern</Filter>
     </ClInclude>
@@ -7159,6 +7189,9 @@
       <Filter>JUCE Modules\juce_organicui\manager</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\mcp\McpConnectionPanel.h">
+      <Filter>JUCE Modules\juce_organicui\mcp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\mcp\McpConnectionSettings.h">
       <Filter>JUCE Modules\juce_organicui\mcp</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\mcp\McpCore.h">

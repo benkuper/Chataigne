@@ -93,12 +93,18 @@ void MainContentComponent::init()
         auto* engine = dynamic_cast<ChataigneEngine*>(Engine::mainEngine);
         if (!engine || !engine->mcp || !engine->mcp->permissions || !engine->mcp->server) return nullptr;
         auto* mcp = engine->mcp.get();
-        return new organic::mcp::ConnectionPanel(name, *mcp->permissions, *mcp->server,
-            [mcp] { return mcp->enabled->boolValue(); }, [mcp](bool value) { mcp->enabled->setValue(value); },
-            [mcp] { return mcp->port->intValue(); }, [mcp](int value) { mcp->port->setValue(value); });
+        return new organic::mcp::ConnectionPanel(name, *mcp->connectionSettings, *mcp->enabled, *mcp->port);
     }));
 #endif
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Modules", &ModuleManagerUI::create));
+#if ORGANICUI_USE_ASSISTANT
+    ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("ChatGPT Assistant", [](const String& name) -> ShapeShifterContent*
+    {
+        auto* engine = dynamic_cast<ChataigneEngine*>(Engine::mainEngine);
+        if (!engine || !engine->mcp || !engine->mcp->assistantController) return nullptr;
+        return new organic::assistant::Panel(name, *engine->mcp->assistantController);
+    }));
+#endif
 
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Custom Variables", &CVGroupManagerUI::create));
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Morpher", &MorpherPanel::create));

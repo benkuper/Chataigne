@@ -2294,6 +2294,18 @@
     <ClCompile Include="..\..\Modules\juce_organicui\app\OrganicMainComponentCommands.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\assistant\AssistantController.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\assistant\AssistantCore.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\assistant\AssistantPanel.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\assistant\AssistantProvider.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\automation\common\fitting\intern\curve_fit_corners_detect.c">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2700,6 +2712,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\mcp\McpConnectionPanel.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\mcp\McpConnectionSettings.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\mcp\McpCore.cpp">
@@ -3963,6 +3978,10 @@
     <ClInclude Include="..\..\Modules\juce_organicui\app\CrashHandler.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\app\OrganicApplication.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\app\OrganicMainComponent.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\assistant\AssistantController.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\assistant\AssistantCore.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\assistant\AssistantPanel.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\assistant\AssistantProvider.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\automation\common\fitting\intern\curve_fit_inline.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\automation\common\fitting\intern\generic_alloc_impl.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\automation\common\fitting\intern\generic_heap.h"/>
@@ -4121,6 +4140,7 @@
     <ClInclude Include="..\..\Modules\juce_organicui\manager\GenericControllableItem.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\GenericControllableManager.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\mcp\McpConnectionPanel.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\mcp\McpConnectionSettings.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\mcp\McpCore.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\mcp\McpManagerAdapter.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\mcp\McpServer.h"/>

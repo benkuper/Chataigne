@@ -344,6 +344,10 @@
  #define   ORGANICUI_USE_MCP 1
 #endif
 
+#ifndef    ORGANICUI_USE_ASSISTANT
+ #define   ORGANICUI_USE_ASSISTANT 1
+#endif
+
 #ifndef    ORGANICUI_USE_WEBBROWSER
  //#define ORGANICUI_USE_WEBBROWSER 1
 #endif

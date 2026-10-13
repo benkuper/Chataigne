@@ -10,12 +10,12 @@ if (!(Test-Path -LiteralPath (Join-Path $JucePath 'modules/juce_core/juce_core.h
 [xml]$project = Get-Content -LiteralPath (Join-Path $projectDir 'Chataigne_App.vcxproj')
 $compile = $project.Project.ItemDefinitionGroup[0].ClCompile
 foreach ($enabled in @(0, 1)) {
-    $arguments = @('/nologo', '/c', '/std:c++17', '/EHsc', '/MDd', '/bigobj', '/Y-', "/DORGANICUI_USE_MCP=$enabled", "/Fo`"$buildDir/organicui-mcp-$enabled.obj`"", "/I`"$JucePath/modules`"")
+    $arguments = @('/nologo', '/c', '/std:c++17', '/EHsc', '/MDd', '/bigobj', '/Y-', "/DORGANICUI_USE_MCP=$enabled", "/DORGANICUI_USE_ASSISTANT=$enabled", "/Fo`"$buildDir/organicui-mcp-$enabled.obj`"", "/I`"$JucePath/modules`"")
     foreach ($include in $compile.AdditionalIncludeDirectories.Split(';')) {
         if (!$include.StartsWith('%(') -and $include -notmatch 'JUCE[\\/]modules') { $arguments += "/I`"$include`"" }
     }
     foreach ($define in $compile.PreprocessorDefinitions.Split(';')) {
-        if (!$define.StartsWith('%(') -and $define -notmatch '^ORGANICUI_USE_MCP=') { $arguments += "/D`"$define`"" }
+        if (!$define.StartsWith('%(') -and $define -notmatch '^ORGANICUI_USE_(MCP|ASSISTANT)=') { $arguments += "/D`"$define`"" }
     }
     $arguments += "`"$repoPath/JuceLibraryCode/include_juce_organicui2.cpp`""
     $response = Join-Path $buildDir "compile-$enabled.rsp"

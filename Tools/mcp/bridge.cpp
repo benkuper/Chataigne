@@ -97,7 +97,7 @@ private:
             selectedVersion = message["params"]["_meta"]["io.modelcontextprotocol/protocolVersion"].toString();
             if (selectedVersion.isEmpty()) selectedVersion = method == "initialize" ? message["params"]["protocolVersion"].toString() : version;
             selectedSession = session;
-            String headers = "Authorization: Bearer " + token + "\r\nContent-Type: application/json\r\nAccept: application/json, text/event-stream\r\n";
+            String headers = "Authorization: Bearer " + token + "\r\nContent-Type: application/json\r\nAccept: application/json, text/event-stream\r\nConnection: close\r\n";
             if (selectedVersion.isNotEmpty()) headers += "MCP-Protocol-Version: " + selectedVersion + "\r\n";
             if (selectedSession.isNotEmpty()) headers += "Mcp-Session-Id: " + selectedSession + "\r\n";
             if (selectedVersion == "2026-07-28")
@@ -108,7 +108,7 @@ private:
             }
             auto url = events ? juce::URL(endpoint) : juce::URL(endpoint).withPOSTData(juce::JSON::toString(message, true));
             request->stream = std::make_shared<juce::WebInputStream>(url, !events);
-            request->stream->withExtraHeaders(headers).withConnectionTimeout(5000).withNumRedirectsToFollow(0);
+            request->stream->withExtraHeaders(headers.trimEnd()).withConnectionTimeout(5000).withNumRedirectsToFollow(0);
             requests[key] = request;
         }
         for (auto& previous : completed) if (previous->worker.joinable()) previous->worker.join();
@@ -120,6 +120,8 @@ private:
                 auto& stream = *request->stream;
                 if (!stream.connect(nullptr)) throw Error(-32000, "Cannot connect to the selected Chataigne instance");
                 auto status = stream.getStatusCode(); auto headers = stream.getResponseHeaders();
+                if (juce::SystemStats::getEnvironmentVariable("MCP_BRIDGE_TRACE", {}) == "1")
+                    std::cerr << "HTTP " << status << "; length=" << stream.getTotalLength() << "; position=" << stream.getPosition() << std::endl;
                 if (headers["Content-Type"].contains("text/event-stream"))
                 {
                     String data; int bytes = 0;
@@ -140,7 +142,10 @@ private:
                     char buffer[4096];
                     while (!stream.isExhausted() && !stream.isError())
                     {
-                        int size = stream.read(buffer, sizeof(buffer)); if (size <= 0) break;
+                        auto length = stream.getTotalLength();
+                        auto remaining = length < 0 ? (juce::int64) sizeof(buffer) : length - stream.getPosition();
+                        if (remaining <= 0) break;
+                        int size = stream.read(buffer, (int) juce::jmin((juce::int64) sizeof(buffer), remaining)); if (size <= 0) break;
                         if (body.getDataSize() + (size_t) size > 1024 * 1024) throw Error(-32000, "HTTP response exceeds the payload limit");
                         body.write(buffer, (size_t) size);
                     }
