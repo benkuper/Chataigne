@@ -78,7 +78,9 @@ separation follows the [MCP transport specification](https://modelcontextprotoco
   client. The native bridge suite covers all three protocol versions,
   subscriptions, cancellation, and EOF teardown. Installed Claude Code passes an
   authenticated health check; installed Codex passes discovery and a direct
-  read-only MCP call through app-server, with no model turn. See [client setup](CLIENTS.md).
+  read-only MCP call through app-server, with no model turn. Both also pass
+  against the real Chataigne engine using its protected native bridge credential.
+  See [client setup](CLIENTS.md).
 - Optional ChatGPT-plan assistant implemented with browser OAuth/PKCE, verified
   identity, protected per-account storage, serialized token renewal, live model
   discovery, streamed responses and local registry function calls. The
