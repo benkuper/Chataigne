@@ -43,6 +43,12 @@ during cancellable work, require each file path explicitly, and reject stale
 object handles. Supported schema validation keywords are documented by
 `checkSchema`; unsupported keywords fail registration instead of being ignored.
 Templated managers expose factories and authoring through `ManagerAdapter`.
+Resources include application/project summaries, capabilities, diagnostics,
+observation history and `organic://usage`. Inspect/browse results include
+`resourceUri` for current object details. `resources/templates/list` advertises
+`organic://object/{handle}`; reads retain the tool's redaction and generation
+checks. The reusable template interface supports RFC 6570 simple expansion with
+one final path-segment variable, rather than arbitrary template expressions.
 
 Network callbacks enqueue immutable request envelopes. Model handlers execute
 on the JUCE message thread. The server bounds payloads to 1 MiB, nesting to 32,

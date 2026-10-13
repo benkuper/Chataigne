@@ -242,6 +242,10 @@ int run()
         rejects([&] { call("organic_set_value", set); }, -32003);
         context.grant.access = Access::control;
         auto edited = call("organic_set_value", set); check(value->doubleValue() == 0.5, "typed parameter edit");
+        auto resourceDetails = parseBounded(mcp.registry.read(edited["resourceUri"].toString(), context)["contents"][0]["text"].toString());
+        check(resourceDetails["handle"] == edited["handle"] && (double) resourceDetails["value"] == 0.5, "object details resource resolves a discovered handle");
+        auto usage = parseBounded(mcp.registry.read("organic://usage", context)["contents"][0]["text"].toString());
+        check(usage["workflow"].size() >= 5 && mcp.registry.resourceTemplates()["resourceTemplates"].size() == 1, "usage documentation and resource template discovery");
         context.grant.access = Access::full;
         rejects([&] { call("organic_set_value", set); }, -32006);
         call("organic_undo", object({{"transaction", edited["transaction"]}})); check(value->doubleValue() != 0.5, "named undo");
@@ -342,6 +346,7 @@ int run()
         call("chataigne_new", object({{"discardChanges", true}}));
         check(mcp.organic.generation() > oldGeneration, "project replacement generation");
         rejects([&] { mcp.organic.container(oldRoot); }, -32005);
+        rejects([&] { mcp.registry.read("organic://object/" + juce::URL::addEscapeChars(oldRoot, true), context); }, -32005);
         call("chataigne_open", object({{"path", project.getFullPathName()}, {"discardChanges", true}}));
         check(ModuleManager::getInstance()->items.size() == 1, "module save/reload");
         check(CVGroupManager::getInstance()->items.size() == 1, "custom variables save/reload");

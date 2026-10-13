@@ -39,6 +39,8 @@ int main(int argc, char** argv)
     registry.add(op);
     registry.add(Resource{"organic://identity", "identity", "Application identity", [](Context&) { return object({{"name", "Organic MCP example"}}); }});
     registry.add(Resource{"organic://clock", "clock", "Observed wall clock for subscription examples", [](Context&) { return object({{"second", juce::Time::currentTimeMillis() / 1000}}); }});
+    registry.add(ResourceTemplate{"organic://example/{field}", "example_field", "Inspect a named example field", [](const String& field, Context&)
+    { if (field != "value") throw Error(-32004, "Unknown example field"); return object({{"field", field}, {"value", 42}}); }});
     Server server(registry, permissions, "Organic MCP example", "1.0.0");
     auto result = server.start(port);
     if (result.failed()) { std::cerr << result.getErrorMessage() << std::endl; return 1; }

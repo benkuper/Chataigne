@@ -63,6 +63,8 @@ def main():
             assert data["result"]["resultType"] == "complete" and "Mcp-Session-Id" not in headers
             assert request("tools/list")[1]["result"]["tools"][0]["name"] == "organic_example_inspect"
             assert request("tools/call", {"name": "organic_example_inspect", "arguments": {}})[1]["result"]["structuredContent"]["value"] == 42
+            assert request("resources/templates/list")[1]["result"]["resourceTemplates"][0]["uriTemplate"] == "organic://example/{field}"
+            assert json.loads(request("resources/read", {"uri": "organic://example/%76alue"})[1]["result"]["contents"][0]["text"])["value"] == 42
             assert request("tools/list", override={"Origin": "https://evil.example"})[0] == 403
             assert request("tools/list", override={"Host": "evil.example"})[0] == 403
             assert request("tools/list", override={"Authorization": "Bearer " + "0" * 64})[0] == 401
@@ -90,6 +92,8 @@ def main():
                 assert request("tools/list", version=version, session=session)[0] == 400
                 assert request("notifications/initialized", version=version, session=session, raw='{"jsonrpc":"2.0","method":"notifications/initialized"}')[0] == 202
                 assert request("tools/list", version=version, session=session)[0] == 200
+                assert request("resources/templates/list", version=version, session=session)[1]["result"]["resourceTemplates"][0]["uriTemplate"] == "organic://example/{field}"
+                assert json.loads(request("resources/read", {"uri": "organic://example/value"}, version=version, session=session)[1]["result"]["contents"][0]["text"])["value"] == 42
                 assert request("resources/subscribe", {"uri": "organic://clock"}, version=version, session=session)[0] == 200
                 connection, response = request("", version=version, session=session, http_method="GET")
                 assert response.status == 200

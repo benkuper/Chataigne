@@ -56,6 +56,12 @@ int main()
         operation.execute = [&executions](const var& args, Context&) { ++executions; return args; };
         registry.add(operation);
         Context context; context.grant = grant;
+        registry.add(ResourceTemplate{"organic://details/{id}", "details", "Template fixture", [](const String& id, Context&) { return object({{"id", id}}); }});
+        expect(registry.resourceTemplates()["resourceTemplates"].size() == 1, "resource template discovery");
+        auto resource = registry.read("organic://details/one%20two", context);
+        expect(parseBounded(resource["contents"][0]["text"].toString())["id"].toString() == "one two", "resource template expansion and decoded value");
+        rejects([&] { registry.read("organic://details/one/two", context); }, -32004);
+        rejects([&] { registry.add(ResourceTemplate{"organic://details/{id}/extra", "invalid", "", [](const String&, Context&) { return object(); }}); }, -32603);
         registry.call("organic_test", object({{"amount", 5}}), context);
         rejects([&] { registry.call("organic_test", object({{"amount", "5"}}), context); }, -32602);
         rejects([&] { registry.call("organic_test", object({{"amount", 11}}), context); }, -32602);
