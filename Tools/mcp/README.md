@@ -70,16 +70,27 @@ separation follows the [MCP transport specification](https://modelcontextprotoco
   presets, Parrot, timeline layers, and clips through their existing model APIs.
   Arbitrary serialized configuration and selection import require Full Access;
   restricted profiles use typed operations with their capability and path checks.
-- Production connection UI, bridge, client packaging and interoperability: pending.
+- Dockable connection UI, native stdio bridge, MCPB packaging, and client setup
+  guide implemented. The UI regression creates, tests, rotates, and revokes a
+  client. The native bridge suite covers all three protocol versions,
+  subscriptions, cancellation, and EOF teardown. Installed Claude Code passes an
+  authenticated health check; installed Codex passes discovery and a direct
+  read-only MCP call through app-server, with no model turn. See [client setup](CLIENTS.md).
 - Optional assistant, ChatGPT account integration and final validation: pending.
 
 The Windows Debug application builds with MCP enabled. The native authoring
-regression covers 38 checks, including module/state/variable/sequence creation,
+regression covers 48 checks, including module/state/variable/sequence creation,
 typed edits and conflicts, duplicate/move, grouped undo, folder restrictions on
 undo, cue/key authoring, frame-aware seeking, save/reload, generation changes,
 and teardown. Run `Tools/tests/run_mcp_authoring_test.ps1` after building the
 application. The core and HTTP suites also pass.
 
-These checks do not establish every subtype's authoring coverage, actual
-third-party client interoperability, account-backed inference, or builds on
-platforms other than the test host. Those remain final acceptance checks.
+The stage-2 CI build passed Windows (including Win7), Linux, and both Raspberry
+architectures. Mac compilation failed; filesystem compatibility was revised for
+the existing macOS deployment target and raw Xcode diagnostics are enabled for
+the next run. CI now also builds and bundles the native bridge and Desktop
+extension without changing its dependency checkout strategy.
+
+Every subtype's authoring coverage, actual Claude Desktop and hosted ChatGPT
+connections, account-backed inference, and final platform/package checks remain
+final acceptance work. The optional assistant is not yet implemented.

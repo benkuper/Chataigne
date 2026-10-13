@@ -2525,6 +2525,9 @@
     <ClCompile Include="..\..\Modules\juce_organicui\manager\GenericControllableManager.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\mcp\McpConnectionPanel.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\mcp\McpCore.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -3943,6 +3946,7 @@
     <ClInclude Include="..\..\Modules\juce_organicui\manager\Factory.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\GenericControllableItem.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\manager\GenericControllableManager.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\mcp\McpConnectionPanel.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\mcp\McpCore.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\mcp\McpManagerAdapter.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\mcp\McpServer.h"/>

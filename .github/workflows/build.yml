@@ -64,6 +64,19 @@ jobs:
           if (-not (Test-Path ./libmpv-2.dll)) { throw 'libmpv-2.dll is missing from the dependency archive' }
         working-directory: ./Binaries/CI/App
 
+      - name: Build and package native MCP bridge
+        shell: powershell
+        run: |
+          cmake -S Tools/mcp -B Binaries/mcp-tools -A x64 -DJUCE_PATH="${{ github.workspace }}/JUCE"
+          if ($LASTEXITCODE -ne 0) { throw 'MCP tools configuration failed' }
+          cmake --build Binaries/mcp-tools --config Release --parallel 2
+          if ($LASTEXITCODE -ne 0) { throw 'MCP tools build failed' }
+          ctest --test-dir Binaries/mcp-tools -C Release --output-on-failure
+          if ($LASTEXITCODE -ne 0) { throw 'MCP protocol checks failed' }
+          Copy-Item -LiteralPath Binaries/mcp-tools/Release/chataigne-mcp-bridge.exe -Destination Binaries/CI/App/chataigne-mcp-bridge.exe
+          python Tools/mcp/package_bridge.py Binaries/CI/App/chataigne-mcp-bridge.exe Binaries/CI/App/chataigne-mcp.mcpb --platform win32 --arch x64
+          if ($LASTEXITCODE -ne 0) { throw 'MCP bundle packaging failed' }
+
       - name: Validate playback runtime
         if: matrix.arch == 'win-x64'
         shell: powershell
@@ -189,7 +202,7 @@ jobs:
           action: build
           arch: ${{ matrix.arch }}
           configuration: ${{ matrix.config }}
-          use-xcpretty: true
+          use-xcpretty: false
 
       - name: Bundle Libraries (Silicon Only)
         if: ${{ matrix.arch == 'arm64' }}
@@ -236,6 +249,19 @@ jobs:
           
           # 8. Re-sign (Mandatory after modifying the bundle)
           codesign --force --deep --sign - "$APP_PATH"
+
+      - name: Build and package native MCP bridge
+        run: |
+          set -euo pipefail
+          DEPLOYMENT_TARGET=10.10
+          if [ "${{ matrix.arch }}" = arm64 ]; then DEPLOYMENT_TARGET=11.0; fi
+          cmake -S Tools/mcp -B Binaries/mcp-tools -DJUCE_PATH="$GITHUB_WORKSPACE/JUCE" -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES=${{ matrix.arch }} -DCMAKE_OSX_DEPLOYMENT_TARGET="$DEPLOYMENT_TARGET"
+          cmake --build Binaries/mcp-tools --parallel 2
+          ctest --test-dir Binaries/mcp-tools --output-on-failure
+          BRIDGE=Release/${{ env.ProjectName }}.app/Contents/MacOS/chataigne-mcp-bridge
+          cp Binaries/mcp-tools/chataigne-mcp-bridge "$BRIDGE"
+          codesign --force --sign - "$BRIDGE"
+          python3 Tools/mcp/package_bridge.py "$BRIDGE" Release/${{ env.ProjectName }}.app/Contents/Resources/mcp/chataigne-mcp.mcpb --platform darwin --arch ${{ matrix.arch }}
 
       - name: Bundle universal mpv libraries
         run: |
@@ -332,6 +358,14 @@ jobs:
           cd Builds/LinuxMakefile
           make -j$(nproc) CONFIG=Release
 
+      - name: Build and check native MCP tools
+        run: |
+          set -euo pipefail
+          cmake -S Tools/mcp -B Binaries/mcp-tools -DJUCE_PATH="$GITHUB_WORKSPACE/JUCE" -DCMAKE_BUILD_TYPE=Release
+          cmake --build Binaries/mcp-tools --parallel 2
+          ctest --test-dir Binaries/mcp-tools --output-on-failure
+          python3 Tools/mcp/package_bridge.py Binaries/mcp-tools/chataigne-mcp-bridge Binaries/chataigne-mcp.mcpb --platform linux --arch x64
+
       - name: Validate network video runtimes
         env:
           JUCE_DIR: ${{ github.workspace }}/JUCE
@@ -410,6 +444,9 @@ jobs:
 
           # 1. Copy Executable
           cp Builds/LinuxMakefile/build/${{ env.ProjectName }} "$BIN"
+          cp Binaries/mcp-tools/chataigne-mcp-bridge "$APPDIR/usr/bin/"
+          mkdir -p "$APPDIR/usr/share/chataigne/mcp"
+          cp Binaries/chataigne-mcp.mcpb "$APPDIR/usr/share/chataigne/mcp/"
 
           # 2. Copy app-specific libs (seed set)
           LIB_PATH=/usr/lib/x86_64-linux-gnu
@@ -699,6 +736,15 @@ jobs:
             STRIP=${{ matrix.gnu_type }}-strip \
             TARGET_ARCH="${{ matrix.arch_flags }}"
 
+      - name: Cross-build and package native MCP bridge
+        env:
+          PKG_CONFIG_LIBDIR: /usr/lib/${{ matrix.gnu_type }}/pkgconfig:/usr/share/pkgconfig
+        run: |
+          set -euo pipefail
+          cmake -S Tools/mcp -B Binaries/mcp-tools -DJUCE_PATH="$GITHUB_WORKSPACE/JUCE" -DCMAKE_BUILD_TYPE=Release -DCMAKE_SYSTEM_NAME=Linux -DCMAKE_C_COMPILER=${{ matrix.gnu_type }}-gcc -DCMAKE_CXX_COMPILER=${{ matrix.gnu_type }}-g++ -DCMAKE_CXX_FLAGS="${{ matrix.arch_flags }}"
+          cmake --build Binaries/mcp-tools --target chataigne-mcp-bridge --parallel 2
+          python3 Tools/mcp/package_bridge.py Binaries/mcp-tools/chataigne-mcp-bridge Binaries/chataigne-mcp.mcpb --platform linux --arch "${{ matrix.gnu_type }}"
+
       - name: ABI Baseline Audit (RPi ${{ matrix.arch_name }})
         run: |
           set -euo pipefail
@@ -751,6 +797,9 @@ jobs:
 
           # 1. Copy Executable
           cp Builds/${{ matrix.buildFolder }}/build/${{ env.ProjectName }} "$BIN"
+          cp Binaries/mcp-tools/chataigne-mcp-bridge "$APPDIR/usr/bin/"
+          mkdir -p "$APPDIR/usr/share/chataigne/mcp"
+          cp Binaries/chataigne-mcp.mcpb "$APPDIR/usr/share/chataigne/mcp/"
 
           # 2. Copy app-specific libs only
           LIB_PATH=/usr/lib/${{ matrix.gnu_type }}

@@ -40,6 +40,7 @@ profile
 doxygen/doc
 extras/Projucer/JUCECompileEngine.dylib
 Binaries/
+Tools/**/__pycache__/
 Builds/LinuxMakeFile/build
 
 travis_enc.txt

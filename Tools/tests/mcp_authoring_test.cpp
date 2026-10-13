@@ -25,6 +25,18 @@ static void rejects(const std::function<void()>& action, int expected)
     try { action(); } catch (const Error& e) { check(e.code == expected, "unexpected rejection code"); return; }
     throw std::runtime_error("operation was not rejected");
 }
+template<class T, class Match>
+static T* findComponent(juce::Component& root, Match match)
+{
+    if (auto* typed = dynamic_cast<T*>(&root)) if (match(*typed)) return typed;
+    for (auto* child : root.getChildren()) if (auto* found = findComponent<T>(*child, match)) return found;
+    return nullptr;
+}
+static void pumpMessages(int milliseconds)
+{
+    auto until = juce::Time::getMillisecondCounterHiRes() + milliseconds;
+    do { MSG message; while (PeekMessage(&message, nullptr, 0, 0, PM_REMOVE)) { TranslateMessage(&message); DispatchMessage(&message); } Sleep(1); } while (juce::Time::getMillisecondCounterHiRes() < until);
+}
 int run()
 {
     juce::ScopedJuceInitialiser_GUI runtime;
@@ -45,6 +57,34 @@ int run()
         };
         check(!mcp.enabled->boolValue() && !mcp.server->isRunning(), "server must be opt-in");
         auto roots = call("chataigne_project", object()); check(roots["modules"].isString(), "project discovery");
+        {
+            Permissions uiPermissions(directory.getChildFile("panel-clients.json"));
+            Server uiServer(mcp.registry, uiPermissions, "Connection panel test", "1");
+            int uiPort = 42009; bool uiEnabled = false;
+            ConnectionPanel panel("MCP Connections", uiPermissions, uiServer,
+                [&] { return uiEnabled; }, [&](bool enabled) { uiEnabled = enabled; if (enabled) { auto started = uiServer.start(uiPort); check(started.wasOk(), "panel listener start"); } else uiServer.stop(); },
+                [&] { return uiPort; }, [&](int value) { uiPort = value; });
+            panel.setSize(720, 760);
+            auto* name = findComponent<juce::TextEditor>(panel, [](const auto& c) { return c.getName() == "Client name"; });
+            auto* profile = findComponent<juce::ComboBox>(panel, [](const auto& c) { return c.getName() == "Access profile"; });
+            auto button = [&](const String& text) { auto* found = findComponent<juce::TextButton>(panel, [&](const auto& c) { return c.getButtonText() == text; }); check(found != nullptr, "connection panel button exists"); return found; };
+            check(name && profile, "connection panel fields exist"); name->setText("Regression client"); profile->setSelectedId(4, juce::sendNotificationSync);
+            button("Create client")->onClick();
+            check(uiPermissions.list().size() == 1 && uiPermissions.list()[0].access == Access::full, "panel creates remembered Full Access client");
+            auto* enable = findComponent<juce::ToggleButton>(panel, [](const auto& c) { return c.getButtonText() == "Enable authenticated MCP"; });
+            enable->setToggleState(true, juce::dontSendNotification); enable->onClick();
+            button("Test connection")->onClick();
+            auto* resultLabel = findComponent<juce::Label>(panel, [](const auto& c) { return c.getName() == "Connection result"; });
+            for (int attempt = 0; attempt < 100 && !resultLabel->getText().contains("succeeded"); ++attempt) pumpMessages(50);
+            check(resultLabel->getText().contains("succeeded"), "panel tests authenticated HTTP connection");
+            auto snapshot = panel.createComponentSnapshot(panel.getLocalBounds());
+            auto preview = juce::File::getCurrentWorkingDirectory().getChildFile("../../Binaries/mcp-connection-panel.png");
+            if (auto output = preview.createOutputStream()) juce::PNGImageFormat().writeImageToStream(snapshot, *output);
+            button("Rotate credential")->onClick();
+            check(uiPermissions.list().size() == 1, "panel rotates existing client");
+            button("Revoke client")->onClick(); check(uiPermissions.list().isEmpty(), "panel revokes client");
+            uiServer.stop();
+        }
         auto module = create(ModuleManager::getInstance(), "OSC", "MCP OSC");
         check(module["type"].toString() == "OSC", "built-in module authoring");
         auto state = create(StateManager::getInstance(), "", "MCP State");

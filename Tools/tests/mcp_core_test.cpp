@@ -1,6 +1,9 @@
 #include "McpCore.h"
 #include <iostream>
 #include <functional>
+#if !JUCE_WINDOWS
+#include <unistd.h>
+#endif
 using namespace organic::mcp;
 static int checks = 0;
 static void expect(bool value, const char* message)
@@ -29,6 +32,13 @@ int main()
         expect(!grant.allows(advanced), "edit granted advanced execution");
         expect(grant.allowsFile(directory.getChildFile("new-project.noisette")), "approved file rejected");
         expect(!grant.allowsFile(directory.getSiblingFile("escape.noisette")), "folder escape allowed");
+#if !JUCE_WINDOWS
+        auto linked = directory.getChildFile("linked-outside"), dangling = directory.getChildFile("dangling");
+        expect(::symlink(directory.getParentDirectory().getFullPathName().toRawUTF8(), linked.getFullPathName().toRawUTF8()) == 0, "create link fixture");
+        expect(!grant.allowsFile(linked.getChildFile("escape.noisette")), "symlink folder escape allowed");
+        expect(::symlink(directory.getSiblingFile("not-created-mcp-target").getFullPathName().toRawUTF8(), dangling.getFullPathName().toRawUTF8()) == 0, "create dangling fixture");
+        expect(!grant.allowsFile(dangling.getChildFile("escape.noisette")), "dangling symlink escape allowed");
+#endif
         Grant full; full.access = Access::full;
         expect(full.allows(inspect | control | edit | files | advanced), "full access incomplete");
         Registry registry; int executions = 0;

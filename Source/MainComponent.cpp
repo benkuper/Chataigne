@@ -9,6 +9,9 @@
 #include "MainIncludes.h"
 #include "Module/ModuleIncludes.h"
 #include "TimeMachine/TimeMachineIncludes.h"
+#if ORGANICUI_USE_MCP
+#include "MCP/ChataigneMcp.h"
+#endif
 
 using namespace std::placeholders;
 
@@ -84,6 +87,17 @@ MainContentComponent::~MainContentComponent()
 void MainContentComponent::init()
 {
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Module Router", &ModuleRouterPanelView::create));
+#if ORGANICUI_USE_MCP
+    ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("MCP Connections", [](const String& name) -> ShapeShifterContent*
+    {
+        auto* engine = dynamic_cast<ChataigneEngine*>(Engine::mainEngine);
+        if (!engine || !engine->mcp || !engine->mcp->permissions || !engine->mcp->server) return nullptr;
+        auto* mcp = engine->mcp.get();
+        return new organic::mcp::ConnectionPanel(name, *mcp->permissions, *mcp->server,
+            [mcp] { return mcp->enabled->boolValue(); }, [mcp](bool value) { mcp->enabled->setValue(value); },
+            [mcp] { return mcp->port->intValue(); }, [mcp](int value) { mcp->port->setValue(value); });
+    }));
+#endif
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Modules", &ModuleManagerUI::create));
 
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Custom Variables", &CVGroupManagerUI::create));

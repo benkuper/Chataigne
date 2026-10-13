@@ -39,6 +39,8 @@ SetupWindowTitle={#ApplicationName} {#ApplicationVersion} Setup
 
 [Files]
 Source: "{#AppSourceDir}/{#ApplicationName}.exe"; DestDir: "{app}" ; Flags: ignoreversion
+Source: "{#AppSourceDir}/chataigne-mcp-bridge.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#AppSourceDir}/chataigne-mcp.mcpb"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#AppSourceDir}/*.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#AppSourceDir}/server.crt"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#AppSourceDir}/server.key"; DestDir: "{app}"; Flags: ignoreversion
