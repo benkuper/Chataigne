@@ -110,8 +110,9 @@ Streaming teardown cancels outstanding socket writes and releases queued respons
 owners before destroying their listener. CI preserves its existing dependency
 checkout strategy.
 
-Actual Claude Desktop connection checks and the follow-up platform/package checks
-remain acceptance work.
-See [acceptance evidence](ACCEPTANCE.md) for the current scope and outstanding checks.
+Claude Desktop also passes real-engine discovery: its enabled connector exposes
+native prompts and application resources through the protected native bridge.
+The final seven-platform build/package run passed. See
+[acceptance evidence](ACCEPTANCE.md) for the checked scope and source revision.
 Hosted ChatGPT and tunnel setup are excluded by the user's scope clarification;
 the embedded assistant uses regular ChatGPT sign-in and needs no Platform key.
