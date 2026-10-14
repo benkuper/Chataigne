@@ -1,10 +1,11 @@
-# ChatGPT assistant (preview)
+# AI Assistant (preview)
 
-Open the **ChatGPT Assistant** docked panel. It uses Chataigne's OrganicUI
+Open the **AI Assistant** docked panel and choose **ChatGPT** or **Claude** in
+the provider selector. It uses Chataigne's OrganicUI
 parameters and triggers, colors, fonts and inspector controls. The compact toolbar
 has a history icon which switches to saved conversations, new conversation and
-delete actions. Model, reasoning effort and remembered access share one row beside
-the composer, including in narrow panels.
+delete actions. Model, reasoning effort, remembered access and message actions
+share one compact row, wrapping when the dock is narrow.
 Effort uses `reasoning.effort` on every inference round. Auto omits that override;
 choices are restricted to documented levels for the selected model family, and
 unknown or non-reasoning variants stay on Auto. See the official
@@ -12,28 +13,70 @@ unknown or non-reasoning variants stay on Auto. See the official
 Consecutive tool calls collapse into one activity row with readable summaries;
 click to expand. Transaction IDs and raw tool payloads stay out of the rendered
 conversation. Messages support headings, lists, emphasis and code. Ctrl+Enter
-sends a prompt; Enter inserts a line break. Message bodies use styled text;
+sends a prompt; during active work it queues a follow-up. **Steer** or
+Ctrl+Shift+Enter applies the composer text to the current request before its next
+project action. An action already executing finishes; unexecuted calls from the
+old response are skipped and the new instructions are included in the same turn.
+The primary message button combines **Send**, **Queue**, and **Stop**: during active
+work it shows Stop with an empty message box and Queue when a draft is entered.
+**Steer** appears beside it only while a request is active and the composer has
+text. Selectors and message actions share one row when space permits, wrapping
+in narrow docks. The adjacent actions menu also offers Stop while a
+draft is present. Stopping preserves the draft and pauses follow-ups.
+Enter inserts a line break. Message bodies use styled text;
 hover a bubble to reveal its copy icon. The Copy conversation toolbar button
 copies all messages, readable activity and errors,
 plus model/effort/access/status context, without raw tool payloads or credentials.
 
-**Global Settings > ChatGPT Assistant** holds account selection, browser sign-in,
-model selection, project-context preference, access, approved folders, sign-out
-and usage settings. The settings icon in the conversation selects that settings
-container in the inspector. The conversation itself is an OrganicUI container
-under the engine: Prompt, Send, Cancel, New conversation, Delete conversation, Status, Busy, and
+While the assistant is busy, a compact animated activity card stays above the composer
+(and remains visible in History). It shows a plain-language phase such as
+**Creating sequence presets...**, **Setting up actions...**, or **Configuring
+custom variables...**, with a short detail and the number of verified outcomes.
+A subtle rotating indicator shows that work is active; it stops when work stops.
+The assistant updates phases before their project operations using the local
+`assistant_progress` tool. Automatic operation/batch summaries provide a fallback
+when no named phase has been supplied. Phases stay visible while the assistant
+thinks through the next step, without requiring the user to expand tool calls.
+The card does not invent a completion percentage, and resets for each new request
+or steering instruction. Copy conversation includes the current phase while busy.
+
+**Global Settings > AI Assistant** holds the provider selector, with **ChatGPT**
+and **Claude** child containers for each provider's connection, models,
+project-context preference, access, approved folders, disconnect and usage settings.
+The settings icon in the conversation selects the active provider's settings
+container in the inspector. Switching providers stops active work and preserves
+each provider's own draft, transcript and history. Existing ChatGPT panel layouts
+and top-level preferences migrate automatically. The conversation is an OrganicUI container
+under the engine: Prompt, Send, Steer, Resume unfinished, Run queue, Cancel, New conversation, Delete conversation, Status, Busy, and
 Conversation. It is excluded from project saves. Prompt suggestions are ordinary
 controllable triggers, and the editor binds directly to the Prompt parameter.
 
-The integration uses your ChatGPT plan. Project context and conversation are
-sent to OpenAI. Account eligibility and app usage limits are managed in
+The ChatGPT provider uses your ChatGPT plan. Its project context and conversation
+are sent to OpenAI. Account eligibility and app usage limits are managed in
 [ChatGPT Settings > Usage](https://chatgpt.com/settings/usage). There is no API-key
 or API-billing fallback. MCP remains usable without an account or assistant.
-The panel's **Usage** link opens that page. This direct sign-in integration has
+The provider's **Usage** action in Account and settings opens that page. This direct sign-in integration has
 no documented endpoint for a plan-usage percentage, so the panel does not invent
 a percentage from response token counts or API rate limits.
 
-Click **Continue with ChatGPT** to complete browser sign-in. For another account
+The Claude provider hosts your installed, unmodified **Claude Code** executable.
+Choose **Connect Claude Code** to use its existing account, or complete Claude
+Code's own browser sign-in if needed. Chataigne never collects or stores Claude
+credentials. The CLI keeps its own authentication and billing configuration.
+**Disconnect** revokes Chataigne's local tool grant and keeps the CLI account signed in.
+Claude-specific conversation history and local MCP credentials are protected under
+`Chataigne/Assistant/Claude`; existing ChatGPT storage stays in `Chataigne/Assistant`.
+
+Claude runs with built-in tools disabled, an empty strict MCP configuration, hooks
+disabled, no inherited settings sources and no CLI session persistence. Conversation
+context travels over stdin, without shell interpolation or command-line size limits.
+Its structured responses request local registered tools through the same application
+thread, remembered access, batching, undo and completion checks as ChatGPT. CLI model
+aliases include its configured default, Sonnet, Opus and Haiku; availability follows
+the account configured in Claude Code. See Anthropic's official
+[CLI integration documentation](https://code.claude.com/docs/en/headless).
+
+For ChatGPT, click **Continue with ChatGPT** to complete browser sign-in. For another account
 or workspace, use **Add account**; saved registrations remain separate, even
 when they share an email address. Model choices come from the selected account.
 Reauthorization validates the selected registration before replacing credentials.
@@ -67,12 +110,30 @@ new one stops and saves an active turn before switching; Stop remains available
 in history. New conversation also clears the previous draft. Existing single-conversation histories
 are retained as **Previous conversation**. **Delete conversation** removes only
 the selected conversation. **Cancel** stops network work and cancels queued
-operations; completed tool effects remain in activity. Status distinguishes
+operations; completed tool effects remain in activity. Pending messages are shown
+above the composer, with **Steer**, **Edit** (move back to the composer), and **Remove** actions.
+Steer promotes an existing queued message to the active request without duplicating
+it or changing the composer draft. It is available while a request is active.
+In narrow panels, each prompt gets a separate row of actions and a full-text tooltip.
+Follow-ups run in order after successful completion, each retaining its selected
+model and effort. Stop or a problem pauses the queue. **Run queue** explicitly
+starts the follow-ups; **Resume unfinished** continues the stopped request first,
+then releases the queue only if that request succeeds. Resume also includes any
+missing details entered in the composer and uses the currently selected model/effort.
+The queue is bounded to 16 pending messages and is saved with its conversation in
+protected storage. Switching conversations or providers saves and pauses the old
+queue; restoring history never automatically runs project actions.
+Status distinguishes
 Thinking, Responding, Working, Completed, Stopped and Failed. Failures are also
 saved in the transcript so they remain visible after another message or restart.
 Unresolved tool errors mark the turn as needing attention, even when the model
 has finished its response. Successful retries of those operations clear that state.
-Failures include recovery instructions for access, approved folders, revoked local
+Stopped and failed requests save a progress summary listing verified outcomes,
+remaining work, specific obstacles and the next user action. Blocked checklist
+entries must supply `nextStep` with the exact setting to change or information to
+provide. The checklist and resume controls survive reopening a conversation or
+restarting the app. A full conversation instead explains how to copy the summary
+and continue in a new conversation. Failures include recovery instructions for access, approved folders, revoked local
 credentials, connection problems, usage limits, project changes and unsupported
 effort. Unresolved tool failures expose their specific recovery in the transcript.
 **Sign out** stops requests, revokes the renewable session and clears local
@@ -80,8 +141,12 @@ tokens while retaining its registration. A revocation network failure is reporte
 explicitly so the app can also be disconnected from ChatGPT Settings.
 
 For embedders, `ORGANICUI_USE_ASSISTANT` is off by default and requires MCP.
-`assistant::Provider` is the native provider interface; `Controller` exposes the
-OrganicUI model and a separate settings container; `Panel` binds its controls.
+`assistant::Provider` is the provider interface, including display metadata and
+supported effort choices. `AgentProvider` shares the protected conversation and
+tool execution loop; `ChatGptProvider` and `ClaudeProvider` implement authentication
+and inference. `Controller` exposes each provider's OrganicUI controls and settings;
+`Hub` owns the common provider selector/settings hierarchy, and `HubPanel` presents
+the selected provider through the shared conversation UI.
 Attach the settings container to Global Settings and exclude conversation state
 from project serialization. Local tool calls go through the same Registry,
 Permissions, schemas, revisions and undo handlers as external clients, on the
@@ -98,12 +163,38 @@ envelope omits them. Interrupted/incomplete streams and subscription limits are
 reported distinctly. Missing streamed calls are retained even if the final
 envelope also contains a message. Authoring runs allow up to 256 tool rounds.
 The assistant tracks every requested outcome with a checklist, including configuration
-and bindings. Completed outcomes require successful read-only inspection call IDs from
-the current turn; later edits invalidate that verification. A premature closing response
+and bindings. Successful read-only inspections return a model-visible `verification.id`.
+Completed outcomes require fresh inspections from the current turn; omit `verifiedBy`
+to attach them automatically, or use those returned IDs explicitly. Later edits
+invalidate that verification. Checklist IDs remain stable while descriptions may be
+clarified. Checklist validation and stale-object errors include internal repair
+instructions rather than asking the user to repair integration bookkeeping.
+A premature closing response
 with pending work automatically resumes the same request, with a bounded guard against
 repeated responses that make no progress. Transient inference failures retry up to twice
-before any calls from that response execute; plan limits and access failures remain explicit.
-Queues, response sizes and history remain bounded.
+before any calls from that response execute, including unclassified terminal failures;
+plan limits and access failures remain explicit. Standard top-level and nested streamed
+error messages are retained. UI activity uses bounded, valid JSON summaries even when
+the model receives a large tool result, so completed actions do not stay on “Working”.
+Attention headings and warning fragments are yellow, actual error fragments red, and
+progress and recovery instructions use the normal text colour. Single-line
+`<warning>...</warning>` and `<error>...</error>` fragments also work inside paragraphs;
+readable transcript exports strip this presentation markup.
+Queues, response sizes and history remain bounded. `assistant_turn_test` provides
+offline regression coverage for FIFO follow-ups, per-message effort, removal,
+steering during inference and between actions, skipped-call context, paused
+recovery, resume, restart restoration and isolation between conversations.
+
+For an explicit live one-prompt regression, build the native authoring test and run
+`mcp_authoring_test.exe --assistant-workflow-smoke` from `Builds/VisualStudio2022`.
+This uses the saved ChatGPT subscription and remembered grant in a disposable empty
+engine, with GPT-6.1-Sol. It does not upgrade permissions or load the user's project.
+It checks varied variables and ranges, populated presets, twenty distinct trigger
+times and resolved preset targets, and simulated Ctrl+P / one-second Ctrl+M chords
+(including cancellation when a key is released). Project/transcript artifacts go
+to ignored `Binaries`; the test conversation is removed and the prior selection
+restored. It consumes subscription usage and is deliberately excluded from automated
+offline test runs.
 
 Repeated creation and configuration should use `organic_batch`, which supports up to
 64 operations per call and one undo group. Explicit revisions are validated before any
@@ -133,7 +224,12 @@ conversation switching (including pointer hit testing during active work), effor
 request payloads, hover copying, narrow selector layout, readable conversation export, longer
 authoring, automatic completion/retry recovery, rejected invented verification, Sound Card
 volume > 0.5 configuration, and creation/configuration/inspection of 20 sequence triggers
-in one batch with grouped undo.
+in one batch with grouped undo. Provider regression coverage includes Claude's local
+tool execution and permissions, cancellation, grant revocation, protected history,
+provider switching, legacy settings/layout migration and narrow shared-panel layout.
 `assistant_subscription_smoke` opens
 browser sign-in and performs a real plan-backed local tool call; `--saved-session`
-uses an already validated session. This manual smoke test is excluded from CTest.
+uses an already validated ChatGPT session. `--claude` performs the equivalent manual
+Claude check in an isolated temporary project; `--claude-check` only checks the native
+CLI process and sign-in detection, without opening a browser or requesting inference.
+These manual smoke checks are excluded from CTest.

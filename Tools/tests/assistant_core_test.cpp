@@ -98,7 +98,15 @@ int run()
             catch (const organic::mcp::Error& error) { return (bool) error.data["retryable"]; }
             return false;
         };
-        require(retryable("server_error") && !retryable("subscription_sharing_usage_limit_exceeded"), "Retry transient inference errors without retrying plan limits");
+        require(retryable("server_error") && retryable("") && !retryable("subscription_sharing_usage_limit_exceeded"), "Retry transient and unclassified inference errors without retrying plan limits");
+        for (auto payload : {object({{"type", "error"}, {"code", "server_error"}, {"message", "Temporary service failure"}}),
+                             object({{"type", "response.failed"}, {"response", object({{"error", object({{"message", "Temporary service failure"}})}})}})})
+        {
+            bool diagnostic = false;
+            try { ResponseStream failed; auto event = "data: " + juce::JSON::toString(payload, true) + "\n\n"; failed.push(event.toRawUTF8(), event.getNumBytesAsUTF8(), [](auto&) {}); }
+            catch (const organic::mcp::Error& error) { diagnostic = String(error.what()).contains("Temporary service failure") && (bool) error.data["retryable"]; }
+            require(diagnostic, "Preserve diagnostic messages from top-level and nested terminal errors");
+        }
         require(usageError("server_error").contains("server_error"), "Inference failures preserve their diagnostic code");
         require(usageError("subscription_sharing_usage_unavailable").contains("unavailable"), "Eligibility recovery");
         require(reasoningEfforts("gpt-6.1-sol").contains("max") && !reasoningEfforts("gpt-6.1-sol").contains("none"), "Documented effort levels exclude unsupported no-reasoning values");
@@ -107,6 +115,9 @@ int run()
         require(actionableError("Path is outside the approved folders", -32003).contains("Remember access"), "File-access recovery names the relevant settings");
         require(actionableError("Network unavailable").contains("Reconnect"), "Connection failures give recovery steps");
         require(actionableError("Unsupported effort").contains("Auto"), "Unsupported effort explains recovery");
+        require(actionableError("Object changed since it was inspected", -32006).contains("Resume unfinished"), "Revision failures explain a user-facing recovery action");
+        require(!actionableError("Object handle is stale", -32005).contains("current handle"), "Users are not asked to repair internal handles");
+        require(actionableError("Incompatible target container").contains("compatible object"), "Target errors explain the failed binding and recovery");
         std::cout << "Passed " << checks << " assistant security and streaming checks\n"; return 0;
     }
     catch (const std::exception& e) { std::cerr << e.what() << '\n'; return 1; }

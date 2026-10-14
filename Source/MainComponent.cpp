@@ -98,11 +98,12 @@ void MainContentComponent::init()
 #endif
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Modules", &ModuleManagerUI::create));
 #if ORGANICUI_USE_ASSISTANT
-    ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("ChatGPT Assistant", [](const String& name) -> ShapeShifterContent*
+    ShapeShifterFactory::getInstance()->aliases.set("ChatGPT Assistant", "AI Assistant");
+    ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("AI Assistant", [](const String& name) -> ShapeShifterContent*
     {
         auto* engine = dynamic_cast<ChataigneEngine*>(Engine::mainEngine);
-        if (!engine || !engine->mcp || !engine->mcp->assistantController) return nullptr;
-        return new organic::assistant::Panel(name, *engine->mcp->assistantController);
+        if (!engine || !engine->mcp || !engine->mcp->assistantHub) return nullptr;
+        return new organic::assistant::HubPanel(name, *engine->mcp->assistantHub);
     }));
 #endif
 

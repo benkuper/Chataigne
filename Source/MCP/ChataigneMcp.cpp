@@ -146,8 +146,13 @@ ChataigneMcp::ChataigneMcp(ChataigneEngine& e)
                 directory.getSiblingFile("Assistant"), "Chataigne", [this] { return organic.generation(); },
                 [this] { return assistantController && !assistantController->includeProjectContext->boolValue() ? object() : projectSummary(); });
             assistantController = std::make_unique<organic::assistant::Controller>(*assistant);
-            engine.addChildControllableContainer(assistantController.get());
-            GlobalSettings::getInstance()->addChildControllableContainer(&assistantController->settings);
+            claudeAssistant = std::make_unique<organic::assistant::ClaudeProvider>(registry, *permissions,
+                directory.getSiblingFile("Assistant").getChildFile("Claude"), "Chataigne", [this] { return organic.generation(); },
+                [this] { return claudeAssistantController && !claudeAssistantController->includeProjectContext->boolValue() ? object() : projectSummary(); });
+            claudeAssistantController = std::make_unique<organic::assistant::Controller>(*claudeAssistant);
+            assistantHub = std::make_unique<organic::assistant::Hub>(juce::Array<organic::assistant::Controller*>{assistantController.get(), claudeAssistantController.get()});
+            engine.addChildControllableContainer(assistantHub.get());
+            GlobalSettings::getInstance()->addChildControllableContainer(&assistantHub->settings);
         }
         catch (const Error& error) { status->setValue(String(error.what())); }
     }
@@ -159,12 +164,14 @@ ChataigneMcp::ChataigneMcp(ChataigneEngine& e)
 ChataigneMcp::~ChataigneMcp()
 {
 #if ORGANICUI_USE_ASSISTANT
-    if (assistantController)
+    if (assistantHub)
     {
-        engine.removeChildControllableContainer(assistantController.get());
-        if (auto* settings = GlobalSettings::getInstanceWithoutCreating()) settings->removeChildControllableContainer(&assistantController->settings);
-        assistantController.reset();
+        engine.removeChildControllableContainer(assistantHub.get());
+        if (auto* settings = GlobalSettings::getInstanceWithoutCreating()) settings->removeChildControllableContainer(&assistantHub->settings);
+        assistantHub.reset();
     }
+    claudeAssistantController.reset(); assistantController.reset();
+    claudeAssistant.reset();
     assistant.reset();
 #endif
     if (server) server->stop();

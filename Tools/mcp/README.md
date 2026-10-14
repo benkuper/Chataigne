@@ -79,6 +79,12 @@ separation follows the [MCP transport specification](https://modelcontextprotoco
   modules. Native selection export produces importable `.lilnut` files.
   Arbitrary serialized configuration and selection import require Full Access;
   restricted profiles use typed operations with their capability and path checks.
+  Target inspection exposes `targetKind`, `targetRoot`, `targetRootAddress`,
+  `targetResolved` and the resolved `targetHandle`/`targetAddress`. Typed target
+  edits accept project-wide discovery addresses or addresses relative to that
+  root, normalize them to native storage, and retain scope/type checks and undo.
+  `organic_inspect` accepts an optional relative child `path` for inspecting the
+  same dynamic command or comparator control across similar objects.
 - Dockable connection UI, native stdio bridge, MCPB packaging, and client setup
   guide implemented. The UI regression creates, tests, rotates, and revokes a
   client. The native bridge suite covers all three protocol versions,

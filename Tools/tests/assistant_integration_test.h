@@ -27,6 +27,7 @@ static void assistantChecks(const juce::File& directory)
     bool prematureFinish = false;
     int transientFailures = 0, transientAttempts = 0;
     bool invalidCompletion = false;
+    bool replaceProject = false;
     String expectedEffort;
     juce::int64 generation = 1;
     auto jwt = [&]
@@ -115,12 +116,19 @@ static void assistantChecks(const juce::File& directory)
                 { return object({{"type", "function_call"}, {"name", name}, {"namespace", "chataigne"}, {"call_id", id}, {"arguments", juce::JSON::toString(args, true)}}); };
                 auto task = [&](const String& status, const String& verification = String())
                 { return object({{"tasks", array({object({{"id", "workflow"}, {"description", "Complete the requested workflow and verify configuration"}, {"status", status},
-                    {"evidence", status == "blocked" ? "Local edit permission was denied" : "Final configuration inspected"}, {"verifiedBy", verification.isEmpty() ? array({}) : array({verification})}})})}}); };
+                    {"evidence", status == "blocked" ? "Local edit permission was denied" : "Final configuration inspected"},
+                    {"nextStep", status == "blocked" ? "Choose Edit in the panel, then Resume unfinished." : ""},
+                    {"verifiedBy", verification.isEmpty() ? array({}) : array({verification})}})})}}); };
                 var output = array({}); auto id = "fixture-" + String(inferences);
                 if (terminalPlan) output.append(object({{"type", "message"}, {"role", "assistant"}, {"content", array({object({{"type", "output_text"}, {"text", "Complete"}})})}}));
                 else if (toolsRemaining >= 0 ? toolsRemaining-- > 0 : rounds++ % 2 == 0)
                 {
                     if (!hasPlan) output.append(invoke("assistant_task", task("pending"), "plan-" + id));
+                    if (replaceProject)
+                    {
+                        replaceProject = false;
+                        output.append(invoke("chataigne_new", object(), "new-" + id));
+                    }
                     output.append(invoke("organic_fixture_edit", object(), id));
                 }
                 else if (prematureFinish)
@@ -151,13 +159,22 @@ static void assistantChecks(const juce::File& directory)
     Operation inspectOp; inspectOp.name = "organic_fixture_inspect"; inspectOp.description = "Inspect the final configuration";
     inspectOp.output = openObjectSchema();
     inspectOp.execute = [&](const var&, Context&) { return object({{"edits", edits}}); }; registry.add(inspectOp);
+    Operation newOp; newOp.name = "chataigne_new"; newOp.description = "Create a new fixture project"; newOp.capabilities = edit;
+    newOp.output = openObjectSchema();
+    newOp.execute = [&](const var&, Context&) { return object({{"generation", ++generation}, {"project", "New fixture"}}); }; registry.add(newOp);
     Permissions permissions(directory.getChildFile("assistant-clients.json"));
     auto assistantDirectory = directory.getChildFile("assistant");
     {
         ChatGptProvider provider(registry, permissions, assistantDirectory, "Chataigne", [&] { return generation; }, [] { return object({{"project", "Fixture"}}); }, services);
         auto wait = [&]
         {
-            for (int i = 0; i < 400 && provider.view().busy; ++i) pumpMessages(25);
+            for (int i = 0; i < 1200 && provider.view().busy; ++i) pumpMessages(25);
+            if (provider.view().busy)
+            {
+                auto state = provider.view();
+                std::cerr << "Assistant fixture timeout: " << state.status << '\n'
+                    << state.transcript.substring(juce::jmax(0, state.transcript.length() - 4000)) << '\n';
+            }
             check(!provider.view().busy, "Assistant completes within deadline");
             if (browser.joinable()) browser.join();
         };
@@ -182,6 +199,12 @@ static void assistantChecks(const juce::File& directory)
         invalidCompletion = true; provider.send("Verify before claiming completion", "gpt-6.1-sol"); wait();
         check(provider.view().transcript.contains("verifiedBy must reference") && provider.view().activity == organic::assistant::Activity::completed, "Invented verification evidence is rejected and repaired within the same turn");
         check(!provider.view().transcript.contains("Some work is still unfinished"), "Premature closing text is not presented as the final answer");
+        replaceProject = true; toolsRemaining = 2;
+        auto editsBeforeReplacement = edits; auto generationBeforeReplacement = generation;
+        provider.send("Create the setup from scratch and finish configuring it", "gpt-6.1-sol"); wait();
+        check(generation == generationBeforeReplacement + 1 && edits == editsBeforeReplacement + 2
+            && provider.view().activity == organic::assistant::Activity::completed, "Assistant follows its own project replacement in the same response and subsequent rounds");
+        toolsRemaining = -1;
         auto previousConversation = provider.view().conversation, previousTranscript = provider.view().transcript;
         provider.newConversation(); check(provider.view().transcript.isEmpty() && provider.view().conversation != previousConversation, "New conversation retains previous history");
         provider.send("Second conversation", "gpt-6.1-sol"); wait();
@@ -301,7 +324,8 @@ static void assistantChecks(const juce::File& directory)
             if (auto output = preview.createOutputStream()) { output->setPosition(0); output->truncate(); juce::PNGImageFormat().writeImageToStream(snapshot, *output); }
         }
         auto deleted = provider.view().conversation; provider.clearHistory();
-        bool retainedDeleted = false; for (auto item : *provider.view().conversations.getArray()) retainedDeleted |= item["id"].toString() == deleted;
+        auto remainingConversations = provider.view().conversations;
+        bool retainedDeleted = false; for (auto item : *remainingConversations.getArray()) retainedDeleted |= item["id"].toString() == deleted;
         check(!retainedDeleted && provider.view().conversations.size() == 1, "Deleting one conversation retains others");
         waitForCancel = true; provider.send("Cancel pending inference", "gpt-6.1-sol"); pumpMessages(100); provider.cancel(); waitForCancel = false;
         check(!provider.view().busy, "Cancellation joins pending network work");

@@ -1,15 +1,21 @@
+param(
+    [string]$ObjectDirectory = '',
+    [ValidatePattern('^[A-Za-z0-9_-]+$')]
+    [string]$TestName = 'mcp_authoring_test',
+    [string[]]$TestArguments = @()
+)
 $ErrorActionPreference = 'Stop'
 $repoPath = (Resolve-Path (Join-Path $PSScriptRoot '../..')).Path
 $projectDir = Join-Path $repoPath 'Builds/VisualStudio2022'
-$objectDir = Join-Path $projectDir 'x64/Debug/App'
-$testDir = Join-Path $objectDir 'mcp_authoring_test'
+$objectDir = if ($ObjectDirectory) { [System.IO.Path]::GetFullPath($ObjectDirectory) } else { Join-Path $projectDir 'x64/Debug/App' }
+$testDir = Join-Path $objectDir $TestName
 New-Item -ItemType Directory -Path $testDir -Force | Out-Null
 $vsPath = & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -latest -products '*' -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath
 if (!$vsPath) { throw 'Visual Studio C++ tools are required.' }
 [xml]$project = Get-Content -LiteralPath (Join-Path $projectDir 'Chataigne_App.vcxproj')
 $compile = $project.Project.ItemDefinitionGroup[0].ClCompile
 $testObject = Join-Path $testDir 'test.obj'
-$testExe = Join-Path $repoPath 'Binaries/Debug/App/mcp_authoring_test.exe'
+$testExe = Join-Path $repoPath "Binaries/Debug/App/$TestName.exe"
 $compileArguments = @('/nologo', '/c', '/std:c++17', '/EHsc', '/MDd', '/bigobj', "/Fo`"$testObject`"")
 foreach ($include in $compile.AdditionalIncludeDirectories.Split(';')) {
     if (!$include.StartsWith('%(')) { $compileArguments += "/I`"$include`"" }
@@ -41,7 +47,7 @@ try {
     $previousErrorPreference = $ErrorActionPreference
     try {
         $ErrorActionPreference = 'Continue'
-        & $testExe 2>&1 | ForEach-Object { "$PSItem" }
+        & $testExe @TestArguments 2>&1 | ForEach-Object { "$PSItem" }
         $testExitCode = $LASTEXITCODE
     } finally { $ErrorActionPreference = $previousErrorPreference }
     if ($testExitCode -ne 0) { throw "MCP authoring integration tests failed (exit $testExitCode)." }

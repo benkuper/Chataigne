@@ -39,6 +39,8 @@ static void pumpMessages(int milliseconds)
 }
 }
 #include "assistant_integration_test.h"
+#include "ai_providers_test.h"
+#include "assistant_workflow_smoke.h"
 namespace mcp_test
 {
 int run()
@@ -62,6 +64,7 @@ int run()
         check(!mcp.enabled->boolValue() && !mcp.server->isRunning(), "server must be opt-in");
         auto roots = call("chataigne_project", object()); check(roots["modules"].isString(), "project discovery");
         assistantChecks(directory);
+        aiProviderChecks(directory);
         {
             Permissions uiPermissions(directory.getChildFile("panel-clients.json"));
             Server uiServer(mcp.registry, uiPermissions, "Connection panel test", "1");
@@ -247,7 +250,53 @@ int run()
         rejects([&] { call("chataigne_execute_command", object({{"handle", mcp.organic.handle(consequence)}})); }, -32003);
         context.grant.access = Access::full; setParameter(localCommand->target, value->getControlAddress());
         engine->removeChildControllableContainer(executableFixture);
-        createFirst(cvGroup->pm.get(), "MCP Preset"); check(cvGroup->pm->items.size() == 1, "preset authoring");
+        auto addVariable = [&](const String& type, const String& name) -> Parameter*
+        {
+            auto data = create(&cvGroup->values, cvGroup->values.getTypeForControllableType(type), name);
+            auto* item = dynamic_cast<GenericControllableItem*>(mcp.organic.container(data["handle"].toString()));
+            auto* parameter = item ? dynamic_cast<Parameter*>(item->controllable) : nullptr;
+            check(parameter != nullptr, "typed custom variable authoring"); return parameter;
+        };
+        auto* count = addVariable("Integer", "Count");
+        auto* flash = addVariable("Boolean", "Flash");
+        auto* label = addVariable("String", "Label");
+        auto* tint = addVariable("Color", "Tint");
+        auto setRange = [&](Parameter* p, double low, double high)
+        {
+            auto info = mcp.organic.describe(mcp.organic.handle(p));
+            return call("organic_set_range", object({{"handle", info["handle"]}, {"revision", info["revision"]}, {"minimum", low}, {"maximum", high}}));
+        };
+        setRange(value, 0, 1); setRange(count, 0, 20);
+        setParameter(value, 0.2); setParameter(count, 3); setParameter(flash, false); setParameter(label, "Low"); setParameter(tint, array({0.1, 0.2, 0.3, 1.0}));
+        createFirst(cvGroup->pm.get(), "Low"); check(cvGroup->pm->items.size() == 1, "preset authoring");
+        setParameter(value, 0.8); setParameter(count, 17); setParameter(flash, true); setParameter(label, "High"); setParameter(tint, array({0.8, 0.7, 0.6, 1.0}));
+        createFirst(cvGroup->pm.get(), "High");
+        check(cvGroup->pm->items.size() == 2 && cvGroup->pm->items[0]->values.getParameterPresetForSource(count)->parameter->intValue() == 3
+            && cvGroup->pm->items[1]->values.getParameterPresetForSource(count)->parameter->intValue() == 17, "presets capture distinct values for ranged mixed-type variables");
+        commandArgs = revisionArgs(consequence);
+        commandArgs.getDynamicObject()->setProperty("module", mcp.organic.handle(CVGroupManager::getInstance()->module.get()));
+        commandArgs.getDynamicObject()->setProperty("menuPath", "");
+        commandArgs.getDynamicObject()->setProperty("type", "Go to preset");
+        call("chataigne_set_command", commandArgs);
+        auto* presetCommand = dynamic_cast<CVCommand*>(consequence->command.get());
+        check(presetCommand && presetCommand->targetPreset, "preset command authoring");
+        auto presetBinding = setParameter(presetCommand->targetPreset, cvGroup->pm->items[0]->getControlAddress());
+        check(presetCommand->targetPreset->getTargetContainer() == cvGroup->pm->items[0], "project-wide preset addresses bind to scoped command targets");
+        check(presetBinding["targetRoot"].toString() == mcp.organic.handle(CVGroupManager::getInstance())
+            && (bool) presetBinding["targetResolved"] && presetBinding["targetHandle"].toString() == mcp.organic.handle(cvGroup->pm->items[0])
+            && presetBinding["value"].toString() == cvGroup->pm->items[0]->getControlAddress(CVGroupManager::getInstance()), "target inspection exposes scope and the canonical resolved binding");
+        call("organic_undo", object({{"transaction", presetBinding["transaction"]}}));
+        check(presetCommand->targetPreset->getTargetContainer() == nullptr, "scoped target normalization remains undoable");
+        setParameter(presetCommand->targetPreset, cvGroup->pm->items[0]->getControlAddress(CVGroupManager::getInstance()).substring(1));
+        check(presetCommand->targetPreset->getTargetContainer() == cvGroup->pm->items[0], "relative container addresses accept omitted leading slash");
+        rejects([&] { setParameter(presetCommand->targetPreset, state["address"]); }, -32602);
+        rejects([&] { setParameter(presetCommand->targetPreset, cvGroup->getControlAddress()); }, -32602);
+        rejects([&] { setParameter(presetCommand->targetPreset, "/"); }, -32602);
+        check(presetCommand->targetPreset->getTargetContainer() == cvGroup->pm->items[0], "out-of-scope target rejection preserves existing binding");
+        auto scopedTarget = call("organic_inspect", object({{"handle", mcp.organic.handle(consequence)}, {"path", "command/targetPreset"}}));
+        check(scopedTarget["handle"] == presetBinding["handle"], "dynamic command targets can be inspected by a reused relative path");
+        rejects([&] { call("organic_inspect", object({{"handle", mcp.organic.handle(consequence)}, {"path", "command/missing"}})); }, -32602);
+        rejects([&] { call("organic_inspect", object({{"handle", mcp.organic.handle(consequence)}, {"path", "/"}})); }, -32602);
         auto watch = call("chataigne_detective_watch", object({{"handle", mcp.organic.handle(value)}}));
         auto observed = call("chataigne_detective_inspect", object({{"handle", watch["handle"]}})); check((bool) observed["readOnly"], "Detective observation");
         auto valueInfo = mcp.organic.describe(mcp.organic.handle(value));
@@ -270,8 +319,9 @@ int run()
         set.getDynamicObject()->setProperty("value", "invalid");
         rejects([&] { call("organic_set_value", set); }, -32602);
         check(value->doubleValue() == 0.5, "invalid edit did not mutate");
+        auto originalVariableCount = cvGroup->values.items.size();
         auto duplicate = call("organic_duplicate", revisionArgs(variableItem));
-        check(cvGroup->values.items.size() == 2, "duplicate custom variable");
+        check(cvGroup->values.items.size() == originalVariableCount + 1, "duplicate custom variable");
         auto secondGroup = create(CVGroupManager::getInstance(), "", "MCP Destination");
         auto* destination = dynamic_cast<CVGroup*>(mcp.organic.container(secondGroup["handle"].toString()));
         auto move = revisionArgs(mcp.organic.container(duplicate["handle"].toString()));
@@ -279,10 +329,10 @@ int run()
         move.getDynamicObject()->setProperty("destination", destinationInfo["handle"]);
         move.getDynamicObject()->setProperty("destinationRevision", destinationInfo["revision"]);
         auto moved = call("organic_move", move);
-        check(destination->values.items.size() == 1 && cvGroup->values.items.size() == 1, "move between compatible managers");
+        check(destination->values.items.size() == 1 && cvGroup->values.items.size() == originalVariableCount, "move between compatible managers");
         check(mcp.organic.container(moved["handle"].toString())->parentContainer == &destination->values, "move returns replacement handle");
         call("organic_undo", object({{"transaction", moved["transaction"]}}));
-        check(destination->values.items.isEmpty() && cvGroup->values.items.size() == 2, "move undo");
+        check(destination->values.items.isEmpty() && cvGroup->values.items.size() == originalVariableCount + 1, "move undo");
         call("organic_remove", revisionArgs(destination));
         auto* helper = new ControllableContainer("MCP Test Helpers"); engine->addChildControllableContainer(helper, true);
         auto* secondValue = helper->addFloatParameter("Second", "", 0, 0, 1);
@@ -369,8 +419,100 @@ int run()
         if (!(bool) triggerBatch["success"]) std::cerr << "Trigger batch failed at " << triggerBatch["failedIndex"].toString() << ": " << triggerBatch["message"].toString() << '\n';
         check((bool) triggerBatch["success"] && triggerLayer->ttm->items.size() == 20 && triggerBatch["completed"].size() == 60, "twenty triggers are created configured and inspected in one batch");
         for (int i = 0; i < 20; ++i) check((double) triggerBatch["completed"][i * 3 + 2]["result"]["value"] == (i + 1) * 0.5, "each bulk trigger has its requested time");
+        // Complete the reported workflow: every time cue loads a real preset.
+        juce::StringArray wiringTransactions;
+        for (int start = 0; start < 20; start += 10)
+        {
+            var wiring = array({});
+            for (int i = start; i < start + 10; ++i)
+            {
+                auto* timeTrigger = dynamic_cast<ChataigneTimeTrigger*>(triggerLayer->ttm->items[i]);
+                check(timeTrigger != nullptr, "native time trigger consequence manager");
+                auto id = "load" + String(i + 1); auto args = revisionArgs(timeTrigger->csm.get());
+                args.getDynamicObject()->setProperty("type", "Consequence"); args.getDynamicObject()->setProperty("name", "Load preset");
+                wiring.append(object({{"id", id}, {"name", "organic_create"}, {"arguments", args}}));
+                wiring.append(object({{"name", "chataigne_set_command"}, {"target", id}, {"arguments", object({
+                    {"module", mcp.organic.handle(CVGroupManager::getInstance()->module.get())}, {"menuPath", ""}, {"type", "Go to preset"}})}}));
+                wiring.append(object({{"name", "organic_set_value"}, {"target", id}, {"path", "command/targetPreset"},
+                    {"arguments", object({{"value", cvGroup->pm->items[i % 2]->getControlAddress()}})}}));
+                wiring.append(object({{"name", "organic_set_value"}, {"target", id}, {"path", "command/interpolationTime"}, {"arguments", object({{"value", 0.0}})}}));
+                wiring.append(object({{"name", "organic_inspect"}, {"target", id}, {"path", "command/targetPreset"}, {"arguments", object()}}));
+            }
+            auto wired = call("organic_batch", object({{"operations", wiring}}));
+            if (!(bool) wired["success"]) std::cerr << "Preset wiring failed: " << wired["message"].toString() << '\n';
+            check((bool) wired["success"] && wired["completed"].size() == 50, "ten time cues bind preset commands and verify their targets in one batch");
+            wiringTransactions.add(wired["transaction"].toString());
+            for (int i = 0; i < 10; ++i)
+                check((bool) wired["completed"][i * 5 + 4]["result"]["targetResolved"], "every preset cue has a resolved target");
+        }
+        for (int i = 0; i < 20; ++i)
+        {
+            auto* timeTrigger = dynamic_cast<ChataigneTimeTrigger*>(triggerLayer->ttm->items[i]);
+            call("chataigne_execute_command", object({{"handle", mcp.organic.handle(timeTrigger->csm->items[0])}}));
+            check(std::abs(value->doubleValue() - (i % 2 == 0 ? 0.2 : 0.8)) < 1.0e-6
+                && count->intValue() == (i % 2 == 0 ? 3 : 17) && flash->boolValue() == (i % 2 != 0)
+                && label->stringValue() == (i % 2 == 0 ? "Low" : "High"), "every authored time cue actually recalls its mixed-type preset");
+        }
+        for (int i = wiringTransactions.size(); --i >= 0;)
+            call("organic_undo", object({{"transaction", wiringTransactions[i]}}));
         call("organic_undo", object({{"transaction", triggerBatch["transaction"]}}));
         check(triggerLayer->ttm->items.isEmpty(), "all twenty trigger creations and settings undo together");
+        auto keyboardData = create(ModuleManager::getInstance(), "Keyboard", "MCP Keyboard");
+        auto* keyboard = dynamic_cast<KeyboardModule*>(mcp.organic.container(keyboardData["handle"].toString()));
+        check(keyboard && keyboard->keyMap.contains(VK_LCONTROL) && keyboard->keyMap.contains(VK_RCONTROL)
+            && keyboard->keyMap.contains('P') && keyboard->keyMap.contains('M'), "keyboard chord inputs are available");
+        // Feed native module events without sending any keys to the user's desktop.
+        KeyboardHooker::getInstance()->removeListener(keyboard);
+        auto keyboardStateData = create(StateManager::getInstance(), "", "MCP Keyboard Controls");
+        auto* keyboardState = dynamic_cast<State*>(mcp.organic.container(keyboardStateData["handle"].toString()));
+        auto keyAction = [&](const String& name, int key, const String& command, double holdTime)
+        {
+            auto data = create(keyboardState->pm.get(), "Action", name);
+            auto* keyAction = dynamic_cast<Action*>(mcp.organic.container(data["handle"].toString()));
+            auto ctrlData = create(keyAction->cdm.get(), "Group", "Either Ctrl");
+            auto* ctrlCondition = dynamic_cast<ConditionGroup*>(mcp.organic.container(ctrlData["handle"].toString()));
+            check(ctrlCondition != nullptr, "left and right modifier condition group");
+            setParameter(ctrlCondition->manager.conditionOperator, "OR");
+            for (auto code : {VK_LCONTROL, VK_RCONTROL, key})
+            {
+                auto* manager = code == key ? keyAction->cdm.get() : &ctrlCondition->manager;
+                auto conditionData = createFirst(manager, "Key " + String(code));
+                auto* keyCondition = dynamic_cast<StandardCondition*>(mcp.organic.container(conditionData["handle"].toString()));
+                setParameter(keyCondition->sourceTarget, keyboard->keyMap[code]->getControlAddress());
+                check(keyCondition->comparator != nullptr, "keyboard binding creates boolean comparator");
+                setParameter(keyCondition->comparator->compareFunction, "=");
+                setParameter(keyCondition->comparator->reference, true);
+            }
+            setParameter(keyAction->cdm->conditionOperator, "AND"); setParameter(keyAction->cdm->validationTime, holdTime);
+            auto consequenceData = createFirst(keyAction->csmOn.get(), "Sequence " + command);
+            auto* handler = dynamic_cast<BaseCommandHandler*>(mcp.organic.container(consequenceData["handle"].toString()));
+            auto args = revisionArgs(handler);
+            args.getDynamicObject()->setProperty("module", mcp.organic.handle(ChataigneSequenceManager::getInstance()->module.get()));
+            args.getDynamicObject()->setProperty("menuPath", "Playback"); args.getDynamicObject()->setProperty("type", command);
+            call("chataigne_set_command", args);
+            auto* sequenceCommand = dynamic_cast<SequenceCommand*>(handler->command.get());
+            check(sequenceCommand && sequenceCommand->target, "keyboard consequence assigns a sequence command");
+            setParameter(sequenceCommand->target, sequence->getControlAddress());
+            check(sequenceCommand->target->getTargetContainer() == sequence, "keyboard command resolves the requested sequence");
+            auto inspected = call("organic_inspect", object({{"handle", data["handle"]}, {"includeData", true}}));
+            check(inspected["data"].isObject() && keyAction->cdm->items.size() == 2, "keyboard action chord and duration are inspectable");
+        };
+        keyAction("Ctrl P Play", 'P', "Play Sequence", 0);
+        keyAction("Ctrl M Hold Stop", 'M', "Stop Sequence", 1);
+        setParameter(keyboardState->active, true);
+        keyboard->keyChanged('P', true); pumpMessages(30); check(!sequence->isPlaying->boolValue(), "P alone cannot play the sequence");
+        keyboard->keyChanged('P', false); keyboard->keyChanged(VK_LCONTROL, true); pumpMessages(30);
+        check(!sequence->isPlaying->boolValue(), "Ctrl alone cannot play the sequence");
+        keyboard->keyChanged('P', true); pumpMessages(50); check(sequence->isPlaying->boolValue(), "Ctrl P plays the sequence");
+        keyboard->keyChanged('P', false); keyboard->keyChanged('M', true); pumpMessages(300);
+        keyboard->keyChanged('M', false); pumpMessages(800); check(sequence->isPlaying->boolValue(), "short Ctrl M press cancels the stop timer");
+        keyboard->keyChanged('M', true); pumpMessages(550); keyboard->keyChanged(VK_LCONTROL, false); pumpMessages(650);
+        check(sequence->isPlaying->boolValue(), "releasing Ctrl cancels the chord's continuous one-second hold");
+        keyboard->keyChanged(VK_RCONTROL, true); pumpMessages(550);
+        check(sequence->isPlaying->boolValue(), "Ctrl M does not stop before one second");
+        pumpMessages(650); check(!sequence->isPlaying->boolValue() && sequence->currentTime->doubleValue() == 0, "Ctrl M held for one second stops and resets the sequence");
+        keyboard->keyChanged('M', false); keyboard->keyChanged(VK_RCONTROL, false);
+        call("organic_remove", revisionArgs(keyboardState)); call("organic_remove", revisionArgs(keyboard));
         call("timeline_transport", object({{"handle", seq["handle"]}, {"action", "play"}})); pumpMessages(30);
         check(sequence->isPlaying->boolValue(), "live playback");
         call("timeline_transport", object({{"handle", seq["handle"]}, {"action", "pause"}})); check(!sequence->isPlaying->boolValue(), "pause playback");
@@ -446,6 +588,7 @@ int run()
 int main(int argc, char** argv)
 {
 #if ORGANICUI_USE_MCP && ORGANICUI_USE_ASSISTANT
+    if (argc == 2 && juce::String(argv[1]) == "--assistant-workflow-smoke") return mcp_test::assistantWorkflowSmoke();
     if (argc == 2 && juce::String(argv[1]) == "--desktop-connection")
     {
         juce::ScopedJuceInitialiser_GUI runtime;

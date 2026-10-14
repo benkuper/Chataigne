@@ -30,6 +30,7 @@ CVCommand::CVCommand(CustomVariablesModule* _module, CommandContext context, var
 	{
 		target = addTargetParameter("Target Group", "The group to target for this command", CVGroupManager::getInstance());
 		target->targetType = TargetParameter::CONTAINER;
+		target->defaultContainerTypeCheckFunc = [](ControllableContainer* cc) { return dynamic_cast<CVGroup*>(cc) != nullptr; };
 		target->customGetTargetContainerFunc = &CVGroupManager::showMenuAndGetGroup;
 		target->showParentNameInEditor = false;
 
@@ -43,6 +44,7 @@ CVCommand::CVCommand(CustomVariablesModule* _module, CommandContext context, var
 	{
 		targetPreset = addTargetParameter("Target Preset", "The Preset to get the values from and set the variables to", CVGroupManager::getInstance());
 		targetPreset->targetType = TargetParameter::CONTAINER;
+		targetPreset->defaultContainerTypeCheckFunc = [](ControllableContainer* cc) { return dynamic_cast<CVPreset*>(cc) != nullptr; };
 		targetPreset->customGetTargetContainerFunc = &CVGroupManager::showMenuAndGetPreset;
 		targetPreset->defaultParentLabelLevel = 2;
 		if (ParameterLink* pl = getLinkedParam(targetPreset)) pl->fullPresetSelectMode = true;
@@ -73,6 +75,7 @@ CVCommand::CVCommand(CustomVariablesModule* _module, CommandContext context, var
 		{
 			targetPreset2 = addTargetParameter("Target Preset 2", "The second preset to use for the interpolation", CVGroupManager::getInstance());
 			targetPreset2->targetType = TargetParameter::CONTAINER;
+			targetPreset2->defaultContainerTypeCheckFunc = [](ControllableContainer* cc) { return dynamic_cast<CVPreset*>(cc) != nullptr; };
 			targetPreset2->customGetTargetContainerFunc = &CVGroupManager::showMenuAndGetPreset;
 			targetPreset2->defaultParentLabelLevel = 2;
 			if (ParameterLink* pl = getLinkedParam(targetPreset2)) pl->fullPresetSelectMode = true;

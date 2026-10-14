@@ -15,6 +15,9 @@ public:
 #if ORGANICUI_USE_ASSISTANT
     std::unique_ptr<organic::assistant::ChatGptProvider> assistant;
     std::unique_ptr<organic::assistant::Controller> assistantController;
+    std::unique_ptr<organic::assistant::ClaudeProvider> claudeAssistant;
+    std::unique_ptr<organic::assistant::Controller> claudeAssistantController;
+    std::unique_ptr<organic::assistant::Hub> assistantHub;
 #endif
     BoolParameter* enabled;
     IntParameter* port;
