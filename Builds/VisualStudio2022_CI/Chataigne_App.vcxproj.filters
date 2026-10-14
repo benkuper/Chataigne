@@ -3418,6 +3418,9 @@
     <ClCompile Include="..\..\Modules\juce_organicui\assistant\AssistantProvider.cpp">
       <Filter>JUCE Modules\juce_organicui\assistant</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\assistant\ClaudeProvider.cpp">
+      <Filter>JUCE Modules\juce_organicui\assistant</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\automation\common\fitting\intern\curve_fit_corners_detect.c">
       <Filter>JUCE Modules\juce_organicui\automation\common\fitting\intern</Filter>
     </ClCompile>
@@ -6715,6 +6718,9 @@
       <Filter>JUCE Modules\juce_organicui\assistant</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\assistant\AssistantProvider.h">
+      <Filter>JUCE Modules\juce_organicui\assistant</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\assistant\ClaudeProvider.h">
       <Filter>JUCE Modules\juce_organicui\assistant</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\automation\common\fitting\intern\curve_fit_inline.h">
