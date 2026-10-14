@@ -129,7 +129,21 @@ int run()
         };
         auto actionData = create(authoredState->pm.get(), "Action", "MCP Action");
         auto* action = dynamic_cast<Action*>(mcp.organic.container(actionData["handle"].toString()));
-        createFirst(action->cdm.get(), "MCP Condition"); createFirst(action->csmOn.get(), "MCP Consequence");
+        auto conditionData = createFirst(action->cdm.get(), "MCP Condition"); createFirst(action->csmOn.get(), "MCP Consequence");
+        auto* condition = dynamic_cast<StandardCondition*>(mcp.organic.container(conditionData["handle"].toString()));
+        auto soundCardData = create(ModuleManager::getInstance(), "Sound Card", "MCP Sound Card");
+        auto* soundCard = dynamic_cast<AudioModule*>(mcp.organic.container(soundCardData["handle"].toString()));
+        soundCard->am.closeAudioDevice(); soundCard->stopTimer();
+        check(condition && !condition->comparator, "New standard condition requires input before comparator configuration");
+        setParameter(condition->sourceTarget, soundCard->detectedVolume->getControlAddress());
+        check(condition->sourceControllable == soundCard->detectedVolume && condition->comparator != nullptr, "Sound Card volume binding creates dynamic comparator");
+        auto conditionChildren = call("organic_browse", object({{"scope", conditionData["handle"]}}));
+        check(juce::JSON::toString(conditionChildren).contains("Comparator"), "Dynamic comparator is discoverable through assistant tools");
+        setParameter(condition->comparator->compareFunction, ">"); setParameter(condition->comparator->reference, 0.5);
+        check(condition->comparator->currentFunctionId.toString() == ">" && condition->comparator->reference->floatValue() == .5f, "Condition operator and threshold configured through tools");
+        soundCard->detectedVolume->setValue(.5f); check(!condition->comparator->compare(soundCard->detectedVolume), "Greater-than condition excludes threshold");
+        soundCard->detectedVolume->setValue(.75f); check(condition->comparator->compare(soundCard->detectedVolume), "Greater-than condition validates above threshold");
+        setParameter(condition->sourceTarget, ""); call("organic_remove", revisionArgs(soundCard));
         auto mappingData = create(authoredState->pm.get(), "Mapping", "MCP Mapping");
         auto* mapping = dynamic_cast<Mapping*>(mcp.organic.container(mappingData["handle"].toString()));
         createFirst(&mapping->im, "MCP Input"); create(&mapping->fm, "Remap", "MCP Remap"); createFirst(&mapping->om, "MCP Output");
@@ -281,11 +295,20 @@ int run()
         check(value->doubleValue() == 0.5 && secondValue->doubleValue() == 0, "batch groups undo");
         firstInfo = mcp.organic.describe(mcp.organic.handle(value));
         auto repeatedEdit = object({{"handle", firstInfo["handle"]}, {"revision", firstInfo["revision"]}, {"value", 0.6}});
-        auto partial = call("organic_batch", object({{"operations", array({
+        auto repeated = call("organic_batch", object({{"operations", array({
             object({{"name", "organic_set_value"}, {"arguments", repeatedEdit}}),
             object({{"name", "organic_set_value"}, {"arguments", repeatedEdit.clone()}})})}}));
-        check(!(bool) partial["success"] && partial["completed"].size() == 1 && partial["recovery"].toString().isNotEmpty(), "batch reports intervening revision conflict and completed work");
-        call("organic_undo", object({{"transaction", partial["transaction"]}})); check(value->doubleValue() == 0.5, "partial batch recovery undo");
+        check((bool) repeated["success"] && repeated["completed"].size() == 2, "batch advances revisions for its own repeated edits");
+        call("organic_undo", object({{"transaction", repeated["transaction"]}})); check(value->doubleValue() == 0.5, "repeated batch edits undo together");
+        rejects([&] { call("organic_batch", object({{"operations", array({object({{"name", "organic_set_value"}, {"arguments", repeatedEdit}})})}})); }, -32006);
+        check(value->doubleValue() == 0.5, "stale revision at batch entry still rejects without edits");
+        auto partial = call("organic_batch", object({{"operations", array({
+            object({{"id", "value"}, {"name", "organic_inspect"}, {"arguments", object({{"handle", mcp.organic.handle(value)}})}}),
+            object({{"name", "organic_set_value"}, {"target", "value"}, {"arguments", object({{"value", 0.6}})}}),
+            object({{"name", "organic_set_value"}, {"target", "value"}, {"arguments", object({{"value", "invalid"}})}})})}}));
+        check(!(bool) partial["success"] && partial["completed"].size() == 2 && (int) partial["error"] == -32602 && partial["recovery"].toString().isNotEmpty(), "dependent batch failure reports completed work and structured recovery");
+        call("organic_undo", object({{"transaction", partial["transaction"]}})); check(value->doubleValue() == 0.5, "partial dependent batch recovery undo");
+        rejects([&] { call("organic_batch", object({{"operations", array({object({{"name", "organic_inspect"}, {"target", "future"}, {"arguments", object()}})})}})); }, -32602);
         rejects([&] { call("organic_undo", object({{"transaction", edited["transaction"]}})); }, -32006);
         auto* file = helper->addFileParameter("Asset", "", directory.getSiblingFile("outside.wav").getFullPathName());
         auto* unresolved = helper->addTargetParameter("Broken reference", ""); unresolved->setValue("/missing/value");
@@ -295,6 +318,11 @@ int run()
         auto fileInfo = mcp.organic.describe(mcp.organic.handle(file));
         context.grant.access = Access::edit; context.grant.folders = {directory.getFullPathName()};
         auto fileEdit = call("organic_set_value", object({{"handle", fileInfo["handle"]}, {"revision", fileInfo["revision"]}, {"value", directory.getChildFile("inside.wav").getFullPathName()}}));
+        auto deniedDependency = call("organic_batch", object({{"operations", array({
+            object({{"id", "asset"}, {"name", "organic_inspect"}, {"arguments", object({{"handle", fileInfo["handle"]}})}}),
+            object({{"name", "organic_set_value"}, {"target", "asset"}, {"arguments", object({{"value", directory.getSiblingFile("outside.wav").getFullPathName()}})}})})}}));
+        check(!(bool) deniedDependency["success"] && (int) deniedDependency["error"] == -32003 && deniedDependency["completed"].size() == 1
+            && file->getFile() == directory.getChildFile("inside.wav"), "dependent batch targets preserve approved-folder checks without side effects");
         rejects([&] { call("organic_undo", object({{"transaction", fileEdit["transaction"]}})); }, -32003);
         context.grant.access = Access::full;
         call("organic_undo", object({{"transaction", fileEdit["transaction"]}}));
@@ -316,7 +344,33 @@ int run()
         auto* clip = dynamic_cast<AudioLayerClip*>(audioLayer->clipManager.items[0]); check(clip != nullptr, "native audio clip type"); setParameter(clip->filePath, media.getFullPathName());
         for (int attempt = 0; attempt < 100 && (!clip->readerSource || clip->isLoading); ++attempt) pumpMessages(20);
         check(clip->readerSource && std::abs(clip->clipDuration - 0.1) < 0.001, "timeline media assignment loads approved audio");
-        create(sequence->layerManager.get(), "Trigger", "MCP Trigger Layer"); check(sequence->layerManager->items.size() == 2, "timeline layer authoring");
+        auto triggerLayerData = create(sequence->layerManager.get(), "Trigger", "MCP Trigger Layer"); check(sequence->layerManager->items.size() == 2, "timeline layer authoring");
+        auto* triggerLayer = dynamic_cast<TriggerLayer*>(mcp.organic.container(triggerLayerData["handle"].toString()));
+        setParameter(sequence->totalTime, 12.0);
+        auto triggerManagerInfo = revisionArgs(triggerLayer->ttm.get());
+        auto triggerTypes = call("organic_types", object({{"handle", triggerManagerInfo["handle"]}}))["types"];
+        var triggerOperations = array({});
+        for (int i = 0; i < 20; ++i)
+        {
+            auto id = "step" + String(i + 1); auto arguments = triggerManagerInfo.clone();
+            arguments.getDynamicObject()->setProperty("type", triggerTypes[0]["type"]);
+            arguments.getDynamicObject()->setProperty("name", "Step " + String(i + 1));
+            triggerOperations.append(object({{"id", id}, {"name", "organic_create"}, {"arguments", arguments}}));
+            triggerOperations.append(object({{"name", "organic_set_value"}, {"target", id}, {"path", "time"}, {"arguments", object({{"value", (i + 1) * 0.5}})}}));
+            triggerOperations.append(object({{"name", "organic_inspect"}, {"target", id}, {"path", "time"}, {"arguments", object()}}));
+        }
+        auto triggerPreview = call("organic_batch", object({{"preview", true}, {"operations", triggerOperations}}));
+        check(!(bool) triggerPreview["valid"] && (int) triggerPreview["deferredValidation"] == 40 && triggerLayer->ttm->items.isEmpty(), "dependent batch preview is read-only and reports deferred validation");
+        context.grant.access = Access::inspect;
+        rejects([&] { call("organic_batch", object({{"operations", triggerOperations}})); }, -32003);
+        check(triggerLayer->ttm->items.isEmpty(), "bulk creation retains access enforcement before editing");
+        context.grant.access = Access::full;
+        auto triggerBatch = call("organic_batch", object({{"operations", triggerOperations}}));
+        if (!(bool) triggerBatch["success"]) std::cerr << "Trigger batch failed at " << triggerBatch["failedIndex"].toString() << ": " << triggerBatch["message"].toString() << '\n';
+        check((bool) triggerBatch["success"] && triggerLayer->ttm->items.size() == 20 && triggerBatch["completed"].size() == 60, "twenty triggers are created configured and inspected in one batch");
+        for (int i = 0; i < 20; ++i) check((double) triggerBatch["completed"][i * 3 + 2]["result"]["value"] == (i + 1) * 0.5, "each bulk trigger has its requested time");
+        call("organic_undo", object({{"transaction", triggerBatch["transaction"]}}));
+        check(triggerLayer->ttm->items.isEmpty(), "all twenty trigger creations and settings undo together");
         call("timeline_transport", object({{"handle", seq["handle"]}, {"action", "play"}})); pumpMessages(30);
         check(sequence->isPlaying->boolValue(), "live playback");
         call("timeline_transport", object({{"handle", seq["handle"]}, {"action", "pause"}})); check(!sequence->isPlaying->boolValue(), "pause playback");
@@ -429,7 +483,7 @@ int main(int argc, char** argv)
         if (!provider) { std::cerr << "Assistant provider unavailable\n"; return 1; }
         try
         {
-            if (juce::String(argv[1]) == "--saved-subscription-smoke") provider->refreshModels(); else provider->signIn(false);
+            if (juce::String(argv[1]) == "--subscription-smoke") { provider->cancel(); provider->signIn(false); }
             auto deadline = juce::Time::getMillisecondCounterHiRes() + 240000;
             while (provider->view().busy && juce::Time::getMillisecondCounterHiRes() < deadline) mcp_test::pumpMessages(50);
             if (provider->view().busy) provider->cancel();
@@ -444,7 +498,7 @@ int main(int argc, char** argv)
             if (provider->view().busy) provider->cancel();
             state = provider->view();
             std::cout << state.status << '\n';
-            auto passed = state.status == "Response complete." && state.transcript.substring(previousLength).contains("[Tool: chataigne_project]");
+            auto passed = state.activity == organic::assistant::Activity::completed && state.transcript.substring(previousLength).contains("[Tool: chataigne_project]");
             std::cout << (passed ? "Passed real subscription-backed assistant smoke test\n" : "Subscription smoke did not complete a local tool call\n");
             return passed ? 0 : 1;
         }

@@ -80,10 +80,33 @@ int run()
         String toolEvents = "data: {\"type\":\"response.output_item.done\",\"output_index\":0,\"item\":{\"type\":\"function_call\",\"name\":\"organic_inspect\",\"call_id\":\"fixture\",\"arguments\":\"{}\"}}\n\ndata: {\"type\":\"response.completed\",\"response\":{\"output\":[]}}\n\n";
         toolStream.push(toolEvents.toRawUTF8(), toolEvents.getNumBytesAsUTF8(), [](const String&) {}); toolStream.finish();
         require(toolStream.output.size() == 1 && toolStream.output[0]["name"].toString() == "organic_inspect", "Retain streamed calls when terminal output is empty");
+        ResponseStream partialStream; String terminalText;
+        String partialEvents = "data: {\"type\":\"response.output_item.done\",\"output_index\":0,\"item\":{\"type\":\"function_call\",\"name\":\"organic_set_value\",\"call_id\":\"configure\",\"arguments\":\"{}\"}}\n\ndata: {\"type\":\"response.completed\",\"response\":{\"output\":[{\"type\":\"message\",\"role\":\"assistant\",\"content\":[{\"type\":\"output_text\",\"text\":\"Configured\"}]}]}}\n\n";
+        partialStream.push(partialEvents.toRawUTF8(), partialEvents.getNumBytesAsUTF8(), [&](const String& d) { terminalText += d; }); partialStream.finish();
+        require(partialStream.output.size() == 2 && partialStream.output[1]["call_id"].toString() == "configure", "Retain configuration calls with a partially populated terminal output");
+        require(terminalText == "Configured", "Terminal message text appears when no text deltas were sent");
         rejects([] { ResponseStream incomplete; incomplete.finish(); });
         rejects([] { ResponseStream failed; String e = "data: {\"type\":\"response.failed\",\"response\":{\"error\":{\"code\":\"subscription_sharing_usage_limit_exceeded\"}}}\n\n"; failed.push(e.toRawUTF8(), e.getNumBytesAsUTF8(), [](auto&) {}); });
         rejects([] { ResponseStream incomplete; String e = "data: {\"type\":\"response.incomplete\"}\n\n"; incomplete.push(e.toRawUTF8(), e.getNumBytesAsUTF8(), [](auto&) {}); });
+        auto retryable = [](const String& code)
+        {
+            try
+            {
+                ResponseStream failed; auto e = "data: {\"type\":\"response.failed\",\"response\":{\"error\":{\"code\":\"" + code + "\"}}}\n\n";
+                failed.push(e.toRawUTF8(), e.getNumBytesAsUTF8(), [](auto&) {});
+            }
+            catch (const organic::mcp::Error& error) { return (bool) error.data["retryable"]; }
+            return false;
+        };
+        require(retryable("server_error") && !retryable("subscription_sharing_usage_limit_exceeded"), "Retry transient inference errors without retrying plan limits");
+        require(usageError("server_error").contains("server_error"), "Inference failures preserve their diagnostic code");
         require(usageError("subscription_sharing_usage_unavailable").contains("unavailable"), "Eligibility recovery");
+        require(reasoningEfforts("gpt-6.1-sol").contains("max") && !reasoningEfforts("gpt-6.1-sol").contains("none"), "Documented effort levels exclude unsupported no-reasoning values");
+        require(reasoningEfforts("unknown-model").isEmpty(), "Unknown models keep the server default effort");
+        require(actionableError("Access profile does not permit this operation", -32003).contains("Edit"), "Permission errors explain the panel setting to change");
+        require(actionableError("Path is outside the approved folders", -32003).contains("Remember access"), "File-access recovery names the relevant settings");
+        require(actionableError("Network unavailable").contains("Reconnect"), "Connection failures give recovery steps");
+        require(actionableError("Unsupported effort").contains("Auto"), "Unsupported effort explains recovery");
         std::cout << "Passed " << checks << " assistant security and streaming checks\n"; return 0;
     }
     catch (const std::exception& e) { std::cerr << e.what() << '\n'; return 1; }
