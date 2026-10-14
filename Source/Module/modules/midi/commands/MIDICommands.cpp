@@ -92,6 +92,10 @@ void MIDINoteAndCCCommand::updateNoteParams()
 {
 	NoteMode m = noteMode->getValueDataAsEnum<NoteMode>();
 
+	//noteMode can notify without its value changing (e.g. resetValue when linking to a template), don't add the parameters twice
+	if (m == MODE_NOTE && noteEnum != nullptr) return;
+	if (m == MODE_PITCH && noteEnum == nullptr && number != nullptr) return;
+
 	if (m == MODE_NOTE)
 	{
 		noteEnum = new EnumParameter("Note", "Note from C to B");
