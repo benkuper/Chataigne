@@ -230,6 +230,16 @@ Alternatively put `export LD_LIBRARY_PATH=/path/to/Servus/build/lib/:$LD_LIBRARY
 ## Dependencies
 
 ### Windows running instructions ###
+
+**VS Code debugging (local Windows workspace)**: Open the Chataigne folder and
+press **F5** with **Chataigne Debug** selected. The C/C++ extension launches the
+Windows debugger after building Debug x64 and staging libmpv. **Ctrl+Shift+B**
+builds Debug, and **Tasks: Run Task > Run Debug** builds and opens the Debug app
+without attaching a debugger. From the integrated terminal, use `./run_debug.cmd`.
+The shared build helper is `Tools/vscode/debug.ps1`; it finds MSBuild through
+Visual Studio Installer and uses the existing shared JUCE checkout. The local
+`.vscode` launch and task configurations are intentionally ignored by Git.
+
 **DLL dependencies** :
   - For **Release**, you can just copy the dll files from there : https://benjamin.kuperberg.fr/chataigne/user/data/Chataigne-win-x64-release-dependencies.zip and paste them in the same folder as the generated executable (in the Binaries folder)
   
