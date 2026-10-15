@@ -62,6 +62,7 @@ jobs:
           python ../../../External/stage-video-runtimes.py ${{ matrix.arch }} .
           if ($LASTEXITCODE -ne 0) { throw 'Video runtime staging failed' }
           if (-not (Test-Path ./libmpv-2.dll)) { throw 'libmpv-2.dll is missing from the dependency archive' }
+          & "${{ github.workspace }}/Tools/tests/run_spout_runtime_test.ps1" -RuntimeDirectory (Get-Location).Path
         working-directory: ./Binaries/CI/App
 
       - name: Build and package native MCP bridge
