@@ -68,6 +68,8 @@ public:
 	HashMap<String, MQTTTopic*> topicItemMap;
 
 	CriticalSection updateTopicLock;
+	// The bundled Windows DLL has no internal mutexes. Serialise its network
+	// loop and client API calls. Model and script callbacks run on the UI thread.
 	CriticalSection mosquittoLock;
 	BaseManager<MQTTTopic> topicsManager;
 	std::atomic<uint32> lastPublishWarningTime { 0 };
@@ -107,6 +109,7 @@ public:
 	virtual void on_disconnect(int rc) override;
 	virtual void on_publish(int mid) override;
 	virtual void on_message(const struct mosquitto_message* message) override;
+	void handleMessage(const String& topic, const String& data);
 	virtual void on_subscribe(int mid, int qos_count, const int* granted_qos) override;
 	virtual void on_unsubscribe(int mid) override;
 	virtual void on_log(int level, const char* str) override;

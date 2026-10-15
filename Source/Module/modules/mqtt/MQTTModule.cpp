@@ -213,8 +213,10 @@ void MQTTClientModule::itemsRemoved(Array<MQTTTopic*> items)
 	if (isCurrentlyLoadingData) return;
 
 #ifdef MOSQUITTO_SUPPORTED
-	GenericScopedLock mosqLock(mosquittoLock);
-	for (auto& item : items) unsubscribe(&item->mid, item->topic->stringValue().toStdString().c_str());
+	{
+		GenericScopedLock mosqLock(mosquittoLock);
+		for (auto& item : items) unsubscribe(&item->mid, item->topic->stringValue().toStdString().c_str());
+	}
 #endif
 	updateTopicSubs();
 }
@@ -319,7 +321,8 @@ void MQTTClientModule::afterLoadJSONDataInternal()
 
 void MQTTClientModule::run()
 {
-	if (wait(100) || threadShouldExit()) return;
+	wait(100);
+	if (threadShouldExit()) return;
 
 #ifdef MOSQUITTO_SUPPORTED
 	int result = MOSQ_ERR_SUCCESS;
@@ -334,9 +337,9 @@ void MQTTClientModule::run()
 			return;
 		}
 
-		// mosquitto_reinitialise() resets the internal threaded state. Publishing
-		// happens on other Chataigne threads while loop_forever() runs here, so
-		// failing to restore it causes races inside libmosquitto.
+		// This flag disables implicit writes from publish(), but cannot provide
+		// mutexes in libraries built without WITH_THREADING. loop() and every
+		// client API call must also hold mosquittoLock.
 		result = threaded_set(true);
 		if (result != MOSQ_ERR_SUCCESS)
 		{
@@ -367,18 +370,32 @@ void MQTTClientModule::run()
 			result = connect(brokerHost.c_str(), port->intValue(), keepAlive->intValue());
 		}
 
-		if (result == MOSQ_ERR_SUCCESS) break;
+		if (result == MOSQ_ERR_SUCCESS)
+		{
+			retryDelayMs = 1000;
+			while (!threadShouldExit())
+			{
+				{
+					GenericScopedLock mosqLock(mosquittoLock);
+					// Bound the lock so publishers and stopClient can proceed.
+					result = loop(10, 1);
+				}
+				if (result != MOSQ_ERR_SUCCESS) break;
+				wait(1);
+			}
+			{
+				GenericScopedLock mosqLock(mosquittoLock);
+				isConnected->setValue(false);
+				disconnect();
+			}
+		}
+		if (threadShouldExit()) break;
 
 		NLOGWARNING(niceName, "MQTT connection failed: " << String(mosqpp::strerror(result)) << " (" << result << "), retrying...");
-		if (wait(retryDelayMs) || threadShouldExit()) return;
+		wait(retryDelayMs);
+		if (threadShouldExit()) break;
 		retryDelayMs = jmin(retryDelayMs * 2, 10000);
 	}
-
-	if (threadShouldExit()) return;
-
-	// loop_forever reconnects automatically after recoverable network failures.
-	// max_packets is documented as reserved and must be 1.
-	result = loop_forever(-1, 1);
 
 	{
 		GenericScopedLock mosqLock(mosquittoLock);
@@ -386,8 +403,6 @@ void MQTTClientModule::run()
 		disconnect();
 	}
 
-	if (!threadShouldExit() && result != MOSQ_ERR_SUCCESS)
-		NLOGERROR(niceName, "MQTT network loop stopped: " << String(mosqpp::strerror(result)) << " (" << result << ")");
 #endif
 }
 
@@ -403,7 +418,7 @@ void MQTTClientModule::stopClient()
 		isConnected->setValue(false);
 	}
 #endif
-	stopThread(5000);
+	if (Thread::getCurrentThread() != this) stopThread(-1);
 }
 
 /**
@@ -451,26 +466,16 @@ var MQTTClientModule::publishMessageFromScript(const var::NativeFunctionArgs& ar
 #ifdef MOSQUITTO_SUPPORTED
 void MQTTClientModule::on_connect(int rc)
 {
-	//LOG("MQTT Connected : " << rc);
-	//DBG("MQTT Connected event reveiced " << rc);
-	isConnected->setValue(rc == 0);
-
-	if (rc != 0) {
-		return;
-	}
-
-	GenericScopedLock lock(updateTopicLock);
-
-	//Subscribe
+	if (rc == 0)
 	{
-		GenericScopedLock mosqLock(mosquittoLock);
-		for (auto& t : topicsManager.items)
+		WeakReference<ControllableContainer> safeThis(this);
+		MessageManager::callAsync([safeThis]()
 		{
-			String topic = t->topic->stringValue();
-			if (topic.isEmpty()) continue;
-			subscribe(&t->mid, topic.toStdString().c_str());
-		}
+			if (auto* module = dynamic_cast<MQTTClientModule*>(safeThis.get()))
+				if (!module->isClearing && !module->isBeingDestroyed) module->updateTopicSubs();
+		});
 	}
+	isConnected->setValue(rc == 0);
 }
 
 void MQTTClientModule::on_disconnect(int rc)
@@ -487,17 +492,32 @@ void MQTTClientModule::on_disconnect(int rc)
 
 void MQTTClientModule::on_publish(int mid)
 {
-	outActivityTrigger->trigger();
+	WeakReference<ControllableContainer> safeThis(this);
+	MessageManager::callAsync([safeThis]()
+	{
+		if (auto* module = dynamic_cast<MQTTClientModule*>(safeThis.get()))
+			if (!module->isClearing && !module->isBeingDestroyed) module->outActivityTrigger->trigger();
+	});
 }
 
 void MQTTClientModule::on_message(const mosquitto_message* message)
 {
+	// libmosquitto owns the incoming buffer only for this callback. Copy it
+	// before delivering scripts and model changes outside the network lock.
+	const String topic(message->topic);
+	const String data((char*)message->payload, message->payloadlen);
+	WeakReference<ControllableContainer> safeThis(this);
+	MessageManager::callAsync([safeThis, topic, data]()
+	{
+		if (auto* module = dynamic_cast<MQTTClientModule*>(safeThis.get()))
+			if (!module->isClearing && !module->isBeingDestroyed) module->handleMessage(topic, data);
+	});
+}
+
+void MQTTClientModule::handleMessage(const String& topic, const String& data)
+{
 	if (!enabled->boolValue()) return;
-
 	GenericScopedLock lock(updateTopicLock);
-
-	String topic(message->topic);
-	String data((char*)message->payload, message->payloadlen);
 	Array<var> args;
 
 	if (logIncomingData->boolValue())
