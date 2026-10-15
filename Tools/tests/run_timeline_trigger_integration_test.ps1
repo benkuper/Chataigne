@@ -1,8 +1,9 @@
 [CmdletBinding()]
 param(
     [ValidateSet('Debug', 'Release')][string]$Configuration = 'Debug',
-    [ValidateSet('timeline_trigger_integration_test', 'cv_set_value_trigger_integration_test')]
+    [ValidateSet('timeline_trigger_integration_test', 'cv_set_value_trigger_integration_test', 'sequence_editing_integration_test')]
     [string]$TestName = 'timeline_trigger_integration_test',
+    [string[]]$TestArguments = @(),
     [switch]$SkipBuild
 )
 $ErrorActionPreference = 'Stop'
@@ -60,6 +61,13 @@ Push-Location $projectDir
 try {
     & cmd /c "`"$vsPath\VC\Auxiliary\Build\vcvars64.bat`" >nul && cl @`"$compileResponse`" && link @`"$linkResponse`""
     if ($LASTEXITCODE -ne 0) { throw "$TestName build failed." }
-    & $testExe
-    if ($LASTEXITCODE -ne 0) { throw "$TestName failed (exit $LASTEXITCODE)." }
+    # Native test diagnostics on stderr are not PowerShell errors.
+    $previousErrorPreference = $ErrorActionPreference
+    try {
+        $ErrorActionPreference = 'Continue'
+        $testOutput = & $testExe @TestArguments 2>&1
+        $testExitCode = $LASTEXITCODE
+        $testOutput | ForEach-Object { "$PSItem" }
+    } finally { $ErrorActionPreference = $previousErrorPreference }
+    if ($testExitCode -ne 0) { throw "$TestName failed (exit $testExitCode)." }
 } finally { Pop-Location }

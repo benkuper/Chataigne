@@ -147,7 +147,7 @@ public:
             UndoMaster::getInstance()->performAction("Edit CV Values blocks", manager.stateAction(stateBeforeDrag, after, true));
         stateBeforeDrag = var();
         isDragging = false;
-        grabber.setVisible(isMouseOverOrDragging()); coreGrabber.setVisible(isMouseOverOrDragging());
+        updateFadeHandles();
         loopGrabber.setVisible(false);
         blockUIListeners.call(&BlockUIListener::blockUINeedsReorder);
         BaseItemMinimalUI<LayerBlock>::mouseUp(e);
