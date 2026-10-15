@@ -11,6 +11,7 @@
 #pragma once
 
 #include <atomic>
+#include "Module/ModuleIncludes.h"
 
 class ChataigneAudioLayer;
 
@@ -24,7 +25,8 @@ class ChataigneSequence :
 	public Sequence,
 	public SequenceLayerManager::ManagerListener,
 	public ChataigneAudioLayerListener,
-	public MTCReceiver::MTCListener
+	public MTCReceiver::MTCListener,
+	public AudioModule::AudioModuleListener
 {
 public:
 	ChataigneSequence();
@@ -65,6 +67,7 @@ public:
 	virtual void clearItem() override;
 
 	void setMasterAudioModule(AudioModule * module);
+	void audioModuleWillBeDestroyed(AudioModule* module) override;
 
 	void updateTargetAudioLayer(ChataigneAudioLayer* excludeLayer = nullptr);
 	void setMasterAudioLayer(ChataigneAudioLayer* layer);

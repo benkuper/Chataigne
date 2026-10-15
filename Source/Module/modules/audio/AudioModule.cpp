@@ -110,6 +110,10 @@ AudioModule::AudioModule(const String& name) :
 
 AudioModule::~AudioModule()
 {
+	isBeingDestroyed = true;
+	// Detach timeline callbacks while the graph and device manager still exist.
+	// Inspectable's destruction notification runs after these members are gone.
+	audioModuleListeners.call(&AudioModuleListener::audioModuleWillBeDestroyed, this);
 	stopTimer();
 	setPlayerActive(false);
 	am.removeAudioCallback(this);
@@ -138,7 +142,12 @@ void AudioModule::initSetup()
 {
 	if (Thread::getCurrentThreadId() != MessageManager::getInstance()->getCurrentMessageThread())
 	{
-		MessageManager::callAsync([this]() { initSetup(); });
+		WeakReference<ControllableContainer> safeThis(this);
+		MessageManager::callAsync([safeThis]()
+		{
+			if (auto* module = dynamic_cast<AudioModule*>(safeThis.get()))
+				module->initSetup();
+		});
 		return;
 	}
 

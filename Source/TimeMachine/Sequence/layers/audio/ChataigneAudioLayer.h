@@ -57,6 +57,7 @@ public:
 	void sequencePlayStateChanged(Sequence* s) override;
 	void updateRecordingState();
 	void audioSetupChanged() override;
+	void audioModuleWillBeDestroyed(AudioModule* module) override;
 
 
 	var getJSONData(bool includeNonOverriden = false) override;

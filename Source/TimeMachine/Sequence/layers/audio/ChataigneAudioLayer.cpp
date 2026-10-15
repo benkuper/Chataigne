@@ -47,6 +47,7 @@ void ChataigneAudioLayer::clearItem()
 
 void ChataigneAudioLayer::setAudioModule(AudioModule* newModule)
 {
+	if (newModule != nullptr && newModule->isBeingDestroyed) newModule = nullptr;
 	if (audioModule != nullptr)
 	{
 		audioModule->removeAudioModuleListener(this);
@@ -68,6 +69,11 @@ void ChataigneAudioLayer::setAudioModule(AudioModule* newModule)
 	updateSelectedOutChannels();
 
 	audioLayerListeners.call(&ChataigneAudioLayerListener::targetAudioModuleChanged, this);
+}
+
+void ChataigneAudioLayer::audioModuleWillBeDestroyed(AudioModule* module)
+{
+	if (audioModule == module) setAudioModule(nullptr);
 }
 
 void ChataigneAudioLayer::updateSelectedOutChannelsInternal()

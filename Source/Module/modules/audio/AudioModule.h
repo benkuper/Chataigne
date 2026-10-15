@@ -188,6 +188,7 @@ public:
 	{
 	public:
 		virtual ~AudioModuleListener() {}
+		virtual void audioModuleWillBeDestroyed(AudioModule*) {}
 		virtual void monitorSetupChanged() {}
 		virtual void audioSetupChanged() {}
 	};

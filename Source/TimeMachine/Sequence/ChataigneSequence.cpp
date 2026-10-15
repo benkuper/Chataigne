@@ -228,17 +228,20 @@ void ChataigneSequence::clearItem()
 
 void ChataigneSequence::setMasterAudioModule(AudioModule* module)
 {
+	if (module != nullptr && module->isBeingDestroyed) module = nullptr;
 	if (masterAudioModule == module) return;
 
 	if (masterAudioModule != nullptr)
 	{
 		masterAudioModule->enabled->removeParameterListener(this);
+		if (masterAudioModule != ltcAudioModule) masterAudioModule->removeAudioModuleListener(this);
 	}
 
 	masterAudioModule = module;
 
 	if (masterAudioModule != nullptr)
 	{
+		masterAudioModule->addAudioModuleListener(this);
 		masterAudioModule->enabled->addParameterListener(this);
 		setAudioDeviceManager(&masterAudioModule->am);
 	}
@@ -249,6 +252,12 @@ void ChataigneSequence::setMasterAudioModule(AudioModule* module)
 
 
 	sequenceListeners.call(&SequenceListener::sequenceMasterAudioModuleChanged, this);
+}
+
+void ChataigneSequence::audioModuleWillBeDestroyed(AudioModule* module)
+{
+	if (ltcAudioModule == module) setLTCAudioModule(nullptr);
+	if (masterAudioModule == module) setMasterAudioModule(nullptr);
 }
 
 void ChataigneSequence::updateTargetAudioLayer(ChataigneAudioLayer* excludeLayer)
@@ -503,6 +512,7 @@ void ChataigneSequence::setupMidiSyncDevices()
 
 void ChataigneSequence::setLTCAudioModule(AudioModule* am)
 {
+	if (am != nullptr && am->isBeingDestroyed) am = nullptr;
 	if (ltcAudioModule == am)
 	{
 		if (am != nullptr) updateLTCSender();
@@ -512,12 +522,14 @@ void ChataigneSequence::setLTCAudioModule(AudioModule* am)
 	{
 		ltcAudioModule->ltcTime->removeParameterListener(this);
 		ltcAudioModule->ltcPlaying->removeParameterListener(this);
+		if (ltcAudioModule != masterAudioModule) ltcAudioModule->removeAudioModuleListener(this);
 	}
 
 	ltcAudioModule = am;
 
 	if (ltcAudioModule != nullptr)
 	{
+		ltcAudioModule->addAudioModuleListener(this);
 		ltcAudioModule->ltcTime->addParameterListener(this);
 		ltcAudioModule->ltcPlaying->addParameterListener(this);
 	}
