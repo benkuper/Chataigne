@@ -235,15 +235,14 @@ void ParameterLink::setLinkedList(BaseMultiplexList* _list)
 	}
 
 	list = _list;
-	listRef = nullptr;
+	listRef = _list;
 
 	if (list != nullptr)
 	{
 		bool shouldNotify = linkType == MULTIPLEX_LIST; //if already, notify will not be trigger by setLinkType()
-		setLinkType(MULTIPLEX_LIST);
-		list = _list;
-		listRef = _list;;
 		list->addMultiplexListListener(this);
+		// setLinkType notifies synchronously; listeners must see the new list.
+		setLinkType(MULTIPLEX_LIST);
 
 		if (shouldNotify) notifyLinkUpdated();
 	}

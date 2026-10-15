@@ -114,8 +114,9 @@ void GenericControllableCommand::updateComponentFromTarget()
 	componentOperator->setEnabled(hasSubComponents);
 
 
-	if (!val.isVoid()) componentOperator->setValueWithData(val);
-	else if (!ghostComponent.isVoid()) componentOperator->setValueWithKey(ghostComponent);
+	// Keep the saved component until its target supplies the matching options.
+	if (!ghostComponent.isVoid() && componentOperator->setValueWithKey(ghostComponent)) ghostComponent = var();
+	else if (!val.isVoid()) componentOperator->setValueWithData(val);
 
 	updateValueFromTargetAndComponent();
 
@@ -255,7 +256,10 @@ void GenericControllableCommand::updateOperatorOptions()
 
 	if (value->type != Controllable::TARGET) valueOperator->addOption("Random", RANDOM);
 
-	if (oldData.isNotEmpty()) valueOperator->setValueWithKey(oldData);
+	if (oldData.isNotEmpty())
+	{
+		if (valueOperator->setValueWithKey(oldData)) ghostOperator = var();
+	}
 	else valueOperator->setValueWithData(EQUAL);
 
 	valueOperator->setEnabled(valueOperator->getAllKeys().size() >= 1);
@@ -611,6 +615,14 @@ void GenericControllableCommand::linkUpdated(ParameterLink* pLink)
 	}
 }
 
+void GenericControllableCommand::listItemUpdated(ParameterLink* pLink, int multiplexIndex)
+{
+	BaseCommand::listItemUpdated(pLink, multiplexIndex);
+	// Index zero defines the command's value type, including targets resolved
+	// after endLoadFile and targets edited in an already linked list.
+	if (pLink->parameter == target && multiplexIndex == 0 && !isCurrentlyLoadingData) updateComponentFromTarget();
+}
+
 void GenericControllableCommand::loadJSONDataInternal(var data)
 {
 	BaseCommand::loadJSONDataInternal(data);
@@ -652,6 +664,9 @@ void GenericControllableCommand::loadGhostData(var data)
 			ghostComponent = paramsData[i].getProperty("value", var());
 		}
 	}
+	// Delayed target recovery runs outside file loading. Restore even an
+	// unlinked value explicitly so it is not auto-linked to the mapping input.
+	ghostValueParamLinkData = data.getProperty("paramLinks", var()).getProperty("value", var(new DynamicObject()));
 	ParamLinkContainer::loadJSONDataInternal(data); //force refreshing links
 
 	if (action == SET_VALUE || action == GO_TO_VALUE) updateComponentFromTarget(); //force generate if not yet

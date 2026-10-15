@@ -58,6 +58,7 @@ public:
 	virtual Controllable* getTargetControllableAtIndex(int multiplexIndex);
 
 	virtual void linkUpdated(ParameterLink* pLink) override;
+	void listItemUpdated(ParameterLink* pLink, int multiplexIndex) override;
 	virtual void onContainerParameterChanged(Parameter*) override;
 
 	virtual void parameterRangeChanged(Parameter* p) override;
