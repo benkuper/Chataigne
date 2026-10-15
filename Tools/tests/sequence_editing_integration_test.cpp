@@ -170,8 +170,11 @@ static void blockHandles()
     host.setOpaque(true);
     host.setBounds(20, 20, 600, 100);
     host.addToDesktop(ComponentPeer::windowIsTemporary | ComponentPeer::windowIgnoresKeyPresses);
+    // Keep native hit testing independent of other desktop windows.
+    host.setAlwaysOnTop(true);
     host.setVisible(true);
     host.toFront(false);
+    drainMessages();
     LayerBlockUI ui(&block);
     host.addAndMakeVisible(ui);
     ui.setBounds(0, 0, 500, 80);
