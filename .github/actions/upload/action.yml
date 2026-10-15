@@ -14,5 +14,9 @@ inputs:
 runs:
   using: "composite"
   steps: 
-    - run: curl -X POST -F "appFile=@${{ inputs.pkg-name }}" -F "pass=${{ inputs.pass }}" ${{ inputs.url }}
+    - run: python "${{ github.action_path }}/upload.py"
       shell: bash
+      env:
+        UPLOAD_URL: ${{ inputs.url }}
+        UPLOAD_PASSWORD: ${{ inputs.pass }}
+        UPLOAD_FILE: ${{ inputs.pkg-name }}
