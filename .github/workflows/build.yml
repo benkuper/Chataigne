@@ -53,6 +53,58 @@ jobs:
       - name: Build
         run:  msbuild "Builds/${{ matrix.buildFolder }}/${{ env.ProjectName }}.sln" /p:PreferredToolArchitecture=x64 /m /verbosity:normal /p:Configuration=${{ steps.set_variables.outputs.config }}
 
+      - name: Preserve Windows symbols
+        if: matrix.arch == 'win-x64'
+        id: windows_symbols
+        shell: powershell
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $symbolName = '${{ env.ProjectName }}-${{ steps.set_variables.outputs.suffix }}.pdb'
+          $pdb = 'Builds/${{ matrix.buildFolder }}/x64/${{ steps.set_variables.outputs.config }}/App/${{ env.ProjectName }}.pdb'
+          $exe = 'Binaries/CI/App/${{ env.ProjectName }}.exe'
+          if (!(Test-Path -LiteralPath $pdb) -or (Get-Item -LiteralPath $pdb).Length -eq 0) { throw 'The matching PDB is missing or empty.' }
+          New-Item -ItemType Directory -Path Binaries/windows-symbols -Force | Out-Null
+          Copy-Item -LiteralPath $pdb -Destination "Binaries/windows-symbols/$symbolName"
+          Copy-Item -LiteralPath $exe -Destination Binaries/windows-symbols/
+          @{
+            commit = '${{ github.sha }}'
+            run = '${{ github.run_id }}'
+            attempt = '${{ github.run_attempt }}'
+            executableSHA256 = (Get-FileHash -LiteralPath $exe -Algorithm SHA256).Hash
+            pdbSHA256 = (Get-FileHash -LiteralPath $pdb -Algorithm SHA256).Hash
+          } | ConvertTo-Json | Set-Content Binaries/windows-symbols/build.json -Encoding UTF8
+          "pdb-name=$symbolName" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
+
+      - name: Archive matching Windows EXE and PDB
+        if: matrix.arch == 'win-x64'
+        uses: actions/upload-artifact@v4
+        with:
+          name: symbols-${{ steps.set_variables.outputs.suffix }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: Binaries/windows-symbols/
+          if-no-files-found: error
+          retention-days: 90
+
+      - name: Compress PDB for upload
+        if: matrix.arch == 'win-x64'
+        id: compress_pdb
+        shell: powershell
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $pdb = 'Binaries/windows-symbols/${{ steps.windows_symbols.outputs.pdb-name }}'
+          $archive = 'Binaries/pdb-upload/${{ steps.windows_symbols.outputs.pdb-name }}.zip'
+          New-Item -ItemType Directory -Path Binaries/pdb-upload -Force | Out-Null
+          Compress-Archive -LiteralPath $pdb -DestinationPath $archive -CompressionLevel Optimal
+          Write-Host "PDB upload compressed from $((Get-Item -LiteralPath $pdb).Length) to $((Get-Item -LiteralPath $archive).Length) bytes."
+          "archive-path=$archive" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
+
+      - name: Upload PDB
+        if: matrix.arch == 'win-x64'
+        uses: ./.github/actions/upload
+        with:
+          pkg-name: ${{ steps.compress_pdb.outputs.archive-path }}
+          url: ${{ secrets.PDBUPLOADURL }}
+          pass: ${{ secrets.PDBUPLOADPASS }}
+
       - name: Stage Dependencies
         shell: powershell
         run: |
@@ -119,7 +171,6 @@ jobs:
           &"C:/Program Files (x86)/Inno Setup 6/ISCC.exe" "${{ github.workspace }}/${{ matrix.installerName }}.iss" /O. /F$PKGNAME
           if ($LASTEXITCODE -ne 0) { throw 'Installer compilation failed' }
           echo "pkg-name=$PKGNAME.exe" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
-          echo "pdb-name=$PKGNAME.pdb" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
         working-directory: ./Binaries/CI/App
 
       - name: Upload
@@ -127,22 +178,6 @@ jobs:
         with:
           pkg-name: ./Binaries/CI/App/${{ steps.create_package.outputs.pkg-name }}
           url: ${{ secrets.UPLOADURL }}
-          pass: ${{ secrets.UPLOADPASS }}
-
-      - name: Rename PDB
-        if: ${{ steps.set_variables.outputs.config == 'Release' && matrix.arch == 'win-x64' }}
-        id: rename_pdb
-        shell: powershell
-        run: |
-          Rename-Item -Path "./${{ env.ProjectName }}.pdb" -NewName "${{ steps.create_package.outputs.pdb-name }}"
-        working-directory: ./Builds/${{ matrix.buildFolder }}/x64/${{ steps.set_variables.outputs.config }}/App
-
-      - name: Upload PDB
-        if: ${{ steps.set_variables.outputs.config == 'Release' && matrix.arch == 'win-x64' }}
-        uses: ./.github/actions/upload
-        with:
-          pkg-name: ./Builds/${{ matrix.buildFolder }}/x64/${{ steps.set_variables.outputs.config }}/App/${{ steps.create_package.outputs.pdb-name }}
-          url: ${{ secrets.PDBUPLOADURL }}
           pass: ${{ secrets.UPLOADPASS }}
 
   osx:
