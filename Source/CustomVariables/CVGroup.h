@@ -48,13 +48,18 @@ public:
 	//Animated interpolation
 	Automation defaultInterpolation;
 
-	CVPreset* targetPreset;
+	std::atomic<CVPreset*> targetPreset;
 	Automation* interpolationAutomation;
 	WeakReference<Inspectable> automationRef;
 	float interpolationTime;
 	FloatParameter* interpolationProgress;
 
 	CriticalSection interpolationLock;
+	// Construct and destroy these model snapshots on the message thread, after
+	// stopping the worker. Their parameter callbacks must not rebuild worker data.
+	std::unique_ptr<CVPreset> interpolationPresetSnapshot;
+	std::unique_ptr<Automation> interpolationCurveSnapshot;
+	Array<var> interpolationSourceValues;
 
 	void addItemFromParameter(Parameter* source, bool linkAsMaster = true);
 	void addItemsFromGroup(CVGroup* source);

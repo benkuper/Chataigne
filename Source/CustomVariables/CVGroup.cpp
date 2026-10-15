@@ -58,7 +58,7 @@ Voronoi and Gradient Band (not implemented yet) also locks values but interpolat
 CVGroup::~CVGroup()
 {
 	if (morpher != nullptr) morpher->removeMorpherListener(this);
-	stopThread(100);
+	stopInterpolation();
 }
 
 void CVGroup::addItemFromParameter(Parameter* source, bool linkAsMaster)
@@ -171,18 +171,48 @@ void CVGroup::lerpPresets(Array<var> sourceValues, CVPreset* endPreset, float we
 
 void CVGroup::goToPreset(CVPreset* p, float time, Automation* curve)
 {
+	if (p == nullptr || !std::isfinite(time) || time < 0) return;
+	if (auto* mm = MessageManager::getInstanceWithoutCreating(); mm != nullptr && !mm->isThisTheMessageThread())
+	{
+		WeakReference<ControllableContainer> groupRef(this), presetRef(p), curveRef(curve);
+		MessageManager::callAsync([groupRef, presetRef, curveRef, time]()
+		{
+			auto* group = dynamic_cast<CVGroup*>(groupRef.get());
+			auto* preset = dynamic_cast<CVPreset*>(presetRef.get());
+			if (group != nullptr && preset != nullptr && !group->isClearing && !group->isBeingDestroyed)
+				group->goToPreset(preset, time, dynamic_cast<Automation*>(curveRef.get()));
+		});
+		return;
+	}
 	if (targetPreset == p) return;
 
-	GenericScopedLock lock(interpolationLock);
+	// Never wait for a worker while holding the lock it needs to start.
+	stopInterpolation();
 
 	if (time == 0)
 	{
-		stopThread(1000);
 		setValuesToPreset(p);
 		return;
 	}
 
-	stopThread(1000);
+	GenericScopedLock lock(interpolationLock);
+	interpolationSourceValues.clear();
+	for (auto* item : values.items)
+	{
+		auto* parameter = static_cast<Parameter*>(item->controllable);
+		const SpinLock::ScopedLockType valueLock(parameter->valueSetLock);
+		interpolationSourceValues.add(parameter->value.clone());
+	}
+
+	interpolationPresetSnapshot = std::make_unique<CVPreset>(this, true);
+	interpolationPresetSnapshot->loadJSONData(p->getJSONData());
+	for (auto* item : interpolationPresetSnapshot->values.manager->items)
+		if (auto* parameter = dynamic_cast<Parameter*>(item->controllable)) parameter->isOverriden = true;
+
+	interpolationCurveSnapshot = std::make_unique<Automation>();
+	interpolationCurveSnapshot->isSelectable = false;
+	interpolationCurveSnapshot->hideInEditor = true;
+	if (curve != nullptr) interpolationCurveSnapshot->loadJSONData(curve->getJSONData());
 
 	targetPreset = p;
 	interpolationAutomation = curve;
@@ -195,7 +225,12 @@ void CVGroup::goToPreset(CVPreset* p, float time, Automation* curve)
 
 void CVGroup::stopInterpolation()
 {
-	stopThread(1000);
+	if (Thread::getCurrentThread() == this)
+	{
+		signalThreadShouldExit();
+		notify();
+	}
+	else stopThread(-1);
 	targetPreset = nullptr;
 }
 
@@ -386,30 +421,9 @@ void CVGroup::loadJSONDataInternal(var data)
 
 void CVGroup::run()
 {
-	if (targetPreset == nullptr || interpolationTime <= 0) return;
-
-
-	interpolationLock.enter();
-	Array<var> sourceValues;
-	for (auto& v : values.items) sourceValues.add(((Parameter*)v->controllable)->value);
-
-
-	CVPreset p2(this, true);
-	p2.loadJSONData(targetPreset->getJSONData());
-	for (auto& v : p2.values.manager->items)
-	{
-		if (Parameter* p = dynamic_cast<Parameter*>(v->controllable)) p->isOverriden = true; //force use
-	}
-
-
-	Automation a;
-	a.isSelectable = false;
-	a.hideInEditor = true;
-	if (interpolationAutomation != nullptr && !automationRef.wasObjectDeleted()) a.loadJSONData(interpolationAutomation->getJSONData());
+	if (targetPreset == nullptr || interpolationTime <= 0 || interpolationPresetSnapshot == nullptr || interpolationCurveSnapshot == nullptr) return;
 
 	interpolationProgress->setValue(0);
-
-	interpolationLock.exit();
 
 
 	double timeAtStart = Time::getMillisecondCounter() / 1000.0;
@@ -420,8 +434,8 @@ void CVGroup::run()
 
 		interpolationProgress->setValue(rel);
 
-		float weight = a.getValueAtPosition(rel);
-		lerpPresets(sourceValues, &p2, weight);
+		float weight = interpolationCurveSnapshot->getValueAtPosition(rel);
+		lerpPresets(interpolationSourceValues, interpolationPresetSnapshot.get(), weight);
 
 		if (rel == 1) break;
 
@@ -430,7 +444,6 @@ void CVGroup::run()
 
 	targetPreset = nullptr;
 	interpolationProgress->setValue(0);
-	interpolationAutomation = nullptr;
 }
 
 CVGroup::ValuesManager::ValuesManager() :
