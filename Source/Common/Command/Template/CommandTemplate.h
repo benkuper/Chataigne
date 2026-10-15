@@ -34,6 +34,10 @@ public:
 	OwnedArray<CommandTemplateParameter> templateParams;
 	std::unique_ptr<CustomValuesCommandArgumentManager> customValuesManager;
 
+	// Set during setup using template-owned state; return true if the editor needs rebuilding.
+	std::function<bool()> updateTemplateParamsFunc;
+	void updateTemplateParams();
+
 	void generateParametersFromDefinition(CommandDefinition* def);
 
 	BaseCommand* createCommand(Module* m, CommandContext context, var params, Multiplex* multiplex = nullptr);

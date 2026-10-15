@@ -113,9 +113,9 @@ void MIDINoteAndCCCommand::updateNoteParams()
 	}
 	else
 	{
-		int pitch = getPitchFromNote(0);
 		number = new IntParameter("Pitch", "The pitch of the note", 0, 0, 127);
-		number->setValue(pitch);
+		// Let templates supply the default without marking a converted note as a user override.
+		if (linkedTemplate == nullptr) number->setValue(getPitchFromNote(0));
 
 		removeControllable(noteEnum);
 		removeControllable(octave);
@@ -125,7 +125,47 @@ void MIDINoteAndCCCommand::updateNoteParams()
 		addParameter(number, controllables.indexOf(channel) + 1);
 	}
 
+	// Only the newly created note parameters need their template defaults and editability.
+	if (linkedTemplate != nullptr)
+	{
+		Parameter* noteParams[] = { noteEnum, octave, number };
+		for (auto* p : noteParams)
+		{
+			if (p == nullptr) continue;
+			updateParameterFromTemplate(dynamic_cast<CommandTemplateParameter*>(linkedTemplate->paramsContainer.getControllableContainerByName(p->shortName)));
+		}
+	}
+}
 
+void MIDINoteAndCCCommand::setupTemplateParameters(CommandTemplate* ct)
+{
+	MIDICommand::setupTemplateParameters(ct);
+	if (noteMode == nullptr) return;
+
+	auto getTemplateParam = [ct](Parameter* p)
+	{
+		return dynamic_cast<CommandTemplateParameter*>(ct->paramsContainer.getControllableContainerByName(p->shortName));
+	};
+	auto* mode = static_cast<EnumParameter*>(getTemplateParam(noteMode)->parameter);
+	auto* note = getTemplateParam(noteEnum);
+	auto* octaveParam = getTemplateParam(octave);
+
+	// Keep both representations in templates so their values survive mode changes and saving.
+	IntParameter pitchParam("Pitch", "The pitch of the note", getPitchFromNote(0), 0, 127);
+	auto* pitch = new CommandTemplateParameter(&pitchParam);
+	ct->templateParams.add(pitch);
+	ct->paramsContainer.addChildControllableContainer(pitch, false, ct->paramsContainer.controllableContainers.indexOf(octaveParam) + 1);
+
+	// The source command is temporary: capture only parameters owned by the template.
+	ct->updateTemplateParamsFunc = [mode, note, octaveParam, pitch]()
+	{
+		const bool isPitch = mode->getValueDataAsEnum<NoteMode>() == MODE_PITCH;
+		const bool changed = note->hideInEditor != isPitch || octaveParam->hideInEditor != isPitch || pitch->hideInEditor == isPitch;
+		note->hideInEditor = isPitch;
+		octaveParam->hideInEditor = isPitch;
+		pitch->hideInEditor = !isPitch;
+		return changed;
+	};
 }
 
 void MIDINoteAndCCCommand::setValue(var value, int multiplexIndex)

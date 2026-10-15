@@ -95,11 +95,22 @@ void CommandTemplate::generateParametersFromDefinition(CommandDefinition * def)
 		return;
 	}
 
+	updateTemplateParamsFunc = nullptr;
 	paramsContainer.clear();
+	templateParams.clear();
 	std::unique_ptr<BaseCommand> c(def->create(CommandContext::ACTION, nullptr));
 
 	c->setupTemplateParameters(this);
+	updateTemplateParams();
 	c->clear();
+}
+
+void CommandTemplate::updateTemplateParams()
+{
+	if (updateTemplateParamsFunc && updateTemplateParamsFunc())
+	{
+		paramsContainer.queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, &paramsContainer));
+	}
 }
 
 BaseCommand * CommandTemplate::createCommand(Module * m, CommandContext context, var params, Multiplex * multiplex)
@@ -132,6 +143,7 @@ void CommandTemplate::onControllableFeedbackUpdateInternal(ControllableContainer
 	CommandTemplateParameter * ctp = c->getParentAs<CommandTemplateParameter>();
 	if (ctp != nullptr)
 	{
+		updateTemplateParams();
 		templateListeners.call(&TemplateListener::templateParameterChanged, ctp);
 	}
 	//if (cc == &arguments) modelListeners.call(&ModelListener::commandModelArgumentsChanged, this);
@@ -203,7 +215,7 @@ void CommandTemplate::loadJSONDataInternal(var data)
 		customValuesManager->loadJSONData(data.getProperty("customValues",var()));
 	}
 
-	
+	updateTemplateParams();
 }
 
 InspectableEditor * CommandTemplate::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
