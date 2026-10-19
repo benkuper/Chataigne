@@ -44,4 +44,3 @@ try {
     & $testExe
     if ($LASTEXITCODE -ne 0) { throw 'OSC crash regression tests failed.' }
 } finally { Pop-Location }
-
