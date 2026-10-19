@@ -371,44 +371,53 @@ void CustomOSCModule::onControllableFeedbackUpdateInternal(ControllableContainer
 {
 	OSCModule::onControllableFeedbackUpdateInternal(cc, c);
 
-	if (autoFeedback->boolValue())
+	if (hierarchyStructureSwitch) return;
+
+	if (autoFeedback->boolValue() && isControllableInValuesContainer(c))
 	{
-		if (isControllableInValuesContainer(c))
+		try
 		{
-			try
+			String cAddress = useHierarchy->boolValue() ? c->getControlAddress(&valuesCC) : c->niceName;
+			if (!cAddress.startsWith("/"))
 			{
-				String cAddress = useHierarchy->boolValue() ? c->getControlAddress(&valuesCC) : c->niceName;
-				if (!cAddress.startsWith("/"))
-				{
-					//Not an osc address, not sending
-					return;
-				}
-
-				OSCMessage m(cAddress);
-				if (c->type == Controllable::TRIGGER) sendOSC(m);
-				else OSCHelpers::addArgumentsForParameter(m, (Parameter*)c, getBoolMode(), getColorMode());
-
-				sendOSC(m);
-			}
-			catch (OSCFormatError& e)
-			{
-				NLOGERROR(niceName, "Error sending feedback " << c->niceName << " : " << e.description);
+				//Not an osc address, not sending
+				return;
 			}
 
+			OSCMessage m(cAddress);
+			if (c->type == Controllable::TRIGGER) sendOSC(m);
+			else OSCHelpers::addArgumentsForParameter(m, (Parameter*)c, getBoolMode(), getColorMode());
+
+			sendOSC(m);
+		}
+		catch (OSCFormatError& e)
+		{
+			NLOGERROR(niceName, "Error sending feedback " << c->niceName << " : " << e.description);
 		}
 	}
 	else if (c == useHierarchy)
 	{
 		if (!isCurrentlyLoadingData)
 		{
-			hierarchyStructureSwitch = true;
+			const ScopedValueSetter<bool> switchingHierarchy(hierarchyStructureSwitch, true);
 			Array<WeakReference<Controllable>> cont = valuesCC.getAllControllables(true);
 			Array<OSCMessage> msg;
-			for (auto& c : cont)
+			try
 			{
-				OSCMessage m = OSCHelpers::getOSCMessageForControllable(c, &valuesCC);
-				if (useHierarchy->boolValue()) m.setAddressPattern(c->niceName.replaceCharacter(' ', '_'));
-				msg.add(m);
+				// Validate every destination before clearing any of the original values.
+				for (auto& value : cont)
+				{
+					if (value == nullptr) continue;
+					OSCMessage m = OSCHelpers::getOSCMessageForControllable(value, &valuesCC);
+					if (useHierarchy->boolValue()) m.setAddressPattern(value->niceName.replaceCharacter(' ', '_'));
+					msg.add(m);
+				}
+			}
+			catch (const OSCFormatError& e)
+			{
+				useHierarchy->setValue(!useHierarchy->boolValue());
+				NLOGERROR(niceName, "Cannot change OSC hierarchy: " << e.description);
+				return;
 			}
 
 			valuesCC.clear();
@@ -416,8 +425,6 @@ void CustomOSCModule::onControllableFeedbackUpdateInternal(ControllableContainer
 			autoAdd->setValue(true);
 			for (auto& m : msg) processMessage(m);
 			autoAdd->setValue(tmpAutoAdd);
-			hierarchyStructureSwitch = false;
-
 			updateControllableAddressMap();
 		}
 	}else if (c == clearValues)

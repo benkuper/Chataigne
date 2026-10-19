@@ -305,7 +305,7 @@ void OSCModule::setupZeroConf()
 var OSCModule::sendOSCFromScript(const var::NativeFunctionArgs& a)
 {
 	OSCModule* m = getObjectFromJS<OSCModule>(a);
-	if (!m->enabled->boolValue()) return var();
+	if (m == nullptr || !m->enabled->boolValue()) return var();
 
 	if (!checkNumArgs(m->niceName, a, 1)) return var();
 
@@ -355,7 +355,7 @@ var OSCModule::sendOSCFromScript(const var::NativeFunctionArgs& a)
 var OSCModule::sendOSCToFromScript(const var::NativeFunctionArgs& a)
 {
 	OSCModule* m = getObjectFromJS<OSCModule>(a);
-	if (!m->enabled->boolValue()) return var();
+	if (m == nullptr || !m->enabled->boolValue()) return var();
 	if (!checkNumArgs(m->niceName, a, 3)) return var();
 
 	OSCHelpers::BoolMode bm = m->getBoolMode();
@@ -391,6 +391,7 @@ var OSCModule::sendOSCToFromScript(const var::NativeFunctionArgs& a)
 var OSCModule::matchOSCAddrFromScript(const var::NativeFunctionArgs& a)
 {
 	OSCModule* m = getObjectFromJS<OSCModule>(a);
+	if (m == nullptr) return var();
 	if (!checkNumArgs(m->niceName, a, 2)) return var();
 
 	try
@@ -412,6 +413,7 @@ var OSCModule::matchOSCAddrFromScript(const var::NativeFunctionArgs& a)
 var OSCModule::registerOSCCallbackFromScript(const var::NativeFunctionArgs& a)
 {
 	OSCModule* m = getObjectFromJS<OSCModule>(a);
+	if (m == nullptr) return var();
 	if (!checkNumArgs(m->niceName, a, 2)) return var();
 
 	try
