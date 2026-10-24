@@ -478,6 +478,8 @@ jobs:
           APPDIR=./Builds/LinuxMakefile/${{ env.ProjectName }}.AppDir
           BIN=$APPDIR/usr/bin/${{ env.ProjectName }}
 
+          python3 Tools/tests/appimage_audio_runtime_test.py
+
           # 1. Copy Executable
           cp Builds/LinuxMakefile/build/${{ env.ProjectName }} "$BIN"
           cp Binaries/mcp-tools/chataigne-mcp-bridge "$APPDIR/usr/bin/"
@@ -508,11 +510,12 @@ jobs:
           fi
 
           # 3. Auto-bundle runtime deps from direct NEEDED entries, excluding forbidden core libs.
+          # JACK/PipeWire must come from the host (including pw-jack's LD_LIBRARY_PATH).
           SEARCH_DIRS=("$LIB_PATH" "/lib/x86_64-linux-gnu" "/usr/lib/x86_64-linux-gnu")
 
           is_forbidden_lib() {
             case "$1" in
-              libc.so*|libm.so*|libpthread.so*|librt.so*|libdl.so*|libgcc_s.so*|libstdc++.so*|libssl.so*|libcrypto.so*|libcurl.so*|libpulse.so*|libpulsecommon*.so*|ld-linux*.so*|libresolv.so*|libnss_*.so*|libanl.so*|libutil.so*)
+              libc.so*|libm.so*|libpthread.so*|librt.so*|libdl.so*|libgcc_s.so*|libstdc++.so*|libssl.so*|libcrypto.so*|libcurl.so*|libpulse.so*|libpulsecommon*.so*|libjack.so*|libjacknet.so*|libjackserver.so*|libpipewire-*.so*|ld-linux*.so*|libresolv.so*|libnss_*.so*|libanl.so*|libutil.so*)
                 return 0
                 ;;
               *)
@@ -574,8 +577,8 @@ jobs:
             done < <(find "$APPDIR/usr/lib" -maxdepth 1 \( -type f -o -type l \))
           done
 
-          # Never bundle glibc/libstdc++/OpenSSL/libcurl/libpulse
-          for FORBIDDEN in libc.so libm.so libpthread.so librt.so libdl.so libgcc_s.so libstdc++.so libssl.so libcrypto.so libcurl.so libpulse.so libpulsecommon; do
+          # Never bundle core libraries or host audio clients.
+          for FORBIDDEN in libc.so libm.so libpthread.so librt.so libdl.so libgcc_s.so libstdc++.so libssl.so libcrypto.so libcurl.so libpulse.so libpulsecommon libjack.so libjacknet.so libjackserver.so libpipewire-; do
             if compgen -G "$APPDIR/usr/lib/${FORBIDDEN}*" > /dev/null; then
               echo "::error::Forbidden bundled runtime detected: ${FORBIDDEN}"
               exit 1
@@ -602,7 +605,7 @@ jobs:
               apt-get update >/dev/null
               apt-get install -y --no-install-recommends xvfb xauth file >/dev/null
 
-              # AppImage payload intentionally relies on host-provided libcurl/libpulse.
+              # AppImage payload relies on host-provided network and audio clients.
               install_any_pkg() {
                 for PKG in "$@"; do
                   if apt-cache show "$PKG" >/dev/null 2>&1; then
@@ -615,6 +618,8 @@ jobs:
               }
               install_any_pkg libcurl4 libcurl4t64
               install_any_pkg libpulse0 libpulse0t64
+              install_any_pkg libjack-jackd2-0 libjack0
+              install_any_pkg libpipewire-0.3-0 libpipewire-0.3-0t64
               install_any_pkg libgcrypt20 libgcrypt20t64
               cd /ws
               chmod +x '"$PKG"'
@@ -869,11 +874,12 @@ jobs:
           fi
 
           # 3. Auto-bundle direct+transitive runtime deps using cross-readelf (works for foreign arch binaries).
+          # JACK/PipeWire must come from the host (including pw-jack's LD_LIBRARY_PATH).
           SEARCH_DIRS=("$LIB_PATH" "/lib/${{ matrix.gnu_type }}" "/usr/lib/${{ matrix.gnu_type }}")
 
           is_forbidden_lib() {
             case "$1" in
-              libc.so*|libm.so*|libpthread.so*|librt.so*|libdl.so*|libgcc_s.so*|libstdc++.so*|libssl.so*|libcrypto.so*|libcurl.so*|libpulse.so*|libpulsecommon*.so*|ld-linux*.so*|libresolv.so*|libnss_*.so*|libanl.so*|libutil.so*)
+              libc.so*|libm.so*|libpthread.so*|librt.so*|libdl.so*|libgcc_s.so*|libstdc++.so*|libssl.so*|libcrypto.so*|libcurl.so*|libpulse.so*|libpulsecommon*.so*|libjack.so*|libjacknet.so*|libjackserver.so*|libpipewire-*.so*|ld-linux*.so*|libresolv.so*|libnss_*.so*|libanl.so*|libutil.so*)
                 return 0
                 ;;
               *)
@@ -963,8 +969,8 @@ jobs:
             verify_target_needed "$LIBFILE"
           done < <(find "$APPDIR/usr/lib" \( -type f -o -type l \))
 
-          # Never bundle glibc/libstdc++/OpenSSL/libcurl/libpulse
-          for FORBIDDEN in libc.so libm.so libpthread.so librt.so libdl.so libgcc_s.so libstdc++.so libssl.so libcrypto.so libcurl.so libpulse.so libpulsecommon; do
+          # Never bundle core libraries or host audio clients.
+          for FORBIDDEN in libc.so libm.so libpthread.so librt.so libdl.so libgcc_s.so libstdc++.so libssl.so libcrypto.so libcurl.so libpulse.so libpulsecommon libjack.so libjacknet.so libjackserver.so libpipewire-; do
             if compgen -G "$APPDIR/usr/lib/${FORBIDDEN}*" > /dev/null; then
               echo "::error::Forbidden bundled runtime detected: ${FORBIDDEN}"
               exit 1
@@ -993,7 +999,7 @@ jobs:
 
           is_forbidden_lib() {
             case "$1" in
-              libc.so*|libm.so*|libpthread.so*|librt.so*|libdl.so*|libgcc_s.so*|libstdc++.so*|libssl.so*|libcrypto.so*|libcurl.so*|libpulse.so*|libpulsecommon*.so*|ld-linux*.so*|libresolv.so*|libnss_*.so*|libanl.so*|libutil.so*)
+              libc.so*|libm.so*|libpthread.so*|librt.so*|libdl.so*|libgcc_s.so*|libstdc++.so*|libssl.so*|libcrypto.so*|libcurl.so*|libpulse.so*|libpulsecommon*.so*|libjack.so*|libjacknet.so*|libjackserver.so*|libpipewire-*.so*|ld-linux*.so*|libresolv.so*|libnss_*.so*|libanl.so*|libutil.so*)
                 return 0
                 ;;
               *)
