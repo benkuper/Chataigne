@@ -1,91 +1,162 @@
-"""Upload packages without treating HTTP or PHP-level failures as success."""
+"""Publish verified packages and crash symbols over authenticated SFTP."""
 
-import os
-import json
+from contextlib import contextmanager
+import errno
 import hashlib
+import json
+import os
 from pathlib import Path
-import subprocess
+import posixpath
+import re
+import stat
 import sys
+import time
+import uuid
 import zipfile
 
-
-def pdb_archive_checksum(path):
-    with zipfile.ZipFile(path) as archive:
-        entries = archive.infolist()
-        if (len(entries) != 1 or not entries[0].filename.lower().endswith(".pdb")
-                or "/" in entries[0].filename or "\\" in entries[0].filename):
-            raise ValueError("The PDB ZIP must contain exactly one .pdb file at its root.")
-        digest = hashlib.sha256()
-        with archive.open(entries[0]) as stream:
-            for chunk in iter(lambda: stream.read(1024 * 1024), b""):
-                digest.update(chunk)
-        return digest.hexdigest()
+import paramiko
 
 
-def print_server_diagnostic(body, password):
-    # The new PHP handler emits one JSON record. A retried request can leave
-    # several records in curl's stdout, so use the last recognized response.
-    for line in reversed(body.splitlines()):
+def checksum(stream):
+    digest = hashlib.sha256()
+    for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+        digest.update(chunk)
+    return digest.hexdigest()
+
+
+def valid_filename(name):
+    return re.fullmatch(r"Chataigne-[A-Za-z0-9_.-]+", name) is not None and ".." not in name
+
+
+@contextmanager
+def payload(path, kind):
+    if not path.is_file() or path.stat().st_size <= 0 or not valid_filename(path.name):
+        raise ValueError("A nonempty Chataigne release file is required")
+    if kind == "pdb":
+        if not path.name.endswith(".pdb.zip"):
+            raise ValueError("Symbols must be a PDB ZIP")
+        with zipfile.ZipFile(path) as archive:
+            entries = archive.infolist()
+            if (len(entries) != 1 or entries[0].filename != path.name[:-4]
+                    or entries[0].file_size <= 0 or entries[0].file_size > 512 * 1024 * 1024
+                    or entries[0].flag_bits & 1):
+                raise ValueError("The ZIP must contain its matching PDB at the root")
+            entry = entries[0]
+            with archive.open(entry) as source:
+                digest = checksum(source)
+            with archive.open(entry) as source:
+                # Preserve the crash server's raw-PDB layout; SSH compression
+                # avoids needing the HTTP ZIP extraction handler during upload.
+                yield source, entry.filename, entry.file_size, digest
+    elif kind == "package" and path.suffix.lower() in (".exe", ".pkg", ".appimage"):
+        with path.open("rb") as source:
+            digest = checksum(source)
+            source.seek(0)
+            yield source, path.name, path.stat().st_size, digest
+    else:
+        raise ValueError("Unsupported upload kind or package extension")
+
+
+def configuration(raw):
+    config = json.loads(raw)
+    if not isinstance(config, dict):
+        raise ValueError("SFTP configuration must be an object")
+    for key in ("host", "username", "password", "remotePath", "hostKey"):
+        if not isinstance(config.get(key), str) or not config[key].strip():
+            raise ValueError("Incomplete SFTP configuration")
+    config["port"] = int(config.get("port", 22))
+    if not 1 <= config["port"] <= 65535:
+        raise ValueError("Invalid SFTP port")
+    root = config["remotePath"]
+    if not root.startswith("/") or root == "/" or posixpath.normpath(root) != root:
+        raise ValueError("An explicit normalized project directory is required")
+    return config
+
+
+def connect(config):
+    client = paramiko.SSHClient()
+    host = config["host"] if config["port"] == 22 else f'[{config["host"]}]:{config["port"]}'
+    entry = paramiko.hostkeys.HostKeyEntry.from_line(host + " " + config["hostKey"])
+    if entry is None or entry.key is None:
+        raise ValueError("A pinned SSH host key is required")
+    client.get_host_keys().add(host, entry.key.get_name(), entry.key)
+    client.set_missing_host_key_policy(paramiko.RejectPolicy())
+    try:
+        client.connect(config["host"], port=config["port"], username=config["username"],
+                       password=config["password"], look_for_keys=False, allow_agent=False,
+                       timeout=30, banner_timeout=30, auth_timeout=30, compress=True)
+    except Exception:
+        client.close()
+        raise
+    return client
+
+
+def publish(sftp, root, source, filename, size, digest, kind):
+    relative = "support/pdb" if kind == "pdb" else "user/data"
+    directory = posixpath.join(root, relative)
+    if not valid_filename(filename) or not stat.S_ISDIR(sftp.stat(directory).st_mode):
+        raise ValueError("Invalid upload destination")
+    destination = posixpath.join(directory, filename)
+    temporary = posixpath.join(directory, f".{filename}.{uuid.uuid4().hex}.upload")
+    try:
+        sftp.putfo(source, temporary, file_size=size, confirm=True)
+        if sftp.stat(temporary).st_size != size:
+            raise ValueError("Incomplete SFTP upload")
+        with sftp.open(temporary, "rb") as uploaded:
+            uploaded.prefetch(file_size=size, max_concurrent_requests=16)
+            if checksum(uploaded) != digest:
+                raise ValueError("Uploaded file checksum mismatch")
+        sftp.chmod(temporary, 0o600 if kind == "pdb" else 0o644)
+        # A failed transfer or verification never truncates an existing release.
+        sftp.posix_rename(temporary, destination)
+        if sftp.stat(destination).st_size != size:
+            raise ValueError("Published file size mismatch")
+    finally:
         try:
-            response = json.loads(line)
-        except (ValueError, UnicodeError):
-            continue
-        if not isinstance(response, dict) or response.get("schema") != "chataigne-upload-v1" or response.get("ok") is not False:
-            continue
-        redact = lambda text: str(text).replace(password, "<redacted>")[:2000]
-        print(f"Upload failed [{redact(response.get('code', 'unknown'))}]: {redact(response.get('message', 'Server rejected the upload.'))}", file=sys.stderr)
-        details = response.get("details", {})
-        keys = ("content_length_bytes", "post_max_size", "upload_max_filesize",
-                "post_fields_received", "files_received", "upload_error", "file_bytes",
-                "compressed_bytes", "zip_error", "write_errors",
-                "temporary_storage", "destination_storage")
-        if isinstance(details, dict):
-            safe_details = {key: details[key] for key in keys if key in details}
-            print(redact(json.dumps(safe_details, sort_keys=True)), file=sys.stderr)
-        print(f"Server request ID: {redact(response.get('request_id', 'unavailable'))}", file=sys.stderr)
-        return True
-    return False
+            sftp.remove(temporary)
+        except OSError:
+            pass
+    return relative + "/" + filename
 
 
 def main():
-    path = Path(os.environ["UPLOAD_FILE"])
-    url = os.environ["UPLOAD_URL"]
-    password = os.environ["UPLOAD_PASSWORD"]
-    if not path.is_file() or path.stat().st_size == 0:
-        print("Upload failed: the package is missing or empty.", file=sys.stderr)
-        return 1
-    if not url or not password:
-        print("Upload failed: URL and password are required.", file=sys.stderr)
+    try:
+        config = configuration(os.environ["UPLOAD_SFTP_CONFIG"])
+        path = Path(os.environ["UPLOAD_FILE"])
+        kind = os.environ.get("UPLOAD_KIND", "package")
+        with payload(path, kind) as (_, filename, size, digest):
+            pass
+    except (KeyError, ValueError, OSError, zipfile.BadZipFile, RuntimeError):
+        print("Upload failed: invalid configuration, file, or PDB archive.", file=sys.stderr)
         return 1
 
-    checksum = None
-    if path.name.lower().endswith(".pdb.zip"):
+    for attempt in range(3):
+        client = None
         try:
-            checksum = pdb_archive_checksum(path)
-        except (OSError, ValueError, zipfile.BadZipFile, RuntimeError):
-            print("Upload failed: the PDB ZIP is invalid, unreadable, or does not contain one root-level PDB.", file=sys.stderr)
+            client = connect(config)
+            with client.open_sftp() as sftp:
+                sftp.get_channel().settimeout(90)
+                with payload(path, kind) as (source, current_name, current_size, current_digest):
+                    if (current_name, current_size, current_digest) != (filename, size, digest):
+                        raise ValueError("Local upload changed during publication")
+                    relative = publish(sftp, config["remotePath"], source, filename, size, digest, kind)
+            print(f"Uploaded and SHA-256 verified: {relative} ({size} bytes; {digest})")
+            return 0
+        except (paramiko.AuthenticationException, paramiko.BadHostKeyException, ValueError,
+                zipfile.BadZipFile, RuntimeError):
+            print("Upload failed: authentication, host-key, archive, or integrity validation failed.", file=sys.stderr)
             return 1
-    arguments = ["curl", "--fail-with-body", "--silent", "--show-error", "--retry", "3",
-                 "--retry-delay", "2", "--form", f"appFile=@{path}",
-                 "--form-string", f"pass={password}"]
-    if checksum is not None:
-        arguments += ["--form-string", f"sha256={checksum}"]
-    result = subprocess.run(
-        arguments + [url],
-        stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-    )
-    # Legacy endpoints may echo the password. Print only recognized structured
-    # diagnostics, with the supplied credential redacted, never raw responses.
-    if print_server_diagnostic(result.stdout, password):
-        return 1
-    if result.returncode != 0:
-        print(f"Upload failed: curl exited with code {result.returncode}.", file=sys.stderr)
-        return 1
-    if b"File is valid, and was successfully uploaded." not in result.stdout:
-        print("Upload failed: the server did not acknowledge the file. Check the endpoint's upload secret and file limits.", file=sys.stderr)
-        return 1
-    print(f"Uploaded {path.name} ({path.stat().st_size} bytes); server confirmed success.")
-    return 0
+        except (OSError, paramiko.SSHException) as error:
+            # Exceptions can contain private connection data. Never print them.
+            if getattr(error, "errno", None) in (errno.EACCES, errno.ENOENT) or attempt == 2:
+                print("Upload failed: SFTP connection or destination unavailable.", file=sys.stderr)
+                return 1
+            print(f"SFTP transfer interrupted; retry {attempt + 1}/2.", file=sys.stderr)
+            time.sleep(2 * (attempt + 1))
+        finally:
+            if client is not None:
+                client.close()
+    return 1
 
 
 if __name__ == "__main__":

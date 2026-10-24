@@ -102,8 +102,8 @@ jobs:
         uses: ./.github/actions/upload
         with:
           pkg-name: ${{ steps.compress_pdb.outputs.archive-path }}
-          url: ${{ secrets.PDBUPLOADURL }}
-          pass: ${{ secrets.PDBUPLOADPASS }}
+          kind: pdb
+          sftp-config: ${{ secrets.RELEASE_SFTP_CONFIG }}
 
       - name: Stage Dependencies
         shell: powershell
@@ -177,8 +177,7 @@ jobs:
         uses: ./.github/actions/upload
         with:
           pkg-name: ./Binaries/CI/App/${{ steps.create_package.outputs.pkg-name }}
-          url: ${{ secrets.UPLOADURL }}
-          pass: ${{ secrets.UPLOADPASS }}
+          sftp-config: ${{ secrets.RELEASE_SFTP_CONFIG }}
 
   osx:
     # if: false # tmp disable
@@ -340,8 +339,7 @@ jobs:
         uses: ./.github/actions/upload
         with:
           pkg-name: ./Package/${{ steps.create_package.outputs.pkg-name }}
-          url: ${{ secrets.UPLOADURL }}
-          pass: ${{ secrets.UPLOADPASS }}
+          sftp-config: ${{ secrets.RELEASE_SFTP_CONFIG }}
 
   linux:
     name: Linux (x64)
@@ -654,8 +652,7 @@ jobs:
         uses: ./.github/actions/upload
         with:
           pkg-name: ${{ steps.create_package.outputs.pkg-name }}
-          url: ${{ secrets.UPLOADURL }}
-          pass: ${{ secrets.UPLOADPASS }}
+          sftp-config: ${{ secrets.RELEASE_SFTP_CONFIG }}
 
   raspberrypi:
     name: Raspberry Pi (Cross-Compile)
@@ -1046,5 +1043,4 @@ jobs:
         uses: ./.github/actions/upload
         with:
           pkg-name: ${{ steps.create_package.outputs.pkg-name }}
-          url: ${{ secrets.UPLOADURL }}
-          pass: ${{ secrets.UPLOADPASS }}
+          sftp-config: ${{ secrets.RELEASE_SFTP_CONFIG }}

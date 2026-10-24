@@ -1,22 +1,28 @@
 name: 'Upload'
-description: 'Upload package to server'
+description: 'Verify and publish release files over SFTP'
 inputs:
-  url: 
-    description: 'Upload URL'
-    required: true
-  pass:
-    description: 'Upload password'
+  sftp-config:
+    description: 'Secret JSON connection settings including the pinned SSH host key'
     required: true
   pkg-name:
     description: 'Name of the file to upload'
     required: true
+  kind:
+    description: 'package or pdb (a ZIP containing one matching PDB)'
+    default: package
 
 runs:
   using: "composite"
   steps: 
-    - run: python "${{ github.action_path }}/upload.py"
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+    - run: |
+        python -m pip install --disable-pip-version-check -r "${{ github.action_path }}/requirements.txt"
+        python -m unittest discover -s "${{ github.action_path }}" -p test_upload.py
+        python "${{ github.action_path }}/upload.py"
       shell: bash
       env:
-        UPLOAD_URL: ${{ inputs.url }}
-        UPLOAD_PASSWORD: ${{ inputs.pass }}
+        UPLOAD_SFTP_CONFIG: ${{ inputs.sftp-config }}
         UPLOAD_FILE: ${{ inputs.pkg-name }}
+        UPLOAD_KIND: ${{ inputs.kind }}
