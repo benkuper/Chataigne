@@ -121,7 +121,9 @@ void WiimoteModule::timerCallback()
 
 void WiimoteModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
 {
+    const WeakReference<ControllableContainer> alive(this);
     Module::onControllableFeedbackUpdateInternal(cc, c);
+    if (alive.get() == nullptr) return;
     if (c == smoothing || c == deviceID)
         WiimoteManager::getInstance()->setSmoothing(deviceID->intValue() - 1, 1.f - smoothing->floatValue() * .9f);
     else if (c == connectTrigger)

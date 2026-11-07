@@ -135,7 +135,9 @@ void JoyConModule::timerCallback()
 
 void JoyConModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
 {
+    const WeakReference<ControllableContainer> alive(this);
     Module::onControllableFeedbackUpdateInternal(cc, c);
+    if (alive.get() == nullptr) return;
     if (c == reconnectControllers)
     {
         if (controllers != nullptr) controllers->reconnect();

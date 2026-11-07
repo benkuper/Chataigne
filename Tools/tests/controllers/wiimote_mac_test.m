@@ -11,7 +11,7 @@ static NSArray* discoveryDevices;
 - (void)unregister;
 @end
 @implementation FakeNotification
-- (void)unregister { ++notificationsUnregistered; }
+- (void)unregister { ++notificationsUnregistered; [self release]; }
 - (void)dealloc { ++notificationsReleased; [super dealloc]; }
 @end
 @interface FakeChannel : NSObject
@@ -36,7 +36,7 @@ static NSArray* discoveryDevices;
 - (IOReturn)openL2CAPChannelSync:(IOBluetoothL2CAPChannel**)channel withPSM:(BluetoothL2CAPPSM)psm delegate:(id)delegate {
     *channel = (id)[[[FakeChannel alloc] init] autorelease]; return kIOReturnSuccess;
 }
-- (id)registerForDisconnectNotification:(id)observer selector:(SEL)selector { return [[[FakeNotification alloc] init] autorelease]; }
+- (id)registerForDisconnectNotification:(id)observer selector:(SEL)selector { return [[FakeNotification alloc] init]; }
 - (IOReturn)closeConnection { return kIOReturnSuccess; }
 - (void)dealloc { [deviceName release]; [super dealloc]; }
 @end
@@ -97,7 +97,7 @@ int main(void) {
         WiiuseWiimote* native = [[WiiuseWiimote alloc] initWithPtr:wm[0] device:(id)device];
         NSAutoreleasePool* connectionPool = [[NSAutoreleasePool alloc] init];
         check([native connect] == kIOReturnSuccess, "Fake L2CAP connect failed");
-        [connectionPool drain]; // Notification must still be retained by native.
+        [connectionPool drain]; // Registration owns the notification until unregister; native owns its extra retain.
         byte buffer[MAX_PAYLOAD] = {0};
         byte packet[MAX_PAYLOAD + 2] = {0xA1, 0x30, 0x01};
         FakeChannel* channel = [[[FakeChannel alloc] init] autorelease];

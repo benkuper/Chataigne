@@ -196,16 +196,16 @@ int JslConnectDevices()
 
 	std::vector<int> createdIds;
 
-	_connectedLock.lock();
+	std::unique_lock<JslMutex> connections(_connectedLock);
 
     for (auto it = _joyshocks.begin(); it != _joyshocks.end();) {
         JoyShock* jc = it->second;
         if (!jc->finished.load()) { ++it; continue; }
         _byPath.erase(jc->path);
         it = _joyshocks.erase(it);
-        _connectedLock.unlock();
+        connections.unlock();
         DisposeJoyShock(jc);
-        _connectedLock.lock();
+        connections.lock();
     }
     int res = hid_init();
 
@@ -283,12 +283,13 @@ int JslConnectDevices()
 		} // charging grip
 		else if (jc->is_usb) {
 			//printf("USB\n");
-			jc->init_usb();
+			jc->initialised = jc->init_usb();
 		}
 		else {
 			//printf("BT\n");
-			jc->init_bt();
+			jc->initialised = jc->init_bt();
 		}
+		if (!jc->initialised) jc->finished.store(true);
 		// all get time now for polling
 		jc->last_polled = std::chrono::steady_clock::now();
 		jc->delta_time = 0.0;
@@ -305,7 +306,7 @@ int JslConnectDevices()
 	for (std::pair<int, JoyShock*> pair : _joyshocks)
 	{
 		JoyShock *jc = pair.second;
-        if (jc->thread != nullptr || chataigneJslStopping.load()) continue;
+        if (jc->thread != nullptr || jc->finished.load() || chataigneJslStopping.load()) continue;
 
 		// restore colours if we have them set for this controller
 		switch (jc->controller_type)
@@ -334,7 +335,7 @@ int JslConnectDevices()
 
 	const int totalDevices = (int)_joyshocks.size();
 
-	_connectedLock.unlock();
+	connections.unlock();
 
 	// notify that we created the new object (now that we're not in a lock that might prevent reading data)
 	{
