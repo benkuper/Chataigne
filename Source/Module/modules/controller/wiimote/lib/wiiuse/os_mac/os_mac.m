@@ -141,6 +141,7 @@
 	
 	WiiuseDisconnectionMessage* message = [[WiiuseDisconnectionMessage alloc] init];
 	[receivedDataLock lock];
+	[receivedData removeAllObjects];
 	[receivedData addObject:message];
 	[receivedDataLock unlock];
 	[message release];
@@ -232,6 +233,7 @@
 		}
 	}
 	
+	if (error != kIOReturnSuccess) wiiuse_disconnected(wm);
 	return (error == kIOReturnSuccess) ? (int)length : 0;
 }
 
@@ -251,6 +253,25 @@
 		return;
 	}
 	
+    // WiiUse's decoders require a complete report; zero-filling a truncated
+    // report would turn missing bytes into buttons/calibration data.
+    NSUInteger minimumLength = 0;
+    switch (data[1]) {
+        case WM_RPT_CTRL_STATUS: minimumLength = 8; break;
+        case WM_RPT_READ: minimumLength = 23; break;
+        case WM_RPT_WRITE: minimumLength = 6; break;
+        case WM_RPT_BTN: minimumLength = 4; break;
+        case WM_RPT_BTN_ACC: minimumLength = 7; break;
+        case WM_RPT_BTN_EXP_8: minimumLength = 12; break;
+        case WM_RPT_BTN_ACC_IR: minimumLength = 19; break;
+        case WM_RPT_BTN_EXP:
+        case WM_RPT_BTN_ACC_EXP:
+        case WM_RPT_BTN_IR_EXP:
+        case WM_RPT_BTN_ACC_IR_EXP: minimumLength = 23; break;
+        default: return;
+    }
+    if (length < minimumLength) return;
+
 	// copy the data into the buffer
 	// on Mac, we ignore the first byte
 	WiiuseReceivedData* newData = [[WiiuseReceivedData alloc] initWithBytes: data+1 length: length-1];
@@ -262,12 +283,14 @@
 	[newData release];
 }
 
+- (void)l2capChannelClosed:(IOBluetoothL2CAPChannel*)channel {
+    if (channel == interruptChannel || channel == controlChannel)
+        [self disconnected:nil fromDevice:device];
+}
+
 #if !WIIUSE_MAC_OS_X_VERSION_10_7_OR_ABOVE
 // the following delegate methods were required on 10.6. They are here to get rid of 10.6 compiler warnings.
 - (void)l2capChannelOpenComplete:(IOBluetoothL2CAPChannel*)l2capChannel status:(IOReturn)error {
-	/* no-op */
-}
-- (void)l2capChannelClosed:(IOBluetoothL2CAPChannel*)l2capChannel {
 	/* no-op */
 }
 - (void)l2capChannelReconfigured:(IOBluetoothL2CAPChannel*)l2capChannel {

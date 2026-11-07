@@ -5,7 +5,7 @@
 #import "../../../Source/Module/modules/controller/wiimote/lib/wiiuse/os_mac/os_mac_find.m"
 
 static int notificationsReleased = 0, notificationsUnregistered = 0, delegatesCleared = 0;
-static BOOL noAdapter = NO, neverComplete = NO;
+static BOOL noAdapter = NO, neverComplete = NO, failWrite = NO;
 static NSArray* discoveryDevices;
 @interface FakeNotification : NSObject
 - (void)unregister;
@@ -24,7 +24,7 @@ static NSArray* discoveryDevices;
 - (BluetoothL2CAPPSM)PSM { return kBluetoothL2CAPPSMHIDInterrupt; }
 - (IOReturn)setDelegate:(id)delegate { if (!delegate) ++delegatesCleared; return kIOReturnSuccess; }
 - (IOReturn)closeChannel { return kIOReturnSuccess; }
-- (IOReturn)writeSync:(void*)bytes length:(UInt16)length { return kIOReturnSuccess; }
+- (IOReturn)writeSync:(void*)bytes length:(UInt16)length { return failWrite ? kIOReturnError : kIOReturnSuccess; }
 @end
 @interface FakeDevice : NSObject { NSString* deviceName; }
 - (id)initWithName:(NSString*)name;
@@ -91,6 +91,24 @@ int main(void) {
     check(-[start timeIntervalSinceNow] < 4, "Discovery without completion callback hung");
     wiiuse_cleanup(wm, 1);
     neverComplete = NO;
+    wm = wiiuse_init(1);
+    byte result[4] = {0};
+    struct read_req_t* request = calloc(1, sizeof(struct read_req_t));
+    request->addr = 0x1000; request->size = 4; request->wait = 4; request->buf = result;
+    wm[0]->read_req = request;
+    byte reply[21] = {0};
+    reply[2] = 0xF0; reply[3] = 0x0F; reply[4] = 0xFF; // Before buffer, 16 bytes
+    propagate_event(wm[0], WM_RPT_READ, reply);
+    check(request->wait == 4 && result[0] == 0, "Invalid read offset modified request");
+    reply[3] = 0x10; reply[4] = 0; // Correct offset, oversized response
+    propagate_event(wm[0], WM_RPT_READ, reply);
+    check(request->wait == 4, "Oversized read reply modified request");
+    reply[2] = 0x10; reply[5] = 7; reply[6] = 8; // Valid first two bytes
+    propagate_event(wm[0], WM_RPT_READ, reply);
+    check(request->wait == 2 && result[0] == 7 && result[1] == 8, "Valid read reply lost");
+    propagate_event(wm[0], WM_RPT_READ, reply); // Duplicate must not complete it
+    check(request->wait == 2, "Duplicate read reply completed pending request");
+    wm[0]->read_req = NULL; free(request); wiiuse_cleanup(wm, 1);
     for (int iteration = 0; iteration < 100; ++iteration) {
         wm = wiiuse_init(1);
         FakeDevice* device = [[FakeDevice alloc] initWithName:@"Nintendo RVL-CNT-01"];
@@ -103,19 +121,29 @@ int main(void) {
         FakeChannel* channel = [[[FakeChannel alloc] init] autorelease];
         [native l2capChannelData:(id)channel data:packet length:0];
         [native l2capChannelData:(id)channel data:packet length:1];
+        [native l2capChannelData:(id)channel data:packet length:3];
         [native l2capChannelData:(id)channel data:packet length:sizeof(packet)];
         check([native checkForAvailableDataForBuffer:buffer length:sizeof(buffer)] == -1, "Invalid packet entered queue");
-        [native l2capChannelData:(id)channel data:packet length:3];
-        check([native checkForAvailableDataForBuffer:buffer length:sizeof(buffer)] == 2 && buffer[0] == 0x30, "Valid packet lost");
-        for (int i = 0; i < 1000; ++i) [native l2capChannelData:(id)channel data:packet length:3];
+        [native l2capChannelData:(id)channel data:packet length:4];
+        check([native checkForAvailableDataForBuffer:buffer length:sizeof(buffer)] == 3 && buffer[0] == 0x30, "Valid packet lost");
+        for (int i = 0; i < 1000; ++i) [native l2capChannelData:(id)channel data:packet length:4];
         int queued = 0;
         while ([native checkForAvailableDataForBuffer:buffer length:sizeof(buffer)] >= 0) ++queued;
         check(queued == 256, "Input queue must be bounded");
         check([native writeReport:0x12 buffer:packet length:MAX_PAYLOAD] == 0, "Oversized write accepted");
+        WIIMOTE_ENABLE_STATE(wm[0], WIIMOTE_STATE_CONNECTED);
+        if (iteration == 0) {
+            failWrite = YES;
+            check([native writeReport:0x12 buffer:packet length:1] == 0 && !WIIMOTE_IS_CONNECTED(wm[0]), "Failed writes left a stale connected state");
+            failWrite = NO;
+        } else {
+            [native l2capChannelClosed:[native valueForKey:@"interruptChannel"]];
+            check([native checkForAvailableDataForBuffer:buffer length:sizeof(buffer)] == 0 && !WIIMOTE_IS_CONNECTED(wm[0]), "Lost channel left a stale connected state");
+        }
         [native disconnect]; [native disconnect]; [native release]; [device release];
         wiiuse_cleanup(wm, 1);
     }
-    check(notificationsReleased == 100 && notificationsUnregistered == 100 && delegatesCleared == 200, "L2CAP delegates/notifications leaked or released twice");
+    check(notificationsReleased == 100 && notificationsUnregistered == 100 && delegatesCleared == 201, "L2CAP delegates/notifications leaked or released twice");
     [pool drain];
     puts("Wii discovery filtering/bounds/cancellation, no adapter, packet validation, queue bound and native teardown passed");
     return 0;
