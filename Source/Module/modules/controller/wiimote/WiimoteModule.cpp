@@ -11,8 +11,7 @@
 
 WiimoteModule::WiimoteModule(const String & name) :
 	Module(name),
-    irCC("IR"),
-    device(nullptr)
+    irCC("IR")
 {
 	setupIOConfiguration(true, false);
 
@@ -77,127 +76,56 @@ WiimoteModule::WiimoteModule(const String & name) :
 
 	connectionFeedbackRef = connected;
 
-	WiimoteManager::getInstance()->addListener(this);
+	WiimoteManager::getInstance();
+	startTimerHz(100);
 }
 
 WiimoteModule::~WiimoteModule()
 {
-	if (WiimoteManager::getInstanceWithoutCreating() != nullptr) WiimoteManager::getInstance()->removeListener(this);
-	if (device != nullptr)
-	{
-		device->removeListener(this);
-		device = nullptr;
-	}
+    stopTimer();
 }
 
-void WiimoteModule::deviceConnected(Wiimote * w)
+void WiimoteModule::timerCallback()
 {
-	if (device != nullptr || w == device) return;
-
-	device = w;
-	w->addListener(this);
-	connected->setValue(true);
-	smoothing->setValue(device->smoothing);
+    if (isClearing) return;
+    auto* manager = WiimoteManager::getInstanceWithoutCreating();
+    if (manager == nullptr) return;
+    auto state = manager->getState(deviceID->intValue() - 1);
+    if (!enabled->boolValue()) state = {};
+    // A mapping triggered by a value can delete this module synchronously.
+    const WeakReference<ControllableContainer> alive(this);
+    const auto set = [&alive](Parameter* parameter, const var& value)
+    {
+        parameter->setValue(value);
+        return alive.get() != nullptr;
+    };
+    if (!set(connected, state.connected)) return;
+    if (!set(nunchuckConnected, state.nunchuk)) return;
+    if (!set(motionPlusConnected, state.motionPlus)) return;
+    if (!set(batteryLevel, state.battery)) return;
+    for (int i = 0; i < NUM_WIIMOTE_BUTTONS; ++i)
+        if (!set(buttons[i], state.buttons[(size_t) i])) return;
+    if (!set(pitch, state.pitch) || !set(roll, state.roll) || !set(yaw, state.yaw)) return;
+    if (!set(accelX, state.accelX) || !set(accelY, state.accelY) || !set(accelZ, state.accelZ)) return;
+    if (!set(rawAccelX, state.rawAccelX) || !set(rawAccelY, state.rawAccelY) || !set(rawAccelZ, state.rawAccelZ)) return;
+    if (!set(nunchuckX, state.joystickX) || !set(nunchuckY, state.joystickY)) return;
+    if (!set(irNumPoints, state.irNumDots) || !set(irDistance, state.irDistance)) return;
+    irPos->setVector(state.irPos);
+    if (alive.get() == nullptr) return;
+    for (int i = 0; i < 4; ++i)
+    {
+        irPoints[i]->setPoint(state.irPoints[(size_t) i]);
+        if (alive.get() == nullptr) return;
+    }
 }
 
-void WiimoteModule::deviceDisconnected(Wiimote * w)
+void WiimoteModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
 {
-	if (w != device) return;
-	device->removeListener(this);
-	device = nullptr;
-	connected->setValue(false);
-}
-
-void WiimoteModule::wiimoteButtonPressed(Wiimote * w, Wiimote::WiimoteButton b)
-{
-	if (w != device) return;
-	buttons[(int)b]->setValue(true);
-	inActivityTrigger->trigger();
-}
-
-void WiimoteModule::wiimoteButtonReleased(Wiimote * w, Wiimote::WiimoteButton b)
-{
-	if (w != device) return;
-	buttons[(int)b]->setValue(false);
-	inActivityTrigger->trigger();
-}
-
-void WiimoteModule::wiimoteOrientationUpdated(Wiimote * w)
-{
-	if (w != device) return;
-
-	pitch->setValue(device->pitch);
-	roll->setValue(device->roll);
-	yaw->setValue(device->yaw);
-}
-
-void WiimoteModule::wiimoteAccelUpdated(Wiimote * w)
-{
-	if (w != device) return;
-	accelX->setValue(device->accelX);
-	accelY->setValue(device->accelY);
-	accelZ->setValue(device->accelZ);
-	rawAccelX->setValue(device->rawAccelX);
-	rawAccelY->setValue(device->rawAccelY);
-	rawAccelZ->setValue(device->rawAccelZ);
-}
-
-void WiimoteModule::wiimoteJoystickUpdated(Wiimote * w)
-{
-	if (w != device) return;
-	nunchuckX->setValue(device->joystickX);
-	nunchuckY->setValue(device->joystickY);
-}
-
-void WiimoteModule::wiimoteIRPointsUpdated(Wiimote* w)
-{
-	if (w != device) return;
-	irNumPoints->setValue(device->irNumDots);
-	irDistance->setValue(device->irDistance);
-	irPos->setVector(device->irPos);
-	for (int i = 0; i < device->irNumDots; i++) irPoints[i]->setPoint(device->irPoints[i]);
-}
-
-void WiimoteModule::wiimoteBatteryLevelChanged(Wiimote * w)
-{
-	if (w != device) return;
-	batteryLevel->setValue(device->batteryLevel);
-}
-
-void WiimoteModule::wiimoteNunchuckPlugged(Wiimote *w)
-{
-	if (w != device) return;
-	nunchuckConnected->setValue(true);
-}
-
-void WiimoteModule::wiimoteNunchuckUnplugged(Wiimote *w)
-{
-	if (w != device) return;
-	nunchuckConnected->setValue(false);
-}
-
-void WiimoteModule::wiimoteMotionPlusPlugged(Wiimote *w)
-{
-	if (w != device) return;
-	motionPlusConnected->setValue(true);
-}
-
-void WiimoteModule::wiimoteMotionPlusUnplugged(Wiimote *w)
-{
-	if (w != device) return;
-	motionPlusConnected->setValue(false);
-}
-
-void WiimoteModule::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
-{
-	Module::onControllableFeedbackUpdateInternal(cc, c);
-
-	if (c == smoothing)
-	{
-		if (device != nullptr) device->setSmoothing(1 - (smoothing->floatValue()*.9f) + .1f); //force minimum .1f
-	}else if (c == connectTrigger)
-	{
-		WiimoteManager::getInstance()->numReconnectTries = 0;
-		WiimoteManager::getInstance()->reinitWiimotes = true;
-	}
+    Module::onControllableFeedbackUpdateInternal(cc, c);
+    if (c == smoothing || c == deviceID)
+        WiimoteManager::getInstance()->setSmoothing(deviceID->intValue() - 1, 1.f - smoothing->floatValue() * .9f);
+    else if (c == connectTrigger)
+        WiimoteManager::getInstance()->requestReconnect();
+    else if (c != nullptr && (c->parentContainer == &valuesCC || c->parentContainer == &irCC))
+        inActivityTrigger->trigger();
 }

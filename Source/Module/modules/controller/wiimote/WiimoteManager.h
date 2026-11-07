@@ -1,138 +1,45 @@
-/*
-  ==============================================================================
-
-    WiimoteManager.h
-    Created: 27 Dec 2016 1:15:35am
-    Author:  Ben
-
-  ==============================================================================
-*/
-
 #pragma once
 
 #include "wiiuse.h"
+#include <array>
+#include <atomic>
 
-#define MAX_WIIMOTES 2
+#define MAX_WIIMOTES 4
 #define NUM_WIIMOTE_BUTTONS 13
 
-
-class Wiimote
+// Copies only: native WiiUse objects never leave the hardware thread.
+struct WiimoteState
 {
-public:
-	Wiimote(int id, wiimote_t * device);
-	~Wiimote();
-
-	int id;
-	wiimote_t * device;
-
-	enum WiimoteButton {TWO,ONE, B, A,MINUS,C,Z,HOME,LEFT,RIGHT,DOWN,UP,PLUS};
-
-	bool isConnected;
-	float batteryLevel;
-
-	float smoothing;
-	bool buttons[NUM_WIIMOTE_BUTTONS]; //11 one wiimote, 2 on nunchuck
-	float yaw;
-	float pitch;
-	float roll;
-	float accelX;
-	float accelY;
-	float accelZ;
-	float rawAccelX;
-	float rawAccelY;
-	float rawAccelZ;
-
-	//Nunchuck
-	float nunchuckAccelX;
-	float nunchuckAccelY;
-	float nunchuckAccelZ;
-	float joystickX;
-	float joystickY;
-
-	float irDistance;
-	int irNumDots;
-	Vector3D<float> irPos;
-	Array<Point<float>> irPoints;
-
-
-	void setDevice(wiimote_t * _device);
-	void setSmoothing(float value);
-
-	bool isButtonDown(WiimoteButton);
-	void update();
-
-	class Listener
-	{
-	public:
-		virtual ~Listener() {}
-		virtual void wiimoteConnected(Wiimote*) {}
-		virtual void wiimoteDisconnected(Wiimote *) {}
-		virtual void wiimoteButtonPressed(Wiimote *,WiimoteButton) {}
-		virtual void wiimoteButtonReleased(Wiimote *,WiimoteButton) {}
-		virtual void wiimoteAccelUpdated(Wiimote *) {}
-		virtual void wiimoteOrientationUpdated(Wiimote *) {}
-		virtual void wiimoteJoystickUpdated(Wiimote *) {}
-		virtual void wiimoteIRPointsUpdated(Wiimote*) {}
-		virtual void wiimoteNunchuckPlugged(Wiimote *) {}
-		virtual void wiimoteNunchuckUnplugged(Wiimote *) {}
-		virtual void wiimoteMotionPlusPlugged(Wiimote *) {}
-		virtual void wiimoteMotionPlusUnplugged(Wiimote *) {}
-		virtual void wiimoteBatteryLevelChanged(Wiimote*) {}
-	};
-
-	ListenerList<Listener> listeners;
-	void addListener(Listener* newListener) { listeners.add(newListener); }
-	void removeListener(Listener* listener) { listeners.remove(listener); }
-
-
-private :
-	void setButton(int index, bool value);
-	void setAccel(float x, float y, float z, float rx, float ry, float rz);
-	void setYPR(float yaw, float pitch, float roll);
-	void setNunchuckXY(float x, float y);
-	void setConnected(bool value);
-	void setBatteryLevel(float value);
-	void setIRPoints(int numDots, float distance, Vector3D<float> estimatedPos, Array<Point<float>> points);
-
+    bool connected = false, nunchuk = false, motionPlus = false;
+    std::array<bool, NUM_WIIMOTE_BUTTONS> buttons {};
+    float battery = 0, yaw = 0, pitch = 0, roll = 0;
+    float accelX = 0, accelY = 0, accelZ = 0;
+    float rawAccelX = 0, rawAccelY = 0, rawAccelZ = 0;
+    float joystickX = 0, joystickY = 0, irDistance = 0;
+    int irNumDots = 0;
+    Vector3D<float> irPos {};
+    std::array<Point<float>, 4> irPoints {};
 };
 
-class WiimoteManager :
-	public Thread
+class WiimoteManager : public Thread
 {
 public:
-	juce_DeclareSingleton(WiimoteManager, false);
-	WiimoteManager();
-	~WiimoteManager();
+    juce_DeclareSingleton(WiimoteManager, false);
+    WiimoteManager();
+    ~WiimoteManager();
 
-	wiimote ** devices;
-	OwnedArray<Wiimote> wiimotes;
+    WiimoteState getState(int index);
+    void requestReconnect();
+    void setSmoothing(int index, float value);
+    void run() override;
 
-	bool wiiuseIsInit;
-	bool reinitWiimotes;
-
-	int numReconnectTries;
-
-	void addWiimote(wiimote_t * device);
-	void removeWiimote(Wiimote * wiimote);
-
-	void reconnect(bool autoPairIfNotFound);
-
-	// Inherited via Thread
-	virtual void run() override;
-
-
-	class Listener
-	{
-	public:
-		virtual ~Listener() {}
-		virtual void deviceConnected(Wiimote *) {}
-		virtual void deviceDisconnected(Wiimote *) {}
-	};
-
-	ListenerList<Listener> listeners;
-	void addListener(Listener* newListener) { listeners.add(newListener); }
-	void removeListener(Listener* listener) { listeners.remove(listener); }
-
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(WiimoteManager)
-
+private:
+    wiimote** devices = nullptr; // owned, accessed and destroyed by run()
+    CriticalSection stateLock;
+    std::array<WiimoteState, MAX_WIIMOTES> states {};
+    std::array<std::atomic<float>, MAX_WIIMOTES> smoothing;
+    std::atomic<bool> reconnectRequested { true }, pairRequested { false };
+    void reconnect(bool allowPairing);
+    void publishStates();
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(WiimoteManager)
 };

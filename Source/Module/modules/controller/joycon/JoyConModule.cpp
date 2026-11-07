@@ -10,7 +10,6 @@
 
 JoyConModule::JoyConModule() :
 	Module(getDefaultTypeString()),
-	Thread("joycon"),
 	leftValues("Left Controller"),
 	rightValues("Right Controller")
 {
@@ -65,203 +64,82 @@ JoyConModule::JoyConModule() :
 	//for (auto &c : rightValues.controllables) c->isControllableFeedbackOnly = true;
 
 
-	startThread();
+	controllers = std::make_unique<JoyConDeviceSession>();
+	startTimerHz(100);
 }
 
 JoyConModule::~JoyConModule()
 {
-	stopThread(500);
+    stopTimer();
+    controllers.reset();
 }
 
-void JoyConModule::connectControllers()
+void JoyConModule::timerCallback()
 {
-	
-	LOG("Connecting Joycons...");
-	int numConnected = JslConnectDevices();
-	int connectedDevices[32];
-	int deviceHandles = JslGetConnectedDeviceHandles(connectedDevices, numConnected);
-
-	controllers.clear();
-
-	for (int i = 0; i < deviceHandles; i++) {
-		controllers.add(connectedDevices[i]);
-		JslSetPlayerNumber(connectedDevices[i], i + 1);
-	}
-
-	
-	LOG(controllers.size() << " controllers found.");
+    if (isClearing || controllers == nullptr) return;
+    auto frames = controllers->getFrames();
+    if (!enabled->boolValue()) frames = {};
+    const WeakReference<ControllableContainer> alive(this);
+    const bool suppress = useJitterThreshold->boolValue();
+    const float threshold = jitterThreshold->floatValue();
+    const std::array<std::array<BoolParameter*, 11>, 2> buttons {{
+        {{ up, down, left, right, minus, lStick, l, zl, capture, leftSL, leftSR }},
+        {{ plus, rStick, r, zr, b, a, y, x, home, rightSL, rightSR }}
+    }};
+    const int bits[2][11] = {{0,1,2,3,5,6,8,10,17,18,19}, {4,7,9,11,12,13,14,15,16,18,19}};
+    const std::array<Point3DParameter*, 2> accels {{ leftAccel, rightAccel }};
+    const std::array<Point3DParameter*, 2> orientations {{ leftOrientation, rightOrientation }};
+    const std::array<Point2DParameter*, 2> axes {{ leftAxis, rightAxis }};
+    const auto finite = [](float value) { return std::isfinite(value) ? value : 0.f; };
+    const auto changed = [suppress, threshold](float x, float y, float z, float a, float b, float c)
+    {
+        return !suppress || std::abs(x-a) > threshold || std::abs(y-b) > threshold || std::abs(z-c) > threshold;
+    };
+    for (size_t side = 0; side < 2; ++side)
+    {
+        auto frame = frames[side];
+        if (!frame.connected) frame = {};
+        for (int i = 0; i < 11; ++i)
+        {
+            buttons[side][(size_t) i]->setValue((frame.state.buttons & (1 << bits[side][i])) != 0);
+            if (alive.get() == nullptr) return;
+        }
+        auto& last = lastFrames[side];
+        const auto& motion = frame.motion;
+        const bool force = !frame.connected || !last.connected;
+        const float ax = finite(motion.accelX), ay = finite(motion.accelY), az = finite(motion.accelZ);
+        if (force || changed(ax, ay, az, last.motion.accelX, last.motion.accelY, last.motion.accelZ))
+        {
+            last.motion.accelX = ax; last.motion.accelY = ay; last.motion.accelZ = az;
+            accels[side]->setVector(ax, ay, az);
+            if (alive.get() == nullptr) return;
+        }
+        const float gx = finite(motion.gravX), gy = finite(motion.gravY), gz = finite(motion.gravZ);
+        if (force || changed(gx, gy, gz, last.motion.gravX, last.motion.gravY, last.motion.gravZ))
+        {
+            last.motion.gravX = gx; last.motion.gravY = gy; last.motion.gravZ = gz;
+            orientations[side]->setVector(gx, gy, gz);
+            if (alive.get() == nullptr) return;
+        }
+        const float sx = finite(side == 0 ? frame.state.stickLX : frame.state.stickRX);
+        const float sy = finite(side == 0 ? frame.state.stickLY : frame.state.stickRY);
+        if (force || changed(sx, sy, 0, last.state.stickLX, last.state.stickLY, 0))
+        {
+            last.state.stickLX = sx; last.state.stickLY = sy;
+            axes[side]->setPoint(sx, sy);
+            if (alive.get() == nullptr) return;
+        }
+        last.connected = frame.connected;
+    }
 }
 
-void JoyConModule::updateController(int controller)
+void JoyConModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
 {
-	if (isClearing || !enabled->boolValue()) return;
-
-	//Left controller
-	int type = JslGetControllerType(controller);
-	
-	JOY_SHOCK_STATE state = JslGetSimpleState(controller);
-	MOTION_STATE motion = JslGetMotionState(controller);
-
-	float tmpThreshold = jitterThreshold->getValue();
-
-	if (type == 1)
-	{
-		up->setValue((state.buttons >> 0) & 1);
-		down->setValue((state.buttons >> 1) & 1);
-		left->setValue((state.buttons >> 2) & 1);
-		right->setValue((state.buttons >> 3) & 1);
-
-		minus->setValue((state.buttons >> 5) & 1);
-		lStick->setValue((state.buttons >> 6) & 1);
-		l->setValue((state.buttons >> 8) & 1);
-		zl->setValue((state.buttons >> 10) & 1);
-
-		capture->setValue((state.buttons >> 17) & 1);
-		leftSL->setValue((state.buttons >> 18) & 1);
-		leftSR->setValue((state.buttons >> 19) & 1);
-
-		tmpDeltaX = abs(lastLeftAccelX - motion.accelX);
-		tmpDeltaY = abs(lastLeftAccelY - motion.accelY);
-		tmpDeltaZ = abs(lastLeftAccelZ - motion.accelZ);
-
-		if (useJitterThreshold->getValue() && (tmpDeltaX > tmpThreshold || tmpDeltaY > tmpThreshold || tmpDeltaZ > tmpThreshold)) {
-			lastLeftAccelX = motion.accelX;
-			lastLeftAccelY = motion.accelY;
-			lastLeftAccelZ = motion.accelZ;
-
-			leftAccel->setVector(motion.accelX, motion.accelY, motion.accelZ);
-		}
-		else if(!useJitterThreshold->getValue()) {
-			leftAccel->setVector(motion.accelX, motion.accelY, motion.accelZ);
-		}
-
-		tmpDeltaX = abs(lastLeftOrientationX - motion.gravX);
-		tmpDeltaY = abs(lastLeftOrientationY - motion.gravY);
-		tmpDeltaZ = abs(lastLeftOrientationZ - motion.gravZ);
-
-		if (useJitterThreshold->getValue() && (tmpDeltaX > tmpThreshold || tmpDeltaY > tmpThreshold || tmpDeltaZ > tmpThreshold)) {
-			lastLeftOrientationX = motion.gravX;
-			lastLeftOrientationY = motion.gravY;
-			lastLeftOrientationZ = motion.gravZ;
-
-			leftOrientation->setVector(motion.gravX, motion.gravY, motion.gravZ);
-		}
-		else if (!useJitterThreshold->getValue()) {
-			leftOrientation->setVector(motion.gravX, motion.gravY, motion.gravZ);
-		}
-
-		tmpDeltaX = abs(lastLeftAxisX - state.stickLX);
-		tmpDeltaY = abs(lastLeftAxisY - state.stickLY);
-
-		if (useJitterThreshold->getValue() && (tmpDeltaX > tmpThreshold || tmpDeltaY > tmpThreshold)) {
-			lastLeftAxisX = state.stickLX;
-			lastLeftAxisY = state.stickLY;
-
-			leftAxis->setPoint(state.stickLX, state.stickLY);
-		}
-		else if (!useJitterThreshold->getValue()) {
-			leftAxis->setPoint(state.stickLX, state.stickLY);
-		}
-		
-	} else if (type == 2)
-	{
-		plus->setValue((state.buttons >> 4) & 1);
-		rStick->setValue((state.buttons >> 7) & 1);
-		r->setValue((state.buttons >> 9) & 1);
-		zr->setValue((state.buttons >> 11) & 1);
-
-
-		b->setValue((state.buttons >> 12) & 1);
-		a->setValue((state.buttons >> 13) & 1);
-		y->setValue((state.buttons >> 14) & 1);
-		x->setValue((state.buttons >> 15) & 1);
-		home->setValue((state.buttons >> 16) & 1);
-
-		rightSL->setValue((state.buttons >> 18) & 1);
-		rightSR->setValue((state.buttons >> 19) & 1);
-
-		tmpDeltaX = abs(lastRightAccelX - motion.accelX);
-		tmpDeltaY = abs(lastRightAccelY - motion.accelY);
-		tmpDeltaZ = abs(lastRightAccelZ - motion.accelZ);
-
-		if (useJitterThreshold->getValue() && (tmpDeltaX > tmpThreshold || tmpDeltaY > tmpThreshold || tmpDeltaZ > tmpThreshold)) {
-			lastRightAccelX = motion.accelX;
-			lastRightAccelY = motion.accelY;
-			lastRightAccelZ = motion.accelZ;
-      rightAccel->setVector(motion.accelX, motion.accelY, motion.accelZ);
-		}
-		else if (!useJitterThreshold->getValue()) {
-      rightAccel->setVector(motion.accelX, motion.accelY, motion.accelZ);
-		}
-
-		tmpDeltaX = abs(lastRightOrientationX - motion.gravX);
-		tmpDeltaY = abs(lastRightOrientationY - motion.gravY);
-		tmpDeltaZ = abs(lastRightOrientationZ - motion.gravZ);
-
-		if (useJitterThreshold->getValue() && (tmpDeltaX > tmpThreshold || tmpDeltaY > tmpThreshold || tmpDeltaZ > tmpThreshold)) {
-			lastRightOrientationX = motion.gravX;
-			lastRightOrientationY = motion.gravY;
-			lastRightOrientationZ = motion.gravZ;
-
-			rightOrientation->setVector(motion.gravX, motion.gravY, motion.gravZ);
-		}
-		else if (!useJitterThreshold->getValue()) {
-			rightOrientation->setVector(motion.gravX, motion.gravY, motion.gravZ);
-		}
-
-
-		tmpDeltaX = abs(lastRightAxisX - state.stickLX);
-		tmpDeltaY = abs(lastRightAxisY - state.stickLY);
-
-		if (useJitterThreshold->getValue() && (tmpDeltaX > tmpThreshold || tmpDeltaY > tmpThreshold)) {
-			lastRightAxisX = state.stickLX;
-			lastRightAxisY = state.stickLY;
-
-			rightAxis->setPoint(state.stickLX, state.stickLY);
-		}
-		else if (!useJitterThreshold->getValue()) {
-			rightAxis->setPoint(state.stickLX, state.stickLY);
-		}
-
-	}
-}
-
-void JoyConModule::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
-{
-	Module::onControllableFeedbackUpdateInternal(cc, c);
-	if (c->parentContainer == &valuesCC || c->parentContainer->parentContainer == &valuesCC)
-	{
-		inActivityTrigger->trigger();
-	}
-	else if (c == reconnectControllers)
-	{
-		stopThread(500);
-		startThread();
-	}
-}
-
-void JoyConModule::run()
-{	
-	connectControllers();
-
-	float rate = jmax(50.0f, 100.0f, JslGetPollRate(0));
-	int msToWait = 1000 / rate;
-
-	while (!threadShouldExit())
-	{
-		try
-		{
-			for (auto& controller : controllers) updateController(controller);
-			wait(msToWait);
-		}
-		catch (std::exception e)
-		{
-			LOGERROR("Error while updating the joycon : " << e.what());
-			break;
-		}
-	}
-
-	controllers.clear();
-	JslDisconnectAndDisposeAll();
-
+    Module::onControllableFeedbackUpdateInternal(cc, c);
+    if (c == reconnectControllers)
+    {
+        if (controllers != nullptr) controllers->reconnect();
+    }
+    else if (c != nullptr && (c->parentContainer == &leftValues || c->parentContainer == &rightValues))
+        inActivityTrigger->trigger();
 }

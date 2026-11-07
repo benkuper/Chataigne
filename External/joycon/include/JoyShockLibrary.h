@@ -70,58 +70,76 @@
 #define JSOFFSET_SR 19
 
 // PS5 Player maps for the DS Player Lightbar
-#define DS5_PLAYER_1 = 4
-#define DS5_PLAYER_2 = 10
-#define DS5_PLAYER_3 = 21
-#define DS5_PLAYER_4 = 27
-#define DS5_PLAYER_5 = 31
+#define DS5_PLAYER_1 4
+#define DS5_PLAYER_2 10
+#define DS5_PLAYER_3 21
+#define DS5_PLAYER_4 27
+#define DS5_PLAYER_5 31
 
 typedef struct JOY_SHOCK_STATE {
-	int buttons;
-	float lTrigger;
-	float rTrigger;
-	float stickLX;
-	float stickLY;
-	float stickRX;
-	float stickRY;
+	int buttons = 0;
+	float lTrigger = 0.f;
+	float rTrigger = 0.f;
+	float stickLX = 0.f;
+	float stickLY = 0.f;
+	float stickRX = 0.f;
+	float stickRY = 0.f;
 } JOY_SHOCK_STATE;
 
 typedef struct IMU_STATE {
-	float accelX;
-	float accelY;
-	float accelZ;
-	float gyroX;
-	float gyroY;
-	float gyroZ;
+	float accelX = 0.f;
+	float accelY = 0.f;
+	float accelZ = 0.f;
+	float gyroX = 0.f;
+	float gyroY = 0.f;
+	float gyroZ = 0.f;
 } IMU_STATE;
 
 typedef struct MOTION_STATE {
-	float quatW;
-	float quatX;
-	float quatY;
-	float quatZ;
-	float accelX;
-	float accelY;
-	float accelZ;
-	float gravX;
-	float gravY;
-	float gravZ;
+	float quatW = 0.f;
+	float quatX = 0.f;
+	float quatY = 0.f;
+	float quatZ = 0.f;
+	float accelX = 0.f;
+	float accelY = 0.f;
+	float accelZ = 0.f;
+	float gravX = 0.f;
+	float gravY = 0.f;
+	float gravZ = 0.f;
 } MOTION_STATE;
 
 typedef struct TOUCH_STATE {
-	int t0Id;
-	int t1Id;
-	bool t0Down;
-	bool t1Down;
-	float t0X;
-	float t0Y;
-	float t1X;
-	float t1Y;
+	int t0Id = 0;
+	int t1Id = 0;
+	bool t0Down = false;
+	bool t1Down = false;
+	float t0X = 0.f;
+	float t0Y = 0.f;
+	float t1X = 0.f;
+	float t1Y = 0.f;
 } TOUCH_STATE;
+
+typedef struct JSL_AUTO_CALIBRATION {
+	float confidence = 0.f;
+	bool autoCalibrationEnabled = false;
+	bool isSteady = false;
+} JSL_AUTO_CALIBRATION;
+
+typedef struct JSL_SETTINGS {
+	int gyroSpace = 0;
+	int colour = 0;
+	int playerNumber = 0;
+	int controllerType = 0;
+	int splitType = 0;
+	bool isCalibrating = false;
+	bool autoCalibrationEnabled = false;
+	bool isConnected = false;
+} JSL_SETTINGS;
 
 extern "C" JOY_SHOCK_API int JslConnectDevices();
 extern "C" JOY_SHOCK_API int JslGetConnectedDeviceHandles(int* deviceHandleArray, int size);
 extern "C" JOY_SHOCK_API void JslDisconnectAndDisposeAll();
+extern "C" JOY_SHOCK_API bool JslStillConnected(int deviceId);
 
 // get buttons as bits in the following order, using North South East West to name face buttons to avoid ambiguity between Xbox and Nintendo layouts:
 // 0x00001: up
@@ -149,7 +167,8 @@ extern "C" JOY_SHOCK_API void JslDisconnectAndDisposeAll();
 extern "C" JOY_SHOCK_API JOY_SHOCK_STATE JslGetSimpleState(int deviceId);
 extern "C" JOY_SHOCK_API IMU_STATE JslGetIMUState(int deviceId);
 extern "C" JOY_SHOCK_API MOTION_STATE JslGetMotionState(int deviceId);
-extern "C" JOY_SHOCK_API TOUCH_STATE JslGetTouchState(int deviceId);
+extern "C" JOY_SHOCK_API TOUCH_STATE JslGetTouchState(int deviceId, bool previous = false);
+extern "C" JOY_SHOCK_API bool JslGetTouchpadDimension(int deviceId, int &sizeX, int &sizeY);
 
 extern "C" JOY_SHOCK_API int JslGetButtons(int deviceId);
 
@@ -168,6 +187,15 @@ extern "C" JOY_SHOCK_API float JslGetGyroX(int deviceId);
 extern "C" JOY_SHOCK_API float JslGetGyroY(int deviceId);
 extern "C" JOY_SHOCK_API float JslGetGyroZ(int deviceId);
 
+// get accumulated average gyro since this function was last called or last flushed values
+extern "C" JOY_SHOCK_API void JslGetAndFlushAccumulatedGyro(int deviceId, float& gyroX, float& gyroY, float& gyroZ);
+
+// set gyro space. JslGetGyro*, JslGetAndFlushAccumulatedGyro, JslGetIMUState, and the IMU_STATEs reported in the callback functions will use one of 3 transformations:
+// 0 = local space -> no transformation is done on gyro input
+// 1 = world space -> gyro input is transformed based on the calculated gravity direction to account for the player's preferred controller orientation
+// 2 = player space -> a simple combination of local and world space that is as adaptive as world space but is as robust as local space
+extern "C" JOY_SHOCK_API void JslSetGyroSpace(int deviceId, int gyroSpace);
+
 // get accelerometor
 extern "C" JOY_SHOCK_API float JslGetAccelX(int deviceId);
 extern "C" JOY_SHOCK_API float JslGetAccelY(int deviceId);
@@ -184,19 +212,28 @@ extern "C" JOY_SHOCK_API float JslGetTouchY(int deviceId, bool secondTouch = fal
 extern "C" JOY_SHOCK_API float JslGetStickStep(int deviceId);
 extern "C" JOY_SHOCK_API float JslGetTriggerStep(int deviceId);
 extern "C" JOY_SHOCK_API float JslGetPollRate(int deviceId);
+extern "C" JOY_SHOCK_API float JslGetTimeSinceLastUpdate(int deviceId);
 
 // calibration
 extern "C" JOY_SHOCK_API void JslResetContinuousCalibration(int deviceId);
 extern "C" JOY_SHOCK_API void JslStartContinuousCalibration(int deviceId);
 extern "C" JOY_SHOCK_API void JslPauseContinuousCalibration(int deviceId);
+extern "C" JOY_SHOCK_API void JslSetAutomaticCalibration(int deviceId, bool enabled);
 extern "C" JOY_SHOCK_API void JslGetCalibrationOffset(int deviceId, float& xOffset, float& yOffset, float& zOffset);
 extern "C" JOY_SHOCK_API void JslSetCalibrationOffset(int deviceId, float xOffset, float yOffset, float zOffset);
+extern "C" JOY_SHOCK_API JSL_AUTO_CALIBRATION JslGetAutoCalibrationStatus(int deviceId);
 
 // this function will get called for each input event from each controller
 extern "C" JOY_SHOCK_API void JslSetCallback(void(*callback)(int, JOY_SHOCK_STATE, JOY_SHOCK_STATE, IMU_STATE, IMU_STATE, float));
 // this function will get called for each input event, even if touch data didn't update
 extern "C" JOY_SHOCK_API void JslSetTouchCallback(void(*callback)(int, TOUCH_STATE, TOUCH_STATE, float));
+// this function will get called for each device when it is newly connected
+extern "C" JOY_SHOCK_API void JslSetConnectCallback(void(*callback)(int));
+// this function will get called for each device when it is disconnected
+extern "C" JOY_SHOCK_API void JslSetDisconnectCallback(void(*callback)(int, bool));
 
+// super-getter for reading a whole lot of state at once
+extern "C" JOY_SHOCK_API JSL_SETTINGS JslGetControllerInfoAndSettings(int deviceId);
 // what kind of controller is this?
 extern "C" JOY_SHOCK_API int JslGetControllerType(int deviceId);
 // is this a left, right, or full controller?
@@ -209,3 +246,6 @@ extern "C" JOY_SHOCK_API void JslSetLightColour(int deviceId, int colour);
 extern "C" JOY_SHOCK_API void JslSetRumble(int deviceId, int smallRumble, int bigRumble);
 // set controller player number indicator (not all controllers have a number indicator which can be set, but that just means nothing will be done when this is called -- no harm)
 extern "C" JOY_SHOCK_API void JslSetPlayerNumber(int deviceId, int number);
+
+// Chataigne extension: interrupt pending connection/initialisation at shutdown.
+extern "C" JOY_SHOCK_API void JslSetCancellation(bool cancelled);

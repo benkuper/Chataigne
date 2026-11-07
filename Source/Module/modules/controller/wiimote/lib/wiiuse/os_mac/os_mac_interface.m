@@ -149,12 +149,13 @@ int wiiuse_os_poll(struct wiimote_t** wm, int wiimotes) {
 	if (!wm) return 0;
 	
 	for (i = 0; i < wiimotes; ++i) {
+		if (!wm[i] || !WIIMOTE_IS_CONNECTED(wm[i])) continue;
 		wm[i]->event = WIIUSE_NONE;
 		
 		/* clear out the buffer */
 		memset(read_buffer, 0, sizeof(read_buffer));
 		/* read */
-		if (wiiuse_os_read(wm[i], read_buffer, sizeof(read_buffer))) {
+		if (wiiuse_os_read(wm[i], read_buffer, sizeof(read_buffer)) > 0) {
 			/* propagate the event */
 			propagate_event(wm[i], read_buffer[0], read_buffer+1);
 		} else {
@@ -186,7 +187,7 @@ int wiiuse_os_read(struct wiimote_t* wm, byte* buf, int len) {
 }
 
 int wiiuse_os_write(struct wiimote_t* wm, byte report_type, byte* buf, int len) {
-	if(!wm || !wm->objc_wm) return 0;
+	if(!wm || !wm->objc_wm || !buf || len < 0 || len > MAX_PAYLOAD - 2) return 0;
 	if(!WIIMOTE_IS_CONNECTED(wm)) {
 		WIIUSE_ERROR("Attempting to write to unconnected Wiimote");
 		return 0;
@@ -210,6 +211,7 @@ void wiiuse_init_platform_fields(struct wiimote_t* wm) {
 
 void wiiuse_cleanup_platform_fields(struct wiimote_t* wm) {
 	if(!wm) return;
+	NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
 	WiiuseWiimote* objc_wm = (WiiuseWiimote*) wm->objc_wm;
 	
 	// disconnect
@@ -220,6 +222,7 @@ void wiiuse_cleanup_platform_fields(struct wiimote_t* wm) {
 	// release WiiuseWiimote object
 	[objc_wm release];
 	wm->objc_wm = NULL;
+	[pool drain];
 }
 
 #endif // __APPLE__

@@ -3,6 +3,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist>
   <dict>
+    <key>NSBluetoothAlwaysUsageDescription</key>
+    <string>Chataigne uses Bluetooth to connect Wii Remotes and Joy-Con controllers.</string>
+    <key>NSBluetoothPeripheralUsageDescription</key>
+    <string>Chataigne uses Bluetooth to connect controllers.</string>
     <key>NSAppTransportSecurity</key>
     <dict>
       <key>NSAllowsArbitraryLoads</key>

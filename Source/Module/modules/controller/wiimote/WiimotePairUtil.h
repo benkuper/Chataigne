@@ -9,6 +9,7 @@
 */
 
 #pragma once
+#include <atomic>
 
 #if JUCE_WINDOWS
 
@@ -36,7 +37,7 @@ public:
 	WiiPairUtil();
 	~WiiPairUtil();
 
-	static bool shouldStop; //safe stop for wiimote thread stop
+	static std::atomic<bool> shouldStop; //safe stop for wiimote thread stop
     
     static int pair(bool forceRepairing = false);
     

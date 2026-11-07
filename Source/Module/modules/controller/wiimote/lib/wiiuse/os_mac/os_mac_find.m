@@ -48,193 +48,90 @@
 #endif
 
 
-#pragma mark -
-#pragma mark WiiuseDeviceInquiry
+// Discovery and all native delegates stay on the WiiUse worker run loop.
+#include <stdbool.h>
+#include <stdatomic.h>
+static atomic_bool discoveryCancelled = false;
+void wiiuse_os_cancel_discovery(void) { atomic_store(&discoveryCancelled, true); }
+void wiiuse_os_reset_discovery(void) { atomic_store(&discoveryCancelled, false); }
 
-#if WIIUSE_MAC_OS_X_VERSION_10_7_OR_ABOVE
-@interface WiiuseDeviceInquiry : NSObject<IOBluetoothDeviceInquiryDelegate> {
-#else
-@interface WiiuseDeviceInquiry : NSObject {
-#endif
-	wiimote** wiimotes;
-	NSUInteger maxDevices;
-	int timeout;
-	
-	BOOL _running;
-	NSUInteger _foundDevices;
-	BOOL _inquiryComplete;
+static BOOL isWiiRemote(IOBluetoothDevice* device) {
+    NSString* name = [device name];
+    return [name isEqualToString:@"Nintendo RVL-CNT-01"] ||
+           [name isEqualToString:@"Nintendo RVL-CNT-01-TR"];
 }
 
-- (id) initWithMemory:(wiimote**)wiimotes maxDevices:(int)maxDevices timeout:(int)timeout;
-- (int) run;
-
+@interface WiiuseDeviceInquiry : NSObject<IOBluetoothDeviceInquiryDelegate> {
+    BOOL complete;
+    NSUInteger found;
+    NSUInteger capacity;
+}
+- (int) find:(wiimote**)wiimotes capacity:(int)count timeout:(int)seconds;
 @end
 
 @implementation WiiuseDeviceInquiry
-
-- (id) initWithMemory:(wiimote**)wiimotes_ maxDevices:(int)maxDevices_ timeout:(int)timeout_ {
-	self = [super init];
-	if(self) {
-
-		BluetoothHCIPowerState powerState = kBluetoothHCIPowerStateUnintialized;
-#if WIIUSE_MAC_OS_X_VERSION_10_7_OR_ABOVE
-		if([IOBluetoothHostController defaultController])
-			powerState = [IOBluetoothHostController defaultController].powerState;
-#else
-		// yes it is deprecated. no, there is no alternative (on 10.6).
-		IOBluetoothLocalDeviceGetPowerState(&powerState);
-#endif
-		if (![IOBluetoothHostController defaultController] ||
-			powerState != kBluetoothHCIPowerStateON)
-		{
-			WIIUSE_DEBUG("Bluetooth hardware not available.");
-			[self release];
-			self = nil;
-		} else {
-			wiimotes = wiimotes_;
-			maxDevices = maxDevices_;
-			timeout = timeout_;
-			_running = NO;
-		}
-	}
-	return self;
+- (int) find:(wiimote**)wiimotes capacity:(int)count timeout:(int)seconds {
+    if (!wiimotes || count <= 0 || atomic_load(&discoveryCancelled)) return 0;
+    IOBluetoothHostController* controller = [IOBluetoothHostController defaultController];
+    if (!controller || [controller powerState] != kBluetoothHCIPowerStateON) {
+        WIIUSE_WARNING("Bluetooth is unavailable or switched off.");
+        return 0;
+    }
+    capacity = count;
+    found = 0;
+    complete = NO;
+    IOBluetoothDeviceInquiry* inquiry = [[IOBluetoothDeviceInquiry inquiryWithDelegate:self] retain];
+    [inquiry setSearchCriteria:kBluetoothServiceClassMajorAny
+             majorDeviceClass:WM_DEV_MAJOR_CLASS minorDeviceClass:kBluetoothDeviceClassMinorAny];
+    // Names are needed to distinguish Wii Remotes from keyboards and other HID devices.
+    [inquiry setUpdateNewDeviceNames:YES];
+    [inquiry setInquiryLength:MAX(1, MIN(30, seconds))];
+    int result = 0;
+    IOReturn status = [inquiry start];
+    if (status == kIOReturnSuccess) {
+        NSDate* deadline = [NSDate dateWithTimeIntervalSinceNow:MAX(1, MIN(30, seconds)) + 2];
+        while (!complete && !atomic_load(&discoveryCancelled) && [deadline timeIntervalSinceNow] > 0) {
+            if (![[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode
+                                         beforeDate:[NSDate dateWithTimeIntervalSinceNow:.05]])
+                [NSThread sleepForTimeInterval:.01];
+        }
+        [inquiry stop];
+        // Stop callbacks before this delegate and the destination array go away.
+        [inquiry setDelegate:nil];
+        if (!atomic_load(&discoveryCancelled)) {
+            for (IOBluetoothDevice* device in [inquiry foundDevices]) {
+                if (result >= count) break;
+                if (!isWiiRemote(device) || !wiimotes[result]) continue;
+                wiimote* wm = wiimotes[result];
+                wm->type = [[device name] hasSuffix:@"-TR"] ? WIIUSE_WIIMOTE_MOTION_PLUS_INSIDE : WIIUSE_WIIMOTE_REGULAR;
+                wm->objc_wm = [[WiiuseWiimote alloc] initWithPtr:wm device:device];
+                WIIMOTE_ENABLE_STATE(wm, WIIMOTE_STATE_DEV_FOUND);
+                ++result;
+            }
+        }
+    } else {
+        WIIUSE_ERROR("Unable to start Bluetooth discovery (%d). Check Bluetooth permission in System Settings.", status);
+        [inquiry setDelegate:nil];
+    }
+    [inquiry release];
+    return result;
 }
-
-// creates and starts inquiry. the returned object is in the current autorelease pool.
-- (IOBluetoothDeviceInquiry*) start {
-	
-	// reset state variables
-	_foundDevices = 0;
-	_inquiryComplete = NO;
-	
-	// create inquiry
-	IOBluetoothDeviceInquiry* inquiry = [IOBluetoothDeviceInquiry inquiryWithDelegate: self];
-	
-	// refine search & set timeout
-	[inquiry setSearchCriteria:kBluetoothServiceClassMajorAny
-			  majorDeviceClass:WM_DEV_MAJOR_CLASS
-			  minorDeviceClass:kBluetoothDeviceClassMinorAny];
-	[inquiry setUpdateNewDeviceNames: NO];
-	if(timeout > 0)
-		[inquiry setInquiryLength:timeout];
-	
-	// start inquiry
-	IOReturn status = [inquiry start];
-	if (status != kIOReturnSuccess) {
-		WIIUSE_ERROR("Unable to start bluetooth device inquiry.");
-		if(![inquiry stop]) {
-			WIIUSE_ERROR("Unable to stop bluetooth device inquiry.");
-		} else {
-			WIIUSE_DEBUG("Bluetooth device inquiry stopped.");
-		}
-		return nil;
-	}
-	
-	return inquiry;
+- (void) deviceInquiryDeviceFound:(IOBluetoothDeviceInquiry*)inquiry device:(IOBluetoothDevice*)device {
+    if (isWiiRemote(device) && ++found >= capacity) complete = YES;
 }
-
-- (void) wait {
-	// wait for the inquiry to complete
-	NSRunLoop *runLoop = [NSRunLoop currentRunLoop];
-	while(!_inquiryComplete &&
-		  [runLoop runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]]) {
-		// no-op
-	}
+- (void) deviceInquiryComplete:(IOBluetoothDeviceInquiry*)inquiry error:(IOReturn)error aborted:(BOOL)aborted {
+    complete = YES;
+    if (error != kIOReturnSuccess && !aborted)
+        WIIUSE_WARNING("Bluetooth inquiry failed (%d).", error);
 }
-
-- (NSUInteger) collectResultsOf: (IOBluetoothDeviceInquiry*) inquiry {
-	// stop the inquiry
-	if(![inquiry stop])
-		WIIUSE_ERROR("Unable to stop bluetooth device inquiry.");
-	
-	// read found device information
-	NSArray* devices = [inquiry foundDevices];
-	NSUInteger i;
-	for(i = 0; i < [devices count]; ++i) {
-		IOBluetoothDevice* device = [devices objectAtIndex:i];
-		
-		// save the device in the wiimote structure
-		wiimotes[i]->objc_wm = (void*) [[WiiuseWiimote alloc] initWithPtr:wiimotes[i] device: device];
-		
-		// mark as found
-		WIIMOTE_ENABLE_STATE(wiimotes[i], WIIMOTE_STATE_DEV_FOUND);
-		NSString* address = IOBluetoothNSStringFromDeviceAddress([device getAddress]);
-		const char* address_str = [address cStringUsingEncoding:NSMacOSRomanStringEncoding];
-		WIIUSE_INFO("Found Wiimote (%s) [id %i]", address_str, wiimotes[i]->unid);
-	}
-	
-	return [devices count];
-}
-
-- (int) run {
-	int result = -1;
-	
-	if(maxDevices == 0) {
-		result = 0;
-	} else if(!_running) {
-		_running = YES;
-		
-		if (![IOBluetoothHostController defaultController]) {
-			WIIUSE_ERROR("Unable to find any bluetooth receiver on your host.");
-		} else {
-			IOBluetoothDeviceInquiry* inquiry = [self start];
-			if(inquiry) {
-				[self wait];
-				result = (int)[self collectResultsOf: inquiry];
-				WIIUSE_INFO("Found %i Wiimote device(s).", result);
-			}
-		}
-		
-		_running = NO;
-	} else { // if(_running)
-		WIIUSE_ERROR("Device inquiry already running - won't start it again.");
-	}
-	
-	return result;
-}
-
-#pragma mark IOBluetoothDeviceInquiryDelegate
-
-- (void) deviceInquiryDeviceFound:(IOBluetoothDeviceInquiry *) inquiry device:(IOBluetoothDevice *) device {
-	
-	WIIUSE_DEBUG("Found a wiimote");
-	
-	_foundDevices++;
-	if(_foundDevices >= maxDevices) {
-		// reached maximum number of devices
-		_inquiryComplete = YES;
-	}
-}
-
-- (void) deviceInquiryComplete:(IOBluetoothDeviceInquiry*) inquiry error:(IOReturn) error aborted:(BOOL) aborted
-{
-	WIIUSE_DEBUG("Inquiry complete, error=%i, aborted=%s", error, aborted ? "YES" : "NO");
-	
-	// mark completion
-	_inquiryComplete = YES;
-	
-	// print error message if we stop due to an error
-	if ((error != kIOReturnSuccess) && !aborted) {
-		WIIUSE_ERROR("Bluetooth device inquiry not completed due to unexpected errors. Try increasing the timeout.");
-	}
-}
-
 @end
 
-#pragma mark -
-#pragma mark public interface
-
-int wiiuse_os_find(struct wiimote_t** wm, int max_wiimotes, int timeout) {
-	int result;
-	
-	NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-	
-	WiiuseDeviceInquiry* inquiry = [[WiiuseDeviceInquiry alloc] initWithMemory:wm maxDevices:max_wiimotes timeout:timeout];
-	result = [inquiry run];
-	[inquiry release];
-	
-	[pool drain];
-	return result;
+int wiiuse_os_find(struct wiimote_t** wm, int count, int timeout) {
+    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+    WiiuseDeviceInquiry* inquiry = [[WiiuseDeviceInquiry alloc] init];
+    int result = [inquiry find:wm capacity:count timeout:timeout];
+    [inquiry release];
+    [pool drain];
+    return result;
 }
-
 #endif // __APPLE__

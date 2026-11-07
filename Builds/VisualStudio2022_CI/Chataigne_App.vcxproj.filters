@@ -1849,6 +1849,15 @@
     <ClCompile Include="..\..\Source\Module\modules\controller\gamepad\GamepadModule.cpp">
       <Filter>Chataigne\Source\Module\modules\controller\gamepad</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\controller\joycon\JoyConDeviceSession.cpp">
+      <Filter>Chataigne\Source\Module\modules\controller\joycon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\External\joycon\src\JoyShockLibrary.cpp">
+      <Filter>Chataigne\Source\Module\modules\controller\joycon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\External\hidapi\mac\hidapi_mac.c">
+      <Filter>Chataigne\Source\Module\modules\controller\joycon</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\controller\joycon\JoyConModule.cpp">
       <Filter>Chataigne\Source\Module\modules\controller\joycon</Filter>
     </ClCompile>
@@ -5033,6 +5042,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\controller\gamepad\GamepadModule.h">
       <Filter>Chataigne\Source\Module\modules\controller\gamepad</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\controller\joycon\JoyConDeviceSession.h">
+      <Filter>Chataigne\Source\Module\modules\controller\joycon</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\controller\joycon\JoyConModule.h">
       <Filter>Chataigne\Source\Module\modules\controller\joycon</Filter>

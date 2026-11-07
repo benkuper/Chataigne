@@ -35,28 +35,14 @@
 
 //#include "os.h"
 
-#ifdef __MACH__
-	#include <mach/clock.h>
-	#include <mach/mach.h>
-#endif
+#include <mach/mach_time.h>
+#include <stdint.h>
 
-unsigned long wiiuse_os_ticks() {
-	struct timespec
-    {
-        unsigned int	tv_sec;			/* seconds */
-        clock_res_t		tv_nsec;		/* nanoseconds */
-    }ts;
-  	clock_serv_t cclock;
-  	mach_timespec_t mts;
-  	host_get_clock_service(mach_host_self(), CALENDAR_CLOCK, &cclock);
-  	clock_get_time(cclock, &mts);
-  	mach_port_deallocate(mach_task_self(), cclock);
-  	ts.tv_sec = mts.tv_sec;
-  	ts.tv_nsec = mts.tv_nsec;
-  	unsigned long ms = 1000 * ts.tv_sec + ts.tv_nsec / 1e6;
-  	return ms;
+unsigned long wiiuse_os_ticks(void) {
+    mach_timebase_info_data_t scale;
+    mach_timebase_info(&scale);
+    // Monotonic time keeps Bluetooth timeouts valid across clock changes.
+    uint64_t ticks = mach_absolute_time();
+    return (unsigned long)((ticks / 1000000) * scale.numer / scale.denom);
 }
-
-
-
 #endif

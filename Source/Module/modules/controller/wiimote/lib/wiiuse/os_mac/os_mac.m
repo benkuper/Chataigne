@@ -66,18 +66,11 @@
 }
 
 - (void) dealloc {
-	wm = NULL;
-	
-	[interruptChannel release];
-	[controlChannel release];
-	[device release];
-	
-	[disconnectNotification unregister];
-	[disconnectNotification release];
-	
-	[receivedData release];
-	
-	[super dealloc];
+    [self disconnect];
+    wm = NULL;
+    [receivedData release];
+    [receivedDataLock release];
+    [super dealloc];
 }
 
 #pragma mark connect, disconnect
@@ -109,7 +102,7 @@
 	}
 	
 	// register for device disconnection
-	disconnectNotification = [device registerForDisconnectNotification:self selector:@selector(disconnected:fromDevice:)];
+	disconnectNotification = [[device registerForDisconnectNotification:self selector:@selector(disconnected:fromDevice:)] retain];
 	if(!disconnectNotification) {
 		WIIUSE_ERROR("Unable to register disconnection handler [id %i].", wm->unid);
 		[self disconnect];
@@ -120,7 +113,8 @@
 }
 
 - (void) disconnectChannel: (IOBluetoothL2CAPChannel**) pChannel {
-	if(!pChannel) return;
+	if(!pChannel || !*pChannel) return;
+	[*pChannel setDelegate:nil];
 	
 	if([*pChannel closeChannel] != kIOReturnSuccess)
 		WIIUSE_ERROR("Unable to close channel [id %i].", wm ? wm->unid : -1);
@@ -129,6 +123,9 @@
 }
 
 - (void) disconnect {
+	[disconnectNotification unregister];
+	[disconnectNotification release];
+	disconnectNotification = nil;
 	// channels
 	[self disconnectChannel:&interruptChannel];
 	[self disconnectChannel:&controlChannel];
@@ -152,20 +149,18 @@
 #pragma mark read, write
 
 // <0: nothing received, else: length of data received (can be 0 in case of disconnection message)
-- (int) checkForAvailableDataForBuffer: (byte*) buffer length: (NSUInteger) bufferLength {
-	int result = -1;
-	
-	[receivedDataLock lock];
-	if([receivedData count]) {
-		// look at first item in queue
-		NSObject<WiiuseReceivedMessage>* firstMessage = [receivedData objectAtIndex:0];
-		result = [firstMessage applyToStruct:wm buffer: buffer length: bufferLength];
-		if(result >= 0)
-			[receivedData removeObjectAtIndex:0];
-	}
-	[receivedDataLock unlock];
-	
-	return result;
+- (int) checkForAvailableDataForBuffer:(byte*)buffer length:(NSUInteger)bufferLength {
+    NSObject<WiiuseReceivedMessage>* message = nil;
+    [receivedDataLock lock];
+    if ([receivedData count]) {
+        message = [[receivedData objectAtIndex:0] retain];
+        [receivedData removeObjectAtIndex:0];
+    }
+    [receivedDataLock unlock];
+    // Processing a disconnect may re-enter native teardown; never do it under the queue lock.
+    int result = message && wm ? [message applyToStruct:wm buffer:buffer length:bufferLength] : -1;
+    [message release];
+    return result;
 }
 
 - (void) waitForIncomingData: (NSTimeInterval) duration {
@@ -173,11 +168,9 @@
 	NSRunLoop *theRL = [NSRunLoop currentRunLoop];
 	while (true) {
 		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init]; // This is used for fast release of NSDate, otherwise it leaks
-		if(![theRL runMode:NSDefaultRunLoopMode beforeDate:timeoutDate]) {
-			WIIUSE_ERROR("Could not start run loop while waiting for read [id %i].", wm->unid);
-			break;
-		}
-		[pool drain];
+        BOOL ran = [theRL runMode:NSDefaultRunLoopMode beforeDate:timeoutDate];
+        [pool drain];
+        if (!ran) break;
 		
 		[receivedDataLock lock];
 		NSUInteger count = [receivedData count];
@@ -200,7 +193,7 @@
 	int result = [self checkForAvailableDataForBuffer: buffer length: bufferLength];
 	if(result < 0) {
 		// wait a short amount of time, until data becomes available or a timeout is reached
-		[self waitForIncomingData:1];
+		[self waitForIncomingData:.005];
 		
 		// check again
 		result = [self checkForAvailableDataForBuffer: buffer length: bufferLength];
@@ -210,6 +203,7 @@
 }
 
 - (int) writeReport: (byte) report_type buffer: (byte*) buffer length: (NSUInteger) length {
+	if (!wm || !buffer || length > MAX_PAYLOAD - 2) return 0;
 	if(interruptChannel == nil) {
 		WIIUSE_ERROR("Attempted to write to nil interrupt channel [id %i].", wm->unid);
 		return 0;
@@ -253,7 +247,7 @@
 #else
 	BluetoothL2CAPPSM psm = [channel getPSM];
 #endif
-	if(!data || (psm == kBluetoothL2CAPPSMHIDControl)) {
+	if (!wm || !data || length < 2 || length > MAX_PAYLOAD + 1 || data[0] != (WM_SET_DATA | WM_BT_INPUT) || (psm == kBluetoothL2CAPPSMHIDControl)) {
 		return;
 	}
 	
@@ -261,6 +255,8 @@
 	// on Mac, we ignore the first byte
 	WiiuseReceivedData* newData = [[WiiuseReceivedData alloc] initWithBytes: data+1 length: length-1];
 	[receivedDataLock lock];
+	// Bound the queue if input outpaces polling.
+	if ([receivedData count] >= 256) [receivedData removeObjectAtIndex:0];
 	[receivedData addObject: newData];
 	[receivedDataLock unlock];
 	[newData release];

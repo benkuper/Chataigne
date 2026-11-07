@@ -45,7 +45,7 @@ ifeq ($(CONFIG),Debug)
 
   JUCE_CFLAGS += $(JUCE_CPPFLAGS) $(TARGET_ARCH) -g -ggdb -O3 -Wno-multichar $(CFLAGS)
   JUCE_CXXFLAGS += $(JUCE_CFLAGS) -std=c++17 $(CXXFLAGS)
-  JUCE_LDFLAGS += $(TARGET_ARCH) -L$(JUCE_BINDIR) -L$(JUCE_LIBDIR) -L../../External/servus/lib/raspberry -L../../External/sdl/lib/raspberry -L../../External/joycon/lib/raspberry -L/usr/lib/arm-linux-gnueabihf -L../../External/mosquitto/lib/rpi/armhf -L../../Modules/juce_simpleweb/libs/Linux/armv8-a $(shell $(PKG_CONFIG) --libs alsa freetype2 gl libcurl) -fvisibility=hidden -Wl,-rpath,"lib" -Wl,--as-needed -Wl,--export-dynamic -fvisibility=default -Wl,-rpath-link,../../External/mosquitto/lib/rpi/armhf -lrt -ldl -lpthread -lssl -lcrypto -lbluetooth -lServus -lcurl -lSDL2 -lusb-1.0 -lhidapi-hidraw -lpthread -lJoyShockLibrary -latomic -lmosquitto -lmosquittopp -lssl -lgpiod -lmpv $(LDFLAGS)
+  JUCE_LDFLAGS += $(TARGET_ARCH) -L$(JUCE_BINDIR) -L$(JUCE_LIBDIR) -L../../External/servus/lib/raspberry -L../../External/sdl/lib/raspberry -L../../External/joycon/lib/raspberry -L/usr/lib/arm-linux-gnueabihf -L../../External/mosquitto/lib/rpi/armhf -L../../Modules/juce_simpleweb/libs/Linux/armv8-a $(shell $(PKG_CONFIG) --libs alsa freetype2 gl libcurl) -fvisibility=hidden -Wl,-rpath,"lib" -Wl,--as-needed -Wl,--export-dynamic -fvisibility=default -Wl,-rpath-link,../../External/mosquitto/lib/rpi/armhf -lrt -ldl -lpthread -lssl -lcrypto -lbluetooth -lServus -lcurl -lSDL2 -lusb-1.0 -lhidapi-hidraw -lpthread -latomic -lmosquitto -lmosquittopp -lssl -lgpiod -lmpv $(LDFLAGS)
 
   CLEANCMD = rm -rf $(JUCE_OUTDIR)/$(JUCE_TARGET_APP) $(JUCE_OBJDIR)
 endif
@@ -66,7 +66,7 @@ ifeq ($(CONFIG),Release)
 
   JUCE_CFLAGS += $(JUCE_CPPFLAGS) $(TARGET_ARCH) -O3 -Wno-multichar $(CFLAGS)
   JUCE_CXXFLAGS += $(JUCE_CFLAGS) -std=c++17 $(CXXFLAGS)
-  JUCE_LDFLAGS += $(TARGET_ARCH) -L$(JUCE_BINDIR) -L$(JUCE_LIBDIR) -L../../External/servus/lib/raspberry -L../../External/sdl/lib/raspberry -L../../External/joycon/lib/raspberry -L/usr/lib/arm-linux-gnueabihf -L../../External/mosquitto/lib/rpi/armhf -L../../Modules/juce_simpleweb/libs/Linux/armv8-a $(shell $(PKG_CONFIG) --libs alsa freetype2 gl libcurl) -fvisibility=hidden -Wl,-rpath,"lib" -Wl,--as-needed -Wl,--export-dynamic -fvisibility=default -Wl,-rpath-link,../../External/mosquitto/lib/rpi/armhf -lrt -ldl -lpthread -lssl -lcrypto -lbluetooth -lServus -lcurl -lSDL2 -lusb-1.0 -lhidapi-hidraw -lpthread -lJoyShockLibrary -latomic -lmosquitto -lmosquittopp -lssl -lgpiod -lmpv $(LDFLAGS)
+  JUCE_LDFLAGS += $(TARGET_ARCH) -L$(JUCE_BINDIR) -L$(JUCE_LIBDIR) -L../../External/servus/lib/raspberry -L../../External/sdl/lib/raspberry -L../../External/joycon/lib/raspberry -L/usr/lib/arm-linux-gnueabihf -L../../External/mosquitto/lib/rpi/armhf -L../../Modules/juce_simpleweb/libs/Linux/armv8-a $(shell $(PKG_CONFIG) --libs alsa freetype2 gl libcurl) -fvisibility=hidden -Wl,-rpath,"lib" -Wl,--as-needed -Wl,--export-dynamic -fvisibility=default -Wl,-rpath-link,../../External/mosquitto/lib/rpi/armhf -lrt -ldl -lpthread -lssl -lcrypto -lbluetooth -lServus -lcurl -lSDL2 -lusb-1.0 -lhidapi-hidraw -lpthread -latomic -lmosquitto -lmosquittopp -lssl -lgpiod -lmpv $(LDFLAGS)
 
   CLEANCMD = rm -rf $(JUCE_OUTDIR)/$(JUCE_TARGET_APP) $(JUCE_OBJDIR)
 endif
@@ -83,6 +83,9 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/ProcessorIncludes_efd64865.o \
   $(JUCE_OBJDIR)/ProcessorIncludes2_b12da37.o \
   $(JUCE_OBJDIR)/CustomVariablesIncludes_d7a15e29.o \
+  $(JUCE_OBJDIR)/JoyConDeviceSession_d13fb9e2.o \
+  $(JUCE_OBJDIR)/JoyShockLibrary_db63f03a.o \
+  $(JUCE_OBJDIR)/hidapi_mac_e3342490.o \
   $(JUCE_OBJDIR)/os_mac_a23c8a30.o \
   $(JUCE_OBJDIR)/classic_e456a893.o \
   $(JUCE_OBJDIR)/dynamics_a64483fd.o \
@@ -203,6 +206,21 @@ $(JUCE_OBJDIR)/CustomVariablesIncludes_d7a15e29.o: ../../Source/CustomVariables/
 	-$(V_AT)mkdir -p $(@D)
 	@echo "Compiling CustomVariablesIncludes.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/JoyConDeviceSession_d13fb9e2.o: ../../Source/Module/modules/controller/joycon/JoyConDeviceSession.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling JoyConDeviceSession.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/JoyShockLibrary_db63f03a.o: ../../External/joycon/src/JoyShockLibrary.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling JoyShockLibrary.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/hidapi_mac_e3342490.o: ../../External/hidapi/mac/hidapi_mac.c
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling hidapi_mac.c"
+	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/os_mac_a23c8a30.o: ../../Source/Module/modules/controller/wiimote/lib/wiiuse/os_mac/os_mac.c
 	-$(V_AT)mkdir -p $(@D)

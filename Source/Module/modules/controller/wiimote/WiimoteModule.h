@@ -13,8 +13,7 @@
 
 class WiimoteModule :
 	public Module,
-	public WiimoteManager::Listener,
-	public Wiimote::Listener
+	private Timer
 {
 public:
 	WiimoteModule(const String &name = "Wiimote");
@@ -49,22 +48,7 @@ public:
 	Array<Point2DParameter*> irPoints;
 
 	Array<BoolParameter *> buttons;
-	Wiimote * device;
-
-	void deviceConnected(Wiimote *) override;
-	void deviceDisconnected(Wiimote *) override;
-
-	void wiimoteButtonPressed(Wiimote *, Wiimote::WiimoteButton b) override;
-	void wiimoteButtonReleased(Wiimote *, Wiimote::WiimoteButton b) override;
-	void wiimoteOrientationUpdated(Wiimote *) override;
-	void wiimoteAccelUpdated(Wiimote *) override;
-	void wiimoteJoystickUpdated(Wiimote*) override;
-	void wiimoteIRPointsUpdated(Wiimote *) override;
-	void wiimoteBatteryLevelChanged(Wiimote *) override;
-	void wiimoteNunchuckPlugged(Wiimote *) override;
-	void wiimoteNunchuckUnplugged(Wiimote *) override;
-	void wiimoteMotionPlusPlugged(Wiimote *) override;
-	void wiimoteMotionPlusUnplugged(Wiimote *) override;
+	void timerCallback() override;
 
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 

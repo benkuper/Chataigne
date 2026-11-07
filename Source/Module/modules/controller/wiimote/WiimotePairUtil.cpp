@@ -10,7 +10,7 @@
 
 #pragma warning(disable:4995)
 
-bool WiiPairUtil::shouldStop = false;
+std::atomic<bool> WiiPairUtil::shouldStop { false };
 
 WiiPairUtil::WiiPairUtil()
 {
@@ -103,7 +103,7 @@ int WiiPairUtil::pairWin(bool forceRepairing)
 	// Keep looping until we pair with a Wii device
 	///////////////////////////////////////////////////////////////////////
 
-	while (nPaired == 0 && !shouldStop)
+	for (int attempt = 0; attempt < 1 && nPaired == 0 && !shouldStop; ++attempt)
 	{
 		int radio;
 
@@ -216,8 +216,7 @@ int WiiPairUtil::pairWin(bool forceRepairing)
 		} // for (radio = 0; radio < nRadios; radio++)
 
 
-		if (shouldStop) return false;
-		Sleep(1000);
+		if (!shouldStop) Sleep(1000);
 	}
 
 	///////////////////////////////////////////////////////////////////////

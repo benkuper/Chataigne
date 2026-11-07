@@ -10,11 +10,11 @@
 
 #pragma once
 
-#include "JoyShockLibrary.h"
+#include "JoyConDeviceSession.h"
 
 class JoyConModule :
 	public Module,
-	public Thread
+	private Timer
 {
 public:
 	JoyConModule();
@@ -25,29 +25,11 @@ public:
 	BoolParameter* useJitterThreshold;
 	FloatParameter* jitterThreshold;
 
-	Array<int> controllers;
-	SpinLock controllerLock;
+	std::unique_ptr<JoyConDeviceSession> controllers;
+	JoyConFrames lastFrames {};
 
 	ControllableContainer leftValues;
 	ControllableContainer rightValues;
-
-	// Temp deltas for jitter suppression
-	float tmpDeltaX;
-	float tmpDeltaY;
-	float tmpDeltaZ;
-
-	//Left controller
-
-	float lastLeftAccelX = 0.0;
-	float lastLeftAccelY = 0.0;
-	float lastLeftAccelZ = 0.0;
-
-	float lastLeftOrientationX = 0.0;
-	float lastLeftOrientationY = 0.0;
-	float lastLeftOrientationZ = 0.0;
-
-	float lastLeftAxisX = 0.0;
-	float lastLeftAxisY = 0.0;
 
 	Point3DParameter* leftAccel;
 	Point3DParameter* leftOrientation;
@@ -63,18 +45,6 @@ public:
 	BoolParameter * leftSR;
 	BoolParameter * capture;
 	BoolParameter *  minus;
-
-	//Right controller
-	float lastRightAccelX = 0.0;
-	float lastRightAccelY = 0.0;
-	float lastRightAccelZ = 0.0;
-
-	float lastRightOrientationX = 0.0;
-	float lastRightOrientationY = 0.0;
-	float lastRightOrientationZ = 0.0;
-
-	float lastRightAxisX = 0.0;
-	float lastRightAxisY = 0.0;
 
 	Point3DParameter* rightAccel;
 	Point3DParameter * rightOrientation;
@@ -92,20 +62,7 @@ public:
 	BoolParameter * plus;
 
 
-	//imu
-	double lastIMUProcessTime;
-	bool resetIMUOnNextPacket;
-	float imuError;
-
-	Vector3D<float> i_b;
-	Vector3D<float> j_b;
-	Vector3D<float> k_b;
-	Vector3D<float> k_acc;
-	Vector3D<float> i_b_;
-	Vector3D<float> w_a, w_g;
-
-	void connectControllers();
-	void updateController(int id);
+	void timerCallback() override;
     void onControllableFeedbackUpdateInternal(ControllableContainer *, Controllable *c) override;
 
 	static JoyConModule * create() { return new JoyConModule(); }
@@ -115,7 +72,5 @@ public:
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(JoyConModule)
 
 
-	// Inherited via Thread
-	virtual void run() override;
 
 };

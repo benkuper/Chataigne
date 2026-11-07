@@ -21,6 +21,7 @@
 		25B79098917C122588CC77C8 /* motion_plus.c */ = {isa = PBXBuildFile; fileRef = FC4F8E36F23BD11587DB882F; };
 		285D2029969E543B47F6A98A /* Foundation.framework */ = {isa = PBXBuildFile; fileRef = C8FEC9E8524F5DBA4DC10D47; };
 		2932D68B207D4E5DF6ABD79D /* include_juce_serial.cpp */ = {isa = PBXBuildFile; fileRef = 1E6A5DD38A4027FCDEAF22A7; };
+		2DA8C2D7B860F7E7ED01982E /* JoyConDeviceSession.cpp */ = {isa = PBXBuildFile; fileRef = 04D3D5A245DEC866EB93E0AA; };
 		30FA7B6D8A11BE5538132D1C /* include_juce_sharedtexture.mm */ = {isa = PBXBuildFile; fileRef = 5CF8710E129A54B3E95A47B8; };
 		323F052E99BDC8B730E6C8DE /* Icon.icns */ = {isa = PBXBuildFile; fileRef = BAE663016FCFB6168EAA4BFE; };
 		38055C0D7E224BD402A18C2A /* os_nix.c */ = {isa = PBXBuildFile; fileRef = F4F243B4A118FB7C15ADC97A; };
@@ -28,6 +29,7 @@
 		41036DAC07D5075CB3AD6D33 /* ParameterLink.cpp */ = {isa = PBXBuildFile; fileRef = EA1E97F19E0B43C7EC126720; };
 		4218F765091045FC822AA302 /* TimeMachineIncludes.cpp */ = {isa = PBXBuildFile; fileRef = 693EFA1B8916691D7568591A; };
 		4482F1AEF42497B7CD326C97 /* include_juce_audio_basics.mm */ = {isa = PBXBuildFile; fileRef = 8883C7CD4CC4127DC5FA03FE; };
+		4527A782C18722041421BEF5 /* hidapi_mac.c */ = {isa = PBXBuildFile; fileRef = C708E070250FB8E7A051192C; };
 		4ACACCD0579323DDC1DBE7D9 /* os_mac_find.m */ = {isa = PBXBuildFile; fileRef = 21D1C7EA304A7B4384016B50; };
 		4B5C294DEFF9C23F03035B05 /* server.key */ = {isa = PBXBuildFile; fileRef = F8E7D02E47F748ADED4BD659; };
 		4D75BBCB531AE4968206FB8D /* include_juce_audio_utils.mm */ = {isa = PBXBuildFile; fileRef = 8802698D52924F5FAB243444; };
@@ -49,6 +51,7 @@
 		779C955137FDB88F7CD846DC /* util.c */ = {isa = PBXBuildFile; fileRef = E5AA04B82683E9B39FCBFDD3; };
 		85E25915D57CB69541CADBC8 /* include_juce_audio_formats.mm */ = {isa = PBXBuildFile; fileRef = A375FF401D9AB143A47EC093; };
 		8670FDE2A6F8AE20A18D48AD /* os_mac_interface.m */ = {isa = PBXBuildFile; fileRef = B7037B1303B113B3EB738DE2; };
+		8D0A25F2A84E7D408EE06C81 /* JoyShockLibrary.cpp */ = {isa = PBXBuildFile; fileRef = 12AD1AB1BFDA570A4677EDC3; };
 		8E4BF978DC12E47F3F886891 /* GuiderIncludes.cpp */ = {isa = PBXBuildFile; fileRef = A186172EC33A3E8B18084A46; };
 		9162BCE79A7FD1E0C8EE0B42 /* dynamics.c */ = {isa = PBXBuildFile; fileRef = C95C470933856CCB6E5E6CC4; };
 		91AA6F409D793234C60EAA87 /* AVFoundation.framework */ = {isa = PBXBuildFile; fileRef = 865579E25E8588014A1721D6; };
@@ -134,6 +137,7 @@
 		040F7315F50E852C0354EF84 /* MappingFilterEditor.h */ /* MappingFilterEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MappingFilterEditor.h; path = ../../Source/Common/Processor/Mapping/Filter/ui/MappingFilterEditor.h; sourceTree = SOURCE_ROOT; };
 		046FA6955B23245D5819D9E3 /* LiveOSCModule.h */ /* LiveOSCModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LiveOSCModule.h; path = ../../Source/Module/modules/osc/live/LiveOSCModule.h; sourceTree = SOURCE_ROOT; };
 		04CDC9F8DBC38B390BD5304F /* AboutWindow.h */ /* AboutWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AboutWindow.h; path = ../../Source/UI/AboutWindow.h; sourceTree = SOURCE_ROOT; };
+		04D3D5A245DEC866EB93E0AA /* JoyConDeviceSession.cpp */ /* JoyConDeviceSession.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = JoyConDeviceSession.cpp; path = ../../Source/Module/modules/controller/joycon/JoyConDeviceSession.cpp; sourceTree = SOURCE_ROOT; };
 		0551F01900908CFF18CE737E /* ConsequenceGroup.cpp */ /* ConsequenceGroup.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ConsequenceGroup.cpp; path = ../../Source/Common/Processor/Action/Consequence/ConsequenceGroup.cpp; sourceTree = SOURCE_ROOT; };
 		0581290063FB39A6152797FA /* ChataigneDashboardCommand.cpp */ /* ChataigneDashboardCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ChataigneDashboardCommand.cpp; path = ../../Source/Module/modules/generic/commands/ChataigneDashboardCommand.cpp; sourceTree = SOURCE_ROOT; };
 		0613104F04B384C88B49A403 /* GenericControllableCommand.cpp */ /* GenericControllableCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = GenericControllableCommand.cpp; path = ../../Source/Module/modules/common/commands/generic/GenericControllableCommand.cpp; sourceTree = SOURCE_ROOT; };
@@ -174,6 +178,7 @@
 		10E36BD392E35F89F77DC7BA /* ConditionManager.cpp */ /* ConditionManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ConditionManager.cpp; path = ../../Source/Common/Processor/Action/Condition/ConditionManager.cpp; sourceTree = SOURCE_ROOT; };
 		10FDEE6F099540F5DC2B246B /* wsServerScriptTemplate.js */ /* wsServerScriptTemplate.js */ = {isa = PBXFileReference; lastKnownFileType = file.js; name = wsServerScriptTemplate.js; path = ../../Resources/Templates/Scripts/wsServerScriptTemplate.js; sourceTree = SOURCE_ROOT; };
 		119888D65DE05EACD18D1B11 /* HTTP.png */ /* HTTP.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = HTTP.png; path = ../../Resources/Modules/HTTP.png; sourceTree = SOURCE_ROOT; };
+		12AD1AB1BFDA570A4677EDC3 /* JoyShockLibrary.cpp */ /* JoyShockLibrary.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = JoyShockLibrary.cpp; path = ../../External/joycon/src/JoyShockLibrary.cpp; sourceTree = SOURCE_ROOT; };
 		12DDF7A00AC1057D87937493 /* State.cpp */ /* State.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = State.cpp; path = ../../Source/StateMachine/State/State.cpp; sourceTree = SOURCE_ROOT; };
 		1324A112A1CE733670690A95 /* QLabWorkspaceCommand.h */ /* QLabWorkspaceCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = QLabWorkspaceCommand.h; path = ../../Source/Module/modules/osc/qlab/commands/QLabWorkspaceCommand.h; sourceTree = SOURCE_ROOT; };
 		13C16FF3A375B8FF066BC8A9 /* AutomationMappingLayerTimeline.cpp */ /* AutomationMappingLayerTimeline.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = AutomationMappingLayerTimeline.cpp; path = ../../Source/TimeMachine/Sequence/layers/mapping/automation/ui/AutomationMappingLayerTimeline.cpp; sourceTree = SOURCE_ROOT; };
@@ -351,6 +356,7 @@
 		498E36E4BBEBDCC6F4155CB4 /* Module.cpp */ /* Module.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Module.cpp; path = ../../Source/Module/Module.cpp; sourceTree = SOURCE_ROOT; };
 		4A2E002198407598BE5F2D27 /* BinaryData.h */ /* BinaryData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BinaryData.h; path = ../../JuceLibraryCode/BinaryData.h; sourceTree = SOURCE_ROOT; };
 		4A7839D73F1B5D61CB692D0F /* CVPresetManager.cpp */ /* CVPresetManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CVPresetManager.cpp; path = ../../Source/CustomVariables/Preset/CVPresetManager.cpp; sourceTree = SOURCE_ROOT; };
+		4AA305E036FCBCDECFAE71A7 /* JoyConDeviceSession.h */ /* JoyConDeviceSession.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = JoyConDeviceSession.h; path = ../../Source/Module/modules/controller/joycon/JoyConDeviceSession.h; sourceTree = SOURCE_ROOT; };
 		4AB737A3CFA4289120C76020 /* MathFilter.h */ /* MathFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MathFilter.h; path = ../../Source/Common/Processor/Mapping/Filter/filters/number/MathFilter.h; sourceTree = SOURCE_ROOT; };
 		4B2FCE14DFEE6D63E46D08B9 /* BaseGuide.h */ /* BaseGuide.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BaseGuide.h; path = ../../Source/Guider/BaseGuide.h; sourceTree = SOURCE_ROOT; };
 		4B6CDDE72FDA5A4885B824B2 /* GuideComponents.h */ /* GuideComponents.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GuideComponents.h; path = ../../Source/Guider/GuideComponents.h; sourceTree = SOURCE_ROOT; };
@@ -770,6 +776,7 @@
 		C6146FC3CED0ECD9A064C9B9 /* MappingInput.cpp */ /* MappingInput.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MappingInput.cpp; path = ../../Source/Common/Processor/Mapping/Input/MappingInput.cpp; sourceTree = SOURCE_ROOT; };
 		C69FF11E58565E652FFE63EB /* AppConfig.h */ /* AppConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppConfig.h; path = ../../JuceLibraryCode/AppConfig.h; sourceTree = SOURCE_ROOT; };
 		C6D2FE7E6817726C8813E755 /* include_juce_cryptography.mm */ /* include_juce_cryptography.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_cryptography.mm; path = ../../JuceLibraryCode/include_juce_cryptography.mm; sourceTree = SOURCE_ROOT; };
+		C708E070250FB8E7A051192C /* hidapi_mac.c */ /* hidapi_mac.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = hidapi_mac.c; path = ../../External/hidapi/mac/hidapi_mac.c; sourceTree = SOURCE_ROOT; };
 		C71E6DD8C2EE411A6B4C9784 /* NetworkStreamingModule.cpp */ /* NetworkStreamingModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NetworkStreamingModule.cpp; path = ../../Source/Module/modules/common/streaming/NetworkStreamingModule.cpp; sourceTree = SOURCE_ROOT; };
 		C79D12282B547B8B49912DAD /* StateMachineIncludes.h */ /* StateMachineIncludes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StateMachineIncludes.h; path = ../../Source/StateMachine/StateMachineIncludes.h; sourceTree = SOURCE_ROOT; };
 		C7B87D07F4FBB8CE172A040C /* CommandTemplateEditor.h */ /* CommandTemplateEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CommandTemplateEditor.h; path = ../../Source/Common/Command/Template/ui/CommandTemplateEditor.h; sourceTree = SOURCE_ROOT; };
@@ -1861,6 +1868,10 @@
 		5196179CA1A0DDE3AAF00F3C /* joycon */ = {
 			isa = PBXGroup;
 			children = (
+				4AA305E036FCBCDECFAE71A7,
+				04D3D5A245DEC866EB93E0AA,
+				12AD1AB1BFDA570A4677EDC3,
+				C708E070250FB8E7A051192C,
 				EE16135FACA08DECECFBE1D6,
 				8A58CD77BC22FE5104C4B2FD,
 			);
@@ -3721,6 +3732,9 @@
 				61E67DC16A98E630727391F8,
 				A01121FD77059F1E4D8C2F72,
 				6CEAB0EC246F117E9DAA830C,
+				2DA8C2D7B860F7E7ED01982E,
+				8D0A25F2A84E7D408EE06C81,
+				4527A782C18722041421BEF5,
 				E850833D3B7F572FADCA4515,
 				F62FACD4F5C6DBB79A747016,
 				4ACACCD0579323DDC1DBE7D9,
@@ -4004,7 +4018,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(HOME)/JUCE/modules $(SRCROOT)/../../Modules $(SRCROOT)/../../Source $(SRCROOT)/../../External/wiiuse $(SRCROOT)/../../External/asio $(SRCROOT)/../../External/asiodriver $(SRCROOT)/../../External/kinect/include $(SRCROOT)/../../External/joycon/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../External/dnssd/include $(SRCROOT)/../../External/ois/include $(SRCROOT)/../../External/sdl/include $(SRCROOT)/../../External/hidapi/include $(SRCROOT)/../../External/abletonlink/include $(SRCROOT)/../../External/libusb/include/libusb-1.0 $(SRCROOT)/../../External/mosquitto/include $(SRCROOT)/../../External/posistagenet/include $(SRCROOT)/../../External/simpleble/include $(SRCROOT)/../../External/mpv/include";
-				OTHER_LDFLAGS = "-lServus -lhidapi -lJoyShockLibrary -lmosquitto -lmosquittopp -lmpv -lserial -lssl -lcrypto -lz";
+				OTHER_LDFLAGS = "-lServus -lmosquitto -lmosquittopp -lmpv -lserial -lssl -lcrypto -lz";
 				PRODUCT_BUNDLE_IDENTIFIER = benkuper.Chataigne;
 				PRODUCT_NAME = "Chataigne";
 				USE_HEADERMAP = NO;
@@ -4089,7 +4103,7 @@
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(HOME)/JUCE/modules $(SRCROOT)/../../Modules $(SRCROOT)/../../Source $(SRCROOT)/../../External/wiiuse $(SRCROOT)/../../External/asio $(SRCROOT)/../../External/asiodriver $(SRCROOT)/../../External/kinect/include $(SRCROOT)/../../External/joycon/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../External/dnssd/include $(SRCROOT)/../../External/ois/include $(SRCROOT)/../../External/sdl/include $(SRCROOT)/../../External/hidapi/include $(SRCROOT)/../../External/abletonlink/include $(SRCROOT)/../../External/libusb/include/libusb-1.0 $(SRCROOT)/../../External/mosquitto/include $(SRCROOT)/../../External/posistagenet/include $(SRCROOT)/../../External/simpleble/include $(SRCROOT)/../../External/mpv/include";
-				OTHER_LDFLAGS = "-lServus -lhidapi -lJoyShockLibrary -lmosquitto -lmosquittopp -lmpv -lserial -lssl -lcrypto -lz";
+				OTHER_LDFLAGS = "-lServus -lmosquitto -lmosquittopp -lmpv -lserial -lssl -lcrypto -lz";
 				PRODUCT_BUNDLE_IDENTIFIER = benkuper.Chataigne;
 				PRODUCT_NAME = "Chataigne";
 				USE_HEADERMAP = NO;
@@ -4222,7 +4236,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(HOME)/JUCE/modules $(SRCROOT)/../../Modules $(SRCROOT)/../../Source $(SRCROOT)/../../External/wiiuse $(SRCROOT)/../../External/asio $(SRCROOT)/../../External/asiodriver $(SRCROOT)/../../External/kinect/include $(SRCROOT)/../../External/joycon/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../External/dnssd/include $(SRCROOT)/../../External/ois/include $(SRCROOT)/../../External/sdl/include $(SRCROOT)/../../External/hidapi/include $(SRCROOT)/../../External/abletonlink/include $(SRCROOT)/../../External/libusb/include/libusb-1.0 $(SRCROOT)/../../External/mosquitto/include $(SRCROOT)/../../External/posistagenet/include $(SRCROOT)/../../External/simpleble/include $(SRCROOT)/../../External/mpv/include";
-				OTHER_LDFLAGS = "-lServus -lhidapi -lJoyShockLibrary -lmosquitto -lmosquittopp -lmpv -lserial -lssl -lcrypto -lz";
+				OTHER_LDFLAGS = "-lServus -lmosquitto -lmosquittopp -lmpv -lserial -lssl -lcrypto -lz";
 				PRODUCT_BUNDLE_IDENTIFIER = benkuper.Chataigne;
 				PRODUCT_NAME = "Chataigne";
 				USE_HEADERMAP = NO;
@@ -4306,7 +4320,7 @@
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(HOME)/JUCE/modules $(SRCROOT)/../../Modules $(SRCROOT)/../../Source $(SRCROOT)/../../External/wiiuse $(SRCROOT)/../../External/asio $(SRCROOT)/../../External/asiodriver $(SRCROOT)/../../External/kinect/include $(SRCROOT)/../../External/joycon/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../External/dnssd/include $(SRCROOT)/../../External/ois/include $(SRCROOT)/../../External/sdl/include $(SRCROOT)/../../External/hidapi/include $(SRCROOT)/../../External/abletonlink/include $(SRCROOT)/../../External/libusb/include/libusb-1.0 $(SRCROOT)/../../External/mosquitto/include $(SRCROOT)/../../External/posistagenet/include $(SRCROOT)/../../External/simpleble/include $(SRCROOT)/../../External/mpv/include";
-				OTHER_LDFLAGS = "-lServus -lhidapi -lJoyShockLibrary -lmosquitto -lmosquittopp -lmpv -lserial -lssl -lcrypto -lz";
+				OTHER_LDFLAGS = "-lServus -lmosquitto -lmosquittopp -lmpv -lserial -lssl -lcrypto -lz";
 				PRODUCT_BUNDLE_IDENTIFIER = benkuper.Chataigne;
 				PRODUCT_NAME = "Chataigne";
 				USE_HEADERMAP = NO;
