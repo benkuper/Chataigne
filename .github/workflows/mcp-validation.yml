@@ -18,6 +18,23 @@ jobs:
           repository: benkuper/JUCE
           ref: develop-local
           path: JUCE
+      - name: Capture native fault stacks
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('Tools/mcp/bridge.cpp')
+          s = p.read_text()
+          s = '#include <execinfo.h>\n#include <csignal>\n#include <cstdlib>\n' + s
+          s = s.replace('int main(int argc, char** argv)\n{', '''int main(int argc, char** argv)
+          {
+              std::signal(SIGSEGV, +[](int signal) {
+                  void* stack[64];
+                  const int count = backtrace(stack, 64);
+                  backtrace_symbols_fd(stack, count, 2);
+                  std::_Exit(128 + signal);
+              });''')
+          p.write_text(s)
+          PY
       - name: Build and stress native bridge
         run: |
           set -euo pipefail
