@@ -5,33 +5,18 @@
 #include <mutex>
 #include <thread>
 #include <vector>
+#include <csignal>
+#include "LoopbackHttpStream.h"
 
 namespace
 {
 using namespace organic::mcp;
 struct Request
 {
-    std::shared_ptr<juce::WebInputStream> stream;
+    std::shared_ptr<LoopbackHttpStream> stream;
     std::atomic<bool> finished {false};
     std::thread worker;
-    std::mutex connectionMutex;
-    bool cancelled = false;
-
-    bool connect()
-    {
-        // JUCE's macOS connect() can reset its native connection after a
-        // failed start. cancel() must not dereference that connection at the
-        // same time. Connection attempts already have a bounded timeout.
-        std::lock_guard<std::mutex> lock(connectionMutex);
-        return !cancelled && stream->connect(nullptr);
-    }
-    void cancel()
-    {
-        std::lock_guard<std::mutex> lock(connectionMutex);
-        if (cancelled || finished) return;
-        cancelled = true;
-        stream->cancel();
-    }
+    void cancel() { stream->cancel(); }
 };
 class Bridge
 {
@@ -131,9 +116,7 @@ private:
                 if (method == "tools/call" || method == "prompts/get" || method == "resources/read")
                     headers += "Mcp-Name: " + headerName(message["params"][method == "resources/read" ? "uri" : "name"].toString()) + "\r\n";
             }
-            auto url = events ? juce::URL(endpoint) : juce::URL(endpoint).withPOSTData(juce::JSON::toString(message, true));
-            request->stream = std::make_shared<juce::WebInputStream>(url, !events);
-            request->stream->withExtraHeaders(headers.trimEnd()).withConnectionTimeout(5000).withNumRedirectsToFollow(0);
+            request->stream = std::make_shared<LoopbackHttpStream>(endpoint, events, headers, juce::JSON::toString(message, true));
             requests[key] = request;
         }
         request->worker = std::thread([this, request, message, id, method, selectedVersion, events, synchronous]
@@ -142,7 +125,7 @@ private:
             try
             {
                 auto& stream = *request->stream;
-                if (!request->connect()) throw Error(-32000, "Cannot connect to the selected Chataigne instance");
+                if (!stream.connect()) throw Error(-32000, "Cannot connect to the selected Chataigne instance");
                 auto status = stream.getStatusCode(); auto headers = stream.getResponseHeaders();
                 if (juce::SystemStats::getEnvironmentVariable("MCP_BRIDGE_TRACE", {}) == "1")
                     std::cerr << "HTTP " << status << "; length=" << stream.getTotalLength() << "; position=" << stream.getPosition() << std::endl;
@@ -154,6 +137,7 @@ private:
                         std::string line; char character;
                         while (stream.read(&character, 1) == 1 && character != '\n')
                         { if (++bytes > 1024 * 1024) throw Error(-32000, "SSE event exceeds the payload limit"); if (character != '\r') line += character; }
+                        if (stream.isError()) break;
                         auto text = String::fromUTF8(line.data(), (int) line.size());
                         if (text.startsWith("data:")) data += text.substring(5).trimStart();
                         if (text.isEmpty() && data.isNotEmpty()) { emit(parseBounded(data)); data.clear(); bytes = 0; }
@@ -199,6 +183,9 @@ private:
 }
 int main(int argc, char** argv)
 {
+   #if !JUCE_WINDOWS
+    std::signal(SIGPIPE, SIG_IGN);
+   #endif
     juce::ScopedJuceInitialiser_GUI runtime;
     juce::String endpoint, tokenEnvironment = "CHATAIGNE_MCP_TOKEN", credentialDirectory;
     for (int i = 1; i < argc; ++i)

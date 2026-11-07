@@ -1,5 +1,6 @@
 """Exercise the native stdio bridge against the native independent MCP server."""
 import json
+import http.server
 import os
 from pathlib import Path
 import queue
@@ -9,6 +10,58 @@ import sys
 import tempfile
 import threading
 import time
+
+
+
+def check_http_framing(bridge, token, clients, hidden):
+    class Handler(http.server.BaseHTTPRequestHandler):
+        protocol_version = "HTTP/1.1"
+
+        def log_message(self, *_):
+            pass
+
+        def do_POST(self):
+            message = json.loads(self.rfile.read(int(self.headers["Content-Length"])))
+            self.close_connection = True
+            if message["params"].get("malformed"):
+                self.wfile.write(b"HTTP/1.1 200 OK\r\nContent-Length: invalid\r\n\r\n")
+                return
+            body = json.dumps({"jsonrpc": "2.0", "id": message["id"], "result": {
+                "text": "?" * 20000,
+                "authenticated": self.headers.get("Authorization") == "Bearer " + token,
+                "method": self.headers.get("Mcp-Method"),
+            }}, ensure_ascii=False).encode()
+            self.send_response(200)
+            self.send_header("content-type", "application/json")
+            self.send_header("content-length", str(len(body)))
+            self.end_headers()
+            for start in range(0, len(body), 4999):
+                self.wfile.write(body[start:start + 4999]); self.wfile.flush()
+
+    server = http.server.ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+    thread = threading.Thread(target=server.serve_forever, daemon=True); thread.start()
+    try:
+        for malformed in (False, True):
+            process = subprocess.Popen([bridge, "--endpoint", f"http://localhost:{server.server_port}/mcp"],
+                                       stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                       text=True, encoding="utf-8", env=dict(os.environ, CHATAIGNE_MCP_TOKEN=token), **hidden)
+            clients.append(process)
+            message = {"jsonrpc": "2.0", "id": 1, "method": "ping", "params": {
+                "malformed": malformed, "_meta": {"io.modelcontextprotocol/protocolVersion": "2026-07-28"}}}
+            output = queue.Queue()
+            reader = threading.Thread(target=lambda: output.put(process.stdout.readline()), daemon=True); reader.start()
+            process.stdin.write(json.dumps(message) + "\n"); process.stdin.flush()
+            response = json.loads(output.get(timeout=8))
+            if malformed:
+                assert response["error"]["code"] == -32000, "invalid HTTP framing must fail safely"
+            else:
+                assert response["result"] == {"text": "?" * 20000, "authenticated": True, "method": "ping"}
+            process.stdin.close(); process.wait(timeout=8); reader.join(timeout=2)
+            diagnostics = process.stderr.read()
+            assert token not in diagnostics, "credential leaked during HTTP framing checks"
+            assert process.returncode == 0, f"HTTP framing teardown failed: {process.returncode}; {diagnostics}"
+    finally:
+        server.shutdown(); server.server_close(); thread.join(timeout=5)
 
 
 def main():
@@ -116,7 +169,8 @@ def main():
                             "_meta": {"io.modelcontextprotocol/protocolVersion": "2026-07-28"}}}) + "\n" for index in range(8))
                         output, diagnostics = process.communicate(requests, timeout=8)
                         assert token not in output + diagnostics, "credential leaked during EOF teardown"
-                        assert process.returncode == 0, f"pending-request EOF failed: attempt={attempt}, exit={process.returncode}; {diagnostics}"
+                        assert process.returncode == 0, f"pending-request EOF failed: refused={target_port == refused_port}, attempt={attempt}, exit={process.returncode}; {diagnostics}"
+            check_http_framing(bridge, token, clients, hidden)
             print("Passed native stdio bridge checks for modern and both legacy MCP versions, protected Desktop credentials, subscriptions, cancellation, and EOF teardown")
         finally:
             for process in clients:
