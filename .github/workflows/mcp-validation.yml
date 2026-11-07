@@ -1,0 +1,47 @@
+name: Native MCP teardown validation
+on:
+  push:
+    branches: ["codex/validate-ci-timeline-reports"]
+jobs:
+  macos-mcp:
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: [arm64, x86_64]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: actions/checkout@v4
+        with:
+          repository: benkuper/JUCE
+          ref: develop-local
+          path: JUCE
+      - name: Build and stress native bridge
+        run: |
+          set -euo pipefail
+          TARGET=11.0
+          if [ "${{ matrix.arch }}" = x86_64 ]; then TARGET=10.10; fi
+          cmake -S Tools/mcp -B Binaries/mcp-tools -DJUCE_PATH="$GITHUB_WORKSPACE/JUCE" -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES=${{ matrix.arch }} -DCMAKE_OSX_DEPLOYMENT_TARGET="$TARGET"
+          cmake --build Binaries/mcp-tools --parallel 2
+          ctest --test-dir Binaries/mcp-tools --output-on-failure
+          ctest --test-dir Binaries/mcp-tools --output-on-failure --repeat until-fail:20 -R '^mcp_bridge$'
+      - name: Native crash traces
+        if: failure()
+        run: |
+          sleep 3
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          for path in Path.home().joinpath('Library/Logs/DiagnosticReports').glob('chataigne-mcp-bridge*.ips'):
+              print(path.name)
+              raw = path.read_text()
+              decoder = json.JSONDecoder()
+              first, end = decoder.raw_decode(raw)
+              data = decoder.raw_decode(raw[end:].lstrip())[0]
+              print('Exception:', data.get('exception'))
+              thread = data.get('faultingThread')
+              if thread is not None:
+                  print(json.dumps(data['threads'][thread], indent=2))
+          PY

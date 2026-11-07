@@ -1,4 +1,7 @@
-on: [push]
+on:
+  push:
+    branches-ignore: ["codex/validate-ci-timeline-reports"]
+    tags: ["*"]
 
 env:
   ProjectName: Chataigne
