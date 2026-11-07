@@ -1,7 +1,5 @@
 name: Native MCP teardown validation
-on:
-  push:
-    branches: ["codex/validate-ci-timeline-reports"]
+on: [workflow_dispatch]
 jobs:
   macos-mcp:
     runs-on: macos-latest
