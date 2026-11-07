@@ -358,6 +358,13 @@ jobs:
           echo "pkg-name=$PKGNAME" >> $GITHUB_OUTPUT
         working-directory: ./Package
 
+      - name: Store controller test installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: controller-test-macos-${{ matrix.suffix }}
+          path: ./Package/${{ steps.create_package.outputs.pkg-name }}
+          retention-days: 14
+
       - name: Upload
         if: false # Validation only: no publication
         uses: ./.github/actions/upload
