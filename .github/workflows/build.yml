@@ -5,6 +5,28 @@ env:
   PackagesVersion: 1.2.11
 
 jobs:
+  controller-regressions:
+    name: Controller regressions (${{ matrix.os }}, ${{ matrix.arch }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: macos-latest
+            arch: arm64
+          - os: macos-latest
+            arch: x86_64
+          - os: ubuntu-latest
+            arch: x86_64
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build and stress hardware backends with sanitizers
+        shell: bash
+        run: |
+          set -euo pipefail
+          cmake -S Tools/tests/controllers -B Binaries/controller-tests -DCMAKE_BUILD_TYPE=Debug -DCMAKE_OSX_ARCHITECTURES=${{ matrix.arch }}
+          cmake --build Binaries/controller-tests --parallel 2
+          ctest --test-dir Binaries/controller-tests --output-on-failure --repeat until-fail:5
   windows:
     name: Windows
     # if: false # always skip job
@@ -98,7 +120,7 @@ jobs:
           "archive-path=$archive" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
 
       - name: Upload PDB
-        if: matrix.arch == 'win-x64'
+        if: false # Validation only: no publication
         uses: ./.github/actions/upload
         with:
           pkg-name: ${{ steps.compress_pdb.outputs.archive-path }}
@@ -174,6 +196,7 @@ jobs:
         working-directory: ./Binaries/CI/App
 
       - name: Upload
+        if: false # Validation only: no publication
         uses: ./.github/actions/upload
         with:
           pkg-name: ./Binaries/CI/App/${{ steps.create_package.outputs.pkg-name }}
@@ -336,6 +359,7 @@ jobs:
         working-directory: ./Package
 
       - name: Upload
+        if: false # Validation only: no publication
         uses: ./.github/actions/upload
         with:
           pkg-name: ./Package/${{ steps.create_package.outputs.pkg-name }}
@@ -650,6 +674,7 @@ jobs:
           done
 
       - name: Upload
+        if: false # Validation only: no publication
         uses: ./.github/actions/upload
         with:
           pkg-name: ${{ steps.create_package.outputs.pkg-name }}
@@ -1041,6 +1066,7 @@ jobs:
           echo "Raspberry payload smoke test passed for ${{ matrix.arch_name }}"
 
       - name: Upload
+        if: false # Validation only: no publication
         uses: ./.github/actions/upload
         with:
           pkg-name: ${{ steps.create_package.outputs.pkg-name }}
