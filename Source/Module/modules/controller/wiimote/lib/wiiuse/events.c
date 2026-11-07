@@ -381,6 +381,15 @@ static void event_data_read(struct wiimote_t* wm, byte* msg) {
 	offset = from_big_endian_uint16_t(msg + 3);
 	req->addr = (req->addr & 0xFFFF);
 
+    /* Replies may be stale, duplicated or malformed. Never let a controller
+       choose a write outside the pending request buffer or complete it early. */
+    if (!req->buf || req->wait > req->size || len > req->wait ||
+        offset < req->addr || (uint32_t)(offset - req->addr) != req->size - req->wait ||
+        (uint32_t)(offset - req->addr) + len > req->size) {
+        WIIUSE_WARNING("Ignoring invalid read reply offset/length.");
+        return;
+    }
+
 	req->wait -= len;
 	if (req->wait >= req->size)
 		/* this should never happen */
