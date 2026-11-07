@@ -289,6 +289,7 @@ juce::Array<CompositionRenderer::Cue> CompositionRenderer::gatherActiveCues(Sequ
 	for (auto& seq : sm->items) // top-most sequence first
 	{
 		if (seq == nullptr || seq->layerManager == nullptr) continue;
+		if (!seq->enabled->boolValue()) continue;
 		if (sequenceFilter != nullptr && seq != sequenceFilter) continue;
 
 		for (auto& layer : seq->layerManager->items) // top-most track first

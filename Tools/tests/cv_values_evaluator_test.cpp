@@ -160,6 +160,33 @@ int main()
         { assert(actual[ch].write == visit.second[ch].write); assert(actual[ch].value == visit.second[ch].value); }
     }
 
+
+    // Preset switch modes apply to both edges, even when the curve reaches
+    // its final value early. Change-at-end holds through the outgoing fade.
+    auto switches = timeline();
+    switches.blocks = { block(2, 4, 100) };
+    switches.blocks[0].channels[0].constant.mode = Mode::End;
+    expect(switches, 2, 0); expect(switches, 2.999, 0); expect(switches, 3, 100);
+    expect(switches, 5, 100); expect(switches, 5.999, 100); expect(switches, 6, 0);
+    switches.curve = [](double w) { return std::min(1.0, w * 2); };
+    expect(switches, 2.75, 0); expect(switches, 5.75, 100);
+    switches.blocks[0].manualFadeIn = switches.blocks[0].manualFadeOut = true;
+    switches.blocks[0].fadeIn = switches.blocks[0].fadeOut = 2;
+    expect(switches, 3.999, 0); expect(switches, 4, 100); expect(switches, 5.999, 100);
+    switches.blocks[0].channels[0].constant.mode = Mode::Start;
+    expect(switches, 2, 100); expect(switches, 4, 0);
+    switches.curve = {};
+    switches.blocks = { block(0, 10, 100), block(8, 10, 200) };
+    switches.blocks[1].channels[0].constant.mode = Mode::End;
+    expect(switches, 8, 100); expect(switches, 9.999, 100); expect(switches, 10, 200);
+    switches.blocks[0].manualFadeOut = switches.blocks[1].manualFadeIn = true;
+    switches.blocks[0].fadeOut = switches.blocks[1].fadeIn = 2;
+    expect(switches, 9.999, 100); expect(switches, 10, 200);
+    switches.blocks[1].fadeIn = 1;
+    expect(switches, 8.999, 100); expect(switches, 9, 200);
+    switches.blocks[1].channels[0].constant.mode = Mode::Start;
+    expect(switches, 8, 200); // Incoming preset decides conflicting overlap modes.
+
     Timeline<std::string> text;
     text.base = { "base" };
     text.interpolate = [](size_t, const std::string& a, const std::string& b, double w) { return w < 1 ? a : b; };

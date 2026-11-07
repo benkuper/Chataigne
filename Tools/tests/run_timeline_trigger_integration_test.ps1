@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param(
     [ValidateSet('Debug', 'Release')][string]$Configuration = 'Debug',
-    [ValidateSet('timeline_trigger_integration_test', 'cv_set_value_trigger_integration_test', 'sequence_editing_integration_test')]
+    [ValidateSet('timeline_trigger_integration_test', 'cv_set_value_trigger_integration_test', 'sequence_editing_integration_test', 'cv_values_integration_test')]
     [string]$TestName = 'timeline_trigger_integration_test',
     [string[]]$TestArguments = @(),
     [switch]$SkipBuild

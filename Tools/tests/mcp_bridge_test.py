@@ -81,7 +81,6 @@ def main():
                     assert first["method"] == "notifications/subscriptions/acknowledged"
                     changed = messages.get(timeout=5)
                     assert changed["method"] == "notifications/resources/updated"
-                    send("notifications/cancelled", {"requestId": 4}, identifier=None)
                 else:
                     send("resources/subscribe", {"uri": "organic://clock"}, 4)
                     assert "result" in response(4)
@@ -89,11 +88,35 @@ def main():
                     assert changed["method"] == "notifications/resources/updated"
                 send("ping", identifier=5)
                 assert "result" in response(5)
+                if version == "2026-07-28":
+                    # Rejection must also reap completed worker threads safely.
+                    send("subscriptions/listen", {"notifications": {}}, 4)
+                    assert response(4)["error"]["code"] == -32600
+                    send("notifications/cancelled", {"requestId": 4}, identifier=None)
+                    send("ping", identifier=6)
+                    assert "result" in response(6)
                 process.stdin.close()
                 process.wait(timeout=8)
-                assert process.returncode == 0, "bridge did not shut down cleanly"
                 reader.join(timeout=2)
-                assert token not in process.stderr.read(), "credential leaked to bridge diagnostics"
+                diagnostics = process.stderr.read()
+                assert token not in diagnostics, "credential leaked to bridge diagnostics"
+                assert process.returncode == 0, f"bridge did not shut down cleanly: version={version}, protected={protected_store}, exit={process.returncode}; {diagnostics}"
+
+            # Close stdin with requests still connecting/reading. A refused
+            # connection exercises native connect failure racing with teardown.
+            with socket.socket() as reservation:
+                reservation.bind(("127.0.0.1", 0)); refused_port = reservation.getsockname()[1]
+                for target_port in (port, refused_port):
+                    for attempt in range(4):
+                        process = subprocess.Popen([bridge, "--endpoint", f"http://127.0.0.1:{target_port}/mcp"],
+                                                   stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                                   text=True, env=dict(os.environ, CHATAIGNE_MCP_TOKEN=token), **hidden)
+                        clients.append(process)
+                        requests = "".join(json.dumps({"jsonrpc": "2.0", "id": index, "method": "ping", "params": {
+                            "_meta": {"io.modelcontextprotocol/protocolVersion": "2026-07-28"}}}) + "\n" for index in range(8))
+                        output, diagnostics = process.communicate(requests, timeout=8)
+                        assert token not in output + diagnostics, "credential leaked during EOF teardown"
+                        assert process.returncode == 0, f"pending-request EOF failed: attempt={attempt}, exit={process.returncode}; {diagnostics}"
             print("Passed native stdio bridge checks for modern and both legacy MCP versions, protected Desktop credentials, subscriptions, cancellation, and EOF teardown")
         finally:
             for process in clients:

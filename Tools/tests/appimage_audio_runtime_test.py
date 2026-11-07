@@ -35,7 +35,7 @@ class AppImageAudioRuntimeTest(unittest.TestCase):
         policies = functions("is_forbidden_lib")
         self.assertEqual(len(policies), 3)  # x64, ARM packaging and ARM smoke test
         forbidden = ["libjack.so.0", "libjacknet.so.0", "libjackserver.so.0",
-                     "libpipewire-0.3.so.0", "libpulse.so.0", "libc.so.6"]
+                     "libpipewire-0.3.so.0", "libpulse.so.0", "libsystemd.so.0", "libc.so.6"]
         for index, policy in enumerate(policies):
             for library in forbidden + ["libmpv.so.2", "libmosquitto.so.1"]:
                 with self.subTest(policy=index, library=library):
@@ -58,7 +58,8 @@ class AppImageAudioRuntimeTest(unittest.TestCase):
                 # A bundled JACK implementation cannot connect to PipeWire; the
                 # host's replacements return a different marker for the probe.
                 for soname, function in (("libjack.so.0", "jack_backend"),
-                                         ("libpipewire-0.3.so.0", "pipewire_backend")):
+                                         ("libpipewire-0.3.so.0", "pipewire_backend"),
+                                         ("libsystemd.so.0", "systemd_backend")):
                     for directory, marker in ((build, 1), (host, 2)):
                         source = directory / (function + ".c")
                         source.write_text(f"int {function}(void) {{ return {marker}; }}\n")
@@ -66,13 +67,13 @@ class AppImageAudioRuntimeTest(unittest.TestCase):
                                         "-Wl,-soname," + soname, "-o", str(directory / soname)], check=True)
 
                 mpv_source = build / "mpv.c"
-                mpv_source.write_text("int jack_backend(void); int pipewire_backend(void);\n"
-                                      "int mpv_backend(void) { return jack_backend() + pipewire_backend(); }\n")
+                mpv_source.write_text("int jack_backend(void); int pipewire_backend(void); int systemd_backend(void);\n"
+                                      "int mpv_backend(void) { return jack_backend() + pipewire_backend() + systemd_backend(); }\n")
                 subprocess.run(["gcc", "-shared", "-fPIC", str(mpv_source), "-L" + str(build),
-                                "-l:libjack.so.0", "-l:libpipewire-0.3.so.0", "-Wl,-soname,libmpv.so.2",
+                                "-l:libjack.so.0", "-l:libpipewire-0.3.so.0", "-l:libsystemd.so.0", "-Wl,-soname,libmpv.so.2",
                                 "-o", str(build / "libmpv.so.2")], check=True)
                 probe_source = build / "probe.c"
-                probe_source.write_text("int mpv_backend(void); int main(void) { return mpv_backend() == 4 ? 0 : 1; }\n")
+                probe_source.write_text("int mpv_backend(void); int main(void) { return mpv_backend() == 6 ? 0 : 1; }\n")
                 subprocess.run(["gcc", str(probe_source), "-L" + str(build), "-l:libmpv.so.2",
                                 "-Wl,-rpath-link," + str(build), "-o", str(binary_dir / "audio-probe")], check=True)
 
@@ -86,6 +87,7 @@ copy_needed_from_target "$APPDIR/usr/lib/libmpv.so.2"
 '''
                 result = shell(package, root, APPDIR=str(appdir), BUILD_LIBS=str(build))
                 self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertFalse((bundled / "libsystemd.so.0").exists(), "systemd must stay on the host")
                 self.assertFalse((bundled / "libjack.so.0").exists(), "JACK must stay on the host")
                 self.assertFalse((bundled / "libpipewire-0.3.so.0").exists(), "PipeWire must stay on the host")
 
@@ -102,7 +104,7 @@ copy_needed_from_target "$APPDIR/usr/lib/libmpv.so.2"
                             re.MULTILINE | re.DOTALL)
         self.assertEqual(len(guards), 2)
         for guard in guards:
-            for library in ("libjack.so.0", "libjacknet.so.0", "libjackserver.so.0", "libpipewire-0.3.so.0"):
+            for library in ("libjack.so.0", "libjacknet.so.0", "libjackserver.so.0", "libpipewire-0.3.so.0", "libsystemd.so.0"):
                 with self.subTest(library=library), tempfile.TemporaryDirectory() as temp:
                     bundled = Path(temp) / "usr/lib"
                     bundled.mkdir(parents=True)

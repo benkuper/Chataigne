@@ -14,6 +14,24 @@ struct Request
     std::shared_ptr<juce::WebInputStream> stream;
     std::atomic<bool> finished {false};
     std::thread worker;
+    std::mutex connectionMutex;
+    bool cancelled = false;
+
+    bool connect()
+    {
+        // JUCE's macOS connect() can reset its native connection after a
+        // failed start. cancel() must not dereference that connection at the
+        // same time. Connection attempts already have a bounded timeout.
+        std::lock_guard<std::mutex> lock(connectionMutex);
+        return !cancelled && stream->connect(nullptr);
+    }
+    void cancel()
+    {
+        std::lock_guard<std::mutex> lock(connectionMutex);
+        if (cancelled || finished) return;
+        cancelled = true;
+        stream->cancel();
+    }
 };
 class Bridge
 {
@@ -24,7 +42,7 @@ public:
         stopping = true;
         std::vector<std::shared_ptr<Request>> pending;
         { std::lock_guard<std::mutex> lifetime(lifecycle); std::lock_guard<std::mutex> lock(mutex); for (auto& item : requests) pending.push_back(item.second); }
-        for (auto& request : pending) { if (request->stream) request->stream->cancel(); }
+        for (auto& request : pending) request->cancel();
         for (auto& request : pending) if (request->worker.joinable()) request->worker.join();
     }
     void run()
@@ -71,7 +89,7 @@ private:
             auto key = juce::JSON::toString(message["params"]["requestId"], true);
             std::lock_guard<std::mutex> lock(mutex);
             auto found = requests.find(key);
-            if (found != requests.end() && found->second->stream) found->second->stream->cancel();
+            if (found != requests.end()) found->second->cancel();
             // Modern HTTP cancellation is the close itself. Legacy servers may
             // also receive the notification through the normal forwarding path.
             if (version == "2026-07-28") return;
@@ -87,12 +105,18 @@ private:
         auto id = message["id"]; auto method = message["method"].toString();
         String key = events ? String("legacy-events") : message.hasProperty("id") ? juce::JSON::toString(id, true) : juce::Uuid().toString();
         String selectedVersion, selectedSession;
-        std::vector<std::shared_ptr<Request>> completed;
         auto request = std::make_shared<Request>();
         {
             std::lock_guard<std::mutex> lock(mutex);
             for (auto it = requests.begin(); it != requests.end();)
-                if (it->second->finished) { completed.push_back(it->second); it = requests.erase(it); } else ++it;
+                if (it->second->finished)
+                {
+                    // Join before any rejection can return: destroying a
+                    // completed but joinable std::thread calls std::terminate.
+                    if (it->second->worker.joinable()) it->second->worker.join();
+                    it = requests.erase(it);
+                }
+                else ++it;
             if (requests.count(key)) { emit(Protocol::error(id, -32600, "Request ID is already active")); return; }
             if (requests.size() >= 8) { emit(Protocol::error(id, -32000, "Bridge concurrency limit reached")); return; }
             selectedVersion = message["params"]["_meta"]["io.modelcontextprotocol/protocolVersion"].toString();
@@ -112,14 +136,13 @@ private:
             request->stream->withExtraHeaders(headers.trimEnd()).withConnectionTimeout(5000).withNumRedirectsToFollow(0);
             requests[key] = request;
         }
-        for (auto& previous : completed) if (previous->worker.joinable()) previous->worker.join();
         request->worker = std::thread([this, request, message, id, method, selectedVersion, events, synchronous]
         {
             bool openEvents = false;
             try
             {
                 auto& stream = *request->stream;
-                if (!stream.connect(nullptr)) throw Error(-32000, "Cannot connect to the selected Chataigne instance");
+                if (!request->connect()) throw Error(-32000, "Cannot connect to the selected Chataigne instance");
                 auto status = stream.getStatusCode(); auto headers = stream.getResponseHeaders();
                 if (juce::SystemStats::getEnvironmentVariable("MCP_BRIDGE_TRACE", {}) == "1")
                     std::cerr << "HTTP " << status << "; length=" << stream.getTotalLength() << "; position=" << stream.getPosition() << std::endl;

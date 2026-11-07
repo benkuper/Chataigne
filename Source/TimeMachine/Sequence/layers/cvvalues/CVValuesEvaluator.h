@@ -100,11 +100,11 @@ template<class T> struct Timeline
     {
         if (!a.write) return b;
         if (!b.write) return a;
-        w = weight(w);
         if (b.mode == Mode::Start) return b;
         if (w <= 0) return a;
         if (w >= 1) return b;
         if (b.mode == Mode::End) return a;
+        w = weight(w);
         return { interpolate(channel, a.value, b.value, w), true, b.mode };
     }
 
@@ -160,6 +160,17 @@ template<class T> struct Timeline
                 else
                 {
                     const auto af = displayFades(first), bf = displayFades(second);
+                    // Discrete preset modes use time boundaries rather than
+                    // curved/normalized gains, which may reach 0 or 1 early.
+                    // The incoming preset controls an overlap; its explicit
+                    // fade-in replaces the automatic overlap duration.
+                    if (to.mode == Mode::Start) { result.push_back(to); continue; }
+                    if (to.mode == Mode::End)
+                    {
+                        const double end = b.manualFadeIn ? b.start + bf.in : a.end();
+                        result.push_back(time < end ? from : to);
+                        continue;
+                    }
                     auto envelope = [&](const Block<T>& block, BlockTransitions::Fades fades)
                     {
                         const double in = fades.in > 0 ? weight((time - block.start) / fades.in) : 1;
@@ -174,8 +185,7 @@ template<class T> struct Timeline
                     if (sum > 0)
                     {
                         const double w = in / sum;
-                        mixed = to.mode == Mode::Start ? to : to.mode == Mode::End && w < 1 ? from
-                            : Sample<T>{ interpolate(ch, from.value, to.value, w), true, to.mode };
+                        mixed = { interpolate(ch, from.value, to.value, w), true, to.mode };
                     }
                     if (sum < 1) mixed.value = interpolate(ch, base[ch], mixed.value, sum);
                     result.push_back(mixed);
@@ -196,8 +206,13 @@ template<class T> struct Timeline
                     if (!from.write) from = background;
                     value = blend(ch, from, value, (time - b.start) / in);
                 }
-                if (out > 0 && time > b.end() - out)
+                if (out > 0 && time >= b.end() - out)
+                {
+                    // Returning to the background is still this block's fade.
+                    // Do not discard its per-parameter interpolation settings.
+                    background.mode = value.mode;
                     value = blend(ch, value, background, (time - (b.end() - out)) / out);
+                }
                 result.push_back(value);
             }
             else if (previous >= 0 && next >= 0 && gapMode != GapMode::Base)

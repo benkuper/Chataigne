@@ -225,7 +225,7 @@ void SequenceCommand::triggerInternal(int multiplexIndex)
 		if (TimeCue* cue = getLinkedTargetContainerAs<TimeCue>(target, multiplexIndex))
 		{
 			Sequence* s = cue->getSequence();
-			s->setCurrentTime(cue->time->floatValue(), true, true);
+			s->setCurrentTime(cue->time->floatValue(), true, true, Sequence::TimeChangeKind::Cue);
 			if (getLinkedValue(playFromStart, multiplexIndex)) s->playTrigger->trigger();
 		}
 		break;

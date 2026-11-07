@@ -139,6 +139,13 @@ static void pointsAndSeeks()
 {
     {
         Fixture f;
+        f.valid(true);
+        f.trigger->duration->forwardSeek->setValueWithData(0);
+        f.move(4, Sequence::TimeChangeKind::Cue);
+        check(f.on == 0 && f.off == 0 && !f.trigger->duration->active, "cue jumps retain seek rules rather than replaying skipped triggers");
+    }
+    {
+        Fixture f;
         f.valid(true); f.seek(4); f.move(3);
         check(!f.trigger->duration->active && f.on == 0, "reverse arrival at exclusive end stays inactive");
         f.move(2.5); f.move(1);

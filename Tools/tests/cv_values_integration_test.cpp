@@ -181,6 +181,27 @@ int main(int argc, char** argv)
         seek(0, 0); seek(3, 100); seek(6, 0); seek(4, 100);
         preset->values.getParameterPresetForSource(number)->parameter->setValue(120);
         seek(4, 120); // A direct seek consumes an edit even before async delivery.
+
+        // Real preset metadata survives snapshot construction and both fades.
+        auto* boolParameter = static_cast<Parameter*>(group->values.items[4]->controllable);
+        auto* boolPreset = preset->values.getParameterPresetForSource(boolParameter);
+        boolPreset->parameter->setValue(true);
+        boolPreset->interpolationMode->setValueWithData(ParameterPreset::CHANGE_AT_END);
+        layer->fadeIn->setValue(1); layer->fadeOut->setValue(1);
+        auto checkBoolean = [&](double time, bool expected)
+        {
+            sequence->setCurrentTime(time, true, true); sequence->evaluateCVValues();
+            check(boolParameter->boolValue() == expected, "preset boolean switches at transition end");
+        };
+        checkBoolean(2.5, false); checkBoolean(3, true);
+        checkBoolean(5.5, true); checkBoolean(5.98, true); checkBoolean(6, false);
+        block->blockFadeOut->setEnabled(true); block->blockFadeOut->setValue(2);
+        checkBoolean(4.5, true); checkBoolean(5.98, true); checkBoolean(6, false);
+        block->blockFadeOut->setEnabled(false);
+        boolPreset->interpolationMode->setValueWithData(ParameterPreset::CHANGE_AT_START);
+        checkBoolean(2, true); checkBoolean(5, false);
+        layer->fadeIn->setValue(0); layer->fadeOut->setValue(0);
+
         block->blockType->setValueWithData(1);
         layer->rebuildSnapshot();
         check(entry->values.items.size() == 8, "typed custom overrides");
@@ -350,7 +371,15 @@ int main(int argc, char** argv)
         sequence->setCurrentTime(2, true, true);
         check(edit->blocks.addItemsFromClipboard(false).isEmpty(), "invalid paste rejected atomically");
         sequence->setCurrentTime(20, true, true);
-        check(edit->blocks.addItemsFromClipboard(false).size() == 1, "valid paste accepted");
+        Array<LayerBlock*> pasted;
+        // Clipboard managers can briefly hold the Windows clipboard open after
+        // the copy notification. Retry an empty read without changing the data.
+        for (int attempt = 0; attempt < 20 && pasted.isEmpty(); ++attempt)
+        {
+            pasted = edit->blocks.addItemsFromClipboard(false);
+            if (pasted.isEmpty()) pumpMessages(10);
+        }
+        check(pasted.size() == 1, "valid paste accepted");
         check(edit->blocks.items.getLast()->time->doubleValue() == 20, "paste anchors at seeker");
         check(UndoMaster::getInstance()->undo(), "paste undo");
         check(edit->blocks.items.size() == 2, "paste undo structure");

@@ -2,6 +2,7 @@
 #include "Common/Processor/ProcessorIncludes.h"
 #include "TimeMachine/TimeMachineIncludes.h"
 #include "StateMachine/StateMachineIncludes.h"
+#include "Module/ModuleIncludes.h"
 #include <iostream>
 #include <stdexcept>
 #include <thread>
@@ -291,6 +292,93 @@ static void savedActionFixture(Engine& engine, const File& file)
     sequence->isPlaying->setValue(false, true);
 }
 
+
+static void viewFollowing()
+{
+    Sequence sequence;
+    sequence.totalTime->setValue(60);
+    for (int mode = 0; mode < 4; ++mode)
+        for (bool playing : { false, true })
+            for (auto kind : { Sequence::TimeChangeKind::Playback, Sequence::TimeChangeKind::Seek,
+                               Sequence::TimeChangeKind::Cue, Sequence::TimeChangeKind::Loop })
+            {
+                sequence.isPlaying->setValue(false, true);
+                sequence.setCurrentTime(0, true, true);
+                sequence.viewStartTime->setValue(0); sequence.viewEndTime->setValue(10);
+                sequence.followViewRange = 10;
+                sequence.viewFollowTime->setValueWithData(mode);
+                sequence.isPlaying->setValue(playing, true);
+                sequence.setCurrentTime(20, true, kind != Sequence::TimeChangeKind::Playback, kind);
+                const bool follows = mode != 0 && (playing || mode == 3 || (mode == 2 && kind == Sequence::TimeChangeKind::Cue));
+                check((sequence.viewStartTime->floatValue() > 0) == follows, "follow policy covers playback, cues, seeks and loops");
+                check(almostEqual(sequence.viewEndTime->floatValue() - sequence.viewStartTime->floatValue(), 10), "following preserves zoom");
+                if (follows && kind != Sequence::TimeChangeKind::Playback)
+                    check(almostEqual(sequence.viewStartTime->floatValue(), 15), "jumps center immediately");
+            }
+    sequence.isPlaying->setValue(false, true);
+    sequence.viewFollowTime->setValue("Playing and Cues");
+    auto resetView = [&] { sequence.viewStartTime->setValue(0); sequence.viewEndTime->setValue(10); };
+    auto* cue = sequence.cueManager->addItem(new TimeCue(35, sequence.cueManager.get()), var(), false);
+    resetView();
+    var params(new DynamicObject()); params.getDynamicObject()->setProperty("type", SequenceCommand::GOTO_CUE);
+    SequenceCommand command(nullptr, ACTION, params);
+    command.target->setRootContainer(&sequence);
+    command.target->setValueFromTarget(cue);
+    check(command.target->targetContainer == cue, "cue command resolves target");
+    command.triggerInternal(0);
+    check(almostEqual(sequence.viewStartTime->floatValue(), 30), "Go to cue command follows while paused");
+    resetView(); sequence.setCurrentTime(0, true, true);
+    sequence.nextCue->trigger();
+    check(almostEqual(sequence.viewStartTime->floatValue(), 30), "next cue follows while paused");
+    resetView(); sequence.setCurrentTime(50, true, true);
+    sequence.prevCue->trigger();
+    check(almostEqual(sequence.viewStartTime->floatValue(), 30), "previous cue follows while paused");
+    resetView(); cue->playFromHere->trigger(); sequence.pauseTrigger->trigger();
+    check(sequence.viewStartTime->floatValue() >= 30, "cue trigger follows before starting playback");
+    sequence.viewFollowTime->setValue("Always");
+    resetView(); sequence.currentTime->setValue(59);
+    check(almostEqual(sequence.viewStartTime->floatValue(), 50) && almostEqual(sequence.viewEndTime->floatValue(), 60), "direct seeks clamp view at end");
+    sequence.currentTime->setValue(1);
+    check(almostEqual(sequence.viewStartTime->floatValue(), 0), "view clamps at start");
+    for (bool oldValue : { false, true })
+    {
+        var data(new DynamicObject()), parameter(new DynamicObject());
+        parameter.getDynamicObject()->setProperty("controlAddress", "/viewFollowTime");
+        parameter.getDynamicObject()->setProperty("value", oldValue);
+        data.getDynamicObject()->setProperty("parameters", var(Array<var>{ parameter }));
+        sequence.loadJSONData(data);
+        check(sequence.viewFollowTime->getValueKey() == (oldValue ? "Playing Only" : "Never"), "saved boolean migrates to equivalent mode");
+    }
+    sequence.viewFollowTime->setValue("Playing and Cues");
+    Sequence restored; restored.loadJSONData(sequence.getJSONData());
+    check(restored.viewFollowTime->getValueKey() == "Playing and Cues", "enum survives save and reload");
+}
+
+static void disabledSequenceVideo()
+{
+    auto* manager = ChataigneSequenceManager::getInstance();
+    auto add = [&]()
+    {
+        auto* seq = manager->addItem(new Sequence(), var(), false);
+        auto* video = static_cast<VideoLayer*>(seq->layerManager->addItem(new VideoLayer(seq, var()), var(), false));
+        auto* clip = static_cast<VideoLayerClip*>(video->clipManager.addItem(new VideoLayerClip(), var(), false));
+        video->currentClip = clip;
+        video->moviePlayer->load("fixture.mp4");
+        return video;
+    };
+    auto* top = add(); auto* bottom = add();
+    check(CompositionRenderer::gatherActiveCues().size() == 2, "both enabled sequences contribute video");
+    top->sequence->enabled->setValue(false);
+    auto cues = CompositionRenderer::gatherActiveCues();
+    check(cues.size() == 1 && cues[0].layer == bottom, "disabling top sequence reveals lower sequence video");
+    check(CompositionRenderer::gatherActiveCues(top->sequence, top).isEmpty(), "filtered outputs also hide disabled sequences");
+    top->sequence->enabled->setValue(true);
+    check(CompositionRenderer::gatherActiveCues().size() == 2, "reenabling restores retained frame");
+    top->enabled->setValue(false);
+    check(CompositionRenderer::gatherActiveCues().size() == 1, "layer disabling still hides video");
+    manager->removeItem(top->sequence, false); manager->removeItem(bottom->sequence, false);
+}
+
 int main(int argc, char** argv)
 {
     ScopedJuceInitialiser_GUI gui;
@@ -302,6 +390,8 @@ int main(int argc, char** argv)
         try { test(); std::cout << "PASS: " << label << std::endl; }
         catch (const std::exception& e) { ++failures; std::cout << "FAIL: " << label << ": " << e.what() << std::endl; }
     };
+    run("view following", viewFollowing);
+    run("disabled sequence video", disabledSequenceVideo);
     run("audio clock media seeks", [] { externalMediaSeeks(true); });
     run("system clock media seeks", [] { externalMediaSeeks(false); });
     run("block handles and fades", blockHandles);
