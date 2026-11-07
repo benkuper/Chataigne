@@ -11,7 +11,7 @@
 #include <stdexcept>
 #include <thread>
 
-struct hid_device_ { unsigned char command[64] {}; size_t length = 0; std::atomic<bool> reading {false}; };
+struct hid_device_ { unsigned char command[64] {}; size_t length = 0; int reports = 0; std::atomic<bool> reading {false}; };
 static std::atomic<int> opened {0}, closed {0}, shortPackets {0};
 static std::atomic<bool> unplugged {false}, badSpi {false};
 extern "C" {
@@ -55,8 +55,13 @@ int hid_read_timeout(hid_device* device, unsigned char* bytes, size_t length, in
         // Real reader: interleave short reports and a blocking read so teardown
         // must join before closing this handle.
         std::this_thread::sleep_for(std::chrono::milliseconds(2));
-        ++shortPackets;
         bytes[0] = 0x30;
+        if (device->reports++ == 0) {
+            bytes[5] = 0x02; // Left Joy-Con Up; subsequent short reports must preserve it.
+            device->reading.store(false);
+            return 49;
+        }
+        ++shortPackets;
         device->reading.store(false);
         return 1;
     }
@@ -75,11 +80,17 @@ int main() {
         check(JslGetConnectedDeviceHandles(&handle, 1) == 1, "Missing connected handle");
         const int before = opened.load();
         check(JslConnectDevices() == 1 && opened.load() == before, "Refresh reopened a live HID handle");
-        std::this_thread::sleep_for(std::chrono::milliseconds(5));
-        check(JslGetSimpleState(handle).buttons == 0, "Short report was interpreted as complete input");
+        const int shortBefore = shortPackets.load();
+        const auto packetDeadline = std::chrono::steady_clock::now() + std::chrono::seconds(2);
+        while (shortPackets.load() == shortBefore && std::chrono::steady_clock::now() < packetDeadline)
+            std::this_thread::sleep_for(std::chrono::milliseconds(1));
+        check(shortPackets.load() > shortBefore, "Reader did not process a truncated report");
+        check((JslGetSimpleState(handle).buttons & JSMASK_UP) != 0, "Short report overwrote valid input");
         if (iteration % 2) {
             unplugged.store(true);
-            std::this_thread::sleep_for(std::chrono::milliseconds(10));
+            const auto deadline = std::chrono::steady_clock::now() + std::chrono::seconds(2);
+            while (JslStillConnected(handle) && std::chrono::steady_clock::now() < deadline)
+                std::this_thread::sleep_for(std::chrono::milliseconds(1));
             check(!JslStillConnected(handle), "Lost controller stayed connected");
         }
         JslSetCancellation(true);
@@ -89,6 +100,8 @@ int main() {
     badSpi.store(true); unplugged.store(false); JslSetCancellation(false);
     const auto start = std::chrono::steady_clock::now();
     JslConnectDevices();
+    int invalidHandle = -1;
+    check(JslGetConnectedDeviceHandles(&invalidHandle, 1) == 0, "Failed calibration exposed an unusable controller");
     check(std::chrono::steady_clock::now() - start < std::chrono::seconds(2), "Malformed SPI reply caused an unbounded retry");
     JslSetCancellation(true); JslDisconnectAndDisposeAll();
     check(shortPackets.load() > 0 && opened.load() == closed.load(), "Transport test did not exercise readers or leaked handles");
