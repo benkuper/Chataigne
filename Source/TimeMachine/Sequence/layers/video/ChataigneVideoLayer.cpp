@@ -10,6 +10,7 @@
 #include "TimeMachine/TimeMachineIncludes.h"
 #include "MPVPlayer.h"
 #include "Module/modules/video/NDIOutModule.h"
+#include "Module/ModuleIncludes.h"
 
 ChataigneVideoLayer::ChataigneVideoLayer(ChataigneSequence* sequence, var params) :
 	VideoLayer(sequence, params),
@@ -34,11 +35,12 @@ ChataigneVideoLayer::ChataigneVideoLayer(ChataigneSequence* sequence, var params
 
 	uiHeight->setValue(110);
 	alpha = addFloatParameter("Alpha", "Visual opacity of this video layer", 1.0f, 0.0f, 1.0f);
-	ndiOutput = addTargetParameter("NDI Output", "Select the NDI output object for video and audio");
+	ndiOutput = addTargetParameter("NDI Output", "Select the NDI output object for video and audio", ModuleManager::getInstance());
 	ndiOutput->targetType = TargetParameter::CONTAINER;
-	ndiOutput->maxDefaultSearchLevel = -1;
+	ndiOutput->maxDefaultSearchLevel = 4;
 	ndiOutput->defaultContainerTypeCheckFunc = [](ControllableContainer* cc)
 		{ return dynamic_cast<NDIOutput*>(cc) != nullptr; };
+	ndiOutput->typesFilter.add("NDI Output");
 	updateNDIOutput();
 
 	spoutOutput = addBoolParameter("Spout Output", "Publish this layer as a Spout texture on Windows (Syphon on macOS)", false);
