@@ -10,6 +10,8 @@
 #pragma once
 
 #include "Module/ModuleIncludes.h"
+#include <atomic>
+#include <cstdint>
 
 class ChataigneSequence;
 namespace CompositionRenderer { class SharedTextureOutput; }
@@ -22,6 +24,13 @@ public:
 	~ChataigneVideoLayer();
 
 	ChataigneSequence* chataigneSequence;
+	FloatParameter* alpha = nullptr;
+	TargetParameter* ndiOutput = nullptr;
+	// GL and PCM threads only read the stable route identifier.
+	std::atomic<uint64_t> ndiRouteId { 0 };
+	void updateNDIOutput();
+	void syncPlaybackState() override;
+
 	BoolParameter* spoutOutput;
 	StringParameter* spoutName;
 	IntParameter* spoutWidth;
@@ -30,9 +39,11 @@ public:
 
 	void updateSharedTextureOutput();
 	void onContainerParameterChangedInternal(Parameter* p) override;
+	void afterLoadJSONDataInternal() override;
 
 	// Factory : provides the mpv-backed engine for the base VideoLayer.
 	virtual VideoPlayerEngine* createVideoPlayer() override;
+	VideoLayerClip* createVideoClip() override;
 
 	virtual SequenceLayerPanel* getPanel() override;
 	virtual SequenceLayerTimeline* getTimelineUI() override;

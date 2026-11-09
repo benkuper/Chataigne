@@ -47,6 +47,7 @@ namespace VideoNetworkRuntime
         CHATAIGNE_NDI_FUNCTION(send_destroy)
         CHATAIGNE_NDI_FUNCTION(send_get_no_connections)
         CHATAIGNE_NDI_FUNCTION(send_send_video_v2)
+        CHATAIGNE_NDI_FUNCTION(send_send_audio_v2)
 #undef CHATAIGNE_NDI_FUNCTION
 
         bool load()
@@ -68,6 +69,7 @@ namespace VideoNetworkRuntime
             CHATAIGNE_NDI_LOAD(send_destroy)
             CHATAIGNE_NDI_LOAD(send_get_no_connections)
             CHATAIGNE_NDI_LOAD(send_send_video_v2)
+            CHATAIGNE_NDI_LOAD(send_send_audio_v2)
 #undef CHATAIGNE_NDI_LOAD
             ready = is_supported_CPU() && initialize();
             return ready;

@@ -13,6 +13,7 @@
 
 #include "TimeMachine/TimeMachineIncludes.h"
 #include "CompositionRenderer.h"
+#include "../ChataigneVideoLayer.h"
 
 #include <map>
 #include <algorithm>
@@ -978,6 +979,15 @@ void CompositionRenderer::CompositionSurface::renderSurfaceGL()
 	{
 		const Cue& cue = cues[i];
 		if (cue.layer == nullptr || cue.clip == nullptr) continue;
+		auto* chataigneLayer = dynamic_cast<ChataigneVideoLayer*>(cue.layer);
+		// An NDI surface composites only the layers assigned to this output.
+		// Preview and Spout/Syphon surfaces retain outputFilter == 0.
+		if (outputFilter != 0)
+		{
+			if (chataigneLayer == nullptr ||
+				chataigneLayer->ndiRouteId.load(std::memory_order_relaxed) != outputFilter)
+				continue;
+		}
 
 		VideoPlayerEngine* engine = cue.engine;
 		if (engine == nullptr || !engine->isGLInit() || !engine->isFileLoaded()) continue;
@@ -995,6 +1005,7 @@ void CompositionRenderer::CompositionSurface::renderSurfaceGL()
 		}
 		if (layerTex == 0) continue;
 		VideoLayerClip* clip = cue.clip;
+		const float layerAlpha = chataigneLayer != nullptr ? chataigneLayer->alpha->floatValue() : 1.0f;
 
 		// Transform, exactly like the CPU version : fit-to-screen, then clip scale
 		// and X/Y offset in percent of the surface.
@@ -1010,7 +1021,7 @@ void CompositionRenderer::CompositionSurface::renderSurfaceGL()
 		bindTarget(*dst, w, h);
 		renderPass(layerTex, src->getTextureID(),
 			u0, v0, u1, v1,
-			clip->getRenderOpacity() * cue.fadeFactor,
+			clip->getRenderOpacity() * layerAlpha * cue.fadeFactor,
 			(int) clip->getBlendMode(),
 			1, // layer FBOs : image top at v=1
 			0, 0, FeatherVec{ 0, 0, 0, 0 });

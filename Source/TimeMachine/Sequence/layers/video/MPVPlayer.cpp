@@ -4,8 +4,7 @@
 	MPVPlayer.cpp
 	Ported from MapGyver (Golden-Geek), adapted to Chataigne :
 	- AudioManager is replaced by the host AudioModule (resolved from the
-	  ModuleManager). When no Sound Card module exists, audio is drained from
-	  the named pipe and silently dropped (video still plays).
+	  ModuleManager). The PCM pipe also feeds NDI without a Sound Card.
 	- GlContextHolder is replaced by VideoGLContext (Chataigne source).
 
   ==============================================================================
@@ -13,6 +12,8 @@
 
 #include "TimeMachine/TimeMachineIncludes.h"
 #include "MPVPlayer.h"
+#include "Module/modules/video/NDIOutModule.h"
+#include <chrono>
 #if !JUCE_WINDOWS
 #include <dlfcn.h>
 #include <fcntl.h>
@@ -229,6 +230,7 @@ MPVPlayer::~MPVPlayer()
 
 void MPVPlayer::clear()
 {
+	NDIOutModule::removeAudioSource(this);
 	if (MPVTimers::getInstanceWithoutCreating())
 		MPVTimers::getInstance()->unregisterMPV(this);
 
@@ -389,16 +391,17 @@ void MPVPlayer::setupMPV()
 
 	// --- AUDIO ROUTING CONFIGURATION ---
 	AudioModule* am = findAudioModule();
-	double sampleRate = am != nullptr ? (double)am->currentSampleRate : 48000.0;
+	double sampleRate = am != nullptr && am->currentSampleRate > 0 ? (double)am->currentSampleRate : 48000.0;
 
+		pcmSampleRate.store((int)sampleRate, std::memory_order_relaxed);
 	setOption("audio-samplerate", String(sampleRate).toRawUTF8());
 	setOption("audio-format", "float");
 	setOption("audio-channels", "stereo");
 
-	// mpv's PCM writer is untimed. Without a Sound Card module there is no
-	// consumer to pace it, so use the timed null output to keep video at speed.
-	usingAudioPipe = am != nullptr && am->currentSampleRate > 0;
-	setOption("ao", usingAudioPipe ? "pcm" : "null");
+	// Always decode to the PCM pipe. Its reader paces playback when no
+	// Sound Card module exists, and forwards each block to the selected NDI output.
+	usingAudioPipe = true;
+	setOption("ao", "pcm");
 	setOption("ao-pcm-waveheader", "no"); // The pipe carries raw interleaved floats.
 	setOption("ao-pcm-file", uniquePipePath.toRawUTF8());
 
@@ -561,6 +564,7 @@ bool MPVPlayer::load(const String& path)
 
 void MPVPlayer::unload()
 {
+	NDIOutModule::removeAudioSource(this);
 	pendingSameFileNotify = false;
 	if (audioProcessor != nullptr) audioProcessor->onAudioFlush(0);
 	if (mpv)
@@ -586,6 +590,7 @@ void MPVPlayer::play()
 
 void MPVPlayer::pause()
 {
+	NDIOutModule::removeAudioSource(this);
 	if (mpv == nullptr) return;
 	int paused = 1;
 	pausedState = true;
@@ -607,6 +612,7 @@ bool MPVPlayer::isPlaying() const
 
 void MPVPlayer::setPosition(double pos)
 {
+	NDIOutModule::removeAudioSource(this);
 	if (mpv == nullptr) return;
 
 	// Avoid re-seeks to the same position : the base layer re-issues setPosition()
@@ -1039,13 +1045,24 @@ void MPVPlayer::AudioPipeThread::shutdown()
 
 void MPVPlayer::AudioPipeThread::run()
 {
-	auto waitForAudioSpace = [this](size_t bytes) -> bool
+	// PCM is independent of the Sound Card audio graph. The pipe is
+	// paced even if the show has no Sound Card module.
+	auto waitForAudioSpace = [this](size_t) -> bool { return !threadShouldExit(); };
+	auto nextAudioDue = std::chrono::steady_clock::now();
+	auto publishAndPace = [this, &nextAudioDue](int frames)
 	{
-		const int frames = (int) ((bytes + sizeof(float) * 2 - 1) / (sizeof(float) * 2));
-		while (!threadShouldExit() && owner != nullptr && owner->audioProcessor != nullptr
-			&& owner->audioProcessor->getFreeFrames() < frames)
-			wait(5);
-		return !threadShouldExit();
+		if (frames <= 0 || owner == nullptr) return;
+		const uint64_t route = owner->ndiRouteId.load(std::memory_order_relaxed);
+		if (route != 0)
+			NDIOutModule::publishAudio(owner, route, readBuffer.data(), frames,
+				owner->pcmSampleRate.load(std::memory_order_relaxed));
+		const int sampleRate = jmax(1, owner->pcmSampleRate.load(std::memory_order_relaxed));
+		const auto now = std::chrono::steady_clock::now();
+		if (nextAudioDue < now - std::chrono::milliseconds(200)) nextAudioDue = now;
+		nextAudioDue += std::chrono::duration_cast<std::chrono::steady_clock::duration>(
+			std::chrono::duration<double>((double)frames / sampleRate));
+		while (!threadShouldExit() && std::chrono::steady_clock::now() < nextAudioDue)
+			wait(1);
 	};
 #if JUCE_WINDOWS
 	if (pipeHandle == INVALID_HANDLE_VALUE) return;
@@ -1075,6 +1092,7 @@ void MPVPlayer::AudioPipeThread::run()
 					const int numFrames = (int)(totalBytes / (sizeof(float) * 2));
 					if (owner && owner->audioProcessor)
 						owner->audioProcessor->onAudioPlay(readBuffer.data(), numFrames, 0);
+					publishAndPace(numFrames);
 					pendingBytes = totalBytes - (size_t)numFrames * sizeof(float) * 2;
 					if (pendingBytes > 0)
 						std::memmove(bytes, bytes + totalBytes - pendingBytes, pendingBytes);
@@ -1110,6 +1128,7 @@ void MPVPlayer::AudioPipeThread::run()
 		const int frames = (int)(totalBytes / (sizeof(float) * 2));
 		if (frames > 0 && owner != nullptr && owner->audioProcessor != nullptr)
 			owner->audioProcessor->onAudioPlay(readBuffer.data(), frames, 0);
+		publishAndPace(frames);
 		pendingBytes = totalBytes - (size_t)frames * sizeof(float) * 2;
 		if (pendingBytes > 0)
 			memmove(bytes, bytes + totalBytes - pendingBytes, pendingBytes);

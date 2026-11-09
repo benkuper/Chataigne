@@ -1,100 +1,133 @@
-/*
-  ==============================================================================
-
-	NDIOutModule.h
-	Created: 5 Oct 2026
-	Author:  
-
-  ==============================================================================
-*/
-
 #pragma once
 
 #include "../../Module.h"
 #include "TimeMachine/Sequence/layers/video/ui/CompositionRenderer.h"
+#include "TimeMachine/Sequence/layers/video/VideoAudioProcessor.h"
 #include "VideoNetworkRuntime.h"
+#include <atomic>
+#include <cstdint>
+#include <map>
+#include <memory>
 #include <mutex>
 #include <condition_variable>
 #include <chrono>
+#include <vector>
 
-/*
-	Video module publishing the composition signal out of Chataigne as an NDI
-	source.
+class NDIOutModule;
 
-	The picture is produced by a CompositionSurface on the shared OpenGL context,
-	exactly like the Video monitor out module, so both outputs always show the
-	same content (composition + test card overlay).
-
-	The surface reads the composite back into a CPU Image::ARGB, whose bytes are
-	B,G,R,A. That is already one of NDI's layouts, so frames are handed to the
-	sender without any per-pixel conversion.
-
-	NDIlib_send_send_video_v2() is synchronous and does the colour conversion,
-	compression and network send before it returns, so it is never called from
-	the message thread: a dedicated worker thread pulls the latest composition
-	and sends it, while the message thread only keeps the surface and the sender
-	configuration up to date. Everything the worker reads is a plain copy guarded
-	by stateLock, because the parameters themselves are not safe to read from
-	another thread.
-*/
-class NDIOutModule : public Module,
-	private juce::Thread
+// One editable output, with its own saved parameters and a unique runtime route.
+// Adding/removing/reordering these items does not change any layer's assignment.
+class NDIOutput : public BaseItem
 {
 public:
-	NDIOutModule();
-	~NDIOutModule() override;
+    NDIOutput();
+    ~NDIOutput() override = default;
 
-	static Module* create() { return new NDIOutModule(); }
+    String getTypeString() const override { return "NDI Output"; }
 
-	String getTypeString() const override { return "NDI out"; }
+    uint64_t routeId = 0;
+    NDIOutModule* module = nullptr;
+    StringParameter* streamName = nullptr;
+    IntParameter* width = nullptr;
+    IntParameter* height = nullptr;
+    FloatParameter* fps = nullptr;
+    BoolParameter* testCard = nullptr;
 
-	// Module
-	void onContainerParameterChangedInternal(Parameter* p) override;
-	void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
-	void clearItem() override;
+    void onContainerParameterChangedInternal(Parameter* p) override;
+    void onContainerNiceNameChanged() override;
+};
 
-	// Opens/closes the output depending on the enabled state, the stream
-	// settings and the current size. Message thread.
-	void updateOutput();
+class NDIOutputManager : public BaseManager<NDIOutput>
+{
+public:
+    explicit NDIOutputManager(NDIOutModule* owner);
+    NDIOutput* createItem() override;
+    NDIOutModule* owner = nullptr;
+};
 
-	BoolParameter* testCard = nullptr;
-	StringParameter* streamName = nullptr;
-	IntParameter* width = nullptr;
-	IntParameter* height = nullptr;
-	FloatParameter* fps = nullptr;
+class NDIOutModule : public Module,
+    private juce::Thread,
+    private BaseManagerListener<NDIOutput>
+{
+public:
+    NDIOutModule();
+    ~NDIOutModule() override;
+
+    static Module* create() { return new NDIOutModule(); }
+    String getTypeString() const override { return "NDI out"; }
+
+    NDIOutputManager outputs;
+
+    void updateOutput();
+    void onContainerParameterChangedInternal(Parameter* p) override;
+    void loadJSONDataItemInternal(var data) override;
+    void clearItem() override;
+
+    // PCM comes from the mpv pipes, independently of the Sound Card audio graph.
+    static void publishAudio(const void* source, uint64_t routeId,
+        const float* interleavedStereo, int frames, int sampleRate);
+    static void removeAudioSource(const void* source);
 
 private:
-	// Parameters are still being built while the module constructor runs, and
-	// adding them fires synchronous feedback. Guard against it.
-	bool isReady() const noexcept;
+    struct OutputConfig
+    {
+        uint64_t id = 0;
+        String name;
+        int width = 1280;
+        int height = 720;
+        int frameRate = 30000; // numerator; denominator is 1000
+    };
 
-	// Pushes the Test Card setting into the surface.
-	void applySettings();
+    struct SenderState
+    {
+        NDIlib_send_instance_t sender = nullptr;
+        String name;
+        int frameRate = 30000;
+        double audioFraction = 0;
+        std::chrono::steady_clock::time_point nextDue;
+    };
 
-	// Worker thread.
-	void run() override;
-	void applyQueuedConfig();
-	void sendLatestFrame();
-	void destroySender();
+    struct AudioSource
+    {
+        uint64_t routeId = 0;
+        int sampleRate = 0;
+        double nextInputPosition = 0;
+        float lastLeft = 0, lastRight = 0;
+        bool hasPrevious = false;
+        std::unique_ptr<AudioFIFO> fifo;
+        bool primed = false;
+    };
 
-	// The sender is only ever touched by the worker thread, which is what lets
-	// NDIlib_send_destroy() run without racing a send.
-	NDIlib_send_instance_t sender = nullptr;
-	String currentSenderName;
+    // Message-thread surfaces; the GL holder writes their latest images.
+    std::map<uint64_t, std::unique_ptr<CompositionRenderer::CompositionSurface>> surfaces;
+    std::vector<OutputConfig> desiredOutputs;
+    std::mutex stateLock;
+    std::condition_variable stateSignal;
+    bool configDirty = true;
 
+    // Only the worker thread touches these NDI sender handles.
+    std::map<uint64_t, SenderState> senders;
 
-	// State shared with the worker thread.
-	std::mutex stateLock;
-	std::condition_variable stateSignal;
+    std::mutex audioLock;
+    std::map<const void*, AudioSource> audioSources;
 
-	std::unique_ptr<CompositionRenderer::CompositionSurface> surface;
+    void run() override;
+    void configureSenders(const std::vector<OutputConfig>& wanted);
+    void destroySender(SenderState& s);
+    void sendLatestFrame(uint64_t id, SenderState& s);
+    void sendLatestAudio(uint64_t id, SenderState& s);
+    void enqueueAudio(const void* source, uint64_t routeId,
+        const float* samples, int frames, int sampleRate);
+    void forgetAudio(const void* source);
 
-	// Desired configuration, written by the message thread under stateLock.
-	bool configDirty = false;
-	bool configEnabled = false;
-	String configName;
-	double configIntervalMs = 1000.0 / 30.0;
-	int configFrameRate = 30000;
+    void itemAdded(NDIOutput*) override;
+    void itemsAdded(Array<NDIOutput*>) override;
+    void itemRemoved(NDIOutput*) override;
+    void itemsRemoved(Array<NDIOutput*>) override;
+    void itemsReordered() override;
 
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(NDIOutModule)
+    bool cleanedUp = false;
+    void shutdown();
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(NDIOutModule)
 };

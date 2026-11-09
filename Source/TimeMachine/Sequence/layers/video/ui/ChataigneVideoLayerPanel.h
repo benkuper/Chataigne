@@ -19,6 +19,9 @@ public:
 	~ChataigneVideoLayerPanel();
 
 	ChataigneVideoLayer* chataigneVideoLayer;
+	std::unique_ptr<FloatSliderUI> alphaUI;
+	Label ndiOutputLabel;
+	std::unique_ptr<TargetParameterUI> ndiOutputUI;
 
 	void resizedInternalHeader(Rectangle<int>& r) override;
 	void resizedInternalContent(Rectangle<int>& r) override;
