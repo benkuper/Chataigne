@@ -4,8 +4,7 @@
 	MPVPlayer.h
 	Ported from MapGyver (Golden-Geek), adapted to Chataigne :
 	- AudioManager is replaced by the host AudioModule (resolved from the
-	  ModuleManager). When no Sound Card module exists, audio is drained from
-	  the named pipe and silently dropped (video still plays).
+	  ModuleManager). The PCM pipe also feeds NDI without a Sound Card.
 	- GlContextHolder is replaced by VideVideoGLContext (Chataigne source).
 
   ==============================================================================
@@ -22,6 +21,8 @@
 #include "VideoAudioProcessor.h"
 
 #include <vector>
+#include <atomic>
+#include <cstdint>
 
 class MPVPlayer;
 
@@ -136,6 +137,10 @@ public:
 	AudioModule* audioModuleResolved = nullptr;
 	bool audioListenerRegistered = false;
 	bool usingAudioPipe = false;
+
+	// NDI routing and mpv PCM sample rate (read by the PCM pipe thread).
+	std::atomic<uint64_t> ndiRouteId { 0 };
+	std::atomic<int> pcmSampleRate { 48000 };
 
 	void setupAudio();
 	void audioSetupChanged() override;

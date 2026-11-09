@@ -90,6 +90,8 @@ namespace CompositionRenderer
 		// Optional filtering (preview panel).
 		Sequence* sequenceFilter = nullptr;
 		VideoLayer* layerFilter = nullptr;
+		// 0 = full composition; other values are stable NDIOutput runtime IDs.
+		uint64_t outputFilter = 0;
 
 		// Message thread : starts/stops being composited by renderSurfaces().
 		void showGL();
