@@ -29,6 +29,7 @@
         <FILE id="MPJkAm" name="DLight.png" compile="0" resource="1" file="Resources/Modules/DLight.png"/>
         <FILE id="kdkONp" name="DMX.png" compile="0" resource="1" file="Resources/Modules/DMX.png"/>
         <FILE id="eqnFj9" name="Empty.png" compile="0" resource="1" file="Resources/Modules/Empty.png"/>
+        <FILE id="FmAtA1" name="Firmata.png" compile="0" resource="1" file="Resources/Modules/Firmata.png"/>
         <FILE id="yfJH3x" name="Gamepad.png" compile="0" resource="1" file="Resources/Modules/Gamepad.png"/>
         <FILE id="dJmafw" name="GPIO.png" compile="0" resource="1" file="Resources/Modules/GPIO.png"/>
         <FILE id="I0DSTK" name="HeavyM.png" compile="0" resource="1" file="Resources/Modules/HeavyM.png"/>
@@ -1305,6 +1306,22 @@
             <FILE id="BA2Jbv" name="SerialModule.cpp" compile="0" resource="0"
                   file="Source/Module/modules/serial/SerialModule.cpp"/>
             <FILE id="rqcIBj" name="SerialModule.h" compile="0" resource="0" file="Source/Module/modules/serial/SerialModule.h"/>
+          </GROUP>
+          <GROUP id="{A7F3C1E2-9B4D-4E8A-B2C6-1D5F7A9E3B80}" name="firmata">
+            <GROUP id="{B8E4D2F3-0C5E-4F9B-A3D7-2E6A8B0C4D91}" name="commands">
+              <FILE id="OqDX9G" name="FirmataCommands.cpp" compile="0" resource="0"
+                    file="Source/Module/modules/firmata/commands/FirmataCommands.cpp"/>
+              <FILE id="tY1Twf" name="FirmataCommands.h" compile="0" resource="0"
+                    file="Source/Module/modules/firmata/commands/FirmataCommands.h"/>
+            </GROUP>
+            <FILE id="X6kFM1" name="FirmataModule.cpp" compile="0" resource="0"
+                  file="Source/Module/modules/firmata/FirmataModule.cpp"/>
+            <FILE id="Eq7tWM" name="FirmataModule.h" compile="0" resource="0"
+                  file="Source/Module/modules/firmata/FirmataModule.h"/>
+            <FILE id="JoSUne" name="FirmataParser.cpp" compile="0" resource="0"
+                  file="Source/Module/modules/firmata/FirmataParser.cpp"/>
+            <FILE id="6atNjo" name="FirmataParser.h" compile="0" resource="0"
+                  file="Source/Module/modules/firmata/FirmataParser.h"/>
           </GROUP>
           <GROUP id="{41A1CFAA-D972-C25C-1442-8D09D843CD2A}" name="state">
             <GROUP id="{9D766034-D96C-AD16-8084-EE1BBF66BA8B}" name="commands">

@@ -17,6 +17,7 @@ ModuleFactory::ModuleFactory() {
 	defs.add(new ModuleDefinition("Protocol", "MIDI", &MIDIModule::create));
 	defs.add(new ModuleDefinition("Protocol", "DMX", &DMXModule::create));
 	defs.add(new ModuleDefinition("Protocol", "Serial", &SerialModule::create));
+	defs.add(new ModuleDefinition("Protocol", "Firmata", &FirmataModule::create));
 	defs.add(new ModuleDefinition("Protocol", "UDP", &UDPModule::create));
 	defs.add(new ModuleDefinition("Protocol", "TCP Client", &TCPClientModule::create));
 	defs.add(new ModuleDefinition("Protocol", "TCP Server", &TCPServerModule::create));
