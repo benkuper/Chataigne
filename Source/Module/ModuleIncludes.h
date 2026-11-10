@@ -175,6 +175,9 @@
 #include "modules/sequence/SequenceModule.h"
 
 #include "modules/serial/SerialModule.h"
+#include "modules/firmata/FirmataParser.h"
+#include "modules/firmata/FirmataModule.h"
+#include "modules/firmata/commands/FirmataCommands.h"
 #include "modules/ble/BLEModule.h"
 
 #include "modules/controller/loupedeck/LoupedeckShape.h"

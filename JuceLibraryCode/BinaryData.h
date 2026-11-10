@@ -41,6 +41,9 @@ namespace BinaryData
     extern const char*   Empty_png;
     const int            Empty_pngSize = 1745;
 
+    extern const char*   Firmata_png;
+    const int            Firmata_pngSize = 852;
+
     extern const char*   Gamepad_png;
     const int            Gamepad_pngSize = 3840;
 
@@ -252,7 +255,7 @@ namespace BinaryData
     const int            tray_icon_pngSize = 3363;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 81;
+    const int namedResourceListSize = 82;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

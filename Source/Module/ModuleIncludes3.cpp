@@ -18,6 +18,9 @@
 #include "modules/custom/empty/EmptyModule.cpp"
 
 #include "modules/serial/SerialModule.cpp"
+#include "modules/firmata/FirmataParser.cpp"
+#include "modules/firmata/FirmataModule.cpp"
+#include "modules/firmata/commands/FirmataCommands.cpp"
 #include "modules/state/commands/StateCommand.cpp"
 #include "modules/system/os/OSModule.cpp"
 #include "modules/system/os/commands/OSExecCommand.cpp"
