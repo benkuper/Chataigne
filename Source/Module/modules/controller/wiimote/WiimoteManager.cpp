@@ -68,16 +68,21 @@ void WiimoteManager::reconnect(bool allowPairing)
 #if JUCE_WINDOWS
     if (connected == 0 && allowPairing && !threadShouldExit())
     {
-        NLOG("Wiimote", "Press 1+2 (or SYNC) to pair a Wii Remote.");
-        if (WiiPairUtil::pair() > 0 && !threadShouldExit())
+        NLOG("Wiimote", "Searching for up to 60 seconds. Press the red SYNC button inside the battery compartment to pair a Wii Remote.");
+        const auto deadline = Time::getMillisecondCounterHiRes() + 60000.0;
+        while (connected == 0 && !threadShouldExit() && Time::getMillisecondCounterHiRes() < deadline)
         {
+            WiiPairUtil::pair();
+            if (threadShouldExit()) return;
             wiiuse_cleanup(devices, MAX_WIIMOTES);
             devices = wiiuse_init(MAX_WIIMOTES);
-            if (devices != nullptr)
-            {
-                wiiuse_find(devices, MAX_WIIMOTES, 5);
-                if (!threadShouldExit()) connected = wiiuse_connect(devices, MAX_WIIMOTES);
-            }
+            if (devices == nullptr) return;
+            // Windows may expose the HID device after pairing has completed,
+            // or reconnect an already paired remote without a new pairing.
+            wiiuse_find(devices, MAX_WIIMOTES, 5);
+            if (threadShouldExit()) return;
+            connected = wiiuse_connect(devices, MAX_WIIMOTES);
+            if (connected == 0) wait(500);
         }
     }
 #else

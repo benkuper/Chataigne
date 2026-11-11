@@ -16,7 +16,7 @@ WiimoteModule::WiimoteModule(const String & name) :
 	setupIOConfiguration(true, false);
 
 	deviceID = moduleParams.addIntParameter("Device Select", "Select the ID of the device, depending on how many wiimotes are connected (max 4)", 1, 1, 4);
-	connectTrigger = moduleParams.addTrigger("Refresh Wiimotes", "Try to reconnect the wiimotes");
+	connectTrigger = moduleParams.addTrigger("Refresh Wiimotes", "Try to reconnect the wiimotes. On Windows, search for up to 60 seconds; press the red SYNC button inside the battery compartment to pair.");
 	smoothing = moduleParams.addFloatParameter("Smoothing", "Set the orientation smoothing for the wiimote orientation algorithm", .5f, 0, 1);
 
 	connected = valuesCC.addBoolParameter("Connected", "Wiimote is connected ?", false);

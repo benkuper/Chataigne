@@ -35,9 +35,10 @@ int WiiPairUtil::pair(bool forceRepairing)
 #if JUCE_WINDOWS
 DWORD WiiPairUtil::ShowErrorCode(LPTSTR msg, DWORD dw)
 {
+	if (dw == ERROR_SUCCESS) return dw;
 	// Retrieve the system error message for the last-error code
 
-	LPVOID lpMsgBuf;
+	LPVOID lpMsgBuf = nullptr;
 
 	FormatMessage(
 		FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
@@ -49,7 +50,8 @@ DWORD WiiPairUtil::ShowErrorCode(LPTSTR msg, DWORD dw)
 		NULL
 	);
 
-	NLOGERROR("Wiimote Pairing", String(msg) << " : "<< String((LPSTR)lpMsgBuf));
+	NLOGERROR("Wiimote Pairing", String(msg) << " (" << (int) dw << ") : "
+		<< (lpMsgBuf != nullptr ? String((LPTSTR)lpMsgBuf).trim() : "Unknown Windows error"));
 
 	LocalFree(lpMsgBuf);
 
@@ -80,7 +82,7 @@ int WiiPairUtil::pairWin(bool forceRepairing)
 	///////////////////////////////////////////////////////////////////////
 	{
 		HBLUETOOTH_RADIO_FIND hFindRadio;
-		BLUETOOTH_FIND_RADIO_PARAMS radioParam;
+		BLUETOOTH_FIND_RADIO_PARAMS radioParam = {};
 
 		radioParam.dwSize = sizeof(BLUETOOTH_FIND_RADIO_PARAMS);
 
@@ -92,7 +94,7 @@ int WiiPairUtil::pairWin(bool forceRepairing)
 			BluetoothFindRadioClose(hFindRadio);
 		} else
 		{
-			DBG("Error enumerating radios : " << String(GetLastError()));
+			ShowErrorCode(("BluetoothFindFirstRadio"), GetLastError());
 			return 0;
 		}
 		//nRadios--;
@@ -109,17 +111,19 @@ int WiiPairUtil::pairWin(bool forceRepairing)
 
 		for (radio = 0; radio < nRadios; radio++)
 		{
-			BLUETOOTH_RADIO_INFO radioInfo;
+			BLUETOOTH_RADIO_INFO radioInfo = {};
 			HBLUETOOTH_DEVICE_FIND hFind;
-			BLUETOOTH_DEVICE_INFO btdi;
-			BLUETOOTH_DEVICE_SEARCH_PARAMS srch;
+			BLUETOOTH_DEVICE_INFO btdi = {};
+			BLUETOOTH_DEVICE_SEARCH_PARAMS srch = {};
 
 			radioInfo.dwSize = sizeof(radioInfo);
 			btdi.dwSize = sizeof(btdi);
 			srch.dwSize = sizeof(BLUETOOTH_DEVICE_SEARCH_PARAMS);
 
-			//DBG("BluetoothGetRadioInfo " << String(BluetoothGetRadioInfo(hRadios[radio], &radioInfo)));
-			//DBG("Radio " << radio << " (" << String(radioInfo.szName) << ") : " << FormatBTAddress(radioInfo.address));
+			// SYNC pairing uses the local radio address as its six-byte binary PIN.
+			// Setting dwSize alone does not populate the address.
+			if (ShowErrorCode(("BluetoothGetRadioInfo"), BluetoothGetRadioInfo(hRadios[radio], &radioInfo)) != ERROR_SUCCESS)
+				continue;
 	
 			srch.fReturnAuthenticated = TRUE;
 			srch.fReturnRemembered = TRUE;
@@ -140,8 +144,7 @@ int WiiPairUtil::pairWin(bool forceRepairing)
 					//DBG("No bluetooth devices found.");
 				} else
 				{
-					//DBG("Error enumerating devices : " << String(GetLastError()));
-					return 0;
+					ShowErrorCode(("BluetoothFindFirstDevice"), GetLastError());
 				}
 			} else
 			{
@@ -149,9 +152,10 @@ int WiiPairUtil::pairWin(bool forceRepairing)
 				{
 					//DBG("Found: " << btdi.szName);
 
-					if (!wcscmp(btdi.szName, L"Nintendo RVL-WBC-01") || !wcscmp(btdi.szName, L"Nintendo RVL-CNT-01"))
+					if (!wcscmp(btdi.szName, L"Nintendo RVL-WBC-01") || !wcscmp(btdi.szName, L"Nintendo RVL-CNT-01")
+						|| !wcscmp(btdi.szName, L"Nintendo RVL-CNT-01-TR"))
 					{
-						WCHAR pass[6];
+						WCHAR pass[7] = {};
 						DWORD pcServices = 16;
 						GUID guids[16];
 						BOOL error = FALSE;
@@ -211,7 +215,8 @@ int WiiPairUtil::pairWin(bool forceRepairing)
 							nPaired++;
 						}
 					} // if (!wcscmp(btdi.szName, L"Nintendo RVL-WBC-01") || !wcscmp(btdi.szName, L"Nintendo RVL-CNT-01"))
-				} while (BluetoothFindNextDevice(hFind, &btdi));
+				} while (!shouldStop && BluetoothFindNextDevice(hFind, &btdi));
+				BluetoothFindDeviceClose(hFind);
 			} // if (hFind == NULL)
 		} // for (radio = 0; radio < nRadios; radio++)
 
