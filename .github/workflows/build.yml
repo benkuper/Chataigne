@@ -368,14 +368,9 @@ jobs:
         run: |
           # Keep the runner's suites/components, but use an independent mirror
           # when Canonical's archive/security DNS is unavailable.
-          sudo sed -i -E 's#https?://([a-z0-9.-]+\.)?ubuntu\.com/ubuntu#https://mirrors.mit.edu/ubuntu#g' /etc/apt/sources.list
           # Recent runner images use mirror+file: sources rather than literal
           # URLs in sources.list. Configure those mirror lists as well.
-          for mirror_list in /etc/apt/apt-mirrors.txt /etc/apt/apt-mirrors-security.txt; do
-            if [ -f "$mirror_list" ]; then
-              printf '%s\n' 'https://mirrors.mit.edu/ubuntu' | sudo tee "$mirror_list"
-            fi
-          done
+          sudo bash .github/scripts/configure-ubuntu-mirror.sh
           sudo apt-get -o Acquire::Retries=5 -o Acquire::https::Timeout=30 --error-on=any update
           sudo apt-get -o Acquire::Retries=5 -o Acquire::https::Timeout=30 install -y \
             libasound2-dev libjack-jackd2-dev ladspa-sdk \
@@ -449,8 +444,9 @@ jobs:
             echo "\n=== ABI check in $IMAGE ==="
             docker run --rm -v "${GITHUB_WORKSPACE}:/ws" "$IMAGE" bash -lc '
               set -euo pipefail
-              apt-get update >/dev/null
-              apt-get install -y --no-install-recommends binutils >/dev/null
+              bash /ws/.github/scripts/configure-ubuntu-mirror.sh
+              apt-get -o Acquire::Retries=5 -o Acquire::https::Timeout=30 --error-on=any update >/dev/null
+              apt-get -o Acquire::Retries=5 -o Acquire::https::Timeout=30 install -y --no-install-recommends binutils >/dev/null
               BIN=/ws/Builds/LinuxMakefile/build/${{ env.ProjectName }}
               MAX_GLIBC=$(objdump -T "$BIN" | grep -o "GLIBC_[0-9.]\\+" | sed "s/GLIBC_//" | sort -V | tail -1)
               echo "Max GLIBC symbol: $MAX_GLIBC"
@@ -610,14 +606,15 @@ jobs:
             docker run --rm -v "${GITHUB_WORKSPACE}:/ws" "$IMAGE" bash -lc '
               set -euo pipefail
               export DEBIAN_FRONTEND=noninteractive
-              apt-get update >/dev/null
-              apt-get install -y --no-install-recommends xvfb xauth file >/dev/null
+              bash /ws/.github/scripts/configure-ubuntu-mirror.sh
+              apt-get -o Acquire::Retries=5 -o Acquire::https::Timeout=30 --error-on=any update >/dev/null
+              apt-get -o Acquire::Retries=5 -o Acquire::https::Timeout=30 install -y --no-install-recommends xvfb xauth file >/dev/null
 
               # AppImage payload relies on host-provided network and audio clients.
               install_any_pkg() {
                 for PKG in "$@"; do
                   if apt-cache show "$PKG" >/dev/null 2>&1; then
-                    apt-get install -y --no-install-recommends "$PKG" >/dev/null
+                    apt-get -o Acquire::Retries=5 -o Acquire::https::Timeout=30 install -y --no-install-recommends "$PKG" >/dev/null
                     return 0
                   fi
                 done
