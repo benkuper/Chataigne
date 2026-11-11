@@ -54,6 +54,7 @@
 static atomic_bool discoveryCancelled = false;
 void wiiuse_os_cancel_discovery(void) { atomic_store(&discoveryCancelled, true); }
 void wiiuse_os_reset_discovery(void) { atomic_store(&discoveryCancelled, false); }
+int wiiuse_os_discovery_cancelled(void) { return atomic_load(&discoveryCancelled); }
 
 static BOOL isWiiRemote(IOBluetoothDevice* device) {
     NSString* name = [device name];
@@ -63,8 +64,6 @@ static BOOL isWiiRemote(IOBluetoothDevice* device) {
 
 @interface WiiuseDeviceInquiry : NSObject<IOBluetoothDeviceInquiryDelegate> {
     BOOL complete;
-    NSUInteger found;
-    NSUInteger capacity;
 }
 - (int) find:(wiimote**)wiimotes capacity:(int)count timeout:(int)seconds;
 @end
@@ -77,8 +76,6 @@ static BOOL isWiiRemote(IOBluetoothDevice* device) {
         WIIUSE_WARNING("Bluetooth is unavailable or switched off.");
         return 0;
     }
-    capacity = count;
-    found = 0;
     complete = NO;
     IOBluetoothDeviceInquiry* inquiry = [[IOBluetoothDeviceInquiry inquiryWithDelegate:self] retain];
     [inquiry setSearchCriteria:kBluetoothServiceClassMajorAny
@@ -95,9 +92,11 @@ static BOOL isWiiRemote(IOBluetoothDevice* device) {
                                          beforeDate:[NSDate dateWithTimeIntervalSinceNow:.05]])
                 [NSThread sleepForTimeInterval:.01];
         }
-        [inquiry stop];
-        // Stop callbacks before this delegate and the destination array go away.
+        // Let name updates finish with the inquiry. Finding enough devices does
+        // not mean the native inquiry (and its name requests) has completed.
+        // Detach before stopping so stop cannot call back into teardown.
         [inquiry setDelegate:nil];
+        if (!complete) [inquiry stop];
         if (!atomic_load(&discoveryCancelled)) {
             for (IOBluetoothDevice* device in [inquiry foundDevices]) {
                 if (result >= count) break;
@@ -115,9 +114,6 @@ static BOOL isWiiRemote(IOBluetoothDevice* device) {
     }
     [inquiry release];
     return result;
-}
-- (void) deviceInquiryDeviceFound:(IOBluetoothDeviceInquiry*)inquiry device:(IOBluetoothDevice*)device {
-    if (isWiiRemote(device) && ++found >= capacity) complete = YES;
 }
 - (void) deviceInquiryComplete:(IOBluetoothDeviceInquiry*)inquiry error:(IOReturn)error aborted:(BOOL)aborted {
     complete = YES;

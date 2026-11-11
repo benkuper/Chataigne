@@ -76,8 +76,11 @@
 #pragma mark connect, disconnect
 
 - (BOOL) connectChannel: (IOBluetoothL2CAPChannel**) pChannel PSM: (BluetoothL2CAPPSM) psm {
-	if ([device openL2CAPChannelSync:pChannel withPSM:psm delegate:self] != kIOReturnSuccess) {
-		WIIUSE_ERROR("Unable to open L2CAP channel [id %i].", wm->unid);
+    if (!device || wiiuse_os_discovery_cancelled()) return NO;
+	IOReturn status = [device openL2CAPChannelSync:pChannel withPSM:psm delegate:self];
+	if (status != kIOReturnSuccess) {
+		WIIUSE_ERROR("Unable to open L2CAP PSM 0x%04x [id %i]: 0x%08x.",
+                     (unsigned int)psm, wm->unid, (unsigned int)status);
 		*pChannel = nil;
 		return NO;
 	} else {
@@ -92,14 +95,38 @@
 		return kIOReturnBadArgument;
 	}
 	
-	// open channels
-	if(![self connectChannel:&controlChannel PSM:kBluetoothL2CAPPSMHIDControl]) {
-		[self disconnect];
-		return kIOReturnNotOpen;
-	} else if(![self connectChannel:&interruptChannel PSM:kBluetoothL2CAPPSMHIDInterrupt]) {
-		[self disconnect];
-		return kIOReturnNotOpen;
-	}
+    // macOS may reject the first channel open while its pairing notification is
+    // still waiting for the user. Keep the discovered device alive and service
+    // this worker's run loop between attempts so authorization can complete.
+    NSDate* deadline = [NSDate dateWithTimeIntervalSinceNow:30];
+    BOOL channelsConnected = NO;
+    while (!wiiuse_os_discovery_cancelled()) {
+        if ([self connectChannel:&controlChannel PSM:kBluetoothL2CAPPSMHIDControl] &&
+            [self connectChannel:&interruptChannel PSM:kBluetoothL2CAPPSMHIDInterrupt]) {
+            channelsConnected = YES;
+            break;
+        }
+        // An interrupt-channel failure must also undo the partial control open.
+        // Do not close/release the device here: pairing may still be in progress.
+        [self disconnectChannel:&interruptChannel];
+        [self disconnectChannel:&controlChannel];
+        [receivedDataLock lock];
+        [receivedData removeAllObjects];
+        [receivedDataLock unlock];
+        if (wiiuse_os_discovery_cancelled() || [deadline timeIntervalSinceNow] <= 0) break;
+        NSDate* retry = [NSDate dateWithTimeIntervalSinceNow:.5];
+        while (!wiiuse_os_discovery_cancelled() && [retry timeIntervalSinceNow] > 0 &&
+               [deadline timeIntervalSinceNow] > 0) {
+            if (![[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode
+                                         beforeDate:[NSDate dateWithTimeIntervalSinceNow:.05]])
+                [NSThread sleepForTimeInterval:.01];
+        }
+        if ([deadline timeIntervalSinceNow] <= 0) break;
+    }
+    if (!channelsConnected || wiiuse_os_discovery_cancelled()) {
+        [self disconnect];
+        return wiiuse_os_discovery_cancelled() ? kIOReturnAborted : kIOReturnNotOpen;
+    }
 	
 	// register for device disconnection
 	disconnectNotification = [[device registerForDisconnectNotification:self selector:@selector(disconnected:fromDevice:)] retain];

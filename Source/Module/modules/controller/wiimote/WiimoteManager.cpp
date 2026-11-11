@@ -60,6 +60,10 @@ void WiimoteManager::reconnect(bool allowPairing)
     const int found = wiiuse_find(devices, MAX_WIIMOTES, 5);
     NLOG("Wiimote", "Found " << found << " Wii Remotes. Press 1+2 (or SYNC) while refreshing.");
     if (threadShouldExit()) return;
+#if JUCE_MAC
+    if (found > 0)
+        NLOG("Wiimote", "Connecting... Accept the macOS pairing request and keep the Wii Remote awake (1+2 or SYNC). Retrying for up to 30 seconds per remote.");
+#endif
     int connected = wiiuse_connect(devices, MAX_WIIMOTES);
 #if JUCE_WINDOWS
     if (connected == 0 && allowPairing && !threadShouldExit())

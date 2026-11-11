@@ -49,6 +49,9 @@
 #endif
 
 
+// Shared cancellation also interrupts connection retries while macOS pairing is pending.
+int wiiuse_os_discovery_cancelled(void);
+
 @interface WiiuseWiimote : NSObject<IOBluetoothL2CAPChannelDelegate> {
 	wiimote* wm; // reference to the C wiimote struct
 	

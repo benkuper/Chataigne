@@ -17,7 +17,9 @@ reader joins. No physical controller is required.
 
 The macOS test compiles the actual WiiUse transport and substitutes Bluetooth
 objects. It checks original/Plus name filtering, excess discovery results,
-missing hardware, cancellation, a missing completion callback, malformed input,
+missing hardware, inquiry completion after a device-found callback, cancellation,
+a missing completion callback, delayed pairing authorization, a failed interrupt
+channel followed by a retry of both channels, cancellation during pairing, malformed input,
 bounded queues, failed writes, lost L2CAP channels, notification ownership and
 100 connect/disconnect cycles. It never starts real Bluetooth discovery.
 
@@ -34,7 +36,12 @@ Physical macOS verification (still required for radio/OS compatibility)
 
 1. Enable Bluetooth and allow Chataigne's Bluetooth permission when requested.
 2. Add a Wiimote module. Make the original Wii Remote discoverable with 1+2 or
-   its SYNC button, then use Refresh Wiimotes. Check Connected, buttons, battery,
+   its SYNC button, then use Refresh Wiimotes. On macOS, accept the pairing
+   notification while the connection retries (a 30-second retry window per remote);
+   keep the remote awake. Check that the same Refresh reaches Connected after
+   authorization, and that closing Chataigne during the retry wait exits promptly.
+   If it fails, capture stderr: L2CAP errors include the PSM and IOReturn code.
+   Check Connected, buttons, battery,
    acceleration, orientation, and Device Select with multiple remotes/modules.
 3. Check Nunchuk C/Z, stick and extension insertion/removal. With an IR source,
    check all four points and clearing when the source disappears.
