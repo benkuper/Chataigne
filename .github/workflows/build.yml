@@ -442,9 +442,11 @@ jobs:
           set -euo pipefail
           for IMAGE in ubuntu:22.04 ubuntu:24.04 ubuntu:26.04 debian:bookworm debian:trixie; do
             echo "\n=== ABI check in $IMAGE ==="
+            # Minimal images have no CA bundle. Keep their signed APT sources on
+            # HTTP while selecting the reachable mirror.
             docker run --rm -v "${GITHUB_WORKSPACE}:/ws" "$IMAGE" bash -lc '
               set -euo pipefail
-              bash /ws/.github/scripts/configure-ubuntu-mirror.sh
+              bash /ws/.github/scripts/configure-ubuntu-mirror.sh http
               apt-get -o Acquire::Retries=5 -o Acquire::https::Timeout=30 --error-on=any update >/dev/null
               apt-get -o Acquire::Retries=5 -o Acquire::https::Timeout=30 install -y --no-install-recommends binutils >/dev/null
               BIN=/ws/Builds/LinuxMakefile/build/${{ env.ProjectName }}
@@ -606,7 +608,7 @@ jobs:
             docker run --rm -v "${GITHUB_WORKSPACE}:/ws" "$IMAGE" bash -lc '
               set -euo pipefail
               export DEBIAN_FRONTEND=noninteractive
-              bash /ws/.github/scripts/configure-ubuntu-mirror.sh
+              bash /ws/.github/scripts/configure-ubuntu-mirror.sh http
               apt-get -o Acquire::Retries=5 -o Acquire::https::Timeout=30 --error-on=any update >/dev/null
               apt-get -o Acquire::Retries=5 -o Acquire::https::Timeout=30 install -y --no-install-recommends xvfb xauth file >/dev/null
 
