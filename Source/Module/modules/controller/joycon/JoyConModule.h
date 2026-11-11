@@ -30,6 +30,9 @@ public:
 
 	ControllableContainer leftValues;
 	ControllableContainer rightValues;
+	BoolParameter* leftConnected;
+	BoolParameter* rightConnected;
+	BoolParameter* cButton;
 
 	Point3DParameter* leftAccel;
 	Point3DParameter* leftOrientation;

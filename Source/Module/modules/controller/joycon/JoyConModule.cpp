@@ -17,7 +17,7 @@ JoyConModule::JoyConModule() :
 	valuesCC.addChildControllableContainer(&leftValues);
 	valuesCC.addChildControllableContainer(&rightValues);
 
-	reconnectControllers = moduleParams.addTrigger("Reconnect Controllers", "If the controllers were not powered on at initialization, then you can connect by clicking here");
+	reconnectControllers = moduleParams.addTrigger("Reconnect Controllers", "Retry controller discovery. Pair original Joy-Cons in OS Bluetooth settings. For Joy-Con 2 on Windows 10/11, hold each controller's SYNC button until its LEDs cycle; Chataigne connects directly over Bluetooth LE.");
 
 	useJitterThreshold = moduleParams.addBoolParameter("Use Jitter Threshold", "Only send accel/orentiation/stick changes if the delta is greater than the jitter threshold.", true);
 	jitterThreshold = moduleParams.addFloatParameter("Jitter Threshold", "Delta change threshold for analog inputs. Only update values if the change is greater than the threshold.", 0.005, 0.0, 0.1, true);
@@ -48,6 +48,11 @@ JoyConModule::JoyConModule() :
 	
 	rightAxis = rightValues.addPoint2DParameter("Right Axis", "");
 	rightAxis->setBounds(-1, -1, 1, 1);
+	leftConnected = leftValues.addBoolParameter("Connected", "Whether a left controller is sending input.", false);
+	rightConnected = rightValues.addBoolParameter("Connected", "Whether a right controller is sending input.", false);
+	leftConnected->isControllableFeedbackOnly = true;
+	rightConnected->isControllableFeedbackOnly = true;
+	cButton = rightValues.addBoolParameter("C", "Joy-Con 2 C button.", false);
 	rStick = rightValues.addBoolParameter("Right Stick", "", false);
 	a = rightValues.addBoolParameter("A", "", false);
 	b = rightValues.addBoolParameter("B", "", false);
@@ -80,6 +85,12 @@ void JoyConModule::timerCallback()
     auto frames = controllers->getFrames();
     if (!enabled->boolValue()) frames = {};
     const WeakReference<ControllableContainer> alive(this);
+    leftConnected->setValue(frames[0].connected);
+    if (alive.get() == nullptr) return;
+    rightConnected->setValue(frames[1].connected);
+    if (alive.get() == nullptr) return;
+    cButton->setValue(frames[1].connected && frames[1].c);
+    if (alive.get() == nullptr) return;
     const bool suppress = useJitterThreshold->boolValue();
     const float threshold = jitterThreshold->floatValue();
     const std::array<std::array<BoolParameter*, 11>, 2> buttons {{

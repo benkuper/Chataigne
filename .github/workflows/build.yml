@@ -693,24 +693,27 @@ jobs:
 
       - name: Setup Multi-Arch Apt
         run: |
+          set -euo pipefail
           sudo dpkg --add-architecture ${{ matrix.deb_arch }}
           sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
 
-          echo "deb [arch=amd64] http://archive.ubuntu.com/ubuntu jammy main universe restricted multiverse" | sudo tee /etc/apt/sources.list
-          echo "deb [arch=amd64] http://archive.ubuntu.com/ubuntu jammy-updates main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
-          echo "deb [arch=amd64] http://archive.ubuntu.com/ubuntu jammy-security main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
+          echo "deb [arch=amd64] https://archive.ubuntu.com/ubuntu jammy main universe restricted multiverse" | sudo tee /etc/apt/sources.list
+          echo "deb [arch=amd64] https://archive.ubuntu.com/ubuntu jammy-updates main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
+          echo "deb [arch=amd64] https://archive.ubuntu.com/ubuntu jammy-security main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
 
-          echo "deb [arch=${{ matrix.deb_arch }}] http://ports.ubuntu.com/ubuntu-ports jammy main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
-          echo "deb [arch=${{ matrix.deb_arch }}] http://ports.ubuntu.com/ubuntu-ports jammy-updates main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
-          echo "deb [arch=${{ matrix.deb_arch }}] http://ports.ubuntu.com/ubuntu-ports jammy-security main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
+          echo "deb [arch=${{ matrix.deb_arch }}] https://ports.ubuntu.com/ubuntu-ports jammy main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
+          echo "deb [arch=${{ matrix.deb_arch }}] https://ports.ubuntu.com/ubuntu-ports jammy-updates main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
+          echo "deb [arch=${{ matrix.deb_arch }}] https://ports.ubuntu.com/ubuntu-ports jammy-security main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
 
-          sudo apt-get update
+          # APT otherwise exits successfully after transient DNS/download errors,
+          # leaving the next step with missing cross-compiler package indexes.
+          sudo apt-get -o Acquire::Retries=5 -o Acquire::https::Timeout=30 --error-on=any update
 
       - name: Install Cross-Compiler and Libraries
         run: |
-          sudo apt-get install -y crossbuild-essential-${{ matrix.deb_arch }}
+          sudo apt-get -o Acquire::Retries=5 -o Acquire::https::Timeout=30 install -y crossbuild-essential-${{ matrix.deb_arch }}
 
-          sudo apt-get install -y \
+          sudo apt-get -o Acquire::Retries=5 -o Acquire::https::Timeout=30 install -y \
             libasound2-dev:${{ matrix.deb_arch }} \
             libjack-jackd2-dev:${{ matrix.deb_arch }} \
             ladspa-sdk:${{ matrix.deb_arch }} \

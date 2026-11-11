@@ -5,6 +5,7 @@
 struct JoyConFrame
 {
     bool connected = false;
+    bool c = false; // Joy-Con 2 right controller
     JOY_SHOCK_STATE state {};
     MOTION_STATE motion {};
 };

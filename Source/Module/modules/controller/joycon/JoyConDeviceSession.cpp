@@ -1,4 +1,5 @@
 #include "JoyConDeviceSession.h"
+#include "JoyCon2Backend.h"
 #include <algorithm>
 #include <atomic>
 #include <chrono>
@@ -24,11 +25,16 @@ public:
     }
     JoyConFrames getFrames()
     {
+        const auto secondGeneration = joyCon2.getFrames();
         std::lock_guard<std::mutex> lock(stateMutex);
-        return frames;
+        auto result = frames;
+        for (size_t side = 0; side < result.size(); ++side)
+            if (!result[side].connected) result[side] = secondGeneration[side];
+        return result;
     }
-    void reconnect() { scan.store(true); wake.notify_all(); }
+    void reconnect() { scan.store(true); joyCon2.reconnect(); wake.notify_all(); }
 private:
+    JoyCon2Backend joyCon2;
     std::atomic<bool> stopping { false }, scan { true };
     std::mutex stateMutex, waitMutex;
     std::condition_variable wake;

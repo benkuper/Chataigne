@@ -461,6 +461,12 @@
     <Filter Include="Chataigne\Source\Module\modules\serial">
       <UniqueIdentifier>{5E38BC10-4B4B-E563-7C9D-A3F43300453B}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\firmata\commands">
+      <UniqueIdentifier>{F8FBBC14-3ED8-CDFA-8FB9-157E2584A0CC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\firmata">
+      <UniqueIdentifier>{D0A5CDEB-7CCC-51E9-F4C6-4F4DA2960791}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Module\modules\state\commands">
       <UniqueIdentifier>{1E198E23-7373-042E-47B5-B35438723155}</UniqueIdentifier>
     </Filter>
@@ -2052,6 +2058,15 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\serial\SerialModule.cpp">
       <Filter>Chataigne\Source\Module\modules\serial</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\firmata\commands\FirmataCommands.cpp">
+      <Filter>Chataigne\Source\Module\modules\firmata\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\firmata\FirmataModule.cpp">
+      <Filter>Chataigne\Source\Module\modules\firmata</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\firmata\FirmataParser.cpp">
+      <Filter>Chataigne\Source\Module\modules\firmata</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\state\commands\StateCommand.cpp">
       <Filter>Chataigne\Source\Module\modules\state\commands</Filter>
@@ -5043,6 +5058,12 @@
     <ClInclude Include="..\..\Source\Module\modules\controller\gamepad\GamepadModule.h">
       <Filter>Chataigne\Source\Module\modules\controller\gamepad</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\controller\joycon\JoyCon2Protocol.h">
+      <Filter>Chataigne\Source\Module\modules\controller\joycon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\controller\joycon\JoyCon2Backend.h">
+      <Filter>Chataigne\Source\Module\modules\controller\joycon</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\controller\joycon\JoyConDeviceSession.h">
       <Filter>Chataigne\Source\Module\modules\controller\joycon</Filter>
     </ClInclude>
@@ -5192,6 +5213,15 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\serial\SerialModule.h">
       <Filter>Chataigne\Source\Module\modules\serial</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\firmata\commands\FirmataCommands.h">
+      <Filter>Chataigne\Source\Module\modules\firmata\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\firmata\FirmataModule.h">
+      <Filter>Chataigne\Source\Module\modules\firmata</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\firmata\FirmataParser.h">
+      <Filter>Chataigne\Source\Module\modules\firmata</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\state\commands\StateCommand.h">
       <Filter>Chataigne\Source\Module\modules\state\commands</Filter>
@@ -10551,6 +10581,9 @@
       <Filter>Chataigne\Resources\Modules</Filter>
     </None>
     <None Include="..\..\Resources\Modules\Empty.png">
+      <Filter>Chataigne\Resources\Modules</Filter>
+    </None>
+    <None Include="..\..\Resources\Modules\Firmata.png">
       <Filter>Chataigne\Resources\Modules</Filter>
     </None>
     <None Include="..\..\Resources\Modules\Gamepad.png">

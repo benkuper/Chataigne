@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.10.5b11"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.10.5b12"
               bundleIdentifier="benkuper.Chataigne" companyName="Ben Kuper"
               companyWebsite="http://benjamin.kuperberg.fr/chataigne" companyEmail="benjamin@kuperberg.fr"
               defines="VST_LOGGING=0" splashScreenColour="Dark" cppLanguageStandard="17"
@@ -1006,6 +1006,10 @@
               <FILE id="K56p4X" name="GamepadModule.h" compile="0" resource="0" file="Source/Module/modules/controller/gamepad/GamepadModule.h"/>
             </GROUP>
             <GROUP id="{B2643A70-9424-FF0A-99E1-F824ED6B791A}" name="joycon">
+              <FILE id="joy2ProtocolH" name="JoyCon2Protocol.h" compile="0" resource="0"
+                    file="Source/Module/modules/controller/joycon/JoyCon2Protocol.h"/>
+              <FILE id="joy2BackendH" name="JoyCon2Backend.h" compile="0" resource="0"
+                    file="Source/Module/modules/controller/joycon/JoyCon2Backend.h"/>
               <FILE id="joySessionH" name="JoyConDeviceSession.h" compile="0" resource="0"
                     file="Source/Module/modules/controller/joycon/JoyConDeviceSession.h"/>
               <FILE id="joySessionC" name="JoyConDeviceSession.cpp" compile="1" resource="0"
@@ -1316,12 +1320,10 @@
             </GROUP>
             <FILE id="X6kFM1" name="FirmataModule.cpp" compile="0" resource="0"
                   file="Source/Module/modules/firmata/FirmataModule.cpp"/>
-            <FILE id="Eq7tWM" name="FirmataModule.h" compile="0" resource="0"
-                  file="Source/Module/modules/firmata/FirmataModule.h"/>
+            <FILE id="Eq7tWM" name="FirmataModule.h" compile="0" resource="0" file="Source/Module/modules/firmata/FirmataModule.h"/>
             <FILE id="JoSUne" name="FirmataParser.cpp" compile="0" resource="0"
                   file="Source/Module/modules/firmata/FirmataParser.cpp"/>
-            <FILE id="6atNjo" name="FirmataParser.h" compile="0" resource="0"
-                  file="Source/Module/modules/firmata/FirmataParser.h"/>
+            <FILE id="6atNjo" name="FirmataParser.h" compile="0" resource="0" file="Source/Module/modules/firmata/FirmataParser.h"/>
           </GROUP>
           <GROUP id="{41A1CFAA-D972-C25C-1442-8D09D843CD2A}" name="state">
             <GROUP id="{9D766034-D96C-AD16-8084-EE1BBF66BA8B}" name="commands">
@@ -1784,7 +1786,7 @@
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>
-    <VS2022 targetFolder="Builds/VisualStudio2022" extraDefs="USE_KINECT=1&#10;USE_ABLETONLINK=1&#10;LINK_PLATFORM_WINDOWS=1&#10;BLE_SUPPORT=0"
+    <VS2022 targetFolder="Builds/VisualStudio2022" extraDefs="USE_KINECT=1&#10;USE_ABLETONLINK=1&#10;LINK_PLATFORM_WINDOWS=1&#10;BLE_SUPPORT=0&#10;JOYCON2_BLE_SUPPORT=1"
             extraLinkerFlags="/HEAP:0x200000,0x10000" externalLibraries="hid.lib&#10;Kinect20.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib&#10;iphlpapi.lib&#10;hid.lib&#10;hidapi_static.lib&#10;mosquitto.lib&#10;mosquittopp.lib&#10;simpleble.lib&#10;libmpv.lib"
             smallIcon="nVz6Li" bigIcon="nVz6Li" extraCompilerFlags="/bigobj">
       <CONFIGURATIONS>
@@ -1900,14 +1902,14 @@
         <MODULEPATH id="juce_video" path="JUCE/modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
-    <VS2022 targetFolder="Builds/VisualStudio2022_CI" extraDefs="USE_KINECT=1&#10;USE_ABLETONLINK=1&#10;LINK_PLATFORM_WINDOWS=1&#10;BLE_SUPPORT=0"
+    <VS2022 targetFolder="Builds/VisualStudio2022_CI" extraDefs="USE_KINECT=1&#10;USE_ABLETONLINK=1&#10;LINK_PLATFORM_WINDOWS=1&#10;BLE_SUPPORT=0&#10;JOYCON2_BLE_SUPPORT=1"
             extraCompilerFlags="/Zm1000 /bigobj" extraLinkerFlags="/HEAP:0x400000,0x10000"
-            externalLibraries="hid.lib&#10;Kinect20.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib&#10;iphlpapi.lib&#10;hid.lib&#10;hidapi_static.lib&#10;mosquitto.lib&#10;mosquittopp.lib&#10;libmpv.lib"
+            externalLibraries="hid.lib&#10;Kinect20.lib&#10;Servus.lib&#10;dnssd.lib&#10;SDL2.lib&#10;iphlpapi.lib&#10;hid.lib&#10;hidapi_static.lib&#10;mosquitto.lib&#10;mosquittopp.lib&#10;simpleble.lib&#10;libmpv.lib"
             smallIcon="nVz6Li" bigIcon="nVz6Li">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" binaryPath="Binaries/CI" libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib/win&#10;../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/hidapi/lib/win/x64&#10;../../External/mosquitto/lib/win&#10;../../External/mpv/lib/win"
+        <CONFIGURATION isDebug="1" name="Debug" binaryPath="Binaries/CI" libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib/win&#10;../../External/simpleble/lib/win/debug&#10;../../External/servus/lib/win/x64/debug&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/hidapi/lib/win/x64&#10;../../External/mosquitto/lib/win&#10;../../External/mpv/lib/win"
                        winArchitecture="x64"/>
-        <CONFIGURATION isDebug="0" name="Release" binaryPath="Binaries/CI" libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib/win&#10;../../External/servus/lib/win/x64/release&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/hidapi/lib/win/x64&#10;../../External/mosquitto/lib/win&#10;../../External/mpv/lib/win"
+        <CONFIGURATION isDebug="0" name="Release" binaryPath="Binaries/CI" libraryPath="../../External/kinect/lib&#10;../../External/joycon/lib/win&#10;../../External/simpleble/lib/win/release&#10;../../External/servus/lib/win/x64/release&#10;../../External/dnssd/lib&#10;../../External/sdl/lib/win&#10;../../External/hidapi/lib/win/x64&#10;../../External/mosquitto/lib/win&#10;../../External/mpv/lib/win"
                        winArchitecture="x64" alwaysGenerateDebugSymbols="1" debugInformationFormat="ProgramDatabase"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
