@@ -366,8 +366,11 @@ jobs:
 
       - name: Installing dependencies
         run: |
-          sudo apt-get update
-          sudo apt-get install -y \
+          # Keep the runner's suites/components, but use an independent mirror
+          # when Canonical's archive/security DNS is unavailable.
+          sudo sed -i -E 's#https?://([a-z0-9.-]+\.)?ubuntu\.com/ubuntu#https://mirrors.mit.edu/ubuntu#g' /etc/apt/sources.list
+          sudo apt-get -o Acquire::Retries=5 -o Acquire::https::Timeout=30 --error-on=any update
+          sudo apt-get -o Acquire::Retries=5 -o Acquire::https::Timeout=30 install -y \
             libasound2-dev libjack-jackd2-dev ladspa-sdk \
             libfreetype6-dev libx11-dev libxcomposite-dev \
             libxcursor-dev libxinerama-dev libxext-dev \
@@ -697,13 +700,15 @@ jobs:
           sudo dpkg --add-architecture ${{ matrix.deb_arch }}
           sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
 
-          echo "deb [arch=amd64] https://archive.ubuntu.com/ubuntu jammy main universe restricted multiverse" | sudo tee /etc/apt/sources.list
-          echo "deb [arch=amd64] https://archive.ubuntu.com/ubuntu jammy-updates main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
-          echo "deb [arch=amd64] https://archive.ubuntu.com/ubuntu jammy-security main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
+          # This mirror serves Ubuntu-signed Jammy indexes independently of
+          # archive.ubuntu.com / ports.ubuntu.com DNS availability.
+          echo "deb [arch=amd64] https://mirrors.mit.edu/ubuntu jammy main universe restricted multiverse" | sudo tee /etc/apt/sources.list
+          echo "deb [arch=amd64] https://mirrors.mit.edu/ubuntu jammy-updates main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
+          echo "deb [arch=amd64] https://mirrors.mit.edu/ubuntu jammy-security main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
 
-          echo "deb [arch=${{ matrix.deb_arch }}] https://ports.ubuntu.com/ubuntu-ports jammy main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
-          echo "deb [arch=${{ matrix.deb_arch }}] https://ports.ubuntu.com/ubuntu-ports jammy-updates main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
-          echo "deb [arch=${{ matrix.deb_arch }}] https://ports.ubuntu.com/ubuntu-ports jammy-security main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
+          echo "deb [arch=${{ matrix.deb_arch }}] https://mirrors.mit.edu/ubuntu-ports jammy main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
+          echo "deb [arch=${{ matrix.deb_arch }}] https://mirrors.mit.edu/ubuntu-ports jammy-updates main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
+          echo "deb [arch=${{ matrix.deb_arch }}] https://mirrors.mit.edu/ubuntu-ports jammy-security main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
 
           # APT otherwise exits successfully after transient DNS/download errors,
           # leaving the next step with missing cross-compiler package indexes.
