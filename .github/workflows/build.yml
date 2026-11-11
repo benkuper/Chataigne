@@ -369,6 +369,13 @@ jobs:
           # Keep the runner's suites/components, but use an independent mirror
           # when Canonical's archive/security DNS is unavailable.
           sudo sed -i -E 's#https?://([a-z0-9.-]+\.)?ubuntu\.com/ubuntu#https://mirrors.mit.edu/ubuntu#g' /etc/apt/sources.list
+          # Recent runner images use mirror+file: sources rather than literal
+          # URLs in sources.list. Configure those mirror lists as well.
+          for mirror_list in /etc/apt/apt-mirrors.txt /etc/apt/apt-mirrors-security.txt; do
+            if [ -f "$mirror_list" ]; then
+              printf '%s\n' 'https://mirrors.mit.edu/ubuntu' | sudo tee "$mirror_list"
+            fi
+          done
           sudo apt-get -o Acquire::Retries=5 -o Acquire::https::Timeout=30 --error-on=any update
           sudo apt-get -o Acquire::Retries=5 -o Acquire::https::Timeout=30 install -y \
             libasound2-dev libjack-jackd2-dev ladspa-sdk \
