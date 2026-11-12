@@ -124,6 +124,15 @@ static void checkFrames(const std::vector<int>& frames, const char* label)
         }
 }
 
+static void awaitFrames(const std::vector<int>& frames)
+{
+    // Worker notifications yield to input/paint/timers between short batches.
+    // Wait for completion rather than assuming one pump drains the OS queue.
+    const auto deadline = Time::getMillisecondCounterHiRes() + 5000;
+    while (frames.size() < 500 && Time::getMillisecondCounterHiRes() < deadline)
+        pumpMessages(5);
+}
+
 static void integerConversion()
 {
     FloatParameter time("Time", "", 0, 0, 20);
@@ -175,7 +184,7 @@ static void queuedInput(bool sendInput, bool sendOutput, bool withFilters)
     });
     producer.join();
     check(output->frames.empty(), "mapping callbacks remain on the message thread");
-    pumpMessages();
+    awaitFrames(output->frames);
     checkFrames(output->frames, "queued mapping input preserves every captured frame");
 }
 
@@ -198,7 +207,7 @@ static void queuedFilterReference()
         for (int frame = 1; frame <= 500; ++frame) time.setValue(frame / 25.0);
     });
     producer.join();
-    pumpMessages();
+    awaitFrames(output->frames);
     checkFrames(output->frames, "queued filter reference preserves every captured frame");
 }
 
@@ -223,7 +232,7 @@ static void oscRounding(bool custom, bool queued)
         std::thread producer(produce);
         producer.join();
         check(sender.frames.empty(), "OSC delivery stays on the message thread");
-        pumpMessages();
+        awaitFrames(sender.frames);
     }
     else produce();
     checkFrames(sender.frames, "OSC rounds all 500 frame values without a Round filter");

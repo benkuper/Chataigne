@@ -196,18 +196,27 @@ void CVGroup::goToPreset(CVPreset* p, float time, Automation* curve)
 	}
 
 	GenericScopedLock lock(interpolationLock);
-	interpolationSourceValues.clear();
+	interpolationValues.clearQuick();
+	interpolationValues.ensureStorageAllocated(values.items.size());
+	HashMap<Parameter*, ParameterPreset*> presetForParameter;
+	HashMap<ParameterPreset*, Parameter*>::Iterator presetValues(p->values.linkMap);
+	while (presetValues.next()) presetForParameter.set(presetValues.getValue(), presetValues.getKey());
 	for (auto* item : values.items)
 	{
-		auto* parameter = static_cast<Parameter*>(item->controllable);
-		const SpinLock::ScopedLockType valueLock(parameter->valueSetLock);
-		interpolationSourceValues.add(parameter->value.clone());
+		auto* parameter = dynamic_cast<Parameter*>(item->controllable);
+		auto* presetValue = presetForParameter[parameter];
+		if (parameter == nullptr || presetValue == nullptr) continue;
+		const auto mode = presetValue->interpolationMode->getValueDataAsEnum<ParameterPreset::InterpolationMode>();
+		if (mode == ParameterPreset::NONE) continue;
+		auto captureValue = [](Parameter* parameter)
+		{
+			const SpinLock::ScopedLockType lock(parameter->valueSetLock);
+			// EnumParameter::getValue() returns option data; setValue() needs its key.
+			return parameter->value.clone();
+		};
+		interpolationValues.add({ parameter, parameter->type, captureValue(parameter),
+			captureValue(presetValue->parameter), mode });
 	}
-
-	interpolationPresetSnapshot = std::make_unique<CVPreset>(this, true);
-	interpolationPresetSnapshot->loadJSONData(p->getJSONData());
-	for (auto* item : interpolationPresetSnapshot->values.manager->items)
-		if (auto* parameter = dynamic_cast<Parameter*>(item->controllable)) parameter->isOverriden = true;
 
 	interpolationCurveSnapshot = std::make_unique<Automation>();
 	interpolationCurveSnapshot->isSelectable = false;
@@ -421,7 +430,7 @@ void CVGroup::loadJSONDataInternal(var data)
 
 void CVGroup::run()
 {
-	if (targetPreset == nullptr || interpolationTime <= 0 || interpolationPresetSnapshot == nullptr || interpolationCurveSnapshot == nullptr) return;
+	if (targetPreset == nullptr || interpolationTime <= 0 || interpolationCurveSnapshot == nullptr) return;
 
 	interpolationProgress->setValue(0);
 
@@ -435,7 +444,9 @@ void CVGroup::run()
 		interpolationProgress->setValue(rel);
 
 		float weight = interpolationCurveSnapshot->getValueAtPosition(rel);
-		lerpPresets(interpolationSourceValues, interpolationPresetSnapshot.get(), weight);
+		if (enabled->boolValue())
+			for (const auto& value : interpolationValues)
+				if (auto* parameter = value.parameter.get()) parameter->setValue(value.getValueAt(weight));
 
 		if (rel == 1) break;
 
@@ -444,6 +455,28 @@ void CVGroup::run()
 
 	targetPreset = nullptr;
 	interpolationProgress->setValue(0);
+}
+
+var CVGroup::InterpolationValue::getValueAt(float weight) const
+{
+	if (weight == 0) return sourceValue;
+	if (weight == 1) return targetValue;
+	if (mode == ParameterPreset::CHANGE_AT_END) return sourceValue;
+	if (mode != ParameterPreset::INTERPOLATE) return targetValue;
+
+	// Match the parameter classes' destination-to-source interpolation, including
+	// float precision and integer truncation, without constructing Parameters.
+	const float inverseWeight = 1 - weight;
+	if (type == Controllable::FLOAT) return jmap<double>(inverseWeight, (double)targetValue, (double)sourceValue);
+	if (type == Controllable::INT) return (int)jmap(inverseWeight, (float)targetValue, (float)sourceValue);
+	if (type == Controllable::COLOR || type == Controllable::POINT2D || type == Controllable::POINT3D)
+	{
+		var result;
+		for (int i = 0; i < targetValue.size(); ++i)
+			result.append(jmap(inverseWeight, (float)targetValue[i], (float)sourceValue[i]));
+		return result;
+	}
+	return targetValue;
 }
 
 CVGroup::ValuesManager::ValuesManager() :

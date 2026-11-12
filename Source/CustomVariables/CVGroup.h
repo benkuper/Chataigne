@@ -55,11 +55,18 @@ public:
 	FloatParameter* interpolationProgress;
 
 	CriticalSection interpolationLock;
-	// Construct and destroy these model snapshots on the message thread, after
-	// stopping the worker. Their parameter callbacks must not rebuild worker data.
-	std::unique_ptr<CVPreset> interpolationPresetSnapshot;
+	// Capture plain values after stopping the worker. Building a temporary preset
+	// here would construct hundreds of model objects/listeners on the UI thread.
+	struct InterpolationValue
+	{
+		WeakReference<Parameter> parameter;
+		Controllable::Type type;
+		var sourceValue, targetValue;
+		ParameterPreset::InterpolationMode mode;
+		var getValueAt(float weight) const;
+	};
+	Array<InterpolationValue> interpolationValues;
 	std::unique_ptr<Automation> interpolationCurveSnapshot;
-	Array<var> interpolationSourceValues;
 
 	void addItemFromParameter(Parameter* source, bool linkAsMaster = true);
 	void addItemsFromGroup(CVGroup* source);
