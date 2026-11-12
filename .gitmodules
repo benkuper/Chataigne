@@ -1,18 +1,24 @@
 [submodule "Modules/juce_organicui"]
 	path = Modules/juce_organicui
 	url = https://github.com/benkuper/juce_organicui
+	branch = master
 [submodule "Modules/juce_timeline"]
 	path = Modules/juce_timeline
 	url = https://github.com/benkuper/juce_timeline
+	branch = master
 [submodule "Modules/juce_simpleweb"]
 	path = Modules/juce_simpleweb
 	url = https://github.com/benkuper/juce_simpleweb
+	branch = master
 [submodule "Modules/juce_sharedtexture"]
 	path = Modules/juce_sharedtexture
 	url = https://github.com/benkuper/juce_sharedtexture
+	branch = master
 [submodule "Modules/juce_serial"]
 	path = Modules/juce_serial
 	url = https://github.com/benkuper/juce_serial
+	branch = master
 [submodule "Modules/juce_dmx"]
 	path = Modules/juce_dmx
 	url = https://github.com/benkuper/juce_dmx
+	branch = master
