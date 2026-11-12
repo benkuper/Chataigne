@@ -40,7 +40,7 @@ void WebSocketClientModule::setupClient()
 
 	isConnected->setValue(false);
 
-	if (!enabled->intValue()) return;
+	if (!enabled->intValue() || serverPath->stringValue().trim().isEmpty()) return;
 
 	if (useSecureConnection->boolValue())
 	{
