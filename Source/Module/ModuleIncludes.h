@@ -90,6 +90,7 @@
 #include "modules/controller/streamdeck/models/StreamDeckV1.h"
 #include "modules/controller/streamdeck/models/StreamDeckV2.h"
 #include "modules/controller/streamdeck/models/StreamDeckXL.h"
+#include "modules/controller/streamdeck/models/StreamDeckPlusXL.h"
 
 #include "modules/controller/ajazz/AjazzDevice.h"
 #include "modules/controller/ajazz/AjazzManager.h"

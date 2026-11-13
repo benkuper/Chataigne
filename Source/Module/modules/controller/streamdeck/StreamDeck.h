@@ -13,13 +13,22 @@
 #include "hidapi.h"
 
 #define STREAMDECK_MAX_ROWS 4
-#define STREAMDECK_MAX_COLUMNS 8
+#define STREAMDECK_MAX_COLUMNS 9
 
 class StreamDeck :
 	public Thread
 {
 public:
-	enum Model { MINI, STANDARD_V1, STANDARD_V2, XL };
+	enum Model { MINI, STANDARD_V1, STANDARD_V2, XL, PLUS_XL };
+
+	// What to draw above one dial on models with a touch strip
+	struct EncoderDisplay
+	{
+		String label;
+		Colour colour;
+		String valueText;
+		float normalizedValue; // 0..1, drawn as a bar
+	};
 
 	StreamDeck(hid_device* device, String serialNumber, Model model, int numColumns, int numRows, bool invertX, int iconSize, int keyDataOffset);
 	virtual ~StreamDeck();
@@ -37,6 +46,7 @@ public:
 	int keyDataOffset;
 	int imagePacketLength;
 	int imageHeaderLength;
+	int numEncoders = 0;
 
 	Array<uint8_t> resetData;
 	Array<uint8_t> brightnessData;
@@ -63,6 +73,11 @@ public:
 
 	virtual void sendFeatureReport(const uint8_t* data, int length);
 
+	// Models with dials and a touch strip draw one box per dial on the strip
+	virtual void setEncoderDisplays(const Array<EncoderDisplay>& displays) {}
+
+	virtual void processInputReport(const unsigned char* data, int length);
+
 	void run() override;
 
 	class StreamDeckListener
@@ -72,6 +87,13 @@ public:
 		virtual void streamDeckButtonPressed(int row, int column) = 0;
 		virtual void streamDeckButtonReleased(int row, int column) = 0;
 
+		virtual void streamDeckEncoderRotated(int index, int delta) {}
+		virtual void streamDeckEncoderPressed(int index) {}
+		virtual void streamDeckEncoderReleased(int index) {}
+
+		// x is normalized 0..1 along the strip, left to right
+		virtual void streamDeckStripTapped(float x, bool longPress) {}
+		virtual void streamDeckStripSwiped(bool toRight) {}
 	};
 
 	ListenerList<StreamDeckListener> deviceListeners;

@@ -118,7 +118,7 @@ void StreamDeck::sendButtonImageData(int row, int column, Image& img)
 
 		int numPartBytes = jmin(remainingBytes, payload);
 
-		writeImageDataHeader(partStream, buttonID, part, remainingBytes <= imagePacketLength, numPartBytes);
+		writeImageDataHeader(partStream, buttonID, part, remainingBytes <= payload, numPartBytes);
 
 		partStream.write((uint8*)imageData.getData() + byteOffset, numPartBytes);
 		partStream.writeRepeatedByte(0, imagePacketLength - partStream.getDataSize());
@@ -153,6 +153,24 @@ void StreamDeck::sendFeatureReport(const uint8_t* data, int length)
 	}
 }
 
+void StreamDeck::processInputReport(const unsigned char* data, int length)
+{
+	if (data[0] != 1 || length < keyDataOffset + numKeys) return;
+
+	for (int i = 0; i < numKeys; ++i)
+	{
+		bool state = data[i + keyDataOffset] > 0;
+
+		if (buttonStates[i] != state)
+		{
+			buttonStates.set(i, state);
+			int column = i % numColumns;
+			int row = floor(i * 1.0f / numColumns);
+			deviceListeners.call(state ? &StreamDeckListener::streamDeckButtonPressed : &StreamDeckListener::streamDeckButtonReleased, row, column);
+		}
+	}
+}
+
 void StreamDeck::run()
 {
 	unsigned char data[1024];
@@ -162,24 +180,7 @@ void StreamDeck::run()
 		try
 		{
 			int numRead = device != nullptr ? hid_read(device, data, 1024) : 0;
-			if (numRead > 0)
-			{
-				if (data[0] == 1)
-				{
-					for (int i = 0; i < numKeys; ++i)
-					{
-						bool state = data[i + keyDataOffset] > 0;
-
-						if (buttonStates[i] != state)
-						{
-							buttonStates.set(i, state);
-							int column = i % numColumns;
-							int row = floor(i * 1.0f / numColumns);
-							deviceListeners.call(state ? &StreamDeckListener::streamDeckButtonPressed : &StreamDeckListener::streamDeckButtonReleased, row, column);
-						}
-					}
-				}
-			}
+			if (numRead > 0) processInputReport(data, numRead);
 		}
 		catch (std::exception e)
 		{

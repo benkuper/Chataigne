@@ -982,6 +982,10 @@
                 <FILE id="sW7OAf" name="StreamDeckXL.cpp" compile="0" resource="0"
                       file="Source/Module/modules/controller/streamdeck/models/StreamDeckXL.cpp"/>
                 <FILE id="yEI2V5" name="StreamDeckXL.h" compile="0" resource="0" file="Source/Module/modules/controller/streamdeck/models/StreamDeckXL.h"/>
+                <FILE id="pXl6Cp" name="StreamDeckPlusXL.cpp" compile="0" resource="0"
+                      file="Source/Module/modules/controller/streamdeck/models/StreamDeckPlusXL.cpp"/>
+                <FILE id="pXl6Hh" name="StreamDeckPlusXL.h" compile="0" resource="0"
+                      file="Source/Module/modules/controller/streamdeck/models/StreamDeckPlusXL.h"/>
               </GROUP>
               <GROUP id="{913B8A45-77B5-B711-04D5-75EC35D70E4C}" name="commands">
                 <FILE id="iVwQ3o" name="StreamDeckCommand.cpp" compile="0" resource="0"

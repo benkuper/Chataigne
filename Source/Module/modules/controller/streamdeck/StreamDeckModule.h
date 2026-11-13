@@ -15,8 +15,8 @@
 class StreamDeckModule :
 	public Module,
 	public StreamDeckManager::StreamDeckManagerListener,
-	public StreamDeck::StreamDeckListener
-
+	public StreamDeck::StreamDeckListener,
+	public Timer
 {
 public:
 	StreamDeckModule(const String& name = "StreamDeck");
@@ -25,11 +25,12 @@ public:
 	BoolParameter* isConnected;
 	StreamDeck* device;
 
-	enum DeviceType { STANDARD = 15, MINI = 6, XL = 32 };
+	enum DeviceType { STANDARD = 15, MINI = 6, XL = 32, PLUS_XL = 36 };
 	EnumParameter* deviceType;
 
 	int numRows;
 	int numColumns;
+	int numDials;
 
 	SpinLock rebuildingLock;
 
@@ -50,11 +51,38 @@ public:
 	Array<ControllableContainer*> buttonRowsCC;
 	OwnedArray<Array<BoolParameter*>> buttonStates;
 
+	// Dials and touch strip (Stream Deck + XL)
+	ControllableContainer dialSettingsCC;
+	FloatParameter* dialSensitivity;
+	FloatParameter* dialFineMultiplier;
+	FloatParameter* dialRangeMin;
+	FloatParameter* dialRangeMax;
+	BoolParameter* dialWrapAround;
+	Array<StringParameter*> dialLabels;
+	Array<ColorParameter*> dialColors;
+
+	ControllableContainer dialsCC;
+	Array<BoolParameter*> dialPressed;
+	Array<FloatParameter*> dialValues;
+	Array<Trigger*> dialIncrements;
+	Array<Trigger*> dialDecrements;
+
+	ControllableContainer stripCC;
+	FloatParameter* stripPosition;
+	Trigger* stripTap;
+	Trigger* stripLongPress;
+	Trigger* stripSwipeLeft;
+	Trigger* stripSwipeRight;
+
+	std::atomic<bool> stripNeedsRedraw;
+
 #if USE_FAKE_DEVICE
 	StreamDeck fakeDevice;
 #endif
 
 	void rebuildValues();
+	void rebuildDials();
+	void timerCallback() override;
 
 	void setDevice(StreamDeck* newDevice);
 	void updateButton(int row, int column);
@@ -67,6 +95,11 @@ public:
 
 	virtual void streamDeckButtonPressed(int row, int column) override;
 	virtual void streamDeckButtonReleased(int row, int column) override;
+	virtual void streamDeckEncoderRotated(int index, int delta) override;
+	virtual void streamDeckEncoderPressed(int index) override;
+	virtual void streamDeckEncoderReleased(int index) override;
+	virtual void streamDeckStripTapped(float x, bool longPress) override;
+	virtual void streamDeckStripSwiped(bool toRight) override;
 
 	void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
 	
