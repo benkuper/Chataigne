@@ -82,6 +82,7 @@
 #include "modules/controller/streamdeck/models/StreamDeckV1.cpp"
 #include "modules/controller/streamdeck/models/StreamDeckV2.cpp"
 #include "modules/controller/streamdeck/models/StreamDeckXL.cpp"
+#include "modules/controller/streamdeck/models/StreamDeckPlusXL.cpp"
 
 #include "modules/controller/ajazz/AjazzDevice.cpp"
 #include "modules/controller/ajazz/AjazzManager.cpp"

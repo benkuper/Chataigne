@@ -131,11 +131,16 @@ StreamDeck* StreamDeckManager::openDevice(hid_device_info* deviceInfo)
 		cd = new StreamDeckXL(d, String(deviceInfo->serial_number));
 		break;
 
+	case PID_PLUS_XL:
+		cd = new StreamDeckPlusXL(d, String(deviceInfo->serial_number));
+		break;
+
 	}
 
 	if (cd == nullptr)
 	{
 		LOGERROR("StreamDeck model not supported : " << (int)deviceInfo->product_id);
+		hid_close(d);
 		return nullptr;
 	}
 
