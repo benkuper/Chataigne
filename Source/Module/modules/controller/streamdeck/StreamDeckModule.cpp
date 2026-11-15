@@ -108,6 +108,11 @@ void StreamDeckModule::rebuildValues()
 
 	DeviceType t = deviceType->getValueDataAsEnum<DeviceType>();
 
+	// Native button icon size per model, used to hint the Image parameters below.
+	// Images are stretched to fit, so anything works, but a square image at this
+	// size avoids distortion and upscaling blur.
+	const int iconSize = t == PLUS_XL ? 112 : (t == XL ? 96 : 72);
+
 	switch (t)
 	{
 	case STANDARD:
@@ -196,7 +201,7 @@ void StreamDeckModule::rebuildValues()
 			String btId = String(btStates->size() + 1);
 			btStates->add(btCC->addBoolParameter("Button " + btId, "Is row " + String(r + 1) + ", button " + btId + " pressed ?", false));
 			cColors->add(cCC->addColorParameter("Color " + btId, "If not image, color for row " + String(r + 1) + ", button " + btId, Colours::black));
-			cImages->add(iCC->addFileParameter("Image " + btId, "Image for row " + String(r + 1) + ", button" + btId));
+			cImages->add(iCC->addFileParameter("Image " + btId, "Image for row " + String(r + 1) + ", button" + btId + ". Square, " + String(iconSize) + "x" + String(iconSize) + "px recommended for this model (it will be stretched to fit otherwise)."));
 			cTexts->add(tCC->addStringParameter("Text " + btId, "Text for row " + String(r + 1) + ", button" + btId, ""));
 		}
 	}
