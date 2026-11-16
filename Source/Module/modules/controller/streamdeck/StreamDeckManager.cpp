@@ -135,6 +135,10 @@ StreamDeck* StreamDeckManager::openDevice(hid_device_info* deviceInfo)
 		cd = new StreamDeckPlusXL(d, String(deviceInfo->serial_number));
 		break;
 
+	case PID_PEDAL:
+		cd = new StreamDeckPedal(d, String(deviceInfo->serial_number));
+		break;
+
 	}
 
 	if (cd == nullptr)

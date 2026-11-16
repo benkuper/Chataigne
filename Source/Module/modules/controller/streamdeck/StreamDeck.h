@@ -19,7 +19,7 @@ class StreamDeck :
 	public Thread
 {
 public:
-	enum Model { MINI, STANDARD_V1, STANDARD_V2, XL, PLUS_XL };
+	enum Model { MINI, STANDARD_V1, STANDARD_V2, XL, PLUS_XL, PEDAL };
 
 	// What to draw above one dial on models with a touch strip
 	struct EncoderDisplay

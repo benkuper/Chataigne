@@ -25,7 +25,7 @@ public:
 	BoolParameter* isConnected;
 	StreamDeck* device;
 
-	enum DeviceType { STANDARD = 15, MINI = 6, XL = 32, PLUS_XL = 36 };
+	enum DeviceType { STANDARD = 15, MINI = 6, XL = 32, PLUS_XL = 36, PEDAL = 3 };
 	EnumParameter* deviceType;
 
 	int numRows;

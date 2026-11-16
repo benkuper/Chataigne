@@ -48,7 +48,7 @@ StreamDeckModule::StreamDeckModule(const String& name) :
 
 
 	deviceType = moduleParams.addEnumParameter("Device type", "Type of the device");
-	deviceType->addOption("StreamDeck (15 buttons)", STANDARD)->addOption("StreamDeck XL (32 buttons)", XL)->addOption("StreamDeck Mini (6 buttons)", MINI)->addOption("StreamDeck + XL (36 buttons, 6 dials)", PLUS_XL);
+	deviceType->addOption("StreamDeck (15 buttons)", STANDARD)->addOption("StreamDeck XL (32 buttons)", XL)->addOption("StreamDeck Mini (6 buttons)", MINI)->addOption("StreamDeck + XL (36 buttons, 6 dials)", PLUS_XL)->addOption("StreamDeck Pedal (3 buttons)", PEDAL);
 
 	dialSettingsCC.saveAndLoadRecursiveData = true;
 	moduleParams.addChildControllableContainer(&dialSettingsCC);
@@ -130,6 +130,10 @@ void StreamDeckModule::rebuildValues()
 	case PLUS_XL:
 		numRows = 4;
 		numColumns = 9;
+		break;
+	case PEDAL:
+		numRows = 1;
+		numColumns = 3;
 		break;
 	}
 
@@ -308,6 +312,10 @@ void StreamDeckModule::setDevice(StreamDeck* newDevice)
 
 		case StreamDeck::PLUS_XL:
 			deviceType->setValueWithData(PLUS_XL);
+			break;
+
+		case StreamDeck::PEDAL:
+			deviceType->setValueWithData(PEDAL);
 			break;
 		}
 
