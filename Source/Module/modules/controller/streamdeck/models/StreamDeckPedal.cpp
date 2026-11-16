@@ -8,8 +8,12 @@
   ==============================================================================
 */
 
-// Button report layout (report id 1, pedal states at bytes 4/5/6) reverse-engineered by
-// https://github.com/pejalo/stream-deck-pedal
+// Elgato doesn't publish a HID protocol page for the Pedal. Button report layout
+// (report id 1, pedal states at bytes 4/5/6) cross-checked between two independent
+// reverse-engineering efforts:
+// https://github.com/pejalo/stream-deck-pedal (src/main.rs)
+// https://github.com/abcminiuser/python-elgato-streamdeck (Devices/StreamDeckPedal.py),
+// which also confirms the Pedal doesn't respond to the reset/brightness feature reports.
 
 StreamDeckPedal::StreamDeckPedal(hid_device* device, String serialNumber) :
 	StreamDeck(device, serialNumber, PEDAL, 3, 1, false, 0, 4)
@@ -42,5 +46,5 @@ void StreamDeckPedal::sendButtonImageData(int row, int column, Image& img)
 
 void StreamDeckPedal::sendFeatureReport(const uint8_t* data, int length)
 {
-	//The Pedal doesn't support feature reports (no reset / brightness capability)
+	//The Pedal ignores the reset and brightness feature reports (no display or LEDs to reset/dim)
 }
