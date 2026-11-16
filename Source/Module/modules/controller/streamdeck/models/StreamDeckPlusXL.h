@@ -31,6 +31,7 @@ public:
 
 	void processInputReport(const unsigned char* data, int length) override;
 
-	// Both the keys and the strip show images turned 90 degrees clockwise
+	// Per Elgato's HID reference (docs.elgato.com/streamdeck/hid/stream-deck-plus-xl),
+	// both the keys and the strip take images rotated 90 degrees counterclockwise
 	static Image rotateCounterClockwise(const Image& img);
 };

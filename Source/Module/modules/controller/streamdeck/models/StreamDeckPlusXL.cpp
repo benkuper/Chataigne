@@ -4,6 +4,9 @@
     StreamDeckPlusXL.cpp
     Stream Deck + XL : 36 keys (4x9), 6 push dials, 1200x100 touch strip
 
+    Protocol per Elgato's own HID reference:
+    https://docs.elgato.com/streamdeck/hid/stream-deck-plus-xl
+
     Input report 0x01, byte 1 = event type:
       0x00 keys  : byte 4+i = key i down
       0x03 dials : byte 4 = 0x01 turn (bytes 5..10 = signed delta per dial)
