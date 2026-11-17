@@ -50,6 +50,7 @@ ModuleFactory::ModuleFactory() {
 	defs.add(new ModuleDefinition("Hardware", "Ajazz AKP", &AjazzModule::create));
 	defs.add(new ModuleDefinition("Hardware", "Loupedeck", &LoupedeckModule::create));
 	defs.add(new ModuleDefinition("Hardware", "GPIO", &GPIOModule::create));
+	defs.add(new ModuleDefinition("Hardware", "Phidget", &PhidgetModule::create));
 
 
 	defs.add(new ModuleDefinition("Software", "DLight", &DLightModule::create));

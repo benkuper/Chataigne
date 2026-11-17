@@ -125,6 +125,7 @@
 
 #include "modules/gpio/GPIOModule.h"
 #include "modules/gpio/commands/GPIOCommands.h"
+#include "modules/phidget/PhidgetModule.h"
 
 #include "modules/http/HTTPModule.h"
 #include "modules/http/commands/HTTPCommand.h"

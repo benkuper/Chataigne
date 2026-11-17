@@ -24,6 +24,8 @@
 
 
 #include "Module.cpp"
+#include "modules/phidget/PhidgetDevice.cpp"
+#include "modules/phidget/PhidgetModule.cpp"
 
 #include "ModuleCommandTester.cpp"
 
