@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.10.5b13"
+<JUCERPROJECT id="QZW0Vv" name="Chataigne" projectType="guiapp" version="1.10.5b14"
               bundleIdentifier="benkuper.Chataigne" companyName="Ben Kuper"
               companyWebsite="http://benjamin.kuperberg.fr/chataigne" companyEmail="benjamin@kuperberg.fr"
               defines="VST_LOGGING=0" splashScreenColour="Dark" cppLanguageStandard="17"
@@ -1450,10 +1450,14 @@
             <FILE id="vShhSX" name="GPIOModule.h" compile="0" resource="0" file="Source/Module/modules/gpio/GPIOModule.h"/>
           </GROUP>
           <GROUP id="phidgetGroup" name="phidget">
-            <FILE id="phidgetDeviceCpp" name="PhidgetDevice.cpp" compile="0" resource="0" file="Source/Module/modules/phidget/PhidgetDevice.cpp"/>
-            <FILE id="phidgetDeviceH" name="PhidgetDevice.h" compile="0" resource="0" file="Source/Module/modules/phidget/PhidgetDevice.h"/>
-            <FILE id="phidgetModuleCpp" name="PhidgetModule.cpp" compile="0" resource="0" file="Source/Module/modules/phidget/PhidgetModule.cpp"/>
-            <FILE id="phidgetModuleH" name="PhidgetModule.h" compile="0" resource="0" file="Source/Module/modules/phidget/PhidgetModule.h"/>
+            <FILE id="phidgetDeviceCpp" name="PhidgetDevice.cpp" compile="0" resource="0"
+                  file="Source/Module/modules/phidget/PhidgetDevice.cpp"/>
+            <FILE id="phidgetDeviceH" name="PhidgetDevice.h" compile="0" resource="0"
+                  file="Source/Module/modules/phidget/PhidgetDevice.h"/>
+            <FILE id="phidgetModuleCpp" name="PhidgetModule.cpp" compile="0" resource="0"
+                  file="Source/Module/modules/phidget/PhidgetModule.cpp"/>
+            <FILE id="phidgetModuleH" name="PhidgetModule.h" compile="0" resource="0"
+                  file="Source/Module/modules/phidget/PhidgetModule.h"/>
           </GROUP>
           <GROUP id="{303429D4-46AF-662A-ECEA-C139C35E331F}" name="posistagenet">
             <GROUP id="{0DC9D488-4014-3860-2CE6-051EA2FF4884}" name="commands">

@@ -722,9 +722,31 @@ jobs:
 
       - name: Install Cross-Compiler and Libraries
         run: |
+          set -euo pipefail
           sudo apt-get -o Acquire::Retries=5 -o Acquire::https::Timeout=30 install -y crossbuild-essential-${{ matrix.deb_arch }}
 
-          sudo apt-get -o Acquire::Retries=5 -o Acquire::https::Timeout=30 install -y \
+          # Multi-Arch: same packages must have identical versions to coexist.
+          # The Jammy archive and ports mirrors can publish at different times.
+          native_headers="linux-libc-dev:$(dpkg --print-architecture)"
+          target_headers="linux-libc-dev:${{ matrix.deb_arch }}"
+          native_versions=$(apt-cache madison "$native_headers" | awk '{print $3}' | sort -u)
+          target_versions=$(apt-cache madison "$target_headers" | awk '{print $3}' | sort -u)
+          common_versions=$(comm -12 <(printf '%s\n' "$native_versions") <(printf '%s\n' "$target_versions"))
+          headers_version=
+          for version in $common_versions; do
+            if [ -z "$headers_version" ] || dpkg --compare-versions "$version" gt "$headers_version"; then
+              headers_version=$version
+            fi
+          done
+          if [ -z "$headers_version" ]; then
+            apt-cache policy "$native_headers" "$target_headers"
+            echo "::error::No common version of $native_headers and $target_headers"
+            exit 1
+          fi
+
+          sudo apt-get -o Acquire::Retries=5 -o Acquire::https::Timeout=30 install -y --allow-downgrades \
+            "$native_headers=$headers_version" \
+            "$target_headers=$headers_version" \
             libasound2-dev:${{ matrix.deb_arch }} \
             libjack-jackd2-dev:${{ matrix.deb_arch }} \
             ladspa-sdk:${{ matrix.deb_arch }} \

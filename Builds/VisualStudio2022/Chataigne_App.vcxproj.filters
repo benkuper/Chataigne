@@ -536,6 +536,9 @@
     <Filter Include="Chataigne\Source\Module\modules\gpio">
       <UniqueIdentifier>{95883558-2B5B-67E4-B81C-3AFA9E47F7AF}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chataigne\Source\Module\modules\phidget">
+      <UniqueIdentifier>{F8D000F8-19DE-D216-3FD6-9A580FFF379C}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Chataigne\Source\Module\modules\posistagenet\commands">
       <UniqueIdentifier>{A03AAC79-C5A8-F84B-CF45-4BAC94EBF383}</UniqueIdentifier>
     </Filter>
@@ -2139,6 +2142,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\gpio\GPIOModule.cpp">
       <Filter>Chataigne\Source\Module\modules\gpio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\phidget\PhidgetDevice.cpp">
+      <Filter>Chataigne\Source\Module\modules\phidget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\phidget\PhidgetModule.cpp">
+      <Filter>Chataigne\Source\Module\modules\phidget</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\posistagenet\commands\PosiStageNetCommand.cpp">
       <Filter>Chataigne\Source\Module\modules\posistagenet\commands</Filter>
@@ -5297,6 +5306,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\gpio\GPIOModule.h">
       <Filter>Chataigne\Source\Module\modules\gpio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\phidget\PhidgetDevice.h">
+      <Filter>Chataigne\Source\Module\modules\phidget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\phidget\PhidgetModule.h">
+      <Filter>Chataigne\Source\Module\modules\phidget</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\posistagenet\commands\PosiStageNetCommand.h">
       <Filter>Chataigne\Source\Module\modules\posistagenet\commands</Filter>
