@@ -153,10 +153,15 @@ void ZeroconfManager::ZeroconfSearcher::shutdown()
 	signalThreadShouldExit();
 	notify();
 
-	// Servus::browse() can block indefinitely on Windows even when given a finite
-	// timeout. Ending the browse closes its DNS-SD handle and releases that call.
-	// Keep the Servus object alive until the worker has returned from browse().
-#if JUCE_WINDOWS
+	// The dnssd backend (Windows and macOS) does not leave browse() when its
+	// timeout elapses: each select waits, then the loop continues while the
+	// browse is still open. endBrowsing() closes the DNS-SD handle so the next
+	// select returns and browse() can see threadShouldExit. Keep the Servus
+	// object alive until the worker has returned from browse().
+	//
+	// Do not do this for Avahi. Linux browse() holds the Avahi mutex until its
+	// own timeout ends, and endBrowsing() takes that same mutex.
+#if JUCE_WINDOWS || JUCE_MAC
 	ScopedLock lock(servusLock);
 	if (servus != nullptr && servus->isBrowsing()) servus->endBrowsing();
 #endif
