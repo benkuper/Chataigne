@@ -33,9 +33,13 @@ StreamDeckCommand::StreamDeckCommand(StreamDeckModule* _module, CommandContext c
 		break;
 
 	case SET_IMAGE:
-		valueParam = addFileParameter("Image", "The image to set the button to");
+	{
+		StreamDeckModule::DeviceType t = streamDeckModule->deviceType->getValueDataAsEnum<StreamDeckModule::DeviceType>();
+		int iconSize = t == StreamDeckModule::PLUS_XL ? 112 : (t == StreamDeckModule::XL ? 96 : 72);
+		valueParam = addFileParameter("Image", "The image to set the button to. Square, " + String(iconSize) + "x" + String(iconSize) + "px recommended for this model (it will be stretched to fit otherwise).");
 		((FileParameter*)valueParam)->fileTypeFilter = "*.png; *.jpg; *.jpeg";
 		break;
+	}
 
 	case SET_TEXT:
 		valueParam = addStringParameter("Text", "The text to set the button to", "");

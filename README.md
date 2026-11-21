@@ -250,6 +250,7 @@ Visual Studio Installer and uses the existing shared JUCE checkout. The local
   - Before running Chataigne, you just need to do a chmod a+x on the .AppImage file, or right-click on it and allow execution, then you're ready to play !  
   - If you're running Arch Linux, you can now just do `yay -S chataigne-stable-bin` or `paru -S chataigne-stable-bin` (Thanks Stephan !)
   - On Raspberry Pi, you may need to install some more dependencies: `sudo apt install libbluetooth-dev libx11-dev libgpiod-dev`
+  - To use a Stream Deck, give your user access to its HID device with a udev rule, then replug the deck: `echo 'KERNEL=="hidraw*", ATTRS{idVendor}=="0fd9", MODE="0660", GROUP="plugdev", TAG+="uaccess"' | sudo tee /etc/udev/rules.d/50-elgato-streamdeck.rules && sudo udevadm control --reload-rules && sudo udevadm trigger`. Without it the deck is connected but never shows up in the module, because `/dev/hidraw*` is root-only by default.
 ## Troubleshooting
 
 If you have any issue regarding the software, you can post an issue on github (preferred for code-related problems and features),
