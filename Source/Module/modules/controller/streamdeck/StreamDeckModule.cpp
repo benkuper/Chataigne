@@ -47,6 +47,9 @@ StreamDeckModule::StreamDeckModule(const String& name) :
 	textsCC.editorIsCollapsed = true;
 
 
+	targetDevice = moduleParams.addEnumParameter("Target Device", "Which connected Stream Deck this module controls. Use one module per device to drive several at once.");
+	targetDevice->isSavable = false; // saved as targetSerial instead, see getJSONData
+
 	deviceType = moduleParams.addEnumParameter("Device type", "Type of the device");
 	deviceType->addOption("StreamDeck (15 buttons)", STANDARD)->addOption("StreamDeck XL (32 buttons)", XL)->addOption("StreamDeck Mini (6 buttons)", MINI)->addOption("StreamDeck + XL (36 buttons, 6 dials)", PLUS_XL)->addOption("StreamDeck Pedal (3 buttons)", PEDAL);
 
@@ -86,7 +89,8 @@ StreamDeckModule::StreamDeckModule(const String& name) :
 #if USE_FAKE_DEVICE
 	setDevice(&fakeDevice);
 #else
-	setDevice(StreamDeckManager::getInstance()->devices.size() > 0 ? StreamDeckManager::getInstance()->devices[0] : nullptr);
+	// When a session loads, wait for the saved target instead of briefly grabbing the first deck
+	if (!Engine::mainEngine->isLoadingFile) updateDeviceList();
 #endif
 
 	StreamDeckManager::getInstance()->addStreamDeckManagerListener(this);
@@ -326,13 +330,14 @@ void StreamDeckModule::setDevice(StreamDeck* newDevice)
 			startTimerHz(30);
 		}
 
-		//for (int i = 0; i < numRows; ++i)
-		//{
-		//	for (int j = 0; j < numColumns; j++)
-		//	{
-		//		updateButton(i, j);
-		//	}
-		//}
+		// Paint the new device, e.g. one picked in Target Device or attached after the session loaded
+		for (int i = 0; i < numRows; ++i)
+		{
+			for (int j = 0; j < numColumns; j++)
+			{
+				updateButton(i, j);
+			}
+		}
 	}
 
 	//rebuildValues();
@@ -520,6 +525,13 @@ void StreamDeckModule::onControllableFeedbackUpdateInternal(ControllableContaine
 {
 	Module::onControllableFeedbackUpdateInternal(cc, c);
 
+	if (c == targetDevice && !updatingDeviceList)
+	{
+		targetSerial = targetDevice->getValueData().toString();
+		updateDeviceList();
+		return;
+	}
+
 	if (c == deviceType)
 	{
 		rebuildValues();
@@ -575,20 +587,56 @@ void StreamDeckModule::onControllableFeedbackUpdateInternal(ControllableContaine
 	}
 }
 
+void StreamDeckModule::updateDeviceList(StreamDeck* removedDevice)
+{
+	StreamDeck* firstFound = nullptr;
+	StreamDeck* target = nullptr;
+
+	updatingDeviceList = true;
+	targetDevice->clearOptions();
+	targetDevice->addOption("First found", "");
+
+	for (auto* d : StreamDeckManager::getInstance()->devices)
+	{
+		if (d == removedDevice) continue; // deviceRemoved is called while it's still in the manager's list
+		if (firstFound == nullptr) firstFound = d;
+		if (d->serialNumber == targetSerial) target = d;
+		targetDevice->addOption((d->productName.isNotEmpty() ? d->productName : "Stream Deck") + " (" + d->serialNumber + ")", d->serialNumber, false);
+	}
+
+	// Keep a chosen device that isn't connected right now, so it's picked up again when it comes back
+	if (targetSerial.isNotEmpty() && target == nullptr) targetDevice->addOption(targetSerial + " (not connected)", targetSerial, false);
+
+	targetDevice->setValueWithData(targetSerial);
+	updatingDeviceList = false;
+
+	setDevice(targetSerial.isEmpty() ? firstFound : target);
+}
+
 void StreamDeckModule::deviceAdded(StreamDeck* d)
 {
-	if (device == nullptr)
-	{
-		setDevice(d);
-	}
+	updateDeviceList();
 }
 
 void StreamDeckModule::deviceRemoved(StreamDeck* d)
 {
-	if (device == d || StreamDeckManager::getInstance()->devices.size() == 0)
-	{
-		setDevice(nullptr);
-	}
+	updateDeviceList(d);
+}
+
+var StreamDeckModule::getJSONData(bool includeNonOverriden)
+{
+	var data = Module::getJSONData(includeNonOverriden);
+	if (targetSerial.isNotEmpty()) data.getDynamicObject()->setProperty("targetSerial", targetSerial);
+	return data;
+}
+
+void StreamDeckModule::loadJSONDataItemInternal(var data)
+{
+	Module::loadJSONDataItemInternal(data);
+	targetSerial = data.getProperty("targetSerial", "").toString();
+#if !USE_FAKE_DEVICE
+	updateDeviceList();
+#endif
 }
 
 void StreamDeckModule::afterLoadJSONDataInternal()

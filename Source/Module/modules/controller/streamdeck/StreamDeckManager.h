@@ -24,7 +24,9 @@ public:
 	enum StreamDeckPID { PID_MINI = 0x63, PID_V1 = 0x60, PID_V2 = 0x6D, PID_MK2 = 0x80, PID_XL = 0x6C, PID_XL_V2 = 0x8F, PID_PLUS_XL = 0xC6, PID_PEDAL = 0x86 };
 
 	OwnedArray<StreamDeck> devices;
+	StringArray ignoredDevicePaths; // other Elgato HID devices (e.g. Facecam), logged once instead of every check
 
+	static bool isSupportedPID(int pid);
 	void checkDevices();
 	StreamDeck* getItemWithSerial(StringRef serial);
 	StreamDeck* getItemWithHidDevice(hid_device* device);

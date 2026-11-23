@@ -36,6 +36,7 @@ public:
 	Model model;
 	hid_device* device;
 	String serialNumber;
+	String productName; // as reported by the device, e.g. "Stream Deck Pedal"
 
 	//Data
 	int numKeys;
