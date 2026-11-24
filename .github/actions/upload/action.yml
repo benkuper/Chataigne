@@ -13,11 +13,27 @@ inputs:
 
 runs:
   using: "composite"
-  steps: 
-    - uses: actions/setup-python@v6
+  steps:
+    # Forks have no release SFTP server: publish the file as a workflow artifact instead
+    - if: github.repository_owner != 'benkuper'
+      id: artifact
+      run: echo "name=$(basename "$UPLOAD_FILE")" >> "$GITHUB_OUTPUT"
+      shell: bash
+      env:
+        UPLOAD_FILE: ${{ inputs.pkg-name }}
+    - if: github.repository_owner != 'benkuper'
+      uses: actions/upload-artifact@v6
+      with:
+        name: ${{ steps.artifact.outputs.name }}
+        path: ${{ inputs.pkg-name }}
+        if-no-files-found: error
+        retention-days: 30
+    - if: github.repository_owner == 'benkuper'
+      uses: actions/setup-python@v6
       with:
         python-version: '3.12'
-    - run: |
+    - if: github.repository_owner == 'benkuper'
+      run: |
         python -m pip install --disable-pip-version-check -r "${{ github.action_path }}/requirements.txt"
         python -m unittest discover -s "${{ github.action_path }}" -p test_upload.py
         python "${{ github.action_path }}/upload.py"
