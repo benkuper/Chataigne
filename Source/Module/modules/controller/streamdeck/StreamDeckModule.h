@@ -25,8 +25,15 @@ public:
 	BoolParameter* isConnected;
 	StreamDeck* device;
 
-	enum DeviceType { STANDARD = 15, MINI = 6, XL = 32, PLUS_XL = 36 };
+	enum DeviceType { STANDARD = 15, MINI = 6, XL = 32, PLUS_XL = 36, PEDAL = 3 };
 	EnumParameter* deviceType;
+
+	// Which connected Stream Deck this module drives. targetSerial is what's saved, so the choice
+	// survives the device being unplugged or absent when the session loads. Empty means "first found".
+	EnumParameter* targetDevice;
+	String targetSerial;
+	bool updatingDeviceList = false;
+	void updateDeviceList(StreamDeck* removedDevice = nullptr);
 
 	int numRows;
 	int numColumns;
@@ -107,6 +114,8 @@ public:
 	void deviceRemoved(StreamDeck * d) override;
 
 	void afterLoadJSONDataInternal() override;
+	var getJSONData(bool includeNonOverriden = false) override;
+	void loadJSONDataItemInternal(var data) override;
 
 	static StreamDeckModule * create() { return new StreamDeckModule(); }
 	virtual String getDefaultTypeString() const override { return "Stream Deck"; }

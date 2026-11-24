@@ -37,6 +37,18 @@ void StreamDeckManager::checkDevices()
 
 	while (dInfo != nullptr)
 	{
+		if (!isSupportedPID(dInfo->product_id))
+		{
+			String path(dInfo->path);
+			if (!ignoredDevicePaths.contains(path))
+			{
+				ignoredDevicePaths.add(path);
+				LOG("Ignoring Elgato device that isn't a supported Stream Deck : " << (dInfo->product_string != nullptr ? String(dInfo->product_string) : String("unknown")) << " (product id " << String::toHexString(dInfo->product_id) << ")");
+			}
+			dInfo = dInfo->next;
+			continue;
+		}
+
 		StreamDeck* p = getItemWithSerial(String(dInfo->serial_number));
 
 
@@ -135,6 +147,10 @@ StreamDeck* StreamDeckManager::openDevice(hid_device_info* deviceInfo)
 		cd = new StreamDeckPlusXL(d, String(deviceInfo->serial_number));
 		break;
 
+	case PID_PEDAL:
+		cd = new StreamDeckPedal(d, String(deviceInfo->serial_number));
+		break;
+
 	}
 
 	if (cd == nullptr)
@@ -144,9 +160,20 @@ StreamDeck* StreamDeckManager::openDevice(hid_device_info* deviceInfo)
 		return nullptr;
 	}
 
+	if (deviceInfo->product_string != nullptr) cd->productName = String(deviceInfo->product_string);
 	devices.add(cd);
 	deviceManagerListeners.call(&StreamDeckManagerListener::deviceAdded, cd);
 	return cd;
+}
+
+bool StreamDeckManager::isSupportedPID(int pid)
+{
+	switch (pid)
+	{
+	case PID_MINI: case PID_V1: case PID_V2: case PID_MK2: case PID_XL: case PID_XL_V2: case PID_PLUS_XL: case PID_PEDAL:
+		return true;
+	}
+	return false;
 }
 
 void StreamDeckManager::timerCallback()
