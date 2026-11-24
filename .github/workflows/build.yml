@@ -24,12 +24,12 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v5
         with:
           submodules: 'recursive'
 
       - name: Checkout JUCE
-        uses: actions/checkout@v2
+        uses: actions/checkout@v5
         with:
           repository: benkuper/JUCE
           ref: develop-local
@@ -42,7 +42,7 @@ jobs:
           os: ${{ matrix.arch }}
 
       - name: Add msbuild to PATH
-        uses: microsoft/setup-msbuild@v1.0.2
+        uses: microsoft/setup-msbuild@v3
 
       - name: Force 64-bit Linker
         shell: powershell
@@ -77,7 +77,7 @@ jobs:
 
       - name: Archive matching Windows EXE and PDB
         if: matrix.arch == 'win-x64'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: symbols-${{ steps.set_variables.outputs.suffix }}-${{ github.run_id }}-${{ github.run_attempt }}
           path: Binaries/windows-symbols/
@@ -199,12 +199,12 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v5
         with:
           submodules: 'recursive'
 
       - name: Checkout JUCE
-        uses: actions/checkout@v2
+        uses: actions/checkout@v5
         with:
           repository: benkuper/JUCE
           ref: develop-local
@@ -229,7 +229,7 @@ jobs:
           xcode-version: '26.6.0'
 
       - name: Build
-        uses: sersoft-gmbh/xcodebuild-action@v2.0.1
+        uses: sersoft-gmbh/xcodebuild-action@v4
         with:
           project: Builds/MacOSX_CI/${{ env.ProjectName }}.xcodeproj
           destination: platform=macOS
@@ -237,7 +237,6 @@ jobs:
           action: build
           arch: ${{ matrix.arch }}
           configuration: ${{ matrix.config }}
-          use-xcpretty: false
 
       - name: Bundle Libraries (Silicon Only)
         if: ${{ matrix.arch == 'arm64' }}
@@ -347,12 +346,12 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           submodules: 'recursive'
 
       - name: Checkout JUCE
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: benkuper/JUCE
           ref: develop-local
@@ -689,12 +688,12 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           submodules: 'recursive'
 
       - name: Checkout JUCE
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: benkuper/JUCE
           ref: develop-local
