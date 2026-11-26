@@ -1843,6 +1843,12 @@
     <ClCompile Include="..\..\Source\Module\modules\controller\streamdeck\models\StreamDeckXL.cpp">
       <Filter>Chataigne\Source\Module\modules\controller\streamdeck\models</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\controller\streamdeck\models\StreamDeckPlusXL.cpp">
+      <Filter>Chataigne\Source\Module\modules\controller\streamdeck\models</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Module\modules\controller\streamdeck\models\StreamDeckPedal.cpp">
+      <Filter>Chataigne\Source\Module\modules\controller\streamdeck\models</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Module\modules\controller\streamdeck\commands\StreamDeckCommand.cpp">
       <Filter>Chataigne\Source\Module\modules\controller\streamdeck\commands</Filter>
     </ClCompile>
@@ -5050,6 +5056,12 @@
       <Filter>Chataigne\Source\Module\modules\controller\streamdeck\models</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\controller\streamdeck\models\StreamDeckXL.h">
+      <Filter>Chataigne\Source\Module\modules\controller\streamdeck\models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\controller\streamdeck\models\StreamDeckPlusXL.h">
+      <Filter>Chataigne\Source\Module\modules\controller\streamdeck\models</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Module\modules\controller\streamdeck\models\StreamDeckPedal.h">
       <Filter>Chataigne\Source\Module\modules\controller\streamdeck\models</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Module\modules\controller\streamdeck\commands\StreamDeckCommand.h">

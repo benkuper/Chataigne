@@ -150,6 +150,7 @@
 		0737D4DC75687E6B61669785 /* BaseCommandHandler.h */ /* BaseCommandHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BaseCommandHandler.h; path = ../../Source/Common/Command/BaseCommandHandler.h; sourceTree = SOURCE_ROOT; };
 		07424E4DC32BDC636B956365 /* ModuleCommandTester.cpp */ /* ModuleCommandTester.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ModuleCommandTester.cpp; path = ../../Source/Module/ModuleCommandTester.cpp; sourceTree = SOURCE_ROOT; };
 		074C067EBC69776F87BBCDD0 /* FFTAnalyzerEditor.h */ /* FFTAnalyzerEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FFTAnalyzerEditor.h; path = ../../Source/Module/modules/audio/analysis/ui/FFTAnalyzerEditor.h; sourceTree = SOURCE_ROOT; };
+		07A4507A3274C8FE3BFC2F72 /* StreamDeckPlusXL.cpp */ /* StreamDeckPlusXL.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = StreamDeckPlusXL.cpp; path = ../../Source/Module/modules/controller/streamdeck/models/StreamDeckPlusXL.cpp; sourceTree = SOURCE_ROOT; };
 		07AB011925F95832C5B2D642 /* TCPServerModule.h */ /* TCPServerModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TCPServerModule.h; path = ../../Source/Module/modules/tcp/tcpserver/TCPServerModule.h; sourceTree = SOURCE_ROOT; };
 		0835723566717978DA39C93A /* ConductorCue.cpp */ /* ConductorCue.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ConductorCue.cpp; path = ../../Source/Common/Processor/Conductor/ConductorCue.cpp; sourceTree = SOURCE_ROOT; };
 		09D731B4973F768408B87E52 /* CVValuesEvaluator.h */ /* CVValuesEvaluator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CVValuesEvaluator.h; path = ../../Source/TimeMachine/Sequence/layers/cvvalues/CVValuesEvaluator.h; sourceTree = SOURCE_ROOT; };
@@ -427,6 +428,7 @@
 		5DACFADA47B796E8671A31A1 /* FFTAnalyzer.cpp */ /* FFTAnalyzer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FFTAnalyzer.cpp; path = ../../Source/Module/modules/audio/analysis/FFTAnalyzer.cpp; sourceTree = SOURCE_ROOT; };
 		5DB923BEF56F893D6C04B857 /* ConditionManagerListener.h */ /* ConditionManagerListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ConditionManagerListener.h; path = ../../Source/Common/Processor/Action/Condition/ConditionManagerListener.h; sourceTree = SOURCE_ROOT; };
 		5E64FD363DAEBC97B49C0E98 /* DLight.png */ /* DLight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DLight.png; path = ../../Resources/Modules/DLight.png; sourceTree = SOURCE_ROOT; };
+		5E828F490AC3D8531253E608 /* StreamDeckPedal.cpp */ /* StreamDeckPedal.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = StreamDeckPedal.cpp; path = ../../Source/Module/modules/controller/streamdeck/models/StreamDeckPedal.cpp; sourceTree = SOURCE_ROOT; };
 		5EC377995C54CB6F2FDDE628 /* ButtplugCommand.h */ /* ButtplugCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ButtplugCommand.h; path = ../../Source/Module/modules/buttplug/commands/ButtplugCommand.h; sourceTree = SOURCE_ROOT; };
 		5FA54638369A3C34CEB7FE3C /* default.chalayout */ /* default.chalayout */ = {isa = PBXFileReference; lastKnownFileType = file.chalayout; name = default.chalayout; path = ../../Resources/default.chalayout; sourceTree = SOURCE_ROOT; };
 		5FAFCDEFF94F762D189E98EF /* LoupedeckShapeManager.cpp */ /* LoupedeckShapeManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LoupedeckShapeManager.cpp; path = ../../Source/Module/modules/controller/loupedeck/LoupedeckShapeManager.cpp; sourceTree = SOURCE_ROOT; };
@@ -681,6 +683,7 @@
 		A72725721A6C3EE2BDE3C914 /* VideoNetworkRuntime.h */ /* VideoNetworkRuntime.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VideoNetworkRuntime.h; path = ../../Source/Module/modules/video/VideoNetworkRuntime.h; sourceTree = SOURCE_ROOT; };
 		A73E903AE8660391CF8BAD95 /* ModuleRouterPanelView.h */ /* ModuleRouterPanelView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ModuleRouterPanelView.h; path = ../../Source/Module/Routing/ui/ModuleRouterPanelView.h; sourceTree = SOURCE_ROOT; };
 		A744DB2EF1F3D5C1A1E99373 /* ResolumeFXCommand.cpp */ /* ResolumeFXCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ResolumeFXCommand.cpp; path = ../../Source/Module/modules/osc/resolume/commands/ResolumeFXCommand.cpp; sourceTree = SOURCE_ROOT; };
+		A80892205C02615BD4677EC5 /* StreamDeckPedal.h */ /* StreamDeckPedal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StreamDeckPedal.h; path = ../../Source/Module/modules/controller/streamdeck/models/StreamDeckPedal.h; sourceTree = SOURCE_ROOT; };
 		A827068B7EA45A80070F2DFD /* OSPowerCommand.h */ /* OSPowerCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OSPowerCommand.h; path = ../../Source/Module/modules/system/os/commands/OSPowerCommand.h; sourceTree = SOURCE_ROOT; };
 		A87E90F4FDB303B941D32E3D /* MIDIDevice.h */ /* MIDIDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MIDIDevice.h; path = ../../Source/Common/MIDI/MIDIDevice.h; sourceTree = SOURCE_ROOT; };
 		A89E9815C9ABE0721FF8CB75 /* MainComponentCommands.cpp */ /* MainComponentCommands.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MainComponentCommands.cpp; path = ../../Source/MainComponentCommands.cpp; sourceTree = SOURCE_ROOT; };
@@ -762,6 +765,7 @@
 		BDAB402CC923EFE36C5149A8 /* PJLinkModuleUI.h */ /* PJLinkModuleUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PJLinkModuleUI.h; path = ../../Source/Module/modules/tcp/pjlink/ui/PJLinkModuleUI.h; sourceTree = SOURCE_ROOT; };
 		BDB99CA1C253489009BCD225 /* Morpher.h */ /* Morpher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Morpher.h; path = ../../Source/CustomVariables/Preset/Morpher/Morpher.h; sourceTree = SOURCE_ROOT; };
 		BDD749FA254591C8E052CB10 /* MergeFilter.cpp */ /* MergeFilter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MergeFilter.cpp; path = ../../Source/Common/Processor/Mapping/Filter/filters/conversion/MergeFilter.cpp; sourceTree = SOURCE_ROOT; };
+		BDDD91FA916EAD488BCE4808 /* StreamDeckPlusXL.h */ /* StreamDeckPlusXL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StreamDeckPlusXL.h; path = ../../Source/Module/modules/controller/streamdeck/models/StreamDeckPlusXL.h; sourceTree = SOURCE_ROOT; };
 		BE4924D424A41C0A3275F3C4 /* ModuleUI.cpp */ /* ModuleUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ModuleUI.cpp; path = ../../Source/Module/ui/ModuleUI.cpp; sourceTree = SOURCE_ROOT; };
 		BEB54714E4B90120D22D47D6 /* BaseCommand.h */ /* BaseCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BaseCommand.h; path = ../../Source/Common/Command/BaseCommand.h; sourceTree = SOURCE_ROOT; };
 		BEB5FC676103F81A003208E8 /* WakeOnLanCommand.cpp */ /* WakeOnLanCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = WakeOnLanCommand.cpp; path = ../../Source/Module/modules/system/os/commands/WakeOnLanCommand.cpp; sourceTree = SOURCE_ROOT; };
@@ -1855,6 +1859,10 @@
 				C1D2BE99C657D67B5FB22423,
 				16BB5496F8FB2C6FEAC1BBA9,
 				3D416A20B2A08146BAEDB7DD,
+				07A4507A3274C8FE3BFC2F72,
+				BDDD91FA916EAD488BCE4808,
+				5E828F490AC3D8531253E608,
+				A80892205C02615BD4677EC5,
 			);
 			name = models;
 			sourceTree = "<group>";
@@ -3967,7 +3975,7 @@
 					"USE_ABLETONLINK=1",
 					"LINK_PLATFORM_MACOSX=1",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.10.5b14",
+					"JUCE_APP_VERSION=1.10.5",
 					"JUCE_APP_VERSION_HEX=0x10a05",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -4052,7 +4060,7 @@
 					"USE_ABLETONLINK=1",
 					"LINK_PLATFORM_MACOSX=1",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.10.5b14",
+					"JUCE_APP_VERSION=1.10.5",
 					"JUCE_APP_VERSION_HEX=0x10a05",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
