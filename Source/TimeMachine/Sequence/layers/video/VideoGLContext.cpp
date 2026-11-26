@@ -142,6 +142,7 @@ void VideoGLContext::setup(juce::Component* topLevelComponent)
 	context.setContinuousRepainting(true);
 	context.setComponentPaintingEnabled(false);
 	context.attachTo(offScreenRenderComponent);
+	startTimerHz(60);
 }
 
 //==============================================================================
@@ -150,6 +151,8 @@ void VideoGLContext::setup(juce::Component* topLevelComponent)
 void VideoGLContext::detach()
 {
 	jassert(juce::MessageManager::getInstance()->isThisTheMessageThread());
+	stopTimer();
+	CompositionRenderer::clearActiveCues();
 
 	if (parent != nullptr)
 	{
@@ -380,8 +383,7 @@ void VideoGLContext::newOpenGLContextCreated()
 	glDisable(GL_DEBUG_OUTPUT);
 #endif
 
-	CompositionRenderer::renderLayers();
-	CompositionRenderer::renderSurfaces();
+	CompositionRenderer::renderFrame();
 
 	checkComponents(false, false);
 }
@@ -396,10 +398,14 @@ void VideoGLContext::renderOpenGL()
 	if (t - timeAtRender < 16.0) return;
 	timeAtRender = t;
 
-	CompositionRenderer::renderLayers();
-	CompositionRenderer::renderSurfaces();
+	CompositionRenderer::renderFrame();
 
 	checkComponents(false, true);
+}
+
+void VideoGLContext::timerCallback()
+{
+	CompositionRenderer::updateActiveCues();
 }
 
 void VideoGLContext::openGLContextClosing()

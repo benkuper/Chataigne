@@ -65,7 +65,8 @@ private:
 
 class VideoGLContext :
 	public juce::ComponentListener,
-	public juce::OpenGLRenderer
+	public juce::OpenGLRenderer,
+	private juce::Timer
 {
 public:
 	juce_DeclareSingleton(VideoGLContext, true);
@@ -111,6 +112,8 @@ public:
 	void openGLContextClosing() override;
 
 private:
+	void timerCallback() override;
+
 	struct Client
 	{
 		enum class State { running, suspended };

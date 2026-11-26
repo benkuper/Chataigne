@@ -4,9 +4,8 @@
 	CompositionRenderer.cpp
 	GL compositor for the video signal. See CompositionRenderer.h.
 
-	All compositing runs on the holder GL thread (renderLayers for layers,
-	renderSurfaces for the display surfaces) ; the only CPU involvement is the
-	layer transform math and the final image read-back that surfaces paint.
+	The message thread publishes active cues. The holder GL thread renders them
+	into layers and composites those layers for the display surfaces.
 
   ==============================================================================
 */
@@ -208,13 +207,15 @@ namespace
 	struct LayerFBO
 	{
 		OpenGLFrameBuffer fbo;
-		VideoLayerClip* thumbnailClip = nullptr;
+		const VideoLayerClip* thumbnailClip = nullptr;
 		double lastThumbnailRequestTime = -1.0;
 		String lastLoadedPath;
 	};
 
 	std::map<VideoPlayerEngine*, std::unique_ptr<LayerFBO>> layerFBOs;
 	CriticalSection layerFBOLock;
+	Array<CompositionRenderer::Cue> activeCues;
+	CriticalSection activeCuesLock;
 
 	void drawFullscreenQuad()
 	{
@@ -280,49 +281,85 @@ namespace
 // CompositionRenderer
 // ==============================================================================
 
-juce::Array<CompositionRenderer::Cue> CompositionRenderer::gatherActiveCues(Sequence* sequenceFilter, VideoLayer* layerFilter)
+void CompositionRenderer::updateActiveCues()
 {
-	juce::Array<Cue> result;
+	jassert(MessageManager::getInstance()->isThisTheMessageThread());
+	Array<Cue> cues;
 
-	if (ChataigneSequenceManager::getInstanceWithoutCreating() == nullptr) return result;
-	auto* sm = ChataigneSequenceManager::getInstance();
-
-	for (auto& seq : sm->items) // top-most sequence first
+	const auto addCue = [&cues](Sequence* sequence, VideoLayer& layer,
+		VideoLayerClip* clip, VideoPlayerEngine* engine, float layerAlpha, uint64_t outputId)
 	{
-		if (seq == nullptr || seq->layerManager == nullptr) continue;
-		if (!seq->enabled->boolValue()) continue;
-		if (sequenceFilter != nullptr && seq != sequenceFilter) continue;
+		if (clip == nullptr || engine == nullptr) return;
+		const auto filePath = engine->getFilePath();
+		if (filePath.isEmpty()) return;
 
-		for (auto& layer : seq->layerManager->items) // top-most track first
+		Cue cue;
+		cue.sequence = sequence;
+		cue.layer = &layer;
+		cue.clip = clip;
+		cue.engine = engine;
+		cue.filePath = filePath;
+		cue.opacity = clip->getRenderOpacity() * layerAlpha * layer.getClipFadeFactor(clip);
+		cue.scaleX = clip->getRenderScaleX();
+		cue.scaleY = clip->getRenderScaleY();
+		cue.xPercent = clip->getRenderXPercent();
+		cue.yPercent = clip->getRenderYPercent();
+		cue.blendMode = (int) clip->getBlendMode();
+		cue.outputId = outputId;
+
+		const double sourceTime = engine->getPosition();
+		if (engine->isFileLoaded() && filePath == clip->filePath->stringValue()
+			&& sourceTime >= 0.0 && clip->needsThumbnail(sourceTime))
 		{
-			if (layer == nullptr) continue;
-			if (!layer->enabled->boolValue()) continue;
-
-			if (VideoLayer* vl = dynamic_cast<VideoLayer*>(layer))
+			cue.thumbnailTime = sourceTime;
+			cue.thumbnailSpacing = jmax(0.35, clip->clipDuration / 36.0);
+			const WeakReference<VideoLayerClip> clipRef(clip);
+			cue.cacheThumbnail = [clipRef, filePath, sourceTime](const Image& image)
 			{
-				if (layerFilter != nullptr && vl != layerFilter) continue;
-				// The list is top-most first. During an overlap the incoming clip
-				// sits above the outgoing clip in the same track.
-				if (vl->overlapPlayer != nullptr && vl->overlapClip != nullptr
-					&& !vl->overlapClip.wasObjectDeleted()
-					&& vl->overlapPlayer->getFilePath().isNotEmpty())
-					result.add({ vl, vl->overlapClip.get(), vl->overlapPlayer.get(), vl->getClipFadeFactor(vl->overlapClip.get()) });
-				if (vl->moviePlayer != nullptr && vl->currentClip != nullptr
-					&& !vl->currentClip.wasObjectDeleted()
-					&& vl->moviePlayer->getFilePath().isNotEmpty())
-					result.add({ vl, vl->currentClip.get(), vl->moviePlayer.get(), vl->getClipFadeFactor(vl->currentClip.get()) });
+				if (auto* liveClip = clipRef.get(); liveClip != nullptr && liveClip->filePath->stringValue() == filePath)
+					liveClip->cacheThumbnail(sourceTime, image);
+			};
+		}
+		cues.add(std::move(cue));
+	};
+
+	if (auto* sm = ChataigneSequenceManager::getInstanceWithoutCreating())
+	{
+		for (auto* seq : sm->items) // top-most sequence first
+		{
+			if (seq == nullptr || seq->layerManager == nullptr || !seq->enabled->boolValue()) continue;
+			for (auto* layer : seq->layerManager->items) // top-most track first
+			{
+				auto* video = dynamic_cast<VideoLayer*>(layer);
+				if (video == nullptr || !video->enabled->boolValue()) continue;
+				auto* chataigneLayer = dynamic_cast<ChataigneVideoLayer*>(video);
+				const float layerAlpha = chataigneLayer != nullptr ? chataigneLayer->alpha->floatValue() : 1.0f;
+				const uint64_t outputId = chataigneLayer != nullptr ? chataigneLayer->ndiRouteId.load(std::memory_order_relaxed) : 0;
+				// During an overlap the incoming clip sits above the outgoing clip.
+				addCue(seq, *video, video->overlapClip.get(), video->overlapPlayer.get(), layerAlpha, outputId);
+				addCue(seq, *video, video->currentClip.get(), video->moviePlayer.get(), layerAlpha, outputId);
 			}
 		}
 	}
 
-	return result;
+	const ScopedLock lock(activeCuesLock);
+	activeCues.swapWith(cues);
 }
 
-void CompositionRenderer::renderLayers()
+void CompositionRenderer::clearActiveCues()
 {
-	if (VideoGLContext::getInstanceWithoutCreating() == nullptr) return;
+	const ScopedLock lock(activeCuesLock);
+	activeCues.clear();
+}
 
-	juce::Array<Cue> cues = gatherActiveCues();
+void CompositionRenderer::removePlayer(VideoPlayerEngine* player)
+{
+	const ScopedLock lock(activeCuesLock);
+	activeCues.removeIf([player](const Cue& cue) { return cue.engine == player; });
+}
+
+static void renderLayers(const Array<CompositionRenderer::Cue>& cues)
+{
 
 	// Report transitions only : the holder repaints continuously.
 	{
@@ -360,7 +397,7 @@ void CompositionRenderer::renderLayers()
 
 		// First time the holder context exists : create the engine's GL renderer.
 		// MPVPlayer::setupGL internally triggers the pending file load.
-		if (!engine->isGLInit() && engine->getFilePath().isNotEmpty())
+		if (!engine->isGLInit())
 			engine->setupGL();
 
 		if (!engine->isGLInit() || !engine->isFileLoaded()) continue;
@@ -375,9 +412,9 @@ void CompositionRenderer::renderLayers()
 		if (entry == nullptr) entry.reset(new LayerFBO());
 
 		if (entry->fbo.getTextureID() == 0 || entry->fbo.getWidth() != w || entry->fbo.getHeight() != h
-			|| entry->lastLoadedPath != engine->getFilePath())
+			|| entry->lastLoadedPath != c.filePath)
 		{
-			entry->lastLoadedPath = engine->getFilePath();
+			entry->lastLoadedPath = c.filePath;
 			entry->thumbnailClip = nullptr;
 			entry->lastThumbnailRequestTime = -1.0;
 			entry->fbo.release();
@@ -388,18 +425,15 @@ void CompositionRenderer::renderLayers()
 
 		// The VLC backend fed clip thumbnails from decoded frames. Capture only
 		// sparse mpv frames so timeline previews remain available after the merge.
-		if (c.clip != nullptr)
+		if (c.cacheThumbnail)
 		{
-			const double sourceTime = engine->getPosition();
-			const double spacing = juce::jmax(0.35, c.clip->clipDuration > 0.0 ? c.clip->clipDuration / 36.0 : 0.35);
 			if (entry->thumbnailClip != c.clip)
 			{
 				entry->thumbnailClip = c.clip;
 				entry->lastThumbnailRequestTime = -1.0;
 			}
-			if (sourceTime >= 0.0 && c.clip->needsThumbnail(sourceTime)
-				&& (entry->lastThumbnailRequestTime < 0.0
-					|| std::abs(sourceTime - entry->lastThumbnailRequestTime) >= spacing))
+			if (entry->lastThumbnailRequestTime < 0.0
+				|| std::abs(c.thumbnailTime - entry->lastThumbnailRequestTime) >= c.thumbnailSpacing)
 			{
 				juce::HeapBlock<juce::PixelARGB> pixels((size_t) w * (size_t) h);
 				if (entry->fbo.readPixels(pixels.getData(), { 0, 0, w, h }))
@@ -409,12 +443,11 @@ void CompositionRenderer::renderLayers()
 					for (int y = 0; y < h; ++y)
 						std::memcpy(data.getLinePointer(y), pixels.getData() + (size_t) (h - 1 - y) * (size_t) w,
 							(size_t) w * sizeof(juce::PixelARGB));
-					juce::WeakReference<VideoLayerClip> clip(c.clip);
-					juce::MessageManager::callAsync([clip, sourceTime, image]()
+					juce::MessageManager::callAsync([cacheThumbnail = c.cacheThumbnail, image]()
 						{
-						if (auto* liveClip = clip.get()) liveClip->cacheThumbnail(sourceTime, image);
+						cacheThumbnail(image);
 						});
-					entry->lastThumbnailRequestTime = sourceTime;
+					entry->lastThumbnailRequestTime = c.thumbnailTime;
 				}
 			}
 		}
@@ -734,12 +767,20 @@ namespace
 	juce::CriticalSection surfacesLock;
 }
 
-void CompositionRenderer::renderSurfaces()
+void CompositionRenderer::renderFrame()
 {
+	Array<Cue> cues;
+	{
+		const ScopedLock lock(activeCuesLock);
+		cues = activeCues;
+	}
+
+	renderLayers(cues);
+
 	const juce::ScopedLock l(surfacesLock);
 	for (int i = 0; i < shownSurfaces.size(); ++i)
 		if (CompositionSurface* s = shownSurfaces[i])
-			s->renderSurfaceGL();
+			s->renderSurfaceGL(cues);
 }
 
 CompositionRenderer::CompositionSurface::CompositionSurface(VideoGLContext* holder) :
@@ -924,7 +965,7 @@ void CompositionRenderer::CompositionSurface::timerCallback()
 	repaint();
 }
 
-void CompositionRenderer::CompositionSurface::renderSurfaceGL()
+void CompositionRenderer::CompositionSurface::renderSurfaceGL(const Array<Cue>& cues)
 {
 	const int w = getWidth();
 	const int h = getHeight();
@@ -970,24 +1011,16 @@ void CompositionRenderer::CompositionSurface::renderSurfaceGL()
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	// 2) Composite the layers, bottom-most first.
-	auto cues = gatherActiveCues(sequenceFilter, layerFilter);
-
 	OpenGLFrameBuffer* src = &pingFB;
 	OpenGLFrameBuffer* dst = &pongFB;
 
 	for (int i = cues.size() - 1; i >= 0; --i)
 	{
 		const Cue& cue = cues[i];
-		if (cue.layer == nullptr || cue.clip == nullptr) continue;
-		auto* chataigneLayer = dynamic_cast<ChataigneVideoLayer*>(cue.layer);
-		// An NDI surface composites only the layers assigned to this output.
-		// Preview and Spout/Syphon surfaces retain outputFilter == 0.
-		if (outputFilter != 0)
-		{
-			if (chataigneLayer == nullptr ||
-				chataigneLayer->ndiRouteId.load(std::memory_order_relaxed) != outputFilter)
-				continue;
-		}
+		if ((sequenceFilter != nullptr && cue.sequence != sequenceFilter)
+			|| (layerFilter != nullptr && cue.layer != layerFilter)
+			|| (outputFilter != 0 && cue.outputId != outputFilter))
+			continue;
 
 		VideoPlayerEngine* engine = cue.engine;
 		if (engine == nullptr || !engine->isGLInit() || !engine->isFileLoaded()) continue;
@@ -1004,16 +1037,14 @@ void CompositionRenderer::CompositionSurface::renderSurfaceGL()
 			layerTex = it->second->fbo.getTextureID();
 		}
 		if (layerTex == 0) continue;
-		VideoLayerClip* clip = cue.clip;
-		const float layerAlpha = chataigneLayer != nullptr ? chataigneLayer->alpha->floatValue() : 1.0f;
 
 		// Transform, exactly like the CPU version : fit-to-screen, then clip scale
 		// and X/Y offset in percent of the surface.
 		const float scale = jmin((float) w / (float) vw, (float) h / (float) vh);
-		float dw = vw * scale * clip->getRenderScaleX();
-		float dh = vh * scale * clip->getRenderScaleY();
-		float dx = (w - dw) * 0.5f + w * (clip->getRenderXPercent() / 100.0f);
-		float dy = (h - dh) * 0.5f + h * (clip->getRenderYPercent() / 100.0f);
+		float dw = vw * scale * cue.scaleX;
+		float dh = vh * scale * cue.scaleY;
+		float dx = (w - dw) * 0.5f + w * (cue.xPercent / 100.0f);
+		float dy = (h - dh) * 0.5f + h * (cue.yPercent / 100.0f);
 
 		const float u0 = dx / w, v0 = dy / h;
 		const float u1 = (dx + dw) / w, v1 = (dy + dh) / h;
@@ -1021,8 +1052,7 @@ void CompositionRenderer::CompositionSurface::renderSurfaceGL()
 		bindTarget(*dst, w, h);
 		renderPass(layerTex, src->getTextureID(),
 			u0, v0, u1, v1,
-			clip->getRenderOpacity() * layerAlpha * cue.fadeFactor,
-			(int) clip->getBlendMode(),
+			cue.opacity, cue.blendMode,
 			1, // layer FBOs : image top at v=1
 			0, 0, FeatherVec{ 0, 0, 0, 0 });
 

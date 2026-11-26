@@ -4,17 +4,10 @@
 	CompositionRenderer.h
 	GL compositor for the video signal.
 
-	Everything compositing-related runs on the holder's single GL thread (see
-	VideoGLContext) :
-
-	- renderLayers() runs on the holder GL thread (once per holder frame). For
-	  every active VideoLayer it makes sure the engine is GL-ready and renders
-	  it into a per-layer framebuffer (layers are GPU-resident : no CPU images).
-	- renderSurfaces() runs right after, also on the holder GL thread. For every
-	  registered CompositionSurface it composites the per-layer textures into a
-	  ping-pong pair of framebuffers using the clip's transform / opacity /
-	  blend mode, plus optional test card and edge feather, then reads the result
-	  back into a CPU image the surface paints.
+	The message thread snapshots the active timeline cues. The holder's GL thread
+	uses that snapshot to render each video into a framebuffer and composite the
+	textures for each registered CompositionSurface. It reads the result back into
+	an image for the surface to paint.
 
 	Surfaces are plain JUCE components (no native OpenGL child windows) : that
 	keeps them glitch-free inside organicui panels.
@@ -36,10 +29,22 @@ namespace CompositionRenderer
 {
 	struct Cue
 	{
-		VideoLayer* layer = nullptr;
-		VideoLayerClip* clip = nullptr;
+		// Used as identities by the GL thread. Timeline objects stay on the message thread.
+		const Sequence* sequence = nullptr;
+		const VideoLayer* layer = nullptr;
+		const VideoLayerClip* clip = nullptr;
 		VideoPlayerEngine* engine = nullptr;
-		float fadeFactor = 1.0f;
+		juce::String filePath;
+		float opacity = 1.0f;
+		float scaleX = 1.0f;
+		float scaleY = 1.0f;
+		float xPercent = 0.0f;
+		float yPercent = 0.0f;
+		int blendMode = 0;
+		uint64_t outputId = 0;
+		double thumbnailTime = -1.0;
+		double thumbnailSpacing = 0.35;
+		std::function<void(const juce::Image&)> cacheThumbnail;
 	};
 
 	struct SceneSettings
@@ -59,18 +64,14 @@ namespace CompositionRenderer
 		float featherBottom = 0;
 	};
 
-	// Collects the enabled video layers that are playing/showing a clip, ordered
-	// from the top-most sequence/track to the bottom-most one. Optionally filtered
-	// to one sequence / one layer (used by the preview panel).
-	juce::Array<Cue> gatherActiveCues(Sequence* sequenceFilter = nullptr, VideoLayer* layerFilter = nullptr);
+	// Message thread. Publish the timeline state and remove retiring players
+	// before their deferred OpenGL cleanup.
+	void updateActiveCues();
+	void clearActiveCues();
+	void removePlayer(VideoPlayerEngine* player);
 
-	// Holder GL thread : ensures every active engine is GL-ready and renders it
-	// into its per-layer framebuffer. Called every holder frame.
-	void renderLayers();
-
-	// Holder GL thread : composites and publishes every registered surface.
-	// Called every holder frame, right after renderLayers().
-	void renderSurfaces();
+	// Holder GL thread. Render the layers and all output surfaces from one snapshot.
+	void renderFrame();
 
 	// A display surface that hosts the composition : a plain JUCE component.
 	// It has no OpenGL context of its own — it is composited on the holder GL
@@ -93,13 +94,13 @@ namespace CompositionRenderer
 		// 0 = full composition; other values are stable NDIOutput runtime IDs.
 		uint64_t outputFilter = 0;
 
-		// Message thread : starts/stops being composited by renderSurfaces().
+		// Message thread. Starts or stops inclusion in the composition.
 		void showGL();
 		void hideGL();
 
 		// Holder GL thread only : composites this surface and reads the result
 		// back into latestImage (painted on the message thread).
-		void renderSurfaceGL();
+		void renderSurfaceGL(const juce::Array<Cue>& cues);
 		juce::Image getLatestImage();
 
 		void paint(juce::Graphics& g) override;

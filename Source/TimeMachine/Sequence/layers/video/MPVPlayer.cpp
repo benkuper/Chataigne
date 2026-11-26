@@ -21,6 +21,7 @@
 #include <unistd.h>
 #endif
 #include "VideoGLContext.h"
+#include "ui/CompositionRenderer.h"
 
 #include <map>
 #include <vector>
@@ -295,7 +296,11 @@ void MPVPlayer::stopGLUpdates()
 void MPVPlayer::destroyAfterShutdown(std::unique_ptr<MPVPlayer> player)
 {
 	if (player != nullptr)
+	{
+		// The cleaner's blocking GL task lets the current frame finish before deletion.
+		CompositionRenderer::removePlayer(player.get());
 		MPVDeferredCleaner::getInstance().add(std::move(player));
+	}
 }
 
 void MPVPlayer::drainDeferredPlayers()
