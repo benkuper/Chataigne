@@ -16,9 +16,15 @@ StreamDeckModule::StreamDeckModule(const String& name) :
 	device(nullptr),
 	numRows(0),
 	numColumns(0),
+	numDials(0),
+	textSize(nullptr),
 	colorsCC("Colors"),
 	imagesCC("Images"),
-	textsCC("Texts")
+	textsCC("Texts"),
+	dialSettingsCC("Dials"),
+	dialsCC("Dials"),
+	stripCC("Touch Strip"),
+	stripNeedsRedraw(false)
 #if USE_FAKE_DEVICE
 	, fakeDevice(nullptr, "fake")
 #endif
@@ -41,8 +47,27 @@ StreamDeckModule::StreamDeckModule(const String& name) :
 	textsCC.editorIsCollapsed = true;
 
 
+	targetDevice = moduleParams.addEnumParameter("Target Device", "Which connected Stream Deck this module controls. Use one module per device to drive several at once.");
+	targetDevice->isSavable = false; // saved as targetSerial instead, see getJSONData
+
 	deviceType = moduleParams.addEnumParameter("Device type", "Type of the device");
-	deviceType->addOption("StreamDeck (15 buttons)", STANDARD)->addOption("StreamDeck XL (32 buttons)", XL)->addOption("StreamDeck Mini (6 buttons)", MINI);
+	deviceType->addOption("StreamDeck (15 buttons)", STANDARD)->addOption("StreamDeck XL (32 buttons)", XL)->addOption("StreamDeck Mini (6 buttons)", MINI)->addOption("StreamDeck + XL (36 buttons, 6 dials)", PLUS_XL)->addOption("StreamDeck Pedal (3 buttons)", PEDAL);
+
+	dialSettingsCC.saveAndLoadRecursiveData = true;
+	moduleParams.addChildControllableContainer(&dialSettingsCC);
+	dialSensitivity = dialSettingsCC.addFloatParameter("Sensitivity", "How much each dial click changes the dial's Value", .01f, 0, 1);
+	dialFineMultiplier = dialSettingsCC.addFloatParameter("Fine Adjust Multiplier", "Multiplier applied to Sensitivity while the dial is held down and turned (below 1 is finer)", .2f, 0, 5);
+	dialRangeMin = dialSettingsCC.addFloatParameter("Range Min", "Lower bound of each dial's Value", 0, -100000, 100000);
+	dialRangeMax = dialSettingsCC.addFloatParameter("Range Max", "Upper bound of each dial's Value", 1, -100000, 100000);
+	dialWrapAround = dialSettingsCC.addBoolParameter("Wrap Around", "If checked, a dial's Value wraps around the range instead of stopping at the bounds", false);
+
+	valuesCC.addChildControllableContainer(&dialsCC);
+	valuesCC.addChildControllableContainer(&stripCC);
+	stripPosition = stripCC.addFloatParameter("Position", "Where the strip was last touched, from 0 (left) to 1 (right)", 0, 0, 1);
+	stripTap = stripCC.addTrigger("Tap", "Fires when the strip is tapped. Position is set first.");
+	stripLongPress = stripCC.addTrigger("Long Press", "Fires when the strip is held. Position is set first.");
+	stripSwipeLeft = stripCC.addTrigger("Swipe Left", "Fires when the strip is swiped right to left");
+	stripSwipeRight = stripCC.addTrigger("Swipe Right", "Fires when the strip is swiped left to right");
 
 	brightness = moduleParams.addFloatParameter("Brightness", "Sets the brigthness of the deck's backlight", .75f, 0, 1);
 	textSize = moduleParams.addIntParameter("Text size", "Sets the size of the text on the buttons", 10, 1, 50);
@@ -64,7 +89,8 @@ StreamDeckModule::StreamDeckModule(const String& name) :
 #if USE_FAKE_DEVICE
 	setDevice(&fakeDevice);
 #else
-	setDevice(StreamDeckManager::getInstance()->devices.size() > 0 ? StreamDeckManager::getInstance()->devices[0] : nullptr);
+	// When a session loads, wait for the saved target instead of briefly grabbing the first deck
+	if (!Engine::mainEngine->isLoadingFile) updateDeviceList();
 #endif
 
 	StreamDeckManager::getInstance()->addStreamDeckManagerListener(this);
@@ -73,6 +99,7 @@ StreamDeckModule::StreamDeckModule(const String& name) :
 
 StreamDeckModule::~StreamDeckModule()
 {
+	stopTimer();
 	if (StreamDeckManager::getInstanceWithoutCreating() != nullptr) StreamDeckManager::getInstance()->removeStreamDeckManagerListener(this);
 	setDevice(nullptr);
 }
@@ -84,6 +111,11 @@ void StreamDeckModule::rebuildValues()
 	//GenericScopedLock lock(rebuildingLock);
 
 	DeviceType t = deviceType->getValueDataAsEnum<DeviceType>();
+
+	// Native button icon size per model, used to hint the Image parameters below.
+	// Images are stretched to fit, so anything works, but a square image at this
+	// size avoids distortion and upscaling blur.
+	const int iconSize = t == PLUS_XL ? 112 : (t == XL ? 96 : 72);
 
 	switch (t)
 	{
@@ -98,6 +130,14 @@ void StreamDeckModule::rebuildValues()
 	case XL:
 		numRows = 4;
 		numColumns = 8;
+		break;
+	case PLUS_XL:
+		numRows = 4;
+		numColumns = 9;
+		break;
+	case PEDAL:
+		numRows = 1;
+		numColumns = 3;
 		break;
 	}
 
@@ -169,11 +209,79 @@ void StreamDeckModule::rebuildValues()
 			String btId = String(btStates->size() + 1);
 			btStates->add(btCC->addBoolParameter("Button " + btId, "Is row " + String(r + 1) + ", button " + btId + " pressed ?", false));
 			cColors->add(cCC->addColorParameter("Color " + btId, "If not image, color for row " + String(r + 1) + ", button " + btId, Colours::black));
-			cImages->add(iCC->addFileParameter("Image " + btId, "Image for row " + String(r + 1) + ", button" + btId));
+			cImages->add(iCC->addFileParameter("Image " + btId, "Image for row " + String(r + 1) + ", button" + btId + ". Square, " + String(iconSize) + "x" + String(iconSize) + "px recommended for this model (it will be stretched to fit otherwise)."));
 			cTexts->add(tCC->addStringParameter("Text " + btId, "Text for row " + String(r + 1) + ", button" + btId, ""));
 		}
 	}
 
+	rebuildDials();
+
+	// The + XL keys are 112 px, so 10 px text is hard to read. Only the default changes:
+	// a size the user set (or loaded from a file) is kept. This redraws every key,
+	// so it must run after the button parameters above exist.
+	if (textSize != nullptr) textSize->setDefaultValue(t == PLUS_XL ? 20 : 10, !textSize->isOverriden);
+}
+
+void StreamDeckModule::rebuildDials()
+{
+	numDials = deviceType->getValueDataAsEnum<DeviceType>() == PLUS_XL ? 6 : 0;
+
+	while (dialValues.size() > numDials)
+	{
+		int i = dialValues.size() - 1;
+		dialsCC.removeControllable(dialPressed[i]);
+		dialsCC.removeControllable(dialValues[i]);
+		dialsCC.removeControllable(dialIncrements[i]);
+		dialsCC.removeControllable(dialDecrements[i]);
+		dialSettingsCC.removeControllable(dialLabels[i]);
+		dialSettingsCC.removeControllable(dialColors[i]);
+		dialPressed.remove(i);
+		dialValues.remove(i);
+		dialIncrements.remove(i);
+		dialDecrements.remove(i);
+		dialLabels.remove(i);
+		dialColors.remove(i);
+	}
+
+	while (dialValues.size() < numDials)
+	{
+		String id = String(dialValues.size() + 1);
+		dialPressed.add(dialsCC.addBoolParameter("Dial " + id + " Pressed", "Is dial " + id + " pressed ?", false));
+		FloatParameter* v = dialsCC.addFloatParameter("Dial " + id + " Value", "Value of dial " + id + ", changed by turning it", 0);
+		v->setRange(dialRangeMin->floatValue(), dialRangeMax->floatValue());
+		dialValues.add(v);
+		dialIncrements.add(dialsCC.addTrigger("Dial " + id + " Increment", "Fires once per click when dial " + id + " is turned clockwise"));
+		dialDecrements.add(dialsCC.addTrigger("Dial " + id + " Decrement", "Fires once per click when dial " + id + " is turned counter-clockwise"));
+		dialLabels.add(dialSettingsCC.addStringParameter("Dial " + id + " Label", "Label shown on the touch strip above dial " + id, "Dial " + id));
+		dialColors.add(dialSettingsCC.addColorParameter("Dial " + id + " Color", "Background of the box above dial " + id, Colours::darkgrey));
+	}
+
+	bool hide = numDials == 0;
+	if (dialSettingsCC.hideInEditor != hide)
+	{
+		dialSettingsCC.hideInEditor = hide;
+		dialsCC.hideInEditor = hide;
+		stripCC.hideInEditor = hide;
+		moduleParams.queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, &moduleParams));
+		valuesCC.queuedNotifier.addMessage(new ContainerAsyncEvent(ContainerAsyncEvent::ControllableContainerNeedsRebuild, &valuesCC));
+	}
+
+	stripNeedsRedraw = true;
+}
+
+void StreamDeckModule::timerCallback()
+{
+	if (!stripNeedsRedraw.exchange(false)) return;
+	if (device == nullptr || device->numEncoders == 0 || !enabled->boolValue()) return;
+
+	Array<StreamDeck::EncoderDisplay> displays;
+	for (int i = 0; i < jmin(numDials, device->numEncoders); ++i)
+	{
+		displays.add({ dialLabels[i]->stringValue(), dialColors[i]->getColor(), String(dialValues[i]->floatValue(), 2), dialValues[i]->getNormalizedValue() });
+	}
+
+	device->setEncoderDisplays(displays);
+	outActivityTrigger->trigger();
 }
 
 void StreamDeckModule::setDevice(StreamDeck* newDevice)
@@ -205,18 +313,36 @@ void StreamDeckModule::setDevice(StreamDeck* newDevice)
 		case StreamDeck::XL:
 			deviceType->setValueWithData(XL);
 			break;
+
+		case StreamDeck::PLUS_XL:
+			deviceType->setValueWithData(PLUS_XL);
+			break;
+
+		case StreamDeck::PEDAL:
+			deviceType->setValueWithData(PEDAL);
+			break;
 		}
 
-		//for (int i = 0; i < numRows; ++i)
-		//{
-		//	for (int j = 0; j < numColumns; j++)
-		//	{
-		//		updateButton(i, j);
-		//	}
-		//}
+		// Strip redraws are coalesced so a fast dial spin doesn't send one image per click
+		if (device->numEncoders > 0)
+		{
+			stripNeedsRedraw = true;
+			startTimerHz(30);
+		}
+
+		// Paint the new device, e.g. one picked in Target Device or attached after the session loaded
+		for (int i = 0; i < numRows; ++i)
+		{
+			for (int j = 0; j < numColumns; j++)
+			{
+				updateButton(i, j);
+			}
+		}
 	}
 
 	//rebuildValues();
+
+	if (device == nullptr || device->numEncoders == 0) stopTimer();
 
 	isConnected->setValue(device != nullptr);
 
@@ -227,7 +353,8 @@ void StreamDeckModule::updateButton(int row, int column)
 	if (device == nullptr) return;
 	//GenericScopedLock lock(rebuildingLock);
 
-	if (row < 0 || row >= numRows || column < 0 || column >= numColumns) return;
+	// numRows/numColumns change before the parameter arrays during a rebuild, so check the arrays
+	if (row < 0 || row >= images.size() || column < 0 || column >= images[row]->size()) return;
 
 	File f = (*images[row])[column]->getFile();
 
@@ -336,19 +463,95 @@ void StreamDeckModule::streamDeckButtonReleased(int row, int column)
 	if (highlightPressedButtons) updateButton(row, column);
 }
 
+void StreamDeckModule::streamDeckEncoderRotated(int index, int delta)
+{
+	if (logIncomingData->boolValue()) NLOG(niceName, "Dial " << String(index + 1) << " turned " << String(delta));
+	if (index < 0 || index >= dialValues.size()) return;
+
+	inActivityTrigger->trigger();
+
+	Trigger* t = delta > 0 ? dialIncrements[index] : dialDecrements[index];
+	for (int i = 0; i < std::abs(delta); ++i) t->trigger();
+
+	float sensitivity = dialSensitivity->floatValue() * (dialPressed[index]->boolValue() ? dialFineMultiplier->floatValue() : 1.0f);
+	float newValue = dialValues[index]->floatValue() + delta * sensitivity;
+
+	float rangeMin = dialRangeMin->floatValue();
+	float rangeMax = dialRangeMax->floatValue();
+	if (dialWrapAround->boolValue() && rangeMax > rangeMin)
+	{
+		float range = rangeMax - rangeMin;
+		while (newValue < rangeMin) newValue += range;
+		while (newValue >= rangeMax) newValue -= range;
+	}
+
+	dialValues[index]->setValue(newValue);
+}
+
+void StreamDeckModule::streamDeckEncoderPressed(int index)
+{
+	if (logIncomingData->boolValue()) NLOG(niceName, "Dial " << String(index + 1) << " pressed");
+	if (index < 0 || index >= dialPressed.size()) return;
+	inActivityTrigger->trigger();
+	dialPressed[index]->setValue(true);
+}
+
+void StreamDeckModule::streamDeckEncoderReleased(int index)
+{
+	if (logIncomingData->boolValue()) NLOG(niceName, "Dial " << String(index + 1) << " released");
+	if (index < 0 || index >= dialPressed.size()) return;
+	inActivityTrigger->trigger();
+	dialPressed[index]->setValue(false);
+}
+
+void StreamDeckModule::streamDeckStripTapped(float x, bool longPress)
+{
+	if (logIncomingData->boolValue()) NLOG(niceName, "Strip " << (longPress ? "long press" : "tap") << " at " << String(x, 3));
+	if (numDials == 0) return;
+	inActivityTrigger->trigger();
+	stripPosition->setValue(x);
+	(longPress ? stripLongPress : stripTap)->trigger();
+}
+
+void StreamDeckModule::streamDeckStripSwiped(bool toRight)
+{
+	if (logIncomingData->boolValue()) NLOG(niceName, "Strip swiped " << (toRight ? "right" : "left"));
+	if (numDials == 0) return;
+	inActivityTrigger->trigger();
+	(toRight ? stripSwipeRight : stripSwipeLeft)->trigger();
+}
+
 void StreamDeckModule::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
 {
 	Module::onControllableFeedbackUpdateInternal(cc, c);
+
+	if (c == targetDevice && !updatingDeviceList)
+	{
+		targetSerial = targetDevice->getValueData().toString();
+		updateDeviceList();
+		return;
+	}
 
 	if (c == deviceType)
 	{
 		rebuildValues();
 	}
 
+	if (c == dialRangeMin || c == dialRangeMax)
+	{
+		for (auto* v : dialValues) v->setRange(dialRangeMin->floatValue(), dialRangeMax->floatValue());
+	}
+
+	if (c == enabled || c == reset || dialLabels.contains((StringParameter*)c) || dialColors.contains((ColorParameter*)c) || dialValues.contains((FloatParameter*)c))
+	{
+		stripNeedsRedraw = true;
+		if (c != enabled && c != reset) return;
+	}
+
 	if (!enabled->boolValue()) return;
 	if (device == nullptr) return;
 
-	if (c == reset || c == colorizeImages)
+	if (c == reset || c == colorizeImages || c == textSize)
 	{
 		if (c == reset) device->reset();
 
@@ -384,20 +587,56 @@ void StreamDeckModule::onControllableFeedbackUpdateInternal(ControllableContaine
 	}
 }
 
+void StreamDeckModule::updateDeviceList(StreamDeck* removedDevice)
+{
+	StreamDeck* firstFound = nullptr;
+	StreamDeck* target = nullptr;
+
+	updatingDeviceList = true;
+	targetDevice->clearOptions();
+	targetDevice->addOption("First found", "");
+
+	for (auto* d : StreamDeckManager::getInstance()->devices)
+	{
+		if (d == removedDevice) continue; // deviceRemoved is called while it's still in the manager's list
+		if (firstFound == nullptr) firstFound = d;
+		if (d->serialNumber == targetSerial) target = d;
+		targetDevice->addOption((d->productName.isNotEmpty() ? d->productName : "Stream Deck") + " (" + d->serialNumber + ")", d->serialNumber, false);
+	}
+
+	// Keep a chosen device that isn't connected right now, so it's picked up again when it comes back
+	if (targetSerial.isNotEmpty() && target == nullptr) targetDevice->addOption(targetSerial + " (not connected)", targetSerial, false);
+
+	targetDevice->setValueWithData(targetSerial);
+	updatingDeviceList = false;
+
+	setDevice(targetSerial.isEmpty() ? firstFound : target);
+}
+
 void StreamDeckModule::deviceAdded(StreamDeck* d)
 {
-	if (device == nullptr)
-	{
-		setDevice(d);
-	}
+	updateDeviceList();
 }
 
 void StreamDeckModule::deviceRemoved(StreamDeck* d)
 {
-	if (device == d || StreamDeckManager::getInstance()->devices.size() == 0)
-	{
-		setDevice(nullptr);
-	}
+	updateDeviceList(d);
+}
+
+var StreamDeckModule::getJSONData(bool includeNonOverriden)
+{
+	var data = Module::getJSONData(includeNonOverriden);
+	if (targetSerial.isNotEmpty()) data.getDynamicObject()->setProperty("targetSerial", targetSerial);
+	return data;
+}
+
+void StreamDeckModule::loadJSONDataItemInternal(var data)
+{
+	Module::loadJSONDataItemInternal(data);
+	targetSerial = data.getProperty("targetSerial", "").toString();
+#if !USE_FAKE_DEVICE
+	updateDeviceList();
+#endif
 }
 
 void StreamDeckModule::afterLoadJSONDataInternal()
