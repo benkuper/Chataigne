@@ -699,53 +699,31 @@ jobs:
           ref: develop-local
           path: JUCE
 
-      - name: Setup Multi-Arch Apt
-        run: |
-          set -euo pipefail
-          sudo dpkg --add-architecture ${{ matrix.deb_arch }}
-          sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
-
-          # This mirror serves Ubuntu-signed Jammy indexes independently of
-          # archive.ubuntu.com / ports.ubuntu.com DNS availability.
-          echo "deb [arch=amd64] https://mirrors.mit.edu/ubuntu jammy main universe restricted multiverse" | sudo tee /etc/apt/sources.list
-          echo "deb [arch=amd64] https://mirrors.mit.edu/ubuntu jammy-updates main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
-          echo "deb [arch=amd64] https://mirrors.mit.edu/ubuntu jammy-security main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
-
-          echo "deb [arch=${{ matrix.deb_arch }}] https://mirrors.mit.edu/ubuntu-ports jammy main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
-          echo "deb [arch=${{ matrix.deb_arch }}] https://mirrors.mit.edu/ubuntu-ports jammy-updates main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
-          echo "deb [arch=${{ matrix.deb_arch }}] https://mirrors.mit.edu/ubuntu-ports jammy-security main universe restricted multiverse" | sudo tee -a /etc/apt/sources.list
-          
-          # APT otherwise exits successfully after transient DNS/download errors,
-          # leaving the next step with missing cross-compiler package indexes.
-          sudo apt-get -o Acquire::Retries=5 -o Acquire::https::Timeout=30 --error-on=any update
-
       - name: Install Cross-Compiler and Libraries
         run: |
           set -euo pipefail
-          sudo apt-get -o Acquire::Retries=5 -o Acquire::https::Timeout=30 install -y crossbuild-essential-${{ matrix.deb_arch }}
+          target_arch=${{ matrix.deb_arch }}
+          sudo dpkg --add-architecture "$target_arch"
 
-          # Multi-Arch: same packages must have identical versions to coexist.
-          # The Jammy archive and ports mirrors can publish at different times.
-          native_headers="linux-libc-dev:$(dpkg --print-architecture)"
-          target_headers="linux-libc-dev:${{ matrix.deb_arch }}"
-          native_versions=$(apt-cache madison "$native_headers" | awk '{print $3}' | sort -u)
-          target_versions=$(apt-cache madison "$target_headers" | awk '{print $3}' | sort -u)
-          common_versions=$(comm -12 <(printf '%s\n' "$native_versions") <(printf '%s\n' "$target_versions"))
-          headers_version=
-          for version in $common_versions; do
-            if [ -z "$headers_version" ] || dpkg --compare-versions "$version" gt "$headers_version"; then
-              headers_version=$version
-            fi
-          done
-          if [ -z "$headers_version" ]; then
-            apt-cache policy "$native_headers" "$target_headers"
-            echo "::error::No common version of $native_headers and $target_headers"
-            exit 1
-          fi
+          # Multi-Arch packages must match across architectures. Use one Jammy
+          # snapshot for both so independent archive and ports mirrors cannot drift.
+          snapshot=$(date -u -d '6 hours ago' +%Y%m%dT%H0000Z)
+          sources=$(mktemp --suffix=.list)
+          trap 'rm -f "$sources"' EXIT
+          for suite in jammy jammy-updates jammy-security; do
+            printf 'deb [arch=amd64,%s signed-by=/usr/share/keyrings/ubuntu-archive-keyring.gpg] https://snapshot.ubuntu.com/ubuntu/%s %s main universe restricted multiverse\n' \
+              "$target_arch" "$snapshot" "$suite"
+          done > "$sources"
 
-          sudo apt-get -o Acquire::Retries=5 -o Acquire::https::Timeout=30 install -y --allow-downgrades \
-            "$native_headers=$headers_version" \
-            "$target_headers=$headers_version" \
+          apt_options=(
+            -o "Dir::Etc::sourcelist=$sources"
+            -o Dir::Etc::sourceparts=-
+            -o Acquire::Retries=5
+            -o Acquire::https::Timeout=30
+          )
+          sudo apt-get "${apt_options[@]}" --error-on=any update
+          sudo apt-get "${apt_options[@]}" install -y \
+            "crossbuild-essential-$target_arch" \
             libasound2-dev:${{ matrix.deb_arch }} \
             libjack-jackd2-dev:${{ matrix.deb_arch }} \
             ladspa-sdk:${{ matrix.deb_arch }} \
